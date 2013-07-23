@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class Rhythm : IComparable<Rhythm>
+public class Rhythm
 {
     public Rhythm(int bt, params Note[] ns)
     {
@@ -14,15 +14,15 @@ public class Rhythm : IComparable<Rhythm>
     public Rhythm(int bt, string rhythm) : this(bt, Note.Parse(rhythm)) { }
 
     public List<Note> notes { get; private set; }
-    public int numNote { get { return notes.Count(n => n.hasNote); } }//装飾音や伸ばし以外の発音数
-    public int baseTime { get; protected set; }//一拍の何分の一を基底とするか。
+    public int numNote { get { return notes.Count(n => n.hasNote); } }//actual note with tones.
+    public int baseTime { get; protected set; }// Beat * 1/baseTime is the basical time of this rhythm.
     public Note this[int i]
     {
         set
         {
             if (0 <= i && i < notes.Count)
                 notes[i] = value;
-            else throw new ApplicationException("リズムのNoteの書き換え時に、不適切なインデックスを渡しています");
+            else throw new ApplicationException("rhythm[i] is out of index: i = " + i);
         }
         get
         {
@@ -38,17 +38,13 @@ public class Rhythm : IComparable<Rhythm>
     {
         if (IsOnBeat())
             return notes.Count * Music.mtBeat / baseTime;
-        else throw new NotImplementedException("特殊リズムは普通のLength()でも使ってろってこった");
+        else throw new NotImplementedException("This rhythm is not OnBeat.");
     }
 
     /// <summary>
-    /// InOnBeat == trueが前提で呼び出す関数。
-    /// trueで呼び出したとしても、音がなければ、
-    /// 例えば8分音符刻みで、16の裏に呼び出されたときなどは
-    /// -1を返すので注意。
+    /// if time is not on thi beat, returns -1.
     /// </summary>
-    /// <param name="start"></param>
-    /// <param name="now"></param>
+    /// <param name="mt">musical time from start playing this rhythm</param>
     /// <returns></returns>
     public int GetNoteIndex(int mt)
     {
@@ -57,20 +53,18 @@ public class Rhythm : IComparable<Rhythm>
         return mt;
     }
     /// <summary>
-    /// 再生するべきNoteを返す。音が存在しなかった場合、nullが返される。
+    /// if time is not on thi beat, returns null.
     /// </summary>
-    /// <param name="start"></param>
-    /// <param name="now"></param>
+    /// <param name="mt">musical time from start playing this rhythm</param>
     /// <returns></returns>
     public Note GetNote(int mt)
     {
         return this[GetNoteIndex(mt)];
     }
     /// <summary>
-    /// リズムのindex番目までのNoteの中で、HasNote()==trueの物を数えて
-    /// 何音目かを返す。
+    /// Count up HasTone notes from 0 to index, and return what index of phrase you should access.
     /// </summary>
-    /// <param name="index">リズムのインデックス</param>
+    /// <param name="index">note index</param>
     /// <returns></returns>
     public int GetToneIndex(int index)
     {
@@ -87,22 +81,6 @@ public class Rhythm : IComparable<Rhythm>
         return this[index];
     }
 
-    public int CompareTo(Rhythm other)
-    {
-        int n1 = this.numNote, n2 = other.numNote;
-        if (n1 == n2) {
-            int l = Math.Min(this.MTLength(), other.MTLength());
-            Note note1, note2;
-            for (int i = 0; i < l; i++) {
-                note1 = this.GetNote(i);
-                note2 = other.GetNote(i);
-                if ((note1 == null || !note1.hasNote) && (note2 == null || !note2.hasNote)) continue;
-                else if (note1.hasNote && note2.hasNote) continue;
-                else return note1.hasNote ? -1 : 1;//先に音があるほうが小さい。
-            }
-            return 0;//音の位置がすべて同じなら同値。
-        } else return n1 - n2;//音が多いほうが大きい。
-    }
     public override string ToString()
     {
         StringBuilder res = new StringBuilder();

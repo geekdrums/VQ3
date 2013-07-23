@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-/// <summary>
-/// 音程、コードの配列。Rhythmと合わせて使用。
-/// </summary>
 public class Phrase
 {
-    //==================コンストラクタ=========================
     public Phrase(Chord bc, params Chord[] phrase)
     {
         baseChord = bc;
@@ -33,7 +29,7 @@ public class Phrase
         {
             if (0 <= i && i < Length) {
                 chords[i] = value;
-            } else throw new ApplicationException("フレーズのchordsの書き換え時に、不適切なインデックスを渡しています");
+            } else throw new ApplicationException("phrase[i] is out of index: i = " + i);
         }
         get
         {
@@ -42,14 +38,8 @@ public class Phrase
             else return null;
         }
     }
-    public Chord baseChord { get; private set; }//コード進行に合わせて使用したい場合は設定する。しない場合はnullにしておく。
+    public Chord baseChord { get; private set; }
 
-    /// <summary>
-    /// 自分自身は変更せずに新たに平行移動したフレーズを作る。
-    /// baseChordもトランスポーズされる。
-    /// </summary>
-    /// <param name="t">移動量</param>
-    /// <returns></returns>
     public Phrase MakeTranspose(int t) 
     {
         List<Chord> transposed = new List<Chord>();
@@ -58,11 +48,6 @@ public class Phrase
         }
         return new Phrase((baseChord != null ? baseChord.Transpose(t) : null), transposed); 
     }
-    /// <summary>
-    /// 自分自身は変更せずに新たに和音を加えたフレーズを作る。
-    /// </summary>
-    /// <param name="t">重ねる音の距離</param>
-    /// <returns></returns>
     public Phrase MakeHarmonize(int t)
     {
         List<Chord> harmonized = new List<Chord>();

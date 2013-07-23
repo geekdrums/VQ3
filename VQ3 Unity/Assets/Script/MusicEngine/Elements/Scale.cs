@@ -34,7 +34,6 @@ public class Scale
 	{
 		get
 		{
-			//何オクターブ目の音か
 			int octave = ( i + ( i < 0 ? 1 - numTones : 0 ) ) / numTones;
 			i -= octave * numTones;
 			return tones[i] + Tone.OCTAVE * octave;

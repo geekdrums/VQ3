@@ -84,7 +84,7 @@ public class Timing : IComparable<Timing>, IEquatable<Timing>
 		}
 		if ( this.GetType() != obj.GetType() )
 		{
-			return false;//”h¶Œ^‚È‚Ç‚ª‚ ‚Á‚½‚Æ‚µ‚Ä‚àA‚±‚¤‚µ‚Ä‚¨‚©‚È‚¢‚Æ”½Ë—¥‚ğ”Æ‚µ‚Ä‚µ‚Ü‚¤B
+			return false;
 		}
 		return this.Equals( obj as Timing );
 	}

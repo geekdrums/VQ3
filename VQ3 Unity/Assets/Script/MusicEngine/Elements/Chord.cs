@@ -203,7 +203,7 @@ public class Chord : IEnumerable<int>
 	}
 
 	/// <summary>
-	/// ex. Parse("C,C E G,o+1,C E")
+	/// ex. Parse("C,C E G,o01,C E")
 	/// </summary>
 	/// <param name="chordphrase"></param>
 	/// <returns></returns>

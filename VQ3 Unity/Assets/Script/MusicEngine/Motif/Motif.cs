@@ -24,10 +24,10 @@ public class Motif
 
 
     /// <summary>
-    /// 次のタイミングで演奏すべき音と音程を取得します。
-    /// 演奏し終わった場合falseを返します。
+    /// Get next Note and Chord.
     /// </summary>
-    /// <param name="mt">再生開始からの音楽時間</param>
+    /// <param name="mt">musical time from started this motif</param>
+    /// <returns>is finished playing</returns>
     public bool PrepareNext(int mt, out Chord nextTones, out Note nextNote)
     {
         if (rhythm.IsOnBeat()) {
@@ -41,11 +41,11 @@ public class Motif
                 if (nextNote != null) {
                     if (nextNote.hasNote) {
                         nextTones = phrase[toneIndex];
-                    } else nextTones = null;// 次は音がストップされるか伸ばされるかもしくは、toneを使わない音(cuttingなど)だけ。
-                } else nextTones = null;// 今のタイミングはbaseTime上にない。
+                    } else nextTones = null;// tone will be sustained or stopped.
+                } else nextTones = null;// not in baseTime.
                 return true;
             }
-        } else throw new ApplicationException("IsOnBeatでないリズムでこの関数は使えません");
+        } else throw new ApplicationException("this motif is not OnBeat.");
     }
     public Chord baseChord { get { return phrase.baseChord; } }
     public int baseTime { get { return rhythm != null ? rhythm.baseTime : 4; } }

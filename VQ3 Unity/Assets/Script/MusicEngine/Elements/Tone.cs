@@ -6,7 +6,7 @@ using System.Text;
 public static class Tone
 {
 	public static readonly int Ces = C - 1;
-	public static readonly int C = 0;//帰納的に定義してるので、ここを変えたら下も全部変えられる。
+	public static readonly int C = 0;//recursive definition based on this note.
 	public static readonly int Cis = C + 1, Des = C + 1;
 	public static readonly int D = Des + 1;
 	public static readonly int Dis = D + 1, Es = D + 1;
@@ -22,14 +22,9 @@ public static class Tone
 	public static readonly int H = Hes + 1;
 	public static readonly int His = H + 1;
 	public static readonly int OCTAVE = H - C + 1;
+	
 	/// <summary>
-	/// 使用するすべてのオクターブの全音程数
-	/// </summary>
-	public static readonly int NUM_TONES = OCTAVE * 6;
-
-	/// <summary>
-	/// ド　レ♭　ミ
-	/// "C00 Df00 E00"などとする。
+    /// ex. Parse( "C E G o01 C" )
 	/// </summary>
 	/// <param name="phrase"></param>
 	/// <returns></returns>
@@ -92,7 +87,7 @@ public static class Tone
             {
                 t = B;
             }
-            else throw new ApplicationException("invalidな音名の指定");
+            else throw new ApplicationException("Invalid tone name: " + str);
 			tones.Add( t + octave * OCTAVE );
 		}
 		return tones;

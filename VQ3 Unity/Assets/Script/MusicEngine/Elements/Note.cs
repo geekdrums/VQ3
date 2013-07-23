@@ -81,8 +81,7 @@ public class Note
         DRUMROLL = ENote._DRUMROLL | ENote.NOTE,
     }
 
-
-    //汎用的な基本ノート
+    //basic notes.
     public static readonly Note note = new Note(ENote.NOTE);
     public static readonly Note sustain = new Note(ENote.SUSTAIN);
     public static readonly Note pianoNote = new Note(ENote.PIANO);
@@ -92,7 +91,6 @@ public class Note
     public static readonly Note staccatoNote = new Note(ENote.STACCATO);
 
     /// <summary>
-    /// 二文字ずつのフラグに分けて合成。
     /// NOTE : ta
     /// REST : nn
     /// SUSTAIN : aa
