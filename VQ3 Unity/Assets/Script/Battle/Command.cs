@@ -29,9 +29,18 @@ public class Command
 	public Command( IActionModule Module )
 		: this( new ActionSet( Module ), true ) { }
 
-	//TEMP!!!
-	public ActionSet GetCurrentAction()
+	public ActionSet GetCurrentAction( Timing startedTiming )
 	{
-		return Actions[0];
+        int mt = Music.Just - startedTiming;
+        int index = ActionRhythm.GetNoteIndex(mt);
+        if( index >= 0 )
+        {
+            return Actions[ActionRhythm.GetToneIndex(index)];
+        }
+        else return null;
 	}
+    public bool IsEnd(Timing startedTiming)
+    {
+        return Music.Just - startedTiming > ActionRhythm.MTLength();
+    }
 }
