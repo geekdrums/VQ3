@@ -6,7 +6,6 @@ using System.Text;
 
 public class Chord : IEnumerable<int>
 {
-	//=============コンストラクタ=================
 	public Chord( params int[] tones )
 	{
 		chord = new List<int>( tones );
@@ -21,10 +20,8 @@ public class Chord : IEnumerable<int>
 	}
     public Chord(string cho, int baseOctave = 0) : this(Tone.Parse(cho, baseOctave)) { }
 
-	//中身はこれだけ
 	private List<int> chord;
 
-	//===========プロパティなど============
 	public int numTones { get { return chord.Count; } }
 	public int this[int i]
 	{
@@ -33,11 +30,11 @@ public class Chord : IEnumerable<int>
 		{
 			if ( 0 <= i && i < numTones )
 				return chord[i];
-			else throw new ApplicationException( "コードのインデックス外にアクセスしようとしました" );
+			else throw new ApplicationException( "chord[i] is out of index: i = " + i );
 		}
 	}
 	public void AddTone( int t ) { if ( !chord.Contains( t ) ) { chord.Add( t ); } }
-	#region IEnumerator実装
+	#region IEnumerator
 	public IEnumerator<int> GetEnumerator()
 	{
 		foreach ( int t in chord )
@@ -49,13 +46,11 @@ public class Chord : IEnumerable<int>
 	}
 	#endregion
 
-	//============コード変更の関数=================
 	/// <summary>
-	/// basechord上で演奏されることを仮定したtones（和音）を
-	/// this.chord上での和音に変換する。
+	/// Original transformation logic from basechord to this chord
 	/// </summary>
-	/// <param name="tones">変更する音</param>
-	/// <param name="basschord">変更する音が入っているMotifがそのまま演奏されるときのコード</param>
+	/// <param name="tones">tones to be transformed</param>
+	/// <param name="basschord">chord that fit to original tones</param>
 	/// <returns></returns>
 	public Chord Fix( Chord tones, Chord basechord )
 	{
@@ -84,27 +79,19 @@ public class Chord : IEnumerable<int>
 		int octave;
 		for ( int i = 0; i < length; i++ )
 		{
-
-			//元のコードにおいて、何オクターブ目の音か
 			octave = ( tones[i] - basechord[0] + ( tones[i] - basechord[0] < 0 ? 1 : 0 ) ) / Tone.OCTAVE + ( tones[i] - basechord[0] < 0 ? -1 : 0 );
-			//考えた末にこうなった。すなわち、今簡単のためbasechrd[0]==0とすると、-12～-1はオクターブが－１としたいのだが、
-			//-1～-11は/Tone.OCTAVEしたときに０になるけど、-12だけは－１になってしまうので、それを避けるためにあえて先に一つずらしている。
 
-			toneOnBasechord = 256.0f;//適当に、再生しようとしたらエラーが出る音にしておく。
+			toneOnBasechord = 256.0f;
 			{
-				#region 元のコード上のどの位置にあるかを算出
-				// これにbasschord上の音の位置を格納する。簡単に言うと、例えばソの音のCmaj上の位置は2、
-				// ファの音なら1.33、ミなら1、レが0.5、ドが0、などというように、中間の音はその前後の音との比によって与えられる。
-				//オクターブをすべて揃える。
+				#region Find where this tone is in basechord
 				int t = tones[i];
-				if ( t % Tone.OCTAVE == basechord[0] % Tone.OCTAVE ) toneOnBasechord = 0.0f;//場合わけ。このときはわかりきっているのですぐ設定して抜ける
+				if ( t % Tone.OCTAVE == basechord[0] % Tone.OCTAVE ) toneOnBasechord = 0.0f;
 				else
 				{
 					t -= Tone.OCTAVE * octave;
 
-					//コード上を探索
 					int l = basechord.numTones;
-					bool flag = false;//場所がループの中で見つかったかを格納。見つかってなければ、一番高い音より上にあるのでその場合の処理に。
+					bool flag = false;
 					for ( int j = 0; j < l; j++ )
 					{
 						if ( basechord[j] == t )
@@ -115,13 +102,12 @@ public class Chord : IEnumerable<int>
 						}
 						else if ( t < basechord[j] )
 						{
-							float d = basechord[j] - basechord[j - 1];// j != 0 は↑で保障されている。
+							float d = basechord[j] - basechord[j - 1];
 							toneOnBasechord = (float)( j - 1 ) + (float)( t - basechord[j - 1] ) / d;
 							flag = true;
 							break;
 						}
 					}
-					//コードの一番下の音のオクターブ上と、一番上の音との間で計算。
 					if ( !flag )
 					{
 						float d2 = basechord[0] + Tone.OCTAVE - basechord[l - 1];
@@ -130,12 +116,11 @@ public class Chord : IEnumerable<int>
 				}
 				#endregion
 			}
-			toneOnDefaultOctave = 256;//適当に、再生しようとしたらエラーが出る音にしておく。
+			toneOnDefaultOctave = 256;
 			{
-				#region 得られた位置に対して、自身のコード上での位置の音を計算する。
+				#region Calcurate a tone in this chord
 				int l = this.numTones;
-				bool flag = false;//音がループの中で見つかったかを格納。見つかってなければ、その上の音を設定する。
-				//コード上を探索
+				bool flag = false;
 				for ( int j = 0; j < l; j++ )
 				{
 					if ( toneOnBasechord == (float)j )
@@ -146,14 +131,14 @@ public class Chord : IEnumerable<int>
 					}
 					else if ( toneOnBasechord < j )
 					{
-						float dec = toneOnBasechord - ( j - 1 );//decimal（は型名だから使えないので）つまり1以下の数になる
+						float dec = toneOnBasechord - ( j - 1 );
 						int d = this[j] - this[j - 1];
 						toneOnDefaultOctave = this[j - 1] + (int)( dec * d );
 						flag = true;
 						break;
 					}
 				}
-				//見つからなかった＝元となるコードの音の方が音数が多い（もしくは同じだが最後のインデックスの音より高い音）
+				//Can't find means basechord has more tones( or higher tones )
 				if ( !flag )
 				{
 					float dec2 = ( toneOnBasechord - (float)( l - 1 ) ) / (float)( basechord.numTones - l + 1 );
@@ -163,14 +148,12 @@ public class Chord : IEnumerable<int>
 				#endregion
 			}
 
-			//以上の情報から、自身のコード上の対応する音を算出。
 			result[i] = toneOnDefaultOctave + octave * Tone.OCTAVE;
 		}
 
 		return new Chord( result );
 	}
 
-	//===========平行移動、展開した音の作成============
 	public Chord Transpose( int t )
 	{
 		if ( t == 0 ) return new Chord( this.chord );
@@ -184,9 +167,6 @@ public class Chord : IEnumerable<int>
 			return new Chord( res );
 		}
 	}
-	/// <summary>
-	/// コードを上に展開する
-	/// </summary>
 	public Chord RollUp( int time )
 	{
 		List<int> res = new List<int>( this );
@@ -197,9 +177,6 @@ public class Chord : IEnumerable<int>
 		}
 		return new Chord( res );
 	}
-	/// <summary>
-	/// コードを下に展開する
-	/// </summary>
 	public Chord RollDown( int time )
 	{
 		List<int> res = new List<int>( this );
@@ -210,11 +187,6 @@ public class Chord : IEnumerable<int>
 		}
 		return new Chord( res );
 	}
-	/// <summary>
-	/// 和音を作る
-	/// </summary>
-	/// <param name="t">重ねる音との距離</param>
-	/// <returns>新しい和音</returns>
 	public Chord Harmonize( int t )
 	{
 		if ( t == 0 ) return new Chord( this.chord );
@@ -230,10 +202,8 @@ public class Chord : IEnumerable<int>
 		}
 	}
 
-	//==============staticメソッド=================
 	/// <summary>
-	/// Parse("C,C E G,D F")
-	/// みたく、コードの音をカンマで分けて渡す。
+	/// ex. Parse("C,C E G,o+1,C E")
 	/// </summary>
 	/// <param name="chordphrase"></param>
 	/// <returns></returns>
@@ -286,6 +256,6 @@ public class Chord : IEnumerable<int>
 		{
 			return new Chord( tone, tone + 3, tone + 6, tone + 9 );
 		}
-		else throw new ApplicationException( "そのコードは自分で入力してくれ" );
+		else throw new ApplicationException( "That chord is not implemented" );
 	}
 }
