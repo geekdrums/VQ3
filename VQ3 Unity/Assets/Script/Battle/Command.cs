@@ -23,7 +23,7 @@ public class Command
 		ActionRhythm = rhythm;
 	}
 	public Command( ActionSet act, bool isPlayer = true )
-		: this( new Rhythm( 1, "da" ), isPlayer, act ) { }
+		: this( Rhythm.ONE_NOTE_RHYTHM, isPlayer, act ) { }
 	public Command( bool isPlayer, params IActionModule[] Modules )
 		: this( new ActionSet( Modules ), isPlayer ) { }
 	public Command( IActionModule Module )

@@ -19,7 +19,7 @@ public class Chord : IEnumerable<int>
 		chord.TrimExcess();
 		chord.Sort();
 	}
-	public Chord( string cho ) : this( Tone.Parse( cho ) ) { }
+    public Chord(string cho, int baseOctave = 0) : this(Tone.Parse(cho, baseOctave)) { }
 
 	//中身はこれだけ
 	private List<int> chord;
@@ -176,10 +176,10 @@ public class Chord : IEnumerable<int>
 		if ( t == 0 ) return new Chord( this.chord );
 		else
 		{
-			int[] res = new int[numTones];
-			for ( int i = 0; i < res.Length; i++ )
+            List<int> res = new List<int>();
+			for ( int i = 0; i < chord.Count; i++ )
 			{
-				res[i] = this[i] + t;
+				res.Add( this[i] + t );
 			}
 			return new Chord( res );
 		}
@@ -232,17 +232,28 @@ public class Chord : IEnumerable<int>
 
 	//==============staticメソッド=================
 	/// <summary>
-	/// Parse("C00,C00 E00 G00,D00 F00")
+	/// Parse("C,C E G,D F")
 	/// みたく、コードの音をカンマで分けて渡す。
 	/// </summary>
 	/// <param name="chordphrase"></param>
 	/// <returns></returns>
-	public static Chord[] Parse( string chordphrase )
+	public static List<Chord> Parse( string chordphrase )
 	{
-		string[] strs = chordphrase.Split( Note.comma, StringSplitOptions.RemoveEmptyEntries );
-		Chord[] chords = new Chord[strs.Length];
-		for ( int i = 0; i < chords.Length; i++ )
-			chords[i] = new Chord( strs[i] );
+		string[] strs = chordphrase.Split( ",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
+        List<Chord> chords = new List<Chord>();
+        int octave = 0;
+        for (int i = 0; i < strs.Length; i++)
+        {
+            string str = strs[i];
+            if (str.StartsWith("o"))
+            {
+                octave = int.Parse(str.Substring(str.Length - 2, 2));
+            }
+            else
+            {
+                chords[i] = new Chord(strs[i], octave);
+            }
+        }
 		return chords;
 	}
 	public static Chord MakeChord( int tone, string option )

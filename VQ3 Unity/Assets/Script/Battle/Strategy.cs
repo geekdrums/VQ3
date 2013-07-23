@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public enum EStrategy
 {
-	Default,
+	Attack,
 	Magic,
 	Cure,
 	Count

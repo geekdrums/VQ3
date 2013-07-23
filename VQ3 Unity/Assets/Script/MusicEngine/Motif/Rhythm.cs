@@ -111,4 +111,7 @@ public class Rhythm : IComparable<Rhythm>
         }
         return res.ToString();
     }
+
+    public static readonly Rhythm REST_RHYTHM = new Rhythm(1, "nn");
+    public static readonly Rhythm ONE_NOTE_RHYTHM = new Rhythm(4, "ta");
 }

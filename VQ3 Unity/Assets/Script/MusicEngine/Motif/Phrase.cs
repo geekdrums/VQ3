@@ -16,6 +16,12 @@ public class Phrase
         chords.AddRange(phrase);
         chords.TrimExcess();
     }
+    public Phrase(Chord bc, List<Chord> phrase)
+    {
+        baseChord = bc;
+        chords = phrase;
+        chords.TrimExcess();
+    }
     public Phrase(Chord bc, string phrase) : this(bc, Chord.Parse(phrase)) { }
     public Phrase( string phrase ) : this(null, Chord.Parse(phrase)) { }
 
@@ -50,7 +56,7 @@ public class Phrase
         foreach (Chord c in this.chords) {
             transposed.Add(c.Transpose(t));
         }
-        return new Phrase((baseChord != null ? baseChord.Transpose(t) : null), transposed.ToArray()); 
+        return new Phrase((baseChord != null ? baseChord.Transpose(t) : null), transposed); 
     }
     /// <summary>
     /// 自分自身は変更せずに新たに和音を加えたフレーズを作る。
@@ -63,7 +69,7 @@ public class Phrase
         foreach (Chord c in this.chords) {
             harmonized.Add(c.Harmonize(t));
         }
-        return new Phrase(baseChord, harmonized.ToArray());
+        return new Phrase(baseChord, harmonized);
     }
 }
 

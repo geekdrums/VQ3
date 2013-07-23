@@ -14,7 +14,7 @@ public class CommandManager : MonoBehaviour {
 		GameContext.CommandManager = this;
 
 		Strategies = new Strategy[(int)EStrategy.Count];
-		Strategies[(int)EStrategy.Default] = new Strategy( ECommand.Attack );
+		Strategies[(int)EStrategy.Attack] = new Strategy( ECommand.Attack );
 		Strategies[(int)EStrategy.Magic] = new Strategy( ECommand.Magic );
 		Strategies[(int)EStrategy.Cure] = new Strategy( ECommand.Cure );
 
@@ -23,7 +23,7 @@ public class CommandManager : MonoBehaviour {
 		Commands[(int)ECommand.Magic] = new Command( new MagicModule( 1 ) );
 		Commands[(int)ECommand.Cure] = new Command( new HealModule( 1 ) );
 
-		CurrentStrategy = Strategies[(int)EStrategy.Default];
+		CurrentStrategy = Strategies[(int)EStrategy.Attack];
 	}
 
 	// Update is called once per frame

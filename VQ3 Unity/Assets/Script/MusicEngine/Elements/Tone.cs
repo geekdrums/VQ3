@@ -5,104 +5,95 @@ using System.Text;
 
 public static class Tone
 {
-	public static readonly int Cf = C - 1;
+	public static readonly int Ces = C - 1;
 	public static readonly int C = 0;//帰納的に定義してるので、ここを変えたら下も全部変えられる。
-	public static readonly int Cs = C + 1, Df = C + 1;
-	public static readonly int D = Df + 1;
-	public static readonly int Ds = D + 1, Ef = D + 1;
-	public static readonly int E = Ef + 1;
-	public static readonly int Ff = E;
-	public static readonly int Es = E + 1;
+	public static readonly int Cis = C + 1, Des = C + 1;
+	public static readonly int D = Des + 1;
+	public static readonly int Dis = D + 1, Es = D + 1;
+	public static readonly int E = Es + 1;
+	public static readonly int Fes = E;
+	public static readonly int Eis = E + 1;
 	public static readonly int F = E + 1;
-	public static readonly int Fs = F + 1, Gf = F + 1;
-	public static readonly int G = Gf + 1;
-	public static readonly int Gs = G + 1, Af = G + 1;
-	public static readonly int A = Af + 1;
-	public static readonly int As = A + 1, Bf = A + 1;
-	public static readonly int B = Bf + 1;
-	public static readonly int Bs = B + 1;
-	public static readonly int OCTAVE = B - C + 1;
+	public static readonly int Fis = F + 1, Ges = F + 1;
+	public static readonly int G = Ges + 1;
+	public static readonly int Gis = G + 1, As = G + 1;
+	public static readonly int A = As + 1;
+	public static readonly int Ais = A + 1, Hes = A + 1, B = Hes;
+	public static readonly int H = Hes + 1;
+	public static readonly int His = H + 1;
+	public static readonly int OCTAVE = H - C + 1;
 	/// <summary>
 	/// 使用するすべてのオクターブの全音程数
 	/// </summary>
 	public static readonly int NUM_TONES = OCTAVE * 6;
-	/// <summary>
-	/// GetToneColorで用いる、色ごとにRGBの値をいくつ変えるかという値
-	/// </summary>
-	public static readonly int COLOR_UNIT = 256 * 256 * 256 / ( NUM_TONES * 2 );
 
 	/// <summary>
 	/// ド　レ♭　ミ
-	/// というフレーズを作りたかったら、
 	/// "C00 Df00 E00"などとする。
-	/// マイナスのオクターブはC-1などとする。
 	/// </summary>
 	/// <param name="phrase"></param>
 	/// <returns></returns>
-	public static int[] Parse( string phrase )
-	{//TODO:和音用のも作るのと、マイナスのオクターブにも対応すること。
-		string[] stringTones = phrase.Split( Note.space, StringSplitOptions.RemoveEmptyEntries );
-		int[] tones = new int[stringTones.Length];
-		int octave;
+	public static List<int> Parse( string phrase, int baseOctave = 0 )
+	{
+		string[] stringTones = phrase.Split( " ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
+        List<int> tones = new List<int>();
+        int octave = baseOctave;
 		int t;
-		int i = 0;
 		foreach ( string str in stringTones )
 		{
-			if ( str.Length <= 2 )
+			if ( str.StartsWith( "o" ) )
 			{
-				octave = 0;
+                octave = baseOctave + int.Parse(str.Substring(str.Length - 2, 2));
+                continue;
 			}
-			else
+			else if ( str.StartsWith( "C" ) )
 			{
-				octave = int.Parse( str.Substring( str.Length - 2, 2 ) );
-			}
-			#region バカな探索
-			if ( str.StartsWith( "C" ) )
-			{
-				if ( str[1] == 'f' ) t = Cf;
-				else if ( str[1] == 's' ) t = Cs;
+				if ( str[1] == 'e' ) t = Ces;
+				else if ( str[1] == 'i' ) t = Cis;
 				else t = C;
 			}
 			else if ( str.StartsWith( "D" ) )
 			{
-				if ( str[1] == 'f' ) t = Df;
-				else if ( str[1] == 's' ) t = Ds;
+				if ( str[1] == 'e' ) t = Des;
+				else if ( str[1] == 'i' ) t = Dis;
 				else t = D;
 			}
 			else if ( str.StartsWith( "E" ) )
 			{
-				if ( str[1] == 'f' ) t = Ef;
-				else if ( str[1] == 's' ) t = Es;
+				if ( str[1] == 's' ) t = Es;
+				else if ( str[1] == 'i' ) t = Eis;
 				else t = E;
 			}
 			else if ( str.StartsWith( "F" ) )
 			{
-				if ( str[1] == 'f' ) t = Ff;
-				else if ( str[1] == 's' ) t = Fs;
+				if ( str[1] == 'e' ) t = Fes;
+				else if ( str[1] == 'i' ) t = Fis;
 				else t = F;
 			}
 			else if ( str.StartsWith( "G" ) )
 			{
-				if ( str[1] == 'f' ) t = Gf;
-				else if ( str[1] == 's' ) t = Gs;
+				if ( str[1] == 'e' ) t = Ges;
+				else if ( str[1] == 'i' ) t = Gis;
 				else t = G;
 			}
 			else if ( str.StartsWith( "A" ) )
 			{
-				if ( str[1] == 'f' ) t = Af;
-				else if ( str[1] == 's' ) t = As;
+				if ( str[1] == 's' ) t = As;
+				else if ( str[1] == 'i' ) t = Ais;
 				else t = A;
 			}
-			else if ( str.StartsWith( "B" ) )
+			else if ( str.StartsWith( "H" ) )
 			{
-				if ( str[1] == 'f' ) t = Bf;
-				else if ( str[1] == 's' ) t = Bs;
-				else t = B;
+				if ( str[1] == 'e' ) t = Hes;
+				else if ( str[1] == 'i' ) t = His;
+				else t = H;
 			}
-			else throw new ApplicationException( "invalidな音名の指定" );
-			#endregion
-			tones[i] = t + octave * OCTAVE;
-			i++;
+            else if ( str.StartsWith( "B" ) )
+            {
+                t = B;
+            }
+            else throw new ApplicationException("invalidな音名の指定");
+			tones.Add( t + octave * OCTAVE );
 		}
 		return tones;
 	}
