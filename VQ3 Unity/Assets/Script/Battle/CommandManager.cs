@@ -33,7 +33,7 @@ public class CommandManager : MonoBehaviour {
 
 	public void OnBarStarted( int CurrentIndex )
 	{
-		ECommand Command = CurrentStrategy.DefaultCommands[CurrentIndex];
+		ECommand Command = CurrentStrategy.DefaultCommands[CurrentIndex%4];//TEMP!!!
 		GameContext.BattleConductor.ExecCommand( Commands[(int)Command] );
 	}
 

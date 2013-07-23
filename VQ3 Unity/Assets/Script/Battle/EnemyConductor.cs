@@ -33,7 +33,7 @@ public class EnemyConductor : MonoBehaviour {
 		Enemy tempEnemy;
 		foreach ( EnemyProperty ep in EnemyProperties )
 		{
-			tempEnemy = ( (GameObject)Instantiate( EnemyOriginal, new Vector3( 0, 5, -30 ), EnemyOriginal.transform.rotation ) ).GetComponent<Enemy>();
+			tempEnemy = ( (GameObject)Instantiate( EnemyOriginal, new Vector3(), EnemyOriginal.transform.rotation ) ).GetComponent<Enemy>();
 			tempEnemy.Initialize( ep );
 			Enemies.Add( tempEnemy );
 		}

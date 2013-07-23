@@ -21,12 +21,19 @@ public class BattleConductor : MonoBehaviour {
             OnBarStarted(Music.Just.bar);
         }
 
-        foreach (KeyValuePair<Timing, Command> cmd in Commands)
-        {
-            GameContext.EnemyConductor.ReceiveAction(cmd.Value.GetCurrentAction(cmd.Key), cmd.Value.isPlayerAction);
-            GameContext.PlayerConductor.ReceiveAction(cmd.Value.GetCurrentAction(cmd.Key), cmd.Value.isPlayerAction);
-        }
-        Commands.RemoveAll((KeyValuePair<Timing, Command> cmd) => cmd.Value.IsEnd(cmd.Key));
+		if ( Music.isJustChanged )
+		{
+			foreach ( KeyValuePair<Timing, Command> cmd in Commands )
+			{
+				ActionSet act = cmd.Value.GetCurrentAction( cmd.Key );
+				if ( act != null )
+				{
+					GameContext.EnemyConductor.ReceiveAction( act, cmd.Value.isPlayerAction );
+					GameContext.PlayerConductor.ReceiveAction( act, cmd.Value.isPlayerAction );
+				}
+			}
+			Commands.RemoveAll( ( KeyValuePair<Timing, Command> cmd ) => cmd.Value.IsEnd( cmd.Key ) );
+		}
     }
 
 	void OnBarStarted( int CurrentIndex )

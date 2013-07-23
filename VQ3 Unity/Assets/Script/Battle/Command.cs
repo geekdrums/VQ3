@@ -21,26 +21,25 @@ public class Command
 	{
 		Actions = inActions;
 		ActionRhythm = rhythm;
+		isPlayerAction = isPlayer;
 	}
 	public Command( ActionSet act, bool isPlayer = true )
 		: this( Rhythm.ONE_NOTE_RHYTHM, isPlayer, act ) { }
-	public Command( bool isPlayer, params IActionModule[] Modules )
-		: this( new ActionSet( Modules ), isPlayer ) { }
 	public Command( IActionModule Module )
 		: this( new ActionSet( Module ), true ) { }
 
 	public ActionSet GetCurrentAction( Timing startedTiming )
 	{
         int mt = Music.Just - startedTiming;
-        int index = ActionRhythm.GetNoteIndex(mt);
-        if( index >= 0 )
+		Note n = ActionRhythm.GetNote(mt);
+        if( n != null && n.hasNote )
         {
-            return Actions[ActionRhythm.GetToneIndex(index)];
+            return Actions[ActionRhythm.GetToneIndex(ActionRhythm.GetNoteIndex(mt))];
         }
         else return null;
 	}
     public bool IsEnd(Timing startedTiming)
     {
-        return Music.Just - startedTiming > ActionRhythm.MTLength();
+        return Music.Just - startedTiming >= ActionRhythm.MTLength();
     }
 }

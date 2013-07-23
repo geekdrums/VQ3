@@ -16,7 +16,6 @@ public class Enemy : MonoBehaviour {
 	// ======================
 	// Initilaize/
 	// ======================
-
 	public void Initialize( EnemyProperty ep )
 	{
 		HitPoint = ep.HP;
@@ -42,11 +41,11 @@ public class Enemy : MonoBehaviour {
 			{
 				if ( HitPoint <= 0 )
 				{
-                    renderer.material.color = Color.black;
+                    renderer.material.color = Color.clear;
 				}
 				else
 				{
-                    renderer.material.color = Color.clear;
+                    renderer.material.color = Color.black;
 				}
 			}
 		}
