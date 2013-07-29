@@ -53,7 +53,7 @@ public class Rhythm
         return mt;
     }
     /// <summary>
-    /// if time is not on thi beat, returns null.
+    /// if time is not on this beat, returns null.
     /// </summary>
     /// <param name="mt">musical time from start playing this rhythm</param>
     /// <returns></returns>

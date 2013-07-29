@@ -71,7 +71,7 @@ public class Music : MonoBehaviour {
 	//static properties
 	public static int mtBar { get { return Current.mtBar_; } }
 	public static int mtBeat { get { return Current.mtBeat_; } }
-	public static double mtUnit { get { return Current.MusicTimeUnit; } }
+    public static double mtUnit { get { return Current.MusicTimeUnit; } }
 	public static Timing Now { get { return Current.Now_; } }
 	public static Timing Just { get { return Current.Just_; } }
 	public static bool isJustChanged { get { return Current.isJustChanged_; } }
@@ -109,7 +109,8 @@ public class Music : MonoBehaviour {
 	/// <summary>
 	/// lag‚ğ-1`0`1‚ÌŠÔ‚Å•Ô‚·B
 	/// </summary>
-	public static double lagUnit { get { return lag / Current.MusicTimeUnit; } }
+    public static double lagUnit { get { return lag / Current.MusicTimeUnit; } }
+    public static double MusicalTime { get { return Now.totalUnit + lagUnit; } }
 
 	//static predicates
 	public static bool IsNowChangedWhen( System.Predicate<Timing> pred )
