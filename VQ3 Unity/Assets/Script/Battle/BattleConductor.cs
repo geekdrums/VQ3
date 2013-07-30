@@ -18,25 +18,32 @@ public class BattleConductor : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-        if (Music.IsJustChangedWhen((Timing t) => t.barUnit == 0))
+        if( Music.GetCurrentBlockName() == "Attack" )//TEMP!!!
         {
-            Debug.Log("OnBarChanged:"+Music.Just.ToString());
-            OnBarStarted(Music.Just.bar);
+            UpdateBattle();
+        }
+    }
+
+    void UpdateBattle()
+    {
+        if( Music.IsJustChangedWhen( ( Timing t ) => t.barUnit == 0 ) )
+        {
+            OnBarStarted( Music.Just.bar );
         }
 
-		if ( Music.isJustChanged )
-		{
-			foreach ( KeyValuePair<Timing, Command> cmd in Commands )
-			{
-				ActionSet act = cmd.Value.GetCurrentAction( cmd.Key );
-				if ( act != null )
-				{
-					GameContext.EnemyConductor.ReceiveAction( act, cmd.Value.isPlayerAction );
-					GameContext.PlayerConductor.ReceiveAction( act, cmd.Value.isPlayerAction );
-				}
-			}
-			Commands.RemoveAll( ( KeyValuePair<Timing, Command> cmd ) => cmd.Value.IsEnd( cmd.Key ) );
-		}
+        if( Music.isJustChanged )
+        {
+            foreach( KeyValuePair<Timing, Command> cmd in Commands )
+            {
+                ActionSet act = cmd.Value.GetCurrentAction( cmd.Key );
+                if( act != null )
+                {
+                    GameContext.EnemyConductor.ReceiveAction( act, cmd.Value.isPlayerAction );
+                    GameContext.PlayerConductor.ReceiveAction( act, cmd.Value.isPlayerAction );
+                }
+            }
+            Commands.RemoveAll( ( KeyValuePair<Timing, Command> cmd ) => cmd.Value.IsEnd( cmd.Key ) );
+        }
     }
 
 	void OnBarStarted( int CurrentIndex )
@@ -53,6 +60,7 @@ public class BattleConductor : MonoBehaviour {
 
 	public void OnPlayerWin()
 	{
+        Music.SetNextBlock("Endro");
 	}
 	public void OnPlayerLose()
 	{

@@ -5,7 +5,7 @@
  *  File Path        : C:/Users/s-iwamoto/Documents/GitHub/VQ3/VQ3 ADX/Public/BattleMusic.acb
  *  File Name        : BattleMusic.acb
  *  File Size        : 747,936 bytes
- *  Date Time        : 2013/07/30 12:11
+ *  Date Time        : 2013/07/30 12:45
  *  Target           : Public
  *  Cues             : 1
  *  CueSheet Comment : 

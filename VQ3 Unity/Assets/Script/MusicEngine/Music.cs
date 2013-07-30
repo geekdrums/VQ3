@@ -270,9 +270,24 @@ public class Music : MonoBehaviour {
 	/// <summary>
     /// you can't catch NextBlockIndex if ADX automatically change next block.
 	/// </summary>
-	int NextBlockIndex;
+    int NextBlockIndex;
+    int AutoChangeBlockIndex;
+    int OldBlockIndex;
 	public List<BlockInfo> BlockInfos;
-	int NumBlockBar { get { return BlockInfos[CurrentBlockIndex].NumBar; } }
+    int NumBlockBar
+    {
+        get
+        {
+            if( AutoChangeBlockIndex != CurrentBlockIndex && Just_.bar != BlockInfos[CurrentBlockIndex].NumBar - 1 )
+            {
+                return OldJust.bar + 1;
+            }
+            else
+            {
+                return BlockInfos[CurrentBlockIndex].NumBar;
+            }
+        }
+    }
     long SamplesInBlock { get { return NumBlockBar * SamplesPerBar; } }
 #else
     readonly int NumBlockBar = 0;
@@ -289,7 +304,6 @@ public class Music : MonoBehaviour {
 	/// Cache of Now and Just a frame ago.
 	/// </summary>
 	Timing OldNow, OldJust;
-	int OldBlockIndex;
 	#endregion
 
 	#region Unity Interfaces
@@ -343,6 +357,7 @@ public class Music : MonoBehaviour {
 		long numSamples;
 #if ADX
         if( playback.GetStatus() != CriAtomExPlayback.Status.Playing ) return;
+        AutoChangeBlockIndex = playback.GetCurrentBlockIndex();
 		int tempOut;
 		if ( !playback.GetNumPlayedSamples( out numSamples, out tempOut ) )
 		{
