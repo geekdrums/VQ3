@@ -18,9 +18,17 @@ public class BattleConductor : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-        if( Music.GetCurrentBlockName() == "Attack" )//TEMP!!!
+        switch( Music.GetCurrentBlockName() )
         {
+        case "Attack"://TEMP!!!
             UpdateBattle();
+            break;
+        case "Endro":
+            if( !Music.IsPlaying() )
+            {
+                Music.Play( "fieldMusic" );
+            }
+            break;
         }
     }
 
@@ -28,6 +36,7 @@ public class BattleConductor : MonoBehaviour {
     {
         if( Music.IsJustChangedWhen( ( Timing t ) => t.barUnit == 0 ) )
         {
+            Debug.Log( "OnBarStarted " + Music.Just.ToString() );
             OnBarStarted( Music.Just.bar );
         }
 

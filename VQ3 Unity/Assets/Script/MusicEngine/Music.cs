@@ -278,14 +278,14 @@ public class Music : MonoBehaviour {
     {
         get
         {
-            if( AutoChangeBlockIndex != CurrentBlockIndex && Just_.bar != BlockInfos[CurrentBlockIndex].NumBar - 1 )
-            {
-                return OldJust.bar + 1;
-            }
-            else
-            {
+            //if( AutoChangeBlockIndex != CurrentBlockIndex && Just_.bar != BlockInfos[CurrentBlockIndex].NumBar - 1 )
+            //{
+            //    return OldJust.bar + 1;
+            //}
+            //else
+            //{
                 return BlockInfos[CurrentBlockIndex].NumBar;
-            }
+            //}
         }
     }
     long SamplesInBlock { get { return NumBlockBar * SamplesPerBar; } }
@@ -304,6 +304,8 @@ public class Music : MonoBehaviour {
 	/// Cache of Now and Just a frame ago.
 	/// </summary>
 	Timing OldNow, OldJust;
+    long OldNumSamples;
+
 	#endregion
 
 	#region Unity Interfaces
@@ -339,6 +341,7 @@ public class Music : MonoBehaviour {
 
     public void PlayStart()
     {
+        Current = this;
         WillBlockChange();
 #if ADX
 		playback = MusicSource.source.Play();
@@ -369,7 +372,13 @@ public class Music : MonoBehaviour {
 #endif
 		if( numSamples >= 0 )
 		{
-			Just_.bar = (int)( numSamples / SamplesPerBar );
+            if( OldNumSamples > numSamples )    //BlockChanged
+            {
+                CurrentBlockIndex = playback.GetCurrentBlockIndex();
+                OldBlockIndex = CurrentBlockIndex;
+            }
+
+            Just_.bar = (int)(numSamples / SamplesPerBar);
 			if ( NumBlockBar != 0 ) Just_.bar %= NumBlockBar;
 			Just_.beat = (int)( ( numSamples % SamplesPerBar ) / SamplesPerBeat );
             Just_.unit = (int)((numSamples % SamplesPerBeat) / SamplesPerUnit);
@@ -392,6 +401,8 @@ public class Music : MonoBehaviour {
 
 			OldNow.Copy( Now_ );
 			OldJust.Copy( Just_ );
+
+            OldNumSamples = numSamples;
 		}
 		else
 		{
@@ -423,8 +434,7 @@ public class Music : MonoBehaviour {
 		if ( isJustChanged_ && OldJust > Just_ )
 		{
 #if ADX
-            CurrentBlockIndex = playback.GetCurrentBlockIndex(); 
-            if( OldBlockIndex == CurrentBlockIndex )
+            if( OldBlockIndex == playback.GetCurrentBlockIndex() )
 			{
 #endif
 				OnBlockRepeated();
@@ -433,8 +443,7 @@ public class Music : MonoBehaviour {
 			else
 			{
 				OnBlockChanged();
-			}
-            OldBlockIndex = CurrentBlockIndex;
+            }
 #endif
         }
 
