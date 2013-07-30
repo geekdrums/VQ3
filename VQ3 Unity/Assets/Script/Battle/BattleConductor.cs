@@ -11,6 +11,8 @@ public class BattleConductor : MonoBehaviour {
 	{
 		GameContext.BattleConductor = this;
         Commands = new List<KeyValuePair<Timing, Command>>();
+
+        Music.Play( "vq2geekdrums" );
 	}
 	
 	// Update is called once per frame

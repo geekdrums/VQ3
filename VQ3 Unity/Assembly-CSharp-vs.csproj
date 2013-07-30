@@ -65,6 +65,10 @@
      <Compile Include="Assets\Script\MusicEngine\Motif\Rhythm.cs" />
      <Compile Include="Assets\Script\MusicEngine\Music.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{13E82DD0-2CBD-382A-1F2D-4CA21CF35556}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	   Other similar extension points exist, see Microsoft.Common.targets.
