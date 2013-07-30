@@ -271,23 +271,9 @@ public class Music : MonoBehaviour {
     /// you can't catch NextBlockIndex if ADX automatically change next block.
 	/// </summary>
     int NextBlockIndex;
-    int AutoChangeBlockIndex;
     int OldBlockIndex;
 	public List<BlockInfo> BlockInfos;
-    int NumBlockBar
-    {
-        get
-        {
-            //if( AutoChangeBlockIndex != CurrentBlockIndex && Just_.bar != BlockInfos[CurrentBlockIndex].NumBar - 1 )
-            //{
-            //    return OldJust.bar + 1;
-            //}
-            //else
-            //{
-                return BlockInfos[CurrentBlockIndex].NumBar;
-            //}
-        }
-    }
+	int NumBlockBar;
     long SamplesInBlock { get { return NumBlockBar * SamplesPerBar; } }
 #else
     readonly int NumBlockBar = 0;
@@ -353,6 +339,8 @@ public class Music : MonoBehaviour {
             listener.OnMusicStarted();
         }
         OnBlockChanged();
+
+		NumBlockBar = BlockInfos[playback.GetCurrentBlockIndex()].NumBar;
     }
 	
 	// Update is called once per frame
@@ -360,7 +348,6 @@ public class Music : MonoBehaviour {
 		long numSamples;
 #if ADX
         if( playback.GetStatus() != CriAtomExPlayback.Status.Playing ) return;
-        AutoChangeBlockIndex = playback.GetCurrentBlockIndex();
 		int tempOut;
 		if ( !playback.GetNumPlayedSamples( out numSamples, out tempOut ) )
 		{
@@ -372,11 +359,7 @@ public class Music : MonoBehaviour {
 #endif
 		if( numSamples >= 0 )
 		{
-            if( OldNumSamples > numSamples )    //BlockChanged
-            {
-                CurrentBlockIndex = playback.GetCurrentBlockIndex();
-                OldBlockIndex = CurrentBlockIndex;
-            }
+			UpdateNumBlockBar( numSamples );
 
             Just_.bar = (int)(numSamples / SamplesPerBar);
 			if ( NumBlockBar != 0 ) Just_.bar %= NumBlockBar;
@@ -406,7 +389,21 @@ public class Music : MonoBehaviour {
 		}
 		else
 		{
-			Debug.LogWarning( "Warning!! Failed to GetNumPlayedSamples" );
+			//Debug.LogWarning( "Warning!! Failed to GetNumPlayedSamples" );
+		}
+	}
+
+	void UpdateNumBlockBar( long numSamples )
+	{
+		//BlockChanged
+		if ( OldNumSamples > numSamples )
+		{
+			NumBlockBar = BlockInfos[playback.GetCurrentBlockIndex()].NumBar;
+		}
+		//BlockChanged during this block
+		else if ( playback.GetCurrentBlockIndex() != CurrentBlockIndex && Just_.bar != BlockInfos[CurrentBlockIndex].NumBar - 1 )
+		{
+			NumBlockBar = Just_.bar + 1;
 		}
 	}
 
@@ -434,7 +431,8 @@ public class Music : MonoBehaviour {
 		if ( isJustChanged_ && OldJust > Just_ )
 		{
 #if ADX
-            if( OldBlockIndex == playback.GetCurrentBlockIndex() )
+			CurrentBlockIndex = playback.GetCurrentBlockIndex();
+			if ( OldBlockIndex == CurrentBlockIndex )
 			{
 #endif
 				OnBlockRepeated();
@@ -444,6 +442,7 @@ public class Music : MonoBehaviour {
 			{
 				OnBlockChanged();
             }
+			OldBlockIndex = CurrentBlockIndex;
 #endif
         }
 
