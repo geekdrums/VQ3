@@ -1,4 +1,4 @@
-//#define ADX
+#define ADX
 
 using UnityEngine;
 using System.Collections;
@@ -273,7 +273,7 @@ public class Music : MonoBehaviour {
 	int NextBlockIndex;
 	public List<BlockInfo> BlockInfos;
 	int NumBlockBar { get { return BlockInfos[CurrentBlockIndex].NumBar; } }
-	long SamplesInBlock { get { return BlockInfos[CurrentBlockIndex].NumBar * SamplesPerBar; } }
+    long SamplesInBlock { get { return NumBlockBar * SamplesPerBar; } }
 #else
     readonly int NumBlockBar = 0;
 #endif
@@ -342,8 +342,7 @@ public class Music : MonoBehaviour {
 	void Update () {
 		long numSamples;
 #if ADX
-        if( playback == null || playback.GetStatus() != CriAtomSource.Status.Playing ) return;
-		CurrentBlockIndex = playback.GetCurrentBlockIndex();
+        if( playback.GetStatus() != CriAtomExPlayback.Status.Playing ) return;
 		int tempOut;
 		if ( !playback.GetNumPlayedSamples( out numSamples, out tempOut ) )
 		{
@@ -358,8 +357,8 @@ public class Music : MonoBehaviour {
 			Just_.bar = (int)( numSamples / SamplesPerBar );
 			if ( NumBlockBar != 0 ) Just_.bar %= NumBlockBar;
 			Just_.beat = (int)( ( numSamples % SamplesPerBar ) / SamplesPerBeat );
-			Just_.unit = (int)( ( numSamples % SamplesPerBeat ) / SamplesPerUnit );
-			isFormerHalf_ = ( numSamples % SamplesPerUnit ) < SamplesPerUnit / 2;
+            Just_.unit = (int)((numSamples % SamplesPerBeat) / SamplesPerUnit);
+            isFormerHalf_ = ( numSamples % SamplesPerUnit ) < SamplesPerUnit / 2;
 			dtFromJust_ = (double)( numSamples % SamplesPerUnit ) / (double)SamplingRate;
 
 			Now_.Copy( Just_ );
@@ -409,7 +408,8 @@ public class Music : MonoBehaviour {
 		if ( isJustChanged_ && OldJust > Just_ )
 		{
 #if ADX
-			if ( OldBlockIndex == CurrentBlockIndex )
+            CurrentBlockIndex = playback.GetCurrentBlockIndex(); 
+            if( OldBlockIndex == CurrentBlockIndex )
 			{
 #endif
 				OnBlockRepeated();

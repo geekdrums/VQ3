@@ -310,6 +310,13 @@ public class CriAtomSource : MonoBehaviour
 		}
 	}
 
+    public CriAtomExPlayer Player
+    {
+        get
+        {
+            return this.player;
+        }
+    }
     #endregion
 
 	#region Functions

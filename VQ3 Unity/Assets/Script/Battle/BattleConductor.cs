@@ -20,6 +20,7 @@ public class BattleConductor : MonoBehaviour {
     {
         if (Music.IsJustChangedWhen((Timing t) => t.barUnit == 0))
         {
+            Debug.Log("OnBarChanged:"+Music.Just.ToString());
             OnBarStarted(Music.Just.bar);
         }
 
