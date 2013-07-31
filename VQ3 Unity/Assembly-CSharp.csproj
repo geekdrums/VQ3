@@ -37,10 +37,10 @@
     <Reference Include="System.XML" />
 	<Reference Include="System.Core" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -48,12 +48,14 @@
      <Compile Include="Assets\Script\Battle\ActionSet.cs" />
      <Compile Include="Assets\Script\Battle\BattleConductor.cs" />
      <Compile Include="Assets\Script\Battle\Command.cs" />
-     <Compile Include="Assets\Script\Battle\CommandManager.cs" />
+     <Compile Include="Assets\Script\Battle\CommandController.cs" />
      <Compile Include="Assets\Script\Battle\Enemy.cs" />
      <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
      <Compile Include="Assets\Script\Battle\Player.cs" />
      <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
      <Compile Include="Assets\Script\Battle\Strategy.cs" />
+     <Compile Include="Assets\Script\Field\Encounter.cs" />
+     <Compile Include="Assets\Script\Field\FieldConductor.cs" />
      <Compile Include="Assets\Script\GameContext.cs" />
      <Compile Include="Assets\Script\MusicEngine\Elements\Chord.cs" />
      <Compile Include="Assets\Script\MusicEngine\Elements\Note.cs" />

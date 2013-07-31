@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class CommandManager : MonoBehaviour {
+public class CommandController : MonoBehaviour {
 
 	Strategy[] Strategies;
 	Command[] Commands;
@@ -11,7 +11,7 @@ public class CommandManager : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
-		GameContext.CommandManager = this;
+		GameContext.CommandController = this;
 
 		Strategies = new Strategy[(int)EStrategy.Count];
 		Strategies[(int)EStrategy.Attack] = new Strategy( ECommand.Attack );

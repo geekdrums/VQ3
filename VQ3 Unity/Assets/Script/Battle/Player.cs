@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
 		if ( HitPoint <= 0 )
 		{
 			GameContext.BattleConductor.OnPlayerLose();
-			GameContext.CommandManager.OnPlayerLose();
+			GameContext.CommandController.OnPlayerLose();
 		}
 	}
 	public void Defend( DefendModule defend )

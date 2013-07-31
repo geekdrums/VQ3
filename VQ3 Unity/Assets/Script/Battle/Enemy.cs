@@ -8,22 +8,9 @@ public class Enemy : MonoBehaviour {
 	public AudioClip MagicDamageSound;
 	public AudioSource AudioSource;
 
-	public string CharacterName { get; protected set; }
-	public int HitPoint { get; protected set; }
+    public int HitPoint;
 
 	float damageTime;
-
-	// ======================
-	// Initilaize/
-	// ======================
-	public void Initialize( EnemyProperty ep )
-	{
-		HitPoint = ep.HP;
-		CharacterName = ep.Name;
-		renderer.material.mainTexture = ep.Texture;
-		transform.localScale *= ep.Transform.Scale;
-		transform.position += ep.Transform.Position * 10;
-	}
 
 	// Use this for initialization
 	void Start()
@@ -42,6 +29,7 @@ public class Enemy : MonoBehaviour {
 				if ( HitPoint <= 0 )
 				{
                     renderer.material.color = Color.clear;
+                    Destroy( this.gameObject );
 				}
 				else
 				{
@@ -80,6 +68,6 @@ public class Enemy : MonoBehaviour {
 	// ======================
 	public override string ToString()
 	{
-		return CharacterName+GetInstanceID();
+        return name;
 	}
 }

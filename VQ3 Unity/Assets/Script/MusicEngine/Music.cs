@@ -314,11 +314,25 @@ public class Music : MonoBehaviour {
 
 		MusicTimeUnit = (double)SamplesPerUnit / (double)SamplingRate;
 
-		Now_ = new Timing( 0, 0, -1 );
-		Just_ = new Timing( Now_ );
-		OldNow = new Timing( Now_ );
-		OldJust = new Timing( Just_ );
+        Initialize();
 	}
+
+    void Initialize()
+    {
+        Now_ = new Timing( 0, 0, -1 );
+        Just_ = new Timing( Now_ );
+        OldNow = new Timing( Now_ );
+        OldJust = new Timing( Just_ );
+        dtFromJust_ = 0;
+        isFormerHalf_ = true;
+        OldNumSamples = 0;
+        numRepeat = 0;
+#if ADX
+        CurrentBlockIndex = 0;
+        OldBlockIndex = 0;
+        NextBlockIndex = 0;
+#endif
+    }
 
 	// Use this for initialization
 	void Start()
@@ -328,6 +342,8 @@ public class Music : MonoBehaviour {
     public void PlayStart()
     {
         Current = this;
+        Initialize();
+
         WillBlockChange();
 #if ADX
 		playback = MusicSource.source.Play();
@@ -345,7 +361,9 @@ public class Music : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		long numSamples;
+        long numSamples;
+        isNowChanged_ = false;
+        isJustChanged_ = false;
 #if ADX
         if( playback.GetStatus() != CriAtomExPlayback.Status.Playing ) return;
 		int tempOut;
@@ -367,6 +385,7 @@ public class Music : MonoBehaviour {
             Just_.unit = (int)((numSamples % SamplesPerBeat) / SamplesPerUnit);
             isFormerHalf_ = ( numSamples % SamplesPerUnit ) < SamplesPerUnit / 2;
 			dtFromJust_ = (double)( numSamples % SamplesPerUnit ) / (double)SamplingRate;
+            //Debug.Log( "NumBlockBar:" + NumBlockBar + " Just_:" + Just_.ToString() + " OldJust:" + OldJust.ToString() );
 
 			Now_.Copy( Just_ );
 			if ( !isFormerHalf_ ) Now_.Increment();

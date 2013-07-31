@@ -11,13 +11,12 @@ public class BattleConductor : MonoBehaviour {
 	{
 		GameContext.BattleConductor = this;
         Commands = new List<KeyValuePair<Timing, Command>>();
-
-        Music.Play( "vq2geekdrums" );
 	}
 	
 	// Update is called once per frame
     void Update()
     {
+        if( GameContext.CurrentState != GameContext.GameState.Battle ) return;
         switch( Music.GetCurrentBlockName() )
         {
         case "Attack"://TEMP!!!
@@ -26,7 +25,7 @@ public class BattleConductor : MonoBehaviour {
         case "Endro":
             if( !Music.IsPlaying() )
             {
-                Music.Play( "fieldMusic" );
+                GameContext.ChangeState( GameContext.GameState.Field );
             }
             break;
         }
@@ -57,7 +56,7 @@ public class BattleConductor : MonoBehaviour {
 
 	void OnBarStarted( int CurrentIndex )
 	{
-		GameContext.CommandManager.OnBarStarted( CurrentIndex );
+		GameContext.CommandController.OnBarStarted( CurrentIndex );
 		GameContext.PlayerConductor.OnBarStarted( CurrentIndex );
 	}
 
