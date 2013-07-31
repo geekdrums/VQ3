@@ -14,7 +14,13 @@ public class FieldConductor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if( GameContext.CurrentState != GameContext.GameState.Field ) return;
-        foreach ( Encounter e in Encounters )
+
+        CheckEncount();
+	}
+
+    void CheckEncount()
+    {
+        foreach( Encounter e in Encounters )
         {
             if( e.IsEncountered() )
             {
@@ -24,6 +30,5 @@ public class FieldConductor : MonoBehaviour {
                 break;
             }
         }
-        
-	}
+    }
 }

@@ -19,11 +19,7 @@ using System.Collections.Generic;
 //}
 
 public class EnemyConductor : MonoBehaviour {
-
-	//public GameObject EnemyOriginal;
-
-	//public EnemyProperty[] EnemyProperties;
-
+    
     List<Enemy> Enemies = new List<Enemy>();
 
 	// Use this for initialization
