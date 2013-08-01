@@ -4,13 +4,8 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
 
-	public AudioClip DamageSound;
-	public AudioClip MagicDamageSound;
-	public AudioSource AudioSource;
-
     public int HitPoint;
-
-	float damageTime;
+    float damageTime;
 
 	// Use this for initialization
 	void Start()
@@ -46,11 +41,13 @@ public class Enemy : MonoBehaviour {
 	public void BeAttacked( AttackModule attack )
 	{
 		BeDamaged( attack.AttackPower );
+        SEPlayer.Play( ActionResult.Damaged, false );
 		Debug.Log( this.ToString() + " was Attacked! " + attack.AttackPower + "Damage! HitPoint is " + HitPoint );
 	}
 	public void BeMagicAttacked( MagicModule magic )
 	{
-		BeDamaged( magic.MagicPower );
+        BeDamaged( magic.MagicPower );
+        SEPlayer.Play( ActionResult.MagicDamaged, false );
 		Debug.Log( this.ToString() + " was MagicAttacked! " + magic.MagicPower + "Damage! HitPoint is " + HitPoint );
 	}
 
@@ -58,8 +55,6 @@ public class Enemy : MonoBehaviour {
 	{
 		HitPoint -= damage;
 		damageTime = 0.2f + damage*0.2f;
-		AudioSource.clip = DamageSound;
-		AudioSource.Play();
 	}
 
 

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class BattleConductor : MonoBehaviour {
 
-	List<KeyValuePair<Timing,Command>> Commands;
+	List<Pair<Timing,Command>> Commands;
 
 	// Use this for initialization
 	void Start ()
 	{
 		GameContext.BattleConductor = this;
-        Commands = new List<KeyValuePair<Timing, Command>>();
+        Commands = new List<Pair<Timing, Command>>();
 	}
 	
 	// Update is called once per frame
@@ -35,22 +35,28 @@ public class BattleConductor : MonoBehaviour {
     {
         if( Music.IsJustChangedWhen( ( Timing t ) => t.barUnit == 0 ) )
         {
-            Debug.Log( "OnBarStarted " + Music.Just.ToString() );
             OnBarStarted( Music.Just.bar );
         }
 
         if( Music.isJustChanged )
         {
-            foreach( KeyValuePair<Timing, Command> cmd in Commands )
+            List<Pair<ActionSet, bool>> CurrentActions = new List<Pair<ActionSet, bool>>();
+            foreach( Pair<Timing, Command> cmd in Commands )
             {
-                ActionSet act = cmd.Value.GetCurrentAction( cmd.Key );
+                ActionSet act = cmd.Get<Command>().GetCurrentAction( cmd.Get<Timing>() );
                 if( act != null )
                 {
-                    GameContext.EnemyConductor.ReceiveAction( act, cmd.Value.isPlayerAction );
-                    GameContext.PlayerConductor.ReceiveAction( act, cmd.Value.isPlayerAction );
+                    CurrentActions.Add( new Pair<ActionSet, bool>( act, cmd.Get<Command>().isPlayerAction ) );
                 }
             }
-            Commands.RemoveAll( ( KeyValuePair<Timing, Command> cmd ) => cmd.Value.IsEnd( cmd.Key ) );
+            //Add setoff logic if needed.
+            foreach( Pair<ActionSet, bool> act in CurrentActions )
+            {
+                GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.second );
+                GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.second );
+            }
+
+            Commands.RemoveAll( ( Pair<Timing, Command> cmd ) => cmd.Get<Command>().IsEnd( cmd.Get<Timing>() ) );
         }
     }
 
@@ -62,7 +68,7 @@ public class BattleConductor : MonoBehaviour {
 
 	public void ExecCommand( Command NewCommand )
 	{
-		Commands.Add( new KeyValuePair<Timing, Command>( new Timing( Music.Just ), NewCommand ) );
+		Commands.Add( new Pair<Timing, Command>( new Timing( Music.Just ), NewCommand ) );
 	}
 
 

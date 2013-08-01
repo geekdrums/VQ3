@@ -3,9 +3,6 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	public AudioClip DamageSound, DefendSound, HealSound;
-	public AudioSource AudioSource;
-
 	public int HitPoint { get; protected set; }
 	int DefendPower;
 
@@ -53,17 +50,16 @@ public class Player : MonoBehaviour {
 	public void BeAttacked( AttackModule attack )
 	{
 		int damage = Mathf.Max( 0, attack.AttackPower - DefendPower );
+        if( damage <= 0 )
+        {
+            SEPlayer.Play( ActionResult.Guarded );
+        }
+        else
+        {
+            SEPlayer.Play( ActionResult.Damaged );
+        }
 		HitPoint -= damage;
 		Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
-		if ( damage == 0 )
-		{
-			AudioSource.clip = DefendSound;
-		}
-		else
-		{
-			AudioSource.clip = DamageSound;
-		}
-		AudioSource.Play();
 		damageTime = 0.2f + damage*0.2f;
 		if ( HitPoint <= 0 )
 		{
@@ -73,11 +69,11 @@ public class Player : MonoBehaviour {
 	}
 	public void Defend( DefendModule defend )
 	{
-		DefendPower = defend.DefendPower;
+        DefendPower = defend.DefendPower;
 	}
 	public void Heal( HealModule heal )
 	{
-		HitPoint += heal.HealPoint;
-		AudioSource.PlayOneShot( HealSound );
+        HitPoint += heal.HealPoint;
+        SEPlayer.Play( ActionResult.Healed );
 	}
 }

@@ -53,6 +53,7 @@
      <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
      <Compile Include="Assets\Script\Battle\Player.cs" />
      <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
+     <Compile Include="Assets\Script\Battle\SEPlayer.cs" />
      <Compile Include="Assets\Script\Battle\Strategy.cs" />
      <Compile Include="Assets\Script\Field\Encounter.cs" />
      <Compile Include="Assets\Script\Field\FieldConductor.cs" />
@@ -66,6 +67,7 @@
      <Compile Include="Assets\Script\MusicEngine\Motif\Phrase.cs" />
      <Compile Include="Assets\Script\MusicEngine\Motif\Rhythm.cs" />
      <Compile Include="Assets\Script\MusicEngine\Music.cs" />
+     <Compile Include="Assets\Script\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
