@@ -22,20 +22,20 @@ public class PlayerConductor : MonoBehaviour {
 		Player.OnBarStarted( CurrentIndex );
 	}
 
-	public void ReceiveAction( ActionSet Action, bool isPlayerAction )
+	public void ReceiveAction( ActionSet Action, Command command )
 	{
 		AttackModule attack = Action.GetModule<AttackModule>();
-		if ( attack != null && !isPlayerAction )
+        if( attack != null && !command.isPlayerAction )
 		{
 			Player.BeAttacked( attack );
 		}
 		DefendModule defend = Action.GetModule<DefendModule>();
-		if ( defend != null && isPlayerAction )
+        if( defend != null && command.isPlayerAction )
 		{
 			Player.Defend( defend );
 		}
 		HealModule heal = Action.GetModule<HealModule>();
-		if ( heal != null && isPlayerAction )
+        if( heal != null && command.isPlayerAction )
 		{
 			Player.Heal( heal );
 		}

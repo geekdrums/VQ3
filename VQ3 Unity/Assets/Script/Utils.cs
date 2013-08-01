@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+public class Utils
+{
+
+    public static readonly char[] comma = new char[] { ',' };
+    public static readonly char[] space = new char[] { ' ' };
+}
 
 public class Pair<T, U>
 {

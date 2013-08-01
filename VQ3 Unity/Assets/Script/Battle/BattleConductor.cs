@@ -40,20 +40,20 @@ public class BattleConductor : MonoBehaviour {
 
         if( Music.isJustChanged )
         {
-            List<Pair<ActionSet, bool>> CurrentActions = new List<Pair<ActionSet, bool>>();
+            List<Pair<ActionSet, Command>> CurrentActions = new List<Pair<ActionSet, Command>>();
             foreach( Pair<Timing, Command> cmd in Commands )
             {
                 ActionSet act = cmd.Get<Command>().GetCurrentAction( cmd.Get<Timing>() );
                 if( act != null )
                 {
-                    CurrentActions.Add( new Pair<ActionSet, bool>( act, cmd.Get<Command>().isPlayerAction ) );
+                    CurrentActions.Add( new Pair<ActionSet, Command>( act, cmd.Get<Command>() ) );
                 }
             }
             //Add setoff logic if needed.
-            foreach( Pair<ActionSet, bool> act in CurrentActions )
+            foreach( Pair<ActionSet, Command> act in CurrentActions )
             {
-                GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.second );
-                GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.second );
+                GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
+                GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
             }
 
             Commands.RemoveAll( ( Pair<Timing, Command> cmd ) => cmd.Get<Command>().IsEnd( cmd.Get<Timing>() ) );

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,43 @@ public enum ECommand
 	Count
 }
 
-public class Command
+public class Command : MonoBehaviour
 {
-	public bool isPlayerAction { get; private set; }
-	protected ActionSet[] Actions;
+    public bool isLocal;
+    public bool isPlayerAction;
+    public string[] ActionStr;
+    public string RhythmStr;
+
+    protected ActionSet[] Actions;
 	protected Rhythm ActionRhythm;
+
+    void Awake()
+    {
+        if( RhythmStr != "" )
+        {
+            ActionRhythm = new Rhythm( 4, RhythmStr );
+        }
+        else
+        {
+            ActionRhythm = Rhythm.ONE_NOTE_RHYTHM;
+        }
+        Actions = new ActionSet[ActionStr.Length];
+        for( int i = 0; i < ActionStr.Length; ++i )
+        {
+            Actions[i] = ActionSet.Parse( ActionStr[i] );
+        }
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if( !GetComponentInChildren<Animation>().isPlaying ) Destroy( this.gameObject );
+    }
 
 	public Command( Rhythm rhythm, bool isPlayer = true, params ActionSet[] inActions )
 	{

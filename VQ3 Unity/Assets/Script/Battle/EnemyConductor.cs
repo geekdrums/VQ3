@@ -43,21 +43,23 @@ public class EnemyConductor : MonoBehaviour {
         }
     }
 
-	public void ReceiveAction( ActionSet Action, bool isPlayerAction )
+	public void ReceiveAction( ActionSet Action, Command command )
 	{
 		AttackModule attack = Action.GetModule<AttackModule>();
-		if ( attack != null && isPlayerAction )
+        if( attack != null && command.isPlayerAction )
 		{
 			foreach ( Enemy e in GetTargetEnemies( attack.TargetType ) )
-			{
+            {
+                if( command.isLocal ) command.transform.position = e.transform.position;
 				e.BeAttacked( attack );
 			}
 		}
 		MagicModule magic = Action.GetModule<MagicModule>();
-		if ( magic != null && isPlayerAction )
+        if( magic != null && command.isPlayerAction )
 		{
 			foreach ( Enemy e in GetTargetEnemies( magic.TargetType ) )
-			{
+            {
+                if( command.isLocal ) command.transform.position = e.transform.position;
 				e.BeMagicAttacked( magic );
 			}
 		}

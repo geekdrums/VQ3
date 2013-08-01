@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class CommandController : MonoBehaviour {
 
-	Strategy[] Strategies;
-	Command[] Commands;
+    public Command[] Commands;
+    Strategy[] Strategies;
 	Strategy CurrentStrategy;
 
 	// Use this for initialization
@@ -18,10 +18,10 @@ public class CommandController : MonoBehaviour {
 		Strategies[(int)EStrategy.Magic] = new Strategy( ECommand.Magic );
 		Strategies[(int)EStrategy.Cure] = new Strategy( ECommand.Cure );
 
-		Commands = new Command[(int)ECommand.Count];
-		Commands[(int)ECommand.Attack] = new Command( new AttackModule( 1 ) );
-		Commands[(int)ECommand.Magic] = new Command( new MagicModule( 1 ) );
-		Commands[(int)ECommand.Cure] = new Command( new HealModule( 1 ) );
+        //Commands = new Command[(int)ECommand.Count];
+        //Commands[(int)ECommand.Attack] = new Command( new AttackModule( 1 ) );
+        //Commands[(int)ECommand.Magic] = new Command( new MagicModule( 1 ) );
+        //Commands[(int)ECommand.Cure] = new Command( new HealModule( 1 ) );
 
 		CurrentStrategy = Strategies[(int)EStrategy.Attack];
 	}
@@ -34,7 +34,8 @@ public class CommandController : MonoBehaviour {
 	public void OnBarStarted( int CurrentIndex )
 	{
 		ECommand Command = CurrentStrategy.DefaultCommands[CurrentIndex%4];//TEMP!!!
-		GameContext.BattleConductor.ExecCommand( Commands[(int)Command] );
+        Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
+        GameContext.BattleConductor.ExecCommand( NewCommand );
 	}
 
 	public void OnPlayerLose()
