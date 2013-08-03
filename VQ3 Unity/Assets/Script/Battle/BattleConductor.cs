@@ -53,10 +53,11 @@ public class BattleConductor : MonoBehaviour {
             foreach( Pair<ActionSet, Command> act in CurrentActions )
             {
                 GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
-                GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
+				GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
+				act.Get<Command>().OnExecuted();
             }
 
-            Commands.RemoveAll( ( Pair<Timing, Command> cmd ) => cmd.Get<Command>().IsEnd( cmd.Get<Timing>() ) );
+			Commands.RemoveAll( ( Pair<Timing, Command> cmd ) => cmd.Get<Command>().CheckIsEnd( cmd.Get<Timing>() ) );
         }
     }
 

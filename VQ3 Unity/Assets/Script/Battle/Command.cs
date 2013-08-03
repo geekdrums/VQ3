@@ -21,6 +21,8 @@ public class Command : MonoBehaviour
 
     protected ActionSet[] Actions;
 	protected Rhythm ActionRhythm;
+	protected Animation CommandAnim;
+	protected bool isEnd;
 
     void Awake()
     {
@@ -42,13 +44,23 @@ public class Command : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		CommandAnim = GetComponentInChildren<Animation>();
+		//GetComponentInChildren<Animation>()["attackAnim"].speed = 0.1f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if( !GetComponentInChildren<Animation>().isPlaying ) Destroy( this.gameObject );
+        if( isEnd && !GetComponentInChildren<Animation>().isPlaying ) Destroy( this.gameObject );
     }
+
+	public void OnExecuted()
+	{
+		if ( CommandAnim != null && !CommandAnim.isPlaying )
+		{
+			CommandAnim.Play();
+		}
+	}
 
 	public Command( Rhythm rhythm, bool isPlayer = true, params ActionSet[] inActions )
 	{
@@ -71,8 +83,9 @@ public class Command : MonoBehaviour
         }
         else return null;
 	}
-    public bool IsEnd(Timing startedTiming)
+    public bool CheckIsEnd(Timing startedTiming)
     {
-        return Music.Just - startedTiming >= ActionRhythm.MTLength();
+		isEnd = Music.Just - startedTiming >= ActionRhythm.MTLength(); 
+        return isEnd;
     }
 }
