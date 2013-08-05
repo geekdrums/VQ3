@@ -2,22 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-//[System.Serializable]
-//public class EnemyProperty
-//{
-//    public int HP;
-//    public string Name;
-//    public Texture Texture;
-//    public TransformProperty Transform;
-
-//    [System.Serializable]
-//    public class TransformProperty
-//    {
-//        public Vector3 Position;
-//        public float Scale = 1;
-//    }
-//}
-
 public class EnemyConductor : MonoBehaviour {
     
     List<Enemy> Enemies = new List<Enemy>();
@@ -43,8 +27,9 @@ public class EnemyConductor : MonoBehaviour {
         }
     }
 
-	public void ReceiveAction( ActionSet Action, Command command )
+	public bool ReceiveAction( ActionSet Action, Command command )
 	{
+		bool isSucceeded = false;
 		AttackModule attack = Action.GetModule<AttackModule>();
         if( attack != null && command.isPlayerAction )
 		{
@@ -52,6 +37,7 @@ public class EnemyConductor : MonoBehaviour {
             {
                 if( command.isLocal ) command.transform.position = e.transform.position;
 				e.BeAttacked( attack );
+				isSucceeded = true;
 			}
 		}
 		MagicModule magic = Action.GetModule<MagicModule>();
@@ -61,6 +47,7 @@ public class EnemyConductor : MonoBehaviour {
             {
                 if( command.isLocal ) command.transform.position = e.transform.position;
 				e.BeMagicAttacked( magic );
+				isSucceeded = true;
 			}
 		}
 
@@ -69,12 +56,14 @@ public class EnemyConductor : MonoBehaviour {
 		{
 			GameContext.BattleConductor.OnPlayerWin();
 		}
+
+		return isSucceeded;
 	}
 
 	List<Enemy> GetTargetEnemies( TargetType TargetType )
 	{
-		List<Enemy> Res;
-		Res = new List<Enemy>();
+		List<Enemy> Res = new List<Enemy>();
+		if ( Enemies.Count == 0 ) return Res;
 		switch ( TargetType )
 		{
 		case TargetType.First:

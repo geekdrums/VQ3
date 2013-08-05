@@ -67,7 +67,8 @@
      <Compile Include="Assets\Script\MusicEngine\Motif\Phrase.cs" />
      <Compile Include="Assets\Script\MusicEngine\Motif\Rhythm.cs" />
      <Compile Include="Assets\Script\MusicEngine\Music.cs" />
-     <Compile Include="Assets\Script\Utils.cs" />
+     <Compile Include="Assets\Script\Utils\TextWindow.cs" />
+     <Compile Include="Assets\Script\Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">

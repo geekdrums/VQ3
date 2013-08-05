@@ -22,22 +22,27 @@ public class PlayerConductor : MonoBehaviour {
 		Player.OnBarStarted( CurrentIndex );
 	}
 
-	public void ReceiveAction( ActionSet Action, Command command )
+	public bool ReceiveAction( ActionSet Action, Command command )
 	{
+		bool isSucceeded = false;
 		AttackModule attack = Action.GetModule<AttackModule>();
         if( attack != null && !command.isPlayerAction )
 		{
 			Player.BeAttacked( attack );
+			isSucceeded = true;
 		}
 		DefendModule defend = Action.GetModule<DefendModule>();
         if( defend != null && command.isPlayerAction )
 		{
 			Player.Defend( defend );
+			isSucceeded = true;
 		}
 		HealModule heal = Action.GetModule<HealModule>();
         if( heal != null && command.isPlayerAction )
 		{
 			Player.Heal( heal );
+			isSucceeded = true;
 		}
+		return isSucceeded;
 	}
 }

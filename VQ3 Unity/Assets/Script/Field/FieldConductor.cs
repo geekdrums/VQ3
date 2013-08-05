@@ -20,13 +20,19 @@ public class FieldConductor : MonoBehaviour {
 
     void CheckEncount()
     {
-        foreach( Encounter e in Encounters )
+        foreach( Encounter encounter in Encounters )
         {
-            if( e.IsEncountered() )
+            if( encounter.IsEncountered() )
             {
                 Music.Stop();
-                GameContext.EnemyConductor.SetEnemy( e.Enemies );
+                GameContext.EnemyConductor.SetEnemy( encounter.Enemies );
                 GameContext.ChangeState( GameContext.GameState.Battle );
+				string message = "";
+				foreach ( GameObject e in encounter.Enemies )
+				{
+					message += e.GetComponent<Enemy>().ToString() + " Ç™Ç†ÇÁÇÌÇÍÇΩÅI\n";
+				}
+				TextWindow.AddMessage( new GUIMessage( message ) );
                 break;
             }
         }

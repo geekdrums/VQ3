@@ -23,6 +23,10 @@ public class BattleConductor : MonoBehaviour {
             UpdateBattle();
             break;
         case "Endro":
+			if ( Music.IsJustChangedAt( 0 ) && Music.numRepeat == 0 )
+			{
+				TextWindow.AddMessage( "てきを　やっつけた！", "３のけいけんちを　えた！" );
+			}
             if( !Music.IsPlaying() )
             {
                 GameContext.ChangeState( GameContext.GameState.Field );
@@ -52,9 +56,13 @@ public class BattleConductor : MonoBehaviour {
             //Add setoff logic if needed.
             foreach( Pair<ActionSet, Command> act in CurrentActions )
             {
-                GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
-				GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
-				act.Get<Command>().OnExecuted();
+				bool isSucceeded = false;
+                isSucceeded |= GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
+				isSucceeded |=GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
+				if ( isSucceeded )
+				{
+					act.Get<Command>().OnExecuted();
+				}
             }
 
 			Commands.RemoveAll( ( Pair<Timing, Command> cmd ) => cmd.Get<Command>().CheckIsEnd( cmd.Get<Timing>() ) );

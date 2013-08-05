@@ -73,6 +73,7 @@ public class Music : MonoBehaviour {
 	public static Timing Just { get { return Current.Just_; } }
 	public static bool isJustChanged { get { return Current.isJustChanged_; } }
     public static bool isNowChanged { get { return Current.isNowChanged_; } }
+	public static int numRepeat { get { return Current.numRepeat_; } }
     /// <summary>
     /// returns how long from nearest Just timing with sign.
     /// </summary>
@@ -113,6 +114,14 @@ public class Music : MonoBehaviour {
 	{
 		return Current.isNowChanged_ && pred( Current.Now_ );
 	}
+	public static bool IsNowChangedBar()
+	{
+		return Current.isNowChanged_ && Current.Now_.barUnit == 0;
+	}
+	public static bool IsNowChangedBeat()
+	{
+		return Current.isNowChanged_ && Current.Now_.unit == 0;
+	}
 	public static bool IsNowChangedAt( int bar, int beat = 0, int unit = 0 )
 	{
 		return Current.isNowChanged_ &&
@@ -121,6 +130,14 @@ public class Music : MonoBehaviour {
 	public static bool IsJustChangedWhen( System.Predicate<Timing> pred )
 	{
 		return Current.isJustChanged_ && pred( Current.Just_ );
+	}
+	public static bool IsJustChangedBar()
+	{
+		return Current.isJustChanged_ && Current.Just_.barUnit == 0;
+	}
+	public static bool IsJustChangedBeat()
+	{
+		return Current.isJustChanged_ && Current.Just_.unit == 0;
 	}
 	public static bool IsJustChangedAt( int bar = 0, int beat = 0, int unit = 0 )
 	{
@@ -257,7 +274,7 @@ public class Music : MonoBehaviour {
 	/// <summary>
     /// how many times you repeat current music/block.
 	/// </summary>
-	int numRepeat;
+	int numRepeat_;
 
 	SoundCue MusicSource;
 	List<SoundCue> QuantizedCue;
@@ -326,7 +343,7 @@ public class Music : MonoBehaviour {
         dtFromJust_ = 0;
         isFormerHalf_ = true;
         OldNumSamples = 0;
-        numRepeat = 0;
+        numRepeat_ = 0;
 #if ADX
         CurrentBlockIndex = 0;
         OldBlockIndex = 0;
@@ -451,6 +468,7 @@ public class Music : MonoBehaviour {
 		{
 #if ADX
 			CurrentBlockIndex = playback.GetCurrentBlockIndex();
+			Debug.Log( "CurrentBlockIndex is " + CurrentBlockIndex );
 			if ( OldBlockIndex == CurrentBlockIndex )
 			{
 #endif
@@ -510,13 +528,13 @@ public class Music : MonoBehaviour {
 
 	void OnBlockRepeated()
 	{
-		++numRepeat;
+		++numRepeat_;
 		//Debug.Log( "NumRepeat = " + numRepeat );
 	}
 
 	void OnBlockChanged()
 	{
-		numRepeat = 0;
+		numRepeat_ = 0;
 		foreach ( IMusicListener listener in Listeners )
 		{
 			listener.OnBlockChanged();

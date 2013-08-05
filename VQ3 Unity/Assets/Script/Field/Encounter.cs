@@ -15,9 +15,9 @@ public class Encounter : MonoBehaviour {
 	
 	}
 
-    // TEMP!!! need some args? ex. PLayer
+    // TEMP!!! need some args? ex. Player
     public bool IsEncountered()
     {
-        return true;//Music.Just.bar >= 2;
+		return true;//Music.Just.bar >= 2;
     }
 }
