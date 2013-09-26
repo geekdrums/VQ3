@@ -84,7 +84,7 @@
                   <Orca OrcaName="battle_endro.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_endro.wav" SynthType="Waveform" DelayTimeMS="11250" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
                 </Orca>
                 <Orca OrcaName="Block_vq2geekdrums" BlockEndPositionMs="3750" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
-                <Orca OrcaName="Block_battle_attack" BlockEndPositionMs="7500" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" ObjectColor="200, 10, 60, 140" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="Block_battle_attack" BlockEndPositionMs="7500" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockDivisionNum="4" BlockTransitionTiming="Division" ObjectColor="200, 10, 60, 140" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
                 <Orca OrcaName="Block_battle_endro" BlockEndPositionMs="3750" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 0, 40, 120" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
               </Orca>
             </Orca>

@@ -9,6 +9,8 @@ public enum ECommand
 	Attack,
 	Magic,
 	Cure,
+	Break,
+	BreakAttack,
 	Count
 }
 
