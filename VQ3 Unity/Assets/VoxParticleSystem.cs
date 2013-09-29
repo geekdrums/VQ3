@@ -9,10 +9,13 @@ public class VoxParticleSystem : MonoBehaviour {
 	public float ANGLE_INTERVAL = 15.0f;
 	public float WIDTH_INTERVAL = 2.5f;
 	public float HEIGHT_INTERVAL = 2.5f;
+	Vector3 DEFAULT_CENTER;
+	Vector3 MAGIC_CENTER;
 
 	readonly static int WIDTH =33;
 	readonly static int CENTER_WIDTH = WIDTH/2;
-	readonly static int HEIGHT = 16;
+	readonly static int HEIGHT = 17;
+	readonly static int CENTER_HEIGHT = 8;
 	readonly static int DEPTH = 8;
 	readonly static int ANGLE = 9;
 	readonly static int CENTER_ANGLE = ANGLE/2;
@@ -25,6 +28,9 @@ public class VoxParticleSystem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		DEFAULT_CENTER = new Vector3( 0, CENTER_HEIGHT*HEIGHT_INTERVAL, BG_DEPTH );
+		MAGIC_CENTER = new Vector3( 0, 3*HEIGHT_INTERVAL, BG_DEPTH );
+
 		bgMap = new GameObject[WIDTH][];
 		bgTargetPositions = new Vector3[WIDTH][];
 		for ( int x=0; x<WIDTH; x++ )
@@ -46,7 +52,7 @@ public class VoxParticleSystem : MonoBehaviour {
 			{
 				floorMap[a][d] = (GameObject)Instantiate( cubePrefab, GetFloorPosition( d, a ), cubePrefab.transform.rotation );
 				floorMap[a][d].transform.parent = this.transform;
-				//floorMap[a][d].transform.localScale = new Vector3();
+				floorMap[a][d].transform.localScale = new Vector3();
 			}
 		}
 	}
@@ -96,7 +102,10 @@ public class VoxParticleSystem : MonoBehaviour {
 
 	Vector3 GetMagicBGPosition( int x, int y )
 	{
-		float theta = Mathf.PI * 2 * (float)y/(float)HEIGHT - Mathf.PI;
-		return new Vector3( Mathf.Cos( theta )*x, Mathf.Sin( theta )*x + 5, BG_DEPTH );
+		//float theta = Mathf.PI * 2 * (float)y/(float)HEIGHT - Mathf.PI;
+		//return new Vector3( Mathf.Cos( theta )*x, Mathf.Sin( theta )*x + 5, BG_DEPTH );
+		Vector3 v = GetDefaultBGPosition( x, y );
+		return ( v - DEFAULT_CENTER ).normalized *
+			Mathf.Max( Mathf.Abs( v.x - DEFAULT_CENTER.x ), Mathf.Abs( v.y - DEFAULT_CENTER.y ) ) + MAGIC_CENTER;
 	}
 }

@@ -50,6 +50,9 @@
      <Compile Include="Assets\Editor\CriWare\CriAtom\CriAtomWindow.cs" />
      <Compile Include="Assets\Editor\CriWare\CriWareEditor.cs" />
      <Compile Include="Assets\Editor\CriWare\CriWareInitializerEditor.cs" />
+     <Compile Include="Assets\Models\unity-skybox-shaders-master\Editor\GradientSkyboxInspector.cs" />
+     <None Include="Assets\Models\unity-skybox-shaders-master\GradientSkybox.shader" />
+     <None Include="Assets\Models\unity-skybox-shaders-master\HorizontalSkybox.shader" />
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
  </Reference>

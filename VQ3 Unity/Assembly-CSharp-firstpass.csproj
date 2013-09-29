@@ -60,6 +60,8 @@
      <Compile Include="Assets\Plugins\CriWare\CriWareErrorHandler.cs" />
      <Compile Include="Assets\Plugins\CriWare\CriWareInitializer.cs" />
      <Compile Include="Assets\Plugins\CriWare\CriWareLeStub.cs" />
+     <None Include="Assets\Models\unity-skybox-shaders-master\GradientSkybox.shader" />
+     <None Include="Assets\Models\unity-skybox-shaders-master\HorizontalSkybox.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -70,6 +70,8 @@
      <Compile Include="Assets\Script\Utils\TextWindow.cs" />
      <Compile Include="Assets\Script\Utils\Utils.cs" />
      <Compile Include="Assets\VoxParticleSystem.cs" />
+     <None Include="Assets\Models\unity-skybox-shaders-master\GradientSkybox.shader" />
+     <None Include="Assets\Models\unity-skybox-shaders-master\HorizontalSkybox.shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
