@@ -17,7 +17,7 @@ public class CriWareEditor : Editor
 	[MenuItem("CRI/Create CRIWARE Library Initializer")]
 	public static void CreateCriwareLibraryInitalizer()
 	{
-		CriWareInitializer[] criWareInitializerList = FindSceneObjectsOfType(typeof(CriWareInitializer)) as CriWareInitializer[];
+		CriWareInitializer[] criWareInitializerList = FindObjectsOfType(typeof(CriWareInitializer)) as CriWareInitializer[];
 		if (criWareInitializerList.Length > 0) {
 			Debug.LogError("\"CriWareLibraryInitializer\" already exists.");
 			
@@ -36,7 +36,7 @@ public class CriWareEditor : Editor
 	[MenuItem("CRI/Create CRIWARE Error Handler")]
 	public static void CreateCriwareErrorHandler()
 	{
-		CriWareErrorHandler[] criWareErrorHandlerList = FindSceneObjectsOfType(typeof(CriWareErrorHandler)) as CriWareErrorHandler[];
+		CriWareErrorHandler[] criWareErrorHandlerList = FindObjectsOfType(typeof(CriWareErrorHandler)) as CriWareErrorHandler[];
 		if (criWareErrorHandlerList.Length > 0) {
 			Debug.LogError("\"CriWareErrorHandler\" already exists.");
 			

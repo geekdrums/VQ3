@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.1.30.00
-* Date Time          : 2013/08/08 17:22
+* Date Time          : 2013/10/15 1:22
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -45,5 +45,9 @@ public partial class CriAtomAcfInfo
         newAcbInfo.cueInfoList.Add(0, new CueInfo("vq2geekdrums", 0, ""));
         newAcbInfo.cueInfoList.Add(1, new CueInfo("field", 1, ""));
         newAcbInfo.cueInfoList.Add(2, new CueInfo("battle", 2, ""));
+        newAcbInfo = new AcbInfo("CommandMusic", 1, "", "CommandMusic.acb", "CommandMusic_streamfiles.awb","8127efc3-e1b3-4398-8ff7-4e2eaea3ab0b");
+        acfInfo.acbInfoList.Add(newAcbInfo);
+        newAcbInfo.cueInfoList.Add(0, new CueInfo("Attack", 0, ""));
+        newAcbInfo.cueInfoList.Add(1, new CueInfo("IntroEndro", 1, ""));
     }
 }

@@ -8,14 +8,17 @@ public class FieldConductor : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        Music.Play( "fieldMusic" );
+        //Music.Play( "fieldMusic" );
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if( GameContext.CurrentState != GameContext.GameState.Field ) return;
 
-        CheckEncount();
+		//if ( Music.IsJustChangedAt( 0 ) && Music.numRepeat > 0 )
+		//{
+			CheckEncount();
+		//}
 	}
 
     void CheckEncount()
@@ -26,7 +29,7 @@ public class FieldConductor : MonoBehaviour {
             {
                 Music.Stop();
                 GameContext.EnemyConductor.SetEnemy( encounter.Enemies );
-                GameContext.ChangeState( GameContext.GameState.Battle );
+                GameContext.ChangeState( GameContext.GameState.Intro );
 				string message = "";
 				foreach ( GameObject e in encounter.Enemies )
 				{

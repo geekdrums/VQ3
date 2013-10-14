@@ -16,28 +16,37 @@ public class BattleConductor : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-        if( GameContext.CurrentState != GameContext.GameState.Battle ) return;
-        switch( Music.GetCurrentBlockName() )
-        {
-        case "Attack"://TEMP!!!
+		switch ( GameContext.CurrentState )
+		{
+		case GameContext.GameState.Intro:
+			if ( Music.IsJustChangedAt( 0 ) && Music.GetCurrentBlockName() == "battle" )
+			{
+				GameContext.ChangeState( GameContext.GameState.Battle );
+			}
+			break;
+		case GameContext.GameState.Battle:
             UpdateBattle();
+			if ( Music.IsJustChangedAt( 0 ) && Music.GetCurrentBlockName() == "GotoEndro" )
+			{
+				GameContext.ChangeState( GameContext.GameState.Endro );
+			}
             break;
-        case "Endro":
+		case GameContext.GameState.Endro:
 			if ( Music.IsJustChangedAt( 0 ) && Music.numRepeat == 0 )
 			{
 				TextWindow.AddMessage( "てきを　やっつけた！", "３のけいけんちを　えた！" );
 			}
-            if( !Music.IsPlaying() )
-            {
-                GameContext.ChangeState( GameContext.GameState.Field );
-            }
+			if ( Music.IsJustChangedAt(2) && Music.GetCurrentBlockName() == "endro" )
+			{
+				GameContext.ChangeState( GameContext.GameState.Field );
+			}
             break;
-        }
+		}
     }
 
     void UpdateBattle()
     {
-        if( Music.IsJustChangedWhen( ( Timing t ) => t.barUnit == 0 ) )
+        if( Music.IsJustChangedWhen( ( Timing t ) => t.barUnit == 0 ) && Music.GetCurrentBlockName() != "GotoEndro" )
         {
             OnBarStarted( Music.Just.bar );
         }
@@ -83,7 +92,7 @@ public class BattleConductor : MonoBehaviour {
 
 	public void OnPlayerWin()
 	{
-        Music.SetNextBlock("Endro");
+        Music.SetNextBlock("GotoEndro");
 	}
 	public void OnPlayerLose()
 	{

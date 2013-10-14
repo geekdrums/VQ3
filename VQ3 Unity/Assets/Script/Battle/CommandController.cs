@@ -70,8 +70,8 @@ public class CommandController : MonoBehaviour {
 			CurrentCommandList[3] = NextCommandList[3];
 		}
 		ECommand Command = CurrentCommandList[CurrentIndex];//CurrentStrategy.DefaultCommands[CurrentIndex%4];//TEMP!!!
-        Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
-        GameContext.BattleConductor.ExecCommand( NewCommand );
+		Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
+		GameContext.BattleConductor.ExecCommand( NewCommand );
 	}
 
 	public void OnPlayerLose()

@@ -135,6 +135,7 @@ public class Music : MonoBehaviour
 	public static int mtBeat { get { return Current.mtBeat_; } }
 	public static double mtUnit { get { return Current.MusicTimeUnit; } }
 	public static SoundCue CurrentSource { get { return Current.MusicSource; } }
+	public static string CurrentMusicName { get { return Current.name; } }
 
 	//static predicates
 	public static bool IsNowChangedWhen( System.Predicate<Timing> pred )
@@ -177,7 +178,7 @@ public class Music : MonoBehaviour
 	/// Change Current Music.
 	/// </summary>
 	/// <param name="MusicName">name of the GameObject that include Music</param>
-	public static void Play( string MusicName ) { MusicList.Find( ( Music m ) => m.name == MusicName ).PlayStart(); }
+	public static void Play( string MusicName, string firstBlockName = "" ) { MusicList.Find( ( Music m ) => m.name == MusicName ).PlayStart(firstBlockName); }
 	/// <summary>
 	/// Quantize to musical time( default is 16 beat ).
 	/// </summary>
@@ -367,7 +368,7 @@ public class Music : MonoBehaviour
 #endif
 	}
 
-	void PlayStart()
+	void PlayStart( string firstBlockName = "" )
 	{
 		if ( Current != null && IsPlaying() )
 		{
@@ -378,6 +379,10 @@ public class Music : MonoBehaviour
 		Initialize();
 
 		WillBlockChange();
+		if ( firstBlockName != "" )
+		{
+			SetFirstBlock( firstBlockName );
+		}
 #if ADX
 		playback = MusicSource.source.Play();
 		NumBlockBar = BlockInfos[playback.GetCurrentBlockIndex()].NumBar;

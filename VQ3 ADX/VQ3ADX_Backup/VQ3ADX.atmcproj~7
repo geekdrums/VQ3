@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Orca XML File Format -->
+<OrcaTrees OriginalFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX.atmcproj" ObjectTypeExpression="Full" BinaryEncodingType="Base64" FileVersion="3" FileRevision="0">
+  <OrcaTree OrcaName="(no name)">
+    <Orca OrcaName="CRI Atom Craft" OrcaType="CriMw.CriGears.Core.OrcaObject">
+      <Orca OrcaName="VQ3ADX" OoUniqId="f6c477d2-fafd-4a2e-a457-37957ca232cb" ProjectFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX.atmcproj" BuildRootPath="" VersionInfo="Ver.1.30.00" MaterialRootPath="Materials" RecentProjectPaths="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX.atmcproj" CurrentTargetConfig="/CRI Atom Craft/VQ3ADX/全体設定/ターゲットコンフィグ/Public" CurrentPreviewTargetConfig="/CRI Atom Craft/VQ3ADX/全体設定/ターゲットコンフィグ/Public" CurrentLanguageSetting="/CRI Atom Craft/VQ3ADX/全体設定/言語設定/Default" UnityInfoOutputFlag="True" MakeInGameAcbFlag="False" AcbInfoFileOutputFlag="False" AcfOutputFlag="True" PostProcessOutputAcbPath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoProject">
+        <Orca OrcaName="全体設定" OoUniqId="4675cac8-829d-4d86-8dae-b0ebac5cf3ee" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGlobalFolder">
+          <Orca OrcaName="グローバルAISAC" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGlobalAisacFolder" />
+          <Orca OrcaName="AISACコントロール" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControlFolder">
+            <Orca OrcaName="Any" ControlId="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="Distance" ControlId="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl02" ControlId="2" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl03" ControlId="3" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl04" ControlId="4" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl05" ControlId="5" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl06" ControlId="6" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl07" ControlId="7" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl08" ControlId="8" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl09" ControlId="9" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl10" ControlId="10" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl11" ControlId="11" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl12" ControlId="12" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl13" ControlId="13" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl14" ControlId="14" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl15" ControlId="15" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+          </Orca>
+          <Orca OrcaName="ターゲットコンフィグ" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoTargetConfigFolder">
+            <Orca OrcaName="Public" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoTargetConfigPublic" />
+          </Orca>
+          <Orca OrcaName="言語設定" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoLanguageSettingFolder">
+            <Orca OrcaName="Default" ReplaceFolderName="" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoLanguageSetting" />
+            <Orca OrcaName="English" ReplaceFolderName="en" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoLanguageSetting" />
+            <Orca OrcaName="French" ReplaceFolderName="fr" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoLanguageSetting" />
+            <Orca OrcaName="German" ReplaceFolderName="de" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoLanguageSetting" />
+            <Orca OrcaName="Japanese" ReplaceFolderName="ja" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoLanguageSetting" />
+            <Orca OrcaName="Korean" ReplaceFolderName="ko" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoLanguageSetting" />
+            <Orca OrcaName="Spanish" ReplaceFolderName="es" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoLanguageSetting" />
+            <Orca OrcaName="Italian" ReplaceFolderName="it" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoLanguageSetting" />
+          </Orca>
+          <Orca OrcaName="カテゴリ" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCategoryFolder">
+            <Orca OrcaName="CategoryGroup_0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCategoryGroup">
+              <Orca OrcaName="Category_0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCategory" />
+            </Orca>
+          </Orca>
+          <Orca OrcaName="REACT" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoReactFolder" />
+          <Orca OrcaName="ボイスリミットグループ" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoVoiceLimitGroupFolder">
+            <Orca OrcaName="VoiceLimitGroup_0" VoiceLimitNum="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoVoiceLimitGroup" />
+          </Orca>
+          <Orca OrcaName="ゲーム変数" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariableFolder">
+            <Orca OrcaName="Default" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariable" />
+          </Orca>
+          <Orca OrcaName="DSPバス設定" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspSettingFolder">
+            <Orca OrcaName="DspBusSetting_0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspSetting">
+              <Orca OrcaName="BUS0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspBus" />
+              <Orca OrcaName="BUS1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspBus">
+                <Orca OrcaName="BusSendToBUS0" BusSend="/CRI Atom Craft/VQ3ADX/全体設定/DSPバス設定/DspBusSetting_0/BUS0" BusSendType="PostPan" BusSendLevel="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspBusLink" />
+                <Orca OrcaName="Reverb" ConfigMaxRoomSize="50" RoomSize="10" ConfigMaxPreDelay="1000" PreDelay="20" ReverbTime="2000" CofLow="0" CofHi="8000" ConfigMode="Surround" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspFxReverb" />
+              </Orca>
+              <Orca OrcaName="BUS2" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspBus" />
+              <Orca OrcaName="BUS3" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspBus" />
+              <Orca OrcaName="BUS4" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspBus" />
+              <Orca OrcaName="BUS5" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspBus" />
+              <Orca OrcaName="BUS6" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspBus" />
+              <Orca OrcaName="BUS7" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspBus" />
+            </Orca>
+          </Orca>
+          <Orca OrcaName="ブックマーク" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBookMarkFolder" />
+        </Orca>
+        <Orca OrcaName="ユーザ" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoUserFolder">
+          <Orca OrcaName="マテリアルルートフォルダ" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveformFolder">
+            <Orca OrcaName="battle_attack.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/battle_attack.wav" SourceFileSize="1323734" Channels="2" SamplingRate="44100" SampleFrames="330750" EncodeFilePath="C:/Users/s-iwamoto/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/battle_attack_Enc_44100_2ch_Public_6a39d9213bdd320be86a0f8d897acc14.adx" EncodeFileSize="372154" AwbId="1" LastLoadSrcFileTimeStamp="2013/07/30 23:57:25" WaveImageCacheWriteTime="2013/07/30 23:57:25" ResamplingRate="44100" ReloopEnd="330750" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="battle_endro.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/battle_endro.wav" SourceFileSize="662234" Channels="2" SamplingRate="44100" SampleFrames="165375" EncodeFilePath="C:/Users/s-iwamoto/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/battle_endro_Enc_44100_2ch_Public_c4123fd3b6c7a90361ab15bdc2cdaeaf.adx" EncodeFileSize="186106" AwbId="2" LastLoadSrcFileTimeStamp="2013/07/30 23:57:25" WaveImageCacheWriteTime="2013/07/30 23:57:25" ResamplingRate="44100" ReloopEnd="165375" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="battle_intro.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/battle_intro.wav" SourceFileSize="662234" Channels="2" SamplingRate="44100" SampleFrames="165375" EncodeFilePath="C:/Users/s-iwamoto/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/battle_intro_Enc_44100_2ch_Public_99cd5af0e1c5a3a9ea0435316052b719.adx" EncodeFileSize="186106" LastLoadSrcFileTimeStamp="2013/07/30 23:57:25" WaveImageCacheWriteTime="2013/07/30 23:57:25" ResamplingRate="44100" ReloopEnd="165375" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="field_temp.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/field_temp.wav" SourceFileSize="1323734" Channels="2" SamplingRate="44100" SampleFrames="330750" EncodeFilePath="C:/Users/s-iwamoto/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/field_temp_Enc_44100_2ch_Public_7188d22e6f122a64570d8e6381be4ee6.adx" EncodeFileSize="372154" AwbId="3" LastLoadSrcFileTimeStamp="2013/07/30 23:57:25" WaveImageCacheWriteTime="2013/07/30 23:57:25" ResamplingRate="44100" ReloopEnd="330750" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="battle_tempIntro.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/battle_tempIntro.wav" SourceFileSize="605530" Channels="2" SamplingRate="44100" SampleFrames="151199" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/battle_tempIntro_Enc_44100_2ch_Public_1af06fe0d884261881e0902c7a5190a3.adx" EncodeFileSize="170158" AwbId="4" LastLoadSrcFileTimeStamp="2013/08/08 17:03:49" WaveImageCacheWriteTime="2013/08/08 17:03:49" ResamplingRate="44100" ReloopEnd="151199" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="battle_magic.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/battle_magic.wav" SourceFileSize="1210334" Channels="2" SamplingRate="44100" SampleFrames="302400" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/battle_magic_Enc_44100_2ch_Public_7cd8e6268655236e844ea572d34d202b.adx" EncodeFileSize="340258" AwbId="6" LastLoadSrcFileTimeStamp="2013/08/08 17:04:25" WaveImageCacheWriteTime="2013/08/08 17:04:25" ResamplingRate="44100" ReloopEnd="302400" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="battle_magicBreak.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/battle_magicBreak.wav" SourceFileSize="1210334" Channels="2" SamplingRate="44100" SampleFrames="302400" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/battle_magicBreak_Enc_44100_2ch_Public_a32d21ab534ae3a5638b7451be370b29.adx" EncodeFileSize="340258" AwbId="7" LastLoadSrcFileTimeStamp="2013/08/08 17:04:46" WaveImageCacheWriteTime="2013/08/08 17:04:46" ResamplingRate="44100" ReloopEnd="302400" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="battle_break.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/battle_break.wav" SourceFileSize="1210330" Channels="2" SamplingRate="44100" SampleFrames="302399" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/battle_break_Enc_44100_2ch_Public_a4f917c59eca76f0ed23dbf33b8688bd.adx" EncodeFileSize="340258" AwbId="8" LastLoadSrcFileTimeStamp="2013/08/08 17:04:57" WaveImageCacheWriteTime="2013/08/08 17:04:57" ResamplingRate="44100" ReloopEnd="302399" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="battle_defaultAttack.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/battle_defaultAttack.wav" SourceFileSize="1210334" Channels="2" SamplingRate="44100" SampleFrames="302400" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/battle_defaultAttack_Enc_44100_2ch_Public_19a670d5e492528185944c60a76206d9.adx" EncodeFileSize="340258" AwbId="5" LastLoadSrcFileTimeStamp="2013/08/08 17:04:11" WaveImageCacheWriteTime="2013/08/08 17:04:11" ResamplingRate="44100" ReloopEnd="302400" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="Attack" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveformSubFolder">
+              <Orca OrcaName="aaaa_Accomp.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/Attack/aaaa_Accomp.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Attack_aaaa_Accomp_Enc_44100_2ch_Public_f88951208365710822e1e56913bc8a46.adx" EncodeFileSize="330826" LastLoadSrcFileTimeStamp="2013/10/12 18:52:31" WaveImageCacheWriteTime="2013/10/12 18:52:31" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="aaaa_Melo.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/Attack/aaaa_Melo.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Attack_aaaa_Melo_Enc_44100_2ch_Public_238fa038e3c4e5118615e2a515764ab2.adx" EncodeFileSize="330826" AwbId="8" LastLoadSrcFileTimeStamp="2013/10/12 18:54:03" WaveImageCacheWriteTime="2013/10/12 18:54:03" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="ggaa_Accomp.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/Attack/ggaa_Accomp.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Attack_ggaa_Accomp_Enc_44100_2ch_Public_b6afed731e113f8de1dbfddc3895aec8.adx" EncodeFileSize="330826" AwbId="1" LastLoadSrcFileTimeStamp="2013/10/12 19:07:15" WaveImageCacheWriteTime="2013/10/12 19:07:15" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="ggaa_Melo.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/Attack/ggaa_Melo.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Attack_ggaa_Melo_Enc_44100_2ch_Public_7af33f400c874a67aa13dd2ed8c7e591.adx" EncodeFileSize="330826" AwbId="7" LastLoadSrcFileTimeStamp="2013/10/12 19:07:31" WaveImageCacheWriteTime="2013/10/12 19:07:31" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="gggg_Accomp.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/Attack/gggg_Accomp.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Attack_gggg_Accomp_Enc_44100_2ch_Public_ee995e7df8438a2d564b3f47cc88178a.adx" EncodeFileSize="330826" AwbId="3" LastLoadSrcFileTimeStamp="2013/10/12 18:56:06" WaveImageCacheWriteTime="2013/10/12 18:56:06" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="gggg_Melo.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/Attack/gggg_Melo.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Attack_gggg_Melo_Enc_44100_2ch_Public_83716f9da01003b17d864412c5f0b8e5.adx" EncodeFileSize="330826" AwbId="5" LastLoadSrcFileTimeStamp="2013/10/12 18:54:52" WaveImageCacheWriteTime="2013/10/12 18:54:52" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="ppaa_Accomp.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/Attack/ppaa_Accomp.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Attack_ppaa_Accomp_Enc_44100_2ch_Public_15fb09761eae9651f3ffe8dacd970a2b.adx" EncodeFileSize="330826" AwbId="2" LastLoadSrcFileTimeStamp="2013/10/12 18:56:24" WaveImageCacheWriteTime="2013/10/12 18:56:24" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="ppaa_Melo.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/Attack/ppaa_Melo.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Attack_ppaa_Melo_Enc_44100_2ch_Public_c77e559948d7e792ca6a0c7c2b4e6656.adx" EncodeFileSize="330826" AwbId="6" LastLoadSrcFileTimeStamp="2013/10/12 18:55:11" WaveImageCacheWriteTime="2013/10/12 18:55:11" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="aaaa_Trans.wav" SrcFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Materials/Attack/aaaa_Trans.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Attack_aaaa_Trans_Enc_44100_2ch_Public_748fbbe52a934853bdac1f077d4a626a.adx" EncodeFileSize="330826" AwbId="4" LastLoadSrcFileTimeStamp="2013/10/12 19:17:23" WaveImageCacheWriteTime="2013/10/12 19:17:23" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            </Orca>
+          </Orca>
+          <Orca OrcaName="リファレンス" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoReferenceFolder">
+            <Orca OrcaName="AISAC" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoReferenceAisacFolder" />
+          </Orca>
+          <Orca OrcaName="キューシートフォルダ" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSheetFolder">
+            <Orca OrcaName="BattleMusic" Expand="True" OoUniqId="092c99ee-743c-46a9-be50-4dc8c020b14e" AcbOutputDirectory="C:/Users/s-iwamoto/Documents/GitHub/VQ3/VQ3 ADX/" AwbOutputDirectory="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Public/BattleMusic/BattleMusic.awb" AcfMd5hash="RyGgFFEIPxud3hrvo5EMMg==" LastOutputCueSheetSize="2656256" CueSheetPaddingSize="2048" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSheet">
+              <Orca OrcaName="vq2geekdrums" CueID="0" Bpm="128" SynthType="SynthPolyphonic" DisplayUnit="Bars" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
+                <Orca OrcaName="Track_battle" SynthType="Track" ObjectColor="200, 20, 80, 160" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
+                  <Orca OrcaName="battle_intro.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_intro.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="battle_attack.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_attack.wav" SynthType="Waveform" DelayTimeMS="3750" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="battle_endro.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_endro.wav" SynthType="Waveform" DelayTimeMS="11250" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                </Orca>
+                <Orca OrcaName="Block_vq2geekdrums" BlockEndPositionMs="3750" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="Block_battle_attack" BlockEndPositionMs="7500" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockDivisionNum="4" BlockTransitionTiming="Division" ObjectColor="200, 10, 60, 140" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="Block_battle_endro" BlockEndPositionMs="3750" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 0, 40, 120" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+              </Orca>
+              <Orca OrcaName="field" CueID="1" Bpm="128" SynthType="SynthPolyphonic" DisplayUnit="Bars" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
+                <Orca OrcaName="Track_field_temp" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
+                  <Orca OrcaName="field_temp.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/field_temp.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                </Orca>
+                <Orca OrcaName="Block_field" BlockEndPositionMs="7500" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+              </Orca>
+              <Orca OrcaName="battle" CueID="2" Bpm="140" SynthType="SynthPolyphonic" DisplayUnit="Bars" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
+                <Orca OrcaName="Track_battle_tempIntro" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
+                  <Orca OrcaName="battle_tempIntro.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_tempIntro.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="battle_defaultAttack.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_defaultAttack.wav" SynthType="Waveform" DelayTimeMS="3428" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="battle_magic.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_magic.wav" SynthType="Waveform" DelayTimeMS="10285" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="battle_magicBreak.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_magicBreak.wav" SynthType="Waveform" DelayTimeMS="17142" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="battle_break.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_break.wav" SynthType="Waveform" DelayTimeMS="23999" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="battle_tempIntro.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/battle_tempIntro.wav" SynthType="Waveform" DelayTimeMS="30856" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                </Orca>
+                <Orca OrcaName="Block_battle" BlockEndPositionMs="3428" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="Block_battle_defaultAttack" BlockEndPositionMs="6857" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" ObjectColor="200, 10, 60, 140" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="Block_battle_magic" BlockEndPositionMs="6857" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" ObjectColor="200, 0, 40, 120" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="Block_battle_magicBreak" BlockEndPositionMs="6857" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" ObjectColor="200, 40, 120, 200" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="Block_battle_break" BlockEndPositionMs="6857" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="Block_battle_tempIntro" BlockEndPositionMs="3428" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+              </Orca>
+            </Orca>
+            <Orca OrcaName="CommandMusic" Expand="True" OoUniqId="8127efc3-e1b3-4398-8ff7-4e2eaea3ab0b" AcbOutputDirectory="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/" AwbOutputDirectory="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Public/CommandMusic/CommandMusic.awb" AcfMd5hash="RyGgFFEIPxud3hrvo5EMMg==" LastOutputCueSheetSize="2982336" CueSheetPaddingSize="2048" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSheet">
+              <Orca OrcaName="Attack" CueID="0" Bpm="144" SynthType="SynthPolyphonic" DisplayUnit="Bars" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
+                <Orca OrcaName="Track_aaaa_Accomp" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
+                  <Orca OrcaName="aaaa_Accomp.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/aaaa_Accomp.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="ggaa_Accomp.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/ggaa_Accomp.wav" SynthType="Waveform" DelayTimeMS="6667" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="ppaa_Accomp.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/ppaa_Accomp.wav" SynthType="Waveform" DelayTimeMS="13333" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="gggg_Accomp.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/gggg_Accomp.wav" SynthType="Waveform" DelayTimeMS="20000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="aaaa_Trans.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/aaaa_Trans.wav" SynthType="Waveform" DelayTimeMS="26666" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                </Orca>
+                <Orca OrcaName="aaaa" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="ggaa" BlockEndPositionMs="6667" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="ppaa" BlockEndPositionMs="6667" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="gggg" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="Track_gggg_Melo" SynthType="Track" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
+                  <Orca OrcaName="gggg_Melo.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/gggg_Melo.wav" SynthType="Waveform" DelayTimeMS="20000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="ppaa_Melo.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/ppaa_Melo.wav" SynthType="Waveform" DelayTimeMS="13333" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="ggaa_Melo.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/ggaa_Melo.wav" SynthType="Waveform" DelayTimeMS="6667" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="aaaa_Melo.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/aaaa_Melo.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="aaaa_Melo.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/aaaa_Melo.wav" SynthType="Waveform" DelayTimeMS="26666" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
+                    <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
+                      <Orca OrcaName="AisacPoint" ControlValue="31655" DestinationValue="1.03" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                      <Orca OrcaName="AisacPoint" ControlValue="31656" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                      <Orca OrcaName="AisacPoint" ControlValue="33331" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                      <Orca OrcaName="AisacPoint" ControlValue="33332" DestinationValue="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                    </Orca>
+                  </Orca>
+                </Orca>
+                <Orca OrcaName="Block_aaaa_Trans" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+              </Orca>
+            </Orca>
+          </Orca>
+        </Orca>
+      </Orca>
+    </Orca>
+  </OrcaTree>
+</OrcaTrees>
+<!-- Copyright (c) CRI Middleware Co.,LTD. -->
+<!-- end of document -->

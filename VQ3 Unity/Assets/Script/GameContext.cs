@@ -1,4 +1,5 @@
-﻿using System;
+﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public static class GameContext
@@ -6,6 +7,8 @@ public static class GameContext
     //Game State
     public enum GameState
     {
+		Intro,
+		Endro,
         Battle,
         Field
     }
@@ -16,11 +19,17 @@ public static class GameContext
         CurrentState = NewState;
         OnLeaveState( OldState );
         OnEnterState( CurrentState );
+
+		Debug.Log( "EnterState:"+CurrentState.ToString() );
     }
     static void OnLeaveState( GameState OldState )
     {
         switch( OldState )
-        {
+		{
+		case GameState.Intro:
+			break;
+		case GameState.Endro:
+			break;
         case GameState.Battle:
             break;
         case GameState.Field:
@@ -30,12 +39,18 @@ public static class GameContext
     static void OnEnterState( GameState NewState )
     {
         switch( NewState )
-        {
-        case GameState.Battle:
-            Music.Play( "battleMusic" );
+		{
+		case GameState.Intro:
+			Music.Play( "IntroEndro", "intro" );
+			break;
+		case GameState.Endro:
+			Music.Play( "IntroEndro", "endro" );
+			break;
+		case GameState.Battle:
+			Music.Play( "Attack" );//TEMP!!!
             break;
         case GameState.Field:
-            Music.Play( "fieldMusic" );
+            //Music.Play( "fieldMusic" );
             break;
         }
     }
