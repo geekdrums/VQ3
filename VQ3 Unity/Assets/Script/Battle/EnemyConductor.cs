@@ -36,7 +36,7 @@ public class EnemyConductor : MonoBehaviour {
 			foreach ( Enemy e in GetTargetEnemies( attack.TargetType ) )
             {
                 if( command.isLocal ) command.transform.position = e.transform.position;
-				e.BeAttacked( attack );
+				e.BeAttacked( attack, command );
 				isSucceeded = true;
 			}
 		}
@@ -46,7 +46,7 @@ public class EnemyConductor : MonoBehaviour {
 			foreach ( Enemy e in GetTargetEnemies( magic.TargetType ) )
             {
                 if( command.isLocal ) command.transform.position = e.transform.position;
-				e.BeMagicAttacked( magic );
+				e.BeMagicAttacked( magic, command );
 				isSucceeded = true;
 			}
 		}

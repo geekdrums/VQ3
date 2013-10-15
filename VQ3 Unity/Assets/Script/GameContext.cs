@@ -47,7 +47,7 @@ public static class GameContext
 			Music.Play( "IntroEndro", "endro" );
 			break;
 		case GameState.Battle:
-			Music.Play( "Attack" );//TEMP!!!
+			Music.Play( "Attack", "ppaa" );//TEMP!!!
             break;
         case GameState.Field:
             //Music.Play( "fieldMusic" );
@@ -59,5 +59,4 @@ public static class GameContext
     public static BattleConductor BattleConductor;
     public static EnemyConductor EnemyConductor;
     public static PlayerConductor PlayerConductor;
-    public static CommandController CommandController;
 }

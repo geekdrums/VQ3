@@ -1,12 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
-
-	public int HitPoint { get; protected set; }
-	int DefendPower;
-
-	float damageTime;
+public class Player : Character {
 	Vector3 initialPosition;
 	GUILayer guiLayer;
 
@@ -17,6 +12,7 @@ public class Player : MonoBehaviour {
 		guiLayer = GetComponent<GUILayer>();
 		initialPosition = guiLayer.transform.position;
 		DefendPower = 0;
+		AttackPower = 0;
 	}
 	
 	// Update is called once per frame
@@ -45,35 +41,18 @@ public class Player : MonoBehaviour {
 	public void OnBarStarted( int CurrentIndex )
 	{
 		DefendPower = 0;
+		if ( CurrentIndex == 0 )
+		{
+			AttackPower = 0;
+		}
 	}
 
-	public void BeAttacked( AttackModule attack )
+	public override void BeAttacked( AttackModule attack, Command command )
 	{
-		int damage = Mathf.Max( 0, attack.AttackPower - DefendPower );
-        if( damage <= 0 )
-        {
-            SEPlayer.Play( ActionResult.Guarded );
-        }
-        else
-        {
-            SEPlayer.Play( ActionResult.Damaged );
-        }
-		HitPoint -= damage;
-		Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
-		damageTime = 0.2f + damage*0.2f;
+		base.BeAttacked( attack, command );
 		if ( HitPoint <= 0 )
 		{
 			GameContext.BattleConductor.OnPlayerLose();
-			GameContext.CommandController.OnPlayerLose();
 		}
-	}
-	public void Defend( DefendModule defend )
-	{
-        DefendPower = defend.DefendPower;
-	}
-	public void Heal( HealModule heal )
-	{
-        HitPoint += heal.HealPoint;
-        SEPlayer.Play( ActionResult.Healed );
 	}
 }

@@ -7,6 +7,8 @@ using System.Text;
 public enum ECommand
 {
 	Attack,
+	Power,
+	Guard,
 	Magic,
 	Cure,
 	Break,
@@ -25,6 +27,10 @@ public class Command : MonoBehaviour
 	protected Rhythm ActionRhythm;
 	protected Animation CommandAnim;
 	protected bool isEnd;
+
+	public Character OwnerCharacter { get; protected set; }
+
+	public void SetOwner( Character chara ) { OwnerCharacter = chara; }
 
     void Awake()
     {

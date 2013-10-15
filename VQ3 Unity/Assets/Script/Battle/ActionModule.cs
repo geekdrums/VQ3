@@ -56,3 +56,13 @@ public class HealModule : IActionModule
 
 	public int HealPoint { get; private set; }
 }
+
+public class PowerModule : IActionModule
+{
+	public PowerModule( int AttackPower )
+	{
+		this.AttackPower = AttackPower;
+	}
+
+	public int AttackPower { get; private set; }
+}

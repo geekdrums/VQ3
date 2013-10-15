@@ -6,20 +6,65 @@ public class PlayerConductor : MonoBehaviour {
 	public GameObject MainCamera;
 	Player Player;
 
+	public Command[] Commands;
+	Strategy[] Strategies;
+	Strategy CurrentStrategy;
+
+	ECommand[] NextCommandList = new ECommand[4];
+	ECommand[] CurrentCommandList = new ECommand[4];
+
 	// Use this for initialization
 	void Start () {
 		GameContext.PlayerConductor = this;
 		Player = MainCamera.GetComponent<Player>();
+
+		Strategies = new Strategy[(int)EStrategy.Count];
+		Strategies[(int)EStrategy.Attack] = new Strategy( ECommand.Attack );
+		Strategies[(int)EStrategy.Magic] = new Strategy( ECommand.Magic );
+
+		CurrentStrategy = Strategies[(int)EStrategy.Attack];
+
+		NextCommandList[0] = ECommand.Power;
+		NextCommandList[1] = ECommand.Power;
+		NextCommandList[2] = ECommand.Attack;
+		NextCommandList[3] = ECommand.Attack;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if( Input.GetKeyDown( KeyCode.A ) )
+		{
+			NextCommandList[0] = ECommand.Attack;
+			NextCommandList[1] = ECommand.Attack;
+			NextCommandList[2] = ECommand.Attack;
+			NextCommandList[3] = ECommand.Attack;
+			Music.SetNextBlock( "aaaa" );
+		}
+		else if ( Input.GetKeyDown( KeyCode.P ) )
+		{
+			NextCommandList[0] = ECommand.Power;
+			NextCommandList[1] = ECommand.Power;
+			NextCommandList[2] = ECommand.Attack;
+			NextCommandList[3] = ECommand.Attack;
+			Music.SetNextBlock( "ppaa" );
+		}
 	}
 
 	public void OnBarStarted( int CurrentIndex )
 	{
 		Player.OnBarStarted( CurrentIndex );
+
+		if ( CurrentIndex == 0 )
+		{
+			CurrentCommandList[0] = NextCommandList[0];
+			CurrentCommandList[1] = NextCommandList[1];
+			CurrentCommandList[2] = NextCommandList[2];
+			CurrentCommandList[3] = NextCommandList[3];
+		}
+		ECommand Command = CurrentCommandList[CurrentIndex];
+		Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
+		NewCommand.SetOwner( Player );
+		GameContext.BattleConductor.ExecCommand( NewCommand );
 	}
 
 	public bool ReceiveAction( ActionSet Action, Command command )
@@ -28,7 +73,7 @@ public class PlayerConductor : MonoBehaviour {
 		AttackModule attack = Action.GetModule<AttackModule>();
         if( attack != null && !command.isPlayerAction )
 		{
-			Player.BeAttacked( attack );
+			Player.BeAttacked( attack, command );
 			isSucceeded = true;
 		}
 		DefendModule defend = Action.GetModule<DefendModule>();
@@ -41,6 +86,12 @@ public class PlayerConductor : MonoBehaviour {
         if( heal != null && command.isPlayerAction )
 		{
 			Player.Heal( heal );
+			isSucceeded = true;
+		}
+		PowerModule power = Action.GetModule<PowerModule>();
+		if ( power != null && command.isPlayerAction )
+		{
+			Player.PowerUp( power );
 			isSucceeded = true;
 		}
 		return isSucceeded;

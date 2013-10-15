@@ -5,7 +5,6 @@ public enum EStrategy
 {
 	Attack,
 	Magic,
-	Cure,
 	Count
 }
 

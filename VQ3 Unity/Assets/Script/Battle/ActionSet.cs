@@ -25,7 +25,11 @@ public class ActionSet : IEnumerable<IActionModule>
             else if( str.StartsWith( "Defend" ) )
             {
                 res.Modules.Add( new DefendModule( int.Parse( parameters[1] ) ) );
-            }
+			}
+			else if ( str.StartsWith( "Power" ) )
+			{
+				res.Modules.Add( new PowerModule( int.Parse( parameters[1] ) ) );
+			}
         }
         return res;
     }
