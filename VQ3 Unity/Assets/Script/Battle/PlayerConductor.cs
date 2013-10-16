@@ -24,8 +24,8 @@ public class PlayerConductor : MonoBehaviour {
 
 		CurrentStrategy = Strategies[(int)EStrategy.Attack];
 
-		NextCommandList[0] = ECommand.Power;
-		NextCommandList[1] = ECommand.Power;
+		NextCommandList[0] = ECommand.Attack;
+		NextCommandList[1] = ECommand.Attack;
 		NextCommandList[2] = ECommand.Attack;
 		NextCommandList[3] = ECommand.Attack;
 	}
@@ -47,6 +47,22 @@ public class PlayerConductor : MonoBehaviour {
 			NextCommandList[2] = ECommand.Attack;
 			NextCommandList[3] = ECommand.Attack;
 			Music.SetNextBlock( "ppaa" );
+		}
+		else if ( Input.GetKeyDown( KeyCode.G ) )
+		{
+			NextCommandList[0] = ECommand.Guard;
+			NextCommandList[1] = ECommand.Guard;
+			NextCommandList[2] = ECommand.Guard;
+			NextCommandList[3] = ECommand.Guard;
+			Music.SetNextBlock( "gggg" );
+		}
+		else if ( Input.GetKeyDown( KeyCode.D ) )
+		{
+			NextCommandList[0] = ECommand.Guard;
+			NextCommandList[1] = ECommand.Guard;
+			NextCommandList[2] = ECommand.Attack;
+			NextCommandList[3] = ECommand.Attack;
+			Music.SetNextBlock( "ggaa" );
 		}
 	}
 
