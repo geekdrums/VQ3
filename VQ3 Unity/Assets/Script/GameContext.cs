@@ -47,7 +47,7 @@ public static class GameContext
 			Music.Play( "IntroEndro", "endro" );
 			break;
 		case GameState.Battle:
-			Music.Play( "Attack", "ppaa" );//TEMP!!!
+			Music.Play( "Attack", PlayerConductor.NextBlockName );
             break;
         case GameState.Field:
             //Music.Play( "fieldMusic" );

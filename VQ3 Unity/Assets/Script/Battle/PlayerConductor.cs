@@ -13,6 +13,8 @@ public class PlayerConductor : MonoBehaviour {
 	ECommand[] NextCommandList = new ECommand[4];
 	ECommand[] CurrentCommandList = new ECommand[4];
 
+    public string NextBlockName { get; protected set; }
+
 	// Use this for initialization
 	void Start () {
 		GameContext.PlayerConductor = this;
@@ -28,42 +30,50 @@ public class PlayerConductor : MonoBehaviour {
 		NextCommandList[1] = ECommand.Attack;
 		NextCommandList[2] = ECommand.Attack;
 		NextCommandList[3] = ECommand.Attack;
+        NextBlockName = "aaaa";
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if( Input.GetKeyDown( KeyCode.A ) )
-		{
-			NextCommandList[0] = ECommand.Attack;
-			NextCommandList[1] = ECommand.Attack;
-			NextCommandList[2] = ECommand.Attack;
-			NextCommandList[3] = ECommand.Attack;
-			Music.SetNextBlock( "aaaa" );
-		}
-		else if ( Input.GetKeyDown( KeyCode.P ) )
-		{
-			NextCommandList[0] = ECommand.Power;
-			NextCommandList[1] = ECommand.Power;
-			NextCommandList[2] = ECommand.Attack;
-			NextCommandList[3] = ECommand.Attack;
-			Music.SetNextBlock( "ppaa" );
-		}
-		else if ( Input.GetKeyDown( KeyCode.G ) )
-		{
-			NextCommandList[0] = ECommand.Guard;
-			NextCommandList[1] = ECommand.Guard;
-			NextCommandList[2] = ECommand.Guard;
-			NextCommandList[3] = ECommand.Guard;
-			Music.SetNextBlock( "gggg" );
-		}
-		else if ( Input.GetKeyDown( KeyCode.D ) )
-		{
-			NextCommandList[0] = ECommand.Guard;
-			NextCommandList[1] = ECommand.Guard;
-			NextCommandList[2] = ECommand.Attack;
-			NextCommandList[3] = ECommand.Attack;
-			Music.SetNextBlock( "ggaa" );
-		}
+        if( Music.Just.totalUnit < Music.mtBar * 4 - 1 )
+        {
+            if( Input.GetKeyDown( KeyCode.A ) )
+            {
+                NextCommandList[0] = ECommand.Attack;
+                NextCommandList[1] = ECommand.Attack;
+                NextCommandList[2] = ECommand.Attack;
+                NextCommandList[3] = ECommand.Attack;
+                NextBlockName = "aaaa";
+            }
+            else if( Input.GetKeyDown( KeyCode.P ) )
+            {
+                NextCommandList[0] = ECommand.Power;
+                NextCommandList[1] = ECommand.Power;
+                NextCommandList[2] = ECommand.Attack;
+                NextCommandList[3] = ECommand.Attack;
+                NextBlockName = "ppaa";
+            }
+            else if( Input.GetKeyDown( KeyCode.G ) )
+            {
+                NextCommandList[0] = ECommand.Guard;
+                NextCommandList[1] = ECommand.Guard;
+                NextCommandList[2] = ECommand.Guard;
+                NextCommandList[3] = ECommand.Guard;
+                NextBlockName = "gggg";
+            }
+            else if( Input.GetKeyDown( KeyCode.D ) )
+            {
+                NextCommandList[0] = ECommand.Guard;
+                NextCommandList[1] = ECommand.Guard;
+                NextCommandList[2] = ECommand.Attack;
+                NextCommandList[3] = ECommand.Attack;
+                NextBlockName = "ggaa";
+            }
+        }
+        if( Music.GetNextBlockName() != "GotoEndro" && Music.IsJustChangedAt( 3, 3, 3 ) )
+        {
+            Music.SetNextBlock( NextBlockName );
+        }
 	}
 
 	public void OnBarStarted( int CurrentIndex )
