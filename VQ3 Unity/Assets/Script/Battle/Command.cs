@@ -59,7 +59,7 @@ public class Command : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if( isEnd && !GetComponentInChildren<Animation>().isPlaying ) Destroy( this.gameObject );
+        if (isEnd && (CommandAnim == null || !CommandAnim.isPlaying)) Destroy(this.gameObject);
     }
 
 	public void OnExecuted()

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Enemy : Character {
+
+    public Command[] Commands;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -29,6 +32,11 @@ public class Enemy : Character {
 			}
 		}
 	}
+
+    public Command GetExecCommand()
+    {
+        return Commands[0];
+    }
 
 
 	// ======================

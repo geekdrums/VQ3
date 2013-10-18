@@ -81,4 +81,15 @@ public class EnemyConductor : MonoBehaviour {
 		}
 		return Res;
 	}
+
+    public void OnBarStarted(int CurrentIndex)
+    {
+        if (CurrentIndex < Enemies.Count)
+        {
+            Command commandPrefab = Enemies[CurrentIndex].GetExecCommand();
+            Command NewCommand = (Command)Instantiate(commandPrefab, new Vector3(), commandPrefab.transform.rotation);
+            NewCommand.SetOwner(Enemies[CurrentIndex]);
+            GameContext.BattleConductor.ExecCommand(NewCommand);
+        }
+    }
 }
