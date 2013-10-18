@@ -36,7 +36,7 @@ public class Character : MonoBehaviour {
 	void BeDamaged( int damage )
 	{
 		HitPoint -= damage;
-		damageTime = 0.2f + damage*0.2f;
+		damageTime = 0.15f + damage*0.15f;
 	}
 
 	public void Defend( DefendModule defend )
