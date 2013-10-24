@@ -51,5 +51,6 @@ public class Character : MonoBehaviour {
 	{
 		HitPoint += heal.HealPoint;
 		SEPlayer.Play( ActionResult.Healed );
+		Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
 	}
 }

@@ -30,6 +30,10 @@ public class ActionSet : IEnumerable<IActionModule>
 			{
 				res.Modules.Add( new PowerModule( int.Parse( parameters[1] ) ) );
 			}
+			else if ( str.StartsWith( "Heal" ) )
+			{
+				res.Modules.Add( new HealModule( int.Parse( parameters[1] ) ) );
+			}
         }
         return res;
     }

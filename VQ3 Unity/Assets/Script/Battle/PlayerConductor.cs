@@ -7,30 +7,22 @@ public class PlayerConductor : MonoBehaviour {
 	Player Player;
 
 	public Command[] Commands;
-	Strategy[] Strategies;
-	Strategy CurrentStrategy;
+	public Strategy[] Strategies;
 
+	EStrategy NextStrategy;
+	EStrategy CurrentStrategy;
 	ECommand[] NextCommandList = new ECommand[4];
 	ECommand[] CurrentCommandList = new ECommand[4];
 
-    public string NextBlockName { get; protected set; }
+	public string NextBlockName { get; protected set; }
+	public string NextStrategyName { get { return NextStrategy.ToString(); } }
 
 	// Use this for initialization
 	void Start () {
 		GameContext.PlayerConductor = this;
 		Player = MainCamera.GetComponent<Player>();
-
-		Strategies = new Strategy[(int)EStrategy.Count];
-		Strategies[(int)EStrategy.Attack] = new Strategy( ECommand.Attack );
-		Strategies[(int)EStrategy.Magic] = new Strategy( ECommand.Magic );
-
-		CurrentStrategy = Strategies[(int)EStrategy.Attack];
-
-		NextCommandList[0] = ECommand.Attack;
-		NextCommandList[1] = ECommand.Attack;
-		NextCommandList[2] = ECommand.Attack;
-		NextCommandList[3] = ECommand.Attack;
-        NextBlockName = "aaaa";
+		NextCommandList = Strategies[(int)CurrentStrategy].CommandList[0];
+		NextBlockName = "aaaa";
 	}
 	
 	// Update is called once per frame
@@ -39,54 +31,94 @@ public class PlayerConductor : MonoBehaviour {
         {
             if( Input.GetKeyDown( KeyCode.A ) )
             {
-                NextCommandList[0] = ECommand.Attack;
-                NextCommandList[1] = ECommand.Attack;
-                NextCommandList[2] = ECommand.Attack;
-                NextCommandList[3] = ECommand.Attack;
+				NextStrategy = EStrategy.Attack;
+				NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
                 NextBlockName = "aaaa";
             }
             else if( Input.GetKeyDown( KeyCode.P ) )
-            {
-                NextCommandList[0] = ECommand.Power;
-                NextCommandList[1] = ECommand.Power;
-                NextCommandList[2] = ECommand.Attack;
-                NextCommandList[3] = ECommand.Attack;
+			{
+				NextStrategy = EStrategy.Attack;
+				NextCommandList = Strategies[(int)NextStrategy].CommandList[1];
                 NextBlockName = "ppaa";
             }
             else if( Input.GetKeyDown( KeyCode.G ) )
-            {
-                NextCommandList[0] = ECommand.Guard;
-                NextCommandList[1] = ECommand.Guard;
-                NextCommandList[2] = ECommand.Guard;
-                NextCommandList[3] = ECommand.Guard;
+			{
+				NextStrategy = EStrategy.Attack;
+				NextCommandList = Strategies[(int)NextStrategy].CommandList[2];
                 NextBlockName = "gggg";
             }
             else if( Input.GetKeyDown( KeyCode.D ) )
-            {
-                NextCommandList[0] = ECommand.Guard;
-                NextCommandList[1] = ECommand.Guard;
-                NextCommandList[2] = ECommand.Attack;
-                NextCommandList[3] = ECommand.Attack;
+			{
+				NextStrategy = EStrategy.Attack;
+				NextCommandList = Strategies[(int)NextStrategy].CommandList[3];
                 NextBlockName = "ggaa";
-            }
+			}
+			else if ( Input.GetKeyDown( KeyCode.M ) )
+			{
+				NextStrategy = EStrategy.Magic;
+				NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
+				NextBlockName = "mmmm";
+			}
+			else if ( Input.GetKeyDown( KeyCode.H ) )
+			{
+				NextStrategy = EStrategy.Magic;
+				NextCommandList = Strategies[(int)NextStrategy].CommandList[1];
+				NextBlockName = "hhhh";
+			}
+			else if ( Input.GetKeyDown( KeyCode.C ) )
+			{
+				NextStrategy = EStrategy.Magic;
+				NextCommandList = Strategies[(int)NextStrategy].CommandList[2];
+				NextBlockName = "hhmm";
+			}
+			else if ( Input.GetKeyDown( KeyCode.F ) )
+			{
+				NextStrategy = EStrategy.Magic;
+				NextCommandList = Strategies[(int)NextStrategy].CommandList[3];
+				NextBlockName = "ffff";
+			}
         }
-        if( Music.GetNextBlockName() != "GotoEndro" && Music.IsJustChangedAt( 3, 3, 3 ) )
+        if( Music.IsJustChangedAt( 3, 3, 3 ) && Music.GetNextBlockName() != "GotoEndro" )
         {
-            Music.SetNextBlock( NextBlockName );
+			if ( CurrentStrategy != NextStrategy )
+			{
+				Music.SetNextBlock( "Goto" + NextStrategy.ToString() );
+			}
+			else
+			{
+				Music.SetNextBlock( NextBlockName );
+			}
         }
+
+		if ( Music.IsJustChangedAt(0) )
+		{
+			if ( Music.GetCurrentBlockName() == "GotoMagic" )
+			{
+				Music.Play( "Magic", NextBlockName );
+			}
+			else if ( Music.GetCurrentBlockName() == "GotoAttack" )
+			{
+				Music.Play( "Attack", NextBlockName );
+			}
+			else if ( Music.GetCurrentBlockName() == "GotoBreak" )
+			{
+				Music.Play( "Break", NextBlockName );
+			}
+		}
+	}
+
+	public void On4BarStarted()
+	{
+		CurrentStrategy = NextStrategy;
+		CurrentCommandList[0] = NextCommandList[0];
+		CurrentCommandList[1] = NextCommandList[1];
+		CurrentCommandList[2] = NextCommandList[2];
+		CurrentCommandList[3] = NextCommandList[3];
 	}
 
 	public void OnBarStarted( int CurrentIndex )
 	{
 		Player.OnBarStarted( CurrentIndex );
-
-		if ( CurrentIndex == 0 )
-		{
-			CurrentCommandList[0] = NextCommandList[0];
-			CurrentCommandList[1] = NextCommandList[1];
-			CurrentCommandList[2] = NextCommandList[2];
-			CurrentCommandList[3] = NextCommandList[3];
-		}
 		ECommand Command = CurrentCommandList[CurrentIndex];
 		Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
 		NewCommand.SetOwner( Player );

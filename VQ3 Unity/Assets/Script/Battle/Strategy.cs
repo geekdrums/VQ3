@@ -1,32 +1,42 @@
-﻿using System;
+﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public enum EStrategy
 {
 	Attack,
 	Magic,
+	Break,
 	Count
 }
 
-public class Strategy
+public class Strategy : MonoBehaviour
 {
-	public List<ECommand> UsableCommands { get; private set; }
-	public ECommand[] DefaultCommands { get; private set; }
+	public string[] CommandStr;
 
-	public Strategy( params ECommand[] UsableCommands )
+	public EStrategy StrategyName { get; protected set; }
+	public List<ECommand[]> CommandList { get; protected set; }
+
+	void Awake()
 	{
-		this.UsableCommands = new List<ECommand>();
-		this.UsableCommands.AddRange( UsableCommands );
-		this.DefaultCommands = new ECommand[4];
-		for ( int i=0; i<4; i++ )
+		this.StrategyName = (EStrategy)Enum.Parse( typeof( EStrategy ), name.Remove(name.IndexOf("Strategy")) );
+		CommandList = new List<ECommand[]>();
+		foreach ( string str in CommandStr )
 		{
-			DefaultCommands[i] = UsableCommands[0];
+			CommandList.Add( Parse( str ) );
+			Debug.Log( str );
 		}
 	}
 
-	public bool IsUsable( ECommand Command )
+	public static ECommand[] Parse( string CommandStr )
 	{
-		return UsableCommands.Contains( Command );
+		ECommand[] res = new ECommand[4];
+		string[] commandStrings = CommandStr.Split( Utils.space );
+		for( int i=0;i<commandStrings.Length; ++i )
+		{
+			res[i] = (ECommand)Enum.Parse( typeof( ECommand ), commandStrings[i] );
+		}
+		return res;
 	}
 }
 

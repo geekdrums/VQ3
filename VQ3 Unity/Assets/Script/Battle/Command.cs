@@ -10,9 +10,11 @@ public enum ECommand
 	Power,
 	Guard,
 	Magic,
-	Cure,
-	Break,
+	Heal,
+	Fire1,
+	Fire2,
 	BreakAttack,
+	Wait,
 	Count
 }
 

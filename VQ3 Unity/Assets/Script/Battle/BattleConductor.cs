@@ -80,6 +80,10 @@ public class BattleConductor : MonoBehaviour {
 
 	void OnBarStarted( int CurrentIndex )
 	{
+		if ( CurrentIndex == 0 )
+		{
+			GameContext.PlayerConductor.On4BarStarted();
+		}
         GameContext.PlayerConductor.OnBarStarted(CurrentIndex);
         GameContext.EnemyConductor.OnBarStarted(CurrentIndex);
 	}
