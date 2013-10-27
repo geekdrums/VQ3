@@ -119,7 +119,7 @@ public class PlayerConductor : MonoBehaviour {
 	public void OnBarStarted( int CurrentIndex )
 	{
 		Player.OnBarStarted( CurrentIndex );
-		ECommand Command = CurrentCommandList[CurrentIndex];
+		ECommand Command = CurrentCommandList[CurrentIndex%4];
 		Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
 		NewCommand.SetOwner( Player );
 		GameContext.BattleConductor.ExecCommand( NewCommand );

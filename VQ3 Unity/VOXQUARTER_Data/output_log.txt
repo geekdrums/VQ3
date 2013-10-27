@@ -13,17 +13,53 @@ Platform assembly: C:\Users\geekdrums\Documents\GitHub\VQ3\VQ3 Unity\VOXQUARTER_
 Loading C:\Users\geekdrums\Documents\GitHub\VQ3\VQ3 Unity\VOXQUARTER_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\geekdrums\Documents\GitHub\VQ3\VQ3 Unity\VOXQUARTER_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading C:\Users\geekdrums\Documents\GitHub\VQ3\VQ3 Unity\VOXQUARTER_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-- Completed reload, in  0.616 seconds
-desktop: 1280x800 60Hz; virtual: 1280x800 at 0,0
+- Completed reload, in  1.535 seconds
+desktop: 1280x800 60Hz; virtual: 2960x1050 at 0,-250
 <RI> Initializing input.
 <RI> Input initialized.
 Platform assembly: C:\Users\geekdrums\Documents\GitHub\VQ3\VQ3 Unity\VOXQUARTER_Data\Managed\System.dll (this message is harmless)
 Platform assembly: C:\Users\geekdrums\Documents\GitHub\VQ3\VQ3 Unity\VOXQUARTER_Data\Managed\System.Core.dll (this message is harmless)
+Magic Magic Magic Magic
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Wait Heal Wait Heal
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Wait Heal Magic Magic
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Wait Fire1 Fire2 Wait
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Attack Attack Attack Attack
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Power Power Attack Attack
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Guard Guard Guard Guard
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Guard Guard Attack Attack
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+BreakAttack BreakAttack BreakAttack BreakAttack
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
 EnterState:Intro
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-Error!! Music.SetNextBlock Can't find block name: gggg
+Error!! Music.SetNextBlock Can't find block name: GotoMagic
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -39,35 +75,22 @@ EnterState:Battle
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-Player was Attacked! 0Damage! HitPoint is 10
+IndexOutOfRangeException: Array index is out of range.
+  at Command.GetCurrentAction (.Timing startedTiming) [0x00000] in <filename unknown>:0 
+  at BattleConductor.UpdateBattle () [0x00000] in <filename unknown>:0 
+  at BattleConductor.Update () [0x00000] in <filename unknown>:0 
  
-(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
-
-Player was Attacked! 0Damage! HitPoint is 10
- 
-(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
-
-Skipped some timing: OldJust = 2 0 0, Just = 2 0 3
- 
-(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
-
-Player was Attacked! 0Damage! HitPoint is 10
- 
-(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
-
-CurrentBlockIndex is 0
- 
-(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
-
-wisp(Clone) was Attacked! 2Damage! HitPoint is 2
- 
-(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+(Filename:  Line: -1)
 
 Player was Attacked! 1Damage! HitPoint is 9
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-wisp(Clone) was Attacked! 2Damage! HitPoint is 2
+Skipped some timing: OldJust = 0 2 0, Just = 0 2 2
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Skipped some timing: OldJust = 0 2 3, Just = 0 3 1
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -75,7 +98,19 @@ Player was Attacked! 1Damage! HitPoint is 8
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-wisp(Clone) was Attacked! 2Damage! HitPoint is 0
+wisp(Clone) was MagicAttacked! 3Damage! HitPoint is 1
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+wisp(Clone) was MagicAttacked! 3Damage! HitPoint is -2
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+wisp(Clone) was MagicAttacked! 3Damage! HitPoint is 1
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+wisp(Clone) was MagicAttacked! 3Damage! HitPoint is -2
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -83,27 +118,26 @@ Player was Attacked! 1Damage! HitPoint is 7
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-wisp(Clone) was Attacked! 2Damage! HitPoint is 0
+wisp(Clone) was MagicAttacked! 3Damage! HitPoint is 1
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-CurrentBlockIndex is 0
+wisp(Clone) was MagicAttacked! 3Damage! HitPoint is -2
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-wisp(Clone) was Attacked! 2Damage! HitPoint is 2
+IndexOutOfRangeException: Array index is out of range.
+  at Command.GetCurrentAction (.Timing startedTiming) [0x00000] in <filename unknown>:0 
+  at BattleConductor.UpdateBattle () [0x00000] in <filename unknown>:0 
+  at BattleConductor.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+Skipped some timing: OldJust = 3 2 1, Just = 3 3 2
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-Player was Attacked! 1Damage! HitPoint is 6
- 
-(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
-
-wisp(Clone) was Attacked! 2Damage! HitPoint is 0
- 
-(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
-
-CurrentBlockIndex is 5
+CurrentBlockIndex is 8
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -123,7 +157,7 @@ EnterState:Intro
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-Error!! Music.SetNextBlock Can't find block name: ppaa
+Error!! Music.SetNextBlock Can't find block name: GotoAttack
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -139,7 +173,27 @@ EnterState:Battle
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
+wisp(Clone) was Attacked! 2Damage! HitPoint is 2
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Player was Attacked! 1Damage! HitPoint is 6
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Skipped some timing: OldJust = 0 2 2, Just = 0 3 1
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+wisp(Clone) was Attacked! 2Damage! HitPoint is 2
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
 Player was Attacked! 1Damage! HitPoint is 5
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+wisp(Clone) was Attacked! 2Damage! HitPoint is 2
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -147,11 +201,15 @@ Player was Attacked! 1Damage! HitPoint is 4
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-wisp(Clone) was Attacked! 4Damage! HitPoint is 0
+wisp(Clone) was Attacked! 2Damage! HitPoint is 0
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-wisp(Clone) was Attacked! 4Damage! HitPoint is 0
+CurrentBlockIndex is 0
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+wisp(Clone) was Attacked! 2Damage! HitPoint is 0
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -159,11 +217,11 @@ Player was Attacked! 1Damage! HitPoint is 3
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-wisp(Clone) was Attacked! 4Damage! HitPoint is 0
+wisp(Clone) was Attacked! 2Damage! HitPoint is 0
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-CurrentBlockIndex is 5
+CurrentBlockIndex is 6
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -215,7 +273,7 @@ Player was Attacked! 1Damage! HitPoint is 2
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-wisp(Clone) was Attacked! 2Damage! HitPoint is 2
+wisp(Clone) was Attacked! 2Damage! HitPoint is 0
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -231,7 +289,19 @@ Player was Attacked! 0Damage! HitPoint is 2
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
+wisp(Clone) was Attacked! 2Damage! HitPoint is 2
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
 wisp(Clone) was Attacked! 2Damage! HitPoint is 0
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+CurrentBlockIndex is 0
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+wisp(Clone) was Attacked! 2Damage! HitPoint is 2
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -243,11 +313,63 @@ wisp(Clone) was Attacked! 2Damage! HitPoint is 0
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
+CurrentBlockIndex is 6
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+EnterState:Endro
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+[CRIWARE] Warning:W2012021700:Some sounds are still playing when current block was gone.
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+EnterState:Field
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+EnterState:Intro
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Error!! Music.SetNextBlock Can't find block name: ppaa
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
 CurrentBlockIndex is 1
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-Player was Attacked! 0Damage! HitPoint is 1
+EnterState:Battle
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+[CRIWARE] Warning:W2012021700:Some sounds are still playing when current block was gone.
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Player was Attacked! 1Damage! HitPoint is 0
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Player was Attacked! 1Damage! HitPoint is -1
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+wisp(Clone) was Attacked! 4Damage! HitPoint is 0
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+Player was Attacked! 1Damage! HitPoint is -2
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+wisp(Clone) was Attacked! 4Damage! HitPoint is 0
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+CurrentBlockIndex is 0
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
@@ -255,15 +377,23 @@ wisp(Clone) was Attacked! 2Damage! HitPoint is 2
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
+Player was Attacked! 1Damage! HitPoint is -3
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
 wisp(Clone) was Attacked! 2Damage! HitPoint is 0
  
 (Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
-IndexOutOfRangeException: Array index is out of range.
-  at PlayerConductor.OnBarStarted (Int32 CurrentIndex) [0x00000] in <filename unknown>:0 
-  at BattleConductor.OnBarStarted (Int32 CurrentIndex) [0x00000] in <filename unknown>:0 
-  at BattleConductor.UpdateBattle () [0x00000] in <filename unknown>:0 
-  at BattleConductor.Update () [0x00000] in <filename unknown>:0 
+CurrentBlockIndex is 6
  
-(Filename:  Line: -1)
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+EnterState:Endro
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
+
+[CRIWARE] Warning:W2012021700:Some sounds are still playing when current block was gone.
+ 
+(Filename: C:/BuildAgent/work/cac08d8a5e25d4cb/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 54)
 
