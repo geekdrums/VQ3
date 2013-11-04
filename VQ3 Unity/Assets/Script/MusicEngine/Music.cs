@@ -246,6 +246,7 @@ public class Music : MonoBehaviour
 
 	public static void SetNextBlock( string blockName )
 	{
+		Debug.Log( "SetNextBlock : "+blockName );
 		int index = Current.BlockInfos.FindIndex( ( BlockInfo info ) => info.BlockName==blockName );
 		if ( index >= 0 )
 		{
@@ -353,7 +354,16 @@ public class Music : MonoBehaviour
 
 	void Initialize()
 	{
-		Now_ = new Timing( 0, 0, -1 );
+		if ( Current != null && isJustChanged && Just.totalUnit == 0 )
+		{
+			Now_ = new Timing( 0, 0, 0 );
+			isJustChanged_ = true;
+		}
+		else
+		{
+			Now_ = new Timing( 0, 0, -1 );
+			isJustChanged_ = false;
+		}
 		Just_ = new Timing( Now_ );
 		OldNow = new Timing( Now_ );
 		OldJust = new Timing( Just_ );
@@ -375,8 +385,8 @@ public class Music : MonoBehaviour
 			Stop();
 		}
 
-		Current = this;
 		Initialize();
+		Current = this;
 
 		WillBlockChange();
 		if ( firstBlockName != "" )
@@ -475,7 +485,6 @@ public class Music : MonoBehaviour
 		{
 #if ADX
 			CurrentBlockIndex = playback.GetCurrentBlockIndex();
-			Debug.Log( "CurrentBlockIndex is " + CurrentBlockIndex );
 			if ( OldBlockIndex == CurrentBlockIndex )
 			{
 #endif

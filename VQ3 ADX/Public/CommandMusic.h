@@ -4,8 +4,8 @@
  *  Tool Ver.        : CRI Atom Craft LE Ver.1.30.00
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/CommandMusic.acb
  *  File Name        : CommandMusic.acb
- *  File Size        : 7,949,664 bytes
- *  Date Time        : 2013/10/24 21:00
+ *  File Size        : 7,949,792 bytes
+ *  Date Time        : 2013/11/03 20:53
  *  Target           : Public
  *  Cues             : 4
  *  CueSheet Comment : 
@@ -44,7 +44,8 @@
 #define CRI_COMMANDMUSIC_BLOCK_MAGIC_ENDRO        ( 8) /* endro  */
 #define CRI_COMMANDMUSIC_BLOCK_BREAK_BBBB         ( 0) /* bbbb  */
 #define CRI_COMMANDMUSIC_BLOCK_BREAK_MAGIC        ( 1) /* magic  */
-#define CRI_COMMANDMUSIC_BLOCK_BREAK_ENDRO        ( 2) /* endro  */
+#define CRI_COMMANDMUSIC_BLOCK_BREAK_ATTACK       ( 2) /* attack  */
+#define CRI_COMMANDMUSIC_BLOCK_BREAK_ENDRO        ( 3) /* endro  */
 
 /* end of file */
 

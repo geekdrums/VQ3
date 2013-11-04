@@ -156,7 +156,7 @@
                 <Orca OrcaName="Block_battle_tempIntro" BlockEndPositionMs="3428" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
               </Orca>
             </Orca>
-            <Orca OrcaName="CommandMusic" OoUniqId="8127efc3-e1b3-4398-8ff7-4e2eaea3ab0b" AcbOutputDirectory="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/" AwbOutputDirectory="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Public/CommandMusic/CommandMusic.awb" AcfMd5hash="RyGgFFEIPxud3hrvo5EMMg==" LastOutputCueSheetSize="7966048" CueSheetPaddingSize="2048" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSheet">
+            <Orca OrcaName="CommandMusic" OoUniqId="8127efc3-e1b3-4398-8ff7-4e2eaea3ab0b" AcbOutputDirectory="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/" AwbOutputDirectory="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Public/CommandMusic/CommandMusic.awb" AcfMd5hash="RyGgFFEIPxud3hrvo5EMMg==" LastOutputCueSheetSize="7949664" CueSheetPaddingSize="2048" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSheet">
               <Orca OrcaName="Attack" CueID="0" Bpm="144" SynthType="SynthPolyphonic" DisplayUnit="Bars" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
                 <Orca OrcaName="Track_aaaa_Accomp" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
                   <Orca OrcaName="aaaa_Accomp.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/aaaa_Accomp.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
@@ -177,6 +177,7 @@
                   <Orca OrcaName="aaaa_MeloTrans.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Attack/aaaa_MeloTrans.wav" SynthType="Waveform" DelayTimeMS="26666" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
                 </Orca>
                 <Orca OrcaName="aaaaTrans" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockDivisionNum="4" BlockTransitionTiming="Division" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="magic" BlockEndPositionMs="1667" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
                 <Orca OrcaName="endro" BlockEndPositionMs="1668" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
               </Orca>
               <Orca OrcaName="IntroEndro" CueID="1" Bpm="144" SynthType="SynthPolyphonic" DisplayUnit="Bars" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
@@ -238,9 +239,16 @@
                   <Orca OrcaName="mm_EngTrans2.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Magic/mm_EngTrans2.wav" SynthType="Waveform" DelayTimeMS="29998" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
                   <Orca OrcaName="mm_EngTrans1.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Magic/mm_EngTrans1.wav" SynthType="Waveform" DelayTimeMS="33332" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
                   <Orca OrcaName="mm_EngTrans2.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/Magic/mm_EngTrans2.wav" SynthType="Waveform" DelayTimeMS="36665" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
+                  <Orca OrcaName="Energy" AisacControl="/CRI Atom Craft/VQ3ADX/全体設定/AISACコントロール/AisacControl02" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
+                    <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
+                      <Orca OrcaName="(no name)" ControlValue="0" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                      <Orca OrcaName="(no name)" ControlValue="1" DestinationValue="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                    </Orca>
+                  </Orca>
                 </Orca>
                 <Orca OrcaName="mmmmTrans" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockDivisionNum="4" BlockTransitionTiming="Division" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
                 <Orca OrcaName="hhmmTrans" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockDivisionNum="4" BlockTransitionTiming="Division" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+                <Orca OrcaName="attack" BlockEndPositionMs="1670" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockTransitionTiming="Division" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
                 <Orca OrcaName="break" BlockEndPositionMs="1670" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockTransitionTiming="Division" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
                 <Orca OrcaName="endro" BlockEndPositionMs="1670" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockTransitionTiming="Division" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
               </Orca>

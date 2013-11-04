@@ -6,9 +6,24 @@ public class EnemyConductor : MonoBehaviour {
     
     List<Enemy> Enemies = new List<Enemy>();
 
+	Color _baseColor;
+	public Color baseColor
+	{
+		get { return _baseColor; }
+		set
+		{
+			_baseColor = value;
+			foreach ( Enemy e in Enemies )
+			{
+				e.renderer.material.color = value;
+			}
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		GameContext.EnemyConductor = this;
+		baseColor = Color.black;
 	}
 	
 	// Update is called once per frame
@@ -23,6 +38,7 @@ public class EnemyConductor : MonoBehaviour {
         for( int i=0; i<NewEnemies.Length; ++i )
         {
             TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 10 * (-(NewEnemies.Length - 1)/ 2.0f + i), 5, 20 ), NewEnemies[i].transform.rotation );
+			TempObj.renderer.material.color = baseColor;
             Enemies.Add( TempObj.GetComponent<Enemy>() );
         }
     }
@@ -49,6 +65,7 @@ public class EnemyConductor : MonoBehaviour {
 				e.BeMagicAttacked( magic, command );
 				isSucceeded = true;
 			}
+			GameContext.BattleConductor.AddVoxon( magic.VoxonEnergy );
 		}
 
 		Enemies.RemoveAll( ( Enemy e ) => e.HitPoint<=0 );
@@ -84,6 +101,8 @@ public class EnemyConductor : MonoBehaviour {
 
     public void OnBarStarted(int CurrentIndex)
     {
+		if ( GameContext.BattleConductor.state == BattleConductor.VoxonState.Break ) return;
+		if ( GameContext.BattleConductor.state == BattleConductor.VoxonState.ShowBreak && CurrentIndex == 3 ) return;
         if (CurrentIndex < Enemies.Count)
         {
             Command commandPrefab = Enemies[CurrentIndex].GetExecCommand();

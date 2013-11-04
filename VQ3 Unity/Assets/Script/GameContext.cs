@@ -42,13 +42,14 @@ public static class GameContext
 		{
 		case GameState.Intro:
 			Music.Play( "IntroEndro", "intro" );
+			PlayerConductor.OnBattleStarted();
 			break;
 		case GameState.Endro:
 			Music.Play( "IntroEndro", "endro" );
 			break;
 		case GameState.Battle:
 			Music.Play( PlayerConductor.NextStrategyName, PlayerConductor.NextBlockName );
-            break;
+			break;
         case GameState.Field:
             //Music.Play( "fieldMusic" );
             break;
