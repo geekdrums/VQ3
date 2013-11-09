@@ -60,6 +60,7 @@
      <Compile Include="Assets\Script\Field\Encounter.cs" />
      <Compile Include="Assets\Script\Field\FieldConductor.cs" />
      <Compile Include="Assets\Script\GameContext.cs" />
+     <Compile Include="Assets\Script\MusicEngine\ADXMusic.cs" />
      <Compile Include="Assets\Script\MusicEngine\Elements\Chord.cs" />
      <Compile Include="Assets\Script\MusicEngine\Elements\Note.cs" />
      <Compile Include="Assets\Script\MusicEngine\Elements\Scale.cs" />
@@ -69,6 +70,7 @@
      <Compile Include="Assets\Script\MusicEngine\Motif\Phrase.cs" />
      <Compile Include="Assets\Script\MusicEngine\Motif\Rhythm.cs" />
      <Compile Include="Assets\Script\MusicEngine\Music.cs" />
+     <Compile Include="Assets\Script\MusicEngine\UnityMusic.cs" />
      <Compile Include="Assets\Script\Utils\TextWindow.cs" />
      <Compile Include="Assets\Script\Utils\Utils.cs" />
      <None Include="Assets\Models\unity-skybox-shaders-master\GradientSkybox.shader" />

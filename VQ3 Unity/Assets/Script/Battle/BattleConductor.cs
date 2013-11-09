@@ -34,7 +34,7 @@ public class BattleConductor : MonoBehaviour {
 		switch ( GameContext.CurrentState )
 		{
 		case GameContext.GameState.Intro:
-			if ( Music.IsJustChangedAt( 0 ) && Music.GetCurrentBlockName() == "battle" )
+			if ( Music.IsJustChangedAt( 0 ) && ( Music.UseADX ? Music.GetCurrentBlockName() == "battle" : Music.CurrentMusicName != "intro" ) )
 			{
 				GameContext.ChangeState( GameContext.GameState.Battle );
 				UpdateBattle();
@@ -125,7 +125,7 @@ public class BattleConductor : MonoBehaviour {
 	{
 		currentVoxon = Mathf.Clamp( currentVoxon + value, 0, BREAK_VOXON );
 		voxonSystem.SetCurrentVoxon( (float)currentVoxon/BREAK_VOXON );
-		Music.CurrentSource.source.SetAisac( 2, Mathf.Sqrt( (float)currentVoxon/BREAK_VOXON ) );
+		Music.SetAisac( 2, Mathf.Sqrt( (float)currentVoxon/BREAK_VOXON ) );
 	}
 	public bool DetermineWillShowBreak( int willGainVoxon )
 	{
