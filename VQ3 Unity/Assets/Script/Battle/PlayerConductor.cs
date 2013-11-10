@@ -265,6 +265,11 @@ public class PlayerConductor : MonoBehaviour {
 		DefendModule defend = Action.GetModule<DefendModule>();
         if( defend != null && command.isPlayerAction )
 		{
+			DefendEffect effect = command.GetComponentInChildren<DefendEffect>();
+			if ( effect != null )
+			{
+				effect.Play();
+			}
 			Player.Defend( defend );
 			isSucceeded = true;
 		}
