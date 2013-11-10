@@ -18,7 +18,7 @@ public class PlayerConductor : MonoBehaviour {
 	public string NextStrategyName { get { return NextStrategy.ToString(); } }
 
 	int RemainBreakTime;
-	Timing AllowInputTime = new Timing( 3, 3, 3 );
+	Timing AllowInputTime = new Timing( 3, 3, 2 );
 
 	// Use this for initialization
 	void Start () {
@@ -44,7 +44,7 @@ public class PlayerConductor : MonoBehaviour {
 		}
 		if ( Music.Just < AllowInputTime )
 		{
-			if ( GameContext.BattleConductor.state == BattleConductor.VoxonState.ShowBreak )
+			if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak )
 			{
 				if ( Music.IsJustChangedAt( 3 ) )
 				{
@@ -53,14 +53,14 @@ public class PlayerConductor : MonoBehaviour {
 					NextBlockName = "bbbb";
 				}
 			}
-			else if ( GameContext.BattleConductor.state == BattleConductor.VoxonState.Break )
+			else if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break )
 			{
 				if ( RemainBreakTime == 1 )
 				{
 					UpdateInput();
 					if ( Music.IsJustChangedAt( 3, 2 ) )
 					{
-						GameContext.BattleConductor.SetState( BattleConductor.VoxonState.HideBreak );
+						GameContext.VoxonSystem.SetState( VoxonSystem.VoxonState.HideBreak );
 					}
 				}
 			}
@@ -77,6 +77,7 @@ public class PlayerConductor : MonoBehaviour {
 
 	void PlayNextMusic()
 	{
+		Debug.Log( "PlayNextMusic: BlockName=" + Music.GetCurrentBlockName() );
 		if ( Music.GetCurrentBlockName() == "GotoMagic" )
 		{
 			Music.Play( "Magic", NextBlockName );
@@ -172,7 +173,7 @@ public class PlayerConductor : MonoBehaviour {
 		}
 		else // CurrentStrategy == NextStrategy != EStrategy.Break
 		{
-			bool willShowBreak = GameContext.BattleConductor.DetermineWillShowBreak( GetWillGainVoxon() );
+			bool willShowBreak = GameContext.VoxonSystem.DetermineWillShowBreak( GetWillGainVoxon() );
 			Music.SetNextBlock( NextBlockName + ( willShowBreak ? "Trans" : "" ) );
 		}
 	}
@@ -194,41 +195,41 @@ public class PlayerConductor : MonoBehaviour {
 		return sum;
 	}
 
-	BattleConductor.VoxonState GetDesiredVoxonState()
+	VoxonSystem.VoxonState GetDesiredVoxonState()
 	{
 		if ( NextStrategy == EStrategy.Magic )
 		{
-			if ( GameContext.BattleConductor.state != BattleConductor.VoxonState.ShowBreak )
+			if ( GameContext.VoxonSystem.state != VoxonSystem.VoxonState.ShowBreak )
 			{
-				return BattleConductor.VoxonState.Show;
+				return VoxonSystem.VoxonState.Show;
 			}
 			else
 			{
-				return BattleConductor.VoxonState.ShowBreak;
+				return VoxonSystem.VoxonState.ShowBreak;
 			}
 		}
 		else if ( NextStrategy == EStrategy.Attack )
 		{
-			return BattleConductor.VoxonState.Hide;
+			return VoxonSystem.VoxonState.Hide;
 		}
 		else// if ( NextStrategy == EStrategy.Break )
 		{
-			return BattleConductor.VoxonState.Break;
+			return VoxonSystem.VoxonState.Break;
 		}
 	}
 
 	public void On4BarStarted()
 	{
-		if ( GameContext.BattleConductor.state != GetDesiredVoxonState() )
+		if ( GameContext.VoxonSystem.state != GetDesiredVoxonState() )
 		{
-			GameContext.BattleConductor.SetState( GetDesiredVoxonState() );
+			GameContext.VoxonSystem.SetState( GetDesiredVoxonState() );
 		}
 
 		CurrentStrategy = NextStrategy;
 		CurrentCommandList[0] = NextCommandList[0];
 		CurrentCommandList[1] = NextCommandList[1];
 		CurrentCommandList[2] = NextCommandList[2];
-		if ( GameContext.BattleConductor.state == BattleConductor.VoxonState.ShowBreak )
+		if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak )
 		{
 			CurrentCommandList[3] = ECommand.Wait;
 		}

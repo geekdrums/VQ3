@@ -65,7 +65,7 @@ public class EnemyConductor : MonoBehaviour {
 				e.BeMagicAttacked( magic, command );
 				isSucceeded = true;
 			}
-			GameContext.BattleConductor.AddVoxon( magic.VoxonEnergy );
+			GameContext.VoxonSystem.AddVoxon( magic.VoxonEnergy );
 		}
 
 		Enemies.RemoveAll( ( Enemy e ) => e.HitPoint<=0 );
@@ -101,8 +101,8 @@ public class EnemyConductor : MonoBehaviour {
 
     public void OnBarStarted(int CurrentIndex)
     {
-		if ( GameContext.BattleConductor.state == BattleConductor.VoxonState.Break ) return;
-		if ( GameContext.BattleConductor.state == BattleConductor.VoxonState.ShowBreak && CurrentIndex == 3 ) return;
+		if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break ) return;
+		if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak && CurrentIndex == 3 ) return;
         if (CurrentIndex < Enemies.Count)
         {
             Command commandPrefab = Enemies[CurrentIndex].GetExecCommand();

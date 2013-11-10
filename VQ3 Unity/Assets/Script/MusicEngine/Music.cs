@@ -10,10 +10,19 @@ using System.Collections.Generic;
 public class Music : MonoBehaviour
 {
 	public bool UseADX_;
+	GUIText debugText;
 	void Awake()
 	{
 		UseADX = UseADX_;
 		Debug.Log( "UseADX_ = " + UseADX_.ToString() );
+		debugText = GetComponentInChildren<GUIText>();
+	}
+	void Update()
+	{
+		if ( debugText!= null )
+		{
+			debugText.text = Just.ToString();
+		}
 	}
 
 	public static bool UseADX;

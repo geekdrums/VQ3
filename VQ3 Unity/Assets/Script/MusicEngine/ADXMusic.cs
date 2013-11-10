@@ -522,7 +522,7 @@ public class ADXMusic : MonoBehaviour
 			NumBlockBar = BlockInfos[playback.GetCurrentBlockIndex()].NumBar;
 		}
 		//BlockChanged during this block
-		else if ( playback.GetCurrentBlockIndex() != CurrentBlockIndex && Just_.bar != BlockInfos[CurrentBlockIndex].NumBar - 1 )
+		else if ( playback.GetCurrentBlockIndex() != CurrentBlockIndex && Just_.bar < BlockInfos[CurrentBlockIndex].NumBar - 1 )
 		{
 			NumBlockBar = Just_.bar + 1;
 		}

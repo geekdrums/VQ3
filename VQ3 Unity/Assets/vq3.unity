@@ -114,6 +114,56 @@ Prefab:
   m_RootGameObject: {fileID: 1235157510}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &73082506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 73082507}
+  - 132: {fileID: 73082508}
+  m_Layer: 0
+  m_Name: GUI Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &73082507
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 73082506}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1974129620}
+--- !u!132 &73082508
+GUIText:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 73082506}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Text: 
+  m_Anchor: 0
+  m_Alignment: 0
+  m_PixelOffset: {x: 0, y: 0}
+  m_LineSpacing: 1
+  m_TabSize: 4
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Material: {fileID: 0}
+  m_FontSize: 0
+  m_FontStyle: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278190335
+  m_PixelCorrect: 1
+  m_RichText: 1
 --- !u!1 &134065695
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +711,7 @@ GUIText:
   m_Enabled: 1
   serializedVersion: 3
   m_Text: A:Attack*4,   P:PowerAttack,   G:Guard*4,   D:Guard*2-Attack*2
-  m_Anchor: 0
+  m_Anchor: 6
   m_Alignment: 0
   m_PixelOffset: {x: 0, y: 0}
   m_LineSpacing: 1
@@ -682,7 +732,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 522976049}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: .0500000007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1396,9 +1446,11 @@ MonoBehaviour:
   LINEAR_FACTOR: .150000006
   linePrefab: {fileID: 100000, guid: 75c473923851a6e4e94302da7222fcb5, type: 2}
   voxonCircle: {fileID: 1517166312}
-  initialBGColor: {r: .970588207, g: .970588207, b: .970588207, a: 0}
-  maxBGColor: {r: .875, g: .875, b: .875, a: 0}
+  initialBGColor: {r: .882352948, g: .882352948, b: .882352948, a: 0}
+  maxBGColor: {r: .772058845, g: .772058845, b: .772058845, a: 0}
   breakBGColor: {r: 0, g: 0, b: 0, a: 0}
+  hidePosition: {x: 0, y: 55, z: 80}
+  showPosition: {x: 0, y: 5, z: 25}
 --- !u!1 &1014535471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2008,8 +2060,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Encounters:
-  - {fileID: 435263932}
   - {fileID: 1014535472}
+  - {fileID: 435263932}
 --- !u!1 &1493466299
 GameObject:
   m_ObjectHideFlags: 0
@@ -2229,7 +2281,7 @@ GUIText:
   m_Enabled: 1
   serializedVersion: 3
   m_Text: M:Magic*4,   F:FireMagic,        H:Heal*4,     C:Heal*2-Magic*2
-  m_Anchor: 0
+  m_Anchor: 6
   m_Alignment: 0
   m_PixelOffset: {x: 0, y: -12}
   m_LineSpacing: 1
@@ -2250,7 +2302,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1523892096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: .0399999991, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2846,11 +2898,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1974129619}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.13775253, y: -2.57815695, z: 16.0811386}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2060954394}
   - {fileID: 1550794427}
+  - {fileID: 73082507}
   - {fileID: 1723616891}
   - {fileID: 815279222}
   m_Father: {fileID: 0}

@@ -6,20 +6,7 @@ public class BattleConductor : MonoBehaviour {
 
 	List<Pair<Timing, Command>> Commands;
 
-	public enum VoxonState
-	{
-		Hide,
-		Show,
-		ShowBreak,
-		Break,
-		HideBreak,
-	}
-	public VoxonState state { get; private set; }
 	public VoxonSystem voxonSystem;
-
-	readonly int BREAK_VOXON = 6;
-	int deltaVoxon = 1;
-	int currentVoxon = 0;
 
 	// Use this for initialization
 	void Start ()
@@ -42,10 +29,9 @@ public class BattleConductor : MonoBehaviour {
 			break;
 		case GameContext.GameState.Battle:
             UpdateBattle();
-			if ( Music.IsJustChangedAt( 0 ) && Music.GetCurrentBlockName() == "GotoEndro" )
+			if ( Music.IsJustChangedAt(0) && Music.GetCurrentBlockName() == "GotoEndro" )
 			{
-				SetState( VoxonState.HideBreak );
-				AddVoxon( -currentVoxon );
+				voxonSystem.SetState( VoxonSystem.VoxonState.HideBreak );
 				GameContext.ChangeState( GameContext.GameState.Endro );
 				TextWindow.AddMessage( "てきを　やっつけた！", "３のけいけんちを　えた！" );
 			}
@@ -99,10 +85,6 @@ public class BattleConductor : MonoBehaviour {
 		{
 			GameContext.PlayerConductor.On4BarStarted();
 		}
-		else if ( CurrentIndex == 3 && state != VoxonState.ShowBreak && state != VoxonState.Break )
-		{
-			AddVoxon( -deltaVoxon );
-		}
         GameContext.PlayerConductor.OnBarStarted(CurrentIndex);
         GameContext.EnemyConductor.OnBarStarted(CurrentIndex);
 	}
@@ -119,40 +101,5 @@ public class BattleConductor : MonoBehaviour {
 	}
 	public void OnPlayerLose()
 	{
-	}
-
-	public void AddVoxon( int value )
-	{
-		currentVoxon = Mathf.Clamp( currentVoxon + value, 0, BREAK_VOXON );
-		voxonSystem.SetCurrentVoxon( (float)currentVoxon/BREAK_VOXON );
-		Music.SetAisac( 2, Mathf.Sqrt( (float)currentVoxon/BREAK_VOXON ) );
-	}
-	public bool DetermineWillShowBreak( int willGainVoxon )
-	{
-		if ( currentVoxon + willGainVoxon >= BREAK_VOXON )
-		{
-			SetState( VoxonState.ShowBreak );
-		}
-		return state == VoxonState.ShowBreak;
-	}
-
-	public void SetState( VoxonState newState )
-	{
-		Debug.Log( "SetState: "+newState );
-		switch( newState )
-		{
-		case VoxonState.Hide:
-			voxonSystem.Hide();
-			break;
-		case VoxonState.HideBreak:
-			AddVoxon( -currentVoxon );
-			voxonSystem.HideBreak();
-			GameContext.EnemyConductor.baseColor = Color.black;
-			break;
-		case VoxonState.Show:
-			voxonSystem.SetCurrentVoxon( (float)currentVoxon/BREAK_VOXON );
-			break;
-		}
-		state = newState;
 	}
 }
