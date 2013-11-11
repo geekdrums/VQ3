@@ -29,10 +29,10 @@ public class PlayerConductor : MonoBehaviour {
 
 	void InitializeCommand()
 	{
-		NextStrategy = EStrategy.Magic;
+		NextStrategy = EStrategy.Attack;
 		CurrentStrategy = NextStrategy;
-		NextCommandList = Strategies[(int)CurrentStrategy].CommandList[0];
-		NextBlockName = "mmmm";
+		NextCommandList = Strategies[(int)CurrentStrategy].CommandList[2];
+		NextBlockName = "gggg";
 	}
 	
 	// Update is called once per frame
