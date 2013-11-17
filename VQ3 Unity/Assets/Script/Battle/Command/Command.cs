@@ -36,6 +36,11 @@ public class Command : MonoBehaviour
 
     void Awake()
     {
+        Parse();
+    }
+
+    public void Parse()
+    {
         if( RhythmStr != "" )
         {
             ActionRhythm = new Rhythm( 4, RhythmStr );
@@ -55,7 +60,10 @@ public class Command : MonoBehaviour
     void Start()
     {
 		CommandAnim = GetComponentInChildren<Animation>();
-		//GetComponentInChildren<Animation>()["attackAnim"].speed = 0.1f;
+        if( CommandAnim != null && CommandAnim.GetClip( name.Replace( "Command(Clone)", "Anim" ) )  != null )
+        {            
+            CommandAnim[name.Replace( "Command(Clone)", "Anim" )].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
+        }
     }
 
     // Update is called once per frame

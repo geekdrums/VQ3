@@ -14,7 +14,18 @@ public class PlayerConductor : MonoBehaviour {
 	ECommand[] NextCommandList = new ECommand[4];
 	ECommand[] CurrentCommandList = new ECommand[4];
 
-	public string NextBlockName { get; protected set; }
+    public string NextBlockName
+    {
+        get
+        {
+            string res = "";
+            for( int i = 0; i < NextCommandList.Length; ++i )
+            {
+                res += NextCommandList[i].ToString().ToLower()[0];
+            }
+            return res;
+        }
+    }
 	public string NextStrategyName { get { return NextStrategy.ToString(); } }
 
 	int RemainBreakTime;
@@ -32,7 +43,6 @@ public class PlayerConductor : MonoBehaviour {
 		NextStrategy = EStrategy.Attack;
 		CurrentStrategy = NextStrategy;
 		NextCommandList = Strategies[(int)CurrentStrategy].CommandList[2];
-		NextBlockName = "gggg";
 	}
 	
 	// Update is called once per frame
@@ -50,7 +60,6 @@ public class PlayerConductor : MonoBehaviour {
 				{
 					NextStrategy = EStrategy.Break;
 					NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
-					NextBlockName = "bbbb";
 				}
 			}
 			else if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break )
@@ -99,50 +108,42 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			NextStrategy = EStrategy.Attack;
 			NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
-			NextBlockName = "aaaa";
 		}
 		else if ( Input.GetKeyDown( KeyCode.P ) )
 		{
 			NextStrategy = EStrategy.Attack;
 			NextCommandList = Strategies[(int)NextStrategy].CommandList[1];
-			NextBlockName = "ppaa";
 		}
 		else if ( Input.GetKeyDown( KeyCode.G ) )
 		{
 			NextStrategy = EStrategy.Attack;
 			NextCommandList = Strategies[(int)NextStrategy].CommandList[2];
-			NextBlockName = "gggg";
 		}
 		else if ( Input.GetKeyDown( KeyCode.D ) )
 		{
 			NextStrategy = EStrategy.Attack;
 			NextCommandList = Strategies[(int)NextStrategy].CommandList[3];
-			NextBlockName = "ggaa";
 		}
 		else if ( Input.GetKeyDown( KeyCode.M ) )
 		{
 			NextStrategy = EStrategy.Magic;
 			NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
-			NextBlockName = "mmmm";
 		}
 		else if ( Input.GetKeyDown( KeyCode.H ) )
 		{
 			NextStrategy = EStrategy.Magic;
 			NextCommandList = Strategies[(int)NextStrategy].CommandList[1];
-			NextBlockName = "hhhh";
 		}
 		else if ( Input.GetKeyDown( KeyCode.C ) )
 		{
 			NextStrategy = EStrategy.Magic;
 			NextCommandList = Strategies[(int)NextStrategy].CommandList[2];
-			NextBlockName = "hhmm";
 		}
 		else if ( Input.GetKeyDown( KeyCode.F ) )
 		{
 			NextStrategy = EStrategy.Magic;
 			NextCommandList = Strategies[(int)NextStrategy].CommandList[3];
-			NextBlockName = "ffff";
-		}
+        }
 	}
 
 	void SetNextBlock()
@@ -162,7 +163,6 @@ public class PlayerConductor : MonoBehaviour {
 				{
 					NextStrategy = EStrategy.Magic;
 					NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
-					NextBlockName = "mmmm";
 				}
 				Music.SetNextBlock( "Goto" + NextStrategy.ToString() );
 			}
@@ -174,15 +174,20 @@ public class PlayerConductor : MonoBehaviour {
 		else // CurrentStrategy == NextStrategy != EStrategy.Break
 		{
 			bool willShowBreak = GameContext.VoxonSystem.DetermineWillShowBreak( GetWillGainVoxon() );
-			Music.SetNextBlock( NextBlockName + ( willShowBreak ? "Trans" : "" ) );
+            Music.SetNextBlock( NextBlockName + (willShowBreak ? "Trans" : "") );
 		}
 	}
+
 
 	int GetWillGainVoxon()
 	{
 		int sum = 0;
 		for ( int i=0; i<3; ++i )
 		{
+            if( Commands[(int)NextCommandList[i]].Actions == null )
+            {
+                Commands[(int)NextCommandList[i]].Parse();
+            }
 			ActionSet[] actions = Commands[(int)NextCommandList[i]].Actions;
 			foreach ( ActionSet a in actions )
 			{
@@ -244,6 +249,7 @@ public class PlayerConductor : MonoBehaviour {
 		Player.OnBarStarted( CurrentIndex );
 		ECommand Command = CurrentCommandList[CurrentIndex%4];
 		Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
+        //NewCommand.Parse();
 		NewCommand.SetOwner( Player );
 		GameContext.BattleConductor.ExecCommand( NewCommand );
 	}
@@ -265,11 +271,6 @@ public class PlayerConductor : MonoBehaviour {
 		DefendModule defend = Action.GetModule<DefendModule>();
         if( defend != null && command.isPlayerAction )
 		{
-			DefendEffect effect = command.GetComponentInChildren<DefendEffect>();
-			if ( effect != null )
-			{
-				effect.Play();
-			}
 			Player.Defend( defend );
 			isSucceeded = true;
 		}

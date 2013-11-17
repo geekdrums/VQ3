@@ -37,7 +37,7 @@ public class EnemyConductor : MonoBehaviour {
         GameObject TempObj;
         for( int i=0; i<NewEnemies.Length; ++i )
         {
-            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 10 * (-(NewEnemies.Length - 1)/ 2.0f + i), 5, 20 ), NewEnemies[i].transform.rotation );
+            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 10 * (-(NewEnemies.Length - 1)/ 2.0f + i), 0, 0 ), NewEnemies[i].transform.rotation );
 			TempObj.renderer.material.color = baseColor;
             Enemies.Add( TempObj.GetComponent<Enemy>() );
         }

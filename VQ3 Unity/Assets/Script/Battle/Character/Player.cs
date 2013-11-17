@@ -3,7 +3,9 @@ using System.Collections;
 
 public class Player : Character {
 	Vector3 initialPosition;
-	GUILayer guiLayer;
+    GUILayer guiLayer;
+
+    public GameObject DefendAnimPrefab;
 
 	// Use this for initialization
 	void Start()
@@ -31,8 +33,6 @@ public class Player : Character {
 		}
 	}
 
-
-
 	public override string ToString()
 	{
 		return "Player";
@@ -47,12 +47,23 @@ public class Player : Character {
 		}
 	}
 
-	public override void BeAttacked( AttackModule attack, Command command )
-	{
-		base.BeAttacked( attack, command );
-		if ( HitPoint <= 0 )
-		{
-			GameContext.BattleConductor.OnPlayerLose();
-		}
-	}
+    public override void BeAttacked( AttackModule attack, Command command )
+    {
+        int damage = Mathf.Max( 0, attack.AttackPower + command.OwnerCharacter.AttackPower - DefendPower );
+        BeDamaged( damage );
+        if( damage <= 0 )
+        {
+            SEPlayer.Play( ActionResult.Guarded, true );
+            Instantiate( DefendAnimPrefab, command.OwnerCharacter.transform.position + new Vector3(0,0,-0.1f), DefendAnimPrefab.transform.rotation );
+        }
+        else
+        {
+            SEPlayer.Play( ActionResult.Damaged, this is Player );
+        }
+
+        if( HitPoint <= 0 )
+        {
+            GameContext.BattleConductor.OnPlayerLose();
+        }
+    }
 }

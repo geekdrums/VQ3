@@ -33,7 +33,7 @@ public class Character : MonoBehaviour {
 		//Debug.Log( this.ToString() + " was MagicAttacked! " + magic.MagicPower + "Damage! HitPoint is " + HitPoint );
 	}
 
-	void BeDamaged( int damage )
+	protected virtual void BeDamaged( int damage )
 	{
 		HitPoint -= damage;
 		damageTime = 0.15f + damage*0.15f;

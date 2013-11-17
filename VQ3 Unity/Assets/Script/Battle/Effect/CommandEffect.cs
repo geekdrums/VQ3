@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class CommandEffect : MonoBehaviour {
+public class CommandEffect : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -12,6 +12,4 @@ public abstract class CommandEffect : MonoBehaviour {
 	void Update () {
 	
 	}
-
-	public abstract void Play();
 }
