@@ -227,4 +227,15 @@ public class Music : MonoBehaviour
 			//Debug.LogError( "Error!! You can't use SetAisac(index,value) in UnityMusic" );
 		}
 	}
+    public static void SetAisac( string controlName, float value )
+    {
+        if( UseADX )
+        {
+            ADXMusic.CurrentSource.source.SetAisac( controlName, value );
+        }
+        else
+        {
+            //Debug.LogError( "Error!! You can't use SetAisac(index,value) in UnityMusic" );
+        }
+    }
 }

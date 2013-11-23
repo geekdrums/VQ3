@@ -26,7 +26,7 @@ AnimationClip:
         value: {x: 1.99303651, y: 2, z: 2}
         inSlope: {x: .993036509, y: 1, z: 1}
         outSlope: {x: .993036509, y: 1, z: 1}
-        tangentMode: 0
+        tangentMode: 5
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: 
@@ -123,6 +123,25 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: Color.a
+    path: MidairTriangle
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Radius
     path: MidairTriangle
     classID: 114
     script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
@@ -299,6 +318,25 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: Color.a
+    path: MidairTriangle
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Radius
     path: MidairTriangle
     classID: 114
     script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}

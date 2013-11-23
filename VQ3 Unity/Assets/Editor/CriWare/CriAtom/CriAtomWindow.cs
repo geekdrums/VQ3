@@ -16,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Xml;
 
 public sealed class CriAtomWindow : EditorWindow
 {
@@ -305,8 +306,8 @@ public sealed class CriAtomWindow : EditorWindow
 				}
 			}
 			GUILayout.EndHorizontal();
-		
-			atomCraftOutputAssetsRootPath = GUILayout.TextArea(atomCraftOutputAssetsRootPath);
+
+            atomCraftOutputAssetsRootPath = GUILayout.TextArea( atomCraftOutputAssetsRootPath );
 			//GUILayout.Label(Application.dataPath);
 		
 			if(GUILayout.Button("Update Assets of \"CRI Atom Craft\"")){
@@ -318,6 +319,9 @@ public sealed class CriAtomWindow : EditorWindow
                 {
                     CopyDirectory(atomCraftOutputAssetsRootPath, Application.dataPath);
                     Debug.Log("Complete Update Assets of \"CRI Atom Craft\"");
+
+                    //geekdrums MusicEngine
+                    CreateADXMusic( atomCraftOutputAssetsRootPath.Replace( "/Assets", "" ) );
                 }
                 catch (Exception ex)
                 {
@@ -363,14 +367,81 @@ public sealed class CriAtomWindow : EditorWindow
 	        destDirName = destDirName + System.IO.Path.DirectorySeparatorChar;
 	
 	    string[] files = System.IO.Directory.GetFiles(sourceDirName);
-	    foreach (string file in files)
-	        System.IO.File.Copy(file,
-	            destDirName + System.IO.Path.GetFileName(file), true);
-	
+        foreach( string file in files )
+            System.IO.File.Copy( file,
+                destDirName + System.IO.Path.GetFileName( file ), true );
 	    string[] dirs = System.IO.Directory.GetDirectories(sourceDirName);
 	    foreach (string dir in dirs)
 	        CopyDirectory(dir, destDirName + System.IO.Path.GetFileName(dir));
 	}
+
+    //(((((((((((((((geekdrums MusicEngine(((((((((((((((
+    private static void CreateADXMusic( string sourceDirName )
+    {
+        string[] files = System.IO.Directory.GetFiles( sourceDirName );
+        foreach( string file in files )
+        {
+            string fileName = System.IO.Path.GetFileName( file );
+            if( fileName.Contains( "Music.acb" ) )
+            {
+                CopyMusicBlockInfo( sourceDirName, fileName.Replace( ".acb", "" ) );
+            }
+        }
+    }
+
+    private static void CopyMusicBlockInfo( string sourceDirName, string CueName )
+    {
+        string[] files = System.IO.Directory.GetFiles( sourceDirName );
+        foreach( string file in files )
+        {
+            if( file.EndsWith( CueName + "_acb_info.xml" ) )
+            {
+                GameObject musicObj = GameObject.Find( CueName );
+                ADXMusic adxMusic;
+                if( musicObj == null )
+                {
+                    musicObj = new GameObject( CueName );
+                    musicObj.transform.parent = GameObject.Find( "Music" ).transform;
+                    musicObj.AddComponent<CriAtomSource>();
+                    musicObj.GetComponent<CriAtomSource>().cueSheet = CueName;
+                    musicObj.GetComponent<CriAtomSource>().cueName = CueName;
+                    adxMusic = musicObj.AddComponent<ADXMusic>();
+                    adxMusic.mtBar_ = 16;
+                    adxMusic.mtBeat_ = 4;
+                    adxMusic.BlockInfos = new List<ADXMusic.BlockInfo>();
+                }
+                else
+                {
+                    adxMusic = GameObject.Find( CueName ).GetComponent<ADXMusic>();
+                    adxMusic.BlockInfos.Clear();
+                }
+
+                XmlReaderSettings settings = new XmlReaderSettings();
+                settings.IgnoreWhitespace = true;
+                settings.IgnoreComments = true;
+                using( XmlReader reader = XmlReader.Create( System.IO.File.OpenText( file ), settings ) )
+                {
+                    while( reader.Read() )
+                    {
+                        if( reader.GetAttribute( "Bpm" ) != null )
+                        {
+                            adxMusic.Tempo_ = double.Parse( reader.GetAttribute( "Bpm" ) );
+                        }
+                        if( adxMusic.Tempo_ > 0 && reader.GetAttribute( "BlockEndPositionMs" ) != null )
+                        {
+                            string blockName = reader.GetAttribute( "OrcaName" );
+                            int msec = int.Parse( reader.GetAttribute( "BlockEndPositionMs" ) );
+                            ADXMusic.BlockInfo blockInfo = new ADXMusic.BlockInfo( blockName, Mathf.RoundToInt( (msec / 1000.0f) / (4 * 60.0f / (float)adxMusic.Tempo_) ) );
+                            adxMusic.BlockInfos.Add( blockInfo );
+                        }
+                    }
+                    reader.Close();
+                }
+                break;
+            }
+        }
+    }
+    //(((((((((((((((geekdrums MusicEngine(((((((((((((((
 
     static string ToBase64(string s)
     {

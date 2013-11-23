@@ -30,6 +30,29 @@ public class MidairPrimitive : MonoBehaviour {
         UpdateAnimation();
 	}
 
+
+    void UpdateAnimation()
+    {
+#if UNITY_EDITOR
+        if( !UnityEditor.EditorApplication.isPlaying ) return;
+#endif
+
+        float d = Mathf.Abs( Radius - targetRadius );
+        if( d > minDistance / 2 )
+        {
+            Radius = (d > minDistance ? Mathf.Lerp( Radius, targetRadius, linearFactor ) : targetRadius);
+            RecalculateRadius();
+        }
+        d = Mathf.Abs( Width - targetWidth );
+        if( d > minDistance / 2 )
+        {
+            Width = (d > minDistance ? Mathf.Lerp( Width, targetWidth, linearFactor ) : targetWidth);
+            RecalculateWidth();
+        }
+        Color = Color.Lerp( Color, targetColor, linearFactor );
+        renderer.material.color = Color;
+    }
+
     void RecalculateRadius()
     {
         Mesh mesh = GetComponent<MeshFilter>().mesh;
@@ -45,10 +68,17 @@ public class MidairPrimitive : MonoBehaviour {
         float InR = (Radius - Width) / Mathf.Cos( Mathf.PI / N );
         for( int i = 0; i < N; ++i )
         {
-            mesh.vertices[2 * i] = mesh.vertices[2 * i + 1].normalized * InR;
+            if( 2 * i >= mesh.vertexCount )
+            {
+                Debug.Log( "vertexCount = " + mesh.vertexCount + ", i = " + i );
+            }
+            else
+            {
+                mesh.vertices[2 * i] = mesh.vertices[2 * i].normalized * InR;
+            }
         }
     }
-    void RecalculatePolygon()
+    public void RecalculatePolygon()
     {
         if( N < 3 ) N = 3;
         if( Width > Radius ) Width = Radius;
@@ -102,29 +132,6 @@ public class MidairPrimitive : MonoBehaviour {
 
         GetComponent<MeshFilter>().mesh = mesh;
     }
-
-    void UpdateAnimation()
-    {
-#if UNITY_EDITOR
-        if( !UnityEditor.EditorApplication.isPlaying ) return;
-#endif
-
-        float d = Mathf.Abs( Radius - targetRadius );
-        if( d > minDistance/2 )
-        {
-            Radius = (d > minDistance ? Mathf.Lerp( Radius, targetRadius, linearFactor ) : targetRadius);
-            RecalculateRadius();
-        }
-        d = Mathf.Abs( Width - targetWidth );
-        if( d > minDistance/2 )
-        {
-            Width = (d > minDistance ? Mathf.Lerp( Width, targetWidth, linearFactor ) : targetWidth);
-            RecalculateWidth();
-        }
-        Color = Color.Lerp( Color, targetColor, linearFactor );
-        renderer.material.color = Color;
-    }
-
 
     public void SetTargetSize( float newTargetSize )
     {

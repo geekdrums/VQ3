@@ -40,18 +40,18 @@ public static class GameContext
     {
         switch( NewState )
 		{
-		case GameState.Intro:
-			Music.Play( "IntroEndro", "intro" );
-			PlayerConductor.OnBattleStarted();
+        case GameState.Intro:
+			Music.Play( "BattleMusic", "intro" );
+            PlayerConductor.OnBattleStarted();
 			break;
 		case GameState.Endro:
-			Music.Play( "IntroEndro", "endro" );
+			//Music.Play( "IntroEndro", "endro" );
 			break;
 		case GameState.Battle:
-			if ( Music.UseADX )
-			{
-				Music.Play( PlayerConductor.NextStrategyName, PlayerConductor.NextBlockName );
-			}
+            //if ( Music.UseADX )
+            //{
+            //    Music.Play( PlayerConductor.NextStrategyName, PlayerConductor.NextBlockName );
+            //}
 			break;
         case GameState.Field:
             //Music.Play( "fieldMusic" );

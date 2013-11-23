@@ -318,6 +318,7 @@ public class ADXMusic : MonoBehaviour
 	int NumBlockBar;
     long SamplesInLoop { get { return NumBlockBar * SamplesPerBar; } }
     long OldNumSamples;
+
 #else
 	/// <summary>
 	/// this helps you get a more accurate timing when you loop this music.

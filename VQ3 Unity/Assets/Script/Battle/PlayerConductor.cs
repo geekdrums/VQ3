@@ -14,14 +14,14 @@ public class PlayerConductor : MonoBehaviour {
 	ECommand[] NextCommandList = new ECommand[4];
 	ECommand[] CurrentCommandList = new ECommand[4];
 
-    public string NextBlockName
+    public string NextCommandsName
     {
         get
         {
             string res = "";
             for( int i = 0; i < NextCommandList.Length; ++i )
             {
-                res += NextCommandList[i].ToString().ToLower()[0];
+                res += NextCommandList[i].ToString()[0];
             }
             return res;
         }
@@ -48,10 +48,6 @@ public class PlayerConductor : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if ( Music.IsJustChangedAt( 0 ) )
-		{
-			PlayNextMusic();
-		}
 		if ( Music.Just < AllowInputTime )
 		{
 			if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak )
@@ -81,24 +77,6 @@ public class PlayerConductor : MonoBehaviour {
 		if ( Music.IsJustChangedAt( AllowInputTime.bar, AllowInputTime.beat, AllowInputTime.unit ) )
         {
 			SetNextBlock();
-		}
-	}
-
-	void PlayNextMusic()
-	{
-		Debug.Log( "PlayNextMusic: BlockName=" + Music.GetCurrentBlockName() );
-		if ( Music.GetCurrentBlockName() == "GotoMagic" )
-		{
-			Music.Play( "Magic", NextBlockName );
-		}
-		else if ( Music.GetCurrentBlockName() == "GotoAttack" )
-		{
-			Music.Play( "Attack", NextBlockName );
-		}
-		else if ( Music.GetCurrentBlockName() == "GotoBreak" )
-		{
-			Music.Play( "Break", NextBlockName );
-			RemainBreakTime = 2;
 		}
 	}
 
@@ -149,7 +127,7 @@ public class PlayerConductor : MonoBehaviour {
 	void SetNextBlock()
 	{
 		CurrentCommandList[0] = ECommand.Wait;
-		if ( Music.GetNextBlockName() == "GotoEndro" )
+		if ( Music.GetNextBlockName() == "endro" )
 		{
 			return;
 		}
@@ -164,20 +142,19 @@ public class PlayerConductor : MonoBehaviour {
 					NextStrategy = EStrategy.Magic;
 					NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
 				}
-				Music.SetNextBlock( "Goto" + NextStrategy.ToString() );
-			}
+                Music.SetNextBlock( NextStrategyName + NextCommandsName );
+            }
 		}
-		else if ( CurrentStrategy != NextStrategy )
-		{
-			Music.SetNextBlock( "Goto" + NextStrategy.ToString() );
-		}
-		else // CurrentStrategy == NextStrategy != EStrategy.Break
+		else
 		{
 			bool willShowBreak = GameContext.VoxonSystem.DetermineWillShowBreak( GetWillGainVoxon() );
-            Music.SetNextBlock( NextBlockName + (willShowBreak ? "Trans" : "") );
+            if( willShowBreak )
+            {
+                RemainBreakTime = 2;
+            }
+            Music.SetNextBlock( NextStrategyName + NextCommandsName + ( willShowBreak ? "Trans" : "" ) );
 		}
 	}
-
 
 	int GetWillGainVoxon()
 	{
@@ -249,7 +226,6 @@ public class PlayerConductor : MonoBehaviour {
 		Player.OnBarStarted( CurrentIndex );
 		ECommand Command = CurrentCommandList[CurrentIndex%4];
 		Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
-        //NewCommand.Parse();
 		NewCommand.SetOwner( Player );
 		GameContext.BattleConductor.ExecCommand( NewCommand );
 	}
@@ -257,7 +233,11 @@ public class PlayerConductor : MonoBehaviour {
 	public void OnBattleStarted()
 	{
 		InitializeCommand();
-	}
+        Music.SetNextBlock( NextStrategyName + NextCommandsName );
+        Music.SetAisac( "IsTransition", 0 );
+        Music.SetAisac( "TrackVolume1", 1 );
+        Music.SetAisac( "TrackVolume2", 1 );
+    }
 
 	public bool ReceiveAction( ActionSet Action, Command command )
 	{

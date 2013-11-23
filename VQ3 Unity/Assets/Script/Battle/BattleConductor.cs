@@ -21,7 +21,7 @@ public class BattleConductor : MonoBehaviour {
 		switch ( GameContext.CurrentState )
 		{
 		case GameContext.GameState.Intro:
-			if ( Music.IsJustChangedAt( 0 ) && ( Music.UseADX ? Music.GetCurrentBlockName() == "battle" : Music.CurrentMusicName != "intro" ) )
+			if ( Music.IsJustChangedAt( 0 ) && Music.GetCurrentBlockName() != "intro" )
 			{
 				GameContext.ChangeState( GameContext.GameState.Battle );
 				UpdateBattle();
@@ -29,7 +29,7 @@ public class BattleConductor : MonoBehaviour {
 			break;
 		case GameContext.GameState.Battle:
             UpdateBattle();
-			if ( Music.IsJustChangedAt(0) && Music.GetCurrentBlockName() == "GotoEndro" )
+			if ( Music.IsJustChangedAt(0) && Music.GetCurrentBlockName() == "endro" )
 			{
 				voxonSystem.SetState( VoxonSystem.VoxonState.HideBreak );
 				GameContext.ChangeState( GameContext.GameState.Endro );
@@ -37,7 +37,7 @@ public class BattleConductor : MonoBehaviour {
 			}
             break;
 		case GameContext.GameState.Endro:
-			if ( Music.IsJustChangedAt(2) && Music.GetCurrentBlockName() == "endro" )
+			if ( !Music.IsPlaying() )
 			{
 				GameContext.ChangeState( GameContext.GameState.Field );
 			}
@@ -47,7 +47,7 @@ public class BattleConductor : MonoBehaviour {
 
     void UpdateBattle()
     {
-        if( Music.IsJustChangedBar() && Music.GetCurrentBlockName() != "GotoEndro" )
+        if( Music.IsJustChangedBar() && Music.GetCurrentBlockName() != "endro" )
         {
             OnBarStarted( Music.Just.bar );
         }
@@ -97,7 +97,7 @@ public class BattleConductor : MonoBehaviour {
 
 	public void OnPlayerWin()
 	{
-        Music.SetNextBlock("GotoEndro");
+        Music.SetNextBlock("endro");
 	}
 	public void OnPlayerLose()
 	{

@@ -46,6 +46,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\Battle\BGEffect\BGEffect.cs" />
+     <Compile Include="Assets\Script\Battle\BGEffect\DefendBGEffect.cs" />
+     <Compile Include="Assets\Script\Battle\BGEffect\VoxParticleSystem.cs" />
+     <Compile Include="Assets\Script\Battle\BGEffect\VoxonSystem.cs" />
      <Compile Include="Assets\Script\Battle\BattleConductor.cs" />
      <Compile Include="Assets\Script\Battle\Character\Character.cs" />
      <Compile Include="Assets\Script\Battle\Character\Enemy.cs" />
@@ -56,8 +60,6 @@
      <Compile Include="Assets\Script\Battle\Command\Strategy.cs" />
      <Compile Include="Assets\Script\Battle\Effect\CommandEffect.cs" />
      <Compile Include="Assets\Script\Battle\Effect\DefendEffect.cs" />
-     <Compile Include="Assets\Script\Battle\Effect\VoxParticleSystem.cs" />
-     <Compile Include="Assets\Script\Battle\Effect\VoxonSystem.cs" />
      <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
      <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
      <Compile Include="Assets\Script\Battle\SEPlayer.cs" />
@@ -75,6 +77,7 @@
      <Compile Include="Assets\Script\MusicEngine\Motif\Rhythm.cs" />
      <Compile Include="Assets\Script\MusicEngine\Music.cs" />
      <Compile Include="Assets\Script\MusicEngine\UnityMusic.cs" />
+     <Compile Include="Assets\Script\Utils\AudioSpectrum.cs" />
      <Compile Include="Assets\Script\Utils\MidairPrimitive.cs" />
      <Compile Include="Assets\Script\Utils\TextWindow.cs" />
      <Compile Include="Assets\Script\Utils\Utils.cs" />

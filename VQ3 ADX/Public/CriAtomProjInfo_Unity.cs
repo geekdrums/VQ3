@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.1.30.00
-* Date Time          : 2013/11/03 20:52
+* Date Time          : 2013/11/23 15:46
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -22,12 +22,12 @@ public partial class CriAtomAcfInfo
     static partial void GetCueInfoInternal()
     {
         acfInfo = new AcfInfo("ACF", 0, "", "VQ3ADX.acf","4675cac8-829d-4d86-8dae-b0ebac5cf3ee","DspBusSetting_0");
-        acfInfo.aisacControlNameList.Add("Any");
-        acfInfo.aisacControlNameList.Add("Distance");
-        acfInfo.aisacControlNameList.Add("AisacControl02");
-        acfInfo.aisacControlNameList.Add("AisacControl03");
-        acfInfo.aisacControlNameList.Add("AisacControl04");
-        acfInfo.aisacControlNameList.Add("AisacControl05");
+        acfInfo.aisacControlNameList.Add("Level");
+        acfInfo.aisacControlNameList.Add("IsTransition");
+        acfInfo.aisacControlNameList.Add("TrackVolume1");
+        acfInfo.aisacControlNameList.Add("TrackVolume2");
+        acfInfo.aisacControlNameList.Add("TrackVolumeEnergy");
+        acfInfo.aisacControlNameList.Add("TrackVolumeTransition");
         acfInfo.aisacControlNameList.Add("AisacControl06");
         acfInfo.aisacControlNameList.Add("AisacControl07");
         acfInfo.aisacControlNameList.Add("AisacControl08");
@@ -42,14 +42,6 @@ public partial class CriAtomAcfInfo
         AcbInfo newAcbInfo = null;
         newAcbInfo = new AcbInfo("BattleMusic", 0, "", "BattleMusic.acb", "BattleMusic_streamfiles.awb","092c99ee-743c-46a9-be50-4dc8c020b14e");
         acfInfo.acbInfoList.Add(newAcbInfo);
-        newAcbInfo.cueInfoList.Add(0, new CueInfo("vq2geekdrums", 0, ""));
-        newAcbInfo.cueInfoList.Add(1, new CueInfo("field", 1, ""));
-        newAcbInfo.cueInfoList.Add(2, new CueInfo("battle", 2, ""));
-        newAcbInfo = new AcbInfo("CommandMusic", 1, "", "CommandMusic.acb", "CommandMusic_streamfiles.awb","8127efc3-e1b3-4398-8ff7-4e2eaea3ab0b");
-        acfInfo.acbInfoList.Add(newAcbInfo);
-        newAcbInfo.cueInfoList.Add(0, new CueInfo("Attack", 0, ""));
-        newAcbInfo.cueInfoList.Add(1, new CueInfo("IntroEndro", 1, ""));
-        newAcbInfo.cueInfoList.Add(2, new CueInfo("Magic", 2, ""));
-        newAcbInfo.cueInfoList.Add(3, new CueInfo("Break", 3, ""));
+        newAcbInfo.cueInfoList.Add(1, new CueInfo("BattleMusic", 1, ""));
     }
 }

@@ -4,8 +4,8 @@
  *  Tool Ver.          : CRI Atom Craft LE Ver.1.30.00
  *  File Path          : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/VQ3ADX.acf
  *  File Name          : VQ3ADX.acf
- *  File Size          : 3,168 bytes
- *  Date Time          : 2013/07/30 23:57
+ *  File Size          : 3,008 bytes
+ *  Date Time          : 2013/11/23 14:02
  *  Target             : Public
  *  Categories         : 1
  *  AISAC Controls     : 16
@@ -30,22 +30,22 @@
 #define CRI_VQ3ADX_ACF_CATEGORY_CATEGORY_0  ( 0) /* CategoryGroup_0/Category_0  */
 
 /* AISAC Control List (AISAC Control ID) */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_ANY             ( 0) /* Any  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_DISTANCE        ( 1) /* Distance  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL02  ( 2) /* AisacControl02  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL03  ( 3) /* AisacControl03  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL04  ( 4) /* AisacControl04  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL05  ( 5) /* AisacControl05  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL06  ( 6) /* AisacControl06  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL07  ( 7) /* AisacControl07  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL08  ( 8) /* AisacControl08  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL09  ( 9) /* AisacControl09  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL10  (10) /* AisacControl10  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL11  (11) /* AisacControl11  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL12  (12) /* AisacControl12  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL13  (13) /* AisacControl13  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL14  (14) /* AisacControl14  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL15  (15) /* AisacControl15  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_LEVEL                  ( 0) /* Level  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_ISTRANSITION           ( 1) /* IsTransition  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUME1           ( 2) /* TrackVolume1  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUME2           ( 3) /* TrackVolume2  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUMEENERGY      ( 4) /* TrackVolumeEnergy  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUMETRANSITION  ( 5) /* TrackVolumeTransition  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL06         ( 6) /* AisacControl06  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL07         ( 7) /* AisacControl07  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL08         ( 8) /* AisacControl08  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL09         ( 9) /* AisacControl09  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL10         (10) /* AisacControl10  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL11         (11) /* AisacControl11  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL12         (12) /* AisacControl12  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL13         (13) /* AisacControl13  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL14         (14) /* AisacControl14  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL15         (15) /* AisacControl15  */
 
 /* Voice Limit Group (Voice Limit Group Index) */
 #define CRI_VQ3ADX_ACF_VOICELIMITGROUP_VOICELIMITGROUP_0  ( 0) /* VoiceLimitGroup_0  */
