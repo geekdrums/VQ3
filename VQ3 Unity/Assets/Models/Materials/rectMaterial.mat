@@ -9,6 +9,7 @@ Material:
   m_Name: rectMaterial
   m_Shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -62,12 +63,12 @@ Material:
         second: 0
       data:
         first:
-          name: _Parallax
-        second: .0199999996
-      data:
-        first:
           name: _InvFade
         second: 1
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
     m_Colors:
       data:
         first:
@@ -88,4 +89,4 @@ Material:
       data:
         first:
           name: _TintColor
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: .0721777603, g: .654411793, b: .124378048, a: .168627456}

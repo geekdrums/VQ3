@@ -8,6 +8,8 @@ public class BattleConductor : MonoBehaviour {
 
 	public VoxonSystem voxonSystem;
 
+    BGEffect CurrentBGEfect;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -93,6 +95,21 @@ public class BattleConductor : MonoBehaviour {
 	{
 		Commands.Add( new Pair<Timing, Command>( new Timing( Music.Just ), NewCommand ) );
 	}
+
+    public void SetBGEffect( BGEffect BGEffectPrefab )
+    {
+        if( CurrentBGEfect != null && (BGEffectPrefab == null || CurrentBGEfect.GetType() != BGEffectPrefab.GetType()) )
+        {
+            CurrentBGEfect.Hide();
+        }
+        if( BGEffectPrefab != null && (CurrentBGEfect == null || CurrentBGEfect.GetType() != BGEffectPrefab.GetType()) )
+        {
+            GameObject bgObj = Instantiate( BGEffectPrefab, Vector3.zero, BGEffectPrefab.transform.rotation ) as GameObject;
+            //Debug.Log( bgObj.name );
+            bgObj.transform.parent = transform;
+            CurrentBGEfect = bgObj.GetComponent<BGEffect>();
+        }
+    }
 
 
 	public void OnPlayerWin()

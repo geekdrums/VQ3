@@ -24,6 +24,7 @@ public class Command : MonoBehaviour
     public bool isPlayerAction;
     public string[] ActionStr;
     public string RhythmStr;
+    public BGEffect bgEffefctPrefab;
 
 	public ActionSet[] Actions { get; protected set; }
 	protected Rhythm ActionRhythm;
@@ -64,6 +65,8 @@ public class Command : MonoBehaviour
         {            
             CommandAnim[name.Replace( "Command(Clone)", "Anim" )].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
         }
+
+        //GameContext.BattleConductor.SetBGEffect( bgEffefctPrefab );
     }
 
     // Update is called once per frame
@@ -77,7 +80,7 @@ public class Command : MonoBehaviour
 		if ( CommandAnim != null && !CommandAnim.isPlaying )
 		{
 			CommandAnim.Play();
-		}
+        }
 	}
 
 	public Command( Rhythm rhythm, bool isPlayer = true, params ActionSet[] inActions )
