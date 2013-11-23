@@ -65,8 +65,15 @@ public class DefendBGEffect : BGEffect {
                     spectrums[i] -= spectrumDelta;
                 }
             }
-            CriAtomExAsr.BusAnalyzerInfo lBusInfo = CriAtom.GetBusAnalyzerInfo( 0 );
-            spectrums[Music.Just.barUnit] = (int)(Mathf.Sqrt( lBusInfo.peakLevels[0] ) * spectrumGain);
+            if( Music.UseADX )
+            {
+                CriAtomExAsr.BusAnalyzerInfo lBusInfo = CriAtom.GetBusAnalyzerInfo( 0 );
+                spectrums[Music.Just.barUnit] = (int)(Mathf.Sqrt( lBusInfo.peakLevels[0] ) * spectrumGain);
+            }
+            else
+            {
+                spectrums[Music.Just.barUnit] = (int)(Mathf.Sqrt( AudioListener.GetSpectrumData(64,0,FFTWindow.Rectangular)[1] * 1.5f ) * spectrumGain);
+            }
         }
 
         for( int i = 0; i < 16; ++i )
