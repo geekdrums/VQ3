@@ -20,7 +20,10 @@ public class DefendBGEffect : BGEffect {
 	// Use this for initialization
     void Start()
     {
-        CriAtom.SetBusAnalyzer( true );
+        if( Music.UseADX )
+        {
+            CriAtom.SetBusAnalyzer( true );
+        }
         for( int i = 0; i < 16; ++i )
         {
             GameObject[] primitives = new GameObject[1 + MaxHeight * 2];
