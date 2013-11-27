@@ -54,7 +54,7 @@ public class Player : Character {
         if( damage <= 0 )
         {
             SEPlayer.Play( ActionResult.Guarded, true );
-            Instantiate( DefendAnimPrefab, command.OwnerCharacter.transform.position + new Vector3(0,0,-0.1f), DefendAnimPrefab.transform.rotation );
+            (Instantiate( DefendAnimPrefab, command.OwnerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
         }
         else
         {

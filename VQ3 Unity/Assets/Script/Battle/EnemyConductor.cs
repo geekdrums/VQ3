@@ -46,12 +46,26 @@ public class EnemyConductor : MonoBehaviour {
 	public bool ReceiveAction( ActionSet Action, Command command )
 	{
 		bool isSucceeded = false;
+
+        AnimModule anim = Action.GetModule<AnimModule>();
+        if( anim != null && command.isPlayerAction )
+        {
+            foreach( Enemy e in GetTargetEnemies( anim, command ) )
+            {
+                isSucceeded = true;
+                if( anim.IsLocal )
+                {
+                    anim.SetTargetEnemy( e );
+                    command.transform.position = e.transform.position;
+                    break;
+                }
+            }
+        }
 		AttackModule attack = Action.GetModule<AttackModule>();
         if( attack != null && command.isPlayerAction )
 		{
-			foreach ( Enemy e in GetTargetEnemies( attack.TargetType ) )
+            foreach( Enemy e in GetTargetEnemies( attack, command ) )
             {
-                if( command.isLocal ) command.transform.position = e.transform.position;
 				e.BeAttacked( attack, command );
 				isSucceeded = true;
 			}
@@ -59,9 +73,8 @@ public class EnemyConductor : MonoBehaviour {
 		MagicModule magic = Action.GetModule<MagicModule>();
         if( magic != null && command.isPlayerAction )
 		{
-			foreach ( Enemy e in GetTargetEnemies( magic.TargetType ) )
+            foreach( Enemy e in GetTargetEnemies( magic, command ) )
             {
-                if( command.isLocal ) command.transform.position = e.transform.position;
 				e.BeMagicAttacked( magic, command );
 				isSucceeded = true;
 			}
@@ -77,11 +90,11 @@ public class EnemyConductor : MonoBehaviour {
 		return isSucceeded;
 	}
 
-	List<Enemy> GetTargetEnemies( TargetType TargetType )
+    List<Enemy> GetTargetEnemies( TargetModule Target, Command command )
 	{
 		List<Enemy> Res = new List<Enemy>();
 		if ( Enemies.Count == 0 ) return Res;
-		switch ( TargetType )
+        switch( Target.TargetType )
 		{
 		case TargetType.First:
 			Res.Add( Enemies[0] );
@@ -95,6 +108,9 @@ public class EnemyConductor : MonoBehaviour {
 				Res.Add( e );
 			}
 			break;
+        case TargetType.Anim:
+            Res.Add( command.Actions[Target.AnimIndex].GetModule<AnimModule>().TargetEnemy );
+            break;
 		}
 		return Res;
 	}

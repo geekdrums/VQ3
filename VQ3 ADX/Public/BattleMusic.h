@@ -4,8 +4,8 @@
  *  Tool Ver.        : CRI Atom Craft LE Ver.1.30.00
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/BattleMusic.acb
  *  File Name        : BattleMusic.acb
- *  File Size        : 7,950,400 bytes
- *  Date Time        : 2013/11/23 15:46
+ *  File Size        : 4,927,904 bytes
+ *  Date Time        : 2013/11/27 11:35
  *  Target           : Public
  *  Cues             : 1
  *  CueSheet Comment : 

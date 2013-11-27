@@ -3,19 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BattleConductor : MonoBehaviour {
+    public GameObject commandParent;
+    public VoxonSystem voxonSystem;
 
-	List<Pair<Timing, Command>> Commands;
-
-	public VoxonSystem voxonSystem;
-
-    BGEffect CurrentBGEfect;
+    BGEffect CurrentBGEffect;
+    
+    List<Pair<Timing, Command>> Commands;
 
 	// Use this for initialization
 	void Start ()
 	{
 		GameContext.BattleConductor = this;
         Commands = new List<Pair<Timing, Command>>();
-	}
+    }
 	
 	// Update is called once per frame
     void Update()
@@ -73,7 +73,7 @@ public class BattleConductor : MonoBehaviour {
 				isSucceeded |=GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
 				if ( isSucceeded )
 				{
-					act.Get<Command>().OnExecuted();
+                    act.Get<Command>().OnExecuted( act.Get<ActionSet>() );
 				}
             }
 
@@ -93,21 +93,21 @@ public class BattleConductor : MonoBehaviour {
 
 	public void ExecCommand( Command NewCommand )
 	{
+        NewCommand.gameObject.transform.parent = commandParent.transform;
 		Commands.Add( new Pair<Timing, Command>( new Timing( Music.Just ), NewCommand ) );
 	}
 
-    public void SetBGEffect( BGEffect BGEffectPrefab )
+    public void SetBGEffect( GameObject BGEffectPrefab )
     {
-        if( CurrentBGEfect != null && (BGEffectPrefab == null || CurrentBGEfect.GetType() != BGEffectPrefab.GetType()) )
+        if( CurrentBGEffect != null && (BGEffectPrefab == null || CurrentBGEffect.GetType() != BGEffectPrefab.GetComponent<BGEffect>().GetType()) )
         {
-            CurrentBGEfect.Hide();
+            CurrentBGEffect.Hide();
         }
-        if( BGEffectPrefab != null && (CurrentBGEfect == null || CurrentBGEfect.GetType() != BGEffectPrefab.GetType()) )
+        if( BGEffectPrefab != null && (CurrentBGEffect == null || CurrentBGEffect.GetType() != BGEffectPrefab.GetComponent<BGEffect>().GetType()) )
         {
             GameObject bgObj = Instantiate( BGEffectPrefab, Vector3.zero, BGEffectPrefab.transform.rotation ) as GameObject;
-            //Debug.Log( bgObj.name );
             bgObj.transform.parent = transform;
-            CurrentBGEfect = bgObj.GetComponent<BGEffect>();
+            CurrentBGEffect = bgObj.GetComponent<BGEffect>();
         }
     }
 

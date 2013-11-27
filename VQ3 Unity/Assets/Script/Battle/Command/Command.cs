@@ -20,11 +20,10 @@ public enum ECommand
 
 public class Command : MonoBehaviour
 {
-    public bool isLocal;
     public bool isPlayerAction;
     public string[] ActionStr;
     public string RhythmStr;
-    public BGEffect bgEffefctPrefab;
+    public GameObject bgEffefctPrefab;
 
 	public ActionSet[] Actions { get; protected set; }
 	protected Rhythm ActionRhythm;
@@ -60,13 +59,10 @@ public class Command : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		CommandAnim = GetComponentInChildren<Animation>();
-        if( CommandAnim != null && CommandAnim.GetClip( name.Replace( "Command(Clone)", "Anim" ) )  != null )
-        {            
-            CommandAnim[name.Replace( "Command(Clone)", "Anim" )].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
+        if( isPlayerAction )
+        {
+            GameContext.BattleConductor.SetBGEffect( bgEffefctPrefab );
         }
-
-        //GameContext.BattleConductor.SetBGEffect( bgEffefctPrefab );
     }
 
     // Update is called once per frame
@@ -75,11 +71,18 @@ public class Command : MonoBehaviour
         if (isEnd && (CommandAnim == null || !CommandAnim.isPlaying)) Destroy(this.gameObject);
     }
 
-	public void OnExecuted()
-	{
-		if ( CommandAnim != null && !CommandAnim.isPlaying )
-		{
-			CommandAnim.Play();
+	public void OnExecuted( ActionSet act )
+    {
+        AnimModule anim = act.GetModule<AnimModule>();
+        if( anim != null )
+        {
+            string AnimName = anim.AnimName == "" ? name.Replace( "Command(Clone)", "Anim" ) : anim.AnimName;
+            CommandAnim = GetComponentInChildren<Animation>();
+            if( CommandAnim.GetClip( AnimName ) != null )
+            {
+                CommandAnim[AnimName].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
+                CommandAnim.Play( AnimName );
+            }
         }
 	}
 

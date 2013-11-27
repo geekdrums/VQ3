@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.1.30.00
-* Date Time          : 2013/11/23 15:46
+* Date Time          : 2013/11/27 11:35
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *

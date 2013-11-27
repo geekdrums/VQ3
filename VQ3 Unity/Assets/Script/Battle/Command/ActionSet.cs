@@ -14,13 +14,19 @@ public class ActionSet : IEnumerable<IActionModule>
         foreach( string str in moduleStrings )
         {
             string[] parameters = str.Split( Utils.space );
-			if ( str.StartsWith( "Attack" ) || str.StartsWith( "BreakAttack" ) )
+            if( str.StartsWith( "Anim" ) )
             {
-                res.Modules.Add( new AttackModule( int.Parse( parameters[1] ), (TargetType)Enum.Parse( typeof( TargetType ), parameters.Length > 2 ? parameters[2] : "First" ) ) );
+                res.Modules.Add( new AnimModule( (TargetType)Enum.Parse( typeof( TargetType ), parameters[1] ), (parameters.Length > 2 ? parameters[2] : "") ) );
+            }
+			else if ( str.StartsWith( "Attack" ) || str.StartsWith( "BreakAttack" ) )
+            {
+                res.Modules.Add( new AttackModule( int.Parse( parameters[1] ), (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ),
+                    (parameters.Length > 3 ? int.Parse( parameters[3] ) : -1) ) );
             }
             else if( str.StartsWith( "Magic" ) )
             {
-                res.Modules.Add( new MagicModule( int.Parse( parameters[1] ), int.Parse( parameters[2] ), (TargetType)Enum.Parse( typeof( TargetType ), parameters.Length > 3 ? parameters[3] : "First" ) ) );
+                res.Modules.Add( new MagicModule( int.Parse( parameters[1] ), int.Parse( parameters[2] ), (TargetType)Enum.Parse( typeof( TargetType ), parameters[3] ),
+                    (parameters.Length > 4 ? int.Parse( parameters[4] ) : -1) ) );
             }
             else if( str.StartsWith( "Defend" ) )
             {

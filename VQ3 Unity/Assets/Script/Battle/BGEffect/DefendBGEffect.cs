@@ -41,6 +41,7 @@ public class DefendBGEffect : BGEffect {
             rects.Add(primitives);
             spectrums[i] = 0;
         }
+        spectrums[0] = 1;
 	}
 
     Vector3 GetRectPosition( int i, int j )
