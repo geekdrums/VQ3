@@ -229,9 +229,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   N: 4
-  Width: 1.5
+  Width: 1.29999995
   Radius: 5
   Color: {r: 0, g: 0, b: 0, a: 0}
+  GrowSize: .800000012
+  GrowAlpha: .600000024
+  GrowTexture: {fileID: 2800000, guid: 9d5f83f94a0ae0547a532278cc48c2c9, type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -247,6 +250,9 @@ MonoBehaviour:
   Width: 2
   Radius: 2
   Color: {r: 0, g: 0, b: 0, a: 0}
+  GrowSize: .5
+  GrowAlpha: .600000024
+  GrowTexture: {fileID: 2800000, guid: 9d5f83f94a0ae0547a532278cc48c2c9, type: 3}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -262,6 +268,9 @@ MonoBehaviour:
   Width: .5
   Radius: 3
   Color: {r: 0, g: 0, b: 0, a: 0}
+  GrowSize: .5
+  GrowAlpha: .600000024
+  GrowTexture: {fileID: 2800000, guid: 9d5f83f94a0ae0547a532278cc48c2c9, type: 3}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

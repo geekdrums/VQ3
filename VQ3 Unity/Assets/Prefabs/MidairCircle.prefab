@@ -71,12 +71,10 @@ MonoBehaviour:
   N: 30
   Width: 1
   Radius: 2
-  Color_: {r: .439147919, g: .419117659, b: .99999994, a: .99999994}
-  targetWidth: 1
-  targetRadius: 3
-  targetColor: {r: .43914789, g: .41911763, b: 1, a: 1}
-  linearFactor: .300000012
-  minDistance: .0500000007
+  Color: {r: 0, g: 0, b: 0, a: 0}
+  GrowSize: 0
+  GrowAlpha: 0
+  GrowTexture: {fileID: 2800000, guid: 9d5f83f94a0ae0547a532278cc48c2c9, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

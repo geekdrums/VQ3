@@ -10,12 +10,18 @@ public class MidairPrimitive : MonoBehaviour {
     public float Width;
     public float Radius;
     public Color Color;
+    public float GrowSize;
+    public float GrowAlpha;
+
+    public Texture2D GrowTexture;
 
     float targetWidth;
     float targetRadius;
     Color targetColor;
     float linearFactor = 0.3f;
     float minDistance = 0.05f;
+
+    MidairPrimitive GrowChild;
 
 	// Use this for initialization
 	void Start () {
@@ -26,17 +32,19 @@ public class MidairPrimitive : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+    void Update()
+    {
+#if UNITY_EDITOR
+        if( !UnityEditor.EditorApplication.isPlaying ) return;
+#endif
+        
         UpdateAnimation();
+        UpdateGrow();
 	}
 
 
     void UpdateAnimation()
     {
-#if UNITY_EDITOR
-        if( !UnityEditor.EditorApplication.isPlaying ) return;
-#endif
-
         float d = Mathf.Abs( Radius - targetRadius );
         if( d > minDistance / 2 )
         {
@@ -51,6 +59,25 @@ public class MidairPrimitive : MonoBehaviour {
         }
         Color = Color.Lerp( Color, targetColor, linearFactor );
         renderer.material.color = Color;
+    }
+
+    void UpdateGrow()
+    {
+        if( GrowSize > 0 && GrowChild == null )
+        {
+            GrowChild = (Instantiate( this.gameObject, transform.position, transform.rotation ) as GameObject).GetComponent<MidairPrimitive>();
+            GrowChild.transform.parent = this.transform;
+            GrowChild.transform.localScale = Vector3.one;
+            GrowChild.renderer.material.mainTexture = GrowTexture;
+            GrowChild.GrowSize = 0;
+        }
+        if( GrowChild != null )
+        {
+            GrowChild.SetColor( Color * GrowAlpha );
+            GrowChild.SetSize( Radius + GrowSize );
+            GrowChild.SetWidth( Width + GrowSize * 2 );
+            GrowChild.renderer.enabled = renderer.enabled;
+        }
     }
 
     void RecalculateRadius()
