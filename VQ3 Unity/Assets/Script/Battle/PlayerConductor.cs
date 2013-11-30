@@ -42,7 +42,7 @@ public class PlayerConductor : MonoBehaviour {
 	{
 		NextStrategy = EStrategy.Attack;
 		CurrentStrategy = NextStrategy;
-		NextCommandList = Strategies[(int)CurrentStrategy].CommandList[2];
+		NextCommandList = Strategies[(int)CurrentStrategy].CommandList[0];
 	}
 	
 	// Update is called once per frame
