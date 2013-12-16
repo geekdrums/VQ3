@@ -445,6 +445,18 @@ MonoBehaviour:
   BlockInfos:
   - BlockName: intro
     NumBar: 4
+  - BlockName: AttackAWWW
+    NumBar: 4
+  - BlockName: AttackAAWW
+    NumBar: 4
+  - BlockName: AttackGGWW
+    NumBar: 4
+  - BlockName: AttackAAAW
+    NumBar: 4
+  - BlockName: AttackGGAW
+    NumBar: 4
+  - BlockName: AttackPPAW
+    NumBar: 4
   - BlockName: AttackAAAA
     NumBar: 4
   - BlockName: AttackGGAA
@@ -452,6 +464,14 @@ MonoBehaviour:
   - BlockName: AttackPPAA
     NumBar: 4
   - BlockName: AttackGGGG
+    NumBar: 4
+  - BlockName: MagicMMWW
+    NumBar: 4
+  - BlockName: MagicWHWW
+    NumBar: 4
+  - BlockName: MagicMMMW
+    NumBar: 4
+  - BlockName: MagicWHMW
     NumBar: 4
   - BlockName: MagicMMMM
     NumBar: 4
@@ -466,6 +486,8 @@ MonoBehaviour:
   - BlockName: MagicWFFW
     NumBar: 4
   - BlockName: BreakBBBB
+    NumBar: 4
+  - BlockName: BreakBBBB2
     NumBar: 4
   - BlockName: endro
     NumBar: 2
@@ -502,36 +524,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
---- !u!1 &348239315
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 348239316}
-  m_Layer: 0
-  m_Name: OldADXMusic
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &348239316
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 348239315}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2060954394}
-  - {fileID: 1550794427}
-  - {fileID: 1723616891}
-  - {fileID: 815279222}
-  m_Father: {fileID: 1974129620}
 --- !u!1 &435263930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,100 +1263,6 @@ Transform:
   - {fileID: 1646926527}
   - {fileID: 603641317}
   m_Father: {fileID: 1974129620}
---- !u!1 &815279221
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 815279222}
-  - 114: {fileID: 815279223}
-  - 114: {fileID: 815279224}
-  m_Layer: 0
-  m_Name: Magic
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &815279222
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 815279221}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.13775253, y: 2.57815695, z: -16.0811386}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 348239316}
---- !u!114 &815279223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 815279221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20788d178b639b1439fa905f090fc162, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 0
-  _cueName: Magic
-  _cueSheet: CommandMusic
-  _volume: 1
-  _pitch: 0
-  aisac:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
---- !u!114 &815279224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 815279221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b958a2301cdcd994e903c7dce842c251, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mtBeat_: 4
-  mtBar_: 16
-  Tempo_: 144
-  BlockInfos:
-  - BlockName: mmmm
-    NumBar: 4
-  - BlockName: whwh
-    NumBar: 4
-  - BlockName: whmm
-    NumBar: 4
-  - BlockName: wffw
-    NumBar: 4
-  - BlockName: mmmmTrans
-    NumBar: 4
-  - BlockName: hhmmTrans
-    NumBar: 4
-  - BlockName: GotoAttack
-    NumBar: 1
-  - BlockName: GotoBreak
-    NumBar: 1
-  - BlockName: GotoEndro
-    NumBar: 1
 --- !u!1 &818097121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2300,90 +2198,6 @@ Transform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1523179797}
---- !u!1 &1550794425
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1550794427}
-  - 114: {fileID: 1550794426}
-  - 114: {fileID: 1550794428}
-  m_Layer: 0
-  m_Name: Break
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1550794426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1550794425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20788d178b639b1439fa905f090fc162, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 0
-  _cueName: Break
-  _cueSheet: CommandMusic
-  _volume: 1
-  _pitch: 0
-  aisac:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
---- !u!4 &1550794427
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1550794425}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.13775253, y: 2.57815695, z: -16.0811386}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 348239316}
---- !u!114 &1550794428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1550794425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b958a2301cdcd994e903c7dce842c251, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mtBeat_: 4
-  mtBar_: 16
-  Tempo_: 144
-  BlockInfos:
-  - BlockName: bbbb
-    NumBar: 4
-  - BlockName: GotoMagic
-    NumBar: 1
-  - BlockName: GotoAttack
-    NumBar: 1
-  - BlockName: GotoEndro
-    NumBar: 1
 --- !u!1 &1596056128
 GameObject:
   m_ObjectHideFlags: 0
@@ -2624,88 +2438,6 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
---- !u!1 &1723616890
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1723616891}
-  - 114: {fileID: 1723616893}
-  - 114: {fileID: 1723616892}
-  m_Layer: 0
-  m_Name: IntroEndro
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1723616891
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1723616890}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.13775253, y: 2.57815695, z: -16.0811386}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 348239316}
---- !u!114 &1723616892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1723616890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20788d178b639b1439fa905f090fc162, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 0
-  _cueName: IntroEndro
-  _cueSheet: CommandMusic
-  _volume: 1
-  _pitch: 0
-  aisac:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
---- !u!114 &1723616893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1723616890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b958a2301cdcd994e903c7dce842c251, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mtBeat_: 4
-  mtBar_: 16
-  Tempo_: 144
-  BlockInfos:
-  - BlockName: intro
-    NumBar: 4
-  - BlockName: battle
-    NumBar: 1
-  - BlockName: endro
-    NumBar: 4
 --- !u!1001 &1733220495
 Prefab:
   m_ObjectHideFlags: 0
@@ -2938,7 +2670,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 241160643}
-  - {fileID: 348239316}
   - {fileID: 73082507}
   - {fileID: 771298646}
   m_Father: {fileID: 0}
@@ -3004,96 +2735,6 @@ Transform:
   - {fileID: 170990849}
   - {fileID: 1828161146}
   m_Father: {fileID: 0}
---- !u!1 &2060954393
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2060954394}
-  - 114: {fileID: 2060954396}
-  - 114: {fileID: 2060954395}
-  m_Layer: 0
-  m_Name: Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2060954394
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2060954393}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.13775253, y: 2.57815695, z: -16.0811386}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 348239316}
---- !u!114 &2060954395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2060954393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20788d178b639b1439fa905f090fc162, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playOnStart: 0
-  _cueName: Attack
-  _cueSheet: CommandMusic
-  _volume: 1
-  _pitch: 0
-  aisac:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
---- !u!114 &2060954396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2060954393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b958a2301cdcd994e903c7dce842c251, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mtBeat_: 4
-  mtBar_: 16
-  Tempo_: 144
-  BlockInfos:
-  - BlockName: aaaa
-    NumBar: 4
-  - BlockName: ggaa
-    NumBar: 4
-  - BlockName: ppaa
-    NumBar: 4
-  - BlockName: gggg
-    NumBar: 4
-  - BlockName: aaaaTrans
-    NumBar: 4
-  - BlockName: GotoMagic
-    NumBar: 1
-  - BlockName: GotoEndro
-    NumBar: 1
 --- !u!1 &2098948337
 GameObject:
   m_ObjectHideFlags: 0
