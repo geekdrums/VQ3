@@ -13,6 +13,7 @@ public class PlayerConductor : MonoBehaviour {
 	EStrategy CurrentStrategy;
 	ECommand[] NextCommandList = new ECommand[4];
 	ECommand[] CurrentCommandList = new ECommand[4];
+    int NumQuarter = 4;
 
     public string NextCommandsName
     {
@@ -21,7 +22,14 @@ public class PlayerConductor : MonoBehaviour {
             string res = "";
             for( int i = 0; i < NextCommandList.Length; ++i )
             {
-                res += NextCommandList[i].ToString()[0];
+                if( i < NumQuarter )
+                {
+                    res += NextCommandList[i].ToString()[0];
+                }
+                else
+                {
+                    res += "W";
+                }
             }
             return res;
         }
@@ -121,6 +129,22 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			NextStrategy = EStrategy.Magic;
 			NextCommandList = Strategies[(int)NextStrategy].CommandList[3];
+        }
+        else if( Input.GetKeyDown( KeyCode.Alpha1 ) )
+        {
+            NumQuarter = 1;
+        }
+        else if( Input.GetKeyDown( KeyCode.Alpha2 ) )
+        {
+            NumQuarter = 2;
+        }
+        else if( Input.GetKeyDown( KeyCode.Alpha3 ) )
+        {
+            NumQuarter = 3;
+        }
+        else if( Input.GetKeyDown( KeyCode.Alpha4 ) )
+        {
+            NumQuarter = 4;
         }
 	}
 
@@ -224,7 +248,7 @@ public class PlayerConductor : MonoBehaviour {
 	public void OnBarStarted( int CurrentIndex )
 	{
 		Player.OnBarStarted( CurrentIndex );
-		ECommand Command = CurrentCommandList[CurrentIndex%4];
+		ECommand Command = ( CurrentIndex < NumQuarter ? CurrentCommandList[CurrentIndex%4] : ECommand.Wait );
 		Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
 		NewCommand.SetOwner( Player );
 		GameContext.BattleConductor.ExecCommand( NewCommand );
