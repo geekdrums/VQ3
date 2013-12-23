@@ -192,6 +192,10 @@ public class MidairPrimitive : MonoBehaviour {
         renderer.material.color = Color;
     }
 
+    public void SetLinearFactor( float factor )
+    {
+        linearFactor = factor;
+    }
     
 #if UNITY_EDITOR
     void OnGUI()

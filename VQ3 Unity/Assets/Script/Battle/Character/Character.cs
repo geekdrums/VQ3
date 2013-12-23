@@ -8,6 +8,12 @@ public class Character : MonoBehaviour {
 	public int AttackPower { get; protected set; }
 
 	protected float damageTime;
+    protected int MaxHP;
+
+    protected virtual void Initialize()
+    {
+        MaxHP = HitPoint;
+    }
 
 	// ======================
 	// Battle

@@ -15,15 +15,17 @@ public class EnemyConductor : MonoBehaviour {
 			_baseColor = value;
 			foreach ( Enemy e in Enemies )
 			{
-				e.renderer.material.color = value;
+                e.OnBaseColorChanged( value );
 			}
 		}
 	}
+    public int baseHP { get; protected set; }
 
 	// Use this for initialization
 	void Start () {
 		GameContext.EnemyConductor = this;
 		baseColor = Color.black;
+        baseHP = 10;//temp
 	}
 	
 	// Update is called once per frame

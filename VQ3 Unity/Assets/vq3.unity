@@ -1070,7 +1070,7 @@ Camera:
   m_GameObject: {fileID: 681572031}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 1, g: 1, b: 1, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -1082,7 +1082,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 100
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1090,7 +1090,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
 --- !u!4 &681572036
 Transform:
   m_ObjectHideFlags: 0
@@ -1115,7 +1115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a4f96294713104f857262ccf9a2b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 0
+  HitPoint: 10
   DefendAnimPrefab: {fileID: 100006, guid: 4f31333e1768f6f4eb770472975f50ee, type: 2}
 --- !u!45 &681572038
 Skybox:
@@ -2362,7 +2362,7 @@ Transform:
   m_GameObject: {fileID: 1646926526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.00999999, y: 1.00999999, z: 1.00999999}
   m_Children: []
   m_Father: {fileID: 771298646}
 --- !u!114 &1646926528
@@ -2511,6 +2511,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 01a0e176d5f10d74ca478e3ad9e7da5b, type: 2}
       propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 01a0e176d5f10d74ca478e3ad9e7da5b, type: 2}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

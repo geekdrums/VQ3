@@ -9,8 +9,8 @@ public class Player : Character {
 
 	// Use this for initialization
 	void Start()
-	{
-		HitPoint = 10;
+    {
+        Initialize();
 		guiLayer = GetComponent<GUILayer>();
 		initialPosition = guiLayer.transform.position;
 		DefendPower = 0;
