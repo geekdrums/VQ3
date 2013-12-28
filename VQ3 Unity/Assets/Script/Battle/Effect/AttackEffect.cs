@@ -8,17 +8,13 @@ public class AttackEffect : MonoBehaviour {
     //public float radius;
     public float width;
     public float size;
+    public float interval;
 
-    List<MidairPrimitive> triangles = new List<MidairPrimitive>();
+    MidairPrimitive[] triangles;
 
 	// Use this for initialization
 	void Start () {
-        triangles.AddRange( GetComponentsInChildren<MidairPrimitive>() );
-        triangles.RemoveAt( triangles.Count - 1 );
-        //for( int i = 0; i < rects.Length; i++ )
-        //{
-        //    rects[i].transform.rotation = Quaternion.AngleAxis( (i * 360.0f / rects.Length), Vector3.forward );
-        //}
+        triangles = GetComponentsInChildren<MidairPrimitive>();
 	}
 	
 	// Update is called once per frame
@@ -28,12 +24,12 @@ public class AttackEffect : MonoBehaviour {
 
     public void UpdateAnimation()
     {
-        for( int i = 0; i < triangles.Count; i++ )
+        for( int i = 0; i < triangles.Length; i++ )
         {
             triangles[i].SetColor( Color );
             triangles[i].SetWidth( width );
             triangles[i].SetSize( size );
-            //rects[i].transform.position = this.transform.position + Quaternion.AngleAxis( (i * 360.0f / rects.Length), Vector3.forward ) * (Vector3.down * radius);
+            triangles[i].transform.localPosition = new Vector3( triangles[i].transform.localPosition.x, interval * (i - 1.5f), triangles[i].transform.localPosition.z );
         }
     }
 }

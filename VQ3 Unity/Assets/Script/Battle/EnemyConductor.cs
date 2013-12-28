@@ -58,7 +58,7 @@ public class EnemyConductor : MonoBehaviour {
                 if( anim.IsLocal )
                 {
                     anim.SetTargetEnemy( e );
-                    command.transform.position = e.transform.position;
+                    command.transform.position = e.transform.position + Vector3.back * 0.1f;
                     break;
                 }
             }
