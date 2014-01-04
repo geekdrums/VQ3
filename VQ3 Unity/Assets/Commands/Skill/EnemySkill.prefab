@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: AttackCommand
+  m_Name: EnemySkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,17 +35,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f90c5941b18d69c4bad926c786655e83, type: 3}
+  m_Script: {fileID: 11500000, guid: eb4918957b1785b44b4981e05af947f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicBlockName: AAAA
-  ExpThreasholds: 00000000000000000000000000000000
-  _skillList:
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
+  isPlayerSkill: 0
+  _actionStr:
+  - Attack 10
+  _rhythmStr: ta
+  _rhythmBaseTime: 1
+  bgEffefctPrefab: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

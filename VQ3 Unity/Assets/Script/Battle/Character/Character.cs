@@ -4,8 +4,12 @@ using System.Collections;
 public class Character : MonoBehaviour {
 
 	public int HitPoint;
-	public int DefendPower { get; protected set; }
-	public int AttackPower { get; protected set; }
+    protected int SkillDefend;
+    protected int SkillMagicDefend;
+    protected int BaseDefend;
+    protected int BaseMagicDefend;
+    protected int DefendPower { get { return BaseDefend + SkillDefend; } }
+    protected int MagicDefendPower { get { return BaseMagicDefend + SkillMagicDefend; } }
 
 	protected float damageTime;
     protected int MaxHP;
@@ -18,9 +22,14 @@ public class Character : MonoBehaviour {
 	// ======================
 	// Battle
 	// ======================
-	public virtual void BeAttacked( AttackModule attack, Command command )
+    public virtual void SkillInit()
+    {
+        SkillDefend = 0;
+        SkillMagicDefend = 0;
+    }
+	public virtual void BeAttacked( AttackModule attack, Skill command )
 	{
-		int damage = Mathf.Max( 0, attack.AttackPower + command.OwnerCharacter.AttackPower - DefendPower );
+		int damage = Mathf.Max( 0, attack.AttackPower - DefendPower );
 		BeDamaged( damage );
 		if ( damage <= 0 )
 		{
@@ -30,33 +39,42 @@ public class Character : MonoBehaviour {
 		{
 			SEPlayer.Play( ActionResult.Damaged, this is Player );
 		}
-		//Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
+		Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
 	}
-	public void BeMagicAttacked( MagicModule magic, Command command )
-	{
-		BeDamaged( magic.MagicPower );
-		SEPlayer.Play( ActionResult.MagicDamaged, this is Player );
-		//Debug.Log( this.ToString() + " was MagicAttacked! " + magic.MagicPower + "Damage! HitPoint is " + HitPoint );
+	public void BeMagicAttacked( MagicModule magic, Skill command )
+    {
+        int damage = Mathf.Max( 0, magic.MagicPower - MagicDefendPower );
+        BeDamaged( damage );
+        if( damage <= 0 )
+        {
+            SEPlayer.Play( ActionResult.Guarded, this is Player );
+        }
+        else
+        {
+            SEPlayer.Play( ActionResult.MagicDamaged, this is Player );
+        }
+        Debug.Log( this.ToString() + " was MagicAttacked! " + damage + "Damage! HitPoint is " + HitPoint );
 	}
 
 	protected virtual void BeDamaged( int damage )
 	{
-		HitPoint -= damage;
-		damageTime = 0.15f + damage*0.15f;
+		HitPoint = Mathf.Max( 0, HitPoint - damage );
+		damageTime = 0.15f + damage*0.015f;
 	}
 
 	public void Defend( DefendModule defend )
 	{
-		DefendPower = defend.DefendPower;
+        SkillDefend = defend.DefendPower;
 	}
-	public void PowerUp( PowerModule power )
-	{
-		AttackPower += power.AttackPower;
-	}
+
+    public void MagicDefend( MagicDefendModule magicDefend )
+    {
+        SkillMagicDefend = magicDefend.MagicDefendPower;
+    }
 	public void Heal( HealModule heal )
 	{
 		HitPoint += heal.HealPoint;
 		SEPlayer.Play( ActionResult.Healed );
-		//Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
+		Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
 	}
 }

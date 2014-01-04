@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BattleConductor : MonoBehaviour {
-    public GameObject commandParent;
+    public GameObject skillParent;
     public VoxonSystem voxonSystem;
 
     BGEffect CurrentBGEffect;
     
-    List<Pair<Timing, Command>> Commands;
+    List<Pair<Timing, Skill>> Skills;
 
 	// Use this for initialization
 	void Start ()
 	{
 		GameContext.BattleConductor = this;
-        Commands = new List<Pair<Timing, Command>>();
+        Skills = new List<Pair<Timing, Skill>>();
     }
 	
 	// Update is called once per frame
@@ -49,52 +49,41 @@ public class BattleConductor : MonoBehaviour {
 
     void UpdateBattle()
     {
-        if( Music.IsJustChangedBar() && Music.GetCurrentBlockName() != "endro" )
+        if( Music.isJustChanged && Music.GetCurrentBlockName() != "endro" )
         {
-            OnBarStarted( Music.Just.bar );
-        }
+            if( Music.IsJustChangedAt( 0 ) ) GameContext.PlayerConductor.CheckCommand();
+            GameContext.PlayerConductor.CheckSkill();
+            //TODO:GameContext.EnemyConductor.CheckSkill();
 
-        if( Music.isJustChanged )
-        {
-            List<Pair<ActionSet, Command>> CurrentActions = new List<Pair<ActionSet, Command>>();
-            foreach( Pair<Timing, Command> cmd in Commands )
+            List<Pair<ActionSet, Skill>> CurrentActions = new List<Pair<ActionSet, Skill>>();
+            foreach( Pair<Timing, Skill> stPair in Skills )
             {
-                ActionSet act = cmd.Get<Command>().GetCurrentAction( cmd.Get<Timing>() );
+                ActionSet act = stPair.Get<Skill>().GetCurrentAction( stPair.Get<Timing>() );
                 if( act != null )
                 {
-                    CurrentActions.Add( new Pair<ActionSet, Command>( act, cmd.Get<Command>() ) );
+                    CurrentActions.Add( new Pair<ActionSet, Skill>( act, stPair.Get<Skill>() ) );
                 }
             }
             //Add setoff logic if needed.
-            foreach( Pair<ActionSet, Command> act in CurrentActions )
+            foreach( Pair<ActionSet, Skill> act in CurrentActions )
             {
-				bool isSucceeded = false;
-                isSucceeded |= GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
-				isSucceeded |=GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Command>() );
-				if ( isSucceeded )
-				{
-                    act.Get<Command>().OnExecuted( act.Get<ActionSet>() );
-				}
+                bool isSucceeded = false;
+                isSucceeded |= GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Skill>() );
+                isSucceeded |=  GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Skill>() );
+                if( isSucceeded )
+                {
+                    act.Get<Skill>().OnExecuted( act.Get<ActionSet>() );
+                }
             }
 
-			Commands.RemoveAll( ( Pair<Timing, Command> cmd ) => cmd.Get<Command>().CheckIsEnd( cmd.Get<Timing>() ) );
+			Skills.RemoveAll( ( Pair<Timing, Skill> cmd ) => cmd.Get<Skill>().CheckIsEnd( cmd.Get<Timing>() ) );
         }
     }
 
-	void OnBarStarted( int CurrentIndex )
+	public void ExecSkill( Skill NewSkill )
 	{
-		if ( CurrentIndex == 0 )
-		{
-			GameContext.PlayerConductor.On4BarStarted();
-		}
-        GameContext.PlayerConductor.OnBarStarted(CurrentIndex);
-        GameContext.EnemyConductor.OnBarStarted(CurrentIndex);
-	}
-
-	public void ExecCommand( Command NewCommand )
-	{
-        NewCommand.gameObject.transform.parent = commandParent.transform;
-		Commands.Add( new Pair<Timing, Command>( new Timing( Music.Just ), NewCommand ) );
+        NewSkill.gameObject.transform.parent = skillParent.transform;
+        Skills.Add( new Pair<Timing, Skill>( new Timing( Music.Just ), NewSkill ) );
 	}
 
     public void SetBGEffect( GameObject BGEffectPrefab )

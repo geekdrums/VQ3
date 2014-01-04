@@ -13,8 +13,6 @@ public class Player : Character {
         Initialize();
 		guiLayer = GetComponent<GUILayer>();
 		initialPosition = guiLayer.transform.position;
-		DefendPower = 0;
-		AttackPower = 0;
 	}
 	
 	// Update is called once per frame
@@ -38,18 +36,9 @@ public class Player : Character {
 		return "Player";
 	}
 
-	public void OnBarStarted( int CurrentIndex )
-	{
-		DefendPower = 0;
-		if ( CurrentIndex == 0 )
-		{
-			AttackPower = 0;
-		}
-	}
-
-    public override void BeAttacked( AttackModule attack, Command command )
+    public override void BeAttacked( AttackModule attack, Skill command )
     {
-        int damage = Mathf.Max( 0, attack.AttackPower + command.OwnerCharacter.AttackPower - DefendPower );
+        int damage = Mathf.Max( 0, attack.AttackPower - DefendPower );
         BeDamaged( damage );
         if( damage <= 0 )
         {

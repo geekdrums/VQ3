@@ -6,35 +6,14 @@ public class PlayerConductor : MonoBehaviour {
 	public GameObject MainCamera;
 	Player Player;
 
-	public Command[] Commands;
 	public Strategy[] Strategies;
 
 	EStrategy NextStrategy;
 	EStrategy CurrentStrategy;
-	ECommand[] NextCommandList = new ECommand[4];
-	ECommand[] CurrentCommandList = new ECommand[4];
-    int NumQuarter = 4;
+    Command NextCommand;
+    Command CurrentCommand;
 
-    public string NextCommandsName
-    {
-        get
-        {
-            string res = "";
-            for( int i = 0; i < NextCommandList.Length; ++i )
-            {
-                if( i < NumQuarter )
-                {
-                    res += NextCommandList[i].ToString()[0];
-                }
-                else
-                {
-                    res += "W";
-                }
-            }
-            return res;
-        }
-    }
-	public string NextStrategyName { get { return NextStrategy.ToString(); } }
+    string NextBlockName { get { return NextStrategy.ToString() + NextCommand.GetBlockName(); } }
 
 	int RemainBreakTime;
 	Timing AllowInputTime = new Timing( 3, 3, 2 );
@@ -50,7 +29,7 @@ public class PlayerConductor : MonoBehaviour {
 	{
 		NextStrategy = EStrategy.Attack;
 		CurrentStrategy = NextStrategy;
-		NextCommandList = Strategies[(int)CurrentStrategy].CommandList[0];
+		NextCommand = Strategies[(int)CurrentStrategy].Commands[0];
 	}
 	
 	// Update is called once per frame
@@ -63,7 +42,7 @@ public class PlayerConductor : MonoBehaviour {
 				if ( Music.IsJustChangedAt( 3 ) )
 				{
 					NextStrategy = EStrategy.Break;
-					NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
+					NextCommand = Strategies[(int)NextStrategy].Commands[0];
 				}
 			}
 			else if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break )
@@ -93,64 +72,47 @@ public class PlayerConductor : MonoBehaviour {
 		if ( Input.GetKeyDown( KeyCode.A ) )
 		{
 			NextStrategy = EStrategy.Attack;
-			NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
+			NextCommand = Strategies[(int)NextStrategy].Commands[0];
 		}
 		else if ( Input.GetKeyDown( KeyCode.P ) )
 		{
 			NextStrategy = EStrategy.Attack;
-			NextCommandList = Strategies[(int)NextStrategy].CommandList[1];
+            NextCommand = Strategies[(int)NextStrategy].Commands[1];
 		}
 		else if ( Input.GetKeyDown( KeyCode.G ) )
 		{
 			NextStrategy = EStrategy.Attack;
-			NextCommandList = Strategies[(int)NextStrategy].CommandList[2];
+            NextCommand = Strategies[(int)NextStrategy].Commands[2];
 		}
 		else if ( Input.GetKeyDown( KeyCode.D ) )
 		{
 			NextStrategy = EStrategy.Attack;
-			NextCommandList = Strategies[(int)NextStrategy].CommandList[3];
+            NextCommand = Strategies[(int)NextStrategy].Commands[3];
 		}
 		else if ( Input.GetKeyDown( KeyCode.M ) )
 		{
 			NextStrategy = EStrategy.Magic;
-			NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
+            NextCommand = Strategies[(int)NextStrategy].Commands[0];
 		}
 		else if ( Input.GetKeyDown( KeyCode.H ) )
 		{
 			NextStrategy = EStrategy.Magic;
-			NextCommandList = Strategies[(int)NextStrategy].CommandList[1];
+            NextCommand = Strategies[(int)NextStrategy].Commands[1];
 		}
 		else if ( Input.GetKeyDown( KeyCode.C ) )
 		{
 			NextStrategy = EStrategy.Magic;
-			NextCommandList = Strategies[(int)NextStrategy].CommandList[2];
+            NextCommand = Strategies[(int)NextStrategy].Commands[2];
 		}
 		else if ( Input.GetKeyDown( KeyCode.F ) )
 		{
 			NextStrategy = EStrategy.Magic;
-			NextCommandList = Strategies[(int)NextStrategy].CommandList[3];
-        }
-        else if( Input.GetKeyDown( KeyCode.Alpha1 ) )
-        {
-            NumQuarter = 1;
-        }
-        else if( Input.GetKeyDown( KeyCode.Alpha2 ) )
-        {
-            NumQuarter = 2;
-        }
-        else if( Input.GetKeyDown( KeyCode.Alpha3 ) )
-        {
-            NumQuarter = 3;
-        }
-        else if( Input.GetKeyDown( KeyCode.Alpha4 ) )
-        {
-            NumQuarter = 4;
+            NextCommand = Strategies[(int)NextStrategy].Commands[3];
         }
 	}
 
 	void SetNextBlock()
 	{
-		CurrentCommandList[0] = ECommand.Wait;
 		if ( Music.GetNextBlockName() == "endro" )
 		{
 			return;
@@ -164,41 +126,20 @@ public class PlayerConductor : MonoBehaviour {
 				if ( NextStrategy == EStrategy.Break )
 				{
 					NextStrategy = EStrategy.Magic;
-					NextCommandList = Strategies[(int)NextStrategy].CommandList[0];
+					NextCommand = Strategies[(int)NextStrategy].Commands[0];
 				}
-                Music.SetNextBlock( NextStrategyName + NextCommandsName );
+                Music.SetNextBlock( NextBlockName );
             }
 		}
 		else
 		{
-			bool willShowBreak = GameContext.VoxonSystem.DetermineWillShowBreak( GetWillGainVoxon() );
+			bool willShowBreak = GameContext.VoxonSystem.DetermineWillShowBreak( NextCommand.GetWillGainVoxon() );
             if( willShowBreak )
             {
                 RemainBreakTime = 2;
             }
-            Music.SetNextBlock( NextStrategyName + NextCommandsName + ( willShowBreak ? "Trans" : "" ) );
+            Music.SetNextBlock( NextBlockName + (willShowBreak ? "Trans" : "") );
 		}
-	}
-
-	int GetWillGainVoxon()
-	{
-		int sum = 0;
-		for ( int i=0; i<3; ++i )
-		{
-            if( Commands[(int)NextCommandList[i]].Actions == null )
-            {
-                Commands[(int)NextCommandList[i]].Parse();
-            }
-			ActionSet[] actions = Commands[(int)NextCommandList[i]].Actions;
-			foreach ( ActionSet a in actions )
-			{
-				if ( a.GetModule<MagicModule>() != null )
-				{
-					sum += a.GetModule<MagicModule>().VoxonEnergy;
-				}
-			}
-		}
-		return sum;
 	}
 
 	VoxonSystem.VoxonState GetDesiredVoxonState()
@@ -224,70 +165,62 @@ public class PlayerConductor : MonoBehaviour {
 		}
 	}
 
-	public void On4BarStarted()
-	{
+	public void CheckCommand()
+    {
 		if ( GameContext.VoxonSystem.state != GetDesiredVoxonState() )
 		{
 			GameContext.VoxonSystem.SetState( GetDesiredVoxonState() );
 		}
 
+        Player.SkillInit();
 		CurrentStrategy = NextStrategy;
-		CurrentCommandList[0] = NextCommandList[0];
-		CurrentCommandList[1] = NextCommandList[1];
-		CurrentCommandList[2] = NextCommandList[2];
-		if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak )
-		{
-			CurrentCommandList[3] = ECommand.Wait;
-		}
-		else
-		{
-			CurrentCommandList[3] = NextCommandList[3];
-		}
+		CurrentCommand = NextCommand;
 	}
-
-	public void OnBarStarted( int CurrentIndex )
-	{
-		Player.OnBarStarted( CurrentIndex );
-		ECommand Command = ( CurrentIndex < NumQuarter ? CurrentCommandList[CurrentIndex%4] : ECommand.Wait );
-		Command NewCommand = (Command)Instantiate( Commands[(int)Command], new Vector3(), Commands[(int)Command].transform.rotation );
-		NewCommand.SetOwner( Player );
-		GameContext.BattleConductor.ExecCommand( NewCommand );
-	}
+    public void CheckSkill()
+    {
+        if( CurrentCommand is QuarterCommand && (CurrentCommand as QuarterCommand).IsWait() )
+        {
+            Player.SkillInit();
+            return;
+        }
+        GameObject playerSkill = CurrentCommand.GetCurrentSkill();
+        if( playerSkill != null )
+        {
+            Skill objSkill = ( Instantiate( playerSkill ) as GameObject ).GetComponent<Skill>();
+            objSkill.SetOwner( Player );
+            GameContext.BattleConductor.ExecSkill( objSkill );
+        }
+    }
 
 	public void OnBattleStarted()
 	{
 		InitializeCommand();
-        Music.SetNextBlock( NextStrategyName + NextCommandsName );
+        Player.SkillInit();
+        Music.SetNextBlock( NextBlockName );
         Music.SetAisac( "IsTransition", 0 );
         Music.SetAisac( "TrackVolume1", 1 );
         Music.SetAisac( "TrackVolume2", 1 );
     }
 
-	public bool ReceiveAction( ActionSet Action, Command command )
+	public bool ReceiveAction( ActionSet Action, Skill skill )
 	{
 		bool isSucceeded = false;
 		AttackModule attack = Action.GetModule<AttackModule>();
-        if( attack != null && !command.isPlayerAction )
+        if( attack != null && !skill.isPlayerSkill )
 		{
-			Player.BeAttacked( attack, command );
+			Player.BeAttacked( attack, skill );
 			isSucceeded = true;
 		}
 		DefendModule defend = Action.GetModule<DefendModule>();
-        if( defend != null && command.isPlayerAction )
+        if( defend != null && skill.isPlayerSkill )
 		{
 			Player.Defend( defend );
 			isSucceeded = true;
 		}
 		HealModule heal = Action.GetModule<HealModule>();
-        if( heal != null && command.isPlayerAction )
+        if( heal != null && skill.isPlayerSkill )
 		{
 			Player.Heal( heal );
-			isSucceeded = true;
-		}
-		PowerModule power = Action.GetModule<PowerModule>();
-		if ( power != null && command.isPlayerAction )
-		{
-			Player.PowerUp( power );
 			isSucceeded = true;
 		}
 		return isSucceeded;

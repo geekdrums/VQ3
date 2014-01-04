@@ -76,7 +76,7 @@ public class DefendBGEffect : BGEffect {
             }
             else
             {
-                spectrums[Music.Just.barUnit] = (int)(Mathf.Sqrt( AudioListener.GetSpectrumData(64,0,FFTWindow.Rectangular)[1] * 1.5f ) * spectrumGain);
+                //spectrums[Music.Just.barUnit] = (int)(Mathf.Sqrt( AudioListener.GetSpectrumData(64,0,FFTWindow.Rectangular)[1] * 1.5f ) * spectrumGain);
             }
         }
 

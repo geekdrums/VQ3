@@ -4,118 +4,84 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public enum ECommand
-{
-	Attack,
-	Power,
-	Guard,
-	Magic,
-	Heal,
-	Fire1,
-	Fire2,
-	BreakAttack,
-	Wait,
-	Count
-}
-
 public class Command : MonoBehaviour
 {
-    public bool isPlayerAction;
-    public string[] ActionStr;
-    public string RhythmStr;
-    public GameObject bgEffefctPrefab;
+    public string MusicBlockName;
+    public List<int> ExpThreasholds;
+    public List<Skill> _skillList;
+    public string _timingStr = "0 0 0,1 0 0,2 0 0,3 0 0";
 
-	public ActionSet[] Actions { get; protected set; }
-	protected Rhythm ActionRhythm;
-	protected Animation CommandAnim;
-	protected bool isEnd;
+    protected int Level;
+    protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int,Skill>();
 
-	public Character OwnerCharacter { get; protected set; }
-
-	public void SetOwner( Character chara ) { OwnerCharacter = chara; }
-
-    void Awake()
-    {
-        Parse();
-    }
-
-    public void Parse()
-    {
-        if( RhythmStr != "" )
+    public int NextExp { get { return (ExpThreasholds.Count > Level ? ExpThreasholds[Level] : -1); } }
+    public bool isExecutable { get { return Level > 0; } }
+    
+    public void Parse(){
+        string[] timingStrs = _timingStr.Split( ",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
+        if( timingStrs.Length != _skillList.Count )
         {
-            ActionRhythm = new Rhythm( 4, RhythmStr );
+            Debug.LogError("invalid skill list! _skillList.Count = " + _skillList.Count + ", timingStrs.Length = " + timingStrs.Length);
+            return;
         }
-        else
+        for( int i=0; i<timingStrs.Length; i++ )
         {
-            ActionRhythm = Rhythm.ONE_NOTE_RHYTHM;
-        }
-        Actions = new ActionSet[ActionStr.Length];
-        for( int i = 0; i < ActionStr.Length; ++i )
-        {
-            Actions[i] = ActionSet.Parse( ActionStr[i] );
+            string[] barBeatUnitStr = timingStrs[i].Split( " ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
+            int bar = int.Parse( barBeatUnitStr[0] );
+            int beat = barBeatUnitStr.Length > 1 ? int.Parse( barBeatUnitStr[1] ) : 0;
+            int unit = barBeatUnitStr.Length > 2 ? int.Parse( barBeatUnitStr[2] ) : 0;
+            SkillDictionary.Add( new Timing( bar, beat, unit ).totalUnit, _skillList[i] );
         }
     }
 
-    // Use this for initialization
-    void Start()
-    {
-        if( isPlayerAction )
-        {
-            GameContext.BattleConductor.SetBGEffect( bgEffefctPrefab );
-        }
+    void Start(){
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (isEnd && (CommandAnim == null || !CommandAnim.isPlaying)) Destroy(this.gameObject);
+    void Update(){
     }
 
-	public void OnExecuted( ActionSet act )
+    public virtual GameObject GetCurrentSkill()
     {
-        AnimModule anim = act.GetModule<AnimModule>();
-        if( anim != null )
+        if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak && Music.Just.bar >= 3 ) return null;
+        return SkillDictionary.ContainsKey( Music.Just.totalUnit ) ? SkillDictionary[Music.Just.totalUnit].gameObject : null;
+    }
+    public void SetExp( int exp )
+    {
+        Level = ExpThreasholds.Count;
+        for( int i = 0; i < ExpThreasholds.Count; i++ )
         {
-            string AnimName = anim.AnimName == "" ? name.Replace( "Command(Clone)", "Anim" ) : anim.AnimName;
-            CommandAnim = GetComponentInChildren<Animation>();
-            if( CommandAnim.GetClip( AnimName ) != null )
+            if( exp < ExpThreasholds[i] )
             {
-                CommandAnim[AnimName].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
-                CommandAnim.Play( AnimName );
+                Level = i;
+                break;
             }
         }
-	}
+    }
 
-	public Command( Rhythm rhythm, bool isPlayer = true, params ActionSet[] inActions )
-	{
-		Actions = inActions;
-		ActionRhythm = rhythm;
-		isPlayerAction = isPlayer;
-	}
-	public Command( ActionSet act, bool isPlayer = true )
-		: this( Rhythm.ONE_NOTE_RHYTHM, isPlayer, act ) { }
-	public Command( IActionModule Module )
-		: this( new ActionSet( Module ), true ) { }
-
-	public ActionSet GetCurrentAction( Timing startedTiming )
-	{
-        int mt = Music.Just - startedTiming;
-		Note n = ActionRhythm.GetNote(mt);
-        if( n != null && n.hasNote )
-        {
-			int noteIndex = ActionRhythm.GetNoteIndex( mt );
-			int toneIndex = ActionRhythm.GetToneIndex( noteIndex );
-			if ( 0 <= toneIndex && toneIndex < Actions.Length )
-			{
-				return Actions[toneIndex];
-			}
-			else return null;
-        }
-        else return null;
-	}
-    public bool CheckIsEnd(Timing startedTiming)
+    public int GetWillGainVoxon()
     {
-		isEnd = Music.Just - startedTiming >= ActionRhythm.MTLength(); 
-        return isEnd;
+        int sum = 0;
+        for( int i = 0; i < SkillDictionary.Count; ++i )
+        {
+            if( SkillDictionary.Keys.ElementAt( i ) < 3 * Music.mtBar )
+            {
+                Skill skill = SkillDictionary.Values.ElementAt( i );
+                if( skill.Actions == null ) skill.Parse();
+                foreach( ActionSet a in skill.Actions )
+                {
+                    if( a.GetModule<MagicModule>() != null )
+                    {
+                        sum += a.GetModule<MagicModule>().VoxonPoint;
+                    }
+                }
+            }
+            else break;
+        }
+        return sum;
+    }
+
+    public virtual string GetBlockName()
+    {
+        return MusicBlockName;
     }
 }

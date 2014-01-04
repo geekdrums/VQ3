@@ -64,15 +64,15 @@ public class AttackModule : TargetModule
 
 public class MagicModule : TargetModule
 {
-    public MagicModule( int MagicPower, int VoxonEnergy, TargetType TargetType = TargetType.First, int AnimIndex = -1 )
+    public MagicModule( int MagicPower, int VoxonPoint, TargetType TargetType = TargetType.First, int AnimIndex = -1 )
         : base( TargetType, AnimIndex )
 	{
 		this.MagicPower = MagicPower;
-        this.VoxonEnergy = VoxonEnergy;
+        this.VoxonPoint = VoxonPoint;
 	}
 
 	public int MagicPower { get; private set; }
-    public int VoxonEnergy { get; private set; }
+    public int VoxonPoint { get; private set; }
 }
 
 public class DefendModule : IActionModule
@@ -85,6 +85,16 @@ public class DefendModule : IActionModule
 	public int DefendPower { get; private set; }
 }
 
+public class MagicDefendModule : IActionModule
+{
+    public MagicDefendModule( int MagicDefendPower )
+    {
+        this.MagicDefendPower = MagicDefendPower;
+    }
+
+    public int MagicDefendPower { get; private set; }
+}
+
 public class HealModule : IActionModule
 {
 	public HealModule( int HealPoint )
@@ -93,14 +103,4 @@ public class HealModule : IActionModule
 	}
 
 	public int HealPoint { get; private set; }
-}
-
-public class PowerModule : IActionModule
-{
-	public PowerModule( int AttackPower )
-	{
-		this.AttackPower = AttackPower;
-	}
-
-	public int AttackPower { get; private set; }
 }

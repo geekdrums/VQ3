@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: AttackCommand
+  m_Name: DefendAttackCommand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,11 +38,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90c5941b18d69c4bad926c786655e83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicBlockName: AAAA
+  MusicBlockName: GGAA
   ExpThreasholds: 00000000000000000000000000000000
   _skillList:
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
+  - {fileID: 11400008, guid: 23abc03c71aa3134fa871f1fceb0381c, type: 2}
+  - {fileID: 11400008, guid: 23abc03c71aa3134fa871f1fceb0381c, type: 2}
   - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
   - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
   _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0

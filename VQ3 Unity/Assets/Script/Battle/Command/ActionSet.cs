@@ -18,7 +18,7 @@ public class ActionSet : IEnumerable<IActionModule>
             {
                 res.Modules.Add( new AnimModule( (TargetType)Enum.Parse( typeof( TargetType ), parameters[1] ), (parameters.Length > 2 ? parameters[2] : "") ) );
             }
-			else if ( str.StartsWith( "Attack" ) || str.StartsWith( "BreakAttack" ) )
+			else if ( str.StartsWith( "Attack" ) )
             {
                 res.Modules.Add( new AttackModule( int.Parse( parameters[1] ), (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ),
                     (parameters.Length > 3 ? int.Parse( parameters[3] ) : -1) ) );
@@ -31,10 +31,6 @@ public class ActionSet : IEnumerable<IActionModule>
             else if( str.StartsWith( "Defend" ) )
             {
                 res.Modules.Add( new DefendModule( int.Parse( parameters[1] ) ) );
-			}
-			else if ( str.StartsWith( "Power" ) )
-			{
-				res.Modules.Add( new PowerModule( int.Parse( parameters[1] ) ) );
 			}
 			else if ( str.StartsWith( "Heal" ) )
 			{

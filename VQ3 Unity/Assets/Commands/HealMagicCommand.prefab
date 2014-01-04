@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: AttackCommand
+  m_Name: HealMagicCommand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,14 +38,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90c5941b18d69c4bad926c786655e83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicBlockName: AAAA
+  MusicBlockName: WHMM
   ExpThreasholds: 00000000000000000000000000000000
   _skillList:
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
+  - {fileID: 11400000, guid: a99a5e0e04e80894296335f7252569e0, type: 2}
+  - {fileID: 11400000, guid: 384b997ecd2512f44b4bb65853e2df6a, type: 2}
+  - {fileID: 11400000, guid: 384b997ecd2512f44b4bb65853e2df6a, type: 2}
+  _timingStr: 1 0 0,2 0 0,3 0 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

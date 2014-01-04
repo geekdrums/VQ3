@@ -12,14 +12,21 @@ public enum EStrategy
 
 public class Strategy : MonoBehaviour
 {
-	public string[] CommandStr;
+    public int Exp;
+    public List<Command> Commands;
 
 	public EStrategy StrategyName { get; protected set; }
-	public List<ECommand[]> CommandList { get; protected set; }
 
-	void Awake()
-	{
-		this.StrategyName = (EStrategy)Enum.Parse( typeof( EStrategy ), name.Remove(name.IndexOf("Strategy")) );
+    void Awake()
+    {
+        this.StrategyName = (EStrategy)Enum.Parse( typeof( EStrategy ), name.Remove( name.IndexOf( "Strategy" ) ) );
+        foreach( Command c in Commands )
+        {
+            c.Parse();
+            c.SetExp( Exp );
+        }
+    }
+    /*
 		CommandList = new List<ECommand[]>();
 		foreach ( string str in CommandStr )
 		{
@@ -37,5 +44,6 @@ public class Strategy : MonoBehaviour
 		}
 		return res;
 	}
+    */
 }
 

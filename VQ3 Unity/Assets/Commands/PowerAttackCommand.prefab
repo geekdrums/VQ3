@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: AttackCommand
+  m_Name: PowerAttackCommand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,14 +38,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90c5941b18d69c4bad926c786655e83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicBlockName: AAAA
+  MusicBlockName: PPAA
   ExpThreasholds: 00000000000000000000000000000000
   _skillList:
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
+  - {fileID: 11400000, guid: 78cb2b499ae0a0642b977610b5e8dd14, type: 2}
+  - {fileID: 11400000, guid: 78cb2b499ae0a0642b977610b5e8dd14, type: 2}
+  _timingStr: 2 0 0,3 0 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

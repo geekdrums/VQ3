@@ -57,6 +57,8 @@
      <Compile Include="Assets\Script\Battle\Command\ActionModule.cs" />
      <Compile Include="Assets\Script\Battle\Command\ActionSet.cs" />
      <Compile Include="Assets\Script\Battle\Command\Command.cs" />
+     <Compile Include="Assets\Script\Battle\Command\QuarterCommand.cs" />
+     <Compile Include="Assets\Script\Battle\Command\Skill.cs" />
      <Compile Include="Assets\Script\Battle\Command\Strategy.cs" />
      <Compile Include="Assets\Script\Battle\Effect\AttackEffect.cs" />
      <Compile Include="Assets\Script\Battle\Effect\CommandEffect.cs" />
@@ -78,7 +80,6 @@
      <Compile Include="Assets\Script\MusicEngine\Motif\Rhythm.cs" />
      <Compile Include="Assets\Script\MusicEngine\Music.cs" />
      <Compile Include="Assets\Script\MusicEngine\UnityMusic.cs" />
-     <Compile Include="Assets\Script\Utils\AudioSpectrum.cs" />
      <Compile Include="Assets\Script\Utils\MidairPrimitive.cs" />
      <Compile Include="Assets\Script\Utils\TextWindow.cs" />
      <Compile Include="Assets\Script\Utils\Utils.cs" />

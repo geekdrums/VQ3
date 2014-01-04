@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Enemy : Character {
 
-    public Command[] Commands;
+    public Skill[] Commands;
 
     SpriteRenderer HPCircle;
     Vector3 baseHPCircleScale;
@@ -33,7 +33,7 @@ public class Enemy : Character {
 	{
 		if ( damageTime > 0 )
 		{
-			renderer.material.color = ( damageTime % 0.1f > 0.05f ? Color.clear : GameContext.EnemyConductor.baseColor );
+            renderer.material.color = (damageTime % 0.1f > 0.05f ? Color.clear : targetHPCircleColor);
 			damageTime -= Time.deltaTime;
 			if ( damageTime <= 0 )
 			{
@@ -44,7 +44,7 @@ public class Enemy : Character {
 				}
 				else
 				{
-					renderer.material.color = GameContext.EnemyConductor.baseColor;
+                    renderer.material.color = targetHPCircleColor;
 				}
 			}
 		}
@@ -57,7 +57,7 @@ public class Enemy : Character {
         HPCircle.color = Color.Lerp( targetHPCircleColor, HPCircle.color, 0.1f );
     }
 
-    public Command GetExecCommand()
+    public Skill GetExecCommand()
     {
         return Commands[0];
     }

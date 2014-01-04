@@ -81,6 +81,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2135033749}
     m_Modifications:
+    - target: {fileID: 11400000, guid: 4482fea023993e845bd4b051e6e6365f, type: 2}
+      propertyPath: Commands.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4482fea023993e845bd4b051e6e6365f, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -109,6 +113,26 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 4482fea023993e845bd4b051e6e6365f, type: 2}
+      propertyPath: Commands.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: fe65331fe9245ea43a36d648b25d8216,
+        type: 2}
+    - target: {fileID: 11400000, guid: 4482fea023993e845bd4b051e6e6365f, type: 2}
+      propertyPath: Commands.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: d831511bc674a74438958c70973630a4,
+        type: 2}
+    - target: {fileID: 11400000, guid: 4482fea023993e845bd4b051e6e6365f, type: 2}
+      propertyPath: Commands.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8c282a6005cec0c4b8ded4ca793df766,
+        type: 2}
+    - target: {fileID: 11400000, guid: 4482fea023993e845bd4b051e6e6365f, type: 2}
+      propertyPath: Commands.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4113f276dc848a04d8da9b55756c0a1a,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4482fea023993e845bd4b051e6e6365f, type: 2}
   m_RootGameObject: {fileID: 1235157510}
@@ -293,11 +317,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f059be8b10acbcd408370cf1cf8c5939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CommandStr:
-  - Magic Magic Magic Magic
-  - Wait Heal Wait Heal
-  - Wait Heal Magic Magic
-  - Wait Fire1 Fire2 Wait
+  Exp: 0
+  Commands:
+  - {fileID: 11400000, guid: b8765ae012d2f3649b1a20e7378bbe1a, type: 2}
+  - {fileID: 11400000, guid: 301143bcc27ebee419637c3ebff2951c, type: 2}
+  - {fileID: 11400000, guid: 18c5c15ef3571f94d8947e7d4e7d78e3, type: 2}
+  - {fileID: 11400000, guid: 455d108574ab22a45b771164de865528, type: 2}
 --- !u!4 &134065697
 Transform:
   m_ObjectHideFlags: 0
@@ -1271,7 +1296,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 818097122}
   m_Layer: 0
-  m_Name: Commands
+  m_Name: Skills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1295,6 +1320,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2135033749}
     m_Modifications:
+    - target: {fileID: 11400000, guid: 486b42010ebc90e418b149ef1fe19075, type: 2}
+      propertyPath: Commands.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 486b42010ebc90e418b149ef1fe19075, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1323,6 +1352,11 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 486b42010ebc90e418b149ef1fe19075, type: 2}
+      propertyPath: Commands.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: c5000a698feb26548b10376c0f8c70d3,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 486b42010ebc90e418b149ef1fe19075, type: 2}
   m_RootGameObject: {fileID: 1287732669}
@@ -1659,11 +1693,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f059be8b10acbcd408370cf1cf8c5939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CommandStr:
-  - Attack Attack Attack Attack
-  - Power Power Attack Attack
-  - Guard Guard Guard Guard
-  - Guard Guard Attack Attack
+  Exp: 0
+  Commands:
+  - {fileID: 11400000, guid: fe65331fe9245ea43a36d648b25d8216, type: 2}
+  - {fileID: 11400000, guid: d831511bc674a74438958c70973630a4, type: 2}
+  - {fileID: 11400000, guid: 8c282a6005cec0c4b8ded4ca793df766, type: 2}
+  - {fileID: 11400000, guid: 4113f276dc848a04d8da9b55756c0a1a, type: 2}
 --- !u!1 &1261502656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,7 +1743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76810c779f2348848a76bb2d7fd7f384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commandParent: {fileID: 818097121}
+  skillParent: {fileID: 818097121}
   voxonSystem: {fileID: 961033927}
 --- !u!1 &1287732669
 GameObject:
@@ -1749,8 +1784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f059be8b10acbcd408370cf1cf8c5939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CommandStr:
-  - BreakAttack BreakAttack BreakAttack BreakAttack
+  Exp: 0
+  Commands:
+  - {fileID: 11400000, guid: c5000a698feb26548b10376c0f8c70d3, type: 2}
 --- !u!1 &1351351090
 GameObject:
   m_ObjectHideFlags: 0
@@ -2444,6 +2480,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2135033749}
     m_Modifications:
+    - target: {fileID: 11400000, guid: c748ba83b9678194d93c4f415d9eaeb7, type: 2}
+      propertyPath: Commands.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c748ba83b9678194d93c4f415d9eaeb7, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2472,6 +2512,26 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c748ba83b9678194d93c4f415d9eaeb7, type: 2}
+      propertyPath: Commands.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: b8765ae012d2f3649b1a20e7378bbe1a,
+        type: 2}
+    - target: {fileID: 11400000, guid: c748ba83b9678194d93c4f415d9eaeb7, type: 2}
+      propertyPath: Commands.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 301143bcc27ebee419637c3ebff2951c,
+        type: 2}
+    - target: {fileID: 11400000, guid: c748ba83b9678194d93c4f415d9eaeb7, type: 2}
+      propertyPath: Commands.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 18c5c15ef3571f94d8947e7d4e7d78e3,
+        type: 2}
+    - target: {fileID: 11400000, guid: c748ba83b9678194d93c4f415d9eaeb7, type: 2}
+      propertyPath: Commands.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 455d108574ab22a45b771164de865528,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c748ba83b9678194d93c4f415d9eaeb7, type: 2}
   m_RootGameObject: {fileID: 134065695}
@@ -2780,16 +2840,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 681572031}
-  Commands:
-  - {fileID: 11400000, guid: 738377b9d4c38dd4db4ad20274df4124, type: 2}
-  - {fileID: 11400000, guid: 78cb2b499ae0a0642b977610b5e8dd14, type: 2}
-  - {fileID: 11400008, guid: 23abc03c71aa3134fa871f1fceb0381c, type: 2}
-  - {fileID: 11400000, guid: 384b997ecd2512f44b4bb65853e2df6a, type: 2}
-  - {fileID: 11400000, guid: a99a5e0e04e80894296335f7252569e0, type: 2}
-  - {fileID: 11400000, guid: 54c3bd843c32b26489a3aa328795f273, type: 2}
-  - {fileID: 11400000, guid: ff12abb3cd1776f448c7806d4e4c0999, type: 2}
-  - {fileID: 11400000, guid: 2b65f7cd69731c040b0e68f85cd5a3f6, type: 2}
-  - {fileID: 11400000, guid: d9604af5081cd854e9b65301611e12db, type: 2}
   Strategies:
   - {fileID: 1235157512}
   - {fileID: 134065696}
