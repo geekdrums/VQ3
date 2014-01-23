@@ -10,6 +10,7 @@ public class QuarterCommand : Command
 
     public override string GetBlockName()
     {
-        return MusicBlockName.Substring(0,Level) + new string( 'W', 4-Level );
+        return MusicBlockName + Level.ToString();
+        //MusicBlockName.Substring(0,Level) + new string( 'W', 4-Level );
     }
 }

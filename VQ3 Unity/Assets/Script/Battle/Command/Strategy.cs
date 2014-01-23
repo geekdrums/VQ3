@@ -6,11 +6,12 @@ public enum EStrategy
 {
 	Attack,
 	Magic,
+    Pilgrim,
 	Break,
 	Count
 }
 
-public class Strategy : MonoBehaviour
+public class Strategy : MonoNode
 {
     public int Exp;
     public List<Command> Commands;
@@ -23,27 +24,35 @@ public class Strategy : MonoBehaviour
         foreach( Command c in Commands )
         {
             c.Parse();
-            c.SetExp( Exp );
+            c.SetParent( this );
         }
     }
-    /*
-		CommandList = new List<ECommand[]>();
-		foreach ( string str in CommandStr )
-		{
-			CommandList.Add( Parse( str ) );
-		}
-	}
 
-	public static ECommand[] Parse( string CommandStr )
-	{
-		ECommand[] res = new ECommand[4];
-		string[] commandStrings = CommandStr.Split( Utils.space );
-		for( int i=0;i<commandStrings.Length; ++i )
-		{
-			res[i] = (ECommand)Enum.Parse( typeof( ECommand ), commandStrings[i] );
-		}
-		return res;
-	}
-    */
+    public IEnumerable<Command> LinkedCommands
+    {
+        get
+        {
+            foreach( Command c in Commands )
+            {
+                yield return c;
+            }
+            foreach( MonoNode link in links )
+            {
+                Strategy linkedStrategy = link as Strategy;
+                Command linkedCommand = link as Command;
+                if( linkedStrategy != null )
+                {
+                    foreach( Command c in linkedStrategy.Commands )
+                    {
+                        yield return c;
+                    }
+                }
+                else if( linkedCommand != null )
+                {
+                    yield return linkedCommand;
+                }
+            }
+        }
+    }
 }
 

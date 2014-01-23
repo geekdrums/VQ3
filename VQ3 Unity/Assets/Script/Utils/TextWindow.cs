@@ -87,14 +87,16 @@ public class TextWindow : MonoBehaviour {
 
 	public static void AddMessage( params string[] NewMessages )
 	{
+        /*
 		foreach ( string message in NewMessages )
 		{
 			instance.AddMessage_( new GUIMessage(message) );
 		}
+        */
 	}
 	public static void AddMessage( GUIMessage NewMessage )
 	{
-		instance.AddMessage_( NewMessage );
+		//instance.AddMessage_( NewMessage );
 	}
 
 	void AddMessage_( GUIMessage NewMessage )

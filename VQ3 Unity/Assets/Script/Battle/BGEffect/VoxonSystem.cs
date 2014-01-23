@@ -19,8 +19,8 @@ public class VoxonSystem : BGEffect{
 
 	public float MAX_SCALE;
 	public float LINEAR_FACTOR;
-	public GameObject linePrefab;
-	public GameObject voxonCircle;
+	//public GameObject linePrefab;
+	//public GameObject voxonCircle;
 
 	public Color initialBGColor;
 	public Color maxBGColor;
@@ -29,7 +29,7 @@ public class VoxonSystem : BGEffect{
 	public Vector3 hidePosition;
 	public Vector3 showPosition;
 
-	LineRenderer threasholdLine;
+	//LineRenderer threasholdLine;
 	Camera mainCamera;
 
 	readonly float lineScale = 1.2f;
@@ -43,21 +43,23 @@ public class VoxonSystem : BGEffect{
 	void Start () {
 		GameContext.VoxonSystem = this;
 
-		//make circle
-		int linePositions = 65;
-		threasholdLine = ( (GameObject)Instantiate( linePrefab, transform.position, linePrefab.transform.rotation ) ).GetComponent<LineRenderer>();
-		threasholdLine.SetVertexCount( linePositions+1 );
-		for ( int i=0; i<=linePositions; ++i )
-		{
-			threasholdLine.SetPosition( i, new Vector3(
-				Mathf.Cos( Mathf.PI * 2 * i/64.0f ) * MAX_SCALE/2,
-				Mathf.Sin( Mathf.PI * 2 * i/64.0f ) * MAX_SCALE/2, 0 ) );
-		}
-		threasholdLine.transform.parent = transform;
+        //make circle
+        /*
+        int linePositions = 65;
+        threasholdLine = ( (GameObject)Instantiate( linePrefab, transform.position, linePrefab.transform.rotation ) ).GetComponent<LineRenderer>();
+        threasholdLine.SetVertexCount( linePositions+1 );
+        for ( int i=0; i<=linePositions; ++i )
+        {
+            threasholdLine.SetPosition( i, new Vector3(
+                Mathf.Cos( Mathf.PI * 2 * i/64.0f ) * MAX_SCALE/2,
+                Mathf.Sin( Mathf.PI * 2 * i/64.0f ) * MAX_SCALE/2, 0 ) );
+        }
+        threasholdLine.transform.parent = transform;
 		
-		//init scale
-		threasholdLine.transform.localScale = targetLineScale;
-		voxonCircle.transform.localScale = targetCircleScale;
+        //init scale
+        threasholdLine.transform.localScale = targetLineScale;
+        voxonCircle.transform.localScale = targetCircleScale;
+        */
 
 		mainCamera = GameObject.Find( "Main Camera" ).camera;
 		mainCamera.backgroundColor = initialBGColor;
@@ -102,7 +104,7 @@ public class VoxonSystem : BGEffect{
 		case VoxonState.HideBreak:
 			break;
 		}
-		UpdateAnimation();
+		//UpdateAnimation();
 	}
 
 	void ShowBreakUpdate()
@@ -118,7 +120,7 @@ public class VoxonSystem : BGEffect{
 			targetCircleColor = breakBGColor;
 
 			targetLineScale = Vector3.zero;
-			threasholdLine.transform.localScale = Vector3.zero;
+			//threasholdLine.transform.localScale = Vector3.zero;
 		}
 		else if ( Music.IsJustChangedAt( 3, 0, 2 ) )
 		{
@@ -131,13 +133,14 @@ public class VoxonSystem : BGEffect{
 		else if ( Music.IsJustChangedAt( 3, 1, 1 ) )
 		{
 			targetLineScale = Vector3.one * 3.5f;
-			threasholdLine.transform.localPosition += Vector3.back * 2;
-			threasholdLine.SetWidth( 30, 30 );
+			//threasholdLine.transform.localPosition += Vector3.back * 2;
+			//threasholdLine.SetWidth( 30, 30 );
 			GameContext.EnemyConductor.baseColor = Color.white;
 		}
 	}
 
 	//linear fade
+    /*
 	void UpdateAnimation()
 	{
 		voxonCircle.transform.localScale = Vector3.Lerp( voxonCircle.transform.localScale, targetCircleScale, LINEAR_FACTOR );
@@ -149,6 +152,7 @@ public class VoxonSystem : BGEffect{
 		float f = (MAX_SCALE - voxonCircle.transform.localScale.x) / MAX_SCALE;
 		mainCamera.backgroundColor = Color.Lerp( maxBGColor, initialBGColor, f );
  	}
+    */
 
 	public void SetState( VoxonState newState )
 	{
@@ -160,8 +164,8 @@ public class VoxonSystem : BGEffect{
 			targetLineScale = Vector3.zero;
 			targetCircleColor = Color.white;
 			targetLineColor = Color.white;
-			threasholdLine.transform.localPosition = Vector3.zero;
-			threasholdLine.SetWidth( 0.1f, 0.1f );
+			//threasholdLine.transform.localPosition = Vector3.zero;
+			//threasholdLine.SetWidth( 0.1f, 0.1f );
 			AddVoxon( -currentVoxon );
 			GameContext.EnemyConductor.baseColor = Color.black;
 			break;

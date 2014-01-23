@@ -6,14 +6,16 @@ public class PlayerConductor : MonoBehaviour {
 	public GameObject MainCamera;
 	Player Player;
 
-	public Strategy[] Strategies;
+    public CommandGraph commandGraph;
+	
+    Strategy[] Strategies;
 
 	EStrategy NextStrategy;
 	EStrategy CurrentStrategy;
     Command NextCommand;
     Command CurrentCommand;
 
-    string NextBlockName { get { return NextStrategy.ToString() + NextCommand.GetBlockName(); } }
+    string NextBlockName { get { return NextCommand.GetBlockName(); } }
 
 	int RemainBreakTime;
 	Timing AllowInputTime = new Timing( 3, 3, 2 );
@@ -27,6 +29,7 @@ public class PlayerConductor : MonoBehaviour {
 
 	void InitializeCommand()
 	{
+        Strategies = commandGraph.StrategyNodes;
 		NextStrategy = EStrategy.Attack;
 		CurrentStrategy = NextStrategy;
 		NextCommand = Strategies[(int)CurrentStrategy].Commands[0];
@@ -76,18 +79,18 @@ public class PlayerConductor : MonoBehaviour {
 		}
 		else if ( Input.GetKeyDown( KeyCode.P ) )
 		{
-			NextStrategy = EStrategy.Attack;
+            NextStrategy = EStrategy.Pilgrim;
             NextCommand = Strategies[(int)NextStrategy].Commands[1];
-		}
+        }
+        else if( Input.GetKeyDown( KeyCode.D ) )
+        {
+            NextStrategy = EStrategy.Attack;
+            NextCommand = Strategies[(int)NextStrategy].Commands[1];
+        }
 		else if ( Input.GetKeyDown( KeyCode.G ) )
 		{
 			NextStrategy = EStrategy.Attack;
             NextCommand = Strategies[(int)NextStrategy].Commands[2];
-		}
-		else if ( Input.GetKeyDown( KeyCode.D ) )
-		{
-			NextStrategy = EStrategy.Attack;
-            NextCommand = Strategies[(int)NextStrategy].Commands[3];
 		}
 		else if ( Input.GetKeyDown( KeyCode.M ) )
 		{
@@ -106,8 +109,8 @@ public class PlayerConductor : MonoBehaviour {
 		}
 		else if ( Input.GetKeyDown( KeyCode.F ) )
 		{
-			NextStrategy = EStrategy.Magic;
-            NextCommand = Strategies[(int)NextStrategy].Commands[3];
+			NextStrategy = EStrategy.Pilgrim;
+            NextCommand = Strategies[(int)NextStrategy].Commands[0];
         }
 	}
 
@@ -155,10 +158,10 @@ public class PlayerConductor : MonoBehaviour {
 				return VoxonSystem.VoxonState.ShowBreak;
 			}
 		}
-		else if ( NextStrategy == EStrategy.Attack )
+		else if ( NextStrategy == EStrategy.Attack || NextStrategy == EStrategy.Pilgrim )
 		{
 			return VoxonSystem.VoxonState.Hide;
-		}
+        }
 		else// if ( NextStrategy == EStrategy.Break )
 		{
 			return VoxonSystem.VoxonState.Break;
@@ -175,6 +178,7 @@ public class PlayerConductor : MonoBehaviour {
         Player.SkillInit();
 		CurrentStrategy = NextStrategy;
 		CurrentCommand = NextCommand;
+        commandGraph.Select( CurrentCommand );
 	}
     public void CheckSkill()
     {
@@ -200,6 +204,7 @@ public class PlayerConductor : MonoBehaviour {
         Music.SetAisac( "IsTransition", 0 );
         Music.SetAisac( "TrackVolume1", 1 );
         Music.SetAisac( "TrackVolume2", 1 );
+        commandGraph.OnBattleStart();
     }
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )

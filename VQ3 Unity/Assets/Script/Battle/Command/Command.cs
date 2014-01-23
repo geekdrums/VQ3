@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class Command : MonoBehaviour
+public class Command : MonoNode
 {
     public string MusicBlockName;
     public List<int> ExpThreasholds;
     public List<Skill> _skillList;
-    public string _timingStr = "0 0 0,1 0 0,2 0 0,3 0 0";
+    public string _timingStr = "0,1,2,3";
 
     protected int Level;
     protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int,Skill>();
 
+    public Strategy ParentStrategy { get; protected set; }
     public int NextExp { get { return (ExpThreasholds.Count > Level ? ExpThreasholds[Level] : -1); } }
     public bool isExecutable { get { return Level > 0; } }
     
@@ -45,12 +46,13 @@ public class Command : MonoBehaviour
         if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak && Music.Just.bar >= 3 ) return null;
         return SkillDictionary.ContainsKey( Music.Just.totalUnit ) ? SkillDictionary[Music.Just.totalUnit].gameObject : null;
     }
-    public void SetExp( int exp )
+    public void SetParent( Strategy parent )
     {
+        ParentStrategy = parent;
         Level = ExpThreasholds.Count;
         for( int i = 0; i < ExpThreasholds.Count; i++ )
         {
-            if( exp < ExpThreasholds[i] )
+            if( parent.Exp < ExpThreasholds[i] )
             {
                 Level = i;
                 break;
@@ -83,5 +85,56 @@ public class Command : MonoBehaviour
     public virtual string GetBlockName()
     {
         return MusicBlockName;
+    }
+
+
+    public IEnumerable<Command> LinkedCommands
+    {
+        get
+        {
+            if( ParentStrategy != null )
+            {
+                foreach( Command c in ParentStrategy.LinkedCommands )
+                {
+                    yield return c;
+                }
+            }
+            foreach( MonoNode link in links )
+            {
+                Strategy linkedStrategy = link as Strategy;
+                Command linkedCommand = link as Command;
+                if( linkedStrategy != null )
+                {
+                    foreach( Command c in linkedStrategy.Commands )
+                    {
+                        yield return c;
+                    }
+                }
+                else if( linkedCommand != null )
+                {
+                    yield return linkedCommand;
+                }
+            }
+        }
+    }
+
+    public void SetLink( bool linked )
+    {
+        if( linked )
+        {
+            GetComponent<TextMesh>().color = Color.black;
+        }
+        else
+        {
+            GetComponent<TextMesh>().color = Color.gray;
+        }
+    }
+    public void SetCurrent()
+    {
+        GetComponent<TextMesh>().color = Color.red;
+    }
+    public void SetNext()
+    {
+        GetComponent<TextMesh>().color = Color.magenta;
     }
 }
