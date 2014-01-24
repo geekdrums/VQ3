@@ -19,8 +19,8 @@ public class VoxonSystem : BGEffect{
 
 	public float MAX_SCALE;
 	public float LINEAR_FACTOR;
-	//public GameObject linePrefab;
-	//public GameObject voxonCircle;
+	public GameObject linePrefab;
+	public GameObject voxonCircle;
 
 	public Color initialBGColor;
 	public Color maxBGColor;
@@ -29,7 +29,7 @@ public class VoxonSystem : BGEffect{
 	public Vector3 hidePosition;
 	public Vector3 showPosition;
 
-	//LineRenderer threasholdLine;
+	LineRenderer threasholdLine;
 	Camera mainCamera;
 
 	readonly float lineScale = 1.2f;
@@ -44,7 +44,7 @@ public class VoxonSystem : BGEffect{
 		GameContext.VoxonSystem = this;
 
         //make circle
-        /*
+        
         int linePositions = 65;
         threasholdLine = ( (GameObject)Instantiate( linePrefab, transform.position, linePrefab.transform.rotation ) ).GetComponent<LineRenderer>();
         threasholdLine.SetVertexCount( linePositions+1 );
@@ -59,7 +59,7 @@ public class VoxonSystem : BGEffect{
         //init scale
         threasholdLine.transform.localScale = targetLineScale;
         voxonCircle.transform.localScale = targetCircleScale;
-        */
+        
 
 		mainCamera = GameObject.Find( "Main Camera" ).camera;
 		mainCamera.backgroundColor = initialBGColor;
@@ -91,7 +91,7 @@ public class VoxonSystem : BGEffect{
 				{
 					AddVoxon( -deltaVoxon );
 					targetLineScale = Vector3.one * lineScale;
-					//threasholdLine.renderer.material.color = breakBGColor;
+					threasholdLine.renderer.material.color = breakBGColor;
 				}
 				targetCircleScale = new Vector3( 1, 0, 1 ) * ( (float)Mathf.Max( 0, currentVoxon )/BREAK_VOXON ) * MAX_SCALE;
 			}
@@ -104,7 +104,7 @@ public class VoxonSystem : BGEffect{
 		case VoxonState.HideBreak:
 			break;
 		}
-		//UpdateAnimation();
+		UpdateAnimation();
 	}
 
 	void ShowBreakUpdate()
@@ -120,7 +120,7 @@ public class VoxonSystem : BGEffect{
 			targetCircleColor = breakBGColor;
 
 			targetLineScale = Vector3.zero;
-			//threasholdLine.transform.localScale = Vector3.zero;
+			threasholdLine.transform.localScale = Vector3.zero;
 		}
 		else if ( Music.IsJustChangedAt( 3, 0, 2 ) )
 		{
@@ -133,26 +133,26 @@ public class VoxonSystem : BGEffect{
 		else if ( Music.IsJustChangedAt( 3, 1, 1 ) )
 		{
 			targetLineScale = Vector3.one * 3.5f;
-			//threasholdLine.transform.localPosition += Vector3.back * 2;
-			//threasholdLine.SetWidth( 30, 30 );
+			threasholdLine.transform.localPosition += Vector3.back * 2;
+			threasholdLine.SetWidth( 30, 30 );
 			GameContext.EnemyConductor.baseColor = Color.white;
 		}
 	}
 
 	//linear fade
-    /*
+    
 	void UpdateAnimation()
 	{
 		voxonCircle.transform.localScale = Vector3.Lerp( voxonCircle.transform.localScale, targetCircleScale, LINEAR_FACTOR );
 		voxonCircle.renderer.material.color = Color.Lerp( voxonCircle.renderer.material.color, targetCircleColor, LINEAR_FACTOR );
 		threasholdLine.transform.localScale = Vector3.Lerp( threasholdLine.transform.localScale, targetLineScale, LINEAR_FACTOR );
-		threasholdLine.renderer.material.color = Color.Lerp( threasholdLine.renderer.material.color, targetLineColor, LINEAR_FACTOR );
+		threasholdLine.renderer.material.SetColor( "_TintColor", Color.Lerp( threasholdLine.renderer.material.GetColor("_TintColor"), targetLineColor, LINEAR_FACTOR ) );
 		transform.position = Vector3.Lerp( transform.position, targetPosition, LINEAR_FACTOR );
 		
 		float f = (MAX_SCALE - voxonCircle.transform.localScale.x) / MAX_SCALE;
 		mainCamera.backgroundColor = Color.Lerp( maxBGColor, initialBGColor, f );
  	}
-    */
+    
 
 	public void SetState( VoxonState newState )
 	{
@@ -164,15 +164,16 @@ public class VoxonSystem : BGEffect{
 			targetLineScale = Vector3.zero;
 			targetCircleColor = Color.white;
 			targetLineColor = Color.white;
-			//threasholdLine.transform.localPosition = Vector3.zero;
-			//threasholdLine.SetWidth( 0.1f, 0.1f );
+			threasholdLine.transform.localPosition = Vector3.zero;
+			threasholdLine.SetWidth( 0.1f, 0.1f );
 			AddVoxon( -currentVoxon );
 			GameContext.EnemyConductor.baseColor = Color.black;
 			break;
 		case VoxonState.Hide:
 			targetPosition = hidePosition;
 			break;
-		case VoxonState.Show:
+        case VoxonState.Show:
+        case VoxonState.ShowBreak:
 			targetPosition = showPosition;
             Music.SetAisac( "TrackVolumeEnergy", Mathf.Sqrt( (float)currentVoxon / BREAK_VOXON ) );
 			break;

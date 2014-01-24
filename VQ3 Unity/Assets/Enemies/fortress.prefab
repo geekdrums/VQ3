@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 300
+  HitPoint: 400
   Commands:
   - {fileID: 11400000, guid: bcc79d6dfe16c45418391e8bb26dd2a7, type: 2}
 --- !u!212 &21200000
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: -2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortingLayerID: 4087608993
   m_Sprite: {fileID: 21300000, guid: e48a40653970c1f488fdf76fa3a8fc33, type: 3}
@@ -111,7 +111,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: -3
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_SortingLayerID: 1161693239
   m_Sprite: {fileID: 21300000, guid: e381f42aedafbc947b02e48c1eea773a, type: 3}
