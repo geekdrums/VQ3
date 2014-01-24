@@ -53,7 +53,7 @@ public class BattleConductor : MonoBehaviour {
         {
             if( Music.IsJustChangedAt( 0 ) ) GameContext.PlayerConductor.CheckCommand();
             GameContext.PlayerConductor.CheckSkill();
-            //TODO:GameContext.EnemyConductor.CheckSkill();
+            GameContext.EnemyConductor.CheckSkill();
 
             List<Pair<ActionSet, Skill>> CurrentActions = new List<Pair<ActionSet, Skill>>();
             foreach( Pair<Timing, Skill> stPair in Skills )

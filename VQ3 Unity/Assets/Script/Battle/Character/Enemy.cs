@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Enemy : Character {
 
-    public Skill[] Commands;
+    public Skill[] Skills;
 
     SpriteRenderer HPCircle;
     Vector3 baseHPCircleScale;
@@ -57,9 +57,9 @@ public class Enemy : Character {
         HPCircle.color = Color.Lerp( targetHPCircleColor, HPCircle.color, 0.1f );
     }
 
-    public Skill GetExecCommand()
+    public Skill GetCurrentSkill()
     {
-        return Commands[0];
+        return Skills[0];
     }
 
     protected override void BeDamaged( int damage )

@@ -39,7 +39,7 @@ public class EnemyConductor : MonoBehaviour {
         GameObject TempObj;
         for( int i=0; i<NewEnemies.Length; ++i )
         {
-            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 10 * (-(NewEnemies.Length - 1)/ 2.0f + i), 0, 0 ), NewEnemies[i].transform.rotation );
+            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 0, 0 ), NewEnemies[i].transform.rotation );
 			TempObj.renderer.material.color = baseColor;
             Enemies.Add( TempObj.GetComponent<Enemy>() );
         }
@@ -118,17 +118,26 @@ public class EnemyConductor : MonoBehaviour {
 		return Res;
 	}
 
-    /*
-    public void OnBarStarted(int CurrentIndex)
+    public void CheckSkill()
     {
-		if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break ) return;
-		if ( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak && CurrentIndex == 3 ) return;
-        if (CurrentIndex < Enemies.Count)
+        int CurrentIndex = Music.Just.bar;
+        if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break ) return;
+        if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak && CurrentIndex == 3 ) return;
+        if( Music.IsJustChangedWhen( ( Timing t ) => t.barUnit == 8 ) && CurrentIndex < Enemies.Count )
         {
-            Skill commandPrefab = Enemies[CurrentIndex].GetExecCommand();
-            Skill NewCommand = (Skill)Instantiate(commandPrefab, new Vector3(), commandPrefab.transform.rotation);
-            NewCommand.SetOwner(Enemies[CurrentIndex]);
-            GameContext.BattleConductor.ExecSkill(NewCommand);
+            Skill enemySkill = Enemies[CurrentIndex].GetCurrentSkill();
+            Skill objSkill = (Skill)Instantiate( enemySkill, new Vector3(), enemySkill.transform.rotation );
+            objSkill.SetOwner( Enemies[CurrentIndex] );
+            GameContext.BattleConductor.ExecSkill( objSkill );
+        }
+    }
+    /*
+        GameObject playerSkill = CurrentCommand.GetCurrentSkill();
+        if( playerSkill != null )
+        {
+            Skill objSkill = ( Instantiate( playerSkill ) as GameObject ).GetComponent<Skill>();
+            objSkill.SetOwner( Player );
+            GameContext.BattleConductor.ExecSkill( objSkill );
         }
     }
     */
