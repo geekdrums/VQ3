@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="shift_jis" standalone="yes"?>
+<SpriteStudioMotion xmlns="http://www.webtech.co.jp/SpriteStudio/XML/Motion" version="4.00.01">
+	<Header>
+		<EndFrame>100</EndFrame>
+		<EditMode>0</EditMode>
+		<BaseTickTime>30</BaseTickTime>
+	</Header>
+	<ImageList>
+		<Image Id="1" Path=".\number.png"/>
+	</ImageList>
+	<Parts>
+		<Part Root="1">
+			<Type>1</Type>
+			<Name>number</Name>
+			<Attributes>
+				<Attribute Tag="POSX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="POSY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="ANGL" Inherit="100"/>
+				<Attribute Tag="SCAX" Inherit="100"/>
+				<Attribute Tag="SCAY" Inherit="100"/>
+				<Attribute Tag="TRAN" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="PRIO" Inherit="100"/>
+				<Attribute Tag="FLPH"/>
+				<Attribute Tag="FLPV"/>
+				<Attribute Tag="HIDE">
+					<Key Time="0">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="PCOL" Inherit="100"/>
+				<Attribute Tag="PALT" Inherit="100"/>
+				<Attribute Tag="VERT" Inherit="100"/>
+				<Attribute Tag="UDAT" Inherit="100"/>
+				<Attribute Tag="IMGX" Inherit="100"/>
+				<Attribute Tag="IMGY" Inherit="100"/>
+				<Attribute Tag="IMGW" Inherit="100"/>
+				<Attribute Tag="IMGH" Inherit="100"/>
+				<Attribute Tag="ORFX" Inherit="100"/>
+				<Attribute Tag="ORFY" Inherit="100"/>
+			</Attributes>
+		</Part>
+		<Part>
+			<Type>0</Type>
+			<Name>number7</Name>
+			<ID>0</ID>
+			<ParentID>-1</ParentID>
+			<PicID>0</PicID>
+			<TransBlendType>0</TransBlendType>
+			<PictArea>
+				<Top>128</Top>
+				<Left>256</Left>
+				<Bottom>256</Bottom>
+				<Right>384</Right>
+			</PictArea>
+			<OriginX>64</OriginX>
+			<OriginY>64</OriginY>
+			<InheritType>0</InheritType>
+			<Attributes>
+				<Attribute Tag="POSX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>128</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="POSY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>128</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="ANGL" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="TRAN" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="PRIO" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="FLPH">
+					<Key Time="0">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="FLPV">
+					<Key Time="0">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="HIDE">
+					<Key Time="0">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="PCOL" Inherit="100"/>
+				<Attribute Tag="PALT" Inherit="100"/>
+				<Attribute Tag="VERT" Inherit="100">
+					<Key Time="10" CurveType="1">
+						<TopLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</TopLeft>
+						<TopRight>
+							<X>0</X>
+							<Y>0</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<TopLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</TopLeft>
+						<TopRight>
+							<X>25</X>
+							<Y>-25</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="30" CurveType="1">
+						<TopLeft>
+							<X>-25</X>
+							<Y>-25</Y>
+						</TopLeft>
+						<TopRight>
+							<X>25</X>
+							<Y>-25</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="40" CurveType="1">
+						<TopLeft>
+							<X>-25</X>
+							<Y>-25</Y>
+						</TopLeft>
+						<TopRight>
+							<X>25</X>
+							<Y>-25</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>25</X>
+							<Y>25</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="50" CurveType="1">
+						<TopLeft>
+							<X>-25</X>
+							<Y>-25</Y>
+						</TopLeft>
+						<TopRight>
+							<X>25</X>
+							<Y>-25</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>-25</X>
+							<Y>25</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>25</X>
+							<Y>25</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="70" CurveType="3" CurveStartT="2.400" CurveStartV="0.800" CurveEndT="0.399" CurveEndV="0.400">
+						<TopLeft>
+							<X>25</X>
+							<Y>25</Y>
+						</TopLeft>
+						<TopRight>
+							<X>-25</X>
+							<Y>25</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>25</X>
+							<Y>-25</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>-25</X>
+							<Y>-25</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="80" CurveType="3" CurveStartT="2.400" CurveStartV="0.800" CurveEndT="0.399" CurveEndV="0.400">
+						<TopLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</TopLeft>
+						<TopRight>
+							<X>0</X>
+							<Y>0</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="85" CurveType="3" CurveStartT="2.400" CurveStartV="0.800" CurveEndT="0.399" CurveEndV="0.400">
+						<TopLeft>
+							<X>10</X>
+							<Y>10</Y>
+						</TopLeft>
+						<TopRight>
+							<X>-10</X>
+							<Y>10</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>10</X>
+							<Y>-10</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>-10</X>
+							<Y>-10</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="90" CurveType="1">
+						<TopLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</TopLeft>
+						<TopRight>
+							<X>0</X>
+							<Y>0</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomRight>
+					</Key>
+				</Attribute>
+				<Attribute Tag="UDAT" Inherit="100"/>
+				<Attribute Tag="IMGX" Inherit="100"/>
+				<Attribute Tag="IMGY" Inherit="100"/>
+				<Attribute Tag="IMGW" Inherit="100"/>
+				<Attribute Tag="IMGH" Inherit="100"/>
+				<Attribute Tag="ORFX" Inherit="100"/>
+				<Attribute Tag="ORFY" Inherit="100"/>
+			</Attributes>
+		</Part>
+	</Parts>
+</SpriteStudioMotion>

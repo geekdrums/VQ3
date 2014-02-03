@@ -1,0 +1,1069 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8302fb81b75e4448e136fa61e58a28, type: 3}
+  m_Name: eye_color_blend_ssa
+  m_EditorClassIdentifier: 
+  OriginalPath: Assets/SpriteStudio/Samples/Data/comipo/eye_color_blend.ssax
+  UseScaleFactor: 0
+  ScaleFactor: 1
+  FPS: 60
+  EndFrame: 29
+  hvFlipForImageOnly: 1
+  ImageList:
+  - path: Assets/SpriteStudio/Samples/Data/comipo/comipo.png
+    texture: {fileID: 2800000, guid: 0b81df6566420f84890ffe7abe1e81f8, type: 3}
+    materials:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 2100000, guid: 0aaa3318dea294a4f9f192c85112aac2, type: 2}
+    - {fileID: 0}
+    - {fileID: 2100000, guid: df0891053a39fc44f92d8b3b69c0f43c, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    width: 512
+    height: 512
+    bpp: 24
+  PartList:
+  - AnimeRes: {fileID: 11400000}
+    Name: eye_color_blend
+    Type: 1
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 0
+      Bottom: 0
+    OriginX: 0
+    OriginY: 0
+    MyId: 0
+    ParentId: -1
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 0
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys: []
+    PosYKeys: []
+    AngleKeys: []
+    ScaleXKeys: []
+    ScaleYKeys: []
+    TransKeys: []
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys: []
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues: []
+    PosYValues: []
+    AngleValues: []
+    ScaleXValues: []
+    ScaleYValues: []
+    TransValues: []
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues: []
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 0
+    HasTrancparency: 0
+    FrameNum: 30
+    imageFile:
+      path: 
+      texture: {fileID: 0}
+      materials: []
+      width: 0
+      height: 0
+      bpp: 0
+    UVs: []
+    OrgVertices:
+    - {x: -0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: -0, z: 0}
+    - {x: -0, y: -0, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: "\u76EE"
+    Type: 0
+    PicArea:
+      Left: 0
+      Top: 368
+      Right: 32
+      Bottom: 408
+    OriginX: 16
+    OriginY: 20
+    MyId: 1
+    ParentId: 0
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys: []
+    PosYKeys: []
+    AngleKeys: []
+    ScaleXKeys: []
+    ScaleYKeys: []
+    TransKeys: []
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys: []
+    PartsColKeys:
+    - Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 128
+          G: 128
+          B: 128
+          A: 0
+        - R: 128
+          G: 128
+          B: 128
+          A: 0
+        - R: 128
+          G: 128
+          B: 128
+          A: 0
+        - R: 128
+          G: 128
+          B: 128
+          A: 0
+      _Time: 0
+      _ValueType: 4
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+      _Time: 15
+      _ValueType: 4
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+      _Time: 29
+      _ValueType: 4
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues: []
+    PosYValues: []
+    AngleValues: []
+    ScaleXValues: []
+    ScaleYValues: []
+    TransValues: []
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues: []
+    PartsColValues:
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 128
+          G: 128
+          B: 128
+          A: 0
+        - R: 128
+          G: 128
+          B: 128
+          A: 0
+        - R: 128
+          G: 128
+          B: 128
+          A: 0
+        - R: 128
+          G: 128
+          B: 128
+          A: 0
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 136
+          G: 119
+          B: 119
+          A: 17
+        - R: 136
+          G: 119
+          B: 119
+          A: 17
+        - R: 136
+          G: 119
+          B: 119
+          A: 17
+        - R: 136
+          G: 119
+          B: 119
+          A: 17
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 144
+          G: 110
+          B: 110
+          A: 34
+        - R: 144
+          G: 110
+          B: 110
+          A: 34
+        - R: 144
+          G: 110
+          B: 110
+          A: 34
+        - R: 144
+          G: 110
+          B: 110
+          A: 34
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 153
+          G: 102
+          B: 102
+          A: 51
+        - R: 153
+          G: 102
+          B: 102
+          A: 51
+        - R: 153
+          G: 102
+          B: 102
+          A: 51
+        - R: 153
+          G: 102
+          B: 102
+          A: 51
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 161
+          G: 93
+          B: 93
+          A: 68
+        - R: 161
+          G: 93
+          B: 93
+          A: 68
+        - R: 161
+          G: 93
+          B: 93
+          A: 68
+        - R: 161
+          G: 93
+          B: 93
+          A: 68
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 170
+          G: 85
+          B: 85
+          A: 85
+        - R: 170
+          G: 85
+          B: 85
+          A: 85
+        - R: 170
+          G: 85
+          B: 85
+          A: 85
+        - R: 170
+          G: 85
+          B: 85
+          A: 85
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 178
+          G: 76
+          B: 76
+          A: 102
+        - R: 178
+          G: 76
+          B: 76
+          A: 102
+        - R: 178
+          G: 76
+          B: 76
+          A: 102
+        - R: 178
+          G: 76
+          B: 76
+          A: 102
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 187
+          G: 68
+          B: 68
+          A: 119
+        - R: 187
+          G: 68
+          B: 68
+          A: 119
+        - R: 187
+          G: 68
+          B: 68
+          A: 119
+        - R: 187
+          G: 68
+          B: 68
+          A: 119
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 195
+          G: 59
+          B: 59
+          A: 136
+        - R: 195
+          G: 59
+          B: 59
+          A: 136
+        - R: 195
+          G: 59
+          B: 59
+          A: 136
+        - R: 195
+          G: 59
+          B: 59
+          A: 136
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 204
+          G: 51
+          B: 51
+          A: 153
+        - R: 204
+          G: 51
+          B: 51
+          A: 153
+        - R: 204
+          G: 51
+          B: 51
+          A: 153
+        - R: 204
+          G: 51
+          B: 51
+          A: 153
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 212
+          G: 42
+          B: 42
+          A: 170
+        - R: 212
+          G: 42
+          B: 42
+          A: 170
+        - R: 212
+          G: 42
+          B: 42
+          A: 170
+        - R: 212
+          G: 42
+          B: 42
+          A: 170
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 221
+          G: 34
+          B: 34
+          A: 187
+        - R: 221
+          G: 34
+          B: 34
+          A: 187
+        - R: 221
+          G: 34
+          B: 34
+          A: 187
+        - R: 221
+          G: 34
+          B: 34
+          A: 187
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 229
+          G: 25
+          B: 25
+          A: 204
+        - R: 229
+          G: 25
+          B: 25
+          A: 204
+        - R: 229
+          G: 25
+          B: 25
+          A: 204
+        - R: 229
+          G: 25
+          B: 25
+          A: 204
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 238
+          G: 17
+          B: 17
+          A: 221
+        - R: 238
+          G: 17
+          B: 17
+          A: 221
+        - R: 238
+          G: 17
+          B: 17
+          A: 221
+        - R: 238
+          G: 17
+          B: 17
+          A: 221
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 246
+          G: 8
+          B: 8
+          A: 238
+        - R: 246
+          G: 8
+          B: 8
+          A: 238
+        - R: 246
+          G: 8
+          B: 8
+          A: 238
+        - R: 246
+          G: 8
+          B: 8
+          A: 238
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 236
+        - R: 255
+          G: 0
+          B: 0
+          A: 236
+        - R: 255
+          G: 0
+          B: 0
+          A: 236
+        - R: 255
+          G: 0
+          B: 0
+          A: 236
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 218
+        - R: 255
+          G: 0
+          B: 0
+          A: 218
+        - R: 255
+          G: 0
+          B: 0
+          A: 218
+        - R: 255
+          G: 0
+          B: 0
+          A: 218
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 200
+        - R: 255
+          G: 0
+          B: 0
+          A: 200
+        - R: 255
+          G: 0
+          B: 0
+          A: 200
+        - R: 255
+          G: 0
+          B: 0
+          A: 200
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 182
+        - R: 255
+          G: 0
+          B: 0
+          A: 182
+        - R: 255
+          G: 0
+          B: 0
+          A: 182
+        - R: 255
+          G: 0
+          B: 0
+          A: 182
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 163
+        - R: 255
+          G: 0
+          B: 0
+          A: 163
+        - R: 255
+          G: 0
+          B: 0
+          A: 163
+        - R: 255
+          G: 0
+          B: 0
+          A: 163
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 145
+        - R: 255
+          G: 0
+          B: 0
+          A: 145
+        - R: 255
+          G: 0
+          B: 0
+          A: 145
+        - R: 255
+          G: 0
+          B: 0
+          A: 145
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 127
+        - R: 255
+          G: 0
+          B: 0
+          A: 127
+        - R: 255
+          G: 0
+          B: 0
+          A: 127
+        - R: 255
+          G: 0
+          B: 0
+          A: 127
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 109
+        - R: 255
+          G: 0
+          B: 0
+          A: 109
+        - R: 255
+          G: 0
+          B: 0
+          A: 109
+        - R: 255
+          G: 0
+          B: 0
+          A: 109
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 91
+        - R: 255
+          G: 0
+          B: 0
+          A: 91
+        - R: 255
+          G: 0
+          B: 0
+          A: 91
+        - R: 255
+          G: 0
+          B: 0
+          A: 91
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 72
+        - R: 255
+          G: 0
+          B: 0
+          A: 72
+        - R: 255
+          G: 0
+          B: 0
+          A: 72
+        - R: 255
+          G: 0
+          B: 0
+          A: 72
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 54
+        - R: 255
+          G: 0
+          B: 0
+          A: 54
+        - R: 255
+          G: 0
+          B: 0
+          A: 54
+        - R: 255
+          G: 0
+          B: 0
+          A: 54
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 36
+        - R: 255
+          G: 0
+          B: 0
+          A: 36
+        - R: 255
+          G: 0
+          B: 0
+          A: 36
+        - R: 255
+          G: 0
+          B: 0
+          A: 36
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 2
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 18
+        - R: 255
+          G: 0
+          B: 0
+          A: 18
+        - R: 255
+          G: 0
+          B: 0
+          A: 18
+        - R: 255
+          G: 0
+          B: 0
+          A: 18
+    - _RefKeyIndex: 2
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 1024
+    HasTrancparency: 0
+    FrameNum: 30
+    imageFile:
+      path: Assets/SpriteStudio/Samples/Data/comipo/comipo.png
+      texture: {fileID: 2800000, guid: 0b81df6566420f84890ffe7abe1e81f8, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: 0aaa3318dea294a4f9f192c85112aac2, type: 2}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: df0891053a39fc44f92d8b3b69c0f43c, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 512
+      height: 512
+      bpp: 24
+    UVs:
+    - {x: 0, y: .28125}
+    - {x: .0625, y: .28125}
+    - {x: .0625, y: .203125}
+    - {x: 0, y: .203125}
+    OrgVertices:
+    - {x: -16, y: 20, z: 0}
+    - {x: 16, y: 20, z: 0}
+    - {x: 16, y: -20, z: 0}
+    - {x: -16, y: -20, z: 0}
+  ImportedTime: -715469937
+  ImportedTimeHigh: -1999573720

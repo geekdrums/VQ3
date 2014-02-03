@@ -1,0 +1,5943 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8302fb81b75e4448e136fa61e58a28, type: 3}
+  m_Name: antarctic3_ssa
+  m_EditorClassIdentifier: 
+  OriginalPath: Assets/SpriteStudio/Samples/Data/antarctic/antarctic3.ssax
+  UseScaleFactor: 0
+  ScaleFactor: 1
+  FPS: 30
+  EndFrame: 79
+  hvFlipForImageOnly: 0
+  ImageList:
+  - path: Assets/SpriteStudio/Samples/Data/antarctic/antactic.png
+    texture: {fileID: 2800000, guid: 95c0092f8ee2fbc45b3d988441a6e101, type: 3}
+    materials:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 2100000, guid: e182462cbceccce41b6f989ec3af9bf5, type: 2}
+    - {fileID: 2100000, guid: 3eb1cff6fe7a2324591d6ee85cf4010c, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    width: 512
+    height: 512
+    bpp: 0
+  PartList:
+  - AnimeRes: {fileID: 11400000}
+    Name: motion 3
+    Type: 1
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 0
+      Bottom: 0
+    OriginX: 0
+    OriginY: 0
+    MyId: 0
+    ParentId: -1
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 0
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys: []
+    ScaleXKeys: []
+    ScaleYKeys: []
+    TransKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    AngleValues: []
+    ScaleXValues: []
+    ScaleYValues: []
+    TransValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 547
+    HasTrancparency: 0
+    FrameNum: 80
+    imageFile:
+      path: 
+      texture: {fileID: 0}
+      materials: []
+      width: 0
+      height: 0
+      bpp: 0
+    UVs: []
+    OrgVertices:
+    - {x: -0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: -0, z: 0}
+    - {x: -0, y: -0, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: "\u80CC\u666F"
+    Type: 0
+    PicArea:
+      Left: 0
+      Top: 144
+      Right: 400
+      Bottom: 304
+    OriginX: 0
+    OriginY: 0
+    MyId: 1
+    ParentId: 0
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: -75
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 40
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleXKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleYKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    TransKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PrioKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipHKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipVKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    HideKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    AngleValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    TransValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PrioValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipHValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipVValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 1023
+    HasTrancparency: 0
+    FrameNum: 80
+    imageFile:
+      path: Assets/SpriteStudio/Samples/Data/antarctic/antactic.png
+      texture: {fileID: 2800000, guid: 95c0092f8ee2fbc45b3d988441a6e101, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: e182462cbceccce41b6f989ec3af9bf5, type: 2}
+      - {fileID: 2100000, guid: 3eb1cff6fe7a2324591d6ee85cf4010c, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 512
+      height: 512
+      bpp: 0
+    UVs:
+    - {x: 0, y: .71875}
+    - {x: .78125, y: .71875}
+    - {x: .78125, y: .40625}
+    - {x: 0, y: .40625}
+    OrgVertices:
+    - {x: -0, y: 0, z: 0}
+    - {x: 400, y: 0, z: 0}
+    - {x: 400, y: -160, z: 0}
+    - {x: -0, y: -160, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: "\u4E0A\u534A\u8EAB"
+    Type: 0
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 64
+      Bottom: 64
+    OriginX: 0
+    OriginY: 0
+    MyId: 2
+    ParentId: 0
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: 240
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 99
+      _Time: 47
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 70
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 70
+      _Time: 47
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleXKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleYKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    TransKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PrioKeys:
+    - Value: 5
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipHKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipVKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    HideKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 1
+      _Time: 48
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: -1
+      _Value: 240
+    - _RefKeyIndex: -1
+      _Value: 237
+    - _RefKeyIndex: -1
+      _Value: 234
+    - _RefKeyIndex: -1
+      _Value: 231
+    - _RefKeyIndex: -1
+      _Value: 228
+    - _RefKeyIndex: -1
+      _Value: 225
+    - _RefKeyIndex: -1
+      _Value: 222
+    - _RefKeyIndex: -1
+      _Value: 219
+    - _RefKeyIndex: -1
+      _Value: 216
+    - _RefKeyIndex: -1
+      _Value: 213
+    - _RefKeyIndex: -1
+      _Value: 210
+    - _RefKeyIndex: -1
+      _Value: 207
+    - _RefKeyIndex: -1
+      _Value: 204
+    - _RefKeyIndex: -1
+      _Value: 201
+    - _RefKeyIndex: -1
+      _Value: 198
+    - _RefKeyIndex: -1
+      _Value: 195
+    - _RefKeyIndex: -1
+      _Value: 192
+    - _RefKeyIndex: -1
+      _Value: 189
+    - _RefKeyIndex: -1
+      _Value: 186
+    - _RefKeyIndex: -1
+      _Value: 183
+    - _RefKeyIndex: -1
+      _Value: 180
+    - _RefKeyIndex: -1
+      _Value: 177
+    - _RefKeyIndex: -1
+      _Value: 174
+    - _RefKeyIndex: -1
+      _Value: 171
+    - _RefKeyIndex: -1
+      _Value: 168
+    - _RefKeyIndex: -1
+      _Value: 165
+    - _RefKeyIndex: -1
+      _Value: 162
+    - _RefKeyIndex: -1
+      _Value: 159
+    - _RefKeyIndex: -1
+      _Value: 156
+    - _RefKeyIndex: -1
+      _Value: 153
+    - _RefKeyIndex: -1
+      _Value: 150
+    - _RefKeyIndex: -1
+      _Value: 147
+    - _RefKeyIndex: -1
+      _Value: 144
+    - _RefKeyIndex: -1
+      _Value: 141
+    - _RefKeyIndex: -1
+      _Value: 138
+    - _RefKeyIndex: -1
+      _Value: 135
+    - _RefKeyIndex: -1
+      _Value: 132
+    - _RefKeyIndex: -1
+      _Value: 129
+    - _RefKeyIndex: -1
+      _Value: 126
+    - _RefKeyIndex: -1
+      _Value: 123
+    - _RefKeyIndex: -1
+      _Value: 120
+    - _RefKeyIndex: -1
+      _Value: 117
+    - _RefKeyIndex: -1
+      _Value: 114
+    - _RefKeyIndex: -1
+      _Value: 111
+    - _RefKeyIndex: -1
+      _Value: 108
+    - _RefKeyIndex: -1
+      _Value: 105
+    - _RefKeyIndex: -1
+      _Value: 102
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: -1
+      _Value: 70
+    AngleValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    TransValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PrioValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipHValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipVValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 1023
+    HasTrancparency: 0
+    FrameNum: 80
+    imageFile:
+      path: Assets/SpriteStudio/Samples/Data/antarctic/antactic.png
+      texture: {fileID: 2800000, guid: 95c0092f8ee2fbc45b3d988441a6e101, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: e182462cbceccce41b6f989ec3af9bf5, type: 2}
+      - {fileID: 2100000, guid: 3eb1cff6fe7a2324591d6ee85cf4010c, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 512
+      height: 512
+      bpp: 0
+    UVs:
+    - {x: 0, y: 1}
+    - {x: .125, y: 1}
+    - {x: .125, y: .875}
+    - {x: 0, y: .875}
+    OrgVertices:
+    - {x: -0, y: 0, z: 0}
+    - {x: 64, y: 0, z: 0}
+    - {x: 64, y: -64, z: 0}
+    - {x: -0, y: -64, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: "\u8DB3"
+    Type: 0
+    PicArea:
+      Left: 16
+      Top: 112
+      Right: 64
+      Bottom: 144
+    OriginX: 0
+    OriginY: 0
+    MyId: 3
+    ParentId: 2
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: 16
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 64
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleXKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleYKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    TransKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PrioKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipHKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipVKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    HideKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 1
+      _Time: 48
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 48
+      _Time: 2
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 96
+      _Time: 4
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 144
+      _Time: 6
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 192
+      _Time: 8
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 240
+      _Time: 10
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 288
+      _Time: 12
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 336
+      _Time: 14
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 0
+      _Time: 16
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 48
+      _Time: 18
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 96
+      _Time: 20
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 144
+      _Time: 22
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 192
+      _Time: 24
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 240
+      _Time: 26
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 288
+      _Time: 28
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 336
+      _Time: 30
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 0
+      _Time: 32
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 48
+      _Time: 34
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 96
+      _Time: 36
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 144
+      _Time: 38
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 192
+      _Time: 40
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 240
+      _Time: 42
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 288
+      _Time: 44
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 336
+      _Time: 46
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 0
+      _Time: 48
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ImageOffsetYKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    AngleValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    TransValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PrioValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipHValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipVValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues:
+    - _RefKeyIndex: -1
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 48
+    - _RefKeyIndex: -1
+      _Value: 48
+    - _RefKeyIndex: -1
+      _Value: 96
+    - _RefKeyIndex: -1
+      _Value: 96
+    - _RefKeyIndex: -1
+      _Value: 144
+    - _RefKeyIndex: -1
+      _Value: 144
+    - _RefKeyIndex: -1
+      _Value: 192
+    - _RefKeyIndex: -1
+      _Value: 192
+    - _RefKeyIndex: -1
+      _Value: 240
+    - _RefKeyIndex: -1
+      _Value: 240
+    - _RefKeyIndex: -1
+      _Value: 288
+    - _RefKeyIndex: -1
+      _Value: 288
+    - _RefKeyIndex: -1
+      _Value: 336
+    - _RefKeyIndex: -1
+      _Value: 336
+    - _RefKeyIndex: -1
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 48
+    - _RefKeyIndex: -1
+      _Value: 48
+    - _RefKeyIndex: -1
+      _Value: 96
+    - _RefKeyIndex: -1
+      _Value: 96
+    - _RefKeyIndex: -1
+      _Value: 144
+    - _RefKeyIndex: -1
+      _Value: 144
+    - _RefKeyIndex: -1
+      _Value: 192
+    - _RefKeyIndex: -1
+      _Value: 192
+    - _RefKeyIndex: -1
+      _Value: 240
+    - _RefKeyIndex: -1
+      _Value: 240
+    - _RefKeyIndex: -1
+      _Value: 288
+    - _RefKeyIndex: -1
+      _Value: 288
+    - _RefKeyIndex: -1
+      _Value: 336
+    - _RefKeyIndex: -1
+      _Value: 336
+    - _RefKeyIndex: -1
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 48
+    - _RefKeyIndex: -1
+      _Value: 48
+    - _RefKeyIndex: -1
+      _Value: 96
+    - _RefKeyIndex: -1
+      _Value: 96
+    - _RefKeyIndex: -1
+      _Value: 144
+    - _RefKeyIndex: -1
+      _Value: 144
+    - _RefKeyIndex: -1
+      _Value: 192
+    - _RefKeyIndex: -1
+      _Value: 192
+    - _RefKeyIndex: -1
+      _Value: 240
+    - _RefKeyIndex: -1
+      _Value: 240
+    - _RefKeyIndex: -1
+      _Value: 288
+    - _RefKeyIndex: -1
+      _Value: 288
+    - _RefKeyIndex: -1
+      _Value: 336
+    - _RefKeyIndex: -1
+      _Value: 336
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    - _RefKeyIndex: 24
+      _Value: 0
+    ImageOffsetYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 99327
+    HasTrancparency: 0
+    FrameNum: 80
+    imageFile:
+      path: Assets/SpriteStudio/Samples/Data/antarctic/antactic.png
+      texture: {fileID: 2800000, guid: 95c0092f8ee2fbc45b3d988441a6e101, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: e182462cbceccce41b6f989ec3af9bf5, type: 2}
+      - {fileID: 2100000, guid: 3eb1cff6fe7a2324591d6ee85cf4010c, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 512
+      height: 512
+      bpp: 0
+    UVs:
+    - {x: .03125, y: .78125}
+    - {x: .125, y: .78125}
+    - {x: .125, y: .71875}
+    - {x: .03125, y: .71875}
+    OrgVertices:
+    - {x: -0, y: 0, z: 0}
+    - {x: 48, y: 0, z: 0}
+    - {x: 48, y: -32, z: 0}
+    - {x: -0, y: -32, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: "\u3075\u3063\u3068\u3073\u30DA\u30F3\u30AE\u30F3"
+    Type: 0
+    PicArea:
+      Left: 64
+      Top: 0
+      Right: 144
+      Bottom: 112
+    OriginX: 40
+    OriginY: 56
+    MyId: 4
+    ParentId: 0
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: 308
+      _Time: 42
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 110
+      _Time: 50
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 64
+      _Time: 79
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 50
+      _Time: 42
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 81
+      _Time: 50
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: -48
+      _Time: 79
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys:
+    - Value: -40.7900009
+      _Time: 42
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: -6.98999977
+      _Time: 50
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 433.839996
+      _Time: 79
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleXKeys:
+    - Value: 1
+      _Time: 42
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 1
+      _Time: 50
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: .300000012
+      _Time: 79
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleYKeys:
+    - Value: 1
+      _Time: 42
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 1
+      _Time: 50
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: .300000012
+      _Time: 79
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    TransKeys:
+    - Value: 1
+      _Time: 42
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PrioKeys:
+    - Value: 0
+      _Time: 42
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipHKeys:
+    - Value: 0
+      _Time: 42
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipVKeys:
+    - Value: 0
+      _Time: 42
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    HideKeys:
+    - Value: 0
+      _Time: 42
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys:
+    - Value:
+        Target: 0
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 255
+          B: 255
+          A: 0
+        - R: 255
+          G: 255
+          B: 255
+          A: 0
+        - R: 255
+          G: 255
+          B: 255
+          A: 0
+        - R: 255
+          G: 255
+          B: 255
+          A: 0
+      _Time: 50
+      _ValueType: 4
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 255
+        - R: 0
+          G: 0
+          B: 0
+          A: 255
+        - R: 0
+          G: 0
+          B: 0
+          A: 255
+        - R: 0
+          G: 0
+          B: 0
+          A: 255
+      _Time: 75
+      _ValueType: 4
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 308
+    - _RefKeyIndex: -1
+      _Value: 283
+    - _RefKeyIndex: -1
+      _Value: 258
+    - _RefKeyIndex: -1
+      _Value: 234
+    - _RefKeyIndex: -1
+      _Value: 209
+    - _RefKeyIndex: -1
+      _Value: 184
+    - _RefKeyIndex: -1
+      _Value: 160
+    - _RefKeyIndex: -1
+      _Value: 135
+    - _RefKeyIndex: -1
+      _Value: 110
+    - _RefKeyIndex: -1
+      _Value: 108
+    - _RefKeyIndex: -1
+      _Value: 107
+    - _RefKeyIndex: -1
+      _Value: 105
+    - _RefKeyIndex: -1
+      _Value: 104
+    - _RefKeyIndex: -1
+      _Value: 102
+    - _RefKeyIndex: -1
+      _Value: 100
+    - _RefKeyIndex: -1
+      _Value: 99
+    - _RefKeyIndex: -1
+      _Value: 97
+    - _RefKeyIndex: -1
+      _Value: 96
+    - _RefKeyIndex: -1
+      _Value: 94
+    - _RefKeyIndex: -1
+      _Value: 93
+    - _RefKeyIndex: -1
+      _Value: 91
+    - _RefKeyIndex: -1
+      _Value: 89
+    - _RefKeyIndex: -1
+      _Value: 88
+    - _RefKeyIndex: -1
+      _Value: 86
+    - _RefKeyIndex: -1
+      _Value: 85
+    - _RefKeyIndex: -1
+      _Value: 83
+    - _RefKeyIndex: -1
+      _Value: 81
+    - _RefKeyIndex: -1
+      _Value: 80
+    - _RefKeyIndex: -1
+      _Value: 78
+    - _RefKeyIndex: -1
+      _Value: 77
+    - _RefKeyIndex: -1
+      _Value: 75
+    - _RefKeyIndex: -1
+      _Value: 74
+    - _RefKeyIndex: -1
+      _Value: 72
+    - _RefKeyIndex: -1
+      _Value: 70
+    - _RefKeyIndex: -1
+      _Value: 69
+    - _RefKeyIndex: -1
+      _Value: 67
+    - _RefKeyIndex: -1
+      _Value: 66
+    - _RefKeyIndex: 2
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 50
+    - _RefKeyIndex: -1
+      _Value: 54
+    - _RefKeyIndex: -1
+      _Value: 58
+    - _RefKeyIndex: -1
+      _Value: 62
+    - _RefKeyIndex: -1
+      _Value: 66
+    - _RefKeyIndex: -1
+      _Value: 69
+    - _RefKeyIndex: -1
+      _Value: 73
+    - _RefKeyIndex: -1
+      _Value: 77
+    - _RefKeyIndex: -1
+      _Value: 81
+    - _RefKeyIndex: -1
+      _Value: 77
+    - _RefKeyIndex: -1
+      _Value: 72
+    - _RefKeyIndex: -1
+      _Value: 68
+    - _RefKeyIndex: -1
+      _Value: 63
+    - _RefKeyIndex: -1
+      _Value: 59
+    - _RefKeyIndex: -1
+      _Value: 54
+    - _RefKeyIndex: -1
+      _Value: 50
+    - _RefKeyIndex: -1
+      _Value: 45
+    - _RefKeyIndex: -1
+      _Value: 41
+    - _RefKeyIndex: -1
+      _Value: 37
+    - _RefKeyIndex: -1
+      _Value: 32
+    - _RefKeyIndex: -1
+      _Value: 28
+    - _RefKeyIndex: -1
+      _Value: 23
+    - _RefKeyIndex: -1
+      _Value: 19
+    - _RefKeyIndex: -1
+      _Value: 14
+    - _RefKeyIndex: -1
+      _Value: 10
+    - _RefKeyIndex: -1
+      _Value: 5
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: -4
+    - _RefKeyIndex: -1
+      _Value: -8
+    - _RefKeyIndex: -1
+      _Value: -12
+    - _RefKeyIndex: -1
+      _Value: -17
+    - _RefKeyIndex: -1
+      _Value: -21
+    - _RefKeyIndex: -1
+      _Value: -26
+    - _RefKeyIndex: -1
+      _Value: -30
+    - _RefKeyIndex: -1
+      _Value: -35
+    - _RefKeyIndex: -1
+      _Value: -39
+    - _RefKeyIndex: -1
+      _Value: -44
+    - _RefKeyIndex: 2
+      _Value: 0
+    AngleValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: -40.7900009
+    - _RefKeyIndex: -1
+      _Value: -36.5650024
+    - _RefKeyIndex: -1
+      _Value: -32.3400002
+    - _RefKeyIndex: -1
+      _Value: -28.1149998
+    - _RefKeyIndex: -1
+      _Value: -23.8899994
+    - _RefKeyIndex: -1
+      _Value: -19.6650009
+    - _RefKeyIndex: -1
+      _Value: -15.4400005
+    - _RefKeyIndex: -1
+      _Value: -11.2150002
+    - _RefKeyIndex: -1
+      _Value: -6.98999977
+    - _RefKeyIndex: -1
+      _Value: 8.21103477
+    - _RefKeyIndex: -1
+      _Value: 23.4120693
+    - _RefKeyIndex: -1
+      _Value: 38.6131058
+    - _RefKeyIndex: -1
+      _Value: 53.8141365
+    - _RefKeyIndex: -1
+      _Value: 69.0151749
+    - _RefKeyIndex: -1
+      _Value: 84.2162094
+    - _RefKeyIndex: -1
+      _Value: 99.4172363
+    - _RefKeyIndex: -1
+      _Value: 114.618271
+    - _RefKeyIndex: -1
+      _Value: 129.819305
+    - _RefKeyIndex: -1
+      _Value: 145.02034
+    - _RefKeyIndex: -1
+      _Value: 160.221375
+    - _RefKeyIndex: -1
+      _Value: 175.422424
+    - _RefKeyIndex: -1
+      _Value: 190.623444
+    - _RefKeyIndex: -1
+      _Value: 205.824478
+    - _RefKeyIndex: -1
+      _Value: 221.025513
+    - _RefKeyIndex: -1
+      _Value: 236.226547
+    - _RefKeyIndex: -1
+      _Value: 251.427597
+    - _RefKeyIndex: -1
+      _Value: 266.628601
+    - _RefKeyIndex: -1
+      _Value: 281.829651
+    - _RefKeyIndex: -1
+      _Value: 297.030701
+    - _RefKeyIndex: -1
+      _Value: 312.23172
+    - _RefKeyIndex: -1
+      _Value: 327.432739
+    - _RefKeyIndex: -1
+      _Value: 342.633789
+    - _RefKeyIndex: -1
+      _Value: 357.834839
+    - _RefKeyIndex: -1
+      _Value: 373.035858
+    - _RefKeyIndex: -1
+      _Value: 388.236908
+    - _RefKeyIndex: -1
+      _Value: 403.437927
+    - _RefKeyIndex: -1
+      _Value: 418.638947
+    - _RefKeyIndex: 2
+      _Value: 0
+    ScaleXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: .975862086
+    - _RefKeyIndex: -1
+      _Value: .951724112
+    - _RefKeyIndex: -1
+      _Value: .927586198
+    - _RefKeyIndex: -1
+      _Value: .903448284
+    - _RefKeyIndex: -1
+      _Value: .879310369
+    - _RefKeyIndex: -1
+      _Value: .855172396
+    - _RefKeyIndex: -1
+      _Value: .831034482
+    - _RefKeyIndex: -1
+      _Value: .806896567
+    - _RefKeyIndex: -1
+      _Value: .782758653
+    - _RefKeyIndex: -1
+      _Value: .758620679
+    - _RefKeyIndex: -1
+      _Value: .734482765
+    - _RefKeyIndex: -1
+      _Value: .710344851
+    - _RefKeyIndex: -1
+      _Value: .686206877
+    - _RefKeyIndex: -1
+      _Value: .662068963
+    - _RefKeyIndex: -1
+      _Value: .637931049
+    - _RefKeyIndex: -1
+      _Value: .613793135
+    - _RefKeyIndex: -1
+      _Value: .589655161
+    - _RefKeyIndex: -1
+      _Value: .565517247
+    - _RefKeyIndex: -1
+      _Value: .541379333
+    - _RefKeyIndex: -1
+      _Value: .517241359
+    - _RefKeyIndex: -1
+      _Value: .493103474
+    - _RefKeyIndex: -1
+      _Value: .46896553
+    - _RefKeyIndex: -1
+      _Value: .444827586
+    - _RefKeyIndex: -1
+      _Value: .420689642
+    - _RefKeyIndex: -1
+      _Value: .396551758
+    - _RefKeyIndex: -1
+      _Value: .372413814
+    - _RefKeyIndex: -1
+      _Value: .34827587
+    - _RefKeyIndex: -1
+      _Value: .324137956
+    - _RefKeyIndex: 2
+      _Value: 0
+    ScaleYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: .975862086
+    - _RefKeyIndex: -1
+      _Value: .951724112
+    - _RefKeyIndex: -1
+      _Value: .927586198
+    - _RefKeyIndex: -1
+      _Value: .903448284
+    - _RefKeyIndex: -1
+      _Value: .879310369
+    - _RefKeyIndex: -1
+      _Value: .855172396
+    - _RefKeyIndex: -1
+      _Value: .831034482
+    - _RefKeyIndex: -1
+      _Value: .806896567
+    - _RefKeyIndex: -1
+      _Value: .782758653
+    - _RefKeyIndex: -1
+      _Value: .758620679
+    - _RefKeyIndex: -1
+      _Value: .734482765
+    - _RefKeyIndex: -1
+      _Value: .710344851
+    - _RefKeyIndex: -1
+      _Value: .686206877
+    - _RefKeyIndex: -1
+      _Value: .662068963
+    - _RefKeyIndex: -1
+      _Value: .637931049
+    - _RefKeyIndex: -1
+      _Value: .613793135
+    - _RefKeyIndex: -1
+      _Value: .589655161
+    - _RefKeyIndex: -1
+      _Value: .565517247
+    - _RefKeyIndex: -1
+      _Value: .541379333
+    - _RefKeyIndex: -1
+      _Value: .517241359
+    - _RefKeyIndex: -1
+      _Value: .493103474
+    - _RefKeyIndex: -1
+      _Value: .46896553
+    - _RefKeyIndex: -1
+      _Value: .444827586
+    - _RefKeyIndex: -1
+      _Value: .420689642
+    - _RefKeyIndex: -1
+      _Value: .396551758
+    - _RefKeyIndex: -1
+      _Value: .372413814
+    - _RefKeyIndex: -1
+      _Value: .34827587
+    - _RefKeyIndex: -1
+      _Value: .324137956
+    - _RefKeyIndex: 2
+      _Value: 0
+    TransValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PrioValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipHValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipVValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    PartsColValues:
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 0
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 255
+          B: 255
+          A: 0
+        - R: 255
+          G: 255
+          B: 255
+          A: 0
+        - R: 255
+          G: 255
+          B: 255
+          A: 0
+        - R: 255
+          G: 255
+          B: 255
+          A: 0
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 10
+        - R: 0
+          G: 0
+          B: 0
+          A: 10
+        - R: 0
+          G: 0
+          B: 0
+          A: 10
+        - R: 0
+          G: 0
+          B: 0
+          A: 10
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 20
+        - R: 0
+          G: 0
+          B: 0
+          A: 20
+        - R: 0
+          G: 0
+          B: 0
+          A: 20
+        - R: 0
+          G: 0
+          B: 0
+          A: 20
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 30
+        - R: 0
+          G: 0
+          B: 0
+          A: 30
+        - R: 0
+          G: 0
+          B: 0
+          A: 30
+        - R: 0
+          G: 0
+          B: 0
+          A: 30
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 40
+        - R: 0
+          G: 0
+          B: 0
+          A: 40
+        - R: 0
+          G: 0
+          B: 0
+          A: 40
+        - R: 0
+          G: 0
+          B: 0
+          A: 40
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 51
+        - R: 0
+          G: 0
+          B: 0
+          A: 51
+        - R: 0
+          G: 0
+          B: 0
+          A: 51
+        - R: 0
+          G: 0
+          B: 0
+          A: 51
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 61
+        - R: 0
+          G: 0
+          B: 0
+          A: 61
+        - R: 0
+          G: 0
+          B: 0
+          A: 61
+        - R: 0
+          G: 0
+          B: 0
+          A: 61
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 71
+        - R: 0
+          G: 0
+          B: 0
+          A: 71
+        - R: 0
+          G: 0
+          B: 0
+          A: 71
+        - R: 0
+          G: 0
+          B: 0
+          A: 71
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 81
+        - R: 0
+          G: 0
+          B: 0
+          A: 81
+        - R: 0
+          G: 0
+          B: 0
+          A: 81
+        - R: 0
+          G: 0
+          B: 0
+          A: 81
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 91
+        - R: 0
+          G: 0
+          B: 0
+          A: 91
+        - R: 0
+          G: 0
+          B: 0
+          A: 91
+        - R: 0
+          G: 0
+          B: 0
+          A: 91
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 102
+        - R: 0
+          G: 0
+          B: 0
+          A: 102
+        - R: 0
+          G: 0
+          B: 0
+          A: 102
+        - R: 0
+          G: 0
+          B: 0
+          A: 102
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 112
+        - R: 0
+          G: 0
+          B: 0
+          A: 112
+        - R: 0
+          G: 0
+          B: 0
+          A: 112
+        - R: 0
+          G: 0
+          B: 0
+          A: 112
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 122
+        - R: 0
+          G: 0
+          B: 0
+          A: 122
+        - R: 0
+          G: 0
+          B: 0
+          A: 122
+        - R: 0
+          G: 0
+          B: 0
+          A: 122
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 132
+        - R: 0
+          G: 0
+          B: 0
+          A: 132
+        - R: 0
+          G: 0
+          B: 0
+          A: 132
+        - R: 0
+          G: 0
+          B: 0
+          A: 132
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 142
+        - R: 0
+          G: 0
+          B: 0
+          A: 142
+        - R: 0
+          G: 0
+          B: 0
+          A: 142
+        - R: 0
+          G: 0
+          B: 0
+          A: 142
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 153
+        - R: 0
+          G: 0
+          B: 0
+          A: 153
+        - R: 0
+          G: 0
+          B: 0
+          A: 153
+        - R: 0
+          G: 0
+          B: 0
+          A: 153
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 163
+        - R: 0
+          G: 0
+          B: 0
+          A: 163
+        - R: 0
+          G: 0
+          B: 0
+          A: 163
+        - R: 0
+          G: 0
+          B: 0
+          A: 163
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 173
+        - R: 0
+          G: 0
+          B: 0
+          A: 173
+        - R: 0
+          G: 0
+          B: 0
+          A: 173
+        - R: 0
+          G: 0
+          B: 0
+          A: 173
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 183
+        - R: 0
+          G: 0
+          B: 0
+          A: 183
+        - R: 0
+          G: 0
+          B: 0
+          A: 183
+        - R: 0
+          G: 0
+          B: 0
+          A: 183
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 193
+        - R: 0
+          G: 0
+          B: 0
+          A: 193
+        - R: 0
+          G: 0
+          B: 0
+          A: 193
+        - R: 0
+          G: 0
+          B: 0
+          A: 193
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 204
+        - R: 0
+          G: 0
+          B: 0
+          A: 204
+        - R: 0
+          G: 0
+          B: 0
+          A: 204
+        - R: 0
+          G: 0
+          B: 0
+          A: 204
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 214
+        - R: 0
+          G: 0
+          B: 0
+          A: 214
+        - R: 0
+          G: 0
+          B: 0
+          A: 214
+        - R: 0
+          G: 0
+          B: 0
+          A: 214
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 224
+        - R: 0
+          G: 0
+          B: 0
+          A: 224
+        - R: 0
+          G: 0
+          B: 0
+          A: 224
+        - R: 0
+          G: 0
+          B: 0
+          A: 224
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 234
+        - R: 0
+          G: 0
+          B: 0
+          A: 234
+        - R: 0
+          G: 0
+          B: 0
+          A: 234
+        - R: 0
+          G: 0
+          B: 0
+          A: 234
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 0
+          G: 0
+          B: 0
+          A: 244
+        - R: 0
+          G: 0
+          B: 0
+          A: 244
+        - R: 0
+          G: 0
+          B: 0
+          A: 244
+        - R: 0
+          G: 0
+          B: 0
+          A: 244
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 2047
+    HasTrancparency: 0
+    FrameNum: 80
+    imageFile:
+      path: Assets/SpriteStudio/Samples/Data/antarctic/antactic.png
+      texture: {fileID: 2800000, guid: 95c0092f8ee2fbc45b3d988441a6e101, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: e182462cbceccce41b6f989ec3af9bf5, type: 2}
+      - {fileID: 2100000, guid: 3eb1cff6fe7a2324591d6ee85cf4010c, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 512
+      height: 512
+      bpp: 0
+    UVs:
+    - {x: .125, y: 1}
+    - {x: .28125, y: 1}
+    - {x: .28125, y: .78125}
+    - {x: .125, y: .78125}
+    OrgVertices:
+    - {x: -40, y: 56, z: 0}
+    - {x: 40, y: 56, z: 0}
+    - {x: 40, y: -56, z: 0}
+    - {x: -40, y: -56, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: "\u5168\u8EAB\u30DA\u30F3\u30AE\u30F3"
+    Type: 0
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 64
+      Bottom: 96
+    OriginX: 30
+    OriginY: 90
+    MyId: 5
+    ParentId: 0
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: 127
+      _Time: 48
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 114
+      _Time: 51
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: -9
+      _Time: 65
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 160
+      _Time: 48
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 160
+      _Time: 51
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 160
+      _Time: 65
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys:
+    - Value: 0
+      _Time: 48
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value: 85.8199997
+      _Time: 51
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleXKeys:
+    - Value: 1
+      _Time: 48
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleYKeys:
+    - Value: 1
+      _Time: 48
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    TransKeys:
+    - Value: 1
+      _Time: 48
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PrioKeys:
+    - Value: 5
+      _Time: 48
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipHKeys:
+    - Value: 0
+      _Time: 48
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipVKeys:
+    - Value: 0
+      _Time: 48
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    HideKeys:
+    - Value: 0
+      _Time: 48
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys:
+    - Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+      _Time: 51
+      _ValueType: 4
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    - Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 128
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 128
+        - R: 255
+          G: 0
+          B: 0
+          A: 128
+      _Time: 63
+      _ValueType: 4
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 127
+    - _RefKeyIndex: -1
+      _Value: 123
+    - _RefKeyIndex: -1
+      _Value: 118
+    - _RefKeyIndex: -1
+      _Value: 114
+    - _RefKeyIndex: -1
+      _Value: 105
+    - _RefKeyIndex: -1
+      _Value: 96
+    - _RefKeyIndex: -1
+      _Value: 88
+    - _RefKeyIndex: -1
+      _Value: 79
+    - _RefKeyIndex: -1
+      _Value: 70
+    - _RefKeyIndex: -1
+      _Value: 61
+    - _RefKeyIndex: -1
+      _Value: 52
+    - _RefKeyIndex: -1
+      _Value: 44
+    - _RefKeyIndex: -1
+      _Value: 35
+    - _RefKeyIndex: -1
+      _Value: 26
+    - _RefKeyIndex: -1
+      _Value: 17
+    - _RefKeyIndex: -1
+      _Value: 9
+    - _RefKeyIndex: -1
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    - _RefKeyIndex: 2
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    AngleValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 0
+    - _RefKeyIndex: -1
+      _Value: 28.6066666
+    - _RefKeyIndex: -1
+      _Value: 57.2133331
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    - _RefKeyIndex: 1
+      _Value: 0
+    ScaleXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    TransValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PrioValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipHValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipVValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    PartsColValues:
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+        - R: 255
+          G: 0
+          B: 0
+          A: 0
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 10
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 10
+        - R: 255
+          G: 0
+          B: 0
+          A: 10
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 21
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 21
+        - R: 255
+          G: 0
+          B: 0
+          A: 21
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 32
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 32
+        - R: 255
+          G: 0
+          B: 0
+          A: 32
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 42
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 42
+        - R: 255
+          G: 0
+          B: 0
+          A: 42
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 53
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 53
+        - R: 255
+          G: 0
+          B: 0
+          A: 53
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 64
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 64
+        - R: 255
+          G: 0
+          B: 0
+          A: 64
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 74
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 74
+        - R: 255
+          G: 0
+          B: 0
+          A: 74
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 85
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 85
+        - R: 255
+          G: 0
+          B: 0
+          A: 85
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 96
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 96
+        - R: 255
+          G: 0
+          B: 0
+          A: 96
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 106
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 106
+        - R: 255
+          G: 0
+          B: 0
+          A: 106
+    - _RefKeyIndex: -1
+      _Value:
+        Target: 2
+        Operation: 1
+        Colors:
+        - R: 255
+          G: 0
+          B: 0
+          A: 117
+        - R: 255
+          G: 0
+          B: 0
+          A: 255
+        - R: 255
+          G: 0
+          B: 0
+          A: 117
+        - R: 255
+          G: 0
+          B: 0
+          A: 117
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    - _RefKeyIndex: 1
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 2047
+    HasTrancparency: 0
+    FrameNum: 80
+    imageFile:
+      path: Assets/SpriteStudio/Samples/Data/antarctic/antactic.png
+      texture: {fileID: 2800000, guid: 95c0092f8ee2fbc45b3d988441a6e101, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: e182462cbceccce41b6f989ec3af9bf5, type: 2}
+      - {fileID: 2100000, guid: 3eb1cff6fe7a2324591d6ee85cf4010c, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 512
+      height: 512
+      bpp: 0
+    UVs:
+    - {x: 0, y: 1}
+    - {x: .125, y: 1}
+    - {x: .125, y: .8125}
+    - {x: 0, y: .8125}
+    OrgVertices:
+    - {x: -30, y: 90, z: 0}
+    - {x: 34, y: 90, z: 0}
+    - {x: 34, y: -6, z: 0}
+    - {x: -30, y: -6, z: 0}
+  ImportedTime: -728560685
+  ImportedTimeHigh: -1999573720
+--- !u!1002 &11400001
+EditorExtensionImpl:
+  serializedVersion: 6

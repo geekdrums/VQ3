@@ -49,9 +49,15 @@ public class BattleConductor : MonoBehaviour {
 
     void UpdateBattle()
     {
-        if( Music.isJustChanged && Music.GetCurrentBlockName() != "endro" )
+        if( Music.GetCurrentBlockName() == "endro" ) return;
+
+        if( Music.IsJustChangedAt( 0 ) )
         {
-            if( Music.IsJustChangedAt( 0 ) ) GameContext.PlayerConductor.CheckCommand();
+            GameContext.PlayerConductor.CheckCommand();
+            GameContext.EnemyConductor.CheckCommand();
+        }
+        if( Music.isJustChanged )
+        {
             GameContext.PlayerConductor.CheckSkill();
             GameContext.EnemyConductor.CheckSkill();
 

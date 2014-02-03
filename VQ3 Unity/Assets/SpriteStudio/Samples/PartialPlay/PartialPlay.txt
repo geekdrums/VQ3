@@ -1,0 +1,14 @@
+# How to use
+
+1. Attach PartialPlay script to your SsSprite game object.
+2. The script parses user data keys having string in the root parts in the Animation of your SsSprite game object and make a dictionary with the string as key and the range between the keys as value.
+3. You can play the animation partially by specifying a label.
+4. To see the behaviour above, run and left-click to switch the range to the next label.
+
+# 使い方
+
+SsSprite オブジェクトに PartialPlay スクリプトをアタッチし、
+Animation のルートパーツに設定されたユーザーデータキーの文字列をラベルとして、
+キーの区間をリストに登録し、labels で指定したラベル名と合致する区間を再生します。
+実行すると、左クリックを押す度に特定の再生区間が順次再生されます。
+

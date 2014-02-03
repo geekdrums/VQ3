@@ -1,0 +1,280 @@
+﻿========================================================================
+ SpriteStudioPlayer for Unity
+
+  Installation and Usage
+
+ Copyright(C) 2003-2013 Web Technology Corp.
+========================================================================
+
+
+------------------------------------------------------------------------
+* Installation
+
+  The procedure to add to a new Unity project is described.
+
+  - Start Unity.
+
+  - Create a project with any name using File -> New Project.
+
+  - Select the SSforUnity package file (SpriteStudio.unitypackage) with Assets -> Import Package -> Custom Package... .
+
+  - A dialog box is shown. Verify that all files are checked and the click on the Import button.
+    Import is finished if there are no errors.
+
+    Note: 
+    If the text becomes corrupted during import and the failed to import dialog box appears,
+    click on the Try Again button to try to continue with the process.
+
+------------------------------------------------------------------------
+* Database File and Animation Data Prefab
+
+SpriteStudioDatabase
+
+    Stores the list of SpriteStudio animation data imported to the project and the configuration information during import.
+    
+    This file is automatically created and updated when importing animation data. 
+    When is deleted, animation data is removed from the animation data list.
+    
+    [Application]
+    
+    To specify animation data that is not placed in a Scene when executing from a script, the animation data list is added to the Scene and used.
+    
+    [Inspector Description]
+    
+    AnimeList       The animation list is modified with the following buttons.
+
+        Pickup      Adds the animation attached to a SpriteObject placed in a Scene to the list.
+        
+        Add         Adds one item to the end of the list.
+        
+        Clear       Clears the list.
+        
+        Instatiate  When the selected file is Prefab, then an instantiation is added to the Scene.
+
+    [Caution]
+    
+    When this file exists in the Scene, because all animations registered in the list maintained by the file are included in the published data, if unnecesary animation data is included, the data size becomes extremely large.
+    
+    In this case, instead of dropping SpriteStudioDatabasePrefab in the project into the Scene, select Create Database from the SpriteStudio menu and register only the necessary animations in the Anime List.
+    
+    * This is not limited to the case when scripts attached to GameObjects existing in a Scene maintain an SsAnimation type filed that is targeted for serialization, and the animation used there are set statically.
+
+    * This file that is in the project folder is regenerated even if deleted.
+    
+SpriteStudioPrefabs
+
+    When animation data is imported, the GameObject Prefab associated with the animation is automatically created in the folder.
+    
+    The Prefab file created here is not deleted automatically even if the referencing animation data is deleted.
+
+------------------------------------------------------------------------
+* Animation Data Import Procedure
+
+- Drop the .ssax file and referencing image file to any folder in the project view.
+
+  * The path of the image file described in .ssax is relative, so do not change the positional relationship of the .ssax file and the image file.
+
+  * When the "Can't load image" error message is shown during import, try importing the .ssax file after first importing the image file.
+
+- A subfolder named "assets" is created in the drop folder, and is successful if an animationfilename_ssa and referencing imagefilename_Mat_* are created in the folder.
+
+- Regarding re-import
+  When an *_ssa file is selected, the Reimport button is shown at the top of Inspector.
+  Click on this button to reimport.
+  The Original Path item is the path of the import source animation file.
+
+- Scaling
+
+  After check ScaleFactor and inputting a value, the size of the animation data can be scaled by reimporting.
+
+  If not checked, the settings in SpriteStudio->Settings are referenced.
+
+------------------------------------------------------------------------
+* Animation Playback
+
++ Using Prefab
+
+  If the animation data is correctly imported, then a GameObject Prefab, which has the corresponding animation data attached, should be created in the project tree root SpriteStudioPrefabs folder.
+  If this is dropped in Hierarchy, then playback can start.
+
++ Creating from GameObject
+
+  GameObject with attached sprite scripts can be created in the Scene by selecting SpriteStudio -> Create Sprite from the menu or by selecting Sprite Studio -> Sprite from the Create menu at the top of the Hierarchy view.
+
+  A playback state can be entered by selecting the animation to play from the Animation right pop-up list in Inspector.
+
+  If the playback button is clicked in this state, animation playback starts.
+
+------------------------------------------------------------------------
+* Operating Inspector
+
+When the GameObject that was created in the "Animation Playback" proceure is selected, an SsSprite roll should be added to Inspector.
+
+The following describes the displayed items.
+
+Animation           The name of the animation currently attached.
+                    Edit...    Jumps to the referencing animation when the button is clicked.
+
+HFlip               Flag to invert in the horizontal direction.
+
+VFlip               Flag to invert in the vertical direction.
+
+Anime Frame         The frame value of the animation currently being displayed.
+
+Start Anime Frame   The playback start frame.
+                    When changed, the Anime Frame is linked and updated to the same value.
+
+End Anime Frame     The playback end frame.
+                    When changed, the Anime Frame is linked and updated to the same value.
+
+Play Direction      Playback direction and loop specification.
+
+                    Forward    Forward direction (default).
+                    Reverse    Reverse direction
+                    RoundTrip    Round trip
+                    ReverseRoundTrip    Round trip from the reverse direction
+
+Play Count          Number of times to play. Becomes an infinite loop when 0.
+
+Speed               Playback speed.
+
+PlayAtStart         Start playback automatically after initialization or changing
+                    animation.
+
+DestroyAtEnd        Destroy sprite object when the animation is finished
+                    if this is true.
+
+LifeTime            Time to destroy automatically by seconds.
+                    Nothing effects if this value is zero.
+                    The count starts since Update() called, and doesn't stop even if the animation is paused.
+
+UpdateCollider      The automatic update flag for the Collider boundary region.
+                    When checked, if the mesh is deformed with the animation, the boundary region is also automatically updated.
+                    
+                    See the SsSprite item in script.txt for details.
+
+
+The following items are for debugging.
+
+Draw Bounding Box   Displays the BoundingBox that encloses all the parts in red.
+                    Does not display if Gizmos at the top of the Scene view is not enabled.
+
+DrawBoundingParts   Display the bounding parts with green frame if this sprite has it.
+                    Also display the AABB of the parts when SsSprite.useAABB is true.
+
+------------------------------------------------------------------------
+* SpriteStudio Menu
+
+When this asset is imported, a SpriteStudio item is added to the top of the Unity menu.
+
+Create Sprite
+    Adds a SpriteObjec that does not have an animation specified to the Scene.
+
+Create Database
+    Adds the SpriteStudioDatabase to the current Scene.
+
+Cleanup Prefabs
+    Deletes Prefabs that do not have valid animations from SpriteStudioPrefabs.
+
+Settings    
+    Scale Factor    Scale factor to apply to the parts size when importing.
+    
+    The changes are applied when the Close button is clicked.
+
+About
+    SpriteStudioPlayer Version indicates the plugin version.
+    Ssax File Version indicates the version of the .ssax file that can be read by the current plugin.
+
+------------------------------------------------------------------------
+* Cautions Regarding Data to be Imported
+
++ Referenced Images (Textures)
+
+  - Expand the texture width and height to a power of two.
+
+    If not a power of two, the texture width and height will be scaled up (to a larger value) or down (to a lower value) by the importer.
+    The result is that the image becomes fuzzy, a small error occurs in the UV value, or unintended pixels are rendered.
+    For this reason, we recommend expanding to a power of two so that the scaling does not occur.
+
+    If it does not matter if scaling is performed and the image does not need to be a size that is a power of two, then you can select whether to scale up or scale down using the following procedure.
+    The default setting for the texture import is to scale to whichever is closest, up or down, for example, if the width is 191 pixels, it will be scaled down to 128.
+    To scale up to 256 in this case, select the texture file in the project tree and change the Texture Importer setting to the following.
+
+    Texture Type:  Advanced
+    Non Power of 2:  ToLarger
+
+    And then click on the Apply button.
+
+  - Palettes are not supported, so save as direct color.
+
+  [NOTICE] Handling the case when transparent color is not removed:
+ 
+  - Because Unity does not recognize the .png transparent color specification, handle by creating an alpha channel.
+
+  - For 32-bit .bmp, even though the transparent color is recognized as expected on SpriteStudio, it may not be recognized by Unity.
+
+  [NOTICE] Handling the case when completely transparent part color is mixed in with pixels with DXT5:
+
+    The cause is that when converting texture files, which have been imported on Unity, to DXTC, the completely transparent color pixels are included as colors that are used.
+
+    In this case, the problem can be avoided by using an image conversion tool, such as OPTPiX imesta, which has a color bleed prevention feature for completely transparent colors, to convert to DXT5 format in advance.
+    * SpriteStudio supports reading DXTC format.
+    * Note that iOS does not support DXTC format.
+
+  [NOTICE] Handling the case when unintended lines or colors appear at the edge of the sprite:
+
+    This may occur when the texture sampling mode is not Point.
+
+    This problem may be resolved by selecting the problem texture file in project view and Clamping the Inspector Wrap Mode.
+
+    If this does not resolve the problem, either shift the parts clip region one pixel to the inside or position a 1-pixel circumference around the parts clip region to the same pixel as inside the region.
+
+[Cautions]
+  Support for operations during importing to Unity and image formats were confirmed for version 3.4.
+
+------------------------------------------------------------------------
+* Camera Settings
+
+Change the camera settings as required as they do not change anything.
+
+If a sprite is placed in a scene but nothing is shown in the Game view, try setting the main camera Projection to Orthographic and the size to about 400 to display in the screen.
+
+Adjust this size to a value appropriate to the resolution of the platform you plan to publish in.
+※ If you set the vertical size of the viewport to be displayed to about half, the displayed animation will near the pixel perfect size.
+
+In addition, when performing XY axis rotation, it will be fragmented unless the Near Clip value is in front.
+For this case, try setting Near for Clipping Planes to about -1000.
+
+------------------------------------------------------------------------
+* Collider
+
+BoxCollider, SphereCollider, and CapsuleCollider are supported.
+
+When using BoxCollider, set the Size z-value to 1 or greater to prevent physical objects from missing each other.
+
+See * SsSprite UpdateCollider Properties in script.txt regarding automatically updating the boundary region to match the animation.
+
+------------------------------------------------------------------------
+* Other Cautions
+
++ Regarding the "Cleaning up leaked objects in scene ... " message
+
+  Cleaning up leaked objects in scene since no game object, component or manager is referencing them
+  Material has been leaked ? times.
+  Mesh has been leaked ? times.
+
+  A message similar to the above may appear while saving a Scene, but because they appear when performing animation display in edit mode, no resource leaks should accumulate and no problems should occur during execution.
+
+
+============================================================================
+Web Technology Corp.
+http://www.webtech.co.jp/eng/
+Copyright(C) 2003-2013 Web Technology Corp.
+============================================================================
+
+* 'SpriteStudio' and 'Web Technology' are registered trademarks of
+  Web Technology Corp.
+* All other trademarks and registered trademarks are the sole property of
+  their respective owners.
+
+[End of TEXT]

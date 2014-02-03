@@ -1,0 +1,296 @@
+﻿========================================================================
+ SpriteStudioPlayer for Unity
+
+  Script reference
+
+ Copyright(C) 2003-2013 Web Technology Corp.
+========================================================================
+
+
+------------------------------------------------------------------------
+SsAnimation class
+
+An animation data which is created when you import the .ssax file.
+
+------------------------------------------------------------------------
+SsPart class
+
+A part of a sprite.
+To access this, call GetPart() method in SsSprite class.
+
+Types:
+    delegate    void KeyframeCallback(SsPart part, SsAttrValueInterface value);
+
+        Delegate for general callback function.
+
+Events:
+
+    event   KeyframeCallback    OnUserDataKey
+    
+        This function will be called during the animation is on the frame
+        which is within the range of user data key.
+
+    event   KeyframeCallback    OnSoundKey
+    
+        This function will be called during the animation is on the frame
+        which is within the range of sound data key.
+
+Properties:
+
+    SsSprite    Sprite
+    
+        Returns the instance to which this part belong.
+
+    Matrix4x4   RootToPartMatrix (readonly)
+    
+        Returns the matrix which transforms the root part's coordinate
+        to this part's coordinate.
+
+Methods:
+
+    Transform   CreateTransform()   
+
+        Returns the Transform of specified part.
+        the name of the Transform takes over the part name.
+
+        This function creates Transforms recursively to root part
+        if the Transform of the parent is null.
+
+        Transforms created through this function are deleted
+        when calling Start() or changing animation.
+
+------------------------------------------------------------------------
+SsSprite class
+
+A sprite which controls an animation.
+Currently it can have a single animation.
+Many parts contained it are generated when an animation is attached to the sprite.
+
+Types:
+
+    delegate void AnimationCallback(SsSprite sprite);
+    
+        Delegate for general callback function.
+        For example, you can use to get the notification when the animation is finished.
+
+Properties:
+
+    SsAnimation     Animation
+
+        Current animation attached to this sprite.
+        You can change animation simply by substitution.
+
+    Vector3     Position
+    
+        Current position.
+        This is identical to accessing gameObject.transform.position.
+
+    Vector3     Rotate
+    
+        Current rotation.
+        This is identical to accessing gameObject.transform.localRotation.eulerAngles.
+
+    Vector3     Scale
+        
+        Current scale.
+        This is identical to accessing gameObject.transform.localScale.
+
+    bool        hFlip
+
+        Horizontal flip.
+
+    bool        vFlip
+    
+        Vertical flip.
+
+    AnimationCallback   AnimationFinished
+
+        Callback which is called when the animation is finished.
+    
+    float       AnimFrame
+    
+        Current time.
+    
+    flaot       StartFrame
+    
+        Start time.
+        You can use this to set the range of the animation.
+
+    flaot       EndFrame
+    
+        End time.
+        You can use this to set the range of the animation.
+    
+    SsAnimePlayDirection    PlayDirection
+    
+        Which direction to go when the animation starts.
+    
+    int         PlayCount
+    
+        Number of times to play.
+        If this is zero, the animation repeats playback eternally.
+    
+    float       Speed
+    
+        Playback speed which is actually multiplying factor.
+    
+    bool        PlayAtStart     Playback automatically when Start() called
+                                or the animation is changed if this is true.
+
+    bool        DestroyAtEnd    Destroy sprite object when the animation
+                                is finished if this is true.
+
+    float       LifeTime        Time to destroy automatically by seconds.
+                                Nothing effects if this value is zero.
+                                The count starts since Update() called, and
+                                doesn't stop even if the animation is paused.
+
+    SsPartRes[] PartResList
+    
+        Returns the array of part's resource which this sprite has.
+
+    bool        UpdateCollider
+    
+        Update automatically the bounds area of collider if this is true.
+        
+        This is available when the one of colliders BoxCollider,
+        SphereCollider and CapsuleCollider is attached. 
+        
+        This occurs re-creation of collider, so it is recommended to
+        enable this only in situation when the animation modifies its part's sizes or shapes.
+
+    bool    DrawBoundingBox
+    
+        Display the bounding box surrounds all parts in this sprite.
+        This is represented when "Gizmos" is enabled on Scene view.
+        Only use for debug.
+
+    bool    DrawBoundingParts
+    
+        Display the bounding parts with green frame if this sprite has it.
+        Also display the AABB of the parts when SsSprite.useAABB is true.
+
+Methods:
+
+    SsPart  GetPart(int index)
+    SsPart  GetPart(string name)
+
+        Returns the part of this sprite by index or by name.
+        If index is zero or name is null, returns the root part.
+    
+    Transform   TransformAt(string name)
+    
+        Returns the Transform of the part of this sprite by name.
+        If you get the part other than root, you need to prepare the
+        Transform by CreateTransform() before.
+    
+    Vector3     PositionAt(string name)
+
+        Returns the Transform of the part of this sprite by name.
+        If the part is not found, returns Vector3.zero.
+    
+    void        Play()
+    
+        Set the status to playback.
+        
+    void        Pause()
+    
+        Set the status to pause.
+
+    bool        IntersectsByBounds(SsSprite other, bool ignoreZ)
+    
+        Does another sprite's bounding box intersect with this sprite's bounding box?
+        
+        if ignoreZ is true, determinds out of consideration of each Z position.
+
+    bool        IntersectsByBoundingParts(SsSprite other, bool ignoreZ, bool useAABB)
+    
+        Does another sprite's bounding parts intersect with this sprite's
+        bounding parts?
+        
+        Test by using the AABB of each bounding part if useAABB is true.
+        AABB testing costs lesser generally.
+        
+        ignoreZ means the same of IntersectsByBounds. 
+
+    bool        ContainsPoint(Vector3 point, bool ignoreZ)
+    
+        Is point contained in the bounding box?
+    
+        ignoreZ means the same of IntersectsByBounds.
+
+	bool		IsPlaying()
+	
+		Is the animation playing?
+
+	bool		IsAnimationFinished()
+	
+		Is the animation finished?
+
+    bool        IsLastFrame()
+    
+        Does current frame reach at last frame?
+
+    void        SetPlayDirection(SsAnimePlayDirection dir, bool keepFrame)
+    
+        Change playback direction.
+        Do the same behaviour as PlayDirection property, in addition you can
+        control whether the current frame will reset or stay by keepFrame flag.
+    
+    void        ReplaceAnime(SsAnimation anime)
+    
+        Replace the animation without rebuilding mesh.
+        This is faster than changing animation via Animation property.
+        This requires the equality of parts struct between before and after,
+        if it doesn't match an error will be reported in log.
+        Do the same behaviour as Animation property if no animation is set.
+    
+
+------------------------------------------------------------------------
+Types
+
+Playback direction
+
+    enum SsAnimePlayDirection
+    {
+        Forward,            forward
+        Reverse,            backward
+        RoundTrip,          forward and round-trip
+        ReverseRoundTrip,   backward and round-trip
+    }
+
+-----------------------------------------------------------------------------
+Collision test
+
+Followings are three types of testing method.
+The upper, the faster.
+
+IntersectsByBounds
+IntersectsByBoundingParts useAABB: true
+IntersectsByBoundingParts
+
+The ratio of speed is 1 : 3 : 5 from the top. (when ignoreZ is true)
+
+It is recommended to use this if you don't care about the parts bounding.
+IntersectsByBounds
+
+Otherwise use this when you want to use bounding parts though,
+you don't use rotation or vertex modification,
+IntersectsByBoundingParts useAABB: true
+
+Else, use this finally.
+IntersectsByBoundingParts
+
+
+============================================================================
+Web Technology Corp.
+http://www.webtech.co.jp/eng/
+Copyright(C) 2003-2013 Web Technology Corp.
+============================================================================
+
+* 'SpriteStudio' and 'Web Technology' are registered trademarks of
+  Web Technology Corp.
+* All other trademarks and registered trademarks are the sole property of
+  their respective owners.
+
+[End of TEXT]

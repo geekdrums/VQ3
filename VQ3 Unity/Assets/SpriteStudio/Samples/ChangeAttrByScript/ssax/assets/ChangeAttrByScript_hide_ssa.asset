@@ -1,0 +1,940 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8302fb81b75e4448e136fa61e58a28, type: 3}
+  m_Name: ChangeAttrByScript_hide_ssa
+  m_EditorClassIdentifier: 
+  OriginalPath: Assets/SpriteStudio/Samples/ChangeAttrByScript/ssax/ChangeAttrByScript_hide.ssax
+  UseScaleFactor: 0
+  ScaleFactor: 1
+  FPS: 30
+  EndFrame: 10
+  hvFlipForImageOnly: 1
+  ImageList:
+  - path: Assets/SpriteStudio/Samples/ChangeAttrByScript/ssax/white.png
+    texture: {fileID: 2800000, guid: c1ad37fc895793747a637ab2d91d4020, type: 3}
+    materials:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 2100000, guid: 12e06f48579dd5d4e952f159fdecc6cf, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    width: 64
+    height: 64
+    bpp: 32
+  PartList:
+  - AnimeRes: {fileID: 11400000}
+    Name: hide_root
+    Type: 1
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 0
+      Bottom: 0
+    OriginX: 0
+    OriginY: 0
+    MyId: 0
+    ParentId: -1
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 0
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys: []
+    PosYKeys: []
+    AngleKeys: []
+    ScaleXKeys: []
+    ScaleYKeys: []
+    TransKeys: []
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues: []
+    PosYValues: []
+    AngleValues: []
+    ScaleXValues: []
+    ScaleYValues: []
+    TransValues: []
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 512
+    HasTrancparency: 0
+    FrameNum: 11
+    imageFile:
+      path: 
+      texture: {fileID: 0}
+      materials: []
+      width: 0
+      height: 0
+      bpp: 0
+    UVs: []
+    OrgVertices:
+    - {x: -0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: -0, z: 0}
+    - {x: -0, y: -0, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: parent
+    Type: 0
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 64
+      Bottom: 64
+    OriginX: 32
+    OriginY: 32
+    MyId: 1
+    ParentId: 0
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 1
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleXKeys: []
+    ScaleYKeys: []
+    TransKeys: []
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    AngleValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleXValues: []
+    ScaleYValues: []
+    TransValues: []
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 519
+    HasTrancparency: 0
+    FrameNum: 11
+    imageFile:
+      path: Assets/SpriteStudio/Samples/ChangeAttrByScript/ssax/white.png
+      texture: {fileID: 2800000, guid: c1ad37fc895793747a637ab2d91d4020, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: 12e06f48579dd5d4e952f159fdecc6cf, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 64
+      height: 64
+      bpp: 32
+    UVs:
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    - {x: 1, y: 0}
+    - {x: 0, y: 0}
+    OrgVertices:
+    - {x: -32, y: 32, z: 0}
+    - {x: 32, y: 32, z: 0}
+    - {x: 32, y: -32, z: 0}
+    - {x: -32, y: -32, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: child
+    Type: 0
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 64
+      Bottom: 64
+    OriginX: 32
+    OriginY: 32
+    MyId: 2
+    ParentId: 1
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 1
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: 32
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 32
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleXKeys: []
+    ScaleYKeys: []
+    TransKeys: []
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    AngleValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleXValues: []
+    ScaleYValues: []
+    TransValues: []
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 519
+    HasTrancparency: 0
+    FrameNum: 11
+    imageFile:
+      path: Assets/SpriteStudio/Samples/ChangeAttrByScript/ssax/white.png
+      texture: {fileID: 2800000, guid: c1ad37fc895793747a637ab2d91d4020, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: 12e06f48579dd5d4e952f159fdecc6cf, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 64
+      height: 64
+      bpp: 32
+    UVs:
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    - {x: 1, y: 0}
+    - {x: 0, y: 0}
+    OrgVertices:
+    - {x: -32, y: 32, z: 0}
+    - {x: 32, y: 32, z: 0}
+    - {x: 32, y: -32, z: 0}
+    - {x: -32, y: -32, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: grandchild
+    Type: 0
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 64
+      Bottom: 64
+    OriginX: 32
+    OriginY: 32
+    MyId: 3
+    ParentId: 2
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 1
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: 32
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 32
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleXKeys: []
+    ScaleYKeys: []
+    TransKeys: []
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    AngleValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleXValues: []
+    ScaleYValues: []
+    TransValues: []
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    - _RefKeyIndex: 0
+      _Value: 0
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 519
+    HasTrancparency: 0
+    FrameNum: 11
+    imageFile:
+      path: Assets/SpriteStudio/Samples/ChangeAttrByScript/ssax/white.png
+      texture: {fileID: 2800000, guid: c1ad37fc895793747a637ab2d91d4020, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: 12e06f48579dd5d4e952f159fdecc6cf, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 64
+      height: 64
+      bpp: 32
+    UVs:
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    - {x: 1, y: 0}
+    - {x: 0, y: 0}
+    OrgVertices:
+    - {x: -32, y: 32, z: 0}
+    - {x: 32, y: 32, z: 0}
+    - {x: 32, y: -32, z: 0}
+    - {x: -32, y: -32, z: 0}
+  ImportedTime: -716429991
+  ImportedTimeHigh: -1999573720

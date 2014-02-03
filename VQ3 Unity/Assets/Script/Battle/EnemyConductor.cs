@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class EnemyConductor : MonoBehaviour {
     
@@ -118,27 +119,50 @@ public class EnemyConductor : MonoBehaviour {
 		return Res;
 	}
 
+    public void CheckCommand()
+    {
+        int num2BarCommands = 0;
+        int num1BarCommands = 0;
+        foreach( Enemy enemy in Enemies )
+        {
+            enemy.CheckCommand();
+        }
+
+        foreach( Enemy enemy in from e in Enemies orderby e.currentCommand.numBar select e )
+        {
+            EnemyCommand c = enemy.currentCommand;
+            if( c.numBar == 1 )
+            {
+                enemy.SetExecBar( num1BarCommands % 4 );
+                ++num1BarCommands;
+            }
+            else if( c.numBar == 2 )
+            {
+                enemy.SetExecBar( 2 * (num2BarCommands + (int)((num1BarCommands + 1) / 2)) % 4 );
+                ++num2BarCommands;
+            }
+            else //0 or 4 or 3(not recommended)
+            {
+                enemy.SetExecBar( 0 );
+            }
+        }
+    }
+
     public void CheckSkill()
     {
         int CurrentIndex = Music.Just.bar;
         if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break ) return;
         if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak && CurrentIndex == 3 ) return;
-        if( Music.IsJustChangedWhen( ( Timing t ) => t.barUnit == 8 ) && CurrentIndex < Enemies.Count )
+
+        foreach( Enemy e in Enemies )
         {
-            Skill enemySkill = Enemies[CurrentIndex].GetCurrentSkill();
-            Skill objSkill = (Skill)Instantiate( enemySkill, new Vector3(), enemySkill.transform.rotation );
-            objSkill.SetOwner( Enemies[CurrentIndex] );
-            GameContext.BattleConductor.ExecSkill( objSkill );
+            Skill enemySkill = e.GetCurrentSkill();
+            if( enemySkill != null )
+            {
+                Skill objSkill = (Skill)Instantiate( enemySkill, new Vector3(), enemySkill.transform.rotation );
+                objSkill.SetOwner( e );
+                GameContext.BattleConductor.ExecSkill( objSkill );
+            }
         }
     }
-    /*
-        GameObject playerSkill = CurrentCommand.GetCurrentSkill();
-        if( playerSkill != null )
-        {
-            Skill objSkill = ( Instantiate( playerSkill ) as GameObject ).GetComponent<Skill>();
-            objSkill.SetOwner( Player );
-            GameContext.BattleConductor.ExecSkill( objSkill );
-        }
-    }
-    */
 }

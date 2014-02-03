@@ -1,0 +1,117 @@
+﻿========================================================================
+ SpriteStudioPlayer for Unity
+
+  Sample animations
+
+ Copyright(C) 2003-2013 Web Technology Corp.
+========================================================================
+
+------------------------------------------------------------------------
+* Folder Structure and Files
+
+Samples
+    BombParticle  Effect when a bee is hit in a GameScene.
+
+    Data
+        
+        antarctic
+            antarctic
+                Use "Reference Source XY Offset" in foot movement.
+
+            antarctic2
+            antarctic3
+                Arranged version of antarctic.
+                With "ColorBlending," color is applied to the penguin after impact.
+
+        BeeChameleon
+            This combines the bee, chameleon, and background animation separately.
+
+        button
+            This has three types of button images and animations.
+            Three types of animation can be created: normal status, focus status, and flash status when pressed.
+            In addition, the buttons on the top portion can be expressed in three patterns of single animation depending on the interval specification: unfocus, focus, and when clicked.
+        
+        comipo
+            Articulated character animation.
+            Realizes smooth movements such as minute translation or rotation of hair or vertex transformation in skirts.
+            
+        effects
+            bomb effect animations which use color blend and alpha blend animations.
+        
+        koma
+            "Frame-by-frame animation" sample. Flipping through images in order to express robotic motion. "Reference Source XY Offset" is used to flip through images.
+
+        vertex
+            number
+            number2
+            Sample using "vertex transformation." A wide variety of movements can be expressed by combining with rotation.
+
+    Scenes
+    
+        AntarcticScene
+            Plays the animation group in the Data/antarctic folder.
+        
+        BeeScene
+            Plays the animation group in the Data/BeeChameleon folder.
+        
+        ButtonScene
+            Three types of button animations are placed in the Scene, and the SsButtonBehaviour script that monitors user operations is attached to them.
+        
+        ColliderScene
+            SpriteObject demo with Collider attached.
+        
+        ComipoAllScene
+            Plays the animation group in the Data/comipo folder.
+        
+        GameScene
+            Sample that dynamically creates SpriteObjects with a script and then allocates animation.
+            Sprite movement and collision detection are also performed with key input.
+            Details follow below.
+    
+        MultiCamera
+            Realized by adding a "2D" layer to for UI, setting Culling Mask for UI camera to only the 2D layer, and setting Clear Flags to DepthOnly.
+            The layer named "2D" is in a blank state unless the TagsandLayers file is imported.
+            See TagsandLayers below for details.
+
+        NumberScene
+            Plays the animation group in the Data/vertex folder.
+            Sample animation of vertex transformation.
+        
+        RoboScene
+            Plays the animation group in the Data/koma folder.
+            Sample of data created with Frame-by-frame animation.
+
+    TagsAndLayers
+    
+        Contains the "2D" layer name used with the MultiCamera sample.
+        By opening and importing this, the current project Tag Manager list is updated.
+        Note that when importing into an existing project, the original tag names and layer names will be overwritten.
+
+------------------------------------------------------------------------
+* about GameScene
+
+There are no sprite objects in this scene.
+SsGameTest.cs script creates sprite objects at runtime.
+
+How to play:
+
+LR-arrow keys		Move
+Up arrow key		Jump
+Fire1(Left-Click)	Swing stick
+Fire2(Right-Click)	Throw stick
+Fire3(Middle-Click)	Bomb
+
+
+
+============================================================================
+Web Technology Corp.
+http://www.webtech.co.jp/eng/
+Copyright(C) 2003-2013 Web Technology Corp.
+============================================================================
+
+* 'SpriteStudio' and 'Web Technology' are registered trademarks of
+  Web Technology Corp.
+* All other trademarks and registered trademarks are the sole property of
+  their respective owners.
+
+[End of TEXT]

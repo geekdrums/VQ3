@@ -1,0 +1,484 @@
+﻿=============================================================================
+ SpriteStudioPlayer for Unity
+
+ Copyright(C) 2003-2013 Web Technology Corp.
+=============================================================================
+
+-----------------------------------------------------------------------------
+■スクリプトについて
+
+SpriteStudio プラグインのモジュールはすべてC#スクリプトで実装されています。
+外部から利用可能なクラスについては後述します。
+
+-----------------------------------------------------------------------------
+■SsAnimation
+	
+１つのアニメーションデータに相当します。
+SpriteStudio のアニメーションデータ(.ssax)をインポートした際に生成され、
+アセットとして保存されます。
+
+フィールド：
+
+	FPS					このアニメのFPSです。
+
+	EndFrame			最終フレーム値です。全フレーム数-1 になります。
+
+	hvFlipForImageOnly	上下左右反転のキーが設定されている場合に
+						イメージのみ反転するか？を示すフラグです。
+
+	ImageList			イメージ情報の配列です。
+
+	PartList			パーツ情報の配列です。
+
+-----------------------------------------------------------------------------
+■SsPart
+
+アニメーションを構成するパーツの１つに相当します。
+このクラスのインスタンスにアクセスするにはSsSpriteのGetPart()メソッドを使用し
+てください。
+
+型：
+	delegate	void KeyframeCallback(SsPart part, SsAttrValueInterface value);
+
+		コールバック関数のデリゲートです。
+
+イベント：
+
+	event	KeyframeCallback	OnUserDataKey
+	
+		アニメーションのカレントフレームがユーザーデータのキーが打たれたフレー
+		ムに入っている時に呼び出されるメソッドを指定します。
+	
+		カレントフレームの値はSsSpriteクラス側で管理しています。
+		このフレーム値はfloat型で少数を許容しているため、キーが打たれたフレー
+		ムに到達した瞬間だけ呼ばれるのではなく、複数回呼び出される可能性がある
+		点に注意してください。
+
+	event	KeyframeCallback	OnSoundKey
+	
+		サウンドキーが打たれたフレームに到達した時に呼び出されるメソッドを指定
+		します。
+		詳細は OnUserDataKey と同じです。
+
+プロパティ：
+
+	SsSprite	Sprite
+	
+		このパーツが属しているスプライトクラスのインスタンスを返します。
+
+	Matrix4x4	RootToPartMatrix (読み取り専用)
+
+		現在のアニメーションのルートパーツからパーツローカル座標系への変換行列
+		を返します。
+
+メソッド：
+
+	Transform	CreateTransform()	
+
+		このパーツの Transform を作成します。
+		作成した Transform が持つ localPostion,localRotation,localScale はパー
+		ツローカルの座標系になります。
+
+		作成される Transform の名前は SpriteStudio 上で付けたパーツ名になりま
+		す。
+
+		指定したパーツの親の Transform が null の場合、ルートパーツまで遡って
+		Transfrom を再帰的に作成します。
+
+		この関数を通じて作成した Transform はカレントのアニメーションを変更し
+		たり、スクリプトの Start() が呼ばれるとすべて削除されますのでご注意下
+		さい。
+
+	Material	IndividualizeMaterial(bool mulMatColor)
+	
+		このパーツのマテリアルをインスタンス化して個別化します。
+		mulMatColor に true を指定するとマテリアルカラーをブレンドするシェーダ
+		に差し替えたマテリアルに変更します。
+		
+		一部のパーツだけ色を変えたり別のシェーダで描画したい場合に利用できます。
+		
+		mulMatColor を true にすると、マテリアルカラーをブレンドする分シェーダ
+		の負荷が増えます。
+		
+		またこのメソッドの呼び出しによりマテリアルの切り替えが発生するため少な
+		くともドローコールが２つ増加することになります。
+		
+		既に一度呼び出している場合は何もしません。
+	
+	void	ChangeMaterial(Material mat)
+	
+		このパーツのマテリアルを指定したマテリアルに変更します。
+		
+		IndividualizeMaterial() と同じくドローコールの増加を招くことにご注意く
+		ださい。
+	
+	void	RevertChangedMaterial()
+	
+		IndividualizeMaterial(), ChangeMaterial() により変更されたマテリアルを
+		オリジナルのマテリアルに戻します。
+		
+		ドローコールを減らすため、マテリアルの変更が不要になった段階でこのメソ
+		ッドで元に戻すことを推奨します。
+
+-----------------------------------------------------------------------------
+■SsSprite
+
+アニメーションを表示・管理するためのスクリプトでMonoBehaviourを継承しています。
+現状１つのSsAnimationを参照し、アニメーションが含む各パーツのポリゴンメッシュ
+を構築して描画を行います。
+
+単にスプライトと書いた場合はこのSsSprite１つを指します。
+スプライトは複数のパーツで構成されます。
+
+型：
+
+	delegate void AnimationCallback(SsSprite sprite);
+	
+		アニメーション終了時などのコールバックに指定するデリゲートです。
+
+プロパティ：
+
+	SsAnimation		Animation	割り当てられているアニメーションです。
+								代入することでアニメーションを変更します。
+
+	Vector3		Position		現在の位置です。
+								ゲームオブジェクトの transform.position
+								にアクセスすることと等価です。
+
+	Vector3		Rotate			現在の回転角です。
+								ゲームオブジェクトの
+								transform.localRotation.eulerAngles
+								にアクセスすることと等価です。
+
+	Vector3		Scale			現在のスケールです。
+								ゲームオブジェクトの transform.localScale
+								にアクセスすることと等価です。
+
+	bool		hFlip			水平フリップです。
+
+	bool		vFlip			垂直フリップです。
+
+	AnimationCallback	AnimationFinished
+
+								アニメーション終了時に呼び出される
+								メソッドを指定します。
+	
+	float		AnimFrame		現在の再生フレーム値です。
+	
+	float		StartFrame		再生開始フレーム値です。
+								任意の区間を再生したい場合に指定します。
+
+	float		EndFrame		再生終了フレーム値です。
+								任意の区間を再生したい場合に指定します。
+	
+	SsAnimePlayDirection	PlayDirection	アニメーションの再生方向です。
+	
+	int			PlayCount		プレイ回数です。0 で無限ループになります。
+	
+	float		Speed			再生スピードです。
+
+	bool		PlayAtStart		Start() 呼び出し時、アニメーション変更時（
+								Animation プロパティにカレントとは異なるアニメ
+								を代入した時）に再生開始します。
+
+	bool		DestroyAtEnd	アニメーション終了時にスプライトオブジェクトを
+								削除します。
+
+	float		LifeTime		スプライトオブジェクトを自動的に削除するまでの
+								時間を秒単位で指定します。
+								Update() 呼び出しが始まってから計測が開始され
+								ます。
+								ポーズ中も計測されます。
+								0 を指定した場合は何もしません。
+	
+	SsPartRes[]	PartResList		このスプライトを構成するパーツの配列を
+								返します。
+
+	bool		UpdateCollider	コライダの自動更新フラグです。
+
+		BoxCollider, SphereCollider, CapsuleCollider がアタッチされている場合、
+		この値を true に設定すると、アニメーションの更新時にコライダが持つ当た
+		り判定領域を更新します。
+		ただし更新のためにコライダを作り直しているため、それなりの処理負荷がか
+		かります。
+		そのため、大きさや形状が大きく変わるアニメーションでない限りはfalse
+		（デフォルト）にしておくことを推奨します。
+
+	bool	DrawBoundingBox		パーツ全体を囲むバウンディングボックスを表示し
+								ます。
+								Unityエディタのシーンビュー上部のGizmos が有効
+								になっている必要があります。
+								※デバッグ用です。
+
+	bool	DrawBoundingParts	当たり判定パーツを含んでいる場合そのパーツの境
+								界を緑の枠で表示します。
+								SsSprite.useAABB を true にした場合の領域は赤
+								枠で表示されます。
+
+メソッド：
+
+	SsPart	GetPart(int index)
+	SsPart	GetPart(string name)
+
+		このアニメーションを構成するパーツを取得します。
+		インデックス指定の場合０がルートパーツになります。
+		またname == null の時もルートパーツを返します。
+
+	SsPart[]	GetParts()
+	
+		このアニメーションを構成するパーツの配列を取得します。
+	
+	Transform	TransformAt(string name)
+	
+		name で指定した名前のパーツの現在のTransformを返します。
+		name == null の場合ルートパーツを指定したことになります。
+		
+		※ルート以外のパーツを取得する場合は事前に CreateTransfrom() を呼び出
+		  して該当パーツの Transform を作成しておく必要があります。
+	
+	Vector3		PositionAt(string name)
+
+		name で指定した名前のパーツの現在の位置を返します。
+		name == null はルートパーツを指定したことになります。
+		指定された名前を持つパーツが存在しない場合は Vector3.zero を返します。
+	
+	void		Play()
+	
+		再生状態にします。
+		
+	void		Pause()
+	
+		一時停止状態にします。
+	
+	bool		IntersectsByBounds(SsSprite other, bool ignoreZ)
+	
+		他のスプライトとの衝突判定を行います。
+		other が持つバウンディングボックスと自身のバウンディングボックス
+		の領域が重なっている場合 true を返します。
+
+		バウンディングボックスは現在のアニメフレームで表示している
+		全パーツを囲む四角形になります。
+		
+		このバウンディングボックスの辺は常にXY軸に対して平行になるため、
+		Ｚ軸回転を行った場合サイズが大きくなります。
+
+		ignoreZ に true を指定すると互いのスプライトオブジェクトのＺ値が
+		一致していなくても接触していると見なします。
+		※Ver 0.72 以前ではバウンディングボックス自体のＺ値が常に０に
+		　統一されていました。
+
+	bool		IntersectsByBoundingParts(SsSprite other, bool ignoreZ, bool useAABB)
+	
+		SpriteStudio上で設定した当たり判定パーツを利用して他のスプライトとの
+		衝突判定を行います。
+		判定対象となる other にも当たり判定パーツを設定しておく必要があります。
+		
+		useAABB が true の場合、XY軸に常に平行なバウンディングボックス同士で
+		判定を行います。false の場合に比べて判定処理の負荷が低くなります。
+		
+		ignoreZ の意味については IntersectsByBounds と同様です。
+
+	bool		ContainsPoint(Vector3 point, bool ignoreZ)
+	
+		指定した点がこのスプライトのバウンディングボックスの領域に入っていれば
+		true を返します。
+		
+		ignoreZ の意味については IntersectsByBounds と同様です。
+
+	bool		IsPlaying()
+	
+		アニメーションを再生中なら true を返します。
+		ポーズ中や再生が終了している時は false を返します。
+
+	bool		IsAnimationFinished()
+	
+		アニメーションの再生が完了している時に true を返します。
+		AnimationFinished コールバックが呼び出されるのと同じタイミングで true
+		になります。
+
+	bool		IsLastFrame()
+	
+		最終フレームに到達している場合 true を返します。
+
+	void		SetPlayDirection(SsAnimePlayDirection dir, bool keepFrame)
+	
+		アニメーションの再生方向を指定します。
+		PlayDirection プロパティと同じ動作をしますが、keepFrame に true を指定
+		すると現在の再生フレーム値を維持します。
+	
+	void		ReplaceAnime(SsAnimation anime)
+	
+		メッシュの再構築をせずにアニメーションを切り替えます。
+		Animation プロパティを経由して変更する場合に比べておおよそ３～４倍ほど
+		高速になります。
+		ただし変更前と変更後のアニメーションが持つパーツが同じ構造をしている
+		必要があります。
+		スクリプトではパーツの数の同一性のみチェックしており、もし違った場合は
+		ログにエラーが出力されます。
+		アニメーションに何も設定されていない時にこのメソッドを呼び出すと、
+		Animation プロパティに代入した時と同じ動作になります。
+	
+【注意】以下は Ver 0.73 以降で廃止されました。
+
+	bool	ShowTransformGameObjects
+
+		座標変換の計算用に内部的に生成されたTransform(=GameObject)をヒエラルキ
+		上に表示します。
+		このフラグはアニメーションの初期化時に参照され有効化されるため、値を変
+		更したタイミングでは何も起こりません。
+
+-----------------------------------------------------------------------------
+■型
+
+●アニメーションの再生方向
+
+	enum SsAnimePlayDirection
+	{
+		Forward,			順方向
+		Reverse,			逆方向
+		RoundTrip,			順方向で往復
+		ReverseRoundTrip,	逆方向で往復
+	}
+
+-----------------------------------------------------------------------------
+■当たり判定について
+
+SsSprite の下記当たり判定メソッドの処理速度は速い順に並べると以下のようになり
+ます。
+
+IntersectsByBounds
+IntersectsByBoundingParts useAABB: true
+IntersectsByBoundingParts
+
+速度比は上から順におおよそ 1 : 3 : 5 になります。(ignoreZ true 時)
+
+使い分けとしては単純に大雑把なスプライト同士の判定で問題がない場合は、
+IntersectsByBounds
+
+当たり判定パーツを使うものの回転や頂点変形などしない場合は
+IntersectsByBoundingParts useAABB: true
+
+そうでない場合は、
+IntersectsByBoundingParts
+
+となります。
+
+-----------------------------------------------------------------------------
+■シェーダについて
+
+本アセットでは５０種類のシェーダを利用するようになっています。
+
+SpriteStudio本体で設定が可能な下記のブレンド方法の組み合わせに対応するために
+多くのバリエーションのシェーダを用意しています。
+
+不透明ブレンド方法 ４種＋ブレンドなし→５種
+カラーブレンド方法 ４種＋ブレンドなし→５種
+	
+さらに
+マテリアルカラーをブレンドするシェーダ、しないシェーダの２通りのバリエーション
+も用意しているため、５ｘ５ｘ２で合計５０種類に及びます。
+
+これらのシェーダファイル(.shader)は全て SpriteStudio/Shaders に格納されており、
+SsShaderTemplate.txt をインポートした際に SsAssetPostProcessor.cs スクリプトの
+中で自動生成されるようになっています。
+
+※１サブメッシュ単位でマテリアルを切り替えること無くシェーダのみを切り替える手
+  段が現状のUnityでは提供されていないため全て別個のシェーダを用意することで対
+  処しています。
+
+●ブレンド方法について
+
+	下記の５種が存在します。
+
+	Non		なし
+	Mix		ミックス
+	Mul		乗算
+	Add		加算
+	Sub		減算
+
+	※現在マテリアルカラーのブレンド方法は乗算のみです。
+	
+	※αブレンドのNonが実際に使われることはありません。
+	  これは下記の理由によります。
+	  ・スマートフォン上ではαテストはαブレンドより負荷が重い。
+	  ・１つのアニメーション内に完全不透明のパーツと透明箇所があるパーツが同居
+	    しているケースがほとんど無いと思われる。
+	    同居している場合にNonとMixのシェーダを混在させるとドローコールが増えて
+	    しまう。
+	  ・そもそもパーツが参照する範囲のピクセル内に透明箇所があるか否か？を
+	    Unity側で判定するのが困難。
+
+●シェーダの名前について
+
+シェーダの名前は下記の規則で付いています。
+
+(カラーブレンド方法)Color(αブレンド方法)Alpha[(マテリアルカラーブレンド方法)MatCol]
+
+例えば下記のようになります。
+
+・NonColorNonAlpha
+  
+  カラーブレンドなし、αブレンドなし、マテリアルカラーブレンドなし
+
+・AddColorMixAlphaMulMatCol
+  
+  加算カラーブレンド、通常のαブレンド、マテリアルカラーの乗算
+
+●シェーダの生成過程
+
+SsAssetPostProcessor.cs の上部にある #define _GENERATE_SHADERS が有効になって
+いる状態で、SsShaderTemplate.txt という名前のファイルをインポートした際に
+自動生成が行われます。
+
+SsShaderTemplate.txt の中には %% で括られた文字列が複数あり、これらの文字列が、
+置き換え用のキーワードとして認識され、スクリプト内で定義された文字列に置換され
+ます。
+こうして出来上がったテキストデータを .shader ファイルとして保存しています。
+
+置換対象となる各キーワードの意味は下記のとおりです。
+
+%SHADER_NAME%		シェーダ名
+%COLOR_PROPERTY%	マテリアルカラー入力用プロパティ
+%PROPERTY%			その他のプロパティ。乗算カラーブレンドで使用。
+%MATERIAL%			マテリアルカラーのブレンド用
+%BLEND_ARGUMENTS%	αブレンドの左辺値と右辺値
+%BLEND_OP%			αブレンドの演算方法
+%BETTER_SHADER%		SsCgShaderTemplate.txt の内容に置き換えられます
+%SET_TEXTURE_*%		SetTexture 文がブレンドの組み合わせに応じて設定されます。
+%ADDITIVE%			カラーブレンドなし、乗算αブレンドの時にSetTexture が追加
+					されます。
+
+BuildShaders() メソッドで全組み合わせのシェーダを生成します。
+テンプレート内のキーワードの置き換えは BuildShader() メソッドで行なっています。
+
+置き換え先の文字列は下記クラスの配列として定義されています。
+
+static private _AlphaBlend[]			_alphaBlends;
+static private _ColorBlend[]			_colorBlends;
+static private _MaterialColorBlends[]	_materialColorBlends
+
+●固定シェーダとプログラマブルシェーダについて
+
+SsCgShaderTemplate.txt に書かれているCGPROGRAMのシェーダが上位の SubShader と
+して使用されます。
+
+●未使用のシェーダ
+
+下記のシェーダはカラーブレンドの各種演算を１つのシェーダ内で行うためのものです
+が、ドローコールが減る効果以上に描画負荷が著しく高くなるため現在は使っていませ
+ん。
+
+SsUnified
+SsUnifiedShaderTemplate
+
+
+=============================================================================
+株式会社ウェブテクノロジ
+http://www.webtech.co.jp/
+Copyright(C) 2003-2013 Web Technology Corp.
+=============================================================================
+
+* SpriteStudio, Web Technologyは、株式会社ウェブテクノロジの登録商標です。
+* その他の商品名は各社の登録商標または商標です。
+
+[End of TEXT]

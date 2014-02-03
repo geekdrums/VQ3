@@ -2,9 +2,22 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum EnemyState
+{
+    Default,
+    State1,
+    State2,
+    State3,
+    //etc...
+}
+
 public class Enemy : Character {
 
-    public Skill[] Skills;
+    public EnemyCommand[] Commands;
+
+    public EnemyCommand currentCommand { get; protected set; }
+    protected int commandExecBar;
+    protected EnemyState currentState = EnemyState.Default;
 
     SpriteRenderer HPCircle;
     Vector3 baseHPCircleScale;
@@ -25,6 +38,10 @@ public class Enemy : Character {
             HPCircle.transform.localScale = baseHPCircleScale * targetHPCircleSize;
             targetHPCircleColor = GameContext.EnemyConductor.baseColor;
             HPCircle.color = targetHPCircleColor;
+        }
+        foreach( EnemyCommand c in Commands )
+        {
+            c.Parse();
         }
     }
 
@@ -57,9 +74,40 @@ public class Enemy : Character {
         HPCircle.color = Color.Lerp( targetHPCircleColor, HPCircle.color, 0.1f );
     }
 
+    public EnemyCommand CheckCommand()
+    {
+        if( currentCommand != null && currentCommand.nextCommand != null )
+        {
+            currentCommand = currentCommand.nextCommand;
+        }
+        else
+        {
+            List<int> probabilityies = new List<int>();
+            int probabilitySum = 0;
+            foreach( EnemyCommand c in Commands )
+            {
+                probabilitySum += c.GetProbability( (int)currentState );
+                probabilityies.Add( probabilitySum );
+            }
+            int rand = Random.Range( 0, probabilitySum );
+            for( int i = 0; i < probabilityies.Count; i++ )
+            {
+                if( rand < probabilityies[i] )
+                {
+                    currentCommand = Commands[i];
+                    break;
+                }
+            }
+        }
+        return currentCommand;
+    }
+    public void SetExecBar( int bar )
+    {
+        commandExecBar = bar;
+    }
     public Skill GetCurrentSkill()
     {
-        return Skills[0];
+        return currentCommand.GetCurrentSkill( commandExecBar );
     }
 
     protected override void BeDamaged( int damage )

@@ -1,0 +1,539 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8302fb81b75e4448e136fa61e58a28, type: 3}
+  m_Name: longstick_ssa
+  m_EditorClassIdentifier: 
+  OriginalPath: Assets/SpriteStudio/Samples/Data/BeeChameleon/longstick.ssax
+  UseScaleFactor: 0
+  ScaleFactor: 1
+  FPS: 30
+  EndFrame: 0
+  hvFlipForImageOnly: 1
+  ImageList:
+  - path: Assets/SpriteStudio/Samples/Data/BeeChameleon/BeeChameleon.png
+    texture: {fileID: 2800000, guid: a99df1e487f2b654f842d01552384728, type: 3}
+    materials:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 2100000, guid: bec3232226b40dc4c9214f8cdb3cc52a, type: 2}
+    - {fileID: 2100000, guid: 5f6eaffbf4568594bbd62a4a99341acc, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    width: 1024
+    height: 1024
+    bpp: 24
+  PartList:
+  - AnimeRes: {fileID: 11400000}
+    Name: longstick
+    Type: 1
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 0
+      Bottom: 0
+    OriginX: 0
+    OriginY: 0
+    MyId: 0
+    ParentId: -1
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 0
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys: []
+    ScaleXKeys: []
+    ScaleYKeys: []
+    TransKeys: []
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys: []
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    AngleValues: []
+    ScaleXValues: []
+    ScaleYValues: []
+    TransValues: []
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues: []
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 3
+    HasTrancparency: 0
+    FrameNum: 1
+    imageFile:
+      path: 
+      texture: {fileID: 0}
+      materials: []
+      width: 0
+      height: 0
+      bpp: 0
+    UVs: []
+    OrgVertices:
+    - {x: -0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: -0, z: 0}
+    - {x: -0, y: -0, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: part 1
+    Type: 0
+    PicArea:
+      Left: 448
+      Top: 320
+      Right: 739
+      Bottom: 352
+    OriginX: 41
+    OriginY: 16
+    MyId: 1
+    ParentId: 0
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys:
+    - Value: -252
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PosYKeys:
+    - Value: 12
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    AngleKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleXKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleYKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    TransKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PrioKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipHKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    FlipVKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    HideKeys:
+    - Value: 0
+      _Time: 0
+      _ValueType: 1
+      _Curve:
+        Type: 0
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsColKeys:
+    - Value:
+        Target: 1
+        Operation: 1
+        Colors:
+        - R: 249
+          G: 87
+          B: 87
+          A: 128
+        - R: 249
+          G: 87
+          B: 87
+          A: 128
+        - R: 249
+          G: 87
+          B: 87
+          A: 128
+        - R: 249
+          G: 87
+          B: 87
+          A: 128
+      _Time: 0
+      _ValueType: 4
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PosYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    AngleValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleXValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    ScaleYValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    TransValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PrioValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipHValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    FlipVValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    HideValues:
+    - _RefKeyIndex: 0
+      _Value: 0
+    PartsColValues:
+    - _RefKeyIndex: 0
+      _Value:
+        Target: 0
+        Operation: 0
+        Colors: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 2047
+    HasTrancparency: 0
+    FrameNum: 1
+    imageFile:
+      path: Assets/SpriteStudio/Samples/Data/BeeChameleon/BeeChameleon.png
+      texture: {fileID: 2800000, guid: a99df1e487f2b654f842d01552384728, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: bec3232226b40dc4c9214f8cdb3cc52a, type: 2}
+      - {fileID: 2100000, guid: 5f6eaffbf4568594bbd62a4a99341acc, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 1024
+      height: 1024
+      bpp: 24
+    UVs:
+    - {x: .4375, y: .6875}
+    - {x: .721679688, y: .6875}
+    - {x: .721679688, y: .65625}
+    - {x: .4375, y: .65625}
+    OrgVertices:
+    - {x: -41, y: 16, z: 0}
+    - {x: 250, y: 16, z: 0}
+    - {x: 250, y: -16, z: 0}
+    - {x: -41, y: -16, z: 0}
+  ImportedTime: -722770354
+  ImportedTimeHigh: -1999573720
+--- !u!1002 &11400001
+EditorExtensionImpl:
+  serializedVersion: 6

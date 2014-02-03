@@ -215,7 +215,13 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			Player.BeAttacked( attack, skill );
 			isSucceeded = true;
-		}
+        }
+        MagicModule magic = Action.GetModule<MagicModule>();
+        if( magic != null && !skill.isPlayerSkill )
+        {
+            Player.BeMagicAttacked( magic, skill );
+            isSucceeded = true;
+        }
 		DefendModule defend = Action.GetModule<DefendModule>();
         if( defend != null && skill.isPlayerSkill )
 		{

@@ -1,0 +1,34 @@
+Shader "Ss/%SHADER_NAME%"
+{
+	Properties
+	{
+		%COLOR_PROPERTY%
+		_MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
+		%PROPERTY%
+	}
+
+	Category
+	{
+		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
+		ZWrite Off
+		Lighting Off
+		Cull Off
+		ColorMaterial AmbientAndDiffuse
+		%MATERIAL%
+		Blend %BLEND_ARGUMENTS%
+		%BLEND_OP%
+		
+%BETTER_SHADER%
+
+		// simple fixed function.
+		SubShader {
+			Pass {
+				%SET_TEXTURE_0%
+				%SET_TEXTURE_1%
+				%SET_TEXTURE_2%
+				%ADDITIVE%
+			}
+		} 
+	}
+	//Fallback "Ss/NonColorMixAlpha"
+}

@@ -7,8 +7,8 @@
 * Library  : CRI Atom
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
-* Tool Ver.          : CRI Atom Craft LE Ver.1.30.00
-* Date Time          : 2014/01/13 17:19
+* Tool Ver.          : CRI Atom Craft LE Ver.1.32.00
+* Date Time          : 2014/02/04 3:25
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -40,7 +40,7 @@ public partial class CriAtomAcfInfo
         acfInfo.aisacControlNameList.Add("AisacControl15");
         acfInfo.acbInfoList.Clear();
         AcbInfo newAcbInfo = null;
-        newAcbInfo = new AcbInfo("BattleMusic", 0, "", "BattleMusic.acb", "BattleMusic_streamfiles.awb","092c99ee-743c-46a9-be50-4dc8c020b14e");
+        newAcbInfo = new AcbInfo("BattleMusic", 0, "", "BattleMusic.acb", "BattleMusic.awb","092c99ee-743c-46a9-be50-4dc8c020b14e");
         acfInfo.acbInfoList.Add(newAcbInfo);
         newAcbInfo.cueInfoList.Add(1, new CueInfo("BattleMusic", 1, ""));
     }

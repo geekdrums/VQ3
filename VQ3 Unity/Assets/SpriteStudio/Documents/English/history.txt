@@ -1,0 +1,131 @@
+﻿=============================================================================
+ SpriteStudioPlayer for Unity
+
+  Releasae notes
+
+ Copyright(C) 2003-2013 Web Technology Corp.
+=============================================================================
+
+[Ver.1.27f1] (2013/11/21)
+
+  - Added a method to show/hide a part forcefully. This method overrides Hide attribute status.
+    ForceShow(bool v), ResetForceShow()
+    Also added a method to specify alpha forcefully.
+    ForceAlpha(float v), ResetForceAlpha()
+    * Disable _INHERITS_FORCE_VISIBLE in SsPart.cs if you do not want to inherit forced visibility.
+
+  - Added a method to specify Start/End frame at a time. (SetStartEndFrame)
+  - Added a sample to play the range marked by user data string stored as label.
+
+[Ver.1.27b2] (2013/10/30)
+
+  - Changed some behaviours relative to sub animation.
+   - UVs array in a PartRes is made for Normal part only.
+   - A part which has no keys in sub anime is never processed to update.
+
+[Ver.1.27b1] (2013/10/11)
+
+  - [experimental] Added a new feature to apply sub multiple animations to main
+    animation.
+
+  - Changed a behaviour that the time stamp of SpriteStudioDatabase.prefab file
+    is updated only when the animation list in it is changed.
+
+[Ver.1.26] (2013/08/28)
+
+  - Fixed an issue that sprite object selected in Hierarchy is updated more
+    than needs and the frame of it increases even if Unity is paused.
+
+  - Supported for Unity 4.1 or later version.
+
+[Ver.1.25] (2013/05/10)
+
+  - Fixed an issue that user data/sound key event invocation is missed when
+    a single key exists after first frame or all of key values are the same. 
+
+[Ver.1.24] (2013/05/08)
+
+  - Fixed the number value in user data gets always zero at import.
+    Please note that the number value is stored as signed 32bit integer.
+
+[Ver.1.22] (2013/04/17)
+
+  - Fixed an angle value applied curve is too less because of the understanding
+    the curve parameter as degree unit.
+    This fix is applied when you import ssax.
+    Also the behaviour of understanding angle unit is changeable on 
+    SpriteStudio -> Settings dialog.
+
+  - Fixed behaviour of vertex deformation is wrong when you apply curve
+    interpolation to it.
+    This fix is applied when you import ssax.
+
+  - Fixed an issue that some value applied bezier interpolation is possibly not
+    the equivalent to its start key value.
+    This fix is applied when you import ssax.
+
+[Ver.1.21] (2013/03/25)
+
+  - Fixed issues occured while playing loop or roundtrip animation.
+
+[Ver.1.20] (2013/03/22)
+
+  - Fixed an event callback is not invoked when keyframes having user data or
+    sound attribute are skipped.
+
+[Ver.1.19] (2013/03/08)
+
+  - Fixed a part has the SrcObjId out of the ImageList length occurs abortion
+    of import. 
+    The SrcObjId is changed to zero in the case.
+  
+  - Fixed a new prefab is created with Active flag unchecked at import on
+    Unity4.
+
+[Ver.1.18] (2013/02/20)
+
+  - Fixed an attribute does not have 'CurveType' tag occurs abortion of import.
+
+[Ver.1.17] (2013/02/05)
+
+  - Fixed an animation which is looping does not draw last frame.
+  
+  - Fixed an error occurs when .ssax and referenced images are stored in
+    different folders.
+  
+  - Support importing images referenced with path includes "..\".
+
+[Ver.1.16] (2012/12/19)
+
+  [Fixes]
+
+  - Fixed a part which has no tranparent keys or has 1.0 values only
+    does not inherit alpha value even if it must inherit by its setting.
+  
+[Ver.1.15] (2012/12/12)
+
+  - Support for Unity 4
+
+[Ver.1.14] (2012/08/08)
+  
+  - Delete materials created in "SsPart.IndividualizeMaterial()", when call
+    "RevertChangedMaterial" and "Destructing SsSprite". 
+
+  - Append Function "GetParts" for "Getting parts-array" in SsSprite
+
+[Ver.1.13] (2012/06/27)
+
+  Initial release on Unity Asset Store.
+
+=============================================================================
+Web Technology Corp.
+http://www.webtech.co.jp/eng/
+Copyright(C) 2003-2013 Web Technology Corp.
+=============================================================================
+
+* 'SpriteStudio' and 'Web Technology' are registered trademarks of
+  Web Technology Corp.
+* All other trademarks and registered trademarks are the sole property of
+  their respective owners.
+
+[End of TEXT]

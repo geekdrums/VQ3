@@ -1,0 +1,181 @@
+Shader "Ss/%SHADER_NAME%"
+{
+	Properties
+	{
+		_Color ("Main Color", Color) = (0.5,0.5,0.5,1)
+		_MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
+//		_OneColor ("Constant Color(1,1,1,1)", Color) = (1,1,1,1)
+	}
+
+	Category
+	{
+		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
+		ZWrite Off
+		Lighting Off
+		Cull Off
+		ColorMaterial AmbientAndDiffuse
+		Material {
+			Diffuse [_Color]
+			Ambient [_Color]
+		}
+		Blend %BLEND_ARGUMENTS%
+		// Unified color blending
+		SubShader {
+			Pass {
+				Name	"ColorBlend"
+				CGPROGRAM
+				#pragma vertex vert
+				#pragma fragment frag
+				#include "UnityCG.cginc"
+			
+				sampler2D _MainTex;
+				float4 _Color;
+				
+				// color.a is not an alpha, it means the effect extent of color blending.
+				// pass to v2f.extras[2]
+				// 
+				// use TEXCOORD1 values as extra infomations for:
+				// [0]: 0~3bit color blend type	-> v2f.extras[0]
+				// 		4~7bit alpha blend type	-> v2f.extras[1]
+				// [1]: alpha value				-> v2f.color.a
+				struct appdata_ss {
+					float4 vertex		: POSITION;
+					float2 texcoord		: TEXCOORD0;
+					fixed4 color		: COLOR0;
+					fixed2 texcoord1	: TEXCOORD1;	// extra infos
+				};
+				struct v2f {
+					float4	pos		: SV_POSITION;
+					float2	uv		: TEXCOORD;
+					fixed4	color	: COLOR0;
+					half3	extras;		// values from texcoord1 field.
+				};
+				
+				static const fixed4 ONE_COLOR = {1,1,1,1};
+				
+				v2f vert(appdata_ss v)
+				{
+					v2f o;
+					o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+					o.uv = v.texcoord;
+
+					// get color blend type
+					int colorBlend = fmod(v.texcoord1[0], 0x10);
+					if (colorBlend == 0)
+					{
+						// none
+						o.color = ONE_COLOR;
+					}
+					else
+					{
+						// all of others
+						o.color.rgb = v.color.rgb;
+					}
+					
+					// get alpha blend type
+					int alphaBlend = (int)v.texcoord1[0] / 0x10;
+					
+					// pass alpha
+					o.color.a = v.texcoord1[1];
+					
+					// pass extra info
+					o.extras[0] = colorBlend;
+					o.extras[1] = alphaBlend;
+					o.extras[2] = v.color.a;	// color blend rate
+
+					/*
+					// Currently Blend* statements need CgFx support.
+					// set alpha blend type
+					//AlphaBlending = true;
+					if (alphaBlend == 0)
+					{
+						// none
+						BlendOp = 
+					}
+					if (alphaBlend == 1)
+					{
+						// mix
+						BlendOp = int(FuncAdd);
+						//BlendFunc = int2(Zero, One);
+					}
+					else if (alphaBlend == 2)
+					{
+						// mul
+						BlendOp = int(FuncMul);
+					}
+					else if (alphaBlend == 3)
+					{
+						// add
+						BlendOp = int(Add);
+					}
+					else if (alphaBlend == 4)
+					{
+						// sub
+						BlendOp = int(Subtract);
+					}
+					*/
+					return o;
+				}
+				
+				half4 frag(v2f i) : COLOR
+				{
+					fixed4 col = i.color;
+					fixed4 tex = tex2D(_MainTex, i.uv);
+
+					half	colorBlend = i.extras[0];
+					half	alphaBlend = i.extras[1];
+					fixed	rate = i.extras[2];
+
+					/*
+						'if' statement in this function occurs too much cost!!
+						VERY VERY SLOW!!
+						e.g. it reduces FPS from around 53 to 17 on iPhone/Android.
+					*/
+					// color blend
+					if (colorBlend == 1)
+					{
+						// mix
+						col.rgb = col.rgb * rate + tex.rgb * (1 - rate);
+					}
+					else if (colorBlend == 2)
+					{
+						// mul
+						col.rgb = lerp(ONE_COLOR, col.rgb, rate) * tex.rgb;
+					}
+					else if (colorBlend == 3)
+					{
+						// add
+						col.rgb = (col.rgb * rate) + tex.rgb;
+					}
+					else if (colorBlend == 4)
+					{
+						// sub
+						col.rgb = tex.rgb - (col.rgb * rate);
+					}
+					else
+					{
+						// none
+						col.rgb = tex.rgb;
+					}
+
+					if (alphaBlend == 2)
+					{
+						// mul
+						col.rgb *= col.a;
+					}
+					
+					// mix alpha
+					col.a *= tex.a;
+					
+					// blend material color
+// 					col.rgb *= _Color.rgb * 2;
+// 					col.a *= _Color.a;
+
+					return col;
+				}
+				ENDCG
+			}
+		}
+	}
+	//Fallback "Ss/NonColorMixAlpha"
+}

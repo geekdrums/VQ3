@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Character : MonoBehaviour {
 
-	public int HitPoint;
+    public int HitPoint;
+    public int BaseDefend;
+    public int BaseMagicDefend;
     protected int SkillDefend;
     protected int SkillMagicDefend;
-    protected int BaseDefend;
-    protected int BaseMagicDefend;
     protected int DefendPower { get { return BaseDefend + SkillDefend; } }
     protected int MagicDefendPower { get { return BaseMagicDefend + SkillMagicDefend; } }
 

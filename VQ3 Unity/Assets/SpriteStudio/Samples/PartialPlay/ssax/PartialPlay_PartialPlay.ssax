@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<SpriteStudioMotion xmlns="http://www.webtech.co.jp/SpriteStudio/XML/Motion" version="4.00.02">
+	<!-- This data was created by OPTPiX SpriteStudio 5.1.1 -->
+	<Header>
+		<EndFrame>29</EndFrame>
+		<BaseTickTime>30</BaseTickTime>
+		<OptionState>
+			<ScreenSize>
+				<CanvasWidth>320</CanvasWidth>
+				<CanvasHeight>320</CanvasHeight>
+				<MarginWidth>168</MarginWidth>
+				<MarginHeight>168</MarginHeight>
+			</ScreenSize>
+			<BgColor>0xFF323232</BgColor>
+			<hvFlipForImageOnly>1</hvFlipForImageOnly>
+		</OptionState>
+	</Header>
+	<ImageList>
+		<Image Id="1" Path="white.png" Width="64" Height="64" Bpp="32" />
+	</ImageList>
+	<Parts>
+		<Part Root="1">
+			<Type>1</Type>
+			<Name>PartialPlay</Name>
+			<Attributes>
+				<Attribute Tag="POSX" Inherit="100">
+					<Key Time="10" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="POSY" Inherit="100">
+					<Key Time="10" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="ANGL" Inherit="100">
+					<Key Time="10" CurveType="1">
+						<Value>0.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="HIDE">
+					<Key Time="0">
+						<Value>0</Value>
+					</Key>
+					<Key Time="10">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="UDAT" Inherit="100">
+					<Key Time="0">
+						<String>first</String>
+					</Key>
+					<Key Time="10">
+						<String>second</String>
+					</Key>
+					<Key Time="20">
+						<String>third</String>
+					</Key>
+				</Attribute>
+			</Attributes>
+		</Part>
+		<Part>
+			<Type>0</Type>
+			<Name>white</Name>
+			<ID>0</ID>
+			<ParentID>-1</ParentID>
+			<PicID>0</PicID>
+			<TransBlendType>0</TransBlendType>
+			<PictArea>
+				<Top>0</Top>
+				<Left>0</Left>
+				<Bottom>64</Bottom>
+				<Right>64</Right>
+			</PictArea>
+			<OriginX>32</OriginX>
+			<OriginY>32</OriginY>
+			<InheritType>0</InheritType>
+			<Attributes>
+				<Attribute Tag="POSX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="POSY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="ANGL" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="10" CurveType="1">
+						<Value>1.500</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>2.000</Value>
+					</Key>
+					<Key Time="29" CurveType="1">
+						<Value>3.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="10" CurveType="1">
+						<Value>1.500</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>2.000</Value>
+					</Key>
+					<Key Time="29" CurveType="1">
+						<Value>3.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="HIDE">
+					<Key Time="0">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="PCOL" Inherit="100">
+					<Key Time="0">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>255</Green>
+							<Blue>255</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+					<Key Time="10">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>0</Green>
+							<Blue>0</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+					<Key Time="20">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>0</Red>
+							<Green>255</Green>
+							<Blue>0</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+				</Attribute>
+			</Attributes>
+		</Part>
+	</Parts>
+</SpriteStudioMotion>

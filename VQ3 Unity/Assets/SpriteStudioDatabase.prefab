@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: SpriteStudioDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e682b35a4aacb9747b7500848a913690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScaleFactor: 1
+  AngleCurveParamAsRadian: 1
+  animeList:
+  - {fileID: 11400000, guid: 0ff52dde6ed9eed459e7021230458318, type: 2}
+  - {fileID: 11400000, guid: 18bfb5006ba08e7409e5cc2f73312e1a, type: 2}
+  - {fileID: 11400000, guid: 10ffdcb99188f7742896aefb53d6379e, type: 2}
+  - {fileID: 11400000, guid: 2b3fc61fc5e3a834aa5f8a635e021ae9, type: 2}
+  - {fileID: 11400000, guid: 0da3d5833715dac499f4195b9173142a, type: 2}
+  - {fileID: 11400000, guid: 38cb02ddf7be47940a35d6e7e208db68, type: 2}
+  - {fileID: 11400000, guid: 0a01b6d5569ec514bb2ed245ea5b61cd, type: 2}
+  - {fileID: 11400000, guid: 3063d40a673c3fc49a2d3893cfdfe260, type: 2}
+  - {fileID: 11400000, guid: 0eb23e04e5215c048a8f6651809cebb1, type: 2}
+  - {fileID: 11400000, guid: 1458a668f2f2da24893a614dcf65bc4c, type: 2}
+  - {fileID: 11400000, guid: 24859ced324792f44b732b37df196a64, type: 2}
+  - {fileID: 11400000, guid: 882504cf271f0b742850692cb4956ab7, type: 2}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

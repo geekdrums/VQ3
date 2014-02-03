@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_OSX;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_3;UNITY_4_3;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_OSX;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_3;UNITY_4_3;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -52,6 +52,80 @@
      <Compile Include="Assets\Editor\CriWare\CriAtom\CriAtomWindow.cs" />
      <Compile Include="Assets\Editor\CriWare\CriWareEditor.cs" />
      <Compile Include="Assets\Editor\CriWare\CriWareInitializerEditor.cs" />
+     <Compile Include="Assets\SpriteStudio\Editor\SsAnimationEditor.cs" />
+     <Compile Include="Assets\SpriteStudio\Editor\SsAssetDatabaseEditor.cs" />
+     <Compile Include="Assets\SpriteStudio\Editor\SsAssetPostProcessor.cs" />
+     <Compile Include="Assets\SpriteStudio\Editor\SsEditor.cs" />
+     <Compile Include="Assets\SpriteStudio\Editor\SsEditorWindow.cs" />
+     <Compile Include="Assets\SpriteStudio\Editor\SsSpriteEditor.cs" />
+     <Compile Include="Assets\SpriteStudio\Editor\SsaxImporter.cs" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorMixAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Documents\Japanese\history.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorSubAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorAddAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorAddAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorSubAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorAddAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorAddAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorMixAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\SsUnified.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorNonAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorNonAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Documents\Japanese\usage.txt" />
+     <None Include="Assets\SpriteStudio\Documents\English\history.txt" />
+     <None Include="Assets\SpriteStudio\Documents\Japanese\readme.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorMixAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Samples\PartialPlay\PartialPlay.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorMixAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorSubAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorAddAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorAddAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorMulAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorNonAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorSubAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Documents\Japanese\script.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorMulAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorMixAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorMulAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorMixAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorMixAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorMulAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorMulAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorMulAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Documents\Japanese\sample.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorMulAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorSubAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorMixAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorMixAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\SsUnifiedShaderTemplate.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorMixAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Documents\English\sample.txt" />
+     <None Include="Assets\SpriteStudio\Documents\English\readme.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorNonAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorSubAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorNonAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorAddAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorSubAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorNonAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorSubAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorAddAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\SsShaderTemplate.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorNonAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorSubAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorSubAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorMulAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\readme.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMixColorNonAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorMulAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsAddColorNonAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorMulAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Documents\English\usage.txt" />
+     <None Include="Assets\SpriteStudio\Samples\TagsAndLayers!!CAUTION!!.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsMulColorAddAlpha.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsSubColorAddAlphaMulMatCol.shader" />
+     <None Include="Assets\SpriteStudio\Shaders\SsCgShaderTemplate.txt" />
+     <None Include="Assets\SpriteStudio\Documents\English\script.txt" />
+     <None Include="Assets\SpriteStudio\Shaders\_SsNonColorNonAlphaMulMatCol.shader" />
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:\Program Files (x86)\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
  </Reference>

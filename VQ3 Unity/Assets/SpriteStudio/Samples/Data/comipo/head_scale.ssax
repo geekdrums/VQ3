@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<SpriteStudioMotion xmlns="http://www.webtech.co.jp/SpriteStudio/XML/Motion" version="4.00.02">
+	<Header>
+		<EndFrame>57</EndFrame>
+		<EditMode>0</EditMode>
+		<BaseTickTime>60</BaseTickTime>
+		<OptionState>
+			<ScreenSize>
+				<CanvasWidth>350</CanvasWidth>
+				<CanvasHeight>400</CanvasHeight>
+				<MarginWidth>64</MarginWidth>
+				<MarginHeight>64</MarginHeight>
+			</ScreenSize>
+			<BgColor>0x006D6D6D</BgColor>
+			<BgPos>0</BgPos>
+			<BgTiling>1</BgTiling>
+			<BgImageFile/>
+			<DcTransType>0</DcTransType>
+			<DcTransColor>0x00000000</DcTransColor>
+			<IcTransType>0</IcTransType>
+			<IcTransIndex>0</IcTransIndex>
+			<DefaultTransBlend>0</DefaultTransBlend>
+			<SkipOutOfLastKey>0</SkipOutOfLastKey>
+			<hvFlipForImageOnly>1</hvFlipForImageOnly>
+		</OptionState>
+	</Header>
+	<ImageList>
+		<Image Id="1" Path=".\comipo.png" Width="512" Height="512" Bpp="24"/>
+	</ImageList>
+	<Parts>
+		<Part Root="1">
+			<Type>1</Type>
+			<Name>head_scale</Name>
+			<Attributes/>
+		</Part>
+		<Part>
+			<Type>0</Type>
+			<Name>顔</Name>
+			<ID>0</ID>
+			<ParentID>-1</ParentID>
+			<PicID>0</PicID>
+			<TransBlendType>0</TransBlendType>
+			<PictArea>
+				<Top>0</Top>
+				<Left>48</Left>
+				<Bottom>112</Bottom>
+				<Right>152</Right>
+			</PictArea>
+			<OriginX>56</OriginX>
+			<OriginY>97</OriginY>
+			<InheritType>0</InheritType>
+			<Attributes>
+				<Attribute Tag="SCAX" Inherit="100">
+					<Key Time="0" CurveType="3" CurveStartT="0.333" CurveStartV="0.480" CurveEndT="-0.666" CurveEndV="0.506">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="57" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAY" Inherit="100">
+					<Key Time="0" CurveType="3" CurveStartT="-0.333" CurveStartV="0.506" CurveEndT="-0.333" CurveEndV="0.440">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="57" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+				</Attribute>
+			</Attributes>
+		</Part>
+	</Parts>
+</SpriteStudioMotion>

@@ -1,0 +1,639 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8302fb81b75e4448e136fa61e58a28, type: 3}
+  m_Name: head_scale_ssa
+  m_EditorClassIdentifier: 
+  OriginalPath: Assets/SpriteStudio/Samples/Data/comipo/head_scale.ssax
+  UseScaleFactor: 0
+  ScaleFactor: 1
+  FPS: 60
+  EndFrame: 57
+  hvFlipForImageOnly: 1
+  ImageList:
+  - path: Assets/SpriteStudio/Samples/Data/comipo/comipo.png
+    texture: {fileID: 2800000, guid: 0b81df6566420f84890ffe7abe1e81f8, type: 3}
+    materials:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 2100000, guid: 0aaa3318dea294a4f9f192c85112aac2, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    width: 512
+    height: 512
+    bpp: 24
+  PartList:
+  - AnimeRes: {fileID: 11400000}
+    Name: head_scale
+    Type: 1
+    PicArea:
+      Left: 0
+      Top: 0
+      Right: 0
+      Bottom: 0
+    OriginX: 0
+    OriginY: 0
+    MyId: 0
+    ParentId: -1
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 0
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys: []
+    PosYKeys: []
+    AngleKeys: []
+    ScaleXKeys: []
+    ScaleYKeys: []
+    TransKeys: []
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys: []
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues: []
+    PosYValues: []
+    AngleValues: []
+    ScaleXValues: []
+    ScaleYValues: []
+    TransValues: []
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues: []
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 0
+    HasTrancparency: 0
+    FrameNum: 58
+    imageFile:
+      path: 
+      texture: {fileID: 0}
+      materials: []
+      width: 0
+      height: 0
+      bpp: 0
+    UVs: []
+    OrgVertices:
+    - {x: -0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: -0, z: 0}
+    - {x: -0, y: -0, z: 0}
+  - AnimeRes: {fileID: 11400000}
+    Name: "\u9854"
+    Type: 0
+    PicArea:
+      Left: 48
+      Top: 0
+      Right: 152
+      Bottom: 112
+    OriginX: 56
+    OriginY: 97
+    MyId: 1
+    ParentId: 0
+    ChildNum: 0
+    SrcObjId: 0
+    SrcObjType: 0
+    AlphaBlendType: 1
+    InheritState:
+      Type: 0
+      Values:
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 0
+        Rate: 0
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+      - Use: 1
+        Rate: 1
+    PosXKeys: []
+    PosYKeys: []
+    AngleKeys: []
+    ScaleXKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 3
+        StartT: .333000004
+        StartV: .479999989
+        EndT: -.666000009
+        EndV: .505999982
+    - Value: 1
+      _Time: 57
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    ScaleYKeys:
+    - Value: 1
+      _Time: 0
+      _ValueType: 0
+      _Curve:
+        Type: 3
+        StartT: -.333000004
+        StartV: .505999982
+        EndT: -.333000004
+        EndV: .439999998
+    - Value: 1
+      _Time: 57
+      _ValueType: 0
+      _Curve:
+        Type: 1
+        StartT: 0
+        StartV: 0
+        EndT: 0
+        EndV: 0
+    TransKeys: []
+    PrioKeys: []
+    FlipHKeys: []
+    FlipVKeys: []
+    HideKeys: []
+    PartsColKeys: []
+    PartsPalKeys: []
+    VertexKeys: []
+    UserKeys: []
+    SoundKeys: []
+    ImageOffsetXKeys: []
+    ImageOffsetYKeys: []
+    ImageOffsetWKeys: []
+    ImageOffsetHKeys: []
+    OriginOffsetXKeys: []
+    OriginOffsetYKeys: []
+    PosXValues: []
+    PosYValues: []
+    AngleValues: []
+    ScaleXValues:
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1.10175049
+    - _RefKeyIndex: -1
+      _Value: 1.14332438
+    - _RefKeyIndex: -1
+      _Value: 1.17328835
+    - _RefKeyIndex: -1
+      _Value: 1.19731259
+    - _RefKeyIndex: -1
+      _Value: 1.21615815
+    - _RefKeyIndex: -1
+      _Value: 1.23393214
+    - _RefKeyIndex: -1
+      _Value: 1.24737751
+    - _RefKeyIndex: -1
+      _Value: 1.26321387
+    - _RefKeyIndex: -1
+      _Value: 1.27510464
+    - _RefKeyIndex: -1
+      _Value: 1.28630161
+    - _RefKeyIndex: -1
+      _Value: 1.29424286
+    - _RefKeyIndex: -1
+      _Value: 1.30422139
+    - _RefKeyIndex: -1
+      _Value: 1.313501
+    - _RefKeyIndex: -1
+      _Value: 1.32000124
+    - _RefKeyIndex: -1
+      _Value: 1.32805383
+    - _RefKeyIndex: -1
+      _Value: 1.33363163
+    - _RefKeyIndex: -1
+      _Value: 1.33881295
+    - _RefKeyIndex: -1
+      _Value: 1.34359682
+    - _RefKeyIndex: -1
+      _Value: 1.34935606
+    - _RefKeyIndex: -1
+      _Value: 1.35320997
+    - _RefKeyIndex: -1
+      _Value: 1.35666418
+    - _RefKeyIndex: -1
+      _Value: 1.35971773
+    - _RefKeyIndex: -1
+      _Value: 1.36237001
+    - _RefKeyIndex: -1
+      _Value: 1.36462009
+    - _RefKeyIndex: -1
+      _Value: 1.36646748
+    - _RefKeyIndex: -1
+      _Value: 1.36791122
+    - _RefKeyIndex: -1
+      _Value: 1.36895061
+    - _RefKeyIndex: -1
+      _Value: 1.36958492
+    - _RefKeyIndex: -1
+      _Value: 1.36981344
+    - _RefKeyIndex: -1
+      _Value: 1.36963534
+    - _RefKeyIndex: -1
+      _Value: 1.36904991
+    - _RefKeyIndex: -1
+      _Value: 1.3680563
+    - _RefKeyIndex: -1
+      _Value: 1.36609542
+    - _RefKeyIndex: -1
+      _Value: 1.36414671
+    - _RefKeyIndex: -1
+      _Value: 1.36178732
+    - _RefKeyIndex: -1
+      _Value: 1.35901666
+    - _RefKeyIndex: -1
+      _Value: 1.35583377
+    - _RefKeyIndex: -1
+      _Value: 1.35223818
+    - _RefKeyIndex: -1
+      _Value: 1.34822881
+    - _RefKeyIndex: -1
+      _Value: 1.34223831
+    - _RefKeyIndex: -1
+      _Value: 1.33726096
+    - _RefKeyIndex: -1
+      _Value: 1.33186746
+    - _RefKeyIndex: -1
+      _Value: 1.32402742
+    - _RefKeyIndex: -1
+      _Value: 1.31765997
+    - _RefKeyIndex: -1
+      _Value: 1.30851877
+    - _RefKeyIndex: -1
+      _Value: 1.30117333
+    - _RefKeyIndex: -1
+      _Value: 1.29072523
+    - _RefKeyIndex: -1
+      _Value: 1.27952802
+    - _RefKeyIndex: -1
+      _Value: 1.26757991
+    - _RefKeyIndex: -1
+      _Value: 1.254879
+    - _RefKeyIndex: -1
+      _Value: 1.23794162
+    - _RefKeyIndex: -1
+      _Value: 1.21982181
+    - _RefKeyIndex: -1
+      _Value: 1.2005161
+    - _RefKeyIndex: -1
+      _Value: 1.17577899
+    - _RefKeyIndex: -1
+      _Value: 1.14474607
+    - _RefKeyIndex: -1
+      _Value: 1.10139382
+    - _RefKeyIndex: 1
+      _Value: 0
+    ScaleYValues:
+    - _RefKeyIndex: -1
+      _Value: 1
+    - _RefKeyIndex: -1
+      _Value: 1.11065638
+    - _RefKeyIndex: -1
+      _Value: 1.1524421
+    - _RefKeyIndex: -1
+      _Value: 1.18212378
+    - _RefKeyIndex: -1
+      _Value: 1.20562267
+    - _RefKeyIndex: -1
+      _Value: 1.22384715
+    - _RefKeyIndex: -1
+      _Value: 1.24084651
+    - _RefKeyIndex: -1
+      _Value: 1.25356984
+    - _RefKeyIndex: -1
+      _Value: 1.26838624
+    - _RefKeyIndex: -1
+      _Value: 1.27937472
+    - _RefKeyIndex: -1
+      _Value: 1.28959942
+    - _RefKeyIndex: -1
+      _Value: 1.29676962
+    - _RefKeyIndex: -1
+      _Value: 1.30566895
+    - _RefKeyIndex: -1
+      _Value: 1.31185007
+    - _RefKeyIndex: -1
+      _Value: 1.31943774
+    - _RefKeyIndex: -1
+      _Value: 1.32464039
+    - _RefKeyIndex: -1
+      _Value: 1.33093023
+    - _RefKeyIndex: -1
+      _Value: 1.33516467
+    - _RefKeyIndex: -1
+      _Value: 1.33898759
+    - _RefKeyIndex: -1
+      _Value: 1.34240055
+    - _RefKeyIndex: -1
+      _Value: 1.34540558
+    - _RefKeyIndex: -1
+      _Value: 1.34878123
+    - _RefKeyIndex: -1
+      _Value: 1.35084188
+    - _RefKeyIndex: -1
+      _Value: 1.35250115
+    - _RefKeyIndex: -1
+      _Value: 1.35376072
+    - _RefKeyIndex: -1
+      _Value: 1.35462272
+    - _RefKeyIndex: -1
+      _Value: 1.35508883
+    - _RefKeyIndex: -1
+      _Value: 1.35516107
+    - _RefKeyIndex: -1
+      _Value: 1.35484123
+    - _RefKeyIndex: -1
+      _Value: 1.35413146
+    - _RefKeyIndex: -1
+      _Value: 1.35303354
+    - _RefKeyIndex: -1
+      _Value: 1.35154927
+    - _RefKeyIndex: -1
+      _Value: 1.34968078
+    - _RefKeyIndex: -1
+      _Value: 1.34742987
+    - _RefKeyIndex: -1
+      _Value: 1.34479845
+    - _RefKeyIndex: -1
+      _Value: 1.34178841
+    - _RefKeyIndex: -1
+      _Value: 1.33840179
+    - _RefKeyIndex: -1
+      _Value: 1.33464026
+    - _RefKeyIndex: -1
+      _Value: 1.33050597
+    - _RefKeyIndex: -1
+      _Value: 1.32600081
+    - _RefKeyIndex: -1
+      _Value: 1.3194201
+    - _RefKeyIndex: -1
+      _Value: 1.31405675
+    - _RefKeyIndex: -1
+      _Value: 1.30832887
+    - _RefKeyIndex: -1
+      _Value: 1.30012786
+    - _RefKeyIndex: -1
+      _Value: 1.29355681
+    - _RefKeyIndex: -1
+      _Value: 1.28423846
+    - _RefKeyIndex: -1
+      _Value: 1.27683449
+    - _RefKeyIndex: -1
+      _Value: 1.26641262
+    - _RefKeyIndex: -1
+      _Value: 1.25536644
+    - _RefKeyIndex: -1
+      _Value: 1.2437005
+    - _RefKeyIndex: -1
+      _Value: 1.23141932
+    - _RefKeyIndex: -1
+      _Value: 1.21520948
+    - _RefKeyIndex: -1
+      _Value: 1.19805431
+    - _RefKeyIndex: -1
+      _Value: 1.17996252
+    - _RefKeyIndex: -1
+      _Value: 1.15702844
+    - _RefKeyIndex: -1
+      _Value: 1.13277388
+    - _RefKeyIndex: -1
+      _Value: 1.09394932
+    - _RefKeyIndex: 1
+      _Value: 0
+    TransValues: []
+    PrioValues: []
+    FlipHValues: []
+    FlipVValues: []
+    HideValues: []
+    PartsColValues: []
+    PartsPalValues: []
+    VertexValues: []
+    UserValues: []
+    SoundValues: []
+    ImageOffsetXValues: []
+    ImageOffsetYValues: []
+    ImageOffsetWValues: []
+    ImageOffsetHValues: []
+    OriginOffsetXValues: []
+    OriginOffsetYValues: []
+    _hasAttrFlags: 24
+    HasTrancparency: 0
+    FrameNum: 58
+    imageFile:
+      path: Assets/SpriteStudio/Samples/Data/comipo/comipo.png
+      texture: {fileID: 2800000, guid: 0b81df6566420f84890ffe7abe1e81f8, type: 3}
+      materials:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 2100000, guid: 0aaa3318dea294a4f9f192c85112aac2, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      width: 512
+      height: 512
+      bpp: 24
+    UVs:
+    - {x: .09375, y: 1}
+    - {x: .296875, y: 1}
+    - {x: .296875, y: .78125}
+    - {x: .09375, y: .78125}
+    OrgVertices:
+    - {x: -56, y: 97, z: 0}
+    - {x: 48, y: 97, z: 0}
+    - {x: 48, y: -15, z: 0}
+    - {x: -56, y: -15, z: 0}
+  ImportedTime: -748901849
+  ImportedTimeHigh: -1999573720

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<SpriteStudioMotion xmlns="http://www.webtech.co.jp/SpriteStudio/XML/Motion" version="4.00.02">
+	<Header>
+		<EndFrame>29</EndFrame>
+		<EditMode>0</EditMode>
+		<BaseTickTime>60</BaseTickTime>
+		<OptionState>
+			<ScreenSize>
+				<CanvasWidth>350</CanvasWidth>
+				<CanvasHeight>400</CanvasHeight>
+				<MarginWidth>64</MarginWidth>
+				<MarginHeight>64</MarginHeight>
+			</ScreenSize>
+			<BgColor>0x006D6D6D</BgColor>
+			<BgPos>0</BgPos>
+			<BgTiling>1</BgTiling>
+			<BgImageFile/>
+			<DcTransType>0</DcTransType>
+			<DcTransColor>0x00000000</DcTransColor>
+			<IcTransType>0</IcTransType>
+			<IcTransIndex>0</IcTransIndex>
+			<DefaultTransBlend>0</DefaultTransBlend>
+			<SkipOutOfLastKey>0</SkipOutOfLastKey>
+			<hvFlipForImageOnly>1</hvFlipForImageOnly>
+		</OptionState>
+	</Header>
+	<ImageList>
+		<Image Id="1" Path=".\comipo.png" Width="512" Height="512" Bpp="24"/>
+	</ImageList>
+	<Parts>
+		<Part Root="1">
+			<Type>1</Type>
+			<Name>eye_color_blend</Name>
+			<Attributes/>
+		</Part>
+		<Part>
+			<Type>0</Type>
+			<Name>目</Name>
+			<ID>0</ID>
+			<ParentID>-1</ParentID>
+			<PicID>0</PicID>
+			<TransBlendType>0</TransBlendType>
+			<PictArea>
+				<Top>368</Top>
+				<Left>0</Left>
+				<Bottom>408</Bottom>
+				<Right>32</Right>
+			</PictArea>
+			<OriginX>16</OriginX>
+			<OriginY>20</OriginY>
+			<InheritType>0</InheritType>
+			<Attributes>
+				<Attribute Tag="PCOL" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Type>1</Type>
+						<Blend>1</Blend>
+						<Value>
+							<Red>128</Red>
+							<Green>128</Green>
+							<Blue>128</Blue>
+							<Alpha>0</Alpha>
+						</Value>
+					</Key>
+					<Key Time="15" CurveType="1">
+						<Type>1</Type>
+						<Blend>1</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>0</Green>
+							<Blue>0</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+					<Key Time="29" CurveType="1">
+						<Type>1</Type>
+						<Blend>1</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>0</Green>
+							<Blue>0</Blue>
+							<Alpha>0</Alpha>
+						</Value>
+					</Key>
+				</Attribute>
+			</Attributes>
+		</Part>
+	</Parts>
+</SpriteStudioMotion>

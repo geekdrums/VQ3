@@ -35,12 +35,6 @@ public class Command : MonoNode
         }
     }
 
-    void Start(){
-    }
-
-    void Update(){
-    }
-
     public virtual GameObject GetCurrentSkill()
     {
         if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak && Music.Just.bar >= 3 ) return null;
