@@ -6,11 +6,14 @@ using System.Text;
 
 public class QuarterCommand : Command
 {
-    public bool IsWait() { return Music.Just.bar >= Level; }
+    public int AcqureLevel = 1;
 
     public override string GetBlockName()
     {
-        return MusicBlockName + Level.ToString();
-        //MusicBlockName.Substring(0,Level) + new string( 'W', 4-Level );
+        return MusicBlockName + GameContext.PlayerConductor.NumQuarter.ToString();
+    }
+    public override bool IsUsable()
+    {
+        return GameContext.PlayerConductor.Level >= AcqureLevel && base.IsUsable();
     }
 }

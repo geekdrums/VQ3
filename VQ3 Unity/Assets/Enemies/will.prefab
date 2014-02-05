@@ -124,8 +124,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoint: 40
-  BaseDefend: 0
-  BaseMagicDefend: 0
+  BasePower: 30
+  BaseMagic: 60
+  BaseDefend: 40
+  BaseMagicDefend: 60
   Commands:
   - {fileID: 11400002}
   - {fileID: 11400004}
@@ -145,6 +147,7 @@ MonoBehaviour:
   _timingStr: 0 2 0
   numBar: 1
   probabilityList: 46000000
+  nextCommand: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,6 +164,7 @@ MonoBehaviour:
   _timingStr: 0 2 0
   numBar: 0
   probabilityList: 1e000000
+  nextCommand: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -43,6 +43,12 @@ public class Enemy : Character {
         {
             c.Parse();
         }
+
+        debugText = gameObject.AddComponent<GUIText>();
+        debugText.transform.position = Vector3.one / 2;
+        debugText.fontSize = 24;
+        debugText.color = Color.red;
+        debugText.text = HitPoint.ToString();
     }
 
 	// Update is called once per frame
@@ -113,6 +119,7 @@ public class Enemy : Character {
     protected override void BeDamaged( int damage )
     {
         base.BeDamaged( damage );
+        debugText.text = HitPoint.ToString() + ", " + damage + " damage!";
         if( HPCircle != null )
         {
             targetHPCircleSize = Mathf.Sqrt( HitPoint );

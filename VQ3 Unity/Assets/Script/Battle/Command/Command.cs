@@ -7,16 +7,13 @@ using System.Text;
 public class Command : MonoNode
 {
     public string MusicBlockName;
-    public List<int> ExpThreasholds;
     public List<Skill> _skillList;
     public string _timingStr = "0,1,2,3";
 
-    protected int Level;
-    protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int,Skill>();
-
     public Strategy ParentStrategy { get; protected set; }
-    public int NextExp { get { return (ExpThreasholds.Count > Level ? ExpThreasholds[Level] : -1); } }
-    public bool isExecutable { get { return Level > 0; } }
+    public bool IsLinked { get; protected set; }
+
+    protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
     
     public void Parse(){
         string[] timingStrs = _timingStr.Split( ",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
@@ -33,6 +30,7 @@ public class Command : MonoNode
             int unit = barBeatUnitStr.Length > 2 ? int.Parse( barBeatUnitStr[2] ) : 0;
             SkillDictionary.Add( new Timing( bar, beat, unit ).totalUnit, _skillList[i] );
         }
+        IsLinked = true;
     }
 
     public virtual GameObject GetCurrentSkill()
@@ -43,6 +41,11 @@ public class Command : MonoNode
     public void SetParent( Strategy parent )
     {
         ParentStrategy = parent;
+        //protected int Level;
+        //public List<int> ExpThreasholds;
+        //public int NextExp { get { return (ExpThreasholds.Count > Level ? ExpThreasholds[Level] : -1); } }
+        //public bool isExecutable { get { return Level > 0; } }
+        /*
         Level = ExpThreasholds.Count;
         for( int i = 0; i < ExpThreasholds.Count; i++ )
         {
@@ -52,6 +55,7 @@ public class Command : MonoNode
                 break;
             }
         }
+        */
     }
 
     public int GetWillGainVoxon()
@@ -79,6 +83,10 @@ public class Command : MonoNode
     public virtual string GetBlockName()
     {
         return MusicBlockName;
+    }
+    public virtual bool IsUsable()
+    {
+        return IsLinked;
     }
 
 
@@ -114,7 +122,8 @@ public class Command : MonoNode
 
     public void SetLink( bool linked )
     {
-        if( linked )
+        IsLinked = linked;
+        if( IsUsable() )
         {
             GetComponent<TextMesh>().color = Color.black;
         }

@@ -5,14 +5,15 @@ public class Player : Character {
 	Vector3 initialPosition;
     GUILayer guiLayer;
 
-    public GameObject DefendAnimPrefab;
+    //public GameObject DefendAnimPrefab;
 
 	// Use this for initialization
 	void Start()
     {
         Initialize();
 		guiLayer = GetComponent<GUILayer>();
-		initialPosition = guiLayer.transform.position;
+        initialPosition = guiLayer.transform.position;
+        debugText.text = HitPoint.ToString();
 	}
 	
 	// Update is called once per frame
@@ -36,19 +37,12 @@ public class Player : Character {
 		return "Player";
 	}
 
-    public override void BeAttacked( AttackModule attack, Skill command )
+    protected override void BeDamaged( int damage )
     {
-        int damage = Mathf.Max( 0, attack.AttackPower - DefendPower );
-        BeDamaged( damage );
-        if( damage <= 0 )
-        {
-            SEPlayer.Play( ActionResult.Guarded, true );
-            (Instantiate( DefendAnimPrefab, command.OwnerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
-        }
-        else
-        {
-            SEPlayer.Play( ActionResult.Damaged, this is Player );
-        }
+        base.BeDamaged( damage );
+        debugText.text = HitPoint.ToString() + ", " + damage + " damage!";
+
+        //(Instantiate( DefendAnimPrefab, skill.OwnerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
 
         if( HitPoint <= 0 )
         {

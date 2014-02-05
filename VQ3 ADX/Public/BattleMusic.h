@@ -5,7 +5,7 @@
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/BattleMusic.acb
  *  File Name        : BattleMusic.acb
  *  File Size        : 5,609,696 bytes
- *  Date Time        : 2014/02/04 3:25
+ *  Date Time        : 2014/02/05 20:50
  *  Target           : Public
  *  Cues             : 1
  *  CueSheet Comment : 
@@ -36,7 +36,7 @@
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_POWERATTACK4      (11) /* PowerAttack4  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_DEFEND4           (12) /* Defend4  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_ECLA2             (13) /* Ecla2  */
-#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_LYMPHA2           (14) /* Lympha2  */
+#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_LYMPHAECLA2       (14) /* LymphaEcla2  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_ECLA3             (15) /* Ecla3  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_LYMPHAECLA3       (16) /* LymphaEcla3  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_ECLA4             (17) /* Ecla4  */
@@ -45,8 +45,8 @@
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_LYMPHAECLA4       (20) /* LymphaEcla4  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_LYMPHAECLA4TRANS  (21) /* LymphaEcla4Trans  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_IGNIS4            (22) /* Ignis4  */
-#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_VOX               (23) /* Vox  */
-#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_VOX2              (24) /* Vox2  */
+#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_VOX4              (23) /* Vox4  */
+#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_VOX4_2            (24) /* Vox4_2  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_ENDRO             (25) /* endro  */
 
 /* end of file */

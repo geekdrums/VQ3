@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerConductor : MonoBehaviour {
 
@@ -7,6 +8,15 @@ public class PlayerConductor : MonoBehaviour {
 	Player Player;
 
     public CommandGraph commandGraph;
+    public int Level = 1;
+    public int NumQuarter { get; private set; }
+
+    public List<int> HPLevelList;
+    public List<int> QuarterLevelList;
+    public List<int> AttackLevelList;
+    public List<int> DefendLevelList;
+    public List<int> MagicLevelList;
+    public List<int> MagicDefendLevelList;
 	
     Strategy[] Strategies;
 
@@ -16,6 +26,7 @@ public class PlayerConductor : MonoBehaviour {
     Command CurrentCommand;
 
     string NextBlockName { get { return NextCommand.GetBlockName(); } }
+    bool CanUseBreak { get { return Level >= 8; } }
 
 	int RemainBreakTime;
 	Timing AllowInputTime = new Timing( 3, 3, 2 );
@@ -25,6 +36,7 @@ public class PlayerConductor : MonoBehaviour {
 		GameContext.PlayerConductor = this;
 		Player = MainCamera.GetComponent<Player>();
 		InitializeCommand();
+        OnLevelUp();
 	}
 
 	void InitializeCommand()
@@ -116,6 +128,7 @@ public class PlayerConductor : MonoBehaviour {
 
 	void SetNextBlock()
 	{
+        if( !NextCommand.IsUsable() ) return;//TEMP
 		if ( Music.GetNextBlockName() == "endro" )
 		{
 			return;
@@ -136,17 +149,32 @@ public class PlayerConductor : MonoBehaviour {
 		}
 		else
 		{
-			bool willShowBreak = GameContext.VoxonSystem.DetermineWillShowBreak( NextCommand.GetWillGainVoxon() );
-            if( willShowBreak )
+            bool willShowBreak = false;
+            if( CanUseBreak )
             {
-                RemainBreakTime = 2;
+                willShowBreak = GameContext.VoxonSystem.DetermineWillShowBreak( NextCommand.GetWillGainVoxon() );
+                if( willShowBreak )
+                {
+                    RemainBreakTime = 2;
+                }
             }
             Music.SetNextBlock( NextBlockName + (willShowBreak ? "Trans" : "") );
 		}
 	}
 
+    void OnLevelUp()
+    {
+        NumQuarter = QuarterLevelList[Level-1];
+        Player.HitPoint         = HPLevelList[Level-1];
+        Player.BasePower        = AttackLevelList[Level-1];
+        Player.BaseDefend       = DefendLevelList[Level-1];
+        Player.BaseMagic        = MagicLevelList[Level-1];
+        Player.BaseMagicDefend  = MagicDefendLevelList[Level-1];
+    }
+
 	VoxonSystem.VoxonState GetDesiredVoxonState()
 	{
+        if( !CanUseBreak ) return VoxonSystem.VoxonState.Hide;
 		if ( NextStrategy == EStrategy.Magic )
 		{
 			if ( GameContext.VoxonSystem.state != VoxonSystem.VoxonState.ShowBreak )
@@ -170,29 +198,35 @@ public class PlayerConductor : MonoBehaviour {
 
 	public void CheckCommand()
     {
+        Player.SkillInit();
+        if( !NextCommand.IsUsable() ) return;//TEMP
 		if ( GameContext.VoxonSystem.state != GetDesiredVoxonState() )
 		{
 			GameContext.VoxonSystem.SetState( GetDesiredVoxonState() );
 		}
 
-        Player.SkillInit();
 		CurrentStrategy = NextStrategy;
 		CurrentCommand = NextCommand;
         commandGraph.Select( CurrentCommand );
 	}
     public void CheckSkill()
     {
-        if( CurrentCommand is QuarterCommand && (CurrentCommand as QuarterCommand).IsWait() )
+        if( Music.Just.bar >= NumQuarter )
         {
-            Player.SkillInit();
-            return;
+            if( Music.IsJustChangedBar() )
+            {
+                Player.SkillInit();
+            }
         }
-        GameObject playerSkill = CurrentCommand.GetCurrentSkill();
-        if( playerSkill != null )
+        else
         {
-            Skill objSkill = ( Instantiate( playerSkill ) as GameObject ).GetComponent<Skill>();
-            objSkill.SetOwner( Player );
-            GameContext.BattleConductor.ExecSkill( objSkill );
+            GameObject playerSkill = CurrentCommand.GetCurrentSkill();
+            if( playerSkill != null )
+            {
+                Skill objSkill = (Instantiate( playerSkill ) as GameObject).GetComponent<Skill>();
+                objSkill.SetOwner( Player );
+                GameContext.BattleConductor.ExecSkill( objSkill );
+            }
         }
     }
 
@@ -227,7 +261,13 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			Player.Defend( defend );
 			isSucceeded = true;
-		}
+        }
+        MagicDefendModule magicDefend = Action.GetModule<MagicDefendModule>();
+        if( magicDefend != null && skill.isPlayerSkill )
+        {
+            Player.MagicDefend( magicDefend );
+            isSucceeded = true;
+        }
 		HealModule heal = Action.GetModule<HealModule>();
         if( heal != null && skill.isPlayerSkill )
 		{

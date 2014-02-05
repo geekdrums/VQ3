@@ -14,25 +14,29 @@ public class ActionSet : IEnumerable<IActionModule>
         foreach( string str in moduleStrings )
         {
             string[] parameters = str.Split( Utils.space );
-            if( str.StartsWith( "Anim" ) )
+            if( str.StartsWith( "Anim " ) )
             {
                 res.Modules.Add( new AnimModule( (TargetType)Enum.Parse( typeof( TargetType ), parameters[1] ), (parameters.Length > 2 ? parameters[2] : "") ) );
             }
-			else if ( str.StartsWith( "Attack" ) )
+			else if ( str.StartsWith( "Attack " ) )
             {
                 res.Modules.Add( new AttackModule( int.Parse( parameters[1] ), (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ),
                     (parameters.Length > 3 ? int.Parse( parameters[3] ) : -1) ) );
             }
-            else if( str.StartsWith( "Magic" ) )
+            else if( str.StartsWith( "Magic " ) )
             {
                 res.Modules.Add( new MagicModule( int.Parse( parameters[1] ), int.Parse( parameters[2] ), (TargetType)Enum.Parse( typeof( TargetType ), parameters[3] ),
                     (parameters.Length > 4 ? int.Parse( parameters[4] ) : -1) ) );
             }
-            else if( str.StartsWith( "Defend" ) )
+            else if( str.StartsWith( "Defend " ) )
             {
                 res.Modules.Add( new DefendModule( int.Parse( parameters[1] ) ) );
-			}
-			else if ( str.StartsWith( "Heal" ) )
+            }
+            else if( str.StartsWith( "MagicDefend " ) )
+            {
+                res.Modules.Add( new MagicDefendModule( int.Parse( parameters[1] ) ) );
+            }
+			else if ( str.StartsWith( "Heal " ) )
 			{
 				res.Modules.Add( new HealModule( int.Parse( parameters[1] ) ) );
 			}

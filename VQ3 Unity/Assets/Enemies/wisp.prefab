@@ -68,8 +68,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoint: 100
-  Skills:
-  - {fileID: 11400000, guid: bcc79d6dfe16c45418391e8bb26dd2a7, type: 2}
+  BasePower: 100
+  BaseMagic: 100
+  BaseDefend: 100
+  BaseMagicDefend: 100
+  Commands: []
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -12,8 +12,8 @@ public class VoxonSystem : BGEffect{
 		HideBreak,
 	}
 	public VoxonState state { get; private set; }
-	readonly int BREAK_VOXON = 6;
-	int deltaVoxon = 1;
+	readonly int BREAK_VOXON = 100;
+	int deltaVoxon = 10;
 	int currentVoxon = 0;
 
 

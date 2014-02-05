@@ -67,9 +67,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 380
-  BaseDefend: 0
-  BaseMagicDefend: 0
+  HitPoint: 100
+  BasePower: 100
+  BaseMagic: 100
+  BaseDefend: 100
+  BaseMagicDefend: 100
   Commands: []
 --- !u!212 &21200000
 SpriteRenderer:
