@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public enum EStrategy
 {
+    None,
 	Attack,
 	Magic,
     Pilgrim,
@@ -21,11 +22,14 @@ public class Strategy : MonoNode
     void Awake()
     {
         this.StrategyName = (EStrategy)Enum.Parse( typeof( EStrategy ), name.Remove( name.IndexOf( "Strategy" ) ) );
+        Vector3 sumPosition = Vector3.zero;
         foreach( Command c in Commands )
         {
-            c.Parse();
             c.SetParent( this );
+            sumPosition += c.transform.localPosition;
         }
+        transform.localPosition = sumPosition / Commands.Count;
+        transform.localRotation = Quaternion.LookRotation( -transform.localPosition );
     }
 
     public IEnumerable<Command> LinkedCommands

@@ -25,7 +25,7 @@ public class Music : MonoBehaviour
 		}
 	}
 
-	public static bool UseADX;
+	public static bool UseADX = true;
 
 	//static properties
 	/// <summary>
@@ -95,7 +95,11 @@ public class Music : MonoBehaviour
 	{
 		return UseADX ? ADXMusic.IsNowChangedAt( bar, beat, unit ) : UnityMusic.IsNowChangedAt( bar, beat, unit );
 	}
-	public static bool IsJustChangedWhen( System.Predicate<Timing> pred )
+    public static bool IsNowChangedAt( Timing timing )
+    {
+        return UseADX ? ADXMusic.IsNowChangedAt( timing.bar, timing.beat, timing.unit ) : UnityMusic.IsNowChangedAt( timing.bar, timing.beat, timing.unit );
+    }
+    public static bool IsJustChangedWhen( System.Predicate<Timing> pred )
 	{
 		return UseADX ? ADXMusic.IsJustChangedWhen( pred ) : UnityMusic.IsJustChangedWhen( pred );
 	}
@@ -111,6 +115,10 @@ public class Music : MonoBehaviour
 	{
 		return UseADX ? ADXMusic.IsJustChangedAt( bar, beat, unit ) : UnityMusic.IsJustChangedAt( bar, beat, unit );
 	}
+    public static bool IsJustChangedAt( Timing timing )
+    {
+        return UseADX ? ADXMusic.IsJustChangedAt( timing.bar, timing.beat, timing.unit ) : UnityMusic.IsJustChangedAt( timing.bar, timing.beat, timing.unit );
+    }
 
 	//static functions
 	/// <summary>

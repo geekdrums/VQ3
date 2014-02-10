@@ -4,18 +4,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+[ExecuteInEditMode]
 public class Command : MonoNode
 {
+    static readonly float radius = 7.5f;
+
     public string MusicBlockName;
     public List<Skill> _skillList;
     public string _timingStr = "0,1,2,3";
+    public float latitude;
+    public float longitude;
 
     public Strategy ParentStrategy { get; protected set; }
     public bool IsLinked { get; protected set; }
 
     protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
-    
-    public void Parse(){
+
+    void Start()
+    {
+        Parse();
+    }
+
+    void Update()
+    {
+#if UNITY_EDITOR
+        if( UnityEditor.EditorApplication.isPlaying ) return;
+        transform.localPosition = Quaternion.AngleAxis( latitude, Vector3.right ) * Quaternion.AngleAxis( longitude, Vector3.down ) * Vector3.back * radius;
+        transform.localRotation = Quaternion.LookRotation( -transform.localPosition );
+#endif
+    }
+
+    void Parse(){
         string[] timingStrs = _timingStr.Split( ",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
         if( timingStrs.Length != _skillList.Count )
         {
@@ -41,21 +60,6 @@ public class Command : MonoNode
     public void SetParent( Strategy parent )
     {
         ParentStrategy = parent;
-        //protected int Level;
-        //public List<int> ExpThreasholds;
-        //public int NextExp { get { return (ExpThreasholds.Count > Level ? ExpThreasholds[Level] : -1); } }
-        //public bool isExecutable { get { return Level > 0; } }
-        /*
-        Level = ExpThreasholds.Count;
-        for( int i = 0; i < ExpThreasholds.Count; i++ )
-        {
-            if( parent.Exp < ExpThreasholds[i] )
-            {
-                Level = i;
-                break;
-            }
-        }
-        */
     }
 
     public int GetWillGainVoxon()
@@ -136,8 +140,12 @@ public class Command : MonoNode
     {
         GetComponent<TextMesh>().color = Color.red;
     }
-    public void SetNext()
+    public void Select()
     {
         GetComponent<TextMesh>().color = Color.magenta;
+    }
+    public void Deselect()
+    {
+        GetComponent<TextMesh>().color = Color.black;
     }
 }
