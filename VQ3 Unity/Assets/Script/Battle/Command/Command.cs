@@ -14,15 +14,21 @@ public class Command : MonoNode
     public string _timingStr = "0,1,2,3";
     public float latitude;
     public float longitude;
+    public int AcqureLevel = 1;
 
     public Strategy ParentStrategy { get; protected set; }
     public bool IsLinked { get; protected set; }
+    public bool IsCurrent { get; protected set; }
+    public bool IsSelected { get; protected set; }
 
     protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
 
     void Start()
     {
         Parse();
+        IsLinked = false;
+        IsCurrent = false;
+        IsSelected = false;
     }
 
     void Update()
@@ -88,9 +94,9 @@ public class Command : MonoNode
     {
         return MusicBlockName;
     }
-    public virtual bool IsUsable()
+    public bool IsUsable()
     {
-        return IsLinked;
+        return GameContext.PlayerConductor.Level >= AcqureLevel && IsLinked;
     }
 
 
@@ -126,6 +132,8 @@ public class Command : MonoNode
 
     public void SetLink( bool linked )
     {
+        IsCurrent = false;
+        IsSelected = false;
         IsLinked = linked;
         if( IsUsable() )
         {
@@ -138,14 +146,23 @@ public class Command : MonoNode
     }
     public void SetCurrent()
     {
+        IsCurrent = true;
         GetComponent<TextMesh>().color = Color.red;
     }
     public void Select()
     {
-        GetComponent<TextMesh>().color = Color.magenta;
+        IsSelected = true;
+        if( !IsCurrent )
+        {
+            GetComponent<TextMesh>().color = Color.magenta;
+        }
     }
     public void Deselect()
     {
-        GetComponent<TextMesh>().color = Color.black;
+        IsSelected = false;
+        if( !IsCurrent )
+        {
+            GetComponent<TextMesh>().color = Color.black;
+        }
     }
 }

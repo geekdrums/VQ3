@@ -25,9 +25,11 @@ public class CommandGraph : MonoBehaviour {
     int RemainBreakTime;
 
     Camera MainCamera;
-    Timing AllowInputTime = new Timing( 3, 3, 2 );
+    Timing AllowInputEnd = new Timing( 3, 3, 2 );
+    Timing AllowInputStart = new Timing( 0, 0, 1 );
     Vector3 oldMousePosition;
     Quaternion targetRotation;
+    Quaternion offsetRotation;
 
 	// Use this for initialization
 	void Start () {
@@ -60,7 +62,9 @@ public class CommandGraph : MonoBehaviour {
         {
             InstantiateLine( IntroCommand, link );
         }
-        transform.rotation = targetRotation;
+        offsetRotation = Quaternion.LookRotation( transform.position - SelectSpot.transform.position );
+        transform.rotation = offsetRotation;
+        targetRotation = offsetRotation;
     }
 
     void InstantiateLine( MonoNode from, MonoNode to )
@@ -77,11 +81,10 @@ public class CommandGraph : MonoBehaviour {
     void Update()
     {
         UpdateInput();
-        if( Music.Just < AllowInputTime )
+        if( AllowInputStart <= Music.Just && Music.Just < AllowInputEnd )
         {
             if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak )
             {
-                if( Music.IsJustChangedAt( 3 ) ) NextCommand = BreakStrategy.Commands[0];
             }
             else if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break )
             {
@@ -99,7 +102,7 @@ public class CommandGraph : MonoBehaviour {
                 if( Music.isJustChanged ) SelectNearestNode();
             }
         }
-        if( Music.IsJustChangedAt( AllowInputTime ) )
+        if( Music.IsJustChangedAt( AllowInputEnd ) )
         {
             SetNextBlock();
         }
@@ -116,31 +119,25 @@ public class CommandGraph : MonoBehaviour {
                 && hit.collider == VoxBall.collider )
             {
                 Vector3 deltaV = Input.mousePosition - oldMousePosition;
-                //float eulerY = transform.rotation.eulerAngles.y;
-                //transform.rotation *= Quaternion.Euler( 0, -eulerAngles.y, 0 ) * Quaternion.Euler( deltaV.y * ROTATE_COEFF, 0, 0 ) * Quaternion.Euler( 0, eulerAngles.y, 0 );
-                //transform.rotation *= Quaternion.Euler( -eulerAngles.x, 0, -eulerAngles.z ) * Quaternion.Euler( 0, -deltaV.x * ROTATE_COEFF, 0 ) * Quaternion.Euler( eulerAngles.x, 0, eulerAngles.z );
-                //transform.rotation *= (Quaternion.Inverse( transform.rotation )
-                //    * Quaternion.AngleAxis( deltaV.y * ROTATE_COEFF, Vector3.right )
-                //    * Quaternion.AngleAxis( deltaV.x * ROTATE_COEFF, -transform.up ) * transform.rotation);
+                //Quaternion oldRotation = transform.rotation;
                 transform.rotation *= (Quaternion.Inverse( transform.rotation )
+                    * Quaternion.AngleAxis( deltaV.y * ROTATE_COEFF, Vector3.right )
                     * Quaternion.AngleAxis( deltaV.x * ROTATE_COEFF, -transform.up ) * transform.rotation);
-                Quaternion oldRotation = transform.rotation;
-                transform.rotation *= (Quaternion.Inverse( transform.rotation )
-                    * Quaternion.AngleAxis( deltaV.y * ROTATE_COEFF, Vector3.right ) * transform.rotation);
                 //Vector3 up = transform.up;
                 //transform.rotation = Quaternion.LookRotation( transform.forward, new Vector3( 0, up.y, up.z ) );
-                Quaternion up = Quaternion.LookRotation( Vector3.up );
-                Quaternion down = Quaternion.LookRotation( Vector3.down );
-                Quaternion rotUp = Quaternion.LookRotation( transform.up );
-                Quaternion rotDown = Quaternion.LookRotation( -transform.up );
-                float angleUp = Quaternion.Angle( rotUp, up );
-                float angleDown = Quaternion.Angle( rotDown, down );
-                float angle = Mathf.Min( angleUp, angleDown );
+                /*
+                Quaternion up = Quaternion.LookRotation( Vector3.up, Vector3.up );
+                Quaternion down = Quaternion.LookRotation( Vector3.down, Vector3.up );
+                Quaternion rotUp = Quaternion.LookRotation( transform.up, Vector3.up );
+                Quaternion rotDown = Quaternion.LookRotation( -transform.up, Vector3.up );
+                float angle = Mathf.Min( Quaternion.Angle( rotUp, up ), Quaternion.Angle( rotDown, down ), Quaternion.Angle( rotUp, down ), Quaternion.Angle( rotDown, up ) );
+                print( angle );
                 if( angle > MAX_LATITUDE )
                 {
-                    transform.rotation = oldRotation;
+                    //transform.rotation = oldRotation;
                     //transform.rotation *= Quaternion.FromToRotation( transform.up, Quaternion.RotateTowards( up, rotUp, MAX_LATITUDE ) * Vector3.up );
                 }
+                */
             }
             oldMousePosition = Input.mousePosition;
         }
@@ -156,6 +153,7 @@ public class CommandGraph : MonoBehaviour {
         float minDistance = (SelectSpot.transform.position - CurrentCommand.transform.position).magnitude;
         foreach( Command command in CurrentCommand.LinkedCommands )
         {
+            if( !command.IsUsable() || command.ParentStrategy == BreakStrategy ) continue;
             float d = (SelectSpot.transform.position - command.transform.position).magnitude;
             if( d < minDistance )
             {
@@ -174,6 +172,15 @@ public class CommandGraph : MonoBehaviour {
         if( Music.GetNextBlockName() == "endro" )
         {
             return;
+        }
+
+        if( NextCommand == IntroCommand )
+        {
+            Select( DefaultCommand );
+        }
+        else if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak )
+        {
+            Select( BreakStrategy.Commands[0] );
         }
 
         if( IsBreaking )
@@ -206,17 +213,16 @@ public class CommandGraph : MonoBehaviour {
 
     public void CheckCommand()
     {
-        Command OldCommand = CurrentCommand;
-        if( OldCommand != null && NextCommand != OldCommand )
+        if( NextCommand != CurrentCommand )
         {
-            OldCommand.SetLink( false );
-            foreach( Command c in OldCommand.LinkedCommands )
+            if( CurrentCommand != null )
             {
-                c.SetLink( false );
+                CurrentCommand.SetLink( false );
+                foreach( Command c in CurrentCommand.LinkedCommands )
+                {
+                    c.SetLink( false );
+                }
             }
-        }
-        if( NextCommand != OldCommand )
-        {
             foreach( Command c in NextCommand.LinkedCommands )
             {
                 c.SetLink( true );
@@ -237,7 +243,6 @@ public class CommandGraph : MonoBehaviour {
     {
         Select( IntroCommand );
         CheckCommand();
-        NextCommand = DefaultCommand;
         transform.rotation = targetRotation;
     }
 
@@ -246,7 +251,7 @@ public class CommandGraph : MonoBehaviour {
         if( NextCommand != null ) NextCommand.Deselect();
         NextCommand = command;
         NextCommand.Select();
-        targetRotation = Quaternion.Inverse( command.transform.localRotation );
+        targetRotation = Quaternion.Inverse( command.transform.localRotation ) * offsetRotation;
     }
 
 
