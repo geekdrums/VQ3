@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class EnemyConductor : MonoBehaviour {
-    
+
+    public GameObject damageTextPrefab;
+
     List<Enemy> Enemies = new List<Enemy>();
 
 	Color _baseColor;
@@ -48,8 +50,6 @@ public class EnemyConductor : MonoBehaviour {
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )
 	{
-        if( !skill.isPlayerSkill ) skill.OwnerCharacter.SkillInit();
-
 		bool isSucceeded = false;
         AnimModule anim = Action.GetModule<AnimModule>();
         if( anim != null && skill.isPlayerSkill )
@@ -83,7 +83,25 @@ public class EnemyConductor : MonoBehaviour {
 				isSucceeded = true;
 			}
 			GameContext.VoxonSystem.AddVoxon( magic.VoxonPoint );
-		}
+        }
+        DefendModule defend = Action.GetModule<DefendModule>();
+        if( defend != null && !skill.isPlayerSkill )
+        {
+            skill.OwnerCharacter.Defend( defend );
+            isSucceeded = true;
+        }
+        MagicDefendModule magicDefend = Action.GetModule<MagicDefendModule>();
+        if( magicDefend != null && !skill.isPlayerSkill )
+        {
+            skill.OwnerCharacter.MagicDefend( magicDefend );
+            isSucceeded = true;
+        }
+        HealModule heal = Action.GetModule<HealModule>();
+        if( heal != null && !skill.isPlayerSkill )
+        {
+            skill.OwnerCharacter.Heal( heal );
+            isSucceeded = true;
+        }
 
 		Enemies.RemoveAll( ( Enemy e ) => e.HitPoint<=0 );
 		if ( Enemies.Count == 0 )

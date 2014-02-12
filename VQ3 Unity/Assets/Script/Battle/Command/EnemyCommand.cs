@@ -8,6 +8,7 @@ public class EnemyCommand : MonoBehaviour
     public string _timingStr = "0 2 0";
     public int numBar = 1;
     public List<int> probabilityList;
+    public EnemyState nextState;
     public EnemyCommand nextCommand;
 
     protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
@@ -43,7 +44,7 @@ public class EnemyCommand : MonoBehaviour
         }
         else
         {
-            Debug.LogError( "enemyState : " + enemyState + " is out of range! probabilityList.Count = " + probabilityList.Count  );
+            //Debug.LogError( "enemyState : " + enemyState + " is out of range! probabilityList.Count = " + probabilityList.Count  );
             return 0;
         }
     }

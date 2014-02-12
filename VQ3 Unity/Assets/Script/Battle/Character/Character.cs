@@ -4,6 +4,7 @@ using System.Collections;
 public class Character : MonoBehaviour {
     protected static readonly float DAMAGE_RANGE = 16.0f;
     protected static readonly float MAGIC_DAMAGE_RANGE = 8.0f;
+    protected static readonly float DEFEND_COEFF = 1.0f / 2.0f;
 
     public int HitPoint;
     public int BasePower;
@@ -16,10 +17,10 @@ public class Character : MonoBehaviour {
     protected int SkillPower;
     protected int SkillMagic;
 
-    public int DefendPower { get { return BaseDefend + SkillDefend; } }
-    public int MagicDefendPower { get { return BaseMagicDefend + SkillMagicDefend; } }
-    public int AttackPower { get { return BasePower + SkillPower; } }
-    public int MagicPower { get { return BaseMagic + SkillMagic; } }
+    public float DefendPower { get { return BaseDefend * ( 100.0f + SkillDefend )/100.0f; } }
+    public float MagicDefendPower { get { return BaseMagicDefend * (100.0f + SkillMagicDefend) / 100.0f; } }
+    public float AttackPower { get { return BasePower * (100.0f + SkillPower) / 100.0f; } }
+    public float MagicPower { get { return BaseMagic * (100.0f + SkillMagic) / 100.0f; } }
 
 	protected float damageTime;
     protected int MaxHP;
@@ -36,16 +37,17 @@ public class Character : MonoBehaviour {
 	// ======================
     public virtual void SkillInit()
     {
+        SkillPower = 0;
+        SkillMagic = 0;
         SkillDefend = 0;
         SkillMagicDefend = 0;
     }
 	public virtual void BeAttacked( AttackModule attack, Skill skill )
 	{
-        float ad = skill.OwnerCharacter.AttackPower * (attack.AttackPower / 100.0f);
-        float damage = ad / ( (DefendPower / 100.0f) * (DefendPower / 100.0f) );
+        float damage = skill.OwnerCharacter.AttackPower * (attack.AttackPower / 100.0f) - DefendPower * DEFEND_COEFF;
         damage *= ((100.0f - DAMAGE_RANGE) + Random.Range( 0, DAMAGE_RANGE ) + Random.Range( 0, DAMAGE_RANGE )) / 100.0f;
-		BeDamaged( (int)damage );
-		if ( damage <= 0 )
+        BeDamaged( (int)damage, skill );
+        if( (int)damage <= 0 )
 		{
 			SEPlayer.Play( ActionResult.Guarded, this is Player );
 		}
@@ -57,11 +59,10 @@ public class Character : MonoBehaviour {
 	}
     public void BeMagicAttacked( MagicModule magic, Skill skill )
     {
-        float ad = skill.OwnerCharacter.MagicPower * (magic.MagicPower / 100.0f);
-        float damage = ad / ((MagicDefendPower / 100.0f) * (MagicDefendPower / 100.0f));
+        float damage = skill.OwnerCharacter.MagicPower * (magic.MagicPower / 100.0f) - MagicDefendPower * DEFEND_COEFF;
         damage *= ((100.0f - MAGIC_DAMAGE_RANGE) + Random.Range( 0, MAGIC_DAMAGE_RANGE ) + Random.Range( 0, MAGIC_DAMAGE_RANGE )) / 100.0f;
-        BeDamaged( (int)damage );
-        if( damage <= 0 )
+        BeDamaged( (int)damage, skill );
+        if( (int)damage <= 0 )
         {
             SEPlayer.Play( ActionResult.Guarded, this is Player );
         }
@@ -72,9 +73,9 @@ public class Character : MonoBehaviour {
         Debug.Log( this.ToString() + " was MagicAttacked! " + damage + "Damage! HitPoint is " + HitPoint );
 	}
 
-	protected virtual void BeDamaged( int damage )
+    protected virtual void BeDamaged( int damage, Skill skill )
 	{
-		HitPoint = Mathf.Max( 0, HitPoint - damage );
+        HitPoint = Mathf.Clamp( HitPoint - damage, 0, HitPoint );
 		damageTime = 0.15f + damage*0.015f;
 	}
 

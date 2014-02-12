@@ -5,7 +5,7 @@ public class Player : Character {
 	Vector3 initialPosition;
     GUILayer guiLayer;
 
-    //public GameObject DefendAnimPrefab;
+    public GameObject DefendAnimPrefab;
 
 	// Use this for initialization
 	void Start()
@@ -37,12 +37,15 @@ public class Player : Character {
 		return "Player";
 	}
 
-    protected override void BeDamaged( int damage )
+    protected override void BeDamaged( int damage, Skill skill )
     {
-        base.BeDamaged( damage );
+        base.BeDamaged( damage, skill );
         debugText.text = HitPoint.ToString() + ", " + damage + " damage!";
 
-        //(Instantiate( DefendAnimPrefab, skill.OwnerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
+        if( damage <= 0 )
+        {
+            (Instantiate( DefendAnimPrefab, skill.OwnerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
+        }
 
         if( HitPoint <= 0 )
         {

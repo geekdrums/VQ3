@@ -45,9 +45,11 @@ public class PlayerConductor : MonoBehaviour {
         commandGraph.CheckCommand();
         CurrentCommand = commandGraph.CurrentCommand;
         Player.SkillInit();
+        GameContext.BattleConductor.SetBGEffect( null );
 	}
     public void CheckSkill()
     {
+        if( Music.Just.bar >= NumQuarter ) return;
         GameObject playerSkill = CurrentCommand.GetCurrentSkill();
         if( playerSkill != null )
         {

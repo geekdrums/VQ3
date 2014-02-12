@@ -14,10 +14,10 @@ public enum EnemyState
 public class Enemy : Character {
 
     public EnemyCommand[] Commands;
+    public EnemyState currentState = EnemyState.Default;
 
     public EnemyCommand currentCommand { get; protected set; }
     protected int commandExecBar;
-    protected EnemyState currentState = EnemyState.Default;
 
     SpriteRenderer HPCircle;
     Vector3 baseHPCircleScale;
@@ -43,12 +43,6 @@ public class Enemy : Character {
         {
             c.Parse();
         }
-
-        debugText = gameObject.AddComponent<GUIText>();
-        debugText.transform.position = Vector3.one / 2;
-        debugText.fontSize = 24;
-        debugText.color = Color.red;
-        debugText.text = HitPoint.ToString();
     }
 
 	// Update is called once per frame
@@ -82,6 +76,9 @@ public class Enemy : Character {
 
     public EnemyCommand CheckCommand()
     {
+        SkillInit();
+        if( currentCommand != null ) currentState = currentCommand.nextState;
+
         if( currentCommand != null && currentCommand.nextCommand != null )
         {
             currentCommand = currentCommand.nextCommand;
@@ -116,10 +113,13 @@ public class Enemy : Character {
         return currentCommand.GetCurrentSkill( commandExecBar );
     }
 
-    protected override void BeDamaged( int damage )
+    protected override void BeDamaged( int damage, Skill skill )
     {
-        base.BeDamaged( damage );
-        debugText.text = HitPoint.ToString() + ", " + damage + " damage!";
+        base.BeDamaged( damage, skill );
+        GameObject damageText = (Instantiate( GameContext.EnemyConductor.damageTextPrefab, transform.position, Quaternion.identity ) as GameObject);
+        damageText.GetComponent<TextMesh>().text = damage.ToString();
+        damageText.transform.parent = transform;
+        damageText.transform.localPosition = Vector3.zero;
         if( HPCircle != null )
         {
             targetHPCircleSize = Mathf.Sqrt( HitPoint );

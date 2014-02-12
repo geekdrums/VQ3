@@ -124,13 +124,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoint: 40
-  BasePower: 30
+  BasePower: 0
   BaseMagic: 60
-  BaseDefend: 40
-  BaseMagicDefend: 60
+  BaseDefend: 32
+  BaseMagicDefend: 50
+  debugText: {fileID: 0}
   Commands:
   - {fileID: 11400002}
   - {fileID: 11400004}
+  currentState: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

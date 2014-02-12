@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: ignis
+  m_Name: ecla
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,10 +40,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 0
   _actionStr:
-  - Magic 50 0 First
-  - Magic 50 0 First
-  - Magic 50 0 First
-  _rhythmStr: nn ta ta ta
+  - Magic 60 0 First
+  - Magic 60 0 First
+  _rhythmStr: nn ta nn nn ta
   _rhythmBaseTime: 4
   bgEffefctPrefab: {fileID: 0}
 --- !u!1001 &100100000

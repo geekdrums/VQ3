@@ -11,7 +11,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 212: {fileID: 21200000}
   m_Layer: 0
-  m_Name: dragon
+  m_Name: hlem 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: Attack
+  m_Name: Critical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ GameObject:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400004}
   m_Layer: 0
-  m_Name: Wait
+  m_Name: Defend
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400006}
   m_Layer: 0
-  m_Name: Ignis
+  m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,11 +89,11 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children:
   - {fileID: 400008}
-  - {fileID: 400002}
   - {fileID: 400004}
+  - {fileID: 400002}
   - {fileID: 400006}
   m_Father: {fileID: 0}
 --- !u!4 &400002
@@ -103,8 +103,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -6, z: 0}
-  m_LocalScale: {x: 2, y: .600000024, z: 1}
+  m_LocalPosition: {x: 0, y: -7, z: 0}
+  m_LocalScale: {x: 2.5, y: .75, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
 --- !u!4 &400004
@@ -115,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
 --- !u!4 &400006
@@ -126,7 +126,7 @@ Transform:
   m_GameObject: {fileID: 100006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
 --- !u!4 &400008
@@ -137,7 +137,7 @@ Transform:
   m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
 --- !u!114 &11400000
@@ -151,16 +151,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 300
-  BasePower: 80
-  BaseMagic: 90
-  BaseDefend: 60
-  BaseMagicDefend: 70
+  HitPoint: 40
+  BasePower: 64
+  BaseMagic: 0
+  BaseDefend: 55
+  BaseMagicDefend: 32
   debugText: {fileID: 0}
   Commands:
-  - {fileID: 11400002}
   - {fileID: 11400006}
   - {fileID: 11400004}
+  - {fileID: 11400002}
+  currentState: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -173,11 +174,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
+  - {fileID: 11400000, guid: fd339432e94dde54382e8149f2e6f478, type: 2}
   _timingStr: 0 2 0
   numBar: 1
-  probabilityList: 32000000
-  nextCommand: {fileID: 0}
+  probabilityList: 0a00000064000000
+  nextState: 0
+  nextCommand: {fileID: 11400004}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -190,10 +192,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 8c59f0377c440ea4cbf98a4cb4c3fabe, type: 2}
-  _timingStr: 0 2 0
-  numBar: 0
-  probabilityList: 05000000
+  - {fileID: 11400008, guid: 0494ebc02f1da8646874736f9c138d35, type: 2}
+  _timingStr: 0
+  numBar: 4
+  probabilityList: 0f000000
+  nextState: 0
   nextCommand: {fileID: 0}
 --- !u!114 &11400006
 MonoBehaviour:
@@ -207,11 +210,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 52f248a6f52ab7344844d0f5655841df, type: 2}
-  _timingStr: 0 3 0
+  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
+  _timingStr: 0 2 0
   numBar: 1
-  probabilityList: 32000000
-  nextCommand: {fileID: 11400002}
+  probabilityList: 4b000000
+  nextState: 0
+  nextCommand: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -230,10 +234,10 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_SortingLayerID: 4087608993
-  m_Sprite: {fileID: 21300000, guid: 2d7f7a12f693f0a43886ec03bbb95d62, type: 3}
+  m_SortingLayerID: 0
+  m_Sprite: {fileID: 21300000, guid: e8e0e49c99715644186819f19557e9c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21200002
 SpriteRenderer:
