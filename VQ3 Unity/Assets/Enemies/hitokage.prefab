@@ -11,7 +11,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 212: {fileID: 21200000}
   m_Layer: 0
-  m_Name: hlem
+  m_Name: hitokage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: Critical
+  m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,23 +59,7 @@ GameObject:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400004}
   m_Layer: 0
-  m_Name: Defend
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100008
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400008}
-  - 114: {fileID: 11400006}
-  m_Layer: 0
-  m_Name: Attack
+  m_Name: Heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,9 +73,8 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 400008}
   - {fileID: 400004}
   - {fileID: 400002}
   - {fileID: 400006}
@@ -103,8 +86,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -7, z: 0}
-  m_LocalScale: {x: 2.5, y: .75, z: 1}
+  m_LocalPosition: {x: 0, y: -4, z: 0}
+  m_LocalScale: {x: 1.5, y: .400000006, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
 --- !u!4 &400004
@@ -129,17 +112,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
---- !u!4 &400008
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100008}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400000}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,19 +123,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 40
-  BasePower: 64
-  BaseMagic: 0
-  BaseDefend: 55
-  BaseMagicDefend: 32
+  HitPoint: 80
+  BasePower: 0
+  BaseMagic: 65
+  BaseDefend: 45
+  BaseMagicDefend: 58
   debugText: {fileID: 0}
   Commands:
-  - {fileID: 11400006}
-  - {fileID: 11400004}
   - {fileID: 11400002}
-  conditions: []
-  StateNames: []
-  currentState: 
+  - {fileID: 11400004}
+  conditions:
+  - conditionType: 0
+    Value: 40
+    Sign: -1
+    FromState: Default
+    ToState: Healing
+    ViceVersa: 1
+  StateNames:
+  - Default
+  - Healing
+  currentState: Default
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -176,12 +155,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: fd339432e94dde54382e8149f2e6f478, type: 2}
+  - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
   _timingStr: 0 2 0
   numBar: 1
-  probabilityList: 0a000000
+  probabilityList: 6400000000000000
   nextState: 
-  nextCommand: {fileID: 11400004}
+  nextCommand: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -194,28 +173,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400008, guid: 0494ebc02f1da8646874736f9c138d35, type: 2}
-  _timingStr: 0
-  numBar: 4
-  probabilityList: 0f000000
-  nextState: 
-  nextCommand: {fileID: 0}
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
+  - {fileID: 11400008, guid: b4103494e6d597e4faa0f7c543d42dde, type: 2}
   _timingStr: 0 2 0
-  numBar: 1
-  probabilityList: 4b000000
+  numBar: 0
+  probabilityList: 0000000064000000
   nextState: 
   nextCommand: {fileID: 0}
 --- !u!212 &21200000
@@ -239,7 +200,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: e8e0e49c99715644186819f19557e9c7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 05f4ea33ff3f84348948f9064785893a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21200002
 SpriteRenderer:

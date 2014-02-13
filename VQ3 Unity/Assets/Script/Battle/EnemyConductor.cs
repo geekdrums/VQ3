@@ -87,20 +87,29 @@ public class EnemyConductor : MonoBehaviour {
         DefendModule defend = Action.GetModule<DefendModule>();
         if( defend != null && !skill.isPlayerSkill )
         {
-            skill.OwnerCharacter.Defend( defend );
-            isSucceeded = true;
+            foreach( Enemy e in GetTargetEnemies( defend, skill ) )
+            {
+                e.Defend( defend );
+                isSucceeded = true;
+            }
         }
         MagicDefendModule magicDefend = Action.GetModule<MagicDefendModule>();
         if( magicDefend != null && !skill.isPlayerSkill )
         {
-            skill.OwnerCharacter.MagicDefend( magicDefend );
-            isSucceeded = true;
+            foreach( Enemy e in GetTargetEnemies( magicDefend, skill ) )
+            {
+                e.MagicDefend( magicDefend );
+                isSucceeded = true;
+            }
         }
         HealModule heal = Action.GetModule<HealModule>();
         if( heal != null && !skill.isPlayerSkill )
         {
-            skill.OwnerCharacter.Heal( heal );
-            isSucceeded = true;
+            foreach( Enemy e in GetTargetEnemies( heal, skill ) )
+            {
+                e.Heal( heal );
+                isSucceeded = true;
+            }
         }
 
 		Enemies.RemoveAll( ( Enemy e ) => e.HitPoint<=0 );
@@ -132,6 +141,31 @@ public class EnemyConductor : MonoBehaviour {
 			break;
         case TargetType.Anim:
             Res.Add( skill.Actions[Target.AnimIndex].GetModule<AnimModule>().TargetEnemy );
+            break;
+        case TargetType.Self:
+            Res.Add( skill.OwnerCharacter as Enemy );
+            break;
+        case TargetType.Other:
+            if( Enemies.Count == 1 ) Res.Add( skill.OwnerCharacter as Enemy );
+            else
+            {
+                int rand = Random.Range( 0, Enemies.Count-1 );
+                int selfIndex = Enemies.IndexOf( skill.OwnerCharacter as Enemy );
+                Res.Add( Enemies[rand < selfIndex ? rand : rand + 1] );
+            }
+            break;
+        case TargetType.Weakest:
+            int minHP = 1000000;
+            Enemy weakest = skill.OwnerCharacter as Enemy;
+            foreach( Enemy enemy in Enemies )
+            {
+                if( enemy.HitPoint < minHP )
+                {
+                    weakest = enemy;
+                    minHP = enemy.HitPoint;
+                }
+            }
+            Res.Add( weakest );
             break;
 		}
 		return Res;

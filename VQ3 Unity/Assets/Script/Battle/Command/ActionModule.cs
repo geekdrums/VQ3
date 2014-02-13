@@ -17,7 +17,11 @@ public enum TargetType
     Anim,
 	Random,
     Select,
-	All
+	All,
+    
+    Self,
+    Other,
+    Weakest
 	//Area, etc...
 }
 
@@ -75,9 +79,10 @@ public class MagicModule : TargetModule
     public int VoxonPoint { get; private set; }
 }
 
-public class DefendModule : IActionModule
+public class DefendModule : TargetModule
 {
-	public DefendModule( int DefendPower )
+	public DefendModule( int DefendPower, TargetType targetType = TargetType.Self )
+        : base( targetType )
 	{
 		this.DefendPower = DefendPower;
 	}
@@ -85,9 +90,10 @@ public class DefendModule : IActionModule
 	public int DefendPower { get; private set; }
 }
 
-public class MagicDefendModule : IActionModule
+public class MagicDefendModule : TargetModule
 {
-    public MagicDefendModule( int MagicDefendPower )
+    public MagicDefendModule( int MagicDefendPower, TargetType targetType = TargetType.Self )
+        : base( targetType )
     {
         this.MagicDefendPower = MagicDefendPower;
     }
@@ -95,10 +101,11 @@ public class MagicDefendModule : IActionModule
     public int MagicDefendPower { get; private set; }
 }
 
-public class HealModule : IActionModule
+public class HealModule : TargetModule
 {
-	public HealModule( int HealPoint )
-	{
+    public HealModule( int HealPoint, TargetType targetType = TargetType.Self )
+        : base( targetType )
+    {
 		this.HealPoint = HealPoint;
 	}
 

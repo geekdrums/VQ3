@@ -88,7 +88,7 @@ public class Character : MonoBehaviour {
     {
         SkillMagicDefend = magicDefend.MagicDefendPower;
     }
-	public void Heal( HealModule heal )
+	public virtual void Heal( HealModule heal )
 	{
 		HitPoint += heal.HealPoint;
 		SEPlayer.Play( ActionResult.Healed );

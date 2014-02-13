@@ -30,15 +30,18 @@ public class ActionSet : IEnumerable<IActionModule>
             }
             else if( str.StartsWith( "Defend " ) )
             {
-                res.Modules.Add( new DefendModule( int.Parse( parameters[1] ) ) );
+                res.Modules.Add( new DefendModule( int.Parse( parameters[1] ),
+                    parameters.Length > 2 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ) : TargetType.Self ) );
             }
             else if( str.StartsWith( "MagicDefend " ) )
             {
-                res.Modules.Add( new MagicDefendModule( int.Parse( parameters[1] ) ) );
+                res.Modules.Add( new MagicDefendModule( int.Parse( parameters[1] ),
+                    parameters.Length > 2 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ) : TargetType.Self ) );
             }
 			else if ( str.StartsWith( "Heal " ) )
 			{
-				res.Modules.Add( new HealModule( int.Parse( parameters[1] ) ) );
+				res.Modules.Add( new HealModule( int.Parse( parameters[1] ),
+                    parameters.Length > 2 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ) : TargetType.Self ) );
 			}
         }
         return res;

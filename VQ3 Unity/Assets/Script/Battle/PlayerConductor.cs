@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class PlayerConductor : MonoBehaviour {
     public CommandGraph commandGraph;
     public int Level = 1;
-    public int NumQuarter { get; private set; }
 
     public List<int> HPLevelList;
     public List<int> QuarterLevelList;
@@ -17,6 +16,8 @@ public class PlayerConductor : MonoBehaviour {
     Command CurrentCommand;
 
     Player Player;
+    public int NumQuarter { get; private set; }
+    public int PlayerHP { get { return Player.HitPoint; } }
 
 	// Use this for initialization
 	void Start () {

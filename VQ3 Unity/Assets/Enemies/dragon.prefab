@@ -161,6 +161,7 @@ MonoBehaviour:
   - {fileID: 11400002}
   - {fileID: 11400006}
   - {fileID: 11400004}
+  currentState: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -177,6 +178,7 @@ MonoBehaviour:
   _timingStr: 0 2 0
   numBar: 1
   probabilityList: 32000000
+  nextState: 4
   nextCommand: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
@@ -194,6 +196,7 @@ MonoBehaviour:
   _timingStr: 0 2 0
   numBar: 0
   probabilityList: 05000000
+  nextState: 4
   nextCommand: {fileID: 0}
 --- !u!114 &11400006
 MonoBehaviour:
@@ -211,6 +214,7 @@ MonoBehaviour:
   _timingStr: 0 3 0
   numBar: 1
   probabilityList: 32000000
+  nextState: 4
   nextCommand: {fileID: 11400002}
 --- !u!212 &21200000
 SpriteRenderer:
