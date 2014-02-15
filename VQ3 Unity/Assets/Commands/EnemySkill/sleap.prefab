@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400008}
   m_Layer: 0
-  m_Name: heal
+  m_Name: sleap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 0
   _actionStr:
-  - Heal 25
+  - Heal 60
   _rhythmStr: nn nn ta
   _rhythmBaseTime: 1
   bgEffefctPrefab: {fileID: 0}

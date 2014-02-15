@@ -42,7 +42,11 @@ public class ActionSet : IEnumerable<IActionModule>
 			{
 				res.Modules.Add( new HealModule( int.Parse( parameters[1] ),
                     parameters.Length > 2 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ) : TargetType.Self ) );
-			}
+            }
+            else if( str.StartsWith( "Weather " ) )
+            {
+                res.Modules.Add( new WeatherModule( parameters[1], int.Parse( parameters[2] ) ) );
+            }
         }
         return res;
     }

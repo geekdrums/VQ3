@@ -11,8 +11,6 @@ public enum TargetType
 	First,
     Second,
     Third,
-    Fourth,
-    Fifth,
 
     Anim,
 	Random,
@@ -110,4 +108,16 @@ public class HealModule : TargetModule
 	}
 
 	public int HealPoint { get; private set; }
+}
+
+public class WeatherModule : IActionModule
+{
+    public WeatherModule( string WeatherName, int Point )
+    {
+        this.WeatherName = WeatherName;
+        this.Point = Point;
+    }
+
+    public string WeatherName { get; private set; }
+    public int Point { get; private set; }
 }

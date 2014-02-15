@@ -22,7 +22,6 @@ public class Skill : MonoBehaviour
     public void SetOwner( Character chara )
     {
         OwnerCharacter = chara;
-        OwnerCharacter.SkillInit();
     }
 
     void Awake()

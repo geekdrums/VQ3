@@ -12,15 +12,19 @@ public class Enemy : Character
     public EnemyCommand currentCommand { get; protected set; }
     protected int commandExecBar;
 
-    SpriteRenderer HPCircle;
-    Vector3 baseHPCircleScale;
+    protected SpriteRenderer HPCircle;
+    protected Vector3 baseHPCircleScale;
 
-    //todo: multiply EnemyConductor's coeff
-    float targetHPCircleSize;// { get { return Mathf.Sqrt( HitPoint ); } }
-    Color targetHPCircleColor;// { get { return Color.Lerp( Color.clear, GameContext.EnemyConductor.baseColor, Mathf.Sqrt( (float)HitPoint / (float)MaxHP ) ); } }
+    protected float targetHPCircleSize;
+    protected Color targetHPCircleColor;
 
     // Use this for initialization
-    void Start()
+    protected virtual void Start()
+    {
+        Initialize();
+    }
+
+    protected override void Initialize()
     {
         base.Initialize();
         HPCircle = GetComponentsInChildren<SpriteRenderer>()[1];
@@ -61,21 +65,21 @@ public class Enemy : Character
         UpdateAnimation();
     }
 
-    void UpdateAnimation()
+    protected virtual void UpdateAnimation()
     {
         HPCircle.transform.localScale = Vector3.Lerp( HPCircle.transform.localScale, baseHPCircleScale * targetHPCircleSize, 0.1f );
         HPCircle.color = Color.Lerp( targetHPCircleColor, HPCircle.color, 0.1f );
     }
 
-    void CreateDamageText( int damage )
+    protected void CreateDamageText( int damage )
     {
         GameObject damageText = (Instantiate( GameContext.EnemyConductor.damageTextPrefab, transform.position, Quaternion.identity ) as GameObject);
         damageText.GetComponent<TextMesh>().text = Mathf.Abs( damage ).ToString();
         if( damage < 0 ) damageText.GetComponent<TextMesh>().color = Color.green;
+        damageText.transform.position += Vector3.back * 3;
         damageText.transform.parent = transform;
-        damageText.transform.localPosition = Vector3.zero;
     }
-    void UpdateHPCircle()
+    protected void UpdateHPCircle()
     {
         if( HPCircle != null )
         {
@@ -84,7 +88,7 @@ public class Enemy : Character
             renderer.material.color = targetHPCircleColor;
         }
     }
-    void CheckState()
+    protected virtual void CheckState()
     {
         if( currentCommand != null && currentCommand.nextState != "" ) currentState = currentCommand.nextState;
         else
@@ -100,6 +104,8 @@ public class Enemy : Character
                 case ConditionType.PlayerHP:
                     CompareValue = GameContext.PlayerConductor.PlayerHP;
                     break;
+                default:
+                    continue;
                 }
                 int d = (CompareValue - condition.Value);
                 if( condition.FromState == "" || condition.FromState == currentState )
@@ -121,10 +127,38 @@ public class Enemy : Character
             }
         }
     }
+    protected virtual void CheckStateOnDamage( int damage )
+    {
+        foreach( StateChangeCondition condition in conditions )
+        {
+            int CompareValue = 0;
+            switch( condition.conditionType )
+            {
+            case ConditionType.OneDamage:
+                CompareValue = damage;
+                break;
+            case ConditionType.TurnDamage:
+                CompareValue = TurnDamage;
+                break;
+            default:
+                continue;
+            }
+            int d = (CompareValue - condition.Value);
+            if( condition.FromState == "" || condition.FromState == currentState )
+            {
+                if( d * condition.Sign > 0 || (d == 0 && condition.Sign == 0) )
+                {
+                    currentState = condition.ToState;
+                    currentCommand = null;//cancel command
+                    break;
+                }
+            }
+        }
+    }
 
     public EnemyCommand CheckCommand()
     {
-        SkillInit();
+        TurnInit();
         CheckState();
 
         if( currentCommand != null && currentCommand.nextCommand != null )
@@ -150,27 +184,38 @@ public class Enemy : Character
                 }
             }
         }
+
+        if( currentCommand != null && currentCommand.currentState != "" ) currentState = currentCommand.currentState;
         return currentCommand;
     }
     public void SetExecBar( int bar )
     {
         commandExecBar = bar;
     }
-    public Skill GetCurrentSkill()
+    public void CheckSkill()
     {
-        return currentCommand.GetCurrentSkill( commandExecBar );
+        Skill skill = (currentCommand != null ? currentCommand.GetCurrentSkill( commandExecBar ) : null);
+        if( skill != null )
+        {
+            Skill objSkill = (Skill)Instantiate( skill, new Vector3(), transform.rotation );
+            objSkill.SetOwner( this );
+            GameContext.BattleConductor.ExecSkill( objSkill );
+        }
     }
 
     protected override void BeDamaged( int damage, Skill skill )
     {
-        base.BeDamaged( damage, skill );
-        CreateDamageText( Mathf.Max( 0, damage ) );
+        int d = Mathf.Max( 0, damage );
+        base.BeDamaged( d, skill );
         UpdateHPCircle();
+        CreateDamageText( d );
+        CheckStateOnDamage( d );
     }
     public override void Heal( HealModule heal )
     {
+        int h = Mathf.Min( MaxHP - HitPoint, (int)(MaxHP * ((float)heal.HealPoint / 100.0f)) );
         base.Heal( heal );
-        CreateDamageText( -heal.HealPoint );
+        CreateDamageText( -h );
         UpdateHPCircle();
     }
 
@@ -183,7 +228,7 @@ public class Enemy : Character
 
     public override string ToString()
     {
-        return name;
+        return name + "(" + currentState + ")";
     }
 
 
@@ -191,6 +236,8 @@ public class Enemy : Character
     {
         MyHP,
         PlayerHP,
+        OneDamage,
+        TurnDamage,
         Count
     }
     [System.Serializable]

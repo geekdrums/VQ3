@@ -16,6 +16,7 @@ public class Character : MonoBehaviour {
     protected int SkillMagicDefend;
     protected int SkillPower;
     protected int SkillMagic;
+    protected int TurnDamage;
 
     public float DefendPower { get { return BaseDefend * ( 100.0f + SkillDefend )/100.0f; } }
     public float MagicDefendPower { get { return BaseMagicDefend * (100.0f + SkillMagicDefend) / 100.0f; } }
@@ -35,12 +36,13 @@ public class Character : MonoBehaviour {
 	// ======================
 	// Battle
 	// ======================
-    public virtual void SkillInit()
+    public virtual void TurnInit()
     {
         SkillPower = 0;
         SkillMagic = 0;
         SkillDefend = 0;
         SkillMagicDefend = 0;
+        TurnDamage = 0;
     }
 	public virtual void BeAttacked( AttackModule attack, Skill skill )
 	{
@@ -75,8 +77,10 @@ public class Character : MonoBehaviour {
 
     protected virtual void BeDamaged( int damage, Skill skill )
 	{
-        HitPoint = Mathf.Clamp( HitPoint - damage, 0, HitPoint );
-		damageTime = 0.15f + damage*0.015f;
+        int d = Mathf.Max( 0, damage );
+        HitPoint = Mathf.Clamp( HitPoint - d, 0, HitPoint );
+        TurnDamage += d;
+        damageTime = 0.15f + damage * 0.015f;
 	}
 
 	public void Defend( DefendModule defend )
@@ -90,13 +94,14 @@ public class Character : MonoBehaviour {
     }
 	public virtual void Heal( HealModule heal )
 	{
-		HitPoint += heal.HealPoint;
+        int h = Mathf.Min( MaxHP - HitPoint, (int)(MaxHP * ( (float)heal.HealPoint/100.0f )) );
+		HitPoint += h;
 		SEPlayer.Play( ActionResult.Healed );
 		Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
 
         if( debugText != null )
         {
-            debugText.text = HitPoint.ToString() + ", " + heal.HealPoint + " healed!";
+            debugText.text = HitPoint.ToString() + ", " + h + " healed!";
         }
 	}
 }

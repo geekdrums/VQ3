@@ -8,6 +8,7 @@ public class EnemyConductor : MonoBehaviour {
     public GameObject damageTextPrefab;
 
     List<Enemy> Enemies = new List<Enemy>();
+    WeatherEnemy WeatherEnemy;
 
 	Color _baseColor;
 	public Color baseColor
@@ -42,9 +43,18 @@ public class EnemyConductor : MonoBehaviour {
         GameObject TempObj;
         for( int i=0; i<NewEnemies.Length; ++i )
         {
-            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 0, 0 ), NewEnemies[i].transform.rotation );
+            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 3, 0 ), NewEnemies[i].transform.rotation );
 			TempObj.renderer.material.color = baseColor;
-            Enemies.Add( TempObj.GetComponent<Enemy>() );
+            Enemy e = TempObj.GetComponent<Enemy>();
+            WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
+            if( we != null )
+            {
+                WeatherEnemy = we;
+            }
+            else
+            {
+                Enemies.Add( e );
+            }
         }
     }
 
@@ -112,10 +122,28 @@ public class EnemyConductor : MonoBehaviour {
             }
         }
 
+        WeatherModule weather = Action.GetModule<WeatherModule>();
+        if( WeatherEnemy != null && weather != null )
+        {
+            bool IsOldSubstance = WeatherEnemy.IsSubstance;
+            WeatherEnemy.ReceiveWeatherModule( weather );
+            if( IsOldSubstance != WeatherEnemy.IsSubstance )
+            {
+                if( IsOldSubstance ) Enemies.Remove( WeatherEnemy );
+                else Enemies.Add( WeatherEnemy );
+            }
+        }
+        
+
 		Enemies.RemoveAll( ( Enemy e ) => e.HitPoint<=0 );
 		if ( Enemies.Count == 0 )
 		{
 			GameContext.BattleConductor.OnPlayerWin();
+            if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
+            {
+                Destroy( WeatherEnemy.gameObject );
+                WeatherEnemy = null;
+            }
 		}
 
 		return isSucceeded;
@@ -127,8 +155,11 @@ public class EnemyConductor : MonoBehaviour {
 		if ( Enemies.Count == 0 ) return Res;
         switch( Target.TargetType )
 		{
-		case TargetType.First:
-			Res.Add( Enemies[0] );
+        case TargetType.First:
+        case TargetType.Second:
+        case TargetType.Third:
+            int index = (int)Target.TargetType - (int)TargetType.First;
+            if( Enemies.Count > index ) Res.Add( Enemies[index] );
 			break;
 		case TargetType.Random:
 			Res.Add( Enemies[Random.Range( 0, Enemies.Count )] );
@@ -198,6 +229,12 @@ public class EnemyConductor : MonoBehaviour {
                 enemy.SetExecBar( 0 );
             }
         }
+
+        if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
+        {
+            WeatherEnemy.CheckCommand();
+            WeatherEnemy.SetExecBar( 0 );
+        }
     }
 
     public void CheckSkill()
@@ -208,13 +245,8 @@ public class EnemyConductor : MonoBehaviour {
 
         foreach( Enemy e in Enemies )
         {
-            Skill enemySkill = e.GetCurrentSkill();
-            if( enemySkill != null )
-            {
-                Skill objSkill = (Skill)Instantiate( enemySkill, new Vector3(), enemySkill.transform.rotation );
-                objSkill.SetOwner( e );
-                GameContext.BattleConductor.ExecSkill( objSkill );
-            }
+            e.CheckSkill();
         }
+        if( WeatherEnemy != null && !WeatherEnemy.IsSubstance ) WeatherEnemy.CheckSkill();
     }
 }

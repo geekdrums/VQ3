@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400008}
   m_Layer: 0
-  m_Name: heal
+  m_Name: rainHeal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,8 +40,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 0
   _actionStr:
-  - Heal 25
-  _rhythmStr: nn nn ta
+  - Heal 25 All
+  _rhythmStr: ta
   _rhythmBaseTime: 1
   bgEffefctPrefab: {fileID: 0}
 --- !u!1001 &100100000

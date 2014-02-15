@@ -52,4 +52,10 @@ public class Player : Character {
             GameContext.BattleConductor.OnPlayerLose();
         }
     }
+
+    public void OnBattleStart()
+    {
+        TurnInit();
+        HitPoint = MaxHP;
+    }
 }

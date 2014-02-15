@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400008}
   m_Layer: 0
-  m_Name: heal
+  m_Name: WeakenSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,10 +38,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb4918957b1785b44b4981e05af947f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerSkill: 0
+  isPlayerSkill: 1
   _actionStr:
-  - Heal 25
-  _rhythmStr: nn nn ta
+  - Defend -15,MagicDefend -15
+  _rhythmStr: ta
   _rhythmBaseTime: 1
   bgEffefctPrefab: {fileID: 0}
 --- !u!1001 &100100000

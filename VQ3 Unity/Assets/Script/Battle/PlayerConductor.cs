@@ -45,7 +45,7 @@ public class PlayerConductor : MonoBehaviour {
     {
         commandGraph.CheckCommand();
         CurrentCommand = commandGraph.CurrentCommand;
-        Player.SkillInit();
+        Player.TurnInit();
         GameContext.BattleConductor.SetBGEffect( null );
 	}
     public void CheckSkill()
@@ -61,12 +61,12 @@ public class PlayerConductor : MonoBehaviour {
     }
 
 	public void OnBattleStarted()
-	{
-        Player.SkillInit();
+    {
+        Player.OnBattleStart();
+        commandGraph.OnBattleStart();
         Music.SetAisac( "IsTransition", 0 );
         Music.SetAisac( "TrackVolume1", 1 );
         Music.SetAisac( "TrackVolume2", 1 );
-        commandGraph.OnBattleStart();
     }
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )

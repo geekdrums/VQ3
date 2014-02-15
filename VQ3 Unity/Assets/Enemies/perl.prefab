@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: 1}
+  m_LocalScale: {x: .800000012, y: .800000012, z: 1}
   m_Children:
   - {fileID: 400004}
   - {fileID: 400002}
@@ -103,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -7, z: 0}
+  m_LocalPosition: {x: 0, y: -4, z: 0}
   m_LocalScale: {x: 2.5, y: .75, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -161,6 +161,8 @@ MonoBehaviour:
   - {fileID: 11400002}
   - {fileID: 11400006}
   - {fileID: 11400004}
+  conditions: []
+  StateNames: []
   currentState: 0
 --- !u!114 &11400002
 MonoBehaviour:
@@ -178,7 +180,8 @@ MonoBehaviour:
   _timingStr: 0 2 0
   numBar: 1
   probabilityList: 00000000
-  nextState: 4
+  currentState: 
+  nextState: 
   nextCommand: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
@@ -196,7 +199,8 @@ MonoBehaviour:
   _timingStr: 0
   numBar: 4
   probabilityList: 3c000000
-  nextState: 4
+  currentState: 
+  nextState: 
   nextCommand: {fileID: 11400002}
 --- !u!114 &11400006
 MonoBehaviour:
@@ -214,7 +218,8 @@ MonoBehaviour:
   _timingStr: 0
   numBar: 4
   probabilityList: 28000000
-  nextState: 4
+  currentState: 
+  nextState: 
   nextCommand: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
@@ -234,11 +239,11 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 0
+  m_SortingLayer: -1
   m_SortingOrder: 0
-  m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: 77bd6a6bd85dc2e4a952d65233f0e0b9, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_SortingLayerID: 4087608993
+  m_Sprite: {fileID: 21300000, guid: 99a770b1d44840140bda9a8bdb66a64f, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
 --- !u!212 &21200002
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -257,7 +262,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_SortingLayerID: 1161693239
   m_Sprite: {fileID: 21300000, guid: e381f42aedafbc947b02e48c1eea773a, type: 3}

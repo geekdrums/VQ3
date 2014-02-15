@@ -423,8 +423,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoint: 8
+  BasePower: 0
+  BaseMagic: 0
+  BaseDefend: 0
+  BaseMagicDefend: 0
+  debugText: {fileID: 0}
   Commands:
-  - {fileID: 11400000, guid: bcc79d6dfe16c45418391e8bb26dd2a7, type: 2}
+  - {fileID: 0}
+  conditions: []
+  StateNames: []
+  currentState: Default
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -466,9 +474,9 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 0
+  m_SortingLayer: -1
   m_SortingOrder: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 4087608993
   m_Sprite: {fileID: 21300000, guid: ae22bddfba0cc9e499934ab144f8b428, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
