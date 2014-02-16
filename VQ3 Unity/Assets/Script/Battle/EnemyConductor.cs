@@ -73,7 +73,7 @@ public class EnemyConductor : MonoBehaviour {
         GameObject TempObj;
         for( int i=0; i<NewEnemies.Length; ++i )
         {
-            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 3, 0 ), NewEnemies[i].transform.rotation );
+            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 5, 0 ), NewEnemies[i].transform.rotation );
 			TempObj.renderer.material.color = baseColor;
             Enemy e = TempObj.GetComponent<Enemy>();
             WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
@@ -210,7 +210,8 @@ public class EnemyConductor : MonoBehaviour {
 			}
 			break;
         case TargetType.Anim:
-            Res.Add( skill.Actions[Target.AnimIndex].GetModule<AnimModule>().TargetEnemy );
+            Enemy animTarget = skill.Actions[Target.AnimIndex].GetModule<AnimModule>().TargetEnemy;
+            if( Enemies.Contains( animTarget ) ) Res.Add( animTarget );
             break;
         case TargetType.Self:
             Res.Add( skill.OwnerCharacter as Enemy );

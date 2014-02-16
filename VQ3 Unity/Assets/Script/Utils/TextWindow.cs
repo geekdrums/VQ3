@@ -41,105 +41,44 @@ public class GUIMessage
 public class TextWindow : MonoBehaviour {
 
 	static TextWindow instance;
-	GUIText displayText;
-	bool isOpened;
+    TextMesh[] displayTexts;
 
-	GUIMessage CurrentMessage;
-	Queue<GUIMessage> NextMessages = new Queue<GUIMessage>();
+	List<GUIMessage> Messages = new List<GUIMessage>();
 
 	// Use this for initialization
 	void Start () {
 		instance = this;
-
-		displayText = GetComponentInChildren<GUIText>();
-		displayText.material.color = Color.black;
-		displayText.enabled = false;
-		guiTexture.pixelInset = new Rect( 0, 0, Screen.width, guiTexture.pixelInset.height );
-		guiTexture.enabled = false;
+        displayTexts = GetComponentsInChildren<TextMesh>();
+        for( int i = 0; i < displayTexts.Length; i++ )
+        {
+            displayTexts[i].text = "";
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if ( ( isOpened && !displayText.enabled ) && !animation.isPlaying )
-		{
-			OnEndOpened();
-		}
-		else if ( ( !isOpened && guiTexture.enabled ) && !animation.isPlaying )
-		{
-			OnEndClosed();
-		}
-
-		if ( isOpened )
-		{
-			if ( displayText.enabled && ( Music.isNowChanged || Music.isJustChanged ) )
-			{
-				//TODO: Sound
-				++CurrentMessage.CurrentIndex;
-			}
-			if ( CurrentMessage.IsEnd )
-			{
-				Close();
-			}
-			displayText.text = CurrentMessage.Text.Substring( 0, Mathf.Min( CurrentMessage.CurrentIndex+1, CurrentMessage.Text.Length ) );
-		}
-
+        for( int i = 0; i < Messages.Count; i++ )
+        {
+            ++Messages[i].CurrentIndex;
+            displayTexts[i].text = Messages[i].Text.Substring( 0, Mathf.Min( Messages[i].CurrentIndex + 1, Messages[i].Text.Length ) );
+        }
 	}
 
 	public static void AddMessage( params string[] NewMessages )
 	{
-        /*
 		foreach ( string message in NewMessages )
 		{
 			instance.AddMessage_( new GUIMessage(message) );
 		}
-        */
 	}
 	public static void AddMessage( GUIMessage NewMessage )
 	{
-		//instance.AddMessage_( NewMessage );
+		instance.AddMessage_( NewMessage );
 	}
 
 	void AddMessage_( GUIMessage NewMessage )
 	{
-		if ( !isOpened )
-		{
-			CurrentMessage = NewMessage;
-			Open();
-		}
-		else
-		{
-			NextMessages.Enqueue( NewMessage );
-		}
-	}
-
-	void Open()
-	{
-		animation.Play("TextOpenAnim");
-		isOpened = true;
-		guiTexture.enabled = true;
-	}
-	void Close()
-	{
-		CurrentMessage.OnEndShow();
-		if ( NextMessages.Count == 0 )
-		{
-			animation.Play( "TextCloseAnim" );
-			isOpened = false;
-			displayText.enabled = false;
-		}
-		else
-		{
-			CurrentMessage = NextMessages.Dequeue();
-		}
-	}
-	void OnEndOpened()
-	{
-		displayText.enabled = true;
-		guiTexture.enabled = true;
-	}
-	void OnEndClosed()
-	{
-		displayText.enabled = false;
-		guiTexture.enabled = false;
+        Messages.Insert( 0, NewMessage );
+        if( Messages.Count > displayTexts.Length ) Messages.RemoveAt( Messages.Count - 1 );
 	}
 }

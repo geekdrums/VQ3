@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Enemy : Character
 {
+    public string DisplayName;
     public EnemyCommand[] Commands;
     public StateChangeCondition[] conditions;
     public List<string> StateNames;
@@ -200,6 +201,7 @@ public class Enemy : Character
             Skill objSkill = (Skill)Instantiate( skill, new Vector3(), transform.rotation );
             objSkill.SetOwner( this );
             GameContext.BattleConductor.ExecSkill( objSkill );
+            if( objSkill.DescribeText != "" ) TextWindow.AddMessage( DisplayName + "Å@" + objSkill.DescribeText );
         }
     }
 

@@ -46,7 +46,7 @@ public class PlayerConductor : MonoBehaviour {
         commandGraph.CheckCommand();
         CurrentCommand = commandGraph.CurrentCommand;
         Player.TurnInit();
-        GameContext.BattleConductor.SetBGEffect( null );
+        TextWindow.AddMessage( "オクスは" + CurrentCommand.name + "をはなった！" );
 	}
     public void CheckSkill()
     {
