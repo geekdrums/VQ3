@@ -20,6 +20,7 @@ public class Command : MonoNode
     public bool IsLinked { get; protected set; }
     public bool IsCurrent { get; protected set; }
     public bool IsSelected { get; protected set; }
+    public bool IsTargetSelectable { get { return _skillList.Find( ( Skill s ) => s.IsTargetSelectable ) != null; } }
 
     protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
 
@@ -54,6 +55,7 @@ public class Command : MonoNode
             int beat = barBeatUnitStr.Length > 1 ? int.Parse( barBeatUnitStr[1] ) : 0;
             int unit = barBeatUnitStr.Length > 2 ? int.Parse( barBeatUnitStr[2] ) : 0;
             SkillDictionary.Add( new Timing( bar, beat, unit ).totalUnit, _skillList[i] );
+            _skillList[i].Parse();
         }
         IsLinked = true;
     }

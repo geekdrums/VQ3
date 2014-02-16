@@ -6,9 +6,14 @@ using System.Linq;
 public class EnemyConductor : MonoBehaviour {
 
     public GameObject damageTextPrefab;
+    public GameObject targetCursor;
+    public GameObject nextTargetCursor;
 
     List<Enemy> Enemies = new List<Enemy>();
     WeatherEnemy WeatherEnemy;
+
+    Enemy targetEnemy;
+    Enemy nextTarget;
 
 	Color _baseColor;
 	public Color baseColor
@@ -34,7 +39,32 @@ public class EnemyConductor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if( Enemies.Count > 0 )
+        {
+
+            targetCursor.transform.position = Vector3.Lerp( targetCursor.transform.position, targetEnemy.transform.position, 0.1f );
+            if( GameContext.PlayerConductor.commandGraph.NextCommand.IsTargetSelectable )
+            {
+                if( nextTarget == null ) nextTarget = targetEnemy;
+                int targetIndex = Enemies.IndexOf( nextTarget );
+                if( Input.GetKeyDown( KeyCode.LeftArrow ) )
+                {
+                    targetIndex = (targetIndex - 1 + Enemies.Count) % Enemies.Count;
+                    nextTarget = Enemies[targetIndex];
+                }
+                else if( Input.GetKeyDown( KeyCode.RightArrow ) )
+                {
+                    targetIndex = (targetIndex + 1) % Enemies.Count;
+                    nextTarget = Enemies[targetIndex];
+                }
+                nextTargetCursor.transform.position = Vector3.Lerp( nextTargetCursor.transform.position, nextTarget.transform.position + Vector3.up * 5 + Vector3.back, 0.1f );
+            }
+            else
+            {
+                nextTarget = null;
+                nextTargetCursor.transform.position = Vector3.Lerp( nextTargetCursor.transform.position, Vector3.up * 10 + Vector3.back, 0.1f );
+            }
+        }
 	}
 
     public void SetEnemy( params GameObject[] NewEnemies )
@@ -56,6 +86,7 @@ public class EnemyConductor : MonoBehaviour {
                 Enemies.Add( e );
             }
         }
+        targetEnemy = Enemies[(Enemies.Count - 1)/2];
     }
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )
@@ -136,15 +167,20 @@ public class EnemyConductor : MonoBehaviour {
         
 
 		Enemies.RemoveAll( ( Enemy e ) => e.HitPoint<=0 );
-		if ( Enemies.Count == 0 )
-		{
-			GameContext.BattleConductor.OnPlayerWin();
+        if( Enemies.Count == 0 )
+        {
+            GameContext.BattleConductor.OnPlayerWin();
             if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
             {
                 Destroy( WeatherEnemy.gameObject );
                 WeatherEnemy = null;
             }
-		}
+        }
+        else
+        {
+            if( !Enemies.Contains( targetEnemy ) ) targetEnemy = (nextTarget != null && Enemies.Contains( nextTarget ) ? nextTarget : Enemies[(Enemies.Count - 1) / 2]);
+            if( nextTarget != null && !Enemies.Contains( nextTarget ) ) nextTarget = Enemies[(Enemies.Count - 1) / 2];
+        }
 
 		return isSucceeded;
 	}
@@ -155,6 +191,9 @@ public class EnemyConductor : MonoBehaviour {
 		if ( Enemies.Count == 0 ) return Res;
         switch( Target.TargetType )
 		{
+        case TargetType.Select:
+            Res.Add( targetEnemy );
+            break;
         case TargetType.First:
         case TargetType.Second:
         case TargetType.Third:
@@ -204,6 +243,8 @@ public class EnemyConductor : MonoBehaviour {
 
     public void CheckCommand()
     {
+        if( nextTarget != null ) targetEnemy = nextTarget;
+
         int num2BarCommands = 0;
         int num1BarCommands = 0;
         foreach( Enemy enemy in Enemies )

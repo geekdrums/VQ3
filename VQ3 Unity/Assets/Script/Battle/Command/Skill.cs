@@ -13,6 +13,7 @@ public class Skill : MonoBehaviour
     public GameObject bgEffefctPrefab;
 
 	public ActionSet[] Actions { get; protected set; }
+    public bool IsTargetSelectable { get; protected set; }
 	protected Rhythm ActionRhythm;
 	protected Animation SkillAnim;
 	protected bool isEnd;
@@ -40,9 +41,15 @@ public class Skill : MonoBehaviour
             ActionRhythm = Rhythm.ONE_NOTE_RHYTHM;
         }
         Actions = new ActionSet[_actionStr.Length];
+        IsTargetSelectable = false;
         for( int i = 0; i < _actionStr.Length; ++i )
         {
             Actions[i] = ActionSet.Parse( _actionStr[i] );
+            if( !IsTargetSelectable && Actions[i].GetModule<TargetModule>() != null
+                && Actions[i].GetModule<TargetModule>().TargetType == TargetType.Select )
+            {
+                IsTargetSelectable = true;
+            }
         }
     }
 

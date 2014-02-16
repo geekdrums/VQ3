@@ -161,7 +161,7 @@ public class CommandGraph : MonoBehaviour {
                 selectedCommand = command;
             }
         }
-        if( NextCommand != selectedCommand )
+        if( NextCommand != selectedCommand && selectedCommand != IntroCommand )
         {
             Select( selectedCommand );
         }
