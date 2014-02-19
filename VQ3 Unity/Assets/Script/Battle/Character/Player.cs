@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class Player : Character {
-	Vector3 initialPosition;
-    GUILayer guiLayer;
+    GameObject UIParent;
+    HPBar HPBar;
 
     public GameObject DefendAnimPrefab;
 
@@ -11,8 +11,10 @@ public class Player : Character {
 	void Start()
     {
         Initialize();
-		guiLayer = GetComponent<GUILayer>();
-        initialPosition = guiLayer.transform.position;
+        UIParent = GameObject.Find( "UI" );
+        HPBar = UIParent.GetComponentInChildren<HPBar>();
+        initialPosition = UIParent.transform.position;
+        HPBar.OnTurnStart();
 	}
 	
 	// Update is called once per frame
@@ -21,12 +23,12 @@ public class Player : Character {
 		{
 			if ( (int)( damageTime/0.05f ) != (int)( (damageTime+Time.deltaTime)/0.05f ) )
 			{
-				guiLayer.transform.position = initialPosition + Random.insideUnitSphere;
+                UIParent.transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 2.0f );
 			}
 			damageTime -= Time.deltaTime;
 			if ( damageTime <= 0 )
 			{
-				guiLayer.transform.position = initialPosition;
+                UIParent.transform.position = initialPosition;
 			}
 		}
 	}
@@ -36,6 +38,11 @@ public class Player : Character {
 		return "Player";
 	}
 
+    public override void TurnInit()
+    {
+        base.TurnInit();
+        if( HPBar != null ) HPBar.OnTurnStart();
+    }
     protected override void BeDamaged( int damage, Skill skill )
     {
         base.BeDamaged( damage, skill );
@@ -44,11 +51,21 @@ public class Player : Character {
         {
             (Instantiate( DefendAnimPrefab, skill.OwnerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
         }
+        else
+        {
+            HPBar.OnDamage( damage );
+        }
 
         if( HitPoint <= 0 )
         {
             GameContext.BattleConductor.OnPlayerLose();
         }
+    }
+    public override void Heal( HealModule heal )
+    {
+        int oldHitPoint = HitPoint;
+        base.Heal( heal );
+        HPBar.OnHeal( HitPoint - oldHitPoint );
     }
 
     public void OnBattleStart()

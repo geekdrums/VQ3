@@ -15,7 +15,7 @@ public class WeatherEnemy : Enemy
     int MaxDensityPoint;
     float currentAlpha;
 
-    protected override void Initialize()
+    public override void Initialize()
     {
         base.Initialize();
         WeatherState = StateNames[0];

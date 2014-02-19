@@ -24,9 +24,10 @@ public class Character : MonoBehaviour {
     public float AttackPower { get { return BasePower * (100.0f + SkillPower) / 100.0f; } }
     public float MagicPower { get { return BaseMagic * (100.0f + SkillMagic) / 100.0f; } }
 
-	protected float damageTime;
+    protected float damageTime;
+    protected Vector3 initialPosition;
 
-    protected virtual void Initialize()
+    public virtual void Initialize()
     {
         MaxHP = HitPoint;
     }
@@ -78,7 +79,8 @@ public class Character : MonoBehaviour {
         int d = Mathf.Max( 0, damage );
         HitPoint = Mathf.Clamp( HitPoint - d, 0, HitPoint );
         TurnDamage += d;
-        damageTime = 0.15f + damage * 0.015f;
+        int RelativeMaxHP = (MaxHP < GameContext.PlayerConductor.PlayerMaxHP ? MaxHP : GameContext.PlayerConductor.PlayerMaxHP);
+        damageTime += 0.15f + ((float)d / (float)RelativeMaxHP) * 2.0f;
 	}
 
 	public void Defend( DefendModule defend )

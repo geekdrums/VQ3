@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Enemy : Character
 {
+    static readonly float DamageTrembleTime = 0.05f;
+
     public string DisplayName;
     public EnemyCommand[] Commands;
     public StateChangeCondition[] conditions;
@@ -21,7 +23,7 @@ public class Enemy : Character
         Initialize();
     }
 
-    protected override void Initialize()
+    public override void Initialize()
     {
         base.Initialize();
         foreach( EnemyCommand c in Commands )
@@ -33,6 +35,7 @@ public class Enemy : Character
         HPCircle.transform.localScale *= Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP );
         HPCircle.Initialize( this );
         HPCircle.OnTurnStart();
+        initialPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -44,7 +47,16 @@ public class Enemy : Character
     {
         if( damageTime > 0 )
         {
-            renderer.material.color = (damageTime % 0.1f > 0.05f ? Color.clear : GameContext.EnemyConductor.baseColor);
+            if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
+            {
+                transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 2.0f ) * 1.3f;
+            }
+            damageTime -= Time.deltaTime;
+            if( damageTime <= 0 )
+            {
+                transform.position = initialPosition;
+            }
+            renderer.material.color = (damageTime % (DamageTrembleTime*2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
             damageTime -= Time.deltaTime;
             if( damageTime <= 0 )
             {
@@ -63,11 +75,9 @@ public class Enemy : Character
 
     protected void CreateDamageText( int damage )
     {
-        GameObject damageText = (Instantiate( GameContext.EnemyConductor.damageTextPrefab, transform.position, Quaternion.identity ) as GameObject);
-        damageText.GetComponent<TextMesh>().text = Mathf.Abs( damage ).ToString();
-        if( damage < 0 ) damageText.GetComponent<TextMesh>().color = Color.green;
-        damageText.transform.position += Vector3.back * 3;
-        damageText.transform.parent = transform;
+        if( damage == 0 ) return;
+        GameObject damageText = (Instantiate( GameContext.EnemyConductor.damageTextPrefab ) as GameObject);
+        damageText.GetComponent<DamageText>().Initialize( damage, transform.position + Vector3.back * 3 + Random.onUnitSphere );
     }
     protected virtual void CheckState()
     {

@@ -12,40 +12,43 @@ AnimationClip:
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
   m_CompressedRotationCurves: []
-  m_PositionCurves:
+  m_PositionCurves: []
+  m_ScaleCurves: []
+  m_FloatCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: 0, y: 0, z: 0}
-        inSlope: {x: 0, y: 4.56706476, z: 0}
-        outSlope: {x: 0, y: 4.56706476, z: 0}
-        tangentMode: 1108082688
-      - time: .0500000007
-        value: {x: 0, y: .228353247, z: 0}
-        inSlope: {x: 0, y: -6.47820091, z: 0}
-        outSlope: {x: 0, y: -6.47820091, z: 0}
-        tangentMode: 0
+        value: 0
+        inSlope: 5.56793118
+        outSlope: 5.56793118
+        tangentMode: 10
       - time: .0833333358
-        value: {x: 0, y: -.355762303, z: 0}
-        inSlope: {x: 0, y: -5.76114273, z: 0}
-        outSlope: {x: 0, y: -5.76114273, z: 0}
-        tangentMode: 0
+        value: .463994265
+        inSlope: -3.74104595
+        outSlope: -3.74104595
+        tangentMode: 10
       - time: .150000006
-        value: {x: 0, y: -.198553726, z: 0}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
+        value: -.40600726
+        inSlope: -4.4759531
+        outSlope: -4.4759531
+        tangentMode: 10
+      - time: .25
+        value: .00380435563
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
       - time: 1
-        value: {x: 0, y: -.200000003, z: 0}
-        inSlope: {x: 0, y: -.00170150225, z: 0}
-        outSlope: {x: 0, y: -.00170150225, z: 0}
-        tangentMode: -1048319
+        value: 0
+        inSlope: -.00507247401
+        outSlope: -.00507247401
+        tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+    attribute: AnimY
     path: 
-  m_ScaleCurves: []
-  m_FloatCurves: []
+    classID: 114
+    script: {fileID: 11500000, guid: 488b8d9b10d2d6c4d95a5209e305c887, type: 3}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 1
@@ -75,72 +78,34 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalPosition.x
-    path: 
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 4.56706476
-        outSlope: 4.56706476
-        tangentMode: 10
-      - time: .0500000007
-        value: .228353247
-        inSlope: -6.47820091
-        outSlope: -6.47820091
+        inSlope: 5.56793118
+        outSlope: 5.56793118
         tangentMode: 10
       - time: .0833333358
-        value: -.355762303
-        inSlope: -5.76114273
-        outSlope: -5.76114273
-        tangentMode: 0
+        value: .463994265
+        inSlope: -3.74104595
+        outSlope: -3.74104595
+        tangentMode: 10
       - time: .150000006
-        value: -.198553726
+        value: -.40600726
+        inSlope: -4.4759531
+        outSlope: -4.4759531
+        tangentMode: 10
+      - time: .25
+        value: .00380435563
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 1
-        value: -.200000003
-        inSlope: -.00170150225
-        outSlope: -.00170150225
+        value: 0
+        inSlope: -.00507247401
+        outSlope: -.00507247401
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
-    attribute: m_LocalPosition.y
+    attribute: AnimY
     path: 
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalPosition.z
-    path: 
-    classID: 4
-    script: {fileID: 0}
+    classID: 114
+    script: {fileID: 11500000, guid: 488b8d9b10d2d6c4d95a5209e305c887, type: 3}
   m_EulerEditorCurves: []
   m_Events: []
