@@ -5,11 +5,12 @@ public class FieldConductor : MonoBehaviour {
 
     public Encounter[] Encounters;
 
-	int encounterCount;
+	public int encounterCount;
 
 	// Use this for initialization
     void Start()
     {
+        //encounterCount = GameContext.PlayerConductor.Level - 1;
         //Music.Play( "fieldMusic" );
 	}
 	

@@ -6,6 +6,7 @@ using System.Linq;
 public class EnemyConductor : MonoBehaviour {
 
     public GameObject damageTextPrefab;
+    public GameObject HPCirclePrefab;
     public GameObject targetCursor;
     public GameObject nextTargetCursor;
 
@@ -28,13 +29,12 @@ public class EnemyConductor : MonoBehaviour {
 			}
 		}
 	}
-    public int baseHP { get; protected set; }
+    public int baseHP { get { return GameContext.PlayerConductor.PlayerHP; } }
 
 	// Use this for initialization
 	void Start () {
 		GameContext.EnemyConductor = this;
 		baseColor = Color.black;
-        baseHP = 100;//temp
 	}
 	
 	// Update is called once per frame
@@ -73,7 +73,7 @@ public class EnemyConductor : MonoBehaviour {
         GameObject TempObj;
         for( int i=0; i<NewEnemies.Length; ++i )
         {
-            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 5, 0 ), NewEnemies[i].transform.rotation );
+            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 6, 0 ), NewEnemies[i].transform.rotation );
 			TempObj.renderer.material.color = baseColor;
             Enemy e = TempObj.GetComponent<Enemy>();
             WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();

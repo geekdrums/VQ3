@@ -26,15 +26,13 @@ public class WeatherEnemy : Enemy
         currentAlpha = IsSubstance ? 1 : 0;
         c.a = currentAlpha;
         renderer.material.color = c;
-        HPCircle.color = c;
-        targetHPCircleColor = c;
+        HPCircle.SetActive( false );
         weatherParticle.enableEmission = !IsSubstance;
     }
 
     protected override void UpdateAnimation()
     {
         base.UpdateAnimation();
-
         float targetAlpha = (IsSubstance ? 1 : 0);
         float d = targetAlpha - currentAlpha;
         if( Mathf.Abs( d ) > 0.1f )
@@ -46,11 +44,6 @@ public class WeatherEnemy : Enemy
             Color c = renderer.material.color;
             c.a = currentAlpha;
             renderer.material.color = c;
-
-            c = HPCircle.color;
-            c.a = currentAlpha;
-            HPCircle.color = c;
-            targetHPCircleColor = c;
         }
     }
 
@@ -67,6 +60,7 @@ public class WeatherEnemy : Enemy
                     DensityPoint = MaxDensityPoint;
                     currentState = WeatherState;
                     weatherParticle.enableEmission = true;
+                    HPCircle.SetActive( false );
                 }
             }
             else if( !IsSubstance && wm.Point < 0 )
@@ -77,6 +71,7 @@ public class WeatherEnemy : Enemy
                     DensityPoint = 0;
                     currentState = SubstanceState;
                     weatherParticle.enableEmission = false;
+                    HPCircle.SetActive( true );
                     renderer.material.color = GameContext.EnemyConductor.baseColor;
                 }
             }

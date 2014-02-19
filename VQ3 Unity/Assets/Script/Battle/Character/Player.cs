@@ -13,7 +13,6 @@ public class Player : Character {
         Initialize();
 		guiLayer = GetComponent<GUILayer>();
         initialPosition = guiLayer.transform.position;
-        debugText.text = HitPoint.ToString();
 	}
 	
 	// Update is called once per frame
@@ -40,7 +39,6 @@ public class Player : Character {
     protected override void BeDamaged( int damage, Skill skill )
     {
         base.BeDamaged( damage, skill );
-        debugText.text = HitPoint.ToString() + ", " + damage + " damage!";
 
         if( damage <= 0 )
         {

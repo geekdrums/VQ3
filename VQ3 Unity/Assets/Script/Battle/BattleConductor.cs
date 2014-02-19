@@ -41,6 +41,11 @@ public class BattleConductor : MonoBehaviour {
 		case GameContext.GameState.Endro:
 			if ( !Music.IsPlaying() )
 			{
+                for( int i = 0; i < skillParent.transform.childCount; i++ )
+                {
+                    Destroy( skillParent.transform.GetChild(i).gameObject );
+                }
+                Skills.Clear();
 				GameContext.ChangeState( GameContext.GameState.Field );
 			}
             break;
@@ -49,7 +54,7 @@ public class BattleConductor : MonoBehaviour {
 
     void UpdateBattle()
     {
-        if( Music.GetCurrentBlockName() == "endro" ) return;
+        if( Music.GetCurrentBlockName() == "endro" || Music.GetNextBlockName() == "endro" ) return;
 
         if( Music.IsJustChangedAt( 0 ) )
         {
@@ -110,6 +115,8 @@ public class BattleConductor : MonoBehaviour {
 	public void OnPlayerWin()
 	{
         Music.SetNextBlock("endro");
+        GameContext.PlayerConductor.Level++;
+        GameContext.PlayerConductor.OnLevelUp();
 	}
 	public void OnPlayerLose()
 	{

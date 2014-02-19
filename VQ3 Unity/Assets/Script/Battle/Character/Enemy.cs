@@ -13,11 +13,7 @@ public class Enemy : Character
     public EnemyCommand currentCommand { get; protected set; }
     protected int commandExecBar;
 
-    protected SpriteRenderer HPCircle;
-    protected Vector3 baseHPCircleScale;
-
-    protected float targetHPCircleSize;
-    protected Color targetHPCircleColor;
+    protected HPCircle HPCircle;
 
     // Use this for initialization
     protected virtual void Start()
@@ -28,27 +24,27 @@ public class Enemy : Character
     protected override void Initialize()
     {
         base.Initialize();
-        HPCircle = GetComponentsInChildren<SpriteRenderer>()[1];
-        if( HPCircle != null )
-        {
-            baseHPCircleScale = HPCircle.transform.localScale / Mathf.Sqrt( GameContext.EnemyConductor.baseHP );
-            targetHPCircleSize = Mathf.Sqrt( MaxHP );
-            HPCircle.transform.localScale = baseHPCircleScale * targetHPCircleSize;
-            targetHPCircleColor = GameContext.EnemyConductor.baseColor;
-            HPCircle.color = targetHPCircleColor;
-        }
         foreach( EnemyCommand c in Commands )
         {
             c.Parse();
         }
+        HPCircle = (Instantiate( GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * 5.5f, Quaternion.identity ) as GameObject).GetComponent<HPCircle>();
+        HPCircle.transform.parent = transform;
+        HPCircle.transform.localScale *= Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP );
+        HPCircle.Initialize( this );
+        HPCircle.OnTurnStart();
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateAnimation();
+    }
+    protected virtual void UpdateAnimation()
+    {
         if( damageTime > 0 )
         {
-            renderer.material.color = (damageTime % 0.1f > 0.05f ? Color.clear : targetHPCircleColor);
+            renderer.material.color = (damageTime % 0.1f > 0.05f ? Color.clear : GameContext.EnemyConductor.baseColor);
             damageTime -= Time.deltaTime;
             if( damageTime <= 0 )
             {
@@ -59,17 +55,10 @@ public class Enemy : Character
                 }
                 else
                 {
-                    renderer.material.color = targetHPCircleColor;
+                    renderer.material.color = GameContext.EnemyConductor.baseColor;
                 }
             }
         }
-        UpdateAnimation();
-    }
-
-    protected virtual void UpdateAnimation()
-    {
-        HPCircle.transform.localScale = Vector3.Lerp( HPCircle.transform.localScale, baseHPCircleScale * targetHPCircleSize, 0.1f );
-        HPCircle.color = Color.Lerp( targetHPCircleColor, HPCircle.color, 0.1f );
     }
 
     protected void CreateDamageText( int damage )
@@ -79,15 +68,6 @@ public class Enemy : Character
         if( damage < 0 ) damageText.GetComponent<TextMesh>().color = Color.green;
         damageText.transform.position += Vector3.back * 3;
         damageText.transform.parent = transform;
-    }
-    protected void UpdateHPCircle()
-    {
-        if( HPCircle != null )
-        {
-            targetHPCircleSize = Mathf.Sqrt( HitPoint );
-            targetHPCircleColor = Color.Lerp( Color.clear, GameContext.EnemyConductor.baseColor, Mathf.Sqrt( (float)HitPoint / (float)MaxHP ) );
-            renderer.material.color = targetHPCircleColor;
-        }
     }
     protected virtual void CheckState()
     {
@@ -161,6 +141,7 @@ public class Enemy : Character
     {
         TurnInit();
         CheckState();
+        HPCircle.OnTurnStart();
 
         if( currentCommand != null && currentCommand.nextCommand != null )
         {
@@ -209,7 +190,7 @@ public class Enemy : Character
     {
         int d = Mathf.Max( 0, damage );
         base.BeDamaged( d, skill );
-        UpdateHPCircle();
+        HPCircle.OnDamage();
         CreateDamageText( d );
         CheckStateOnDamage( d );
     }
@@ -218,14 +199,12 @@ public class Enemy : Character
         int h = Mathf.Min( MaxHP - HitPoint, (int)(MaxHP * ((float)heal.HealPoint / 100.0f)) );
         base.Heal( heal );
         CreateDamageText( -h );
-        UpdateHPCircle();
+        HPCircle.OnHeal();
     }
 
     public void OnBaseColorChanged( Color newColor )
     {
         renderer.material.color = newColor;
-        targetHPCircleColor = Color.Lerp( Color.clear, newColor, Mathf.Sqrt( (float)HitPoint / (float)MaxHP ) );
-        HPCircle.color = targetHPCircleColor;
     }
 
     public override string ToString()

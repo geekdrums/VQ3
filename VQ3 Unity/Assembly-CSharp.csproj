@@ -73,6 +73,9 @@
      <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
      <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
      <Compile Include="Assets\Script\Battle\SEPlayer.cs" />
+     <Compile Include="Assets\Script\Battle\UI\HPBar.cs" />
+     <Compile Include="Assets\Script\Battle\UI\HPCircle.cs" />
+     <Compile Include="Assets\Script\Battle\UI\TextWindow.cs" />
      <Compile Include="Assets\Script\Field\Encounter.cs" />
      <Compile Include="Assets\Script\Field\FieldConductor.cs" />
      <Compile Include="Assets\Script\GameContext.cs" />
@@ -88,7 +91,6 @@
      <Compile Include="Assets\Script\MusicEngine\Music.cs" />
      <Compile Include="Assets\Script\MusicEngine\UnityMusic.cs" />
      <Compile Include="Assets\Script\Utils\MidairPrimitive.cs" />
-     <Compile Include="Assets\Script\Utils\TextWindow.cs" />
      <Compile Include="Assets\Script\Utils\Utils.cs" />
      <Compile Include="Assets\SpriteStudio\Runtime\SsAnimation.cs" />
      <Compile Include="Assets\SpriteStudio\Runtime\SsAssetDatabase.cs" />

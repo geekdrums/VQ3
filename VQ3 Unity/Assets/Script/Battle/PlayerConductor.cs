@@ -16,6 +16,7 @@ public class PlayerConductor : MonoBehaviour {
     Command CurrentCommand;
 
     Player Player;
+    HPBar HPBar;
     public int NumQuarter { get; private set; }
     public int PlayerHP { get { return Player.HitPoint; } }
 
@@ -23,6 +24,7 @@ public class PlayerConductor : MonoBehaviour {
 	void Start () {
 		GameContext.PlayerConductor = this;
 		Player = GameObject.Find( "Main Camera" ).GetComponent<Player>();
+        HPBar = GameObject.Find( "UI" ).GetComponentInChildren<HPBar>();
         OnLevelUp();
 	}
 
@@ -31,7 +33,7 @@ public class PlayerConductor : MonoBehaviour {
 	{
 	}
 
-    void OnLevelUp()
+    public void OnLevelUp()
     {
         NumQuarter = QuarterLevelList[Level-1];
         Player.HitPoint         = HPLevelList[Level-1];
@@ -46,6 +48,7 @@ public class PlayerConductor : MonoBehaviour {
         commandGraph.CheckCommand();
         CurrentCommand = commandGraph.CurrentCommand;
         Player.TurnInit();
+        HPBar.OnTurnStart();
         TextWindow.AddMessage( "オクスは" + CurrentCommand.name + "をはなった！" );
 	}
     public void CheckSkill()
@@ -63,6 +66,7 @@ public class PlayerConductor : MonoBehaviour {
 	public void OnBattleStarted()
     {
         Player.OnBattleStart();
+        HPBar.OnTurnStart();
         commandGraph.OnBattleStart();
         Music.SetAisac( "IsTransition", 0 );
         Music.SetAisac( "TrackVolume1", 1 );
@@ -77,12 +81,14 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			Player.BeAttacked( attack, skill );
 			isSucceeded = true;
+            HPBar.OnDamage();
         }
         MagicModule magic = Action.GetModule<MagicModule>();
         if( magic != null && !skill.isPlayerSkill )
         {
             Player.BeMagicAttacked( magic, skill );
             isSucceeded = true;
+            HPBar.OnDamage();
         }
 		DefendModule defend = Action.GetModule<DefendModule>();
         if( defend != null && skill.isPlayerSkill )
@@ -101,7 +107,8 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			Player.Heal( heal );
 			isSucceeded = true;
-		}
+            HPBar.OnHeal();
+        }
 		return isSucceeded;
 	}
 }

@@ -18,15 +18,13 @@ public class Character : MonoBehaviour {
     protected int SkillMagic;
     protected int TurnDamage;
 
+    public int MaxHP { get; protected set; }
     public float DefendPower { get { return BaseDefend * ( 100.0f + SkillDefend )/100.0f; } }
     public float MagicDefendPower { get { return BaseMagicDefend * (100.0f + SkillMagicDefend) / 100.0f; } }
     public float AttackPower { get { return BasePower * (100.0f + SkillPower) / 100.0f; } }
     public float MagicPower { get { return BaseMagic * (100.0f + SkillMagic) / 100.0f; } }
 
 	protected float damageTime;
-    protected int MaxHP;
-
-    public GUIText debugText;
 
     protected virtual void Initialize()
     {
@@ -98,10 +96,5 @@ public class Character : MonoBehaviour {
 		HitPoint += h;
 		SEPlayer.Play( ActionResult.Healed );
 		Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
-
-        if( debugText != null )
-        {
-            debugText.text = HitPoint.ToString() + ", " + h + " healed!";
-        }
 	}
 }
