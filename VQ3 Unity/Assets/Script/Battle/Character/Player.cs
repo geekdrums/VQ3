@@ -43,13 +43,13 @@ public class Player : Character {
         base.TurnInit();
         if( HPBar != null ) HPBar.OnTurnStart();
     }
-    protected override void BeDamaged( int damage, Skill skill )
+    protected override void BeDamaged( int damage, Character ownerCharacter )
     {
-        base.BeDamaged( damage, skill );
+        base.BeDamaged( damage, ownerCharacter );
 
         if( damage <= 0 )
         {
-            (Instantiate( DefendAnimPrefab, skill.OwnerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
+            (Instantiate( DefendAnimPrefab, ownerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
         }
         else
         {

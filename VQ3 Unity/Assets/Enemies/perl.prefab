@@ -120,7 +120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
+  m_Script: {fileID: 11500000, guid: 51c4b48b39799c8418def7f2ff8b2455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoint: 10
@@ -129,6 +129,7 @@ MonoBehaviour:
   BaseDefend: 64
   BaseMagicDefend: 62
   DisplayName: "\u30D1\u30FC\u30EB"
+  Speceis: 3
   Commands:
   - {fileID: 11400002}
   - {fileID: 11400006}

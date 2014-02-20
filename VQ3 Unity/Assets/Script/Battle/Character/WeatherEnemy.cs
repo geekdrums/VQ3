@@ -47,6 +47,13 @@ public class WeatherEnemy : Enemy
         }
     }
 
+    public override void BePhysicDamaged( int damage, Character ownerCharacter )
+    {
+        SEPlayer.Play( "PhysicNoDamage" );
+        Debug.Log( this.ToString() + "was attacked but no damage." );
+        //base.BePhysicDamaged( damage, ownerCharacter );
+    }
+
     public void ReceiveWeatherModule( WeatherModule wm )
     {
         if( this.WeatherName == wm.WeatherName )

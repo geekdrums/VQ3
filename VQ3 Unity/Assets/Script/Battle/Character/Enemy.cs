@@ -2,11 +2,24 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum EnemySpecies
+{
+    Spirit,
+    Fairy,
+    Human,
+    Jewel,
+    Beast,
+    Dragon,
+    Weather,
+    Thing
+}
+
 public class Enemy : Character
 {
     static readonly float DamageTrembleTime = 0.05f;
 
     public string DisplayName;
+    public EnemySpecies Speceis;
     public EnemyCommand[] Commands;
     public StateChangeCondition[] conditions;
     public List<string> StateNames;
@@ -196,19 +209,18 @@ public class Enemy : Character
         }
     }
 
-    protected override void BeDamaged( int damage, Skill skill )
+    protected override void BeDamaged( int damage, Character ownerCharacter )
     {
-        int d = Mathf.Max( 0, damage );
-        base.BeDamaged( d, skill );
+        base.BeDamaged( damage, ownerCharacter );
+        CreateDamageText( damage );
+        CheckStateOnDamage( damage );
         HPCircle.OnDamage();
-        CreateDamageText( d );
-        CheckStateOnDamage( d );
     }
     public override void Heal( HealModule heal )
     {
-        int h = Mathf.Min( MaxHP - HitPoint, (int)(MaxHP * ((float)heal.HealPoint / 100.0f)) );
+        int oldHitPoint = HitPoint;
         base.Heal( heal );
-        CreateDamageText( -h );
+        CreateDamageText( -(HitPoint - oldHitPoint) );
         HPCircle.OnHeal();
     }
 
