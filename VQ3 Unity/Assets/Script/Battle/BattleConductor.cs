@@ -34,10 +34,7 @@ public class BattleConductor : MonoBehaviour {
             UpdateBattle();
 			if ( Music.IsJustChangedAt(0) && Music.GetCurrentBlockName() == "endro" )
 			{
-                if( GameContext.VoxSystem.state == VoxState.Invert || GameContext.VoxSystem.state == VoxState.Eclipse )
-                {
-                    GameContext.VoxSystem.SetState( VoxState.Revert );
-                }
+                GameContext.VoxSystem.SetState( VoxState.SunSet );
 				GameContext.ChangeState( GameContext.GameState.Endro );
                 TextWindow.ClearMessages();
 				TextWindow.AddMessage( "ÇƒÇ´ÇÅ@Ç‚Ç¡Ç¬ÇØÇΩÅI" );
@@ -122,8 +119,12 @@ public class BattleConductor : MonoBehaviour {
 	public void OnPlayerWin()
 	{
         Music.SetNextBlock("endro");
+        GameContext.PlayerConductor.OnPlayerWin();
+        GameContext.EnemyConductor.OnPlayerWin();
 	}
 	public void OnPlayerLose()
-	{
+    {
+        GameContext.PlayerConductor.OnPlayerLose();
+        GameContext.EnemyConductor.OnPlayerLose();
 	}
 }

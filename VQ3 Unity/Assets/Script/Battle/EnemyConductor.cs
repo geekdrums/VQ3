@@ -308,4 +308,12 @@ public class EnemyConductor : MonoBehaviour {
             e.TurnInit();
         }
     }
+
+
+    public void OnPlayerWin()
+    {
+    }
+    public void OnPlayerLose()
+    {
+    }
 }

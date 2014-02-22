@@ -231,7 +231,10 @@ public class Enemy : Character
     public void OnBaseColorChanged( Color newColor )
     {
         renderer.material.color = newColor;
-        HPCircle.CurrentCircle.GetComponent<SpriteRenderer>().color = newColor;
+        if( HPCircle != null )
+        {
+            HPCircle.CurrentCircle.GetComponent<SpriteRenderer>().color = newColor;
+        }
     }
 
     public override string ToString()

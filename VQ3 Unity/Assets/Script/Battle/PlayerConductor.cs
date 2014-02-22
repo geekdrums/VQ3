@@ -107,4 +107,14 @@ public class PlayerConductor : MonoBehaviour {
         }
 		return isSucceeded;
 	}
+
+
+    public void OnPlayerWin()
+    {
+        Player.TurnInit();
+    }
+    public void OnPlayerLose()
+    {
+        Player.TurnInit();
+    }
 }
