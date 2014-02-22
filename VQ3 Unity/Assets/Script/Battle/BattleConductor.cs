@@ -3,11 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BattleConductor : MonoBehaviour {
-    public GameObject skillParent;
-    public VoxonSystem voxonSystem;
-
-    BGEffect CurrentBGEffect;
-    
+    public GameObject skillParent;    
     List<Pair<Timing, Skill>> Skills;
 
 	// Use this for initialization
@@ -24,8 +20,13 @@ public class BattleConductor : MonoBehaviour {
 		{
 		case GameContext.GameState.Intro:
 			if ( Music.IsJustChangedAt( 0 ) && Music.GetCurrentBlockName() != "intro" )
-			{
-				GameContext.ChangeState( GameContext.GameState.Battle );
+            {
+                if( GameContext.PlayerConductor.Level < 8 )
+                {
+                    GameContext.PlayerConductor.Level++;
+                    GameContext.PlayerConductor.OnLevelUp();
+                }
+                GameContext.ChangeState( GameContext.GameState.Battle );
 				UpdateBattle();
 			}
 			break;
@@ -33,9 +34,13 @@ public class BattleConductor : MonoBehaviour {
             UpdateBattle();
 			if ( Music.IsJustChangedAt(0) && Music.GetCurrentBlockName() == "endro" )
 			{
-				voxonSystem.SetState( VoxonSystem.VoxonState.HideBreak );
+                if( GameContext.VoxSystem.state == VoxState.Invert || GameContext.VoxSystem.state == VoxState.Eclipse )
+                {
+                    GameContext.VoxSystem.SetState( VoxState.Revert );
+                }
 				GameContext.ChangeState( GameContext.GameState.Endro );
-				TextWindow.AddMessage( "てきを　やっつけた！", "３のけいけんちを　えた！" );
+                TextWindow.ClearMessages();
+				TextWindow.AddMessage( "てきを　やっつけた！" );
 			}
             break;
 		case GameContext.GameState.Endro:
@@ -97,6 +102,8 @@ public class BattleConductor : MonoBehaviour {
         Skills.Add( new Pair<Timing, Skill>( new Timing( Music.Just ), NewSkill ) );
 	}
 
+    //BGEffect CurrentBGEffect;
+    /*
     public void SetBGEffect( GameObject BGEffectPrefab )
     {
         if( CurrentBGEffect != null && (BGEffectPrefab == null || CurrentBGEffect.GetType() != BGEffectPrefab.GetComponent<BGEffect>().GetType()) )
@@ -110,13 +117,11 @@ public class BattleConductor : MonoBehaviour {
             CurrentBGEffect = bgObj.GetComponent<BGEffect>();
         }
     }
-
+    */
 
 	public void OnPlayerWin()
 	{
         Music.SetNextBlock("endro");
-        GameContext.PlayerConductor.Level++;
-        GameContext.PlayerConductor.OnLevelUp();
 	}
 	public void OnPlayerLose()
 	{

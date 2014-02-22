@@ -61,7 +61,7 @@ public static class GameContext
 
     //Conductors
 	public static BattleConductor BattleConductor;
-	public static VoxonSystem VoxonSystem;
     public static EnemyConductor EnemyConductor;
     public static PlayerConductor PlayerConductor;
+    public static VoxSystem VoxSystem;
 }

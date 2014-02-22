@@ -66,15 +66,15 @@ public class AttackModule : TargetModule
 
 public class MagicModule : TargetModule
 {
-    public MagicModule( int MagicPower, int VoxonPoint, TargetType TargetType = TargetType.First, int AnimIndex = -1 )
+    public MagicModule( int MagicPower, int VoxPoint, TargetType TargetType = TargetType.First, int AnimIndex = -1 )
         : base( TargetType, AnimIndex )
 	{
 		this.MagicPower = MagicPower;
-        this.VoxonPoint = VoxonPoint;
+        this.VoxPoint = VoxPoint;
 	}
 
 	public int MagicPower { get; private set; }
-    public int VoxonPoint { get; private set; }
+    public int VoxPoint { get; private set; }
 }
 
 public class DefendModule : TargetModule

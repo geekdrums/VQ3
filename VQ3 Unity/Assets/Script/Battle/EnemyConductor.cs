@@ -7,7 +7,6 @@ public class EnemyConductor : MonoBehaviour {
 
     public GameObject damageTextPrefab;
     public GameObject HPCirclePrefab;
-    public GameObject targetCursor;
     public GameObject nextTargetCursor;
 
     List<Enemy> Enemies = new List<Enemy>();
@@ -15,6 +14,7 @@ public class EnemyConductor : MonoBehaviour {
 
     Enemy targetEnemy;
     Enemy nextTarget;
+    Camera mainCamera;
 
 	Color _baseColor;
 	public Color baseColor
@@ -35,14 +35,13 @@ public class EnemyConductor : MonoBehaviour {
 	void Start () {
 		GameContext.EnemyConductor = this;
 		baseColor = Color.black;
+        mainCamera = GameObject.Find( "Main Camera" ).GetComponent<Camera>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if( Enemies.Count > 0 )
         {
-
-            targetCursor.transform.position = Vector3.Lerp( targetCursor.transform.position, targetEnemy.transform.position, 0.1f );
             if( GameContext.PlayerConductor.commandGraph.NextCommand.IsTargetSelectable )
             {
                 if( nextTarget == null ) nextTarget = targetEnemy;
@@ -85,8 +84,10 @@ public class EnemyConductor : MonoBehaviour {
             {
                 Enemies.Add( e );
             }
+            e.transform.parent = transform;
         }
         targetEnemy = Enemies[(Enemies.Count - 1)/2];
+        GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
     }
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )
@@ -123,7 +124,7 @@ public class EnemyConductor : MonoBehaviour {
 				e.BeMagicAttacked( magic, skill );
 				isSucceeded = true;
 			}
-			GameContext.VoxonSystem.AddVoxon( magic.VoxonPoint );
+			GameContext.VoxSystem.AddVP( magic.VoxPoint );
         }
         DefendModule defend = Action.GetModule<DefendModule>();
         if( defend != null && !skill.isPlayerSkill )
@@ -178,8 +179,12 @@ public class EnemyConductor : MonoBehaviour {
         }
         else
         {
-            if( !Enemies.Contains( targetEnemy ) ) targetEnemy = (nextTarget != null && Enemies.Contains( nextTarget ) ? nextTarget : Enemies[(Enemies.Count - 1) / 2]);
             if( nextTarget != null && !Enemies.Contains( nextTarget ) ) nextTarget = Enemies[(Enemies.Count - 1) / 2];
+            if( !Enemies.Contains( targetEnemy ) )
+            {
+                targetEnemy = (nextTarget != null && Enemies.Contains( nextTarget ) ? nextTarget : Enemies[(Enemies.Count - 1) / 2]);
+                GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
+            }
         }
 
 		return isSucceeded;
@@ -244,7 +249,11 @@ public class EnemyConductor : MonoBehaviour {
 
     public void CheckCommand()
     {
-        if( nextTarget != null ) targetEnemy = nextTarget;
+        if( nextTarget != null )
+        {
+            targetEnemy = nextTarget;
+            GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
+        }
 
         int num2BarCommands = 0;
         int num1BarCommands = 0;
@@ -282,13 +291,21 @@ public class EnemyConductor : MonoBehaviour {
     public void CheckSkill()
     {
         int CurrentIndex = Music.Just.bar;
-        if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break ) return;
-        if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak && CurrentIndex == 3 ) return;
+        if( GameContext.VoxSystem.state == VoxState.Invert ) return;
+        if( GameContext.VoxSystem.state == VoxState.Eclipse && CurrentIndex == 3 ) return;
 
         foreach( Enemy e in Enemies )
         {
             e.CheckSkill();
         }
         if( WeatherEnemy != null && !WeatherEnemy.IsSubstance ) WeatherEnemy.CheckSkill();
+    }
+
+    public void OnInvert()
+    {
+        foreach( Enemy e in Enemies )
+        {
+            e.TurnInit();
+        }
     }
 }

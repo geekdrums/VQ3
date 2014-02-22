@@ -8,7 +8,7 @@ public class CommandGraph : MonoBehaviour {
     public GameObject EdgePrefab;
     public Command IntroCommand;
     public Command DefaultCommand;
-    public Strategy BreakStrategy;
+    public Strategy InvertStrategy;
     public Command[] CommandNodes;
     public Strategy[] StrategyNodes;
     public GameObject VoxBall;
@@ -19,10 +19,10 @@ public class CommandGraph : MonoBehaviour {
     public Command NextCommand { get; private set; }
     public Command CurrentCommand { get; private set; }
 
-    bool IsLinkedToBreak { get { return ( CurrentCommand.ParentStrategy != null && CurrentCommand.ParentStrategy.IsLinkedTo( BreakStrategy ) ) || CurrentCommand.IsLinkedTo( BreakStrategy ); } }
-    bool IsBreaking { get { return CurrentCommand.ParentStrategy == BreakStrategy; } }
-    bool CanUseBreak { get { return GameContext.PlayerConductor.Level >= 8; } }
-    int RemainBreakTime;
+    bool IsLinkedToInvert { get { return ( CurrentCommand.ParentStrategy != null && CurrentCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) ) || CurrentCommand.IsLinkedTo( InvertStrategy ); } }
+    bool IsInvert { get { return CurrentCommand.ParentStrategy == InvertStrategy; } }
+    bool CanUseInvert { get { return GameContext.PlayerConductor.Level >= 8; } }
+    int RemainInvertTime;
 
     Camera MainCamera;
     Timing AllowInputEnd = new Timing( 3, 3, 2 );
@@ -83,17 +83,17 @@ public class CommandGraph : MonoBehaviour {
         UpdateInput();
         if( AllowInputStart <= Music.Just && Music.Just < AllowInputEnd )
         {
-            if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak )
+            if( GameContext.VoxSystem.state == VoxState.Eclipse )
             {
             }
-            else if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.Break )
+            else if( GameContext.VoxSystem.state == VoxState.Invert )
             {
-                if( RemainBreakTime == 1 )
+                if( RemainInvertTime == 1 )
                 {
                     if( Music.isJustChanged ) SelectNearestNode();
                     if( Music.IsJustChangedAt( 3, 2 ) )
                     {
-                        GameContext.VoxonSystem.SetState( VoxonSystem.VoxonState.HideBreak );
+                        GameContext.VoxSystem.SetState( VoxState.Revert );
                     }
                 }
             }
@@ -153,7 +153,7 @@ public class CommandGraph : MonoBehaviour {
         float minDistance = (SelectSpot.transform.position - CurrentCommand.transform.position).magnitude;
         foreach( Command command in CurrentCommand.LinkedCommands )
         {
-            if( !command.IsUsable() || command.ParentStrategy == BreakStrategy ) continue;
+            if( !command.IsUsable() || command.ParentStrategy == InvertStrategy ) continue;
             float d = (SelectSpot.transform.position - command.transform.position).magnitude;
             if( d < minDistance )
             {
@@ -178,36 +178,42 @@ public class CommandGraph : MonoBehaviour {
         {
             Select( DefaultCommand );
         }
-        else if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak )
+        else if( GameContext.VoxSystem.state == VoxState.Eclipse )
         {
-            Select( BreakStrategy.Commands[0] );
+            Select( InvertStrategy.Commands[0] );
         }
 
-        if( IsBreaking )
+        if( IsInvert )
         {
-            --RemainBreakTime;
-            if( RemainBreakTime == 0 )
+            --RemainInvertTime;
+            if( RemainInvertTime == 0 )
             {
-                //if ( NextStrategy == EStrategy.Break )
-                //{
-                //    NextStrategy = EStrategy.Magic;
-                //    NextCommand = Strategies[(int)NextStrategy].Commands[0];
-                //}
+                if( NextCommand.ParentStrategy == InvertStrategy )
+                {
+                    foreach( Command c in InvertStrategy.LinkedCommands )
+                    {
+                        if( c.ParentStrategy != InvertStrategy )
+                        {
+                            NextCommand = c;
+                            break;
+                        }
+                    }
+                }
                 Music.SetNextBlock( NextCommand.GetBlockName() );
             }
         }
         else
         {
-            bool willShowBreak = false;
-            if( CanUseBreak )
+            bool willEclipse = false;
+            if( CanUseInvert && NextCommand.ParentStrategy != null && NextCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) )
             {
-                willShowBreak = GameContext.VoxonSystem.DetermineWillShowBreak( NextCommand.GetWillGainVoxon() );
-                if( willShowBreak )
+                willEclipse = GameContext.VoxSystem.WillEclipse;
+                if( willEclipse )
                 {
-                    RemainBreakTime = 2;
+                    RemainInvertTime = 2;
                 }
             }
-            Music.SetNextBlock( NextCommand.GetBlockName() + (willShowBreak ? "Trans" : "") );
+            Music.SetNextBlock( NextCommand.GetBlockName() + (willEclipse ? "Trans" : "") );
         }
     }
 
@@ -232,10 +238,10 @@ public class CommandGraph : MonoBehaviour {
         CurrentCommand = NextCommand;
         CurrentCommand.SetCurrent();
 
-        VoxonSystem.VoxonState desiredState = GetDesiredVoxonState();
-        if( GameContext.VoxonSystem.state != desiredState )
+        VoxState desiredState = GetDesiredVoxState();
+        if( GameContext.VoxSystem.state != desiredState )
         {
-            GameContext.VoxonSystem.SetState( desiredState );
+            GameContext.VoxSystem.SetState( desiredState );
         }
     }
 
@@ -255,27 +261,27 @@ public class CommandGraph : MonoBehaviour {
     }
 
 
-    VoxonSystem.VoxonState GetDesiredVoxonState()
+    VoxState GetDesiredVoxState()
     {
-        if( !CanUseBreak ) return VoxonSystem.VoxonState.Hide;
-        if( IsLinkedToBreak )
+        if( !CanUseInvert ) return VoxState.Sun;
+        if( IsLinkedToInvert )
         {
-            if( GameContext.VoxonSystem.state != VoxonSystem.VoxonState.ShowBreak )
+            if( GameContext.VoxSystem.WillEclipse )
             {
-                return VoxonSystem.VoxonState.Show;
+                return VoxState.Eclipse;
             }
             else
             {
-                return VoxonSystem.VoxonState.ShowBreak;
+                return VoxState.Sun;
             }
         }
-        else if( IsBreaking )
+        else if( IsInvert )
         {
-            return VoxonSystem.VoxonState.Break;
+            return VoxState.Invert;
         }
         else
         {
-            return VoxonSystem.VoxonState.Hide;
+            return VoxState.Sun;
         }
     }
 }

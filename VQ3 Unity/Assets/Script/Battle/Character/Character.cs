@@ -86,6 +86,7 @@ public class Character : MonoBehaviour {
         TurnDamage += d;
         int RelativeMaxHP = (MaxHP < GameContext.PlayerConductor.PlayerMaxHP ? MaxHP : GameContext.PlayerConductor.PlayerMaxHP);
         damageTime += 0.15f + ((float)d / (float)RelativeMaxHP) * 2.0f;
+        damageTime = Mathf.Min( damageTime, (float)Music.mtUnit * 8 );
 	}
 
 	public void Defend( DefendModule defend )

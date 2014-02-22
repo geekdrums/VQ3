@@ -10,7 +10,7 @@ public class Skill : MonoBehaviour
     public string[] _actionStr;
     public string _rhythmStr;
     public int _rhythmBaseTime = 4;
-    public GameObject bgEffefctPrefab;
+    //public GameObject bgEffefctPrefab;
     public string DescribeText;
 
 	public ActionSet[] Actions { get; protected set; }
@@ -57,10 +57,10 @@ public class Skill : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if( isPlayerSkill )
-        {
-            GameContext.BattleConductor.SetBGEffect( bgEffefctPrefab );
-        }
+        //if( isPlayerSkill )
+        //{
+        //    GameContext.BattleConductor.SetBGEffect( bgEffefctPrefab );
+        //}
     }
 
     // Update is called once per frame

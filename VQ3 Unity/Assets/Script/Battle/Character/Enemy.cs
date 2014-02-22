@@ -62,7 +62,7 @@ public class Enemy : Character
         {
             if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
             {
-                transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 2.0f ) * 1.3f;
+                transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 1.5f ) * 1.3f;
             }
             damageTime -= Time.deltaTime;
             if( damageTime <= 0 )
@@ -160,11 +160,15 @@ public class Enemy : Character
         }
     }
 
+    public override void TurnInit()
+    {
+        base.TurnInit();
+        HPCircle.OnTurnStart();
+    }
     public EnemyCommand CheckCommand()
     {
         TurnInit();
         CheckState();
-        HPCircle.OnTurnStart();
 
         if( currentCommand != null && currentCommand.nextCommand != null )
         {
@@ -227,6 +231,7 @@ public class Enemy : Character
     public void OnBaseColorChanged( Color newColor )
     {
         renderer.material.color = newColor;
+        HPCircle.CurrentCircle.GetComponent<SpriteRenderer>().color = newColor;
     }
 
     public override string ToString()

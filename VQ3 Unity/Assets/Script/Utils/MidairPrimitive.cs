@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class MidairPrimitive : MonoBehaviour {
 
     public int N;
@@ -34,10 +34,11 @@ public class MidairPrimitive : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-#if UNITY_EDITOR
-        if( !UnityEditor.EditorApplication.isPlaying ) return;
-#endif
-        
+//#if UNITY_EDITOR
+//        if( !UnityEditor.EditorApplication.isPlaying ) return;
+//#endif
+
+        RecalculatePolygon();
         UpdateAnimation();
         UpdateGrow();
 	}

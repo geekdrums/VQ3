@@ -14,16 +14,16 @@ public class TargetCursor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Command NextCommand = GameContext.PlayerConductor.commandGraph.NextCommand;
-        if( NextCommand != null )
-        {
-            GetComponent<TextMesh>().text = NextCommand.GetComponent<TextMesh>().text;
-        }
+        //Command NextCommand = GameContext.PlayerConductor.commandGraph.NextCommand;
+        //if( NextCommand != null )
+        //{
+        //    GetComponent<TextMesh>().text = NextCommand.GetComponent<TextMesh>().text;
+        //}
 	}
 
     public void OnBattleStart()
     {
         transform.position = initialPosition;
-        GetComponent<TextMesh>().text = initialText;
+        //GetComponent<TextMesh>().text = initialText;
     }
 }

@@ -62,7 +62,7 @@ public class Command : MonoNode
 
     public virtual GameObject GetCurrentSkill()
     {
-        if( GameContext.VoxonSystem.state == VoxonSystem.VoxonState.ShowBreak && Music.Just.bar >= 3 ) return null;
+        if( GameContext.VoxSystem.state == VoxState.Eclipse && Music.Just.bar >= 2 ) return null;
         return SkillDictionary.ContainsKey( Music.Just.totalUnit ) ? SkillDictionary[Music.Just.totalUnit].gameObject : null;
     }
     public void SetParent( Strategy parent )
@@ -70,7 +70,7 @@ public class Command : MonoNode
         ParentStrategy = parent;
     }
 
-    public int GetWillGainVoxon()
+    public int GetWillGainVP()
     {
         int sum = 0;
         for( int i = 0; i < SkillDictionary.Count; ++i )
@@ -83,7 +83,7 @@ public class Command : MonoNode
                 {
                     if( a.GetModule<MagicModule>() != null )
                     {
-                        sum += a.GetModule<MagicModule>().VoxonPoint;
+                        sum += a.GetModule<MagicModule>().VoxPoint;
                     }
                 }
             }

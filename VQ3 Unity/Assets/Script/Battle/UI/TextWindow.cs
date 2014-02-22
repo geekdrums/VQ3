@@ -64,6 +64,10 @@ public class TextWindow : MonoBehaviour {
         }
 	}
 
+    public static void ClearMessages()
+    {
+        instance.ClearMessages_();
+    }
 	public static void AddMessage( params string[] NewMessages )
 	{
 		foreach ( string message in NewMessages )
@@ -81,4 +85,12 @@ public class TextWindow : MonoBehaviour {
         Messages.Insert( 0, NewMessage );
         if( Messages.Count > displayTexts.Length ) Messages.RemoveAt( Messages.Count - 1 );
 	}
+    void ClearMessages_()
+    {
+        Messages.Clear();
+        for( int i = 0; i < displayTexts.Length; i++ )
+        {
+            displayTexts[i].text = "";
+        }
+    }
 }
