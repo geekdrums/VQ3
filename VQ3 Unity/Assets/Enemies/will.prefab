@@ -101,9 +101,9 @@ MonoBehaviour:
   BaseDefend: 32
   BaseMagicDefend: 50
   DisplayName: "\u30A6\u30A3\u30EB"
+  Speceis: 0
   Commands:
   - {fileID: 11400002}
-  - {fileID: 11400004}
   conditions: []
   StateNames: []
   currentState: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8c59f0377c440ea4cbf98a4cb4c3fabe, type: 2}
   _timingStr: 0 2 0
   numBar: 0
-  probabilityList: 1e000000
+  probabilityList: 00000000
   currentState: 
   nextState: 
   nextCommand: {fileID: 0}

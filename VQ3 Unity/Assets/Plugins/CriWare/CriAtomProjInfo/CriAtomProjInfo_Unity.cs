@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.1.32.00
-* Date Time          : 2014/02/20 21:14
+* Date Time          : 2014/02/25 19:27
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -43,6 +43,7 @@ public partial class CriAtomAcfInfo
         newAcbInfo = new AcbInfo("BattleMusic", 0, "", "BattleMusic.acb", "BattleMusic.awb","092c99ee-743c-46a9-be50-4dc8c020b14e");
         acfInfo.acbInfoList.Add(newAcbInfo);
         newAcbInfo.cueInfoList.Add(1, new CueInfo("BattleMusic", 1, ""));
+        newAcbInfo.cueInfoList.Add(2, new CueInfo("continue", 2, ""));
         newAcbInfo = new AcbInfo("SE", 1, "", "SE.acb", "SE.awb","61f6c484-c862-4d1d-b6ad-5f194ae823c8");
         acfInfo.acbInfoList.Add(newAcbInfo);
         newAcbInfo.cueInfoList.Add(2, new CueInfo("PhysicGoodDamage", 2, ""));
@@ -58,5 +59,6 @@ public partial class CriAtomAcfInfo
         newAcbInfo.cueInfoList.Add(3, new CueInfo("PlayerDefend", 3, ""));
         newAcbInfo.cueInfoList.Add(1, new CueInfo("PlayerPhysicDamage", 1, ""));
         newAcbInfo.cueInfoList.Add(12, new CueInfo("PlayerMagicDamage", 12, ""));
+        newAcbInfo.cueInfoList.Add(13, new CueInfo("select", 13, ""));
     }
 }

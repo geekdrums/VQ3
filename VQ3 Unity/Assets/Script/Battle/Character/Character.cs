@@ -85,7 +85,7 @@ public class Character : MonoBehaviour {
         HitPoint = Mathf.Clamp( HitPoint - d, 0, HitPoint );
         TurnDamage += d;
         int RelativeMaxHP = (MaxHP < GameContext.PlayerConductor.PlayerMaxHP ? MaxHP : GameContext.PlayerConductor.PlayerMaxHP);
-        damageTime += 0.15f + ((float)d / (float)RelativeMaxHP) * 2.0f;
+        damageTime += 0.15f + ((float)d / (float)RelativeMaxHP) * 0.7f;
         damageTime = Mathf.Min( damageTime, (float)Music.mtUnit * 8 );
 	}
 
@@ -102,8 +102,11 @@ public class Character : MonoBehaviour {
 	public virtual void Heal( HealModule heal )
 	{
         int h = Mathf.Min( MaxHP - HitPoint, (int)(MaxHP * ( (float)heal.HealPoint/100.0f )) );
-		HitPoint += h;
-		SEPlayer.Play( ActionResult.Healed, this, h );
-		Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
+        if( h > 0 )
+        {
+            HitPoint += h;
+            SEPlayer.Play( ActionResult.Healed, this, h );
+            Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
+        }
 	}
 }

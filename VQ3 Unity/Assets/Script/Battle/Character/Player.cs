@@ -65,7 +65,10 @@ public class Player : Character {
     {
         int oldHitPoint = HitPoint;
         base.Heal( heal );
-        HPBar.OnHeal( HitPoint - oldHitPoint );
+        if( HitPoint - oldHitPoint > 0 )
+        {
+            HPBar.OnHeal( HitPoint - oldHitPoint );
+        }
     }
 
     public void OnBattleStart()

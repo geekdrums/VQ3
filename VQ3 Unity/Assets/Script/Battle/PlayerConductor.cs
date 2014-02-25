@@ -117,4 +117,9 @@ public class PlayerConductor : MonoBehaviour {
     {
         Player.TurnInit();
     }
+    public void OnContinue()
+    {
+        Player.HitPoint = Player.MaxHP;
+        Player.TurnInit();
+    }
 }

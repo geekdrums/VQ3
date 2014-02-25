@@ -41,7 +41,11 @@ public class Command : MonoNode
 #endif
     }
 
-    void Parse(){
+    void Parse()
+    {
+#if UNITY_EDITOR
+        if( !UnityEditor.EditorApplication.isPlaying ) return;
+#endif
         string[] timingStrs = _timingStr.Split( ",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
         if( timingStrs.Length != _skillList.Count )
         {

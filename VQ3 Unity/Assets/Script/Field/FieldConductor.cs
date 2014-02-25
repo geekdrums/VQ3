@@ -29,10 +29,6 @@ public class FieldConductor : MonoBehaviour {
         Music.Stop();
 		GameContext.EnemyConductor.SetEnemy( Encounters[encounterCount].Enemies );
         GameContext.ChangeState( GameContext.GameState.Intro );
-		foreach ( GameObject e in Encounters[encounterCount].Enemies )
-        {
-            TextWindow.AddMessage( new GUIMessage( e.GetComponent<Enemy>().DisplayName + " Ç™Ç†ÇÁÇÌÇÍÇΩÅI" ) );
-		}
 		++encounterCount;
 		encounterCount %= Encounters.Length;
     }

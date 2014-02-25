@@ -79,6 +79,11 @@ public class TextWindow : MonoBehaviour {
 	{
 		instance.AddMessage_( NewMessage );
 	}
+    public static void ChangeMessage( params string[] NewMessages )
+    {
+        ClearMessages();
+        AddMessage( NewMessages );
+    }
 
 	void AddMessage_( GUIMessage NewMessage )
 	{

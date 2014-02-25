@@ -30,16 +30,16 @@ public class HPBar : MonoBehaviour {
 
     public void OnDamage( int damage )
     {
-        hpText.text = "HP:" + Player.HitPoint + "/" + Player.MaxHP;
+        UpdateHPText();
         CurrentBar.transform.localScale = targetScale;
 
-        Vector3 nextDamageTextPosition =(latestDamageText == null ? damageTextPrefab.transform.position : latestDamageText.transform.position + Vector3.right);
+        Vector3 nextDamageTextPosition = (latestDamageText == null ? damageTextPrefab.transform.position : latestDamageText.GetComponent<DamageText>().initialPosition + Vector3.right);
         latestDamageText = (Instantiate( damageTextPrefab, nextDamageTextPosition, Quaternion.identity ) as GameObject);
         latestDamageText.GetComponent<DamageText>().Initialize( damage, nextDamageTextPosition );
     }
     public void OnHeal( int heal )
     {
-        hpText.text = "HP:" + Player.HitPoint + "/" + Player.MaxHP;
+        UpdateHPText();
         CurrentBar.transform.localScale = targetScale;
         if( Player.HitPoint > TurnStartHP )
         {
@@ -53,9 +53,22 @@ public class HPBar : MonoBehaviour {
     }
     public void OnTurnStart()
     {
-        hpText.text = "HP:" + Player.HitPoint + "/" + Player.MaxHP;
+        UpdateHPText();
         TurnStartHP = Player.HitPoint;
         CurrentBar.transform.localScale = targetScale;
         RedBar.transform.localScale = targetScale;
+    }
+
+    void UpdateHPText()
+    {
+        hpText.text = "HP" + Player.HitPoint + "/" + Player.MaxHP;
+        if( (float)Player.HitPoint / Player.MaxHP <= 0.25f )
+        {
+            hpText.color = Color.gray;
+        }
+        else
+        {
+            hpText.color = Color.white;
+        }
     }
 }

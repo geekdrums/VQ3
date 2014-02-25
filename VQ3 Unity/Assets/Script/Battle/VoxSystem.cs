@@ -25,6 +25,7 @@ public class VoxSystem : MonoBehaviour{
     public TextMesh VPText;
     public GameObject[] sunLights;
     public GameObject mainLight;
+    public GameObject nextTargetLight;
 
     //animation preferences
     public Color BGColor;
@@ -32,17 +33,22 @@ public class VoxSystem : MonoBehaviour{
     public Vector3 sunsetPosition;
     public float[] lightAngles;
     public float targetLightAngle;
+    public float nextTargetLightAngle;
     public float lightSpeedCoeff = 0.03f;
     public float lightMinSpeed = 0.05f;
+    public Color nextTargetLightColor;
 
     //initial parameters
     Color initialBGColor;
     Color initialMoonColor;
+    Color initialNextLightColor;
     Vector3 initialSunPosition;
     Vector3 initialMoonPosition;
     float initialMainLightScale;
     float[] initialLightScales;
     float[] initialLightAngles;
+    float initialRingWidth;
+    float initialRingRadius;
 
     //target parameters
     Color targetTextColor;
@@ -62,6 +68,7 @@ public class VoxSystem : MonoBehaviour{
     //etc
     Camera mainCamera;
     Enemy currentTargetEnemy;
+    Enemy nextTargetEnemy;
     float rotTime;
 
 	// Use this for initialization
@@ -92,6 +99,24 @@ public class VoxSystem : MonoBehaviour{
             targetLightAngles[i] = initialLightAngles[i];
             targetLightScales[i] = initialLightScales[i];
         }
+
+        initialRingWidth = voxRing.Width;
+        initialRingRadius = voxRing.Radius;
+        initialNextLightColor = nextTargetLight.renderer.material.color;
+        nextTargetLight.renderer.material.color = Color.clear;
+
+        //initial blacck
+        mainCamera.backgroundColor = Color.black;
+        BGColor = Color.black;
+        transform.position = sunsetPosition;
+        voxSun.transform.localScale = Vector3.zero;
+        voxRing.transform.localScale = Vector3.zero;
+        for( int i = 0; i < sunLights.Length; i++ )
+        {
+            sunLights[i].transform.rotation = Quaternion.identity;
+            sunLights[i].transform.localScale = new Vector3( 0, sunLights[i].transform.localScale.y, sunLights[i].transform.localScale.z );
+        }
+        mainLight.transform.localScale = new Vector3( 0, mainLight.transform.localScale.y, mainLight.transform.localScale.z );
 	}
 
     // Update is called once per frame
@@ -170,6 +195,10 @@ public class VoxSystem : MonoBehaviour{
             {
                 lightAngles[i] += (targetLightAngle - lightAngles[i] > 0 ? -1 : 1) * 0.1f * (i+2);
             }
+            voxRing.SetWidth( initialRingWidth * (1.1f - t) );
+            voxRing.SetSize( initialRingRadius + t * 2.0f );
+            voxSun.GrowSize = t * 0.4f;
+            voxSun.SetTargetColor( Color.white * ( 1.0f - t*0.2f ) );
         }
         else if( animation.isPlaying )
         {
@@ -183,6 +212,7 @@ public class VoxSystem : MonoBehaviour{
         {
             voxMoon.transform.position = voxSun.transform.position + Vector3.back * 0.1f + Vector3.down * 0.1f;
             BGColor = Color.black;
+            nextTargetLightColor = Color.clear;
             animation["EclipseAnim"].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
             animation.Play();
             GameContext.EnemyConductor.OnInvert();
@@ -193,9 +223,11 @@ public class VoxSystem : MonoBehaviour{
             GameContext.EnemyConductor.baseColor = Color.white;
             BGOffset = Vector3.zero;
             voxRing.SetColor( Color.clear );
+            voxRing.SetWidth( initialRingWidth );
+            voxRing.SetSize( initialRingRadius );
             voxSun.transform.localScale = Vector3.zero;
 
-            Enemy refleshTarget = currentTargetEnemy;
+            Enemy refleshTarget = ( nextTargetEnemy != null && nextTargetEnemy != currentTargetEnemy ? nextTargetEnemy : currentTargetEnemy );
             currentTargetEnemy = null;
             SetTargetEnemy( refleshTarget );
             for( int i = 0; i < sunLights.Length; i++ )
@@ -229,6 +261,8 @@ public class VoxSystem : MonoBehaviour{
                 sunLights[i].transform.localScale = new Vector3( Mathf.Lerp( sunLights[i].transform.localScale.x, targetLightScales[i], 0.1f ), sunLights[i].transform.localScale.y, sunLights[i].transform.localScale.z );
             }
         }
+        nextTargetLight.transform.rotation = Quaternion.Lerp( nextTargetLight.transform.rotation, Quaternion.AngleAxis( nextTargetLightAngle, Vector3.forward ), 0.2f );
+        nextTargetLight.renderer.material.color = Color.Lerp( nextTargetLight.renderer.material.color, nextTargetLightColor, 0.1f );
 
         VPText.color = Color.Lerp( VPText.color, targetTextColor, 0.05f );
         voxMoon.SetColor( Color.Lerp( voxMoon.Color, targetMoonColor, 0.1f ) );
@@ -266,6 +300,7 @@ public class VoxSystem : MonoBehaviour{
                 GameContext.EnemyConductor.baseColor = Color.black;
                 voxRing.SetTargetColor( Color.white );
                 voxSun.transform.localScale = Vector3.one;
+                voxSun.SetTargetColor( Color.white );
                 voxMoon.transform.localScale = Vector3.zero;
                 voxMoon.transform.position = initialMoonPosition;
                 
@@ -278,6 +313,10 @@ public class VoxSystem : MonoBehaviour{
                     targetLightScales[i] = initialLightScales[i];
                 }
                 targetMainLightScale = initialMainLightScale;
+
+                voxRing.SetTargetWidth( initialRingWidth );
+                voxRing.SetTargetSize( initialRingRadius );
+                nextTargetLightColor = Color.clear;
                 break;
             case VoxState.Eclipse:
                 useTargetBGColor = false;
@@ -327,8 +366,12 @@ public class VoxSystem : MonoBehaviour{
         if( currentTargetEnemy != targetEnemy )
         {
             currentTargetEnemy = targetEnemy;
-            Vector3 direction = targetEnemy.transform.position + Vector3.down * 1.5f - mainLight.transform.position;
+            Vector3 direction = targetEnemy.transform.position + Vector3.down * 1.5f - initialSunPosition;
             targetLightAngle = Quaternion.LookRotation( Vector3.forward, -direction ).eulerAngles.z;
+            if( nextTargetEnemy == currentTargetEnemy )
+            {
+                nextTargetLightColor = Color.clear;
+            }
             if( state == VoxState.Sun )
             {
                 for( int i = 0; i < lightAngles.Length; i++ )
@@ -343,6 +386,34 @@ public class VoxSystem : MonoBehaviour{
                     lightAngles[i] = targetLightAngle;
                 }
             }
+        }
+    }
+
+    public void SetNextTargetEnemy( Enemy targetEnemy )
+    {
+        Enemy oldTargetEnemy = nextTargetEnemy;
+        if( nextTargetEnemy != targetEnemy )
+        {
+            nextTargetEnemy = targetEnemy;
+            if( nextTargetEnemy != null )
+            {
+                Vector3 direction = targetEnemy.transform.position + Vector3.down * 1.5f - nextTargetLight.transform.position;
+                nextTargetLightAngle = Quaternion.LookRotation( Vector3.forward, -direction ).eulerAngles.z;
+                if( nextTargetEnemy == currentTargetEnemy )
+                {
+                    nextTargetLightColor = Color.clear;
+                }
+                else
+                {
+                    nextTargetLightColor = initialNextLightColor;
+                    if( oldTargetEnemy == null ) nextTargetLight.transform.rotation = Quaternion.AngleAxis( targetLightAngle, Vector3.forward );
+                }
+            }
+            else
+            {
+                nextTargetLightColor = Color.clear;
+            }
+            
         }
     }
 }

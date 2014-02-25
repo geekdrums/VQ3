@@ -4,7 +4,7 @@ using System.Collections;
 public class DamageText : MonoBehaviour {
 
     public float AnimY;
-    Vector3 initialPosition;
+    public Vector3 initialPosition { get; private set; }
     float time = 0;
 	// Use this for initialization
 	void Start () {
@@ -32,6 +32,5 @@ public class DamageText : MonoBehaviour {
         foreach( TextMesh textMesh in GetComponentsInChildren<TextMesh>() ) textMesh.text = Mathf.Abs( damage ).ToString();
         if( damage < 0 ) GetComponentsInChildren<TextMesh>()[1].color = Color.green;
         initialPosition = initialPos;
-        transform.position = initialPosition;
     }
 }

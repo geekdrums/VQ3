@@ -16,7 +16,7 @@ public enum EnemySpecies
 
 public class Enemy : Character
 {
-    static readonly float DamageTrembleTime = 0.05f;
+    static readonly float DamageTrembleTime = 0.025f;
 
     public string DisplayName;
     public EnemySpecies Speceis;
@@ -43,7 +43,7 @@ public class Enemy : Character
         {
             c.Parse();
         }
-        HPCircle = (Instantiate( GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * 5.5f, Quaternion.identity ) as GameObject).GetComponent<HPCircle>();
+        HPCircle = (Instantiate( GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * 5.0f, Quaternion.identity ) as GameObject).GetComponent<HPCircle>();
         HPCircle.transform.parent = transform;
         HPCircle.transform.localScale *= Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP );
         HPCircle.Initialize( this );
@@ -64,15 +64,11 @@ public class Enemy : Character
             {
                 transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 1.5f ) * 1.3f;
             }
-            damageTime -= Time.deltaTime;
-            if( damageTime <= 0 )
-            {
-                transform.position = initialPosition;
-            }
             renderer.material.color = (damageTime % (DamageTrembleTime*2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
             damageTime -= Time.deltaTime;
             if( damageTime <= 0 )
             {
+                transform.position = initialPosition;
                 if( HitPoint <= 0 )
                 {
                     renderer.material.color = Color.clear;
@@ -235,6 +231,16 @@ public class Enemy : Character
         {
             HPCircle.CurrentCircle.GetComponent<SpriteRenderer>().color = newColor;
         }
+    }
+    public void OnPlayerLose()
+    {
+        HPCircle.SetActive( false );
+    }
+    public void OnContinue()
+    {
+        HitPoint = MaxHP;
+        HPCircle.SetActive( true );
+        TurnInit();
     }
 
     public override string ToString()

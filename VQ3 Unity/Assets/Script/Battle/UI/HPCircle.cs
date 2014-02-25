@@ -28,6 +28,8 @@ public class HPCircle : MonoBehaviour {
         RedCircle.transform.localScale = Vector3.zero;
         targetCurrentScale = initialScale;
         targetRedScale = Vector3.zero;
+
+        CurrentCircle.transform.localScale = -Vector3.one;
     }
 
     // Update is called once per frame

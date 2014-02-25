@@ -7,12 +7,11 @@ public class EnemyConductor : MonoBehaviour {
 
     public GameObject damageTextPrefab;
     public GameObject HPCirclePrefab;
-    public GameObject nextTargetCursor;
 
     List<Enemy> Enemies = new List<Enemy>();
     WeatherEnemy WeatherEnemy;
 
-    Enemy targetEnemy;
+    public Enemy targetEnemy { get; private set; }
     Enemy nextTarget;
     Camera mainCamera;
 
@@ -42,37 +41,56 @@ public class EnemyConductor : MonoBehaviour {
 	void Update () {
         if( Enemies.Count > 0 )
         {
-            if( GameContext.PlayerConductor.commandGraph.NextCommand.IsTargetSelectable )
-            {
-                if( nextTarget == null ) nextTarget = targetEnemy;
-                int targetIndex = Enemies.IndexOf( nextTarget );
-                if( Input.GetKeyDown( KeyCode.LeftArrow ) )
-                {
-                    targetIndex = (targetIndex - 1 + Enemies.Count) % Enemies.Count;
-                    nextTarget = Enemies[targetIndex];
-                }
-                else if( Input.GetKeyDown( KeyCode.RightArrow ) )
-                {
-                    targetIndex = (targetIndex + 1) % Enemies.Count;
-                    nextTarget = Enemies[targetIndex];
-                }
-                nextTargetCursor.transform.position = Vector3.Lerp( nextTargetCursor.transform.position, nextTarget.transform.position + Vector3.up * 5 + Vector3.back, 0.1f );
-            }
-            else
-            {
-                nextTarget = null;
-                nextTargetCursor.transform.position = Vector3.Lerp( nextTargetCursor.transform.position, Vector3.up * 10 + Vector3.back, 0.1f );
-            }
         }
 	}
 
+    public void OnNextCommandChanged( Command NextCommand )
+    {
+        if( Enemies.Count > 0 )
+        {
+            if( NextCommand.IsTargetSelectable )
+            {
+                if( nextTarget == null ) nextTarget = targetEnemy;
+                GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
+            }
+            else if( nextTarget != null )
+            {
+                nextTarget = null;
+                GameContext.VoxSystem.SetNextTargetEnemy( null );
+            }
+        }
+    }
+
+    public void OnArrowPushed( bool LorR )
+    {
+        if( Enemies.Count > 0 )
+        {
+            int targetIndex = Enemies.IndexOf( nextTarget );
+            if( LorR )
+            {
+                targetIndex = (targetIndex - 1 + Enemies.Count) % Enemies.Count;
+                nextTarget = Enemies[targetIndex];
+            }
+            else
+            {
+                targetIndex = (targetIndex + 1) % Enemies.Count;
+                nextTarget = Enemies[targetIndex];
+            }
+            GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
+        }
+    }
+
     public void SetEnemy( params GameObject[] NewEnemies )
     {
+        foreach( Enemy e in Enemies )
+        {
+            Destroy( e.gameObject );
+        }
         Enemies.Clear();
         GameObject TempObj;
         for( int i=0; i<NewEnemies.Length; ++i )
         {
-            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 6, 0 ), NewEnemies[i].transform.rotation );
+            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 4, 0 ), NewEnemies[i].transform.rotation );
 			TempObj.renderer.material.color = baseColor;
             Enemy e = TempObj.GetComponent<Enemy>();
             WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
@@ -86,8 +104,13 @@ public class EnemyConductor : MonoBehaviour {
             }
             e.transform.parent = transform;
         }
-        targetEnemy = Enemies[(Enemies.Count - 1)/2];
+        targetEnemy = Enemies[(Enemies.Count - 1) / 2];
         GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
+
+        foreach( Enemy e in Enemies )
+        {
+            TextWindow.AddMessage( new GUIMessage( e.DisplayName + " Ç™Ç†ÇÁÇÌÇÍÇΩÅI" ) );
+        }
     }
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )
@@ -315,5 +338,18 @@ public class EnemyConductor : MonoBehaviour {
     }
     public void OnPlayerLose()
     {
+        foreach( Enemy e in Enemies )
+        {
+            e.OnPlayerLose();
+        }
+    }
+    public void OnContinue()
+    {
+        TextWindow.ClearMessages();
+        foreach( Enemy e in Enemies )
+        {
+            e.OnContinue();
+            TextWindow.AddMessage( new GUIMessage( e.DisplayName + " Ç™Ç†ÇÁÇÌÇÍÇΩÅI" ) );
+        }
     }
 }

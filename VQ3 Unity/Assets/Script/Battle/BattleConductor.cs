@@ -19,15 +19,13 @@ public class BattleConductor : MonoBehaviour {
 		switch ( GameContext.CurrentState )
 		{
 		case GameContext.GameState.Intro:
-			if ( Music.IsJustChangedAt( 0 ) && Music.GetCurrentBlockName() != "intro" )
+            if( Music.IsJustChangedAt( 0 ) || Music.IsJustChangedAt( 4 ) )
             {
-                if( GameContext.PlayerConductor.Level < 8 )
+                if( Music.GetCurrentBlockName() != "intro" )
                 {
-                    GameContext.PlayerConductor.Level++;
-                    GameContext.PlayerConductor.OnLevelUp();
+                    GameContext.ChangeState( GameContext.GameState.Battle );
+                    UpdateBattle();
                 }
-                GameContext.ChangeState( GameContext.GameState.Battle );
-				UpdateBattle();
 			}
 			break;
 		case GameContext.GameState.Battle:
@@ -36,27 +34,33 @@ public class BattleConductor : MonoBehaviour {
 			{
                 GameContext.VoxSystem.SetState( VoxState.SunSet );
 				GameContext.ChangeState( GameContext.GameState.Endro );
-                TextWindow.ClearMessages();
-				TextWindow.AddMessage( "てきを　やっつけた！" );
+                TextWindow.ChangeMessage( "てきを　やっつけた！" );
 			}
             break;
 		case GameContext.GameState.Endro:
 			if ( !Music.IsPlaying() )
 			{
-                for( int i = 0; i < skillParent.transform.childCount; i++ )
+                if( GameContext.PlayerConductor.Level < 8 )
                 {
-                    Destroy( skillParent.transform.GetChild(i).gameObject );
+                    GameContext.PlayerConductor.Level++;
+                    GameContext.PlayerConductor.OnLevelUp();
                 }
-                Skills.Clear();
+                ClearSkills();
 				GameContext.ChangeState( GameContext.GameState.Field );
 			}
+            break;
+        case GameContext.GameState.Continue:
             break;
 		}
     }
 
     void UpdateBattle()
     {
-        if( Music.GetCurrentBlockName() == "endro" || Music.GetNextBlockName() == "endro" ) return;
+        if( Music.GetCurrentBlockName() == "endro" || Music.GetNextBlockName() == "endro" )
+        {
+            Skills.RemoveAll( ( Pair<Timing, Skill> cmd ) => cmd.Get<Skill>().CheckIsEnd( cmd.Get<Timing>() ) );
+            return;
+        }
 
         if( Music.IsJustChangedAt( 0 ) )
         {
@@ -93,28 +97,20 @@ public class BattleConductor : MonoBehaviour {
         }
     }
 
+    void ClearSkills()
+    {
+        for( int i = 0; i < skillParent.transform.childCount; i++ )
+        {
+            Destroy( skillParent.transform.GetChild( i ).gameObject );
+        }
+        Skills.Clear();
+    }
+
 	public void ExecSkill( Skill NewSkill )
 	{
         NewSkill.gameObject.transform.parent = skillParent.transform;
         Skills.Add( new Pair<Timing, Skill>( new Timing( Music.Just ), NewSkill ) );
 	}
-
-    //BGEffect CurrentBGEffect;
-    /*
-    public void SetBGEffect( GameObject BGEffectPrefab )
-    {
-        if( CurrentBGEffect != null && (BGEffectPrefab == null || CurrentBGEffect.GetType() != BGEffectPrefab.GetComponent<BGEffect>().GetType()) )
-        {
-            CurrentBGEffect.Hide();
-        }
-        if( BGEffectPrefab != null && (CurrentBGEffect == null || CurrentBGEffect.GetType() != BGEffectPrefab.GetComponent<BGEffect>().GetType()) )
-        {
-            GameObject bgObj = Instantiate( BGEffectPrefab, Vector3.zero, BGEffectPrefab.transform.rotation ) as GameObject;
-            bgObj.transform.parent = transform;
-            CurrentBGEffect = bgObj.GetComponent<BGEffect>();
-        }
-    }
-    */
 
 	public void OnPlayerWin()
 	{
@@ -124,7 +120,12 @@ public class BattleConductor : MonoBehaviour {
 	}
 	public void OnPlayerLose()
     {
+        TextWindow.ChangeMessage( "オクスボールを　おすと　ふっかつします" );
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
+        GameContext.VoxSystem.SetState( VoxState.SunSet );
+        GameContext.ChangeState( GameContext.GameState.Continue );
+        Music.Play( "Continue" );
+        ClearSkills();
 	}
 }

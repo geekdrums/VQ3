@@ -13,6 +13,7 @@ public class CommandGraph : MonoBehaviour {
     public Strategy[] StrategyNodes;
     public GameObject VoxBall;
     public GameObject SelectSpot;
+    public GameObject RightArrow;
     public float MAX_LATITUDE;
     public float ROTATE_COEFF;
 
@@ -30,6 +31,8 @@ public class CommandGraph : MonoBehaviour {
     Vector3 oldMousePosition;
     Quaternion targetRotation;
     Quaternion offsetRotation;
+    Vector3 initialPosition;
+    Vector3 initialRightArrowPosition;
 
 	// Use this for initialization
 	void Start () {
@@ -63,8 +66,8 @@ public class CommandGraph : MonoBehaviour {
             InstantiateLine( IntroCommand, link );
         }
         offsetRotation = Quaternion.LookRotation( transform.position - SelectSpot.transform.position );
-        transform.rotation = offsetRotation;
-        targetRotation = offsetRotation;
+        initialPosition = transform.localPosition;
+        initialRightArrowPosition = RightArrow.transform.localPosition;
     }
 
     void InstantiateLine( MonoNode from, MonoNode to )
@@ -81,6 +84,20 @@ public class CommandGraph : MonoBehaviour {
     void Update()
     {
         UpdateInput();
+
+        if( GameContext.CurrentState == GameContext.GameState.Intro )
+        {
+            if( Music.GetNextBlockName() == "intro" )
+            {
+                if( Music.isJustChanged && NextCommand != IntroCommand && !Input.GetMouseButton( 0 ))
+                {
+                    SetNextBlock();
+                    SEPlayer.Play( "select" );
+                }
+            }
+            else return;
+        }
+
         if( AllowInputStart <= Music.Just && Music.Just < AllowInputEnd )
         {
             if( GameContext.VoxSystem.state == VoxState.Eclipse )
@@ -111,39 +128,54 @@ public class CommandGraph : MonoBehaviour {
     void UpdateInput()
     {
         if( Input.GetMouseButtonDown( 0 ) ) oldMousePosition = Input.mousePosition;
-        if( Input.GetMouseButton( 0 ) )
+        Ray ray = MainCamera.ScreenPointToRay( Input.mousePosition );
+        RaycastHit hit;
+        bool isHit = Physics.Raycast( ray.origin, ray.direction, out hit, Mathf.Infinity ) && hit.collider == VoxBall.collider;
+        if( Input.GetMouseButton( 0 ) && isHit )
         {
-            Ray ray = MainCamera.ScreenPointToRay( Input.mousePosition );
-            RaycastHit hit;
-            if( Physics.Raycast( ray.origin, ray.direction, out hit, Mathf.Infinity )
-                && hit.collider == VoxBall.collider )
+            Vector3 deltaV = Input.mousePosition - oldMousePosition;
+            //Quaternion oldRotation = transform.rotation;
+            transform.rotation *= (Quaternion.Inverse( transform.rotation )
+                * Quaternion.AngleAxis( deltaV.y * ROTATE_COEFF, Vector3.right )
+                * Quaternion.AngleAxis( deltaV.x * ROTATE_COEFF, -transform.up ) * transform.rotation);
+            //Vector3 up = transform.up;
+            //transform.rotation = Quaternion.LookRotation( transform.forward, new Vector3( 0, up.y, up.z ) );
+            /*
+            Quaternion up = Quaternion.LookRotation( Vector3.up, Vector3.up );
+            Quaternion down = Quaternion.LookRotation( Vector3.down, Vector3.up );
+            Quaternion rotUp = Quaternion.LookRotation( transform.up, Vector3.up );
+            Quaternion rotDown = Quaternion.LookRotation( -transform.up, Vector3.up );
+            float angle = Mathf.Min( Quaternion.Angle( rotUp, up ), Quaternion.Angle( rotDown, down ), Quaternion.Angle( rotUp, down ), Quaternion.Angle( rotDown, up ) );
+            print( angle );
+            if( angle > MAX_LATITUDE )
             {
-                Vector3 deltaV = Input.mousePosition - oldMousePosition;
-                //Quaternion oldRotation = transform.rotation;
-                transform.rotation *= (Quaternion.Inverse( transform.rotation )
-                    * Quaternion.AngleAxis( deltaV.y * ROTATE_COEFF, Vector3.right )
-                    * Quaternion.AngleAxis( deltaV.x * ROTATE_COEFF, -transform.up ) * transform.rotation);
-                //Vector3 up = transform.up;
-                //transform.rotation = Quaternion.LookRotation( transform.forward, new Vector3( 0, up.y, up.z ) );
-                /*
-                Quaternion up = Quaternion.LookRotation( Vector3.up, Vector3.up );
-                Quaternion down = Quaternion.LookRotation( Vector3.down, Vector3.up );
-                Quaternion rotUp = Quaternion.LookRotation( transform.up, Vector3.up );
-                Quaternion rotDown = Quaternion.LookRotation( -transform.up, Vector3.up );
-                float angle = Mathf.Min( Quaternion.Angle( rotUp, up ), Quaternion.Angle( rotDown, down ), Quaternion.Angle( rotUp, down ), Quaternion.Angle( rotDown, up ) );
-                print( angle );
-                if( angle > MAX_LATITUDE )
-                {
-                    //transform.rotation = oldRotation;
-                    //transform.rotation *= Quaternion.FromToRotation( transform.up, Quaternion.RotateTowards( up, rotUp, MAX_LATITUDE ) * Vector3.up );
-                }
-                */
+                //transform.rotation = oldRotation;
+                //transform.rotation *= Quaternion.FromToRotation( transform.up, Quaternion.RotateTowards( up, rotUp, MAX_LATITUDE ) * Vector3.up );
             }
+            */
             oldMousePosition = Input.mousePosition;
+
+            transform.localPosition = Vector3.MoveTowards( transform.localPosition, initialPosition + Vector3.forward * 0.2f, 0.1f );
         }
         else
         {
+            transform.localPosition = Vector3.MoveTowards( transform.localPosition, initialPosition, 0.1f );
             transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
+
+            if( GameContext.CurrentState == GameContext.GameState.Continue && Music.Just.totalUnit > 4 && Input.GetMouseButtonUp( 0 ) )
+            {
+                GameContext.ChangeState( GameContext.GameState.Intro );
+            }
+        }
+
+        if( hit.collider == RightArrow.collider )
+        {
+            RightArrow.transform.localPosition = Vector3.MoveTowards( RightArrow.transform.localPosition,
+                initialRightArrowPosition + ( Input.GetMouseButton( 0 ) ? Vector3.forward * 0.3f : Vector3.zero ), 0.1f );
+            if( Input.GetMouseButtonDown( 0 ) )
+            {
+                GameContext.EnemyConductor.OnArrowPushed( false );
+            }
         }
     }
 
@@ -249,7 +281,7 @@ public class CommandGraph : MonoBehaviour {
     {
         Select( IntroCommand );
         CheckCommand();
-        transform.rotation = targetRotation;
+        //transform.rotation = targetRotation;
     }
 
     void Select( Command command )
@@ -258,6 +290,7 @@ public class CommandGraph : MonoBehaviour {
         NextCommand = command;
         NextCommand.Select();
         targetRotation = Quaternion.Inverse( command.transform.localRotation ) * offsetRotation;
+        GameContext.EnemyConductor.OnNextCommandChanged( NextCommand );
     }
 
 

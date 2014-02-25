@@ -10,6 +10,7 @@ public static class GameContext
 		Intro,
 		Endro,
         Battle,
+        Continue,
         Field
     }
     public static GameState CurrentState = GameState.Field;
@@ -32,6 +33,11 @@ public static class GameContext
 			break;
         case GameState.Battle:
             break;
+        case GameState.Continue:
+            EnemyConductor.OnContinue();
+            PlayerConductor.OnContinue();
+            VoxSystem.SetState( VoxState.Sun );
+            break;
         case GameState.Field:
             break;
         }
@@ -52,7 +58,9 @@ public static class GameContext
             //{
             //    Music.Play( PlayerConductor.NextStrategyName, PlayerConductor.NextBlockName );
             //}
-			break;
+            break;
+        case GameState.Continue:
+            break;
         case GameState.Field:
             //Music.Play( "fieldMusic" );
             break;
