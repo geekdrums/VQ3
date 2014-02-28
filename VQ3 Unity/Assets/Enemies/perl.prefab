@@ -43,7 +43,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400006}
   m_Layer: 0
-  m_Name: Defend
+  m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   HitPoint: 15
   BasePower: 0
   BaseMagic: 60
-  BaseDefend: 36
+  BaseDefend: 40
   BaseMagicDefend: 999
   DisplayName: "\u30D1\u30FC\u30EB"
   Speceis: 3
@@ -111,7 +111,7 @@ MonoBehaviour:
     pattern:
     - {fileID: 11400006}
     - {fileID: 11400002}
-    DescribeText: 
+    DescribeText: "\u307E\u3082\u308A\u306B\u306F\u3044\u3063\u305F"
   - name: Defender
     pattern:
     - {fileID: 11400006}
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400008, guid: 0494ebc02f1da8646874736f9c138d35, type: 2}
+  - {fileID: 11400008, guid: 586f41ba65d093c4a9826325cb13ae41, type: 2}
   _timingStr: 0
   nextState: 
   isPassive: 1

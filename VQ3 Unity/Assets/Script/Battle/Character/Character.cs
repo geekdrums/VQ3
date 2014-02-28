@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Character : MonoBehaviour {
-    protected static readonly float DAMAGE_RANGE = 16.0f;
+    protected static readonly float DAMAGE_RANGE = 12.0f;
     protected static readonly float MAGIC_DAMAGE_RANGE = 8.0f;
     protected static readonly int LEAST_DAMAGE_RANGE = 4;
     protected static readonly int LEAST_MAGIC_DAMAGE_RANGE = 2;
@@ -20,6 +20,7 @@ public class Character : MonoBehaviour {
     protected int SkillMagic;
     protected int TurnDamage;
 
+    public bool isAlive { get { return HitPoint > 0; } }
     public int MaxHP { get; protected set; }
     public float DefendPower { get { return BaseDefend * ( 100.0f + SkillDefend )/100.0f; } }
     public float MagicDefendPower { get { return BaseMagicDefend * (100.0f + SkillMagicDefend) / 100.0f; } }

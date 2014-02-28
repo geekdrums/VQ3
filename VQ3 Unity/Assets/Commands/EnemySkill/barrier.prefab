@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400008}
   m_Layer: 0
-  m_Name: DefendSkill 1
+  m_Name: barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,9 +38,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb4918957b1785b44b4981e05af947f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerSkill: 1
+  isPlayerSkill: 0
   _actionStr:
-  - Defend 28,MagicDefend 33
+  - Defend 30 All,MagicDefend 30 All
   _rhythmStr: ta
   _rhythmBaseTime: 1
 --- !u!1001 &100100000

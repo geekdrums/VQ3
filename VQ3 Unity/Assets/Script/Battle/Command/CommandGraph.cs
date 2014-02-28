@@ -241,7 +241,7 @@ public class CommandGraph : MonoBehaviour {
         else
         {
             bool willEclipse = false;
-            if( GameContext.PlayerConductor.CanUseInvert && NextCommand.ParentStrategy != null && NextCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) )
+            if( GameContext.PlayerConductor.CanUseInvert && ( NextCommand.IsLinkedTo( InvertStrategy ) || ( NextCommand.ParentStrategy != null && NextCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) ) ) )
             {
                 willEclipse = GameContext.VoxSystem.WillEclipse;
                 if( willEclipse )

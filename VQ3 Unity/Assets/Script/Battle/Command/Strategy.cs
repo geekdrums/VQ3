@@ -8,7 +8,7 @@ public enum EStrategy
 	Attack,
 	Magic,
     Pilgrim,
-	Invert,
+	Vox,
 	Count
 }
 

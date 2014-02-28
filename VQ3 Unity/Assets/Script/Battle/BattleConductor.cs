@@ -70,6 +70,7 @@ public class BattleConductor : MonoBehaviour {
             List<Pair<ActionSet, Skill>> CurrentActions = new List<Pair<ActionSet, Skill>>();
             foreach( Pair<Timing, Skill> stPair in Skills )
             {
+                if( !stPair.Get<Skill>().OwnerCharacter.isAlive ) continue;
                 ActionSet act = stPair.Get<Skill>().GetCurrentAction( stPair.Get<Timing>() );
                 if( act != null )
                 {

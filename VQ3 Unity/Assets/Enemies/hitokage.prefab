@@ -126,8 +126,8 @@ MonoBehaviour:
   HitPoint: 60
   BasePower: 0
   BaseMagic: 64
-  BaseDefend: 34
-  BaseMagicDefend: 30
+  BaseDefend: 30
+  BaseMagicDefend: 26
   DisplayName: "\u3072\u3068\u304B\u3052"
   Speceis: 2
   States:
@@ -181,7 +181,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8c59f0377c440ea4cbf98a4cb4c3fabe, type: 2}
   _timingStr: 0
   nextState: 
-  isPassive: 1
+  isPassive: 0
   DescribeText: "\u306F\u3000\u3058\u3085\u3082\u3093\u3092\u3000\u3068\u306A\u3048\u306F\u3058\u3081\u305F"
 --- !u!114 &11400006
 MonoBehaviour:
