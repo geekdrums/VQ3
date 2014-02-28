@@ -15,6 +15,7 @@ public class Command : MonoNode
     public float latitude;
     public float longitude;
     public int AcqureLevel = 1;
+    public string[] DescribeTexts;
 
     public Strategy ParentStrategy { get; protected set; }
     public bool IsLinked { get; protected set; }

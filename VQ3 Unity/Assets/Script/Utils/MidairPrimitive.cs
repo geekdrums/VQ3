@@ -5,6 +5,11 @@ using System.Collections;
 public class MidairPrimitive : MonoBehaviour {
 
     public int N;
+    static readonly int[] quadIndices = new int[] { 0, 2, 1, 3, 1, 2 };
+    static readonly Vector2 UVZero = new Vector2( 0, 0 );
+    static readonly Vector2 UVRight = new Vector2( 0, 1 );
+    static readonly Vector2 UVUp  = new Vector2( 1, 0 );
+    static readonly Vector2 UVOne = new Vector2( 1, 1 );
 
     //when Radius == Width, this will make no midair polygon.
     public float Width;
@@ -111,14 +116,20 @@ public class MidairPrimitive : MonoBehaviour {
         if( N < 3 ) N = 3;
         if( Width > Radius ) Width = Radius;
 
-        Mesh mesh = new Mesh();
-        
+        Mesh mesh = GetComponent<MeshFilter>().mesh;
+
         float OutR = Radius / Mathf.Cos( Mathf.PI / N );
         float InR = (Radius - Width) / Mathf.Cos( Mathf.PI / N );
         Matrix4x4 rotateMatrix = Matrix4x4.TRS( Vector3.zero, Quaternion.AngleAxis( 360.0f / N, Vector3.forward ), Vector3.one );
 
         Vector3 OutVertex = Vector3.up * OutR;
         Vector3 InVertex = Vector3.up * InR;
+        bool isNChanged = ( mesh.vertices == null || mesh.vertices.Length != N * 2 );
+        if( isNChanged )
+        {
+            mesh = new Mesh();
+            mesh.vertices = new Vector3[N * 2];
+        }
         Vector3[] vertices = new Vector3[N * 2];
         for( int i = 0; i < N; ++i )
         {
@@ -129,36 +140,49 @@ public class MidairPrimitive : MonoBehaviour {
         }
         mesh.vertices = vertices;
 
-        Vector2[] uvs = new Vector2[2 * N];
-        for( int i = 0; i < N; ++i )
+        //for( int i = 0; i < N; ++i )
+        //{
+        //    mesh.vertices[2 * i] = InVertex;
+        //    mesh.vertices[2 * i + 1] = OutVertex;
+        //    InVertex = rotateMatrix * InVertex;
+        //    OutVertex = rotateMatrix * OutVertex;
+        //}
+
+        if( isNChanged )
         {
-            if( i % 2 == 0 )
+            Vector2[] uvs = new Vector2[2 * N];
+            mesh.uv = new Vector2[2 * N];
+            for( int i = 0; i < N; ++i )
             {
-                uvs[2 * i] = new Vector2( 0, 0 );
-                uvs[2 * i + 1] = new Vector2( 0, 1 );
+                if( i % 2 == 0 )
+                {
+                    uvs[2 * i] = UVZero;
+                    uvs[2 * i + 1] = UVRight;
+                }
+                else
+                {
+                    uvs[2 * i] = UVUp;
+                    uvs[2 * i + 1] = UVOne;
+                }
             }
-            else
-            {
-                uvs[2 * i] = new Vector2( 1, 0 );
-                uvs[2 * i + 1] = new Vector2( 1, 1 );
-            }
+            mesh.uv = uvs;
         }
-        mesh.uv = uvs;
 
-        int[] quadIndices = new int[] { 0, 2, 1, 3, 1, 2 };
-        int[] indices = new int[6 * N];
-        for( int i = 0; i < N; ++i )
+        //int[] quadIndices = new int[] { 0, 2, 1, 3, 1, 2 };
+        if( isNChanged )
         {
-            for( int j = 0; j < 6; ++j )
+            int[] indices = new int[6 * N];
+            for( int i = 0; i < N; ++i )
             {
-                indices[6 * i + j] = (2 * i + quadIndices[j]) % vertices.Length;
+                for( int j = 0; j < 6; ++j )
+                {
+                    indices[6 * i + j] = (2 * i + quadIndices[j]) % mesh.vertices.Length;
+                }
             }
+            mesh.SetIndices( indices, MeshTopology.Triangles, 0 );
+            mesh.RecalculateNormals();
+            GetComponent<MeshFilter>().mesh = mesh;
         }
-        mesh.SetIndices( indices, MeshTopology.Triangles, 0 );
-
-        mesh.RecalculateNormals();
-
-        GetComponent<MeshFilter>().mesh = mesh;
     }
 
     public void SetTargetSize( float newTargetSize )

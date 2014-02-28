@@ -126,17 +126,26 @@ MonoBehaviour:
   HitPoint: 40
   BasePower: 64
   BaseMagic: 0
-  BaseDefend: 50
-  BaseMagicDefend: 32
+  BaseDefend: 35
+  BaseMagicDefend: 16
   DisplayName: "\u30D8\u30EB\u30E0"
   Speceis: 1
-  Commands:
-  - {fileID: 11400006}
-  - {fileID: 11400004}
-  - {fileID: 11400002}
-  conditions: []
-  StateNames: []
-  currentState: 
+  States:
+  - name: Default
+    pattern:
+    - {fileID: 11400006}
+    DescribeText: 
+  - name: Critical
+    pattern:
+    - {fileID: 11400002}
+    DescribeText: "\u304D\u3042\u3044\u3092\u3044\u308C\u305F"
+  conditions:
+  - conditionType: 4
+    Value: 6
+    Sign: 1
+    FromState: Default
+    ToState: Critical
+    ViceVersa: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,12 +159,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillList:
   - {fileID: 11400000, guid: fd339432e94dde54382e8149f2e6f478, type: 2}
-  _timingStr: 0 2 0
-  numBar: 1
-  probabilityList: 0a000000
-  currentState: 
-  nextState: 
-  nextCommand: {fileID: 11400004}
+  _timingStr: 0 1
+  nextState: Default
+  isPassive: 0
+  DescribeText: "\u306F\u3000\u304A\u3082\u3044\u3063\u304D\u308A\u3000\u3076\u304D\u3092\u3000\u3075\u308A\u304A\u308D\u3057\u305F\uFF01"
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -170,11 +177,9 @@ MonoBehaviour:
   _skillList:
   - {fileID: 11400008, guid: 0494ebc02f1da8646874736f9c138d35, type: 2}
   _timingStr: 0
-  numBar: 4
-  probabilityList: 0f000000
-  currentState: 
   nextState: 
-  nextCommand: {fileID: 0}
+  isPassive: 1
+  DescribeText: "\u306F\u3000\u305F\u3066\u3092\u3000\u304B\u307E\u3048\u3066\u3044\u308B"
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,11 +194,9 @@ MonoBehaviour:
   _skillList:
   - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
   _timingStr: 0 2 0
-  numBar: 1
-  probabilityList: 4b000000
-  currentState: 
   nextState: 
-  nextCommand: {fileID: 0}
+  isPassive: 0
+  DescribeText: "\u306E\u3000\u3053\u3046\u3052\u304D\uFF01"
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

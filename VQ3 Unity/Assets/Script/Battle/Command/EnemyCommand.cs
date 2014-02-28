@@ -6,11 +6,13 @@ public class EnemyCommand : MonoBehaviour
 {
     public List<Skill> _skillList;
     public string _timingStr = "0 2 0";
-    public int numBar = 1;
-    public List<int> probabilityList;
-    public string currentState;
+    //public List<int> probabilityList;
+    //public string currentState;
     public string nextState;
-    public EnemyCommand nextCommand;
+    //public EnemyCommand nextCommand;
+    public bool isPassive;
+
+    public string DescribeText;
 
     protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
 
@@ -37,6 +39,7 @@ public class EnemyCommand : MonoBehaviour
         int totalUnit = Music.Just.totalUnit - startBar * Music.mtBar;
         return SkillDictionary.ContainsKey( totalUnit ) ? SkillDictionary[totalUnit] : null;
     }
+    /*
     public int GetProbability( int enemyState )
     {
         if( 0 <= enemyState && enemyState < probabilityList.Count )
@@ -49,4 +52,5 @@ public class EnemyCommand : MonoBehaviour
             return 0;
         }
     }
+    */
 }

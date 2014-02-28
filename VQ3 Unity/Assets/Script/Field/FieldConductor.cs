@@ -3,33 +3,45 @@ using System.Collections;
 
 public class FieldConductor : MonoBehaviour {
 
-    public Encounter[] Encounters;
+    [System.Serializable]
+    public class LevelEncounter
+    {
+        public Encounter[] Encounters;
+    }
 
+    public LevelEncounter[] LevelEncounters;
 	public int encounterCount;
+
+    LevelEncounter CurrentLevel { get { return LevelEncounters[GameContext.PlayerConductor.Level - 1]; } }
 
 	// Use this for initialization
     void Start()
     {
-        //encounterCount = GameContext.PlayerConductor.Level - 1;
-        //Music.Play( "fieldMusic" );
+        GameContext.FieldConductor = this;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if( GameContext.CurrentState != GameContext.GameState.Field ) return;
 
-		//if ( Music.IsJustChangedAt( 0 ) && Music.numRepeat > 0 )
-		//{
-			CheckEncount();
-		//}
+        CheckEncount();
 	}
 
     void CheckEncount()
     {
+        if( encounterCount >= CurrentLevel.Encounters.Length )
+        {
+            if( GameContext.PlayerConductor.Level >= LevelEncounters.Length ) return;
+            else
+            {
+                GameContext.PlayerConductor.Level++;
+                GameContext.PlayerConductor.OnLevelUp();
+                encounterCount = 0;
+            }
+        }
         Music.Stop();
-		GameContext.EnemyConductor.SetEnemy( Encounters[encounterCount].Enemies );
+		GameContext.EnemyConductor.SetEncounter( CurrentLevel.Encounters[encounterCount] );
         GameContext.ChangeState( GameContext.GameState.Intro );
 		++encounterCount;
-		encounterCount %= Encounters.Length;
     }
 }

@@ -20,15 +20,15 @@ public class Enemy : Character
 
     public string DisplayName;
     public EnemySpecies Speceis;
-    public EnemyCommand[] Commands;
+    public List<BattleState> States;
     public StateChangeCondition[] conditions;
-    public List<string> StateNames;
-    public string currentState = "Default";
 
     public EnemyCommand currentCommand { get; protected set; }
-    protected int commandExecBar;
+    public int commandExecBar { get; protected set; }
+    public BattleState currentState { get; protected set; }
 
     protected HPCircle HPCircle;
+    protected int turnCount;
 
     // Use this for initialization
     protected virtual void Start()
@@ -39,7 +39,7 @@ public class Enemy : Character
     public override void Initialize()
     {
         base.Initialize();
-        foreach( EnemyCommand c in Commands )
+        foreach( EnemyCommand c in GetComponentsInChildren<EnemyCommand>() )
         {
             c.Parse();
         }
@@ -90,7 +90,7 @@ public class Enemy : Character
     }
     protected virtual void CheckState()
     {
-        if( currentCommand != null && currentCommand.nextState != "" ) currentState = currentCommand.nextState;
+        if( currentCommand != null && currentCommand.nextState != "" ) ChangeState( currentCommand.nextState );
         else
         {
             foreach( StateChangeCondition condition in conditions )
@@ -98,29 +98,32 @@ public class Enemy : Character
                 int CompareValue = 0;
                 switch( condition.conditionType )
                 {
-                case ConditionType.MyHP:
-                    CompareValue = HitPoint;
-                    break;
                 case ConditionType.PlayerHP:
                     CompareValue = GameContext.PlayerConductor.PlayerHP;
+                    break;
+                case ConditionType.TurnCout:
+                    CompareValue = turnCount;
+                    break;
+                case ConditionType.EnemyCount:
+                    CompareValue = GameContext.EnemyConductor.EnemyCount;
                     break;
                 default:
                     continue;
                 }
                 int d = (CompareValue - condition.Value);
-                if( condition.FromState == "" || condition.FromState == currentState )
+                if( condition.FromState == "" || condition.FromState == currentState.name )
                 {
                     if( d * condition.Sign > 0 || (d == 0 && condition.Sign == 0) )
                     {
-                        currentState = condition.ToState;
+                        ChangeState( condition.ToState );
                         break;
                     }
                 }
-                else if( condition.ViceVersa && (condition.ToState == currentState) )
+                else if( condition.ViceVersa && (condition.ToState == currentState.name) )
                 {
                     if( d * condition.Sign < 0 && condition.FromState != "" )
                     {
-                        currentState = condition.FromState;
+                        ChangeState( condition.FromState );
                         break;
                     }
                 }
@@ -134,6 +137,9 @@ public class Enemy : Character
             int CompareValue = 0;
             switch( condition.conditionType )
             {
+            case ConditionType.MyHP:
+                CompareValue = HitPoint;
+                break;
             case ConditionType.OneDamage:
                 CompareValue = damage;
                 break;
@@ -144,11 +150,20 @@ public class Enemy : Character
                 continue;
             }
             int d = (CompareValue - condition.Value);
-            if( condition.FromState == "" || condition.FromState == currentState )
+            if( condition.FromState == "" || condition.FromState == currentState.name )
             {
                 if( d * condition.Sign > 0 || (d == 0 && condition.Sign == 0) )
                 {
-                    currentState = condition.ToState;
+                    ChangeState( condition.ToState );
+                    currentCommand = null;//cancel command
+                    break;
+                }
+            }
+            else if( condition.ViceVersa && (condition.ToState == currentState.name) )
+            {
+                if( d * condition.Sign < 0 && condition.FromState != "" )
+                {
+                    ChangeState( condition.FromState );
                     currentCommand = null;//cancel command
                     break;
                 }
@@ -166,36 +181,29 @@ public class Enemy : Character
         TurnInit();
         CheckState();
 
-        if( currentCommand != null && currentCommand.nextCommand != null )
-        {
-            currentCommand = currentCommand.nextCommand;
-        }
-        else
-        {
-            List<int> probabilityies = new List<int>();
-            int probabilitySum = 0;
-            foreach( EnemyCommand c in Commands )
-            {
-                probabilitySum += c.GetProbability( StateNames.Count > 0 ? StateNames.IndexOf( currentState ) : 0 );
-                probabilityies.Add( probabilitySum );
-            }
-            int rand = Random.Range( 0, probabilitySum );
-            for( int i = 0; i < probabilityies.Count; i++ )
-            {
-                if( rand < probabilityies[i] )
-                {
-                    currentCommand = Commands[i];
-                    break;
-                }
-            }
-        }
+        currentCommand = currentState.pattern[turnCount % currentState.pattern.Length];
+        ++turnCount;
 
-        if( currentCommand != null && currentCommand.currentState != "" ) currentState = currentCommand.currentState;
         return currentCommand;
     }
     public void SetExecBar( int bar )
     {
         commandExecBar = bar;
+    }
+    public void ChangeState( string name )
+    {
+        if( currentState == null || currentState.name != name )
+        {
+            currentState = States.Find( ( BattleState state ) => state.name == name );
+            turnCount = 0;
+            if( currentState.DescribeText != "" )
+            {
+                ShortTextWindow shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
+                shortText.Initialize( currentState.DescribeText );
+                shortText.transform.position = new Vector3( transform.position.x*0.7f, shortText.transform.position.y, shortText.transform.position.z );
+                //shortText.transform.parent = transform;
+            }
+        }
     }
     public void CheckSkill()
     {
@@ -205,7 +213,6 @@ public class Enemy : Character
             Skill objSkill = (Skill)Instantiate( skill, new Vector3(), transform.rotation );
             objSkill.SetOwner( this );
             GameContext.BattleConductor.ExecSkill( objSkill );
-            if( objSkill.DescribeText != "" ) TextWindow.AddMessage( DisplayName + "@" + objSkill.DescribeText );
         }
     }
 
@@ -213,8 +220,11 @@ public class Enemy : Character
     {
         base.BeDamaged( damage, ownerCharacter );
         CreateDamageText( damage );
-        CheckStateOnDamage( damage );
         HPCircle.OnDamage();
+        if( HitPoint > 0 )
+        {
+            CheckStateOnDamage( damage );
+        }
     }
     public override void Heal( HealModule heal )
     {
@@ -236,18 +246,29 @@ public class Enemy : Character
     {
         HPCircle.SetActive( false );
     }
+    /*
     public void OnContinue()
     {
         HitPoint = MaxHP;
+        currentState = States[initialStateIndex];
+        turnCount = 0;
         HPCircle.SetActive( true );
         TurnInit();
     }
+    */
 
     public override string ToString()
     {
         return name + "(" + currentState + ")";
     }
 
+    [System.Serializable]
+    public class BattleState
+    {
+        public string name;
+        public EnemyCommand[] pattern;
+        public string DescribeText;
+    }
 
     public enum ConditionType
     {
@@ -255,6 +276,8 @@ public class Enemy : Character
         PlayerHP,
         OneDamage,
         TurnDamage,
+        TurnCout,
+        EnemyCount,
         Count
     }
     [System.Serializable]

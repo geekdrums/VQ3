@@ -8,15 +8,17 @@ public interface IActionModule
 
 public enum TargetType
 {
-	First,
-    Second,
-    Third,
+	Left,
+    Center,
+    Right,
 
     Anim,
 	Random,
     Select,
 	All,
     
+    Player,
+
     Self,
     Other,
     Weakest
@@ -25,7 +27,7 @@ public enum TargetType
 
 public class TargetModule : IActionModule
 {
-    public TargetModule( TargetType TargetType = TargetType.First, int AnimIndex = -1 )
+    public TargetModule( TargetType TargetType = TargetType.Left, int AnimIndex = -1 )
     {
         this.TargetType = TargetType;
         this.AnimIndex = AnimIndex;
@@ -55,7 +57,7 @@ public class AnimModule : TargetModule
 
 public class AttackModule : TargetModule
 {
-	public AttackModule( int AttackPower, TargetType TargetType = TargetType.First, int AnimIndex = -1 )
+	public AttackModule( int AttackPower, TargetType TargetType = TargetType.Left, int AnimIndex = -1 )
         : base( TargetType, AnimIndex )
 	{
 		this.AttackPower = AttackPower;
@@ -66,7 +68,7 @@ public class AttackModule : TargetModule
 
 public class MagicModule : TargetModule
 {
-    public MagicModule( int MagicPower, int VoxPoint, TargetType TargetType = TargetType.First, int AnimIndex = -1 )
+    public MagicModule( int MagicPower, int VoxPoint, TargetType TargetType = TargetType.Left, int AnimIndex = -1 )
         : base( TargetType, AnimIndex )
 	{
 		this.MagicPower = MagicPower;

@@ -127,28 +127,9 @@ public class VoxSystem : MonoBehaviour{
 		switch ( state )
 		{
         case VoxState.Sun:
-            if( WillEclipse )
+            if( GameContext.PlayerConductor.CanUseInvert )
             {
-                if( Music.IsJustChangedAt( 0 ) )
-                {
-                    //if don't use eclipse, reset.
-                    DecreaseDeltaVP();
-                    targetTextColor = Color.black;
-                    targetMoonColor = initialMoonColor;
-                }
-                else if( Music.isJustChanged )
-                {
-                    targetTextColor = (Music.Just.unit == 2 ? Color.clear : Color.white);
-                    VPText.text = "VP:" + ((int)InvertVP).ToString() + "/" + ((int)InvertVP).ToString();
-                }
-            }
-            else
-            {
-                if( Music.isJustChanged )
-                {
-                    DecreaseDeltaVP();
-                    VPText.text = "VP:" + ((int)currentVP).ToString() + "/" + ((int)InvertVP).ToString();
-                }
+                UpdateVP();
             }
             UpdateLightAngles();
             break;
@@ -166,6 +147,32 @@ public class VoxSystem : MonoBehaviour{
 		UpdateAnimation();
 	}
 
+    void UpdateVP()
+    {
+        if( WillEclipse )
+        {
+            if( Music.IsJustChangedAt( 0 ) )
+            {
+                //if don't use eclipse, reset.
+                DecreaseDeltaVP();
+                targetTextColor = Color.black;
+                targetMoonColor = initialMoonColor;
+            }
+            else if( Music.isJustChanged )
+            {
+                targetTextColor = (Music.Just.unit == 2 ? Color.clear : Color.white);
+                VPText.text = "VP:" + ((int)InvertVP).ToString() + "/" + ((int)InvertVP).ToString();
+            }
+        }
+        else
+        {
+            if( Music.isJustChanged )
+            {
+                DecreaseDeltaVP();
+                VPText.text = "VP:" + ((int)currentVP).ToString() + "/" + ((int)InvertVP).ToString();
+            }
+        }
+    }
     void DecreaseDeltaVP()
     {
         currentVP -= deltaVP / ( Music.mtBar * 4 );
@@ -208,7 +215,11 @@ public class VoxSystem : MonoBehaviour{
             }
         }
 
-        if( Music.IsJustChangedAt( 3 ) )
+        if( Music.IsJustChangedAt( 2 ) )
+        {
+            TextWindow.ChangeMessage( "くろいつきが　せかいを　はんてんさせる" );
+        }
+        else if( Music.IsJustChangedAt( 3 ) )
         {
             voxMoon.transform.position = voxSun.transform.position + Vector3.back * 0.1f + Vector3.down * 0.1f;
             BGColor = Color.black;
@@ -217,7 +228,7 @@ public class VoxSystem : MonoBehaviour{
             animation.Play();
             GameContext.EnemyConductor.OnInvert();
         }
-        else if ( Music.IsJustChangedAt( 3, 2 ) )
+        else if( Music.IsJustChangedAt( 3, 2 ) )
         {
             animation.Stop();
             GameContext.EnemyConductor.baseColor = Color.white;
@@ -227,14 +238,16 @@ public class VoxSystem : MonoBehaviour{
             voxRing.SetSize( initialRingRadius );
             voxSun.transform.localScale = Vector3.zero;
 
-            Enemy refleshTarget = ( nextTargetEnemy != null && nextTargetEnemy != currentTargetEnemy ? nextTargetEnemy : currentTargetEnemy );
+            Enemy refleshTarget = (nextTargetEnemy != null && nextTargetEnemy != currentTargetEnemy ? nextTargetEnemy : currentTargetEnemy);
             currentTargetEnemy = null;
             SetTargetEnemy( refleshTarget );
             for( int i = 0; i < sunLights.Length; i++ )
             {
                 sunLights[i].transform.localPosition = Vector3.right * (i < 2 ? i - 5 : i + 2) * 0.55f;
                 sunLights[i].transform.localScale = new Vector3( 0.1f, sunLights[i].transform.localScale.y, sunLights[i].transform.localScale.z );
+                sunLights[i].transform.rotation = Quaternion.AngleAxis( lightAngles[i], Vector3.forward );
             }
+            mainLight.transform.rotation = Quaternion.AngleAxis( targetLightAngle, Vector3.forward );
         }
 	}
 
@@ -294,7 +307,10 @@ public class VoxSystem : MonoBehaviour{
                     sunLights[i].transform.localPosition = Vector3.zero;
                 }
 
-                targetTextColor = Color.black;
+                if( GameContext.PlayerConductor.CanUseInvert )
+                {
+                    targetTextColor = Color.black;
+                }
                 targetMoonColor = initialMoonColor;
                 AddVP( -(int)currentVP - 1 );
                 GameContext.EnemyConductor.baseColor = Color.black;
@@ -350,14 +366,17 @@ public class VoxSystem : MonoBehaviour{
 	}
 
 	public void AddVP( int value )
-	{
-        currentVP = Mathf.Clamp( currentVP + value, 0, InvertVP );
-        Music.SetAisac( "TrackVolumeEnergy", Mathf.Sqrt( (float)currentVP / InvertVP ) );
-
-        if( state == VoxState.Sun && WillEclipse )
+    {
+        if( GameContext.PlayerConductor.CanUseInvert )
         {
-            targetTextColor = Color.white;
-            targetMoonColor = Color.black;
+            currentVP = Mathf.Clamp( currentVP + value, 0, InvertVP );
+            Music.SetAisac( "TrackVolumeEnergy", Mathf.Sqrt( (float)currentVP / InvertVP ) );
+
+            if( state == VoxState.Sun && WillEclipse )
+            {
+                targetTextColor = Color.white;
+                targetMoonColor = Color.black;
+            }
         }
 	}
 

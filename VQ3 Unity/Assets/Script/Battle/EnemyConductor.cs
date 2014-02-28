@@ -5,12 +5,18 @@ using System.Linq;
 
 public class EnemyConductor : MonoBehaviour {
 
+    static readonly float EnemyInterval = 7.0f;
+    static readonly int[] CommandExecBars = new int[3] { 2, 3, 1 };
+
     public GameObject damageTextPrefab;
     public GameObject HPCirclePrefab;
+    public GameObject shortTextWindowPrefab;
 
     List<Enemy> Enemies = new List<Enemy>();
     WeatherEnemy WeatherEnemy;
+    Encounter CurrentEncounter;
 
+    public int EnemyCount { get { return Enemies.Count + (WeatherEnemy != null ? 1 : 0); } }
     public Enemy targetEnemy { get; private set; }
     Enemy nextTarget;
     Camera mainCamera;
@@ -39,60 +45,57 @@ public class EnemyConductor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if( Enemies.Count > 0 )
+        if( GameContext.CurrentState == GameContext.GameState.Battle )
         {
+            if( Music.IsJustChangedBar() && Music.Just.bar >= 1 )
+            {
+                List<string> messages = new List<string>();
+                if( Music.Just.bar == 1 )
+                {
+                    foreach( Enemy passiveEnemy in from e in Enemies where e.currentCommand != null && e.currentCommand.isPassive select e )
+                    {
+                        messages.Add( passiveEnemy.DisplayName + passiveEnemy.currentCommand.DescribeText );
+                    }
+                    if( WeatherEnemy != null && WeatherEnemy.currentCommand != null && WeatherEnemy.currentCommand.isPassive )
+                    {
+                        messages.Add( WeatherEnemy.currentCommand.DescribeText );
+                    }
+                }
+                if( messages.Count == 0 && ( Music.Just.bar < 2 || GameContext.VoxSystem.state == VoxState.Sun ) )
+                {
+                    Enemy enemy = Enemies.Find( ( Enemy e ) => e.commandExecBar == Music.Just.bar );
+                    if( enemy != null && enemy.currentCommand != null )
+                    {
+                        messages.Add( enemy.DisplayName + enemy.currentCommand.DescribeText );
+                    }
+                    else if( WeatherEnemy != null && WeatherEnemy.commandExecBar == Music.Just.bar )
+                    {
+                        messages.Add( WeatherEnemy.currentCommand.DescribeText );
+                    }
+                }
+                if( messages.Count > 0 )
+                {
+                    TextWindow.ChangeMessage( messages.ToArray() );
+                }
+            }
         }
 	}
 
-    public void OnNextCommandChanged( Command NextCommand )
+    public void SetEncounter( Encounter encounter )
     {
-        if( Enemies.Count > 0 )
-        {
-            if( NextCommand.IsTargetSelectable )
-            {
-                if( nextTarget == null ) nextTarget = targetEnemy;
-                GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
-            }
-            else if( nextTarget != null )
-            {
-                nextTarget = null;
-                GameContext.VoxSystem.SetNextTargetEnemy( null );
-            }
-        }
-    }
-
-    public void OnArrowPushed( bool LorR )
-    {
-        if( Enemies.Count > 0 )
-        {
-            int targetIndex = Enemies.IndexOf( nextTarget );
-            if( LorR )
-            {
-                targetIndex = (targetIndex - 1 + Enemies.Count) % Enemies.Count;
-                nextTarget = Enemies[targetIndex];
-            }
-            else
-            {
-                targetIndex = (targetIndex + 1) % Enemies.Count;
-                nextTarget = Enemies[targetIndex];
-            }
-            GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
-        }
-    }
-
-    public void SetEnemy( params GameObject[] NewEnemies )
-    {
+        CurrentEncounter = encounter;
         foreach( Enemy e in Enemies )
         {
             Destroy( e.gameObject );
         }
         Enemies.Clear();
         GameObject TempObj;
-        for( int i=0; i<NewEnemies.Length; ++i )
+        int l = encounter.Enemies.Length;
+        for( int i = 0; i < l; ++i )
         {
-            TempObj = (GameObject)Instantiate( NewEnemies[i], new Vector3( 7 * (-(NewEnemies.Length - 1)/ 2.0f + i), 4, 0 ), NewEnemies[i].transform.rotation );
+            TempObj = (GameObject)Instantiate( encounter.Enemies[i], new Vector3( EnemyInterval * (-(l - 1) / 2.0f + i) * (l==2 ? 1.2f : 1.0f), 4, 0 ), encounter.Enemies[i].transform.rotation );
 			TempObj.renderer.material.color = baseColor;
-            Enemy e = TempObj.GetComponent<Enemy>();
+            Enemy enemy = TempObj.GetComponent<Enemy>();
             WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
             if( we != null )
             {
@@ -100,13 +103,16 @@ public class EnemyConductor : MonoBehaviour {
             }
             else
             {
-                Enemies.Add( e );
+                Enemies.Add( enemy );
             }
-            e.transform.parent = transform;
+            enemy.transform.parent = transform;
+            enemy.ChangeState( encounter.StateSets[0][i] );
+            enemy.DisplayName += (char)((int)'A' + Enemies.FindAll( ( Enemy e ) => e.DisplayName.StartsWith( enemy.DisplayName ) && e.DisplayName.Length == enemy.DisplayName.Length + 1 ).Count);
         }
         targetEnemy = Enemies[(Enemies.Count - 1) / 2];
         GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
 
+        TextWindow.ClearMessages();
         foreach( Enemy e in Enemies )
         {
             TextWindow.AddMessage( new GUIMessage( e.DisplayName + " Ç™Ç†ÇÁÇÌÇÍÇΩÅI" ) );
@@ -222,12 +228,18 @@ public class EnemyConductor : MonoBehaviour {
         case TargetType.Select:
             Res.Add( targetEnemy );
             break;
-        case TargetType.First:
-        case TargetType.Second:
-        case TargetType.Third:
-            int index = (int)Target.TargetType - (int)TargetType.First;
-            if( Enemies.Count > index ) Res.Add( Enemies[index] );
-			break;
+        case TargetType.Left:
+            Enemy leftTarget = Enemies.Find( ( Enemy e ) => e.transform.position.x <= -EnemyInterval / 2 );
+            if( leftTarget != null ) Res.Add( leftTarget );
+            break;
+        case TargetType.Center:
+            Enemy centerTarget = Enemies.Find( ( Enemy e ) => Mathf.Abs( e.transform.position.x ) <= EnemyInterval / 2 );
+            if( centerTarget != null ) Res.Add( centerTarget );
+            break;
+        case TargetType.Right:
+            Enemy rightTarget = Enemies.Find( ( Enemy e ) => e.transform.position.x >= EnemyInterval / 2 );
+            if( rightTarget != null ) Res.Add( rightTarget );
+            break;
 		case TargetType.Random:
 			Res.Add( Enemies[Random.Range( 0, Enemies.Count )] );
 			break;
@@ -277,14 +289,37 @@ public class EnemyConductor : MonoBehaviour {
             targetEnemy = nextTarget;
             GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
         }
-
-        int num2BarCommands = 0;
-        int num1BarCommands = 0;
+        int execIndex = 0;
         foreach( Enemy enemy in Enemies )
         {
             enemy.CheckCommand();
+            if( enemy.currentCommand.isPassive )
+            {
+                enemy.SetExecBar( 0 );
+            }
+            else
+            {
+                enemy.SetExecBar( CommandExecBars[execIndex] );
+                ++execIndex;
+            }
         }
 
+        if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
+        {
+            WeatherEnemy.CheckCommand();
+            if( WeatherEnemy.currentCommand.isPassive )
+            {
+                WeatherEnemy.SetExecBar( 0 );
+            }
+            else
+            {
+                WeatherEnemy.SetExecBar( CommandExecBars[execIndex] );
+            }
+        }
+
+        /*
+        int num2BarCommands = 0;
+        int num1BarCommands = 0;
         foreach( Enemy enemy in from e in Enemies orderby e.currentCommand.numBar select e )
         {
             EnemyCommand c = enemy.currentCommand;
@@ -303,19 +338,14 @@ public class EnemyConductor : MonoBehaviour {
                 enemy.SetExecBar( 0 );
             }
         }
-
-        if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
-        {
-            WeatherEnemy.CheckCommand();
-            WeatherEnemy.SetExecBar( 0 );
-        }
+        */
     }
 
     public void CheckSkill()
     {
         int CurrentIndex = Music.Just.bar;
         if( GameContext.VoxSystem.state == VoxState.Invert ) return;
-        if( GameContext.VoxSystem.state == VoxState.Eclipse && CurrentIndex == 3 ) return;
+        if( GameContext.VoxSystem.state == VoxState.Eclipse && CurrentIndex >= 2 ) return;
 
         foreach( Enemy e in Enemies )
         {
@@ -332,6 +362,41 @@ public class EnemyConductor : MonoBehaviour {
         }
     }
 
+    public void OnNextCommandChanged( Command NextCommand )
+    {
+        if( Enemies.Count > 0 )
+        {
+            if( NextCommand.IsTargetSelectable )
+            {
+                if( nextTarget == null ) nextTarget = targetEnemy;
+                GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
+            }
+            else if( nextTarget != null )
+            {
+                nextTarget = null;
+                GameContext.VoxSystem.SetNextTargetEnemy( null );
+            }
+        }
+    }
+
+    public void OnArrowPushed( bool LorR )
+    {
+        if( Enemies.Count > 0 )
+        {
+            int targetIndex = Enemies.IndexOf( nextTarget );
+            if( LorR )
+            {
+                targetIndex = (targetIndex - 1 + Enemies.Count) % Enemies.Count;
+                nextTarget = Enemies[targetIndex];
+            }
+            else
+            {
+                targetIndex = (targetIndex + 1) % Enemies.Count;
+                nextTarget = Enemies[targetIndex];
+            }
+            GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
+        }
+    }
 
     public void OnPlayerWin()
     {
@@ -345,11 +410,16 @@ public class EnemyConductor : MonoBehaviour {
     }
     public void OnContinue()
     {
-        TextWindow.ClearMessages();
         foreach( Enemy e in Enemies )
         {
-            e.OnContinue();
-            TextWindow.AddMessage( new GUIMessage( e.DisplayName + " Ç™Ç†ÇÁÇÌÇÍÇΩÅI" ) );
+            Destroy( e.gameObject );
+            //e.OnContinue();
+            //TextWindow.AddMessage( new GUIMessage( e.DisplayName + " Ç™Ç†ÇÁÇÌÇÍÇΩÅI" ) );
         }
+        if( WeatherEnemy != null )
+        {
+            Destroy( WeatherEnemy.gameObject );
+        }
+        SetEncounter( CurrentEncounter );
     }
 }

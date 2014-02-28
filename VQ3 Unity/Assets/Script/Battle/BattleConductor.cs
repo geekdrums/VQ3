@@ -40,11 +40,6 @@ public class BattleConductor : MonoBehaviour {
 		case GameContext.GameState.Endro:
 			if ( !Music.IsPlaying() )
 			{
-                if( GameContext.PlayerConductor.Level < 8 )
-                {
-                    GameContext.PlayerConductor.Level++;
-                    GameContext.PlayerConductor.OnLevelUp();
-                }
                 ClearSkills();
 				GameContext.ChangeState( GameContext.GameState.Field );
 			}
@@ -120,7 +115,7 @@ public class BattleConductor : MonoBehaviour {
 	}
 	public void OnPlayerLose()
     {
-        TextWindow.ChangeMessage( "オクスボールを　おすと　ふっかつします" );
+        TextWindow.ChangeMessage( "オクスは　しんでしまった", "ボールを　おして　ふっかつ　できます");
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
         GameContext.VoxSystem.SetState( VoxState.SunSet );

@@ -50,10 +50,12 @@ public class Player : Character {
         if( damage <= 0 )
         {
             (Instantiate( DefendAnimPrefab, ownerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
+            TextWindow.AddMessage( "オクスは　ぼうぎょで　うけきった" );
         }
         else
         {
             HPBar.OnDamage( damage );
+            TextWindow.AddMessage( "オクスは " + damage + " のダメージを　うけた" );
         }
 
         if( HitPoint <= 0 )

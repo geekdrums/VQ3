@@ -22,7 +22,6 @@ public class CommandGraph : MonoBehaviour {
 
     bool IsLinkedToInvert { get { return ( CurrentCommand.ParentStrategy != null && CurrentCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) ) || CurrentCommand.IsLinkedTo( InvertStrategy ); } }
     bool IsInvert { get { return CurrentCommand.ParentStrategy == InvertStrategy; } }
-    bool CanUseInvert { get { return GameContext.PlayerConductor.Level >= 8; } }
     int RemainInvertTime;
 
     Camera MainCamera;
@@ -85,9 +84,10 @@ public class CommandGraph : MonoBehaviour {
     {
         UpdateInput();
 
+
         if( GameContext.CurrentState == GameContext.GameState.Intro )
         {
-            if( Music.GetNextBlockName() == "intro" )
+            if( Music.GetNextBlockName() == "intro" && Music.Just.totalUnit > 4 )
             {
                 if( Music.isJustChanged && NextCommand != IntroCommand && !Input.GetMouseButton( 0 ))
                 {
@@ -96,6 +96,15 @@ public class CommandGraph : MonoBehaviour {
                 }
             }
             else return;
+        }
+        else if( GameContext.CurrentState == GameContext.GameState.Continue )
+        {
+            if( GameContext.CurrentState == GameContext.GameState.Continue && ( !Music.IsPlaying() || Music.Just.totalUnit > 4 )
+                && Input.GetMouseButtonUp( 0 ) && (transform.localPosition - initialPosition).magnitude > 0.03f )
+            {
+                GameContext.ChangeState( GameContext.GameState.Intro );
+            }
+            return;
         }
 
         if( AllowInputStart <= Music.Just && Music.Just < AllowInputEnd )
@@ -161,11 +170,6 @@ public class CommandGraph : MonoBehaviour {
         {
             transform.localPosition = Vector3.MoveTowards( transform.localPosition, initialPosition, 0.1f );
             transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
-
-            if( GameContext.CurrentState == GameContext.GameState.Continue && Music.Just.totalUnit > 4 && Input.GetMouseButtonUp( 0 ) )
-            {
-                GameContext.ChangeState( GameContext.GameState.Intro );
-            }
         }
 
         if( hit.collider == RightArrow.collider )
@@ -237,7 +241,7 @@ public class CommandGraph : MonoBehaviour {
         else
         {
             bool willEclipse = false;
-            if( CanUseInvert && NextCommand.ParentStrategy != null && NextCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) )
+            if( GameContext.PlayerConductor.CanUseInvert && NextCommand.ParentStrategy != null && NextCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) )
             {
                 willEclipse = GameContext.VoxSystem.WillEclipse;
                 if( willEclipse )
@@ -296,7 +300,7 @@ public class CommandGraph : MonoBehaviour {
 
     VoxState GetDesiredVoxState()
     {
-        if( !CanUseInvert ) return VoxState.Sun;
+        if( !GameContext.PlayerConductor.CanUseInvert ) return VoxState.Sun;
         if( IsLinkedToInvert )
         {
             if( GameContext.VoxSystem.WillEclipse )

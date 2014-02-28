@@ -68,6 +68,7 @@ public static class GameContext
     }
 
     //Conductors
+    public static FieldConductor FieldConductor;
 	public static BattleConductor BattleConductor;
     public static EnemyConductor EnemyConductor;
     public static PlayerConductor PlayerConductor;

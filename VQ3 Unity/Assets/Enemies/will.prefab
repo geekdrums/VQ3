@@ -17,6 +17,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &100002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400002}
+  - 114: {fileID: 11400006}
+  m_Layer: 0
+  m_Name: Aura
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +43,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: Attack
+  m_Name: Aura2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,12 +72,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 400002}
   - {fileID: 400004}
   - {fileID: 400006}
   m_Father: {fileID: 0}
+--- !u!4 &400002
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
 --- !u!4 &400004
 Transform:
   m_ObjectHideFlags: 1
@@ -95,18 +123,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 40
+  HitPoint: 18
   BasePower: 0
-  BaseMagic: 60
-  BaseDefend: 32
-  BaseMagicDefend: 50
+  BaseMagic: 56
+  BaseDefend: 12
+  BaseMagicDefend: 30
   DisplayName: "\u30A6\u30A3\u30EB"
   Speceis: 0
-  Commands:
-  - {fileID: 11400002}
-  conditions: []
-  StateNames: []
-  currentState: 0
+  States:
+  - name: Default
+    pattern:
+    - {fileID: 11400006}
+    DescribeText: 
+  - name: Tremble
+    pattern:
+    - {fileID: 11400004}
+    - {fileID: 11400004}
+    - {fileID: 11400004}
+    - {fileID: 11400002}
+    DescribeText: "\u304A\u3073\u3048\u3060\u3057\u305F"
+  conditions:
+  - conditionType: 0
+    Value: 0
+    Sign: -1
+    FromState: Default
+    ToState: Tremble
+    ViceVersa: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,12 +162,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillList:
   - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
-  _timingStr: 0 2 0
-  numBar: 1
-  probabilityList: 46000000
-  currentState: 
+  _timingStr: 0
   nextState: 
-  nextCommand: {fileID: 0}
+  isPassive: 0
+  DescribeText: "\u306F\u3000\u3086\u3046\u304D\u3092\u3060\u3057\u3066\u3000\u3053\u3046\u3052\u304D\u3057\u305F\uFF01"
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,12 +179,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillList:
   - {fileID: 11400000, guid: 8c59f0377c440ea4cbf98a4cb4c3fabe, type: 2}
-  _timingStr: 0 2 0
-  numBar: 0
-  probabilityList: 00000000
-  currentState: 
+  _timingStr: 0
   nextState: 
-  nextCommand: {fileID: 0}
+  isPassive: 1
+  DescribeText: "\u306F\u3000\u304A\u3073\u3048\u3066\u3044\u308B\uFF01"
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillList:
+  - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
+  _timingStr: 0
+  nextState: 
+  isPassive: 0
+  DescribeText: "\u306F\u3000\u304B\u305C\u3092\u3000\u304A\u3053\u3057\u305F\uFF01"
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

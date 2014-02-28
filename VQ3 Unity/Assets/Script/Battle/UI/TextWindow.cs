@@ -87,8 +87,8 @@ public class TextWindow : MonoBehaviour {
 
 	void AddMessage_( GUIMessage NewMessage )
 	{
-        Messages.Insert( 0, NewMessage );
-        if( Messages.Count > displayTexts.Length ) Messages.RemoveAt( Messages.Count - 1 );
+        Messages.Add( NewMessage );
+        if( Messages.Count > displayTexts.Length ) Messages.RemoveAt( 0 );
 	}
     void ClearMessages_()
     {

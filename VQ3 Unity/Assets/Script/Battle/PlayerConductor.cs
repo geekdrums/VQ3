@@ -19,6 +19,7 @@ public class PlayerConductor : MonoBehaviour {
     public int NumQuarter { get; private set; }
     public int PlayerHP { get { return Player.HitPoint; } }
     public int PlayerMaxHP { get { return Player.HitPoint; } }
+    public bool CanUseInvert { get { return Level >= 8; } }
 
 	// Use this for initialization
 	void Start () {
@@ -49,7 +50,7 @@ public class PlayerConductor : MonoBehaviour {
         commandGraph.CheckCommand();
         CurrentCommand = commandGraph.CurrentCommand;
         Player.TurnInit();
-        TextWindow.AddMessage( "オクスは" + CurrentCommand.name + "をはなった！" );
+        TextWindow.ChangeMessage( CurrentCommand.DescribeTexts );
 	}
     public void CheckSkill()
     {

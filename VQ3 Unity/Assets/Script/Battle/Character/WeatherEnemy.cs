@@ -8,7 +8,7 @@ public class WeatherEnemy : Enemy
     public string WeatherName;
     public ParticleSystem weatherParticle;
 
-    public bool IsSubstance { get { return currentState != WeatherState; } }
+    public bool IsSubstance { get { return currentState.name != WeatherState; } }
 
     string WeatherState;
     string SubstanceState;
@@ -18,8 +18,8 @@ public class WeatherEnemy : Enemy
     public override void Initialize()
     {
         base.Initialize();
-        WeatherState = StateNames[0];
-        SubstanceState = StateNames[1];
+        WeatherState = States[0].name;
+        SubstanceState = States[1].name;
         MaxDensityPoint = DensityPoint;
 
         Color c = renderer.material.color;
@@ -65,7 +65,7 @@ public class WeatherEnemy : Enemy
                 if( DensityPoint >= MaxDensityPoint )
                 {
                     DensityPoint = MaxDensityPoint;
-                    currentState = WeatherState;
+                    ChangeState( WeatherState );
                     weatherParticle.enableEmission = true;
                     HPCircle.SetActive( false );
                 }
@@ -76,7 +76,7 @@ public class WeatherEnemy : Enemy
                 if( DensityPoint <= 0 )
                 {
                     DensityPoint = 0;
-                    currentState = SubstanceState;
+                    ChangeState( SubstanceState );
                     weatherParticle.enableEmission = false;
                     HPCircle.SetActive( true );
                     renderer.material.color = GameContext.EnemyConductor.baseColor;

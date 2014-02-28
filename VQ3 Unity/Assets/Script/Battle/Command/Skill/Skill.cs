@@ -11,7 +11,7 @@ public class Skill : MonoBehaviour
     public string _rhythmStr;
     public int _rhythmBaseTime = 4;
     //public GameObject bgEffefctPrefab;
-    public string DescribeText;
+    //public string DescribeText;
 
 	public ActionSet[] Actions { get; protected set; }
     public bool IsTargetSelectable { get; protected set; }

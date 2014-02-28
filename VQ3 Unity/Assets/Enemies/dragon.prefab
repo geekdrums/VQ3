@@ -91,23 +91,7 @@ GameObject:
   - 4: {fileID: 400014}
   - 114: {fileID: 11400012}
   m_Layer: 0
-  m_Name: Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100014
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400012}
-  - 114: {fileID: 11400010}
-  m_Layer: 0
-  m_Name: Wait
+  m_Name: IgnisSave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,7 +110,6 @@ Transform:
   - {fileID: 400004}
   - {fileID: 400008}
   - {fileID: 400014}
-  - {fileID: 400012}
   - {fileID: 400010}
   - {fileID: 400006}
   m_Father: {fileID: 0}
@@ -174,17 +157,6 @@ Transform:
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
---- !u!4 &400012
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100014}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400000}
 --- !u!4 &400014
 Transform:
   m_ObjectHideFlags: 1
@@ -207,44 +179,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 300
-  BasePower: 80
-  BaseMagic: 90
-  BaseDefend: 55
-  BaseMagicDefend: 65
+  HitPoint: 200
+  BasePower: 65
+  BaseMagic: 70
+  BaseDefend: 30
+  BaseMagicDefend: 40
   DisplayName: "\u30C9\u30E9\u30B4\u30F3"
   Speceis: 5
-  Commands:
-  - {fileID: 11400012}
-  - {fileID: 11400006}
-  - {fileID: 11400010}
-  - {fileID: 11400008}
-  - {fileID: 11400002}
-  - {fileID: 11400004}
+  States:
+  - name: Sleep
+    pattern:
+    - {fileID: 11400004}
+    - {fileID: 11400002}
+    DescribeText: "\u306D\u3080\u3063\u3066\u3044\u308B"
+  - name: Wake
+    pattern:
+    - {fileID: 11400012}
+    - {fileID: 11400006}
+    DescribeText: "\u304A\u304D\u3042\u304C\u3063\u305F"
+  - name: Pinch
+    pattern:
+    - {fileID: 11400008}
+    DescribeText: "\u304D\u3051\u3093\u3092\u304B\u3093\u3058\u305F"
   conditions:
-  - conditionType: 0
-    Value: 150
-    Sign: -1
+  - conditionType: 4
+    Value: 2
+    Sign: 1
     FromState: Sleep
     ToState: Wake
     ViceVersa: 0
   - conditionType: 3
-    Value: 45
+    Value: 35
     Sign: 1
     FromState: Sleep
     ToState: Wake
     ViceVersa: 0
   - conditionType: 0
-    Value: 100
+    Value: 30
     Sign: -1
     FromState: Wake
     ToState: Pinch
     ViceVersa: 1
-  StateNames:
-  - Sleep
-  - Wake
-  - Pinch
-  currentState: Wake
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,12 +233,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillList:
   - {fileID: 11400000, guid: 16b5674e6cd988e4891702dcc94925f2, type: 2}
-  _timingStr: 0 2 0
-  numBar: 1
-  probabilityList: 1e000000
-  currentState: 
+  _timingStr: 0
   nextState: 
-  nextCommand: {fileID: 0}
+  isPassive: 0
+  DescribeText: "\u306F\u3000\u306D\u307C\u3051\u3066\u3000\u3057\u3063\u307D\u3092\u3000\u3075\u3063\u305F"
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -278,11 +251,9 @@ MonoBehaviour:
   _skillList:
   - {fileID: 11400008, guid: c522ff04fdb63714f98b123b33311c38, type: 2}
   _timingStr: 0
-  numBar: 0
-  probabilityList: 46000000
-  currentState: 
   nextState: 
-  nextCommand: {fileID: 0}
+  isPassive: 1
+  DescribeText: "\u306F\u3000\u306D\u3080\u3063\u3066\u3044\u308B"
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -296,12 +267,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillList:
   - {fileID: 11400000, guid: 52f248a6f52ab7344844d0f5655841df, type: 2}
-  _timingStr: 0 3 0
-  numBar: 1
-  probabilityList: 000000003200000028000000
-  currentState: 
+  _timingStr: 0 0 0
   nextState: 
-  nextCommand: {fileID: 11400012}
+  isPassive: 0
+  DescribeText: "\u306F\u3000\u306F\u3052\u3057\u3044\u3000\u307B\u306E\u304A\u3092\u3000\u306F\u3044\u305F\uFF01"
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -315,31 +284,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillList:
   - {fileID: 11400008, guid: 0cccfe18d2d37cf44b1dd4c6d7814830, type: 2}
-  _timingStr: 3 0 0
-  numBar: 4
-  probabilityList: 000000000a0000001e000000
-  currentState: Sleep
-  nextState: 
-  nextCommand: {fileID: 0}
---- !u!114 &11400010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400000, guid: 8c59f0377c440ea4cbf98a4cb4c3fabe, type: 2}
-  _timingStr: 0 2 0
-  numBar: 0
-  probabilityList: 0000000005000000
-  currentState: 
-  nextState: 
-  nextCommand: {fileID: 0}
+  _timingStr: 0 3 0
+  nextState: Sleep
+  isPassive: 0
+  DescribeText: "\u306F\u3000\u3050\u3046\u3050\u3046\u3068\u3000\u306D\u3080\u308A\u306F\u3058\u3081\u305F"
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -352,13 +300,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  _timingStr: 0 2 0
-  numBar: 1
-  probabilityList: 00000000320000001e000000
-  currentState: 
+  - {fileID: 11400000, guid: 8c59f0377c440ea4cbf98a4cb4c3fabe, type: 2}
+  _timingStr: 0 0 0
   nextState: 
-  nextCommand: {fileID: 0}
+  isPassive: 1
+  DescribeText: "\u306F\u3000\u307B\u306E\u304A\u3092\u3000\u304F\u3061\u306B\u3000\u3075\u304F\u3093\u3060"
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

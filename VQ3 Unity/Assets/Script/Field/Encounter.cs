@@ -3,7 +3,20 @@ using System.Collections;
 
 public class Encounter : MonoBehaviour {
 
+    [System.Serializable]
+    public class StateSet
+    {
+        public string nameList;
+        public string this[int i]
+        {
+            get{
+                return nameList.Split( ' ' )[i];
+            }
+        }
+    }
+
     public GameObject[] Enemies;
+    public StateSet[] StateSets;
 
 	// Use this for initialization
 	void Start () {
