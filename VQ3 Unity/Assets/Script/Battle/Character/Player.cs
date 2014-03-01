@@ -75,7 +75,7 @@ public class Player : Character {
 
     public void OnBattleStart()
     {
-        TurnInit();
         HitPoint = MaxHP;
+        TurnInit();
     }
 }

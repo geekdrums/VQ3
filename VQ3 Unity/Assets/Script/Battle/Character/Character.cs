@@ -4,7 +4,7 @@ using System.Collections;
 public class Character : MonoBehaviour {
     protected static readonly float DAMAGE_RANGE = 12.0f;
     protected static readonly float MAGIC_DAMAGE_RANGE = 8.0f;
-    protected static readonly int LEAST_DAMAGE_RANGE = 4;
+    protected static readonly int LEAST_DAMAGE_RANGE = 3;
     protected static readonly int LEAST_MAGIC_DAMAGE_RANGE = 2;
     protected static readonly float DEFEND_COEFF = 1.0f / 2.0f;
 

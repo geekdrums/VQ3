@@ -2,17 +2,18 @@
 using System;
 using System.Collections.Generic;
 
+//Game State
+public enum GameState
+{
+    Intro,
+    Endro,
+    Battle,
+    Continue,
+    Field,
+    Result
+}
 public static class GameContext
 {
-    //Game State
-    public enum GameState
-    {
-		Intro,
-		Endro,
-        Battle,
-        Continue,
-        Field
-    }
     public static GameState CurrentState = GameState.Field;
     public static void ChangeState( GameState NewState )
     {
@@ -40,6 +41,8 @@ public static class GameContext
             break;
         case GameState.Field:
             break;
+        case GameState.Result:
+            break;
         }
     }
     static void OnEnterState( GameState NewState )
@@ -63,6 +66,8 @@ public static class GameContext
             break;
         case GameState.Field:
             //Music.Play( "fieldMusic" );
+            break;
+        case GameState.Result:
             break;
         }
     }

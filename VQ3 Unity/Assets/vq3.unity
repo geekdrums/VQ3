@@ -128,18 +128,6 @@ MonoBehaviour:
   IntroCommand: {fileID: 283443411}
   DefaultCommand: {fileID: 900260677}
   InvertStrategy: {fileID: 915600407}
-  CommandNodes:
-  - {fileID: 1105696645}
-  - {fileID: 2119427361}
-  - {fileID: 347835329}
-  - {fileID: 1249678215}
-  - {fileID: 283443411}
-  - {fileID: 1945084954}
-  - {fileID: 900260677}
-  - {fileID: 1888633259}
-  - {fileID: 1270097627}
-  StrategyNodes:
-  - {fileID: 915600407}
   VoxBall: {fileID: 1472346222}
   SelectSpot: {fileID: 417770709}
   RightArrow: {fileID: 240504246}
@@ -755,7 +743,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c2f7dcd443c2b0d41af3485ff746aac2, type: 2}
+  - {fileID: 2100000, guid: b384123dc18728b46932c6a384ed3351, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -865,9 +853,10 @@ MonoBehaviour:
   _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
   latitude: 25
   longitude: 0
-  AcqureLevel: 8
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u307E\u3070\u3086\u3044\u3000\u3051\u3093\u3092\u3000\u3066\u3093\u304B\u3089\u3000\u3075\u308A\u304A\u308D\u3057\u305F"
+  AcquireTexts: []
 --- !u!4 &239945211
 Transform:
   m_ObjectHideFlags: 0
@@ -1315,8 +1304,9 @@ MonoBehaviour:
   _timingStr: 
   latitude: -15
   longitude: 0
-  AcqureLevel: 1
+  AcquireLevel: 1
   DescribeTexts: []
+  AcquireTexts: []
 --- !u!102 &279086606
 TextMesh:
   serializedVersion: 3
@@ -1455,8 +1445,9 @@ MonoBehaviour:
   _timingStr: 
   latitude: -25
   longitude: 0
-  AcqureLevel: 1
+  AcquireLevel: 1
   DescribeTexts: []
+  AcquireTexts: []
 --- !u!1 &313610058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1537,9 +1528,12 @@ MonoBehaviour:
   _timingStr: 1 0 0,3 0 0
   latitude: 15
   longitude: 40
-  AcqureLevel: 6
+  AcquireLevel: 6
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u304A\u304A\u304D\u306A\u3000\u3081\u3050\u307F\u306E\u3042\u3081\u3092\u3000\u3088\u3073\u3088\u305B\u305F"
+  AcquireTexts:
+  - "\u30AA\u30AF\u30B9\u306F\u3000\u3060\u3044\u304B\u3044\u3075\u304F\u3000\u3092\u304A\u307C\u3048\u305F\uFF01"
+  - "\u30D4\u30F3\u30C1\u306B\u306A\u3063\u305F\u3089\u3000\u3064\u304B\u3063\u3066\u307F\u3088\u3046\u3002"
 --- !u!102 &347835330
 TextMesh:
   serializedVersion: 3
@@ -1713,9 +1707,10 @@ MonoBehaviour:
   _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
   latitude: -15
   longitude: 50
-  AcqureLevel: 5
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u3057\u3087\u3046\u3078\u304D\u3092\u3064\u304F\u308A\u3000\u3084\u3044\u3070\u3092\u3000\u3066\u306B\u3057\u305F"
+  AcquireTexts: []
 --- !u!4 &407613035
 Transform:
   m_ObjectHideFlags: 0
@@ -2245,9 +2240,10 @@ MonoBehaviour:
   _timingStr: 0,1,2,3
   latitude: -5
   longitude: 20
-  AcqureLevel: 1
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u304D\u3087\u3060\u3044\u306A\u3000\u3084\u3044\u3070\u3092\u3000\u3075\u308A\u304B\u3056\u3057\u305F"
+  AcquireTexts: []
 --- !u!4 &567602753
 Transform:
   m_ObjectHideFlags: 0
@@ -2428,7 +2424,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400006, guid: e28732d6eca58a849a26ab7f499010dd, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 606756464}
-  m_LocalRotation: {x: 0, y: 0, z: .837718725, w: .546101928}
+  m_LocalRotation: {x: 0, y: 0, z: .844327867, w: .535826862}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.20000005, y: 60, z: 1}
   m_Children: []
@@ -2518,9 +2514,10 @@ MonoBehaviour:
   _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
   latitude: -5
   longitude: -20
-  AcqureLevel: 3
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u3044\u304B\u3065\u3061\u3092\u3000\u3088\u3073\u3088\u305B\u305F"
+  AcquireTexts: []
 --- !u!4 &625124932
 Transform:
   m_ObjectHideFlags: 0
@@ -2701,7 +2698,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400002, guid: e28732d6eca58a849a26ab7f499010dd, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 642197340}
-  m_LocalRotation: {x: 0, y: 0, z: .579281211, w: .81512785}
+  m_LocalRotation: {x: 0, y: 0, z: .518027008, w: .855364263}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .200000003, y: 60, z: 1}
   m_Children: []
@@ -3132,9 +3129,10 @@ MonoBehaviour:
   _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
   latitude: 40
   longitude: 0
-  AcqureLevel: 8
+  AcquireLevel: 8
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u307E\u3070\u3086\u3044\u3000\u3051\u3093\u3092\u3000\u3066\u3093\u304B\u3089\u3000\u3075\u308A\u304A\u308D\u3057\u305F"
+  AcquireTexts: []
 --- !u!102 &736554187
 TextMesh:
   serializedVersion: 3
@@ -3505,9 +3503,10 @@ MonoBehaviour:
   _timingStr: 1 0 0,2 0 0,3 0 0
   latitude: 5
   longitude: -20
-  AcqureLevel: 3
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u3081\u3050\u307F\u306E\u3042\u3081\u3092\u3000\u3088\u3073\u3088\u305B\u305F"
+  AcquireTexts: []
 --- !u!4 &780278396
 Transform:
   m_ObjectHideFlags: 0
@@ -3604,9 +3603,10 @@ MonoBehaviour:
   _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
   latitude: 5
   longitude: 20
-  AcqureLevel: 1
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u3057\u3087\u3046\u3078\u304D\u3092\u3064\u304F\u308A\u3000\u307F\u3092\u307E\u3082\u3063\u305F"
+  AcquireTexts: []
 --- !u!4 &785193060
 Transform:
   m_ObjectHideFlags: 0
@@ -3686,7 +3686,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: e28732d6eca58a849a26ab7f499010dd, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 807280705}
-  m_LocalRotation: {x: 0, y: 0, z: .951298952, w: .308269978}
+  m_LocalRotation: {x: 0, y: 0, z: .981627166, w: .190809056}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .400000006, y: 60, z: 1}
   m_Children: []
@@ -3901,9 +3901,10 @@ MonoBehaviour:
   _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
   latitude: -10
   longitude: 20
-  AcqureLevel: 1
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u3057\u3087\u3046\u3078\u304D\u3092\u3064\u304F\u308A\u3000\u307F\u3092\u307E\u3082\u3063\u305F"
+  AcquireTexts: []
 --- !u!102 &900260678
 TextMesh:
   serializedVersion: 3
@@ -4080,9 +4081,10 @@ MonoBehaviour:
   _timingStr: 0,2,3
   latitude: 15
   longitude: 50
-  AcqureLevel: 5
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u304D\u3087\u3060\u3044\u306A\u3000\u3084\u3044\u3070\u306B\u3000\u3044\u306E\u308A\u3092\u3000\u3053\u3081\u305F"
+  AcquireTexts: []
 --- !u!4 &926664769
 Transform:
   m_ObjectHideFlags: 0
@@ -4173,7 +4175,7 @@ MonoBehaviour:
   lightAngles: []
   targetLightAngle: 0
   nextTargetLightAngle: 0
-  lightSpeedCoeff: .0500000007
+  lightSpeedCoeff: 1
   lightMinSpeed: .0299999993
   nextTargetLightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1014535471
@@ -4346,16 +4348,6 @@ MonoBehaviour:
   IntroCommand: {fileID: 279086605}
   DefaultCommand: {fileID: 785193059}
   InvertStrategy: {fileID: 1432312465}
-  CommandNodes:
-  - {fileID: 407613034}
-  - {fileID: 926664768}
-  - {fileID: 1834369952}
-  - {fileID: 1661643850}
-  - {fileID: 279086605}
-  StrategyNodes:
-  - {fileID: 242269008}
-  - {fileID: 90979773}
-  - {fileID: 1432312465}
   VoxBall: {fileID: 141490141}
   SelectSpot: {fileID: 417770709}
   RightArrow: {fileID: 240504246}
@@ -4775,9 +4767,12 @@ MonoBehaviour:
   _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
   latitude: 17
   longitude: 0
-  AcqureLevel: 5
+  AcquireLevel: 5
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u3057\u3087\u3046\u3078\u304D\u3092\u3064\u304F\u308A\u3000\u3084\u3044\u3070\u3092\u3000\u3066\u306B\u3057\u305F"
+  AcquireTexts:
+  - "\u30AA\u30AF\u30B9\u306F\u3000\u307C\u3046\u304E\u3087\u3053\u3046\u3052\u304D\u3000\u3092\u304A\u307C\u3048\u305F\uFF01"
+  - "\u3058\u307F\u3061\u306B\u3000\u305B\u3081\u308B\u306E\u3082\u3000\u3055\u304F\u305B\u3093\u3060\u3002"
 --- !u!1 &1134430427
 GameObject:
   m_ObjectHideFlags: 0
@@ -4931,10 +4926,14 @@ MonoBehaviour:
   _timingStr: 1 3
   latitude: 15
   longitude: -40
-  AcqureLevel: 7
+  AcquireLevel: 7
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u30A4\u30B0\u30CB\u30B9\u3000\u3092\u3068\u306A\u3048\u305F\u3002"
   - "\u3042\u307E\u306D\u304F\u3000\u307B\u306E\u304A\u304C\u3000\u304F\u3046\u3092\u3000\u3084\u304D\u3064\u304F\u3059"
+  AcquireTexts:
+  - "\u30AA\u30AF\u30B9\u306F\u3000\u30A4\u30B0\u30CB\u30B9\u3000\u3092\u304A\u307C\u3048\u305F\uFF01"
+  - "\u304D\u3087\u3046\u3060\u3044\u306A\u3000\u3058\u3085\u3082\u3093\u304C\u3000\u305D\u3089\u307E\u3067\u3082"
+  - "\u3084\u304D\u3064\u304F\u3059\u3060\u308D\u3046\u3002"
 --- !u!102 &1249678216
 TextMesh:
   serializedVersion: 3
@@ -5136,9 +5135,12 @@ MonoBehaviour:
   _timingStr: 1 0 0,2 0 0,3 0 0
   latitude: 30
   longitude: 15
-  AcqureLevel: 3
+  AcquireLevel: 3
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u3081\u3050\u307F\u306E\u3042\u3081\u3092\u3000\u3088\u3073\u3088\u305B\u305F"
+  AcquireTexts:
+  - "\u30AA\u30AF\u30B9\u306F\u3000\u304B\u3044\u3075\u304F\u306E\u307E\u307B\u3046\u3000\u3092\u304A\u307C\u3048\u305F\uFF01"
+  - "\u3042\u3076\u306A\u304F\u306A\u3063\u305F\u3089\u3000\u3064\u304B\u3063\u3066\u307F\u3088\u3046\u3002"
 --- !u!102 &1270097628
 TextMesh:
   serializedVersion: 3
@@ -6049,6 +6051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2268af502b2c4e643bda6eebe0f0a29f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlinkInterval: .200000003
 --- !u!4 &1525615982
 Transform:
   m_ObjectHideFlags: 0
@@ -6502,10 +6505,11 @@ MonoBehaviour:
   _timingStr: 1 3
   latitude: 15
   longitude: -50
-  AcqureLevel: 7
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u30A4\u30B0\u30CB\u30B9\u3000\u3092\u3068\u306A\u3048\u305F\u3002"
   - "\u3042\u307E\u306D\u304F\u3000\u307B\u306E\u304A\u304C\u3000\u304F\u3046\u3092\u3000\u3084\u304D\u3064\u304F\u3059"
+  AcquireTexts: []
 --- !u!4 &1661643851
 Transform:
   m_ObjectHideFlags: 0
@@ -7136,9 +7140,10 @@ MonoBehaviour:
   _timingStr: 1 0 0,3 0 0
   latitude: -15
   longitude: -50
-  AcqureLevel: 6
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u304A\u304A\u304D\u306A\u3000\u3081\u3050\u307F\u306E\u3042\u3081\u3092\u3000\u3088\u3073\u3088\u305B\u305F"
+  AcquireTexts: []
 --- !u!4 &1834369953
 Transform:
   m_ObjectHideFlags: 0
@@ -7294,9 +7299,12 @@ MonoBehaviour:
   _timingStr: 0 0 0,1 0 0,2 0 0,3 0 0
   latitude: 30
   longitude: -20
-  AcqureLevel: 3
+  AcquireLevel: 3
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u3044\u304B\u3065\u3061\u3092\u3000\u3088\u3073\u3088\u305B\u305F"
+  AcquireTexts:
+  - "\u30AA\u30AF\u30B9\u306F\u3000\u3044\u304B\u3065\u3061\u306E\u307E\u307B\u3046\u3000\u3092\u304A\u307C\u3048\u305F\uFF01"
+  - "\u3084\u3044\u3070\u3068\u306F\u3000\u305B\u3044\u3057\u3064\u304C\u3000\u3061\u304C\u3046\u3088\u3046\u3060\u3002"
 --- !u!102 &1888633260
 TextMesh:
   serializedVersion: 3
@@ -7459,9 +7467,10 @@ MonoBehaviour:
   _timingStr: 0,1,2,3
   latitude: -10
   longitude: -20
-  AcqureLevel: 1
+  AcquireLevel: 1
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u304D\u3087\u3060\u3044\u306A\u3000\u3084\u3044\u3070\u3092\u3000\u3075\u308A\u304B\u3056\u3057\u305F"
+  AcquireTexts: []
 --- !u!102 &1945084955
 TextMesh:
   serializedVersion: 3
@@ -7674,7 +7683,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400004, guid: e28732d6eca58a849a26ab7f499010dd, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2002037996}
-  m_LocalRotation: {x: 0, y: 0, z: .434445232, w: .900698245}
+  m_LocalRotation: {x: 0, y: 0, z: .320613027, w: .947210312}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .699999988, y: 60, z: 1}
   m_Children: []
@@ -7998,9 +8007,12 @@ MonoBehaviour:
   _timingStr: 0,2,3
   latitude: 0
   longitude: 0
-  AcqureLevel: 5
+  AcquireLevel: 5
   DescribeTexts:
   - "\u30AA\u30AF\u30B9\u306F\u3000\u304D\u3087\u3060\u3044\u306A\u3000\u3084\u3044\u3070\u306B\u3000\u3044\u306E\u308A\u3092\u3000\u3053\u3081\u305F"
+  AcquireTexts:
+  - "\u30AA\u30AF\u30B9\u306F\u3000\u3044\u306E\u308A\u306E\u3084\u3044\u3070\u3000\u3092\u304A\u307C\u3048\u305F\uFF01"
+  - "\u3059\u3066\u307F\u306E\u304B\u304F\u3054\u304C\u3000\u304B\u305F\u3044\u3082\u306E\u3082\u3000\u3064\u3089\u306C\u304F\u3060\u308D\u3046\u3002"
 --- !u!102 &2119427362
 TextMesh:
   serializedVersion: 3

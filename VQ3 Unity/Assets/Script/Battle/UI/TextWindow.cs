@@ -10,7 +10,7 @@ public class GUIMessage
 	Func<bool> isEndPred;
 	Action OnEndShowEvent;
 
-	public bool IsEnd { get { return CurrentIndex >= Text.Length - 1 && isEndPred(); } }
+	public bool IsEnd { get { return CurrentIndex >= Text.Length - 1 && ( isEndPred == null || isEndPred() ); } }
 	public void OnEndShow()
 	{
 		if ( OnEndShowEvent != null )
@@ -26,16 +26,8 @@ public class GUIMessage
 		{
 			this.isEndPred = isEnd;
 		}
-		else
-		{
-			this.isEndPred = EndNextBar;
-		}
 		this.OnEndShowEvent = OnEndShow;
 	}
-
-	public readonly static Func<bool> EndNextBar = () => Music.IsNowChangedBar();
-	public readonly static Func<bool> EndByTouch = () => Input.GetMouseButtonDown( 0 );//Input.GetTouch(0).tapCount > 0;
-	public readonly static Action<string> Nextmessage = ( string message ) => TextWindow.AddMessage( new GUIMessage( message ) );
 }
 
 public class TextWindow : MonoBehaviour {
@@ -44,6 +36,10 @@ public class TextWindow : MonoBehaviour {
     TextMesh[] displayTexts;
 
 	List<GUIMessage> Messages = new List<GUIMessage>();
+    bool useNextCursor = false;
+    float blinkTime;
+
+    public float BlinkInterval;
 
 	// Use this for initialization
 	void Start () {
@@ -61,6 +57,14 @@ public class TextWindow : MonoBehaviour {
         {
             ++Messages[i].CurrentIndex;
             displayTexts[i].text = Messages[i].Text.Substring( 0, Mathf.Min( Messages[i].CurrentIndex + 1, Messages[i].Text.Length ) );
+        }
+        if( useNextCursor )
+        {
+            blinkTime += Time.deltaTime;
+            if( Messages[Messages.Count - 1].IsEnd && (blinkTime % (BlinkInterval*2) ) >= BlinkInterval )
+            {
+                displayTexts[Messages.Count - 1].text += " >";
+            }
         }
 	}
 
@@ -84,6 +88,10 @@ public class TextWindow : MonoBehaviour {
         ClearMessages();
         AddMessage( NewMessages );
     }
+    public static void SetNextCursor( bool use )
+    {
+        instance.SetNextCursor_( use );
+    }
 
 	void AddMessage_( GUIMessage NewMessage )
 	{
@@ -97,5 +105,11 @@ public class TextWindow : MonoBehaviour {
         {
             displayTexts[i].text = "";
         }
+    }
+
+    void SetNextCursor_( bool use )
+    {
+        useNextCursor = use;
+        blinkTime = 0;
     }
 }

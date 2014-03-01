@@ -21,6 +21,8 @@ public class PlayerConductor : MonoBehaviour {
     public int PlayerMaxHP { get { return Player.HitPoint; } }
     public bool CanUseInvert { get { return Level >= 8; } }
 
+    float resultTime;
+
 	// Use this for initialization
 	void Start () {
 		GameContext.PlayerConductor = this;
@@ -33,6 +35,99 @@ public class PlayerConductor : MonoBehaviour {
 	{
 	}
 
+    public void UpdateResult()
+    {
+        resultTime += Time.deltaTime;
+        if( resultTime >= 0.4f && Input.GetMouseButtonUp( 0 ) && commandGraph.CurrentButton != VoxButton.None )
+        {
+            resultTime = 0;
+            bool isProceeded = false;
+            while( !isProceeded )
+            {
+                print( GameContext.FieldConductor.RState );
+                isProceeded = true;
+                if( GameContext.FieldConductor.RState == ResultState.Command )
+                {
+                    Command acquiredCommand = commandGraph.CheckAcquireCommand( Level );
+                    if( acquiredCommand != null && acquiredCommand != commandGraph.InvertStrategy.Commands[0] )
+                    {
+                        TextWindow.ChangeMessage( acquiredCommand.AcquireTexts );
+                        acquiredCommand.Acquire();
+                        commandGraph.Select( acquiredCommand );
+                        break;
+                    }
+                    else
+                    {
+                        isProceeded = false;
+                        GameContext.FieldConductor.MoveNextResult();
+                    }
+                }
+                else
+                {
+                    GameContext.FieldConductor.MoveNextResult();
+                }
+
+                switch( GameContext.FieldConductor.RState )
+                {
+                case ResultState.Status2:
+                    TextWindow.ChangeMessage( "ぼうぎょ：" + Player.BaseDefend + " ( +" + (DefendLevelList[Level - 1] - DefendLevelList[Level - 2]) + " )" );
+                    TextWindow.AddMessage( "まほう：  " + Player.BaseMagic + " ( +" + (MagicLevelList[Level - 1] - MagicLevelList[Level - 2]) + " )" );
+                    TextWindow.AddMessage( "まぼう：  " + Player.BaseMagicDefend + " ( +" + (MagicDefendLevelList[Level - 1] - MagicDefendLevelList[Level - 2]) + " )" );
+                    break;
+                case ResultState.Quarter:
+                    if( QuarterLevelList[Level - 1] > QuarterLevelList[Level - 2] )
+                    {
+                        TextWindow.ChangeMessage( "オクスは　" + NumQuarter + "つめの　クオーターを　てにいれた！" );
+                        if( NumQuarter < 4 )
+                        {
+                            TextWindow.AddMessage( "4ぶんの" + NumQuarter + "のちからが　ときはなたれた。" );
+                            TextWindow.AddMessage( "あと" + (4 - NumQuarter) + "つ！" );
+                        }
+                        else
+                        {
+                            TextWindow.AddMessage( "しかしまだ　かくされたちからが　あるようだ。" );
+                        }
+                    }
+                    else
+                    {
+                        isProceeded = false;
+                    }
+                    break;
+                case ResultState.Command:
+                    isProceeded = false;
+                    break;
+                case ResultState.Moon1:
+                    if( CanUseInvert )
+                    {
+                        TextWindow.ChangeMessage( "かくされた　つきのちからを　てにいれた。" );
+                        commandGraph.InvertStrategy.Commands[0].Acquire();
+                        commandGraph.Select( commandGraph.InvertStrategy.Commands[0] );
+                        isProceeded = true;
+                    }
+                    else
+                    {
+                        isProceeded = false;
+                    }
+                    break;
+                case ResultState.Moon2:
+                    if( CanUseInvert )
+                    {
+                        TextWindow.AddMessage( "まほうにより　つきがみちたとき、" );
+                        TextWindow.AddMessage( "てんちの　すべてを　みかたに　できるだろう。" );
+                    }
+                    else
+                    {
+                        isProceeded = false;
+                    }
+                    break;
+                default://ResultState.End
+                    break;
+                }
+            }
+
+        }
+    }
+
     public void OnLevelUp()
     {
         NumQuarter = QuarterLevelList[Level-1];
@@ -43,6 +138,13 @@ public class PlayerConductor : MonoBehaviour {
         Player.BaseMagicDefend  = MagicDefendLevelList[Level-1];
         Player.Initialize();
         Player.TurnInit();
+        if( Level > 1 )
+        {
+            TextWindow.ChangeMessage( "オクスは　レベル" + Level + "に　あがった！" );
+            TextWindow.AddMessage( "さいだいHP：" + Player.HitPoint + " ( +" + (HPLevelList[Level - 1] - HPLevelList[Level - 2]) + " )" );
+            TextWindow.AddMessage( "こうげき：  " + Player.BasePower + " ( +" + (AttackLevelList[Level - 1] - AttackLevelList[Level - 2]) + " )" );
+            resultTime = 0;
+        }
     }
 
 	public void CheckCommand()

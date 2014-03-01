@@ -95,10 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c4b48b39799c8418def7f2ff8b2455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 15
+  HitPoint: 10
   BasePower: 0
   BaseMagic: 60
-  BaseDefend: 40
+  BaseDefend: 44
   BaseMagicDefend: 999
   DisplayName: "\u30D1\u30FC\u30EB"
   Speceis: 3
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillList:
   - {fileID: 11400000, guid: bd6e15dfe38bae9459894676abfd71fa, type: 2}
-  _timingStr: 0
+  _timingStr: 0 1
   nextState: 
   isPassive: 0
   DescribeText: "\u306F\u3000\u3042\u3089\u3057\u3092\u3000\u3064\u304F\u308A\u3060\u3057\u305F\uFF01"

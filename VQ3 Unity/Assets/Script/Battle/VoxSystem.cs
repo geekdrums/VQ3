@@ -122,7 +122,7 @@ public class VoxSystem : MonoBehaviour{
     // Update is called once per frame
     void Update()
 	{
-        if( GameContext.CurrentState == GameContext.GameState.Field ) return;
+        if( GameContext.CurrentState == GameState.Field ) return;
 
 		switch ( state )
 		{
@@ -185,8 +185,17 @@ public class VoxSystem : MonoBehaviour{
         rotTime += Time.deltaTime / (float)Music.mtUnit;
         for( int i = 0; i < lightAngles.Length; i++ )
         {
-            float leaveAwayFactor = ( currentTargetEnemy != null ? 0.5f / Mathf.Max( 0.1f, Mathf.Abs( (targetLightAngle - lightAngles[i]) % 180.0f ) / 90.0f ) : 0.0f );
-            float d = (i % 2 == 0 ? 1 : -1) * Mathf.Sin( (float)(rotTime / 1024) * Mathf.PI * 2 * (5 - i) ) * lightSpeedCoeff * Mathf.Max( 1.0f, leaveAwayFactor );
+            float diffToMainLight = sunLights[i].transform.eulerAngles.z - mainLight.transform.eulerAngles.z;
+            float leaveAwayFactor = 1.0f / Mathf.Max( 0.2f, (Mathf.Abs( diffToMainLight ) % 180.0f) / 90.0f );
+            float d = 0;
+            if( leaveAwayFactor > 1.0f )
+            {
+                d = ( Mathf.Abs( diffToMainLight ) > 0.1f ? diffToMainLight/Mathf.Abs(diffToMainLight) : 1.0f ) * lightSpeedCoeff * leaveAwayFactor;
+            }
+            else
+            {
+                d = (i % 2 == 0 ? 1 : -1) * Mathf.Sin( (float)(rotTime / 512) * Mathf.PI * 2 * (3 - i*0.5f) ) * lightSpeedCoeff;
+            }
             lightAngles[i] += (Mathf.Abs( d ) < lightMinSpeed ? 0 : d);
         }
     }
@@ -274,8 +283,8 @@ public class VoxSystem : MonoBehaviour{
                 sunLights[i].transform.localScale = new Vector3( Mathf.Lerp( sunLights[i].transform.localScale.x, targetLightScales[i], 0.1f ), sunLights[i].transform.localScale.y, sunLights[i].transform.localScale.z );
             }
         }
-        nextTargetLight.transform.rotation = Quaternion.Lerp( nextTargetLight.transform.rotation, Quaternion.AngleAxis( nextTargetLightAngle, Vector3.forward ), 0.2f );
-        nextTargetLight.renderer.material.color = Color.Lerp( nextTargetLight.renderer.material.color, nextTargetLightColor, 0.1f );
+        //nextTargetLight.transform.rotation = Quaternion.Lerp( nextTargetLight.transform.rotation, Quaternion.AngleAxis( nextTargetLightAngle, Vector3.forward ), 0.2f );
+        //nextTargetLight.renderer.material.color = Color.Lerp( nextTargetLight.renderer.material.color, nextTargetLightColor, 0.1f );
 
         VPText.color = Color.Lerp( VPText.color, targetTextColor, 0.05f );
         voxMoon.SetColor( Color.Lerp( voxMoon.Color, targetMoonColor, 0.1f ) );
@@ -391,6 +400,7 @@ public class VoxSystem : MonoBehaviour{
             {
                 nextTargetLightColor = Color.clear;
             }
+            /*
             if( state == VoxState.Sun )
             {
                 for( int i = 0; i < lightAngles.Length; i++ )
@@ -398,6 +408,7 @@ public class VoxSystem : MonoBehaviour{
                     lightAngles[i] += Random.Range( -10.0f, 10.0f );
                 }
             }
+            */
             else if( state == VoxState.Invert || state == VoxState.Eclipse )
             {
                 for( int i = 0; i < lightAngles.Length; i++ )

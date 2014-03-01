@@ -14,13 +14,15 @@ public class Command : MonoNode
     public string _timingStr = "0,1,2,3";
     public float latitude;
     public float longitude;
-    public int AcqureLevel = 1;
+    public int AcquireLevel = 1;
     public string[] DescribeTexts;
+    public string[] AcquireTexts;
 
     public Strategy ParentStrategy { get; protected set; }
     public bool IsLinked { get; protected set; }
     public bool IsCurrent { get; protected set; }
     public bool IsSelected { get; protected set; }
+    public bool IsAcquired { get; protected set; }
     public bool IsTargetSelectable { get { return _skillList.Find( ( Skill s ) => s.IsTargetSelectable ) != null; } }
 
     protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
@@ -63,6 +65,12 @@ public class Command : MonoNode
             _skillList[i].Parse();
         }
         IsLinked = true;
+        IsAcquired = AcquireLevel <= GameContext.PlayerConductor.Level;
+        print( name + " is " + IsAcquired + " AcquireLevel:" + AcquireLevel ); 
+        if( !IsAcquired )
+        {
+            GetComponent<TextMesh>().color = Color.clear;
+        }
     }
 
     public virtual GameObject GetCurrentSkill()
@@ -103,7 +111,7 @@ public class Command : MonoNode
     }
     public bool IsUsable()
     {
-        return GameContext.PlayerConductor.Level >= AcqureLevel && IsLinked;
+        return IsAcquired && IsLinked;
     }
 
 
@@ -148,28 +156,45 @@ public class Command : MonoNode
         }
         else
         {
-            GetComponent<TextMesh>().color = Color.gray;
+            if( IsAcquired )
+            {
+                GetComponent<TextMesh>().color = Color.gray;
+            }
         }
     }
     public void SetCurrent()
     {
-        IsCurrent = true;
-        GetComponent<TextMesh>().color = Color.red;
+        if( IsAcquired )
+        {
+            IsCurrent = true;
+            GetComponent<TextMesh>().color = Color.red;
+        }
     }
     public void Select()
     {
-        IsSelected = true;
-        if( !IsCurrent )
+        if( IsAcquired )
         {
-            GetComponent<TextMesh>().color = Color.magenta;
+            IsSelected = true;
+            if( !IsCurrent )
+            {
+                GetComponent<TextMesh>().color = Color.magenta;
+            }
         }
     }
     public void Deselect()
     {
-        IsSelected = false;
-        if( !IsCurrent )
+        if( IsAcquired )
         {
-            GetComponent<TextMesh>().color = Color.black;
+            IsSelected = false;
+            if( !IsCurrent )
+            {
+                GetComponent<TextMesh>().color = Color.black;
+            }
         }
+    }
+    public void Acquire()
+    {
+        IsAcquired = true;
+        GetComponent<TextMesh>().color = Color.gray;
     }
 }

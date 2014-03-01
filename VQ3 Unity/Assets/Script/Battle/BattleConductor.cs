@@ -18,33 +18,37 @@ public class BattleConductor : MonoBehaviour {
     {
 		switch ( GameContext.CurrentState )
 		{
-		case GameContext.GameState.Intro:
+		case GameState.Intro:
             if( Music.IsJustChangedAt( 0 ) || Music.IsJustChangedAt( 4 ) )
             {
                 if( Music.GetCurrentBlockName() != "intro" )
                 {
-                    GameContext.ChangeState( GameContext.GameState.Battle );
+                    GameContext.ChangeState( GameState.Battle );
                     UpdateBattle();
                 }
 			}
 			break;
-		case GameContext.GameState.Battle:
+		case GameState.Battle:
             UpdateBattle();
 			if ( Music.IsJustChangedAt(0) && Music.GetCurrentBlockName() == "endro" )
 			{
                 GameContext.VoxSystem.SetState( VoxState.SunSet );
-				GameContext.ChangeState( GameContext.GameState.Endro );
+				GameContext.ChangeState( GameState.Endro );
                 TextWindow.ChangeMessage( "‚Ä‚«‚ð@‚â‚Á‚Â‚¯‚½I" );
 			}
             break;
-		case GameContext.GameState.Endro:
-			if ( !Music.IsPlaying() )
-			{
+		case GameState.Endro:
+            if( Music.IsJustChangedAt( 0, 2 ) )
+            {
+                TextWindow.SetNextCursor( true );
+            }
+            if( !Music.IsPlaying() || ( Music.Just.totalUnit > 8 && Input.GetMouseButtonUp( 0 ) && GameContext.PlayerConductor.commandGraph.CurrentButton != VoxButton.None) )
+            {
                 ClearSkills();
-				GameContext.ChangeState( GameContext.GameState.Field );
-			}
+                GameContext.ChangeState( GameState.Field );
+            }
             break;
-        case GameContext.GameState.Continue:
+        case GameState.Continue:
             break;
 		}
     }
@@ -120,7 +124,7 @@ public class BattleConductor : MonoBehaviour {
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
         GameContext.VoxSystem.SetState( VoxState.SunSet );
-        GameContext.ChangeState( GameContext.GameState.Continue );
+        GameContext.ChangeState( GameState.Continue );
         Music.Play( "Continue" );
         ClearSkills();
 	}

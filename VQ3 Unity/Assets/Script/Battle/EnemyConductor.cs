@@ -45,7 +45,7 @@ public class EnemyConductor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if( GameContext.CurrentState == GameContext.GameState.Battle )
+        if( GameContext.CurrentState == GameState.Battle )
         {
             if( Music.IsJustChangedBar() && Music.Just.bar >= 1 )
             {
@@ -208,7 +208,7 @@ public class EnemyConductor : MonoBehaviour {
         }
         else
         {
-            if( nextTarget != null && !Enemies.Contains( nextTarget ) ) nextTarget = Enemies[(Enemies.Count - 1) / 2];
+            //if( nextTarget != null && !Enemies.Contains( nextTarget ) ) nextTarget = Enemies[(Enemies.Count - 1) / 2];
             if( !Enemies.Contains( targetEnemy ) )
             {
                 targetEnemy = (nextTarget != null && Enemies.Contains( nextTarget ) ? nextTarget : Enemies[(Enemies.Count - 1) / 2]);
@@ -284,11 +284,11 @@ public class EnemyConductor : MonoBehaviour {
 
     public void CheckCommand()
     {
-        if( nextTarget != null )
-        {
-            targetEnemy = nextTarget;
-            GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
-        }
+        //if( nextTarget != null )
+        //{
+        //    targetEnemy = nextTarget;
+        //    GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
+        //}
         int execIndex = 0;
         foreach( Enemy enemy in Enemies )
         {
@@ -364,6 +364,7 @@ public class EnemyConductor : MonoBehaviour {
 
     public void OnNextCommandChanged( Command NextCommand )
     {
+        /*
         if( Enemies.Count > 0 )
         {
             if( NextCommand.IsTargetSelectable )
@@ -377,12 +378,14 @@ public class EnemyConductor : MonoBehaviour {
                 GameContext.VoxSystem.SetNextTargetEnemy( null );
             }
         }
+        */
     }
 
     public void OnArrowPushed( bool LorR )
     {
         if( Enemies.Count > 0 )
         {
+            /*
             int targetIndex = Enemies.IndexOf( nextTarget );
             if( LorR )
             {
@@ -395,6 +398,19 @@ public class EnemyConductor : MonoBehaviour {
                 nextTarget = Enemies[targetIndex];
             }
             GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
+            */
+            int targetIndex = Enemies.IndexOf( targetEnemy );
+            if( LorR )
+            {
+                targetIndex = (targetIndex - 1 + Enemies.Count) % Enemies.Count;
+                targetEnemy = Enemies[targetIndex];
+            }
+            else
+            {
+                targetIndex = (targetIndex + 1) % Enemies.Count;
+                targetEnemy = Enemies[targetIndex];
+            }
+            GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
         }
     }
 

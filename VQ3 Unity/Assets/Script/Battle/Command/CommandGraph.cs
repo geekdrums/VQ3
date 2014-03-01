@@ -2,23 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CommandGraph : MonoBehaviour {
+public enum VoxButton
+{
+    None,
+    Ball,
+    ArrowRight,
+    ArrowLeft,
+    Enter,
+    Count
+}
 
+public class CommandGraph : MonoBehaviour {
 
     public GameObject EdgePrefab;
     public Command IntroCommand;
     public Command DefaultCommand;
     public Strategy InvertStrategy;
-    public Command[] CommandNodes;
-    public Strategy[] StrategyNodes;
     public GameObject VoxBall;
     public GameObject SelectSpot;
     public GameObject RightArrow;
     public float MAX_LATITUDE;
     public float ROTATE_COEFF;
 
+    public List<Command> CommandNodes { get; private set; }
+    public List<Strategy> StrategyNodes { get; private set; }
     public Command NextCommand { get; private set; }
     public Command CurrentCommand { get; private set; }
+    public VoxButton CurrentButton { get; private set; }
 
     bool IsLinkedToInvert { get { return ( CurrentCommand.ParentStrategy != null && CurrentCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) ) || CurrentCommand.IsLinkedTo( InvertStrategy ); } }
     bool IsInvert { get { return CurrentCommand.ParentStrategy == InvertStrategy; } }
@@ -37,8 +47,10 @@ public class CommandGraph : MonoBehaviour {
 	void Start () {
         MainCamera = GameObject.Find( "Main Camera" ).GetComponent<Camera>();
 
-        foreach( Strategy strategy in StrategyNodes )
+        StrategyNodes = new List<Strategy>();
+        foreach( Strategy strategy in GetComponentsInChildren<Strategy>() )
         {
+            StrategyNodes.Add( strategy );
             foreach( MonoNode link in strategy.links )
             {
                 InstantiateLine( strategy, link );
@@ -52,8 +64,10 @@ public class CommandGraph : MonoBehaviour {
                 command.SetLink( false );
             }
         }
-        foreach( Command command in CommandNodes )
+        CommandNodes = new List<Command>();
+        foreach( Command command in GetComponentsInChildren<Command>() )
         {
+            CommandNodes.Add( command );
             foreach( MonoNode link in command.links )
             {
                 InstantiateLine( command, link );
@@ -67,6 +81,7 @@ public class CommandGraph : MonoBehaviour {
         offsetRotation = Quaternion.LookRotation( transform.position - SelectSpot.transform.position );
         initialPosition = transform.localPosition;
         initialRightArrowPosition = RightArrow.transform.localPosition;
+        CurrentButton = VoxButton.None;
     }
 
     void InstantiateLine( MonoNode from, MonoNode to )
@@ -85,7 +100,7 @@ public class CommandGraph : MonoBehaviour {
         UpdateInput();
 
 
-        if( GameContext.CurrentState == GameContext.GameState.Intro )
+        if( GameContext.CurrentState == GameState.Intro )
         {
             if( Music.GetNextBlockName() == "intro" && Music.Just.totalUnit > 4 )
             {
@@ -97,12 +112,12 @@ public class CommandGraph : MonoBehaviour {
             }
             else return;
         }
-        else if( GameContext.CurrentState == GameContext.GameState.Continue )
+        else if( GameContext.CurrentState == GameState.Continue )
         {
-            if( GameContext.CurrentState == GameContext.GameState.Continue && ( !Music.IsPlaying() || Music.Just.totalUnit > 4 )
+            if( GameContext.CurrentState == GameState.Continue && ( !Music.IsPlaying() || Music.Just.totalUnit > 4 )
                 && Input.GetMouseButtonUp( 0 ) && (transform.localPosition - initialPosition).magnitude > 0.03f )
             {
-                GameContext.ChangeState( GameContext.GameState.Intro );
+                GameContext.ChangeState( GameState.Intro );
             }
             return;
         }
@@ -139,8 +154,19 @@ public class CommandGraph : MonoBehaviour {
         if( Input.GetMouseButtonDown( 0 ) ) oldMousePosition = Input.mousePosition;
         Ray ray = MainCamera.ScreenPointToRay( Input.mousePosition );
         RaycastHit hit;
-        bool isHit = Physics.Raycast( ray.origin, ray.direction, out hit, Mathf.Infinity ) && hit.collider == VoxBall.collider;
-        if( Input.GetMouseButton( 0 ) && isHit )
+        Physics.Raycast( ray.origin, ray.direction, out hit, Mathf.Infinity );
+
+        CurrentButton = VoxButton.None;
+        if( hit.collider == VoxBall.collider )
+        {
+            CurrentButton = VoxButton.Ball;
+        }
+        else if( hit.collider == RightArrow.collider )
+        {
+            CurrentButton = VoxButton.ArrowRight;
+        }
+
+        if( Input.GetMouseButton( 0 ) && CurrentButton == VoxButton.Ball )
         {
             Vector3 deltaV = Input.mousePosition - oldMousePosition;
             //Quaternion oldRotation = transform.rotation;
@@ -172,7 +198,7 @@ public class CommandGraph : MonoBehaviour {
             transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
         }
 
-        if( hit.collider == RightArrow.collider )
+        if( CurrentButton == VoxButton.ArrowRight )
         {
             RightArrow.transform.localPosition = Vector3.MoveTowards( RightArrow.transform.localPosition,
                 initialRightArrowPosition + ( Input.GetMouseButton( 0 ) ? Vector3.forward * 0.3f : Vector3.zero ), 0.1f );
@@ -281,14 +307,31 @@ public class CommandGraph : MonoBehaviour {
         }
     }
 
+    public Command CheckAcquireCommand( int Level )
+    {
+        foreach( Command command in CommandNodes )
+        {
+            if( command.AcquireLevel <= Level && !command.IsAcquired )
+            {
+                return command;
+            }
+        }
+        return null;
+    }
+
     public void OnBattleStart()
     {
+        foreach( Command command in CommandNodes )
+        {
+            command.SetLink(false);
+        }
+        NextCommand = null;
         Select( IntroCommand );
         CheckCommand();
         //transform.rotation = targetRotation;
     }
 
-    void Select( Command command )
+    public void Select( Command command )
     {
         if( NextCommand != null ) NextCommand.Deselect();
         NextCommand = command;
