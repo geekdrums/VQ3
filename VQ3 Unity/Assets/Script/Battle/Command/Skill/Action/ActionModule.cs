@@ -123,3 +123,15 @@ public class WeatherModule : IActionModule
     public string WeatherName { get; private set; }
     public int Point { get; private set; }
 }
+
+public class EnemySpawnModule : IActionModule
+{
+    public EnemySpawnModule( GameObject Enemy, string state )
+    {
+        this.EnemyPrefab = Enemy;
+        this.InitialState = state;
+    }
+
+    public GameObject EnemyPrefab { get; private set; }
+    public string InitialState { get; private set; }
+}

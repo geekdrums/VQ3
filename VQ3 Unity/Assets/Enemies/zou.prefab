@@ -188,6 +188,12 @@ MonoBehaviour:
     FromState: RUp
     ToState: Down
     ViceVersa: 0
+  - conditionType: 4
+    Value: 3
+    Sign: 1
+    FromState: Down
+    ToState: Default
+    ViceVersa: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

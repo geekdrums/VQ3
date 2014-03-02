@@ -66,7 +66,6 @@ public class Command : MonoNode
         }
         IsLinked = true;
         IsAcquired = AcquireLevel <= GameContext.PlayerConductor.Level;
-        print( name + " is " + IsAcquired + " AcquireLevel:" + AcquireLevel ); 
         if( !IsAcquired )
         {
             GetComponent<TextMesh>().color = Color.clear;

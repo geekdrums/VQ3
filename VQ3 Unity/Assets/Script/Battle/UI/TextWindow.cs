@@ -19,9 +19,10 @@ public class GUIMessage
 		}
 	}
 
-	public GUIMessage( string Text, Func<bool> isEnd = null, Action OnEndShow = null )
+	public GUIMessage( string Text, Func<bool> isEnd = null, Action OnEndShow = null, int startIndex = 0 )
 	{
 		this.Text = Text;
+        this.CurrentIndex = startIndex;
 		if ( isEnd != null )
 		{
 			this.isEndPred = isEnd;

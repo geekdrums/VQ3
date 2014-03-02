@@ -10,6 +10,7 @@ public class Skill : MonoBehaviour
     public string[] _actionStr;
     public string _rhythmStr;
     public int _rhythmBaseTime = 4;
+    public List<GameObject> _prefabs;
     //public GameObject bgEffefctPrefab;
     //public string DescribeText;
 
@@ -45,7 +46,7 @@ public class Skill : MonoBehaviour
         IsTargetSelectable = false;
         for( int i = 0; i < _actionStr.Length; ++i )
         {
-            Actions[i] = ActionSet.Parse( _actionStr[i] );
+            Actions[i] = ActionSet.Parse( _actionStr[i], this );
             if( !IsTargetSelectable && Actions[i].GetModule<TargetModule>() != null
                 && Actions[i].GetModule<TargetModule>().TargetType == TargetType.Select )
             {

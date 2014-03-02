@@ -7,7 +7,7 @@ public class ActionSet : IEnumerable<IActionModule>
 {
     List<IActionModule> Modules = new List<IActionModule>();
 
-    public static ActionSet Parse( string ModuleStr )
+    public static ActionSet Parse( string ModuleStr, Skill ownerSkill )
     {
         ActionSet res = new ActionSet();
         string[] moduleStrings = ModuleStr.Split( Utils.comma );
@@ -46,6 +46,10 @@ public class ActionSet : IEnumerable<IActionModule>
             else if( str.StartsWith( "Weather " ) )
             {
                 res.Modules.Add( new WeatherModule( parameters[1], int.Parse( parameters[2] ) ) );
+            }
+            else if( str.StartsWith( "Enemy " ) )
+            {
+                res.Modules.Add( new EnemySpawnModule( ownerSkill._prefabs.Find( (GameObject obj)=> obj.name == parameters[1] ), parameters[2] ) );
             }
         }
         return res;

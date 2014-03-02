@@ -22,6 +22,7 @@ public class Enemy : Character
     public EnemySpecies Speceis;
     public List<BattleState> States;
     public StateChangeCondition[] conditions;
+    public int DeltaVP;
 
     public EnemyCommand currentCommand { get; protected set; }
     public int commandExecBar { get; protected set; }
@@ -29,6 +30,7 @@ public class Enemy : Character
 
     protected HPCircle HPCircle;
     protected int turnCount;
+    protected ActionResult lastDamageResult;
 
     // Use this for initialization
     protected virtual void Start()
@@ -45,7 +47,7 @@ public class Enemy : Character
         }
         HPCircle = (Instantiate( GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * 5.0f, Quaternion.identity ) as GameObject).GetComponent<HPCircle>();
         HPCircle.transform.parent = transform;
-        HPCircle.transform.localScale *= Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP );
+        HPCircle.transform.localScale *= Mathf.Min( 2.0f, Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP ) );
         HPCircle.Initialize( this );
         HPCircle.OnTurnStart();
         initialPosition = transform.position;
@@ -60,11 +62,14 @@ public class Enemy : Character
     {
         if( damageTime > 0 )
         {
-            if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
+            if( lastDamageResult == ActionResult.PhysicGoodDamage || lastDamageResult == ActionResult.MagicGoodDamage )
             {
-                transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 1.5f ) * 1.3f;
+                if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
+                {
+                    transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 1.5f ) * 1.3f;
+                }
             }
-            renderer.material.color = (damageTime % (DamageTrembleTime*2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
+            renderer.material.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
             damageTime -= Time.deltaTime;
             if( damageTime <= 0 )
             {
@@ -150,7 +155,7 @@ public class Enemy : Character
                 continue;
             }
             int d = (CompareValue - condition.Value);
-            if( condition.FromState == "" || condition.FromState == currentState.name )
+            if( ( condition.FromState == "" || condition.FromState == currentState.name ) && condition.ToState != currentState.name )
             {
                 if( d * condition.Sign > 0 || (d == 0 && condition.Sign == 0) )
                 {
@@ -159,7 +164,7 @@ public class Enemy : Character
                     break;
                 }
             }
-            else if( condition.ViceVersa && (condition.ToState == currentState.name) )
+            else if( condition.ViceVersa && (condition.ToState == currentState.name) && condition.FromState != currentState.name )
             {
                 if( d * condition.Sign < 0 && condition.FromState != "" )
                 {
@@ -216,6 +221,54 @@ public class Enemy : Character
         }
     }
 
+    public override void BePhysicDamaged( int damage, Character ownerCharacter )
+    {
+        base.BePhysicDamaged( damage, ownerCharacter );
+
+        switch( Speceis )
+        {
+        case EnemySpecies.Human:
+        case EnemySpecies.Thing:
+        case EnemySpecies.Fairy:
+        case EnemySpecies.Jewel:
+            lastDamageResult = ActionResult.PhysicDamage;
+            break;
+        case EnemySpecies.Spirit:
+        case EnemySpecies.Dragon:
+            lastDamageResult = ActionResult.PhysicGoodDamage;
+            break;
+        case EnemySpecies.Beast:
+            lastDamageResult = ActionResult.PhysicBadDamage;
+            break;
+        case EnemySpecies.Weather:
+            break;
+        }
+        SEPlayer.Play( lastDamageResult, ownerCharacter, damage );
+    }
+    public override void BeMagicDamaged( int damage, Character ownerCharacter )
+    {
+        base.BeMagicDamaged( damage, ownerCharacter );
+
+        switch( Speceis )
+        {
+        case EnemySpecies.Human:
+        case EnemySpecies.Thing:
+        case EnemySpecies.Spirit:
+        case EnemySpecies.Weather:
+            lastDamageResult = ActionResult.MagicDamage;
+            break;
+        case EnemySpecies.Fairy:
+        case EnemySpecies.Beast:
+            lastDamageResult = ActionResult.MagicGoodDamage;
+            break;
+        case EnemySpecies.Dragon:
+            lastDamageResult = ActionResult.MagicBadDamage;
+            break;
+        case EnemySpecies.Jewel:
+            break;
+        }
+        SEPlayer.Play( lastDamageResult, ownerCharacter, damage );
+    }
     protected override void BeDamaged( int damage, Character ownerCharacter )
     {
         base.BeDamaged( damage, ownerCharacter );
@@ -232,6 +285,7 @@ public class Enemy : Character
         base.Heal( heal );
         CreateDamageText( -(HitPoint - oldHitPoint) );
         HPCircle.OnHeal();
+        SEPlayer.Play( ActionResult.EnemyHeal, this, HitPoint - oldHitPoint );
     }
 
     public void OnBaseColorChanged( Color newColor )
@@ -259,7 +313,7 @@ public class Enemy : Character
 
     public override string ToString()
     {
-        return name + "(" + currentState + ")";
+        return DisplayName + "(" + currentState.name + ")";
     }
 
     [System.Serializable]

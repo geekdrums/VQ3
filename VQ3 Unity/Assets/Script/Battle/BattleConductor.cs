@@ -6,6 +6,16 @@ public class BattleConductor : MonoBehaviour {
     public GameObject skillParent;    
     List<Pair<Timing, Skill>> Skills;
 
+    void Awake()
+    {
+        if( Application.platform == RuntimePlatform.WindowsPlayer ||
+        Application.platform == RuntimePlatform.OSXPlayer ||
+        Application.platform == RuntimePlatform.LinuxPlayer )
+        {
+            Screen.SetResolution( 400, 600, false );
+        }
+    }
+
 	// Use this for initialization
 	void Start ()
 	{

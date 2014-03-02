@@ -3,9 +3,17 @@ using System.Collections;
 
 public enum ActionResult
 {
-    Damaged,
-    MagicDamaged,
-    Healed,
+    PlayerDefend,
+    PlayerPhysicDamage,
+    PlayerMagicDamage,
+    PhysicDamage,
+    PhysicGoodDamage,
+    PhysicBadDamage,
+    MagicDamage,
+    MagicGoodDamage,
+    MagicBadDamage,
+    PlayerHeal,
+    EnemyHeal,
 }
 
 public class SEPlayer : MonoBehaviour {
@@ -41,6 +49,8 @@ public class SEPlayer : MonoBehaviour {
 
     void Play_( ActionResult act, Character target, int damage )
     {
+        Play_( act.ToString() );
+        /*
         Player targetPlayer = target as Player;
         Enemy targetEnemy = target as Enemy;
         switch( act )
@@ -119,5 +129,6 @@ public class SEPlayer : MonoBehaviour {
             Play_( (targetPlayer != null ? "Player" : "Enemy") + "Heal" );
             break;
         }
+        */
     }
 }

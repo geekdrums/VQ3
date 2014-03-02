@@ -43,6 +43,34 @@ public class Player : Character {
         base.TurnInit();
         if( HPBar != null ) HPBar.OnTurnStart();
     }
+    public override void BePhysicDamaged( int damage, Character ownerCharacter )
+    {
+        int oldHP = HitPoint;
+        base.BePhysicDamaged( damage, ownerCharacter );
+        damage = oldHP - HitPoint;
+        if( damage <= 0 )
+        {
+            SEPlayer.Play( ActionResult.PlayerDefend, ownerCharacter, damage );
+        }
+        else
+        {
+            SEPlayer.Play( ActionResult.PlayerPhysicDamage, ownerCharacter, damage );
+        }
+    }
+    public override void BeMagicDamaged( int damage, Character ownerCharacter )
+    {
+        int oldHP = HitPoint;
+        base.BeMagicDamaged( damage, ownerCharacter );
+        damage = oldHP - HitPoint;
+        if( damage <= 0 )
+        {
+            SEPlayer.Play( ActionResult.PlayerDefend, ownerCharacter, damage );
+        }
+        else
+        {
+            SEPlayer.Play( ActionResult.PlayerMagicDamage, ownerCharacter, damage );
+        }
+    }
     protected override void BeDamaged( int damage, Character ownerCharacter )
     {
         base.BeDamaged( damage, ownerCharacter );
@@ -70,6 +98,7 @@ public class Player : Character {
         if( HitPoint - oldHitPoint > 0 )
         {
             HPBar.OnHeal( HitPoint - oldHitPoint );
+            SEPlayer.Play( ActionResult.PlayerHeal, this, HitPoint - oldHitPoint );
         }
     }
 

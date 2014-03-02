@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<SpriteStudioMotion xmlns="http://www.webtech.co.jp/SpriteStudio/XML/Motion" version="4.00.02">
+	<!-- This data was created by OPTPiX SpriteStudio 5.2.0 -->
+	<Header>
+		<EndFrame>47</EndFrame>
+		<BaseTickTime>60</BaseTickTime>
+		<OptionState>
+			<ScreenSize>
+				<CanvasWidth>1024</CanvasWidth>
+				<CanvasHeight>1024</CanvasHeight>
+				<MarginWidth>520</MarginWidth>
+				<MarginHeight>520</MarginHeight>
+			</ScreenSize>
+			<BgColor>0xFF323232</BgColor>
+			<hvFlipForImageOnly>1</hvFlipForImageOnly>
+		</OptionState>
+	</Header>
+	<ImageList>
+		<Image Id="1" Path="vox3-effects-Attack1.png" Width="836" Height="836" Bpp="32" />
+	</ImageList>
+	<Parts>
+		<Part Root="1">
+			<Type>1</Type>
+			<Name>Attack</Name>
+			<Attributes>
+				<Attribute Tag="POSX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="POSY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>-56</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="HIDE">
+					<Key Time="0">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+			</Attributes>
+		</Part>
+		<Part>
+			<Type>0</Type>
+			<Name>Splinter_1</Name>
+			<ID>0</ID>
+			<ParentID>-1</ParentID>
+			<PicID>0</PicID>
+			<TransBlendType>0</TransBlendType>
+			<PictArea>
+				<Top>69</Top>
+				<Left>363</Left>
+				<Bottom>759</Bottom>
+				<Right>487</Right>
+			</PictArea>
+			<OriginX>62</OriginX>
+			<OriginY>500</OriginY>
+			<InheritType>0</InheritType>
+			<Attributes>
+				<Attribute Tag="POSX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="POSY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="ANGL" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>60.000</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>60.000</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>60.000</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>60.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0.400</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0.100</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="23" CurveType="2" CurveStartT="0.000" CurveStartV="0.000" CurveEndT="0.000" CurveEndV="0.000">
+						<Value>0.800</Value>
+					</Key>
+					<Key Time="47" CurveType="1">
+						<Value>0.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0.400</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0.100</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>0.800</Value>
+					</Key>
+					<Key Time="47" CurveType="1">
+						<Value>0.800</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="TRAN" Inherit="100">
+					<Key Time="9" CurveType="1">
+						<Value>0.000</Value>
+					</Key>
+					<Key Time="11" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="HIDE">
+					<Key Time="0">
+						<Value>1</Value>
+					</Key>
+					<Key Time="9">
+						<Value>0</Value>
+					</Key>
+					<Key Time="16">
+						<Value>0</Value>
+					</Key>
+					<Key Time="20">
+						<Value>0</Value>
+					</Key>
+					<Key Time="23">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="PCOL" Inherit="100">
+					<Key Time="16" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>128</Red>
+							<Green>128</Green>
+							<Blue>128</Blue>
+							<Alpha>0</Alpha>
+						</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>255</Green>
+							<Blue>255</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>255</Green>
+							<Blue>255</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+					<Key Time="47" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>38</Red>
+							<Green>38</Green>
+							<Blue>38</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="VERT" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<TopLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</TopLeft>
+						<TopRight>
+							<X>0</X>
+							<Y>0</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<TopLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</TopLeft>
+						<TopRight>
+							<X>0</X>
+							<Y>0</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<TopLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</TopLeft>
+						<TopRight>
+							<X>0</X>
+							<Y>0</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomRight>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<TopLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</TopLeft>
+						<TopRight>
+							<X>0</X>
+							<Y>0</Y>
+						</TopRight>
+						<BottomLeft>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomLeft>
+						<BottomRight>
+							<X>0</X>
+							<Y>0</Y>
+						</BottomRight>
+					</Key>
+				</Attribute>
+			</Attributes>
+		</Part>
+		<Part>
+			<Type>0</Type>
+			<Name>Splinter_2</Name>
+			<ID>1</ID>
+			<ParentID>-1</ParentID>
+			<PicID>0</PicID>
+			<TransBlendType>0</TransBlendType>
+			<PictArea>
+				<Top>69</Top>
+				<Left>363</Left>
+				<Bottom>759</Bottom>
+				<Right>487</Right>
+			</PictArea>
+			<OriginX>62</OriginX>
+			<OriginY>500</OriginY>
+			<InheritType>0</InheritType>
+			<Attributes>
+				<Attribute Tag="POSX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="POSY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="ANGL" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>180.000</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>180.000</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>180.000</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>180.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0.400</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0.100</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="23" CurveType="2" CurveStartT="0.000" CurveStartV="0.000" CurveEndT="0.000" CurveEndV="0.000">
+						<Value>0.800</Value>
+					</Key>
+					<Key Time="47" CurveType="1">
+						<Value>0.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0.400</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0.100</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>0.800</Value>
+					</Key>
+					<Key Time="47" CurveType="1">
+						<Value>0.800</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="TRAN" Inherit="100">
+					<Key Time="4" CurveType="1">
+						<Value>0.000</Value>
+					</Key>
+					<Key Time="6" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="HIDE">
+					<Key Time="0">
+						<Value>1</Value>
+					</Key>
+					<Key Time="4">
+						<Value>0</Value>
+					</Key>
+					<Key Time="16">
+						<Value>0</Value>
+					</Key>
+					<Key Time="20">
+						<Value>0</Value>
+					</Key>
+					<Key Time="23">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="PCOL" Inherit="100">
+					<Key Time="16" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>128</Red>
+							<Green>128</Green>
+							<Blue>128</Blue>
+							<Alpha>0</Alpha>
+						</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>255</Green>
+							<Blue>255</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>255</Green>
+							<Blue>255</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+					<Key Time="47" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>38</Red>
+							<Green>38</Green>
+							<Blue>38</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+				</Attribute>
+			</Attributes>
+		</Part>
+		<Part>
+			<Type>0</Type>
+			<Name>Splinter_3</Name>
+			<ID>2</ID>
+			<ParentID>-1</ParentID>
+			<PicID>0</PicID>
+			<TransBlendType>0</TransBlendType>
+			<PictArea>
+				<Top>69</Top>
+				<Left>363</Left>
+				<Bottom>759</Bottom>
+				<Right>487</Right>
+			</PictArea>
+			<OriginX>62</OriginX>
+			<OriginY>500</OriginY>
+			<InheritType>0</InheritType>
+			<Attributes>
+				<Attribute Tag="POSX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="POSY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>0</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="ANGL" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>300.000</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>300.000</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>300.000</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>300.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAX" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0.400</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0.100</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="23" CurveType="2" CurveStartT="0.000" CurveStartV="0.000" CurveEndT="0.000" CurveEndV="0.000">
+						<Value>0.800</Value>
+					</Key>
+					<Key Time="47" CurveType="1">
+						<Value>0.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="SCAY" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0.400</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>0.100</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Value>0.800</Value>
+					</Key>
+					<Key Time="47" CurveType="1">
+						<Value>0.800</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="TRAN" Inherit="100">
+					<Key Time="0" CurveType="1">
+						<Value>0.000</Value>
+					</Key>
+					<Key Time="2" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+					<Key Time="16" CurveType="1">
+						<Value>1.000</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="HIDE">
+					<Key Time="0">
+						<Value>0</Value>
+					</Key>
+					<Key Time="16">
+						<Value>0</Value>
+					</Key>
+					<Key Time="20">
+						<Value>0</Value>
+					</Key>
+					<Key Time="23">
+						<Value>0</Value>
+					</Key>
+				</Attribute>
+				<Attribute Tag="PCOL" Inherit="100">
+					<Key Time="16" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>128</Red>
+							<Green>128</Green>
+							<Blue>128</Blue>
+							<Alpha>0</Alpha>
+						</Value>
+					</Key>
+					<Key Time="20" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>255</Green>
+							<Blue>255</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+					<Key Time="23" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>255</Red>
+							<Green>255</Green>
+							<Blue>255</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+					<Key Time="47" CurveType="1">
+						<Type>1</Type>
+						<Blend>0</Blend>
+						<Value>
+							<Red>38</Red>
+							<Green>38</Green>
+							<Blue>38</Blue>
+							<Alpha>255</Alpha>
+						</Value>
+					</Key>
+				</Attribute>
+			</Attributes>
+		</Part>
+	</Parts>
+</SpriteStudioMotion>

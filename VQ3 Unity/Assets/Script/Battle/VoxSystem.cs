@@ -175,7 +175,7 @@ public class VoxSystem : MonoBehaviour{
     }
     void DecreaseDeltaVP()
     {
-        currentVP -= deltaVP / ( Music.mtBar * 4 );
+        currentVP -= (deltaVP + GameContext.EnemyConductor.DeltaVP) / (Music.mtBar * 4);
         currentVP = Mathf.Clamp( currentVP, 0, InvertVP );
         Music.SetAisac( "TrackVolumeEnergy", Mathf.Sqrt( (float)currentVP / InvertVP ) );
     }

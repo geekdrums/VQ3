@@ -64,6 +64,7 @@ public class FieldConductor : MonoBehaviour {
     void CheckEncount()
     {
         Music.Stop();
+        TextWindow.SetNextCursor( false );
         GameContext.EnemyConductor.SetEncounter( CurrentLevel.Encounters[encounterCount] );
         GameContext.ChangeState( GameState.Intro );
         ++encounterCount;
@@ -74,7 +75,6 @@ public class FieldConductor : MonoBehaviour {
         ++RState;
         if( RState == ResultState.End )
         {
-            TextWindow.SetNextCursor( false );
             GameContext.ChangeState( GameState.Field );
         }
     }

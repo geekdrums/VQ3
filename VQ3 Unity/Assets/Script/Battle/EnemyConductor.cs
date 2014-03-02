@@ -17,6 +17,18 @@ public class EnemyConductor : MonoBehaviour {
     Encounter CurrentEncounter;
 
     public int EnemyCount { get { return Enemies.Count + (WeatherEnemy != null ? 1 : 0); } }
+    public int DeltaVP
+    {
+        get
+        {
+            int res = 0;
+            foreach( Enemy e in Enemies )
+            {
+                res += e.DeltaVP;
+            }
+            return res;
+        }
+    }
     public Enemy targetEnemy { get; private set; }
     Enemy nextTarget;
     Camera mainCamera;
@@ -34,7 +46,7 @@ public class EnemyConductor : MonoBehaviour {
 			}
 		}
 	}
-    public int baseHP { get { return GameContext.PlayerConductor.PlayerHP; } }
+    public int baseHP { get { return GameContext.PlayerConductor.PlayerMaxHP; } }
 
 	// Use this for initialization
 	void Start () {
@@ -89,34 +101,35 @@ public class EnemyConductor : MonoBehaviour {
             Destroy( e.gameObject );
         }
         Enemies.Clear();
-        GameObject TempObj;
+        TextWindow.ClearMessages();
         int l = encounter.Enemies.Length;
         for( int i = 0; i < l; ++i )
         {
-            TempObj = (GameObject)Instantiate( encounter.Enemies[i], new Vector3( EnemyInterval * (-(l - 1) / 2.0f + i) * (l==2 ? 1.2f : 1.0f), 4, 0 ), encounter.Enemies[i].transform.rotation );
-			TempObj.renderer.material.color = baseColor;
-            Enemy enemy = TempObj.GetComponent<Enemy>();
-            WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
-            if( we != null )
-            {
-                WeatherEnemy = we;
-            }
-            else
-            {
-                Enemies.Add( enemy );
-            }
-            enemy.transform.parent = transform;
-            enemy.ChangeState( encounter.StateSets[0][i] );
-            enemy.DisplayName += (char)((int)'A' + Enemies.FindAll( ( Enemy e ) => e.DisplayName.StartsWith( enemy.DisplayName ) && e.DisplayName.Length == enemy.DisplayName.Length + 1 ).Count);
+            SpawnEnemy( encounter.Enemies[i], encounter.StateSets[0][i], i, l );
         }
         targetEnemy = Enemies[(Enemies.Count - 1) / 2];
         GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
+    }
 
-        TextWindow.ClearMessages();
-        foreach( Enemy e in Enemies )
+    void SpawnEnemy( GameObject enemyPrefab, string initialState, int index, int l )
+    {
+        GameObject TempObj;
+        TempObj = (GameObject)Instantiate( enemyPrefab, new Vector3( EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 4, 0 ), enemyPrefab.transform.rotation );
+        TempObj.renderer.material.color = baseColor;
+        Enemy enemy = TempObj.GetComponent<Enemy>();
+        WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
+        if( we != null )
         {
-            TextWindow.AddMessage( new GUIMessage( e.DisplayName + " ‚ª‚ ‚ç‚í‚ê‚½I" ) );
+            WeatherEnemy = we;
         }
+        else
+        {
+            Enemies.Add( enemy );
+            TextWindow.AddMessage( new GUIMessage( enemy.DisplayName + " ‚ª‚ ‚ç‚í‚ê‚½I" ) );
+        }
+        enemy.transform.parent = transform;
+        enemy.ChangeState( initialState );
+        enemy.DisplayName += (char)((int)'A' + Enemies.FindAll( ( Enemy e ) => e.DisplayName.StartsWith( enemy.DisplayName ) && e.DisplayName.Length == enemy.DisplayName.Length + 1 ).Count);
     }
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )
@@ -193,6 +206,14 @@ public class EnemyConductor : MonoBehaviour {
                 if( IsOldSubstance ) Enemies.Remove( WeatherEnemy );
                 else Enemies.Add( WeatherEnemy );
             }
+            isSucceeded = true;
+        }
+
+        EnemySpawnModule spawner = Action.GetModule<EnemySpawnModule>();
+        if( spawner != null && Enemies.Count < 3 )
+        {
+            SpawnEnemy( spawner.EnemyPrefab, spawner.InitialState, (Enemies.Count == 1 ? 0 : 2), 3 );
+            isSucceeded = true;
         }
         
 

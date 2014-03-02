@@ -54,12 +54,12 @@ public class Character : MonoBehaviour {
 	}
     public virtual void BePhysicDamaged( int damage, Character ownerCharacter )
     {
-        if( damage == 0 && SkillDefend == 0 )
+        if( damage == 0 && SkillDefend <= 0 )
         {
             damage = Random.Range( 1, LEAST_DAMAGE_RANGE );
         }
         BeDamaged( damage, ownerCharacter );
-        SEPlayer.Play( ActionResult.Damaged, this, damage );
+        //SEPlayer.Play( ActionResult.Damaged, this, damage );
         Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
     }
 
@@ -71,12 +71,12 @@ public class Character : MonoBehaviour {
 	}
     public virtual void BeMagicDamaged( int damage, Character ownerCharacter )
     {
-        if( damage == 0 && SkillMagicDefend == 0 )
+        if( damage == 0 && SkillMagicDefend <= 0 )
         {
             damage = Random.Range( 1, LEAST_MAGIC_DAMAGE_RANGE );
         }
         BeDamaged( damage, ownerCharacter );
-        SEPlayer.Play( ActionResult.MagicDamaged, this, damage );
+        //SEPlayer.Play( ActionResult.MagicDamaged, this, damage );
         Debug.Log( this.ToString() + " was MagicAttacked! " + damage + "Damage! HitPoint is " + HitPoint );
     }
 
@@ -106,7 +106,6 @@ public class Character : MonoBehaviour {
         if( h > 0 )
         {
             HitPoint += h;
-            SEPlayer.Play( ActionResult.Healed, this, h );
             Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
         }
 	}

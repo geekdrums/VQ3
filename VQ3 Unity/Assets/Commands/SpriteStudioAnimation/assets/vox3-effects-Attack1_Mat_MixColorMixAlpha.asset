@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: white_Mat_NonColorSubAlpha
-  m_Shader: {fileID: 4800000, guid: b5d449fe3a1a5a946a19a2355ba5ad8e, type: 3}
+  m_Name: vox3-effects-Attack1_Mat_MixColorMixAlpha
+  m_Shader: {fileID: 4800000, guid: 2ff788c1a25707a4daf38377f126916d, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,16 +17,8 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 0a7c116520e7be24589f493c49283f63, type: 3}
+          m_Texture: {fileID: 2800000, guid: 452683510445a6e47b565843e31247f3, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: 0, g: 0, b: 0, a: 0}
-      data:
-        first:
-          name: _OneColor
-        second: {r: 0, g: 0, b: 0, a: 0}
+    m_Colors: {}

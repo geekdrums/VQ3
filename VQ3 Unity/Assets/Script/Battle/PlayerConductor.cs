@@ -18,7 +18,7 @@ public class PlayerConductor : MonoBehaviour {
     Player Player;
     public int NumQuarter { get; private set; }
     public int PlayerHP { get { return Player.HitPoint; } }
-    public int PlayerMaxHP { get { return Player.HitPoint; } }
+    public int PlayerMaxHP { get { return Player.MaxHP; } }
     public bool CanUseInvert { get { return Level >= 8; } }
 
     float resultTime;
@@ -27,7 +27,7 @@ public class PlayerConductor : MonoBehaviour {
 	void Start () {
 		GameContext.PlayerConductor = this;
 		Player = GameObject.Find( "Main Camera" ).GetComponent<Player>();
-        OnLevelUp();
+        SetLevelParams();
 	}
 
 	// Update is called once per frame
@@ -112,7 +112,8 @@ public class PlayerConductor : MonoBehaviour {
                 case ResultState.Moon2:
                     if( CanUseInvert )
                     {
-                        TextWindow.AddMessage( "まほうにより　つきがみちたとき、" );
+                        int startIndex = "<color=red>まほうにより</color>".Length;
+                        TextWindow.AddMessage( new GUIMessage( "<color=red>まほうにより</color>　つきがみちたとき、", null, null, startIndex ) );
                         TextWindow.AddMessage( "てんちの　すべてを　みかたに　できるだろう。" );
                     }
                     else
@@ -128,16 +129,21 @@ public class PlayerConductor : MonoBehaviour {
         }
     }
 
-    public void OnLevelUp()
+    void SetLevelParams()
     {
-        NumQuarter = QuarterLevelList[Level-1];
-        Player.HitPoint         = HPLevelList[Level-1];
-        Player.BasePower        = AttackLevelList[Level-1];
-        Player.BaseDefend       = DefendLevelList[Level-1];
-        Player.BaseMagic        = MagicLevelList[Level-1];
-        Player.BaseMagicDefend  = MagicDefendLevelList[Level-1];
+        NumQuarter = QuarterLevelList[Level - 1];
+        Player.HitPoint = HPLevelList[Level - 1];
+        Player.BasePower = AttackLevelList[Level - 1];
+        Player.BaseDefend = DefendLevelList[Level - 1];
+        Player.BaseMagic = MagicLevelList[Level - 1];
+        Player.BaseMagicDefend = MagicDefendLevelList[Level - 1];
         Player.Initialize();
         Player.TurnInit();
+    }
+
+    public void OnLevelUp()
+    {
+        SetLevelParams();
         if( Level > 1 )
         {
             TextWindow.ChangeMessage( "オクスは　レベル" + Level + "に　あがった！" );
@@ -189,6 +195,7 @@ public class PlayerConductor : MonoBehaviour {
         {
             Player.BeMagicAttacked( magic, skill );
             isSucceeded = true;
+            GameContext.VoxSystem.AddVP( magic.VoxPoint );
         }
 		DefendModule defend = Action.GetModule<DefendModule>();
         if( defend != null && skill.isPlayerSkill )
