@@ -186,6 +186,7 @@ public class VoxSystem : MonoBehaviour{
         for( int i = 0; i < lightAngles.Length; i++ )
         {
             float diffToMainLight = sunLights[i].transform.eulerAngles.z - mainLight.transform.eulerAngles.z;
+            if( diffToMainLight > 180 ) diffToMainLight -= 360.0f;
             float leaveAwayFactor = 1.0f / Mathf.Max( 0.2f, (Mathf.Abs( diffToMainLight ) % 180.0f) / 90.0f );
             float d = 0;
             if( leaveAwayFactor > 1.0f )

@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 60
+  HitPoint: 52
   BasePower: 0
   BaseMagic: 64
   BaseDefend: 30
@@ -147,6 +147,7 @@ MonoBehaviour:
     FromState: Watch
     ToState: Enemy
     ViceVersa: 0
+  DeltaVP: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

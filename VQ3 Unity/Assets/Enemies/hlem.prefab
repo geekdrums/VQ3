@@ -128,7 +128,7 @@ MonoBehaviour:
   BaseMagic: 0
   BaseDefend: 35
   BaseMagicDefend: 16
-  DisplayName: "\u30D8\u30EB\u30E0"
+  DisplayName: "\u30DF\u30DF\u30C3\u30AF"
   Speceis: 1
   States:
   - name: Default
@@ -138,7 +138,7 @@ MonoBehaviour:
   - name: Critical
     pattern:
     - {fileID: 11400002}
-    DescribeText: "\u304D\u3042\u3044\u3092\u3044\u308C\u305F"
+    DescribeText: "\u308F\u3089\u3063\u3066\u3044\u308B"
   conditions:
   - conditionType: 4
     Value: 6
@@ -146,6 +146,7 @@ MonoBehaviour:
     FromState: Default
     ToState: Critical
     ViceVersa: 0
+  DeltaVP: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,7 +163,7 @@ MonoBehaviour:
   _timingStr: 0 1
   nextState: Default
   isPassive: 0
-  DescribeText: "\u306F\u3000\u304A\u3082\u3044\u3063\u304D\u308A\u3000\u3076\u304D\u3092\u3000\u3075\u308A\u304A\u308D\u3057\u305F\uFF01"
+  DescribeText: "\u306F\u3000\u3068\u3064\u305C\u3093\u3000\u304A\u305D\u3044\u304B\u304B\u3063\u3066\u304D\u305F\uFF01"
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,7 +180,7 @@ MonoBehaviour:
   _timingStr: 0
   nextState: 
   isPassive: 1
-  DescribeText: "\u306F\u3000\u305F\u3066\u3092\u3000\u304B\u307E\u3048\u3066\u3044\u308B"
+  DescribeText: "\u306F\u3000\u3075\u305F\u3092\u3000\u3068\u3058\u3066\u3044\u308B"
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

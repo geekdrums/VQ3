@@ -107,22 +107,11 @@ MonoBehaviour:
     pattern:
     - {fileID: 11400002}
     DescribeText: 
-  - name: Balance
-    pattern:
-    - {fileID: 11400006}
-    - {fileID: 11400002}
-    DescribeText: "\u307E\u3082\u308A\u306B\u306F\u3044\u3063\u305F"
   - name: Defender
     pattern:
     - {fileID: 11400006}
     DescribeText: 
-  conditions:
-  - conditionType: 0
-    Value: 7
-    Sign: -1
-    FromState: Blaster
-    ToState: Balance
-    ViceVersa: 0
+  conditions: []
   DeltaVP: 0
 --- !u!114 &11400002
 MonoBehaviour:
