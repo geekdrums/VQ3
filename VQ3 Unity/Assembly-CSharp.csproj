@@ -70,8 +70,10 @@
      <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
      <Compile Include="Assets\Script\Battle\UI\HPBar.cs" />
      <Compile Include="Assets\Script\Battle\UI\HPCircle.cs" />
+     <Compile Include="Assets\Script\Battle\UI\QuarterRing.cs" />
      <Compile Include="Assets\Script\Battle\UI\ShortTextWindow.cs" />
      <Compile Include="Assets\Script\Battle\UI\TextWindow.cs" />
+     <Compile Include="Assets\Script\Battle\UI\TitleLogo.cs" />
      <Compile Include="Assets\Script\Battle\VoxSystem.cs" />
      <Compile Include="Assets\Script\Field\Encounter.cs" />
      <Compile Include="Assets\Script\Field\FieldConductor.cs" />
@@ -87,6 +89,7 @@
      <Compile Include="Assets\Script\MusicEngine\Motif\Rhythm.cs" />
      <Compile Include="Assets\Script\MusicEngine\Music.cs" />
      <Compile Include="Assets\Script\MusicEngine\UnityMusic.cs" />
+     <Compile Include="Assets\Script\Utils\CounterSprite.cs" />
      <Compile Include="Assets\Script\Utils\MidairPrimitive.cs" />
      <Compile Include="Assets\Script\Utils\SEPlayer.cs" />
      <Compile Include="Assets\Script\Utils\Utils.cs" />

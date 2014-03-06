@@ -47,10 +47,10 @@ public class Enemy : Character
         }
         HPCircle = (Instantiate( GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * 5.0f, Quaternion.identity ) as GameObject).GetComponent<HPCircle>();
         HPCircle.transform.parent = transform;
-        HPCircle.transform.localScale *= Mathf.Min( 2.0f, Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP ) );
+        HPCircle.transform.localScale *= Mathf.Min( 1.5f, Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP ) );
         HPCircle.Initialize( this );
         HPCircle.OnTurnStart();
-        initialPosition = transform.position;
+        initialPosition = transform.localPosition;
     }
 
     // Update is called once per frame
@@ -66,14 +66,14 @@ public class Enemy : Character
             {
                 if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
                 {
-                    transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 1.5f ) * 1.3f;
+                    transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 1.5f ) * 1.3f;
                 }
             }
             renderer.material.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
             damageTime -= Time.deltaTime;
             if( damageTime <= 0 )
             {
-                transform.position = initialPosition;
+                transform.localPosition = initialPosition;
                 if( HitPoint <= 0 )
                 {
                     renderer.material.color = Color.clear;
@@ -293,7 +293,8 @@ public class Enemy : Character
         renderer.material.color = newColor;
         if( HPCircle != null )
         {
-            HPCircle.CurrentCircle.GetComponent<SpriteRenderer>().color = newColor;
+            //HPCircle.CurrentCircle.GetComponent<SpriteRenderer>().color = newColor;
+            HPCircle.OnBaseColorChanged();
         }
     }
     public void OnPlayerLose()

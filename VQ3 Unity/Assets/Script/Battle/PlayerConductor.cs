@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class PlayerConductor : MonoBehaviour {
     public CommandGraph commandGraph;
+    public QuarterRing quarterRing;
+    public Color MoonGetColor;
     public int Level = 1;
 
     public List<int> HPLevelList;
@@ -21,7 +23,8 @@ public class PlayerConductor : MonoBehaviour {
     public int PlayerMaxHP { get { return Player.MaxHP; } }
     public bool CanUseInvert { get { return Level >= 8; } }
 
-    float resultTime;
+    float resultRemainTime;
+    readonly float DefaultResultTime = 0.4f;
 
 	// Use this for initialization
 	void Start () {
@@ -37,10 +40,20 @@ public class PlayerConductor : MonoBehaviour {
 
     public void UpdateResult()
     {
-        resultTime += Time.deltaTime;
-        if( resultTime >= 0.4f && Input.GetMouseButtonUp( 0 ) && commandGraph.CurrentButton != VoxButton.None )
+        resultRemainTime -= Time.deltaTime;
+        if( resultRemainTime <= 0 )
         {
-            resultTime = 0;
+            TextWindow.SetNextCursor( true );
+        }
+        if( GameContext.FieldConductor.RState == ResultState.Moon1 || GameContext.FieldConductor.RState == ResultState.Moon2 )
+        {
+            float t = (Mathf.Abs( resultRemainTime ) % 1.0f) / 0.5f;
+            GameContext.VoxSystem.SetBlinkMoonColor( Color.Lerp( MoonGetColor, MoonGetColor * 0.3f, (t > 1 ? 2 - t : t) ) );
+        }
+        if( resultRemainTime <= 0 && Input.GetMouseButtonUp( 0 ) && commandGraph.CurrentButton != VoxButton.None )
+        {
+            TextWindow.SetNextCursor( false );
+            resultRemainTime = DefaultResultTime;
             bool isProceeded = false;
             while( !isProceeded )
             {
@@ -54,6 +67,7 @@ public class PlayerConductor : MonoBehaviour {
                         TextWindow.ChangeMessage( acquiredCommand.AcquireTexts );
                         acquiredCommand.Acquire();
                         commandGraph.Select( acquiredCommand );
+                        SEPlayer.Play( "newCommand" );
                         break;
                     }
                     else
@@ -67,6 +81,7 @@ public class PlayerConductor : MonoBehaviour {
                     GameContext.FieldConductor.MoveNextResult();
                 }
 
+                quarterRing.SetBlinkTime( 0.0f );
                 switch( GameContext.FieldConductor.RState )
                 {
                 case ResultState.Status2:
@@ -87,6 +102,9 @@ public class PlayerConductor : MonoBehaviour {
                         {
                             TextWindow.AddMessage( "しかしまだ　かくされたちからが　あるようだ。" );
                         }
+                        quarterRing.SetBlinkTime( 10.0f );
+                        resultRemainTime += resultRemainTime;
+                        SEPlayer.Play( "quarter" + NumQuarter );
                     }
                     else
                     {
@@ -103,6 +121,9 @@ public class PlayerConductor : MonoBehaviour {
                         commandGraph.InvertStrategy.Commands[0].Acquire();
                         commandGraph.Select( commandGraph.InvertStrategy.Commands[0] );
                         isProceeded = true;
+                        resultRemainTime += resultRemainTime * 3;
+                        GameContext.VoxSystem.AddVP( (int)VoxSystem.InvertVP );
+                        SEPlayer.Play( "moon" );
                     }
                     else
                     {
@@ -112,9 +133,10 @@ public class PlayerConductor : MonoBehaviour {
                 case ResultState.Moon2:
                     if( CanUseInvert )
                     {
-                        int startIndex = "<color=red>まほうにより</color>".Length;
-                        TextWindow.AddMessage( new GUIMessage( "<color=red>まほうにより</color>　つきがみちたとき、", null, null, startIndex ) );
+                        int startIndex = "<color=red>まほう</color>".Length;
+                        TextWindow.AddMessage( new GUIMessage( "<color=red>まほう</color>により　つきがみちたとき、", null, null, startIndex ) );
                         TextWindow.AddMessage( "てんちの　すべてを　みかたに　できるだろう。" );
+                        resultRemainTime += resultRemainTime * 2;
                     }
                     else
                     {
@@ -149,7 +171,8 @@ public class PlayerConductor : MonoBehaviour {
             TextWindow.ChangeMessage( "オクスは　レベル" + Level + "に　あがった！" );
             TextWindow.AddMessage( "さいだいHP：" + Player.HitPoint + " ( +" + (HPLevelList[Level - 1] - HPLevelList[Level - 2]) + " )" );
             TextWindow.AddMessage( "こうげき：  " + Player.BasePower + " ( +" + (AttackLevelList[Level - 1] - AttackLevelList[Level - 2]) + " )" );
-            resultTime = 0;
+            resultRemainTime = DefaultResultTime;
+            SEPlayer.Play( "levelUp" );
         }
     }
 

@@ -59,6 +59,9 @@ public class FieldConductor : MonoBehaviour {
         default:
             break;
         }
+        //if( Input.GetMouseButtonDown( 0 ) )
+        //{
+        //}
 	}
 
     void CheckEncount()

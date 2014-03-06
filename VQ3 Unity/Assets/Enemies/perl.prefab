@@ -123,6 +123,7 @@ MonoBehaviour:
     FromState: Blaster
     ToState: Balance
     ViceVersa: 0
+  DeltaVP: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -156,7 +157,7 @@ MonoBehaviour:
   _timingStr: 0
   nextState: 
   isPassive: 1
-  DescribeText: "\u306F\u3000\u304A\u304A\u304D\u306A\u3000\u3057\u3087\u3046\u3078\u304D\u3092\u3000\u3064\u304F\u308A\u3060\u3057\u305F"
+  DescribeText: "\u306F\u3000\u3066\u304D\u305C\u3093\u305F\u3044\u306B\u3000\u3057\u3087\u3046\u3078\u304D\u3092\u3000\u306F\u3063\u305F"
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

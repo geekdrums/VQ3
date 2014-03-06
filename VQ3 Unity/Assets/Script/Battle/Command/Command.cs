@@ -144,7 +144,7 @@ public class Command : MonoNode
         }
     }
 
-    public void SetLink( bool linked )
+    public virtual void SetLink( bool linked )
     {
         IsCurrent = false;
         IsSelected = false;

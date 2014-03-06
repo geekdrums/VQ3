@@ -5,7 +5,7 @@
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/BattleMusic.acb
  *  File Name        : BattleMusic.acb
  *  File Size        : 5,940,768 bytes
- *  Date Time        : 2014/02/25 19:27
+ *  Date Time        : 2014/03/05 15:11
  *  Target           : Public
  *  Cues             : 2
  *  CueSheet Comment : 
@@ -46,8 +46,8 @@
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_LYMPHAECLA4       (20) /* LymphaEcla4  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_LYMPHAECLA4TRANS  (21) /* LymphaEcla4Trans  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_IGNIS4            (22) /* Ignis4  */
-#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_VOX4              (23) /* Vox4  */
-#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_VOX4_2            (24) /* Vox4_2  */
+#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_VOX               (23) /* Vox  */
+#define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_VOX_2             (24) /* Vox_2  */
 #define CRI_BATTLEMUSIC_BLOCK_BATTLEMUSIC_ENDRO             (25) /* endro  */
 #define CRI_BATTLEMUSIC_BLOCK_CONTINUE_BLOCK_CONTINUE       ( 0) /* Block_continue  */
 

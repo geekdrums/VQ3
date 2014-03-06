@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.1.32.00
-* Date Time          : 2014/02/25 19:27
+* Date Time          : 2014/03/07 1:03
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -60,5 +60,14 @@ public partial class CriAtomAcfInfo
         newAcbInfo.cueInfoList.Add(1, new CueInfo("PlayerPhysicDamage", 1, ""));
         newAcbInfo.cueInfoList.Add(12, new CueInfo("PlayerMagicDamage", 12, ""));
         newAcbInfo.cueInfoList.Add(13, new CueInfo("select", 13, ""));
+        newAcbInfo.cueInfoList.Add(14, new CueInfo("tick", 14, ""));
+        newAcbInfo.cueInfoList.Add(15, new CueInfo("tickback", 15, ""));
+        newAcbInfo.cueInfoList.Add(16, new CueInfo("runaway", 16, ""));
+        newAcbInfo.cueInfoList.Add(17, new CueInfo("newCommand", 17, ""));
+        newAcbInfo.cueInfoList.Add(18, new CueInfo("quarter2", 18, ""));
+        newAcbInfo.cueInfoList.Add(19, new CueInfo("quarter3", 19, ""));
+        newAcbInfo.cueInfoList.Add(20, new CueInfo("quarter4", 20, ""));
+        newAcbInfo.cueInfoList.Add(21, new CueInfo("moon", 21, ""));
+        newAcbInfo.cueInfoList.Add(22, new CueInfo("levelUp", 22, ""));
     }
 }

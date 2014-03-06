@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BattleConductor : MonoBehaviour {
+
+    //public TitleLogo titleLogo;
+
     public GameObject skillParent;    
     List<Pair<Timing, Skill>> Skills;
 
@@ -12,7 +15,7 @@ public class BattleConductor : MonoBehaviour {
         Application.platform == RuntimePlatform.OSXPlayer ||
         Application.platform == RuntimePlatform.LinuxPlayer )
         {
-            Screen.SetResolution( 400, 600, false );
+            Screen.SetResolution( 800, 1200, false );
         }
     }
 
@@ -51,6 +54,7 @@ public class BattleConductor : MonoBehaviour {
             if( Music.IsJustChangedAt( 0, 2 ) )
             {
                 TextWindow.SetNextCursor( true );
+                //titleLogo.animation.Play();
             }
             if( !Music.IsPlaying() || ( Music.Just.totalUnit > 8 && Input.GetMouseButtonUp( 0 ) && GameContext.PlayerConductor.commandGraph.CurrentButton != VoxButton.None) )
             {
@@ -68,6 +72,11 @@ public class BattleConductor : MonoBehaviour {
         if( Music.GetCurrentBlockName() == "endro" || Music.GetNextBlockName() == "endro" )
         {
             Skills.RemoveAll( ( Pair<Timing, Skill> cmd ) => cmd.Get<Skill>().CheckIsEnd( cmd.Get<Timing>() ) );
+            return;
+        }
+        else if( Music.GetCurrentBlockName() == "intro" )
+        {
+            OnPlayerRunaway();
             return;
         }
 
@@ -130,7 +139,7 @@ public class BattleConductor : MonoBehaviour {
 	}
 	public void OnPlayerLose()
     {
-        TextWindow.ChangeMessage( "オクスは　しんでしまった", "ボールを　おして　ふっかつ　できます");
+        TextWindow.ChangeMessage( "オクスは　ちからつきた", "ボールを　おして　ふっかつを　いのろう");
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
         GameContext.VoxSystem.SetState( VoxState.SunSet );
@@ -138,4 +147,15 @@ public class BattleConductor : MonoBehaviour {
         Music.Play( "Continue" );
         ClearSkills();
 	}
+    public void OnPlayerRunaway()
+    {
+        TextWindow.ChangeMessage( "オクスは　にげだした", "ボールを　おして　さいせん　できます" );
+        GameContext.PlayerConductor.OnPlayerLose();
+        GameContext.EnemyConductor.OnPlayerLose();
+        GameContext.VoxSystem.SetState( VoxState.SunSet );
+        GameContext.ChangeState( GameState.Continue );
+        Music.Stop();
+        SEPlayer.Play( "runaway" );
+        ClearSkills();
+    }
 }

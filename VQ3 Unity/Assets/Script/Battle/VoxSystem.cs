@@ -11,7 +11,7 @@ public enum VoxState
 }
 
 public class VoxSystem : MonoBehaviour{
-	readonly float InvertVP = 100;
+	public static readonly float InvertVP = 100;
 	float deltaVP = 8;
     float currentVP = 0;
 
@@ -445,5 +445,12 @@ public class VoxSystem : MonoBehaviour{
             }
             
         }
+    }
+
+    public void SetBlinkMoonColor( Color color )
+    {
+        targetMoonColor = color;
+        targetTextColor = Color.black;
+        VPText.text = "VP:0/" + InvertVP;
     }
 }

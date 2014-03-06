@@ -6,5 +6,9 @@ using System.Text;
 
 public class InvertCommand : Command
 {
-    
+
+    public override void SetLink( bool linked )
+    {
+        base.SetLink( linked && ( GameContext.VoxSystem.state == VoxState.Eclipse || GameContext.VoxSystem.state == VoxState.Invert ) );
+    }
 }

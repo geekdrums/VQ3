@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DamageText : MonoBehaviour {
+public class DamageText : CounterSprite {
 
-    public float AnimY;
     public Vector3 initialPosition { get; private set; }
+    public Color damageColor;
+    public Color healColor;
+
     float time = 0;
 	// Use this for initialization
 	void Start () {
-        //animation.Play();
 	}
 	
 	// Update is called once per frame
@@ -17,7 +18,7 @@ public class DamageText : MonoBehaviour {
         float theta = time * (Mathf.PI * 2) * 8.0f;
         if( theta <= Mathf.PI * 2 )
         {
-            AnimY = Mathf.Sin( theta ) * 0.4f;
+            float AnimY = Mathf.Sin( theta ) * 0.4f;
             transform.position = initialPosition + Vector3.up * AnimY;
         }
         if( time >= 2.0f )
@@ -29,8 +30,13 @@ public class DamageText : MonoBehaviour {
 
     public void Initialize( int damage, Vector3 initialPos )
     {
-        foreach( TextMesh textMesh in GetComponentsInChildren<TextMesh>() ) textMesh.text = Mathf.Abs( damage ).ToString();
-        if( damage < 0 ) GetComponentsInChildren<TextMesh>()[1].color = Color.green;
+        count = Mathf.Abs( damage );
+        foreach( SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>() )
+        {
+            //sprite.gameObject.renderer.material.SetColor( "Tint", (damage < 0 ? healColor : damageColor) );
+            sprite.renderer.material.color = (damage < 0 ? healColor : damageColor);
+            //sprite.color = (damage < 0 ? healColor : damageColor);
+        }
         initialPosition = initialPos;
     }
 }

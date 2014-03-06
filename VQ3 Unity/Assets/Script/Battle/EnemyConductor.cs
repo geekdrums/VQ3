@@ -76,13 +76,13 @@ public class EnemyConductor : MonoBehaviour {
                 if( messages.Count == 0 && ( Music.Just.bar < 2 || GameContext.VoxSystem.state == VoxState.Sun ) )
                 {
                     Enemy enemy = Enemies.Find( ( Enemy e ) => e.commandExecBar == Music.Just.bar );
-                    if( enemy != null && enemy.currentCommand != null )
-                    {
-                        messages.Add( enemy.DisplayName + enemy.currentCommand.DescribeText );
-                    }
-                    else if( WeatherEnemy != null && WeatherEnemy.commandExecBar == Music.Just.bar )
+                    if( WeatherEnemy != null && WeatherEnemy.commandExecBar == Music.Just.bar )
                     {
                         messages.Add( WeatherEnemy.currentCommand.DescribeText );
+                    }
+                    else if( enemy != null && enemy.currentCommand != null )
+                    {
+                        messages.Add( enemy.DisplayName + enemy.currentCommand.DescribeText );
                     }
                 }
                 if( messages.Count > 0 )

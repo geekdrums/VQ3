@@ -100,52 +100,47 @@ public class CommandGraph : MonoBehaviour {
         UpdateInput();
 
 
-        if( GameContext.CurrentState == GameState.Intro )
+        switch( GameContext.CurrentState )
         {
+        case GameState.Continue:
+            if( GameContext.CurrentState == GameState.Continue && (!Music.IsPlaying() || Music.Just.totalUnit > 4)
+                && Input.GetMouseButtonUp( 0 ) && (transform.localPosition - initialPosition).magnitude > 0.03f )
+            {
+                GameContext.ChangeState( GameState.Intro );
+            }
+            break;
+        case GameState.Intro:
             if( Music.GetNextBlockName() == "intro" && Music.Just.totalUnit > 4 )
             {
-                if( Music.isJustChanged && NextCommand != IntroCommand && !Input.GetMouseButton( 0 ))
+                if( Music.isJustChanged ) SelectNearestNode();
+                if( Music.isJustChanged && NextCommand != IntroCommand && !Input.GetMouseButton( 0 ) )
                 {
                     SetNextBlock();
                     SEPlayer.Play( "select" );
                 }
             }
-            else return;
-        }
-        else if( GameContext.CurrentState == GameState.Continue )
-        {
-            if( GameContext.CurrentState == GameState.Continue && ( !Music.IsPlaying() || Music.Just.totalUnit > 4 )
-                && Input.GetMouseButtonUp( 0 ) && (transform.localPosition - initialPosition).magnitude > 0.03f )
+            if( Music.IsJustChangedAt( AllowInputEnd ) )
             {
-                GameContext.ChangeState( GameState.Intro );
+                SetNextBlock();
             }
-            return;
-        }
-
-        if( AllowInputStart <= Music.Just && Music.Just < AllowInputEnd )
-        {
-            if( GameContext.VoxSystem.state == VoxState.Eclipse )
+            break;
+        case GameState.Battle:
+            if( AllowInputStart <= Music.Just && Music.Just < AllowInputEnd )
             {
-            }
-            else if( GameContext.VoxSystem.state == VoxState.Invert )
-            {
-                if( RemainInvertTime == 1 )
+                if( Music.isJustChanged ) SelectNearestNode();
+                if( GameContext.VoxSystem.state == VoxState.Invert )
                 {
-                    if( Music.isJustChanged ) SelectNearestNode();
-                    if( Music.IsJustChangedAt( 3, 2 ) )
+                    if( Music.IsJustChangedAt( 3, 2 ) && RemainInvertTime == 1 )
                     {
                         GameContext.VoxSystem.SetState( VoxState.Revert );
                     }
                 }
             }
-            else
+            if( Music.IsJustChangedAt( AllowInputEnd ) )
             {
-                if( Music.isJustChanged ) SelectNearestNode();
+                SetNextBlock();
             }
-        }
-        if( Music.IsJustChangedAt( AllowInputEnd ) )
-        {
-            SetNextBlock();
+            break;
         }
     }
 
@@ -211,11 +206,11 @@ public class CommandGraph : MonoBehaviour {
 
     void SelectNearestNode()
     {
-        Command selectedCommand = CurrentCommand;
-        float minDistance = (SelectSpot.transform.position - CurrentCommand.transform.position).magnitude;
-        foreach( Command command in CurrentCommand.LinkedCommands )
+        Command selectedCommand = null;// CurrentCommand;
+        float minDistance = 10000;//(SelectSpot.transform.position - CurrentCommand.transform.position).magnitude;
+        foreach( Command command in GetLinkedCommands() )
         {
-            if( !command.IsUsable() || command.ParentStrategy == InvertStrategy ) continue;
+            if( !command.IsUsable() ) continue;
             float d = (SelectSpot.transform.position - command.transform.position).magnitude;
             if( d < minDistance )
             {
@@ -223,9 +218,50 @@ public class CommandGraph : MonoBehaviour {
                 selectedCommand = command;
             }
         }
-        if( NextCommand != selectedCommand && selectedCommand != IntroCommand )
+        if( NextCommand != selectedCommand )//&& selectedCommand != IntroCommand )
         {
             Select( selectedCommand );
+            SEPlayer.Play( selectedCommand == CurrentCommand ? "tickback" : "tick" );
+        }
+    }
+
+    IEnumerable<Command> GetLinkedCommands()
+    {
+        if( GameContext.VoxSystem.state == VoxState.Eclipse )
+        {
+            foreach( Command c in InvertStrategy.Commands )
+            {
+                yield return c;
+            }
+        }
+        else if( GameContext.VoxSystem.state == VoxState.Invert )
+        {
+            if( RemainInvertTime > 1 )
+            {
+                foreach( Command c in InvertStrategy.Commands )
+                {
+                    yield return c;
+                }
+            }
+            else
+            {
+                foreach( Command c in CurrentCommand.LinkedCommands )
+                {
+                    if( !(c is InvertCommand) )
+                    {
+                        yield return c;
+                    }
+                }
+            }
+        }
+        else
+        {
+            yield return CurrentCommand;
+            foreach( Command c in CurrentCommand.LinkedCommands )
+            {
+                yield return c;
+            }
+            yield return IntroCommand;
         }
     }
 
@@ -238,7 +274,15 @@ public class CommandGraph : MonoBehaviour {
 
         if( NextCommand == IntroCommand )
         {
-            Select( DefaultCommand );
+            if( GameContext.CurrentState == GameState.Intro )
+            {
+                Select( DefaultCommand );
+            }
+            else
+            {
+                Music.SetNextBlock( "intro" );//runaway
+                return;
+            }
         }
         else if( GameContext.VoxSystem.state == VoxState.Eclipse )
         {
@@ -281,30 +325,29 @@ public class CommandGraph : MonoBehaviour {
 
     public void CheckCommand()
     {
-        if( NextCommand != CurrentCommand )
-        {
-            if( CurrentCommand != null )
-            {
-                CurrentCommand.SetLink( false );
-                foreach( Command c in CurrentCommand.LinkedCommands )
-                {
-                    c.SetLink( false );
-                }
-            }
-            foreach( Command c in NextCommand.LinkedCommands )
-            {
-                c.SetLink( true );
-            }
-        }
-
+        Command OldCommand = CurrentCommand;
         CurrentCommand = NextCommand;
-        CurrentCommand.SetCurrent();
 
         VoxState desiredState = GetDesiredVoxState();
         if( GameContext.VoxSystem.state != desiredState )
         {
             GameContext.VoxSystem.SetState( desiredState );
         }
+
+        if( OldCommand != null )
+        {
+            OldCommand.SetLink( false );
+            foreach( Command c in OldCommand.LinkedCommands )
+            {
+                c.SetLink( false );
+            }
+        }
+        foreach( Command c in GetLinkedCommands() )
+        {
+            c.SetLink( true );
+        }
+        IntroCommand.SetLink( true );
+        CurrentCommand.SetCurrent();
     }
 
     public Command CheckAcquireCommand( int Level )
