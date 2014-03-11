@@ -6,6 +6,7 @@ public class PlayerConductor : MonoBehaviour {
     public CommandGraph commandGraph;
     public QuarterRing quarterRing;
     public Color MoonGetColor;
+    public CounterSprite LevelCounter;
     public int Level = 1;
 
     public List<int> HPLevelList;
@@ -161,6 +162,7 @@ public class PlayerConductor : MonoBehaviour {
         Player.BaseMagicDefend = MagicDefendLevelList[Level - 1];
         Player.Initialize();
         Player.TurnInit();
+        LevelCounter.count = Level;
     }
 
     public void OnLevelUp()

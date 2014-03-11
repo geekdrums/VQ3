@@ -23,6 +23,7 @@ public class CommandGraph : MonoBehaviour {
     public GameObject RightArrow;
     public float MAX_LATITUDE;
     public float ROTATE_COEFF;
+    //public float SELECT_DISTANCE;
 
     public List<Command> CommandNodes { get; private set; }
     public List<Strategy> StrategyNodes { get; private set; }
@@ -218,7 +219,7 @@ public class CommandGraph : MonoBehaviour {
                 selectedCommand = command;
             }
         }
-        if( NextCommand != selectedCommand )//&& selectedCommand != IntroCommand )
+        if( /*minDistance < SELECT_DISTANCE &&*/ NextCommand != selectedCommand )//&& selectedCommand != IntroCommand )
         {
             Select( selectedCommand );
             SEPlayer.Play( selectedCommand == CurrentCommand ? "tickback" : "tick" );
@@ -261,7 +262,7 @@ public class CommandGraph : MonoBehaviour {
             {
                 yield return c;
             }
-            yield return IntroCommand;
+            //yield return IntroCommand;
         }
     }
 
@@ -346,7 +347,7 @@ public class CommandGraph : MonoBehaviour {
         {
             c.SetLink( true );
         }
-        IntroCommand.SetLink( true );
+        //IntroCommand.SetLink( true );
         CurrentCommand.SetCurrent();
     }
 
