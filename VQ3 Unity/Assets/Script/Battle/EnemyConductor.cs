@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,7 +125,7 @@ public class EnemyConductor : MonoBehaviour {
         else
         {
             Enemies.Add( enemy );
-            TextWindow.AddMessage( new GUIMessage( enemy.DisplayName + " Ç™Ç†ÇÁÇÌÇÍÇΩÅI" ) );
+            TextWindow.AddMessage( new GUIMessage( enemy.DisplayName + " „Åå„ÅÇ„Çâ„Çè„Çå„ÅüÔºÅ" ) );
         }
         enemy.transform.parent = transform;
         enemy.ChangeState( initialState );
@@ -451,7 +451,7 @@ public class EnemyConductor : MonoBehaviour {
         {
             Destroy( e.gameObject );
             //e.OnContinue();
-            //TextWindow.AddMessage( new GUIMessage( e.DisplayName + " Ç™Ç†ÇÁÇÌÇÍÇΩÅI" ) );
+            //TextWindow.AddMessage( new GUIMessage( e.DisplayName + " „Åå„ÅÇ„Çâ„Çè„Çå„ÅüÔºÅ" ) );
         }
         if( WeatherEnemy != null )
         {

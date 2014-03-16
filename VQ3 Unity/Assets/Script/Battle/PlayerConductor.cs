@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -86,22 +86,22 @@ public class PlayerConductor : MonoBehaviour {
                 switch( GameContext.FieldConductor.RState )
                 {
                 case ResultState.Status2:
-                    TextWindow.ChangeMessage( "‚Ú‚¤‚¬‚åF" + Player.BaseDefend + " ( +" + (DefendLevelList[Level - 1] - DefendLevelList[Level - 2]) + " )" );
-                    TextWindow.AddMessage( "‚Ü‚Ù‚¤F  " + Player.BaseMagic + " ( +" + (MagicLevelList[Level - 1] - MagicLevelList[Level - 2]) + " )" );
-                    TextWindow.AddMessage( "‚Ü‚Ú‚¤F  " + Player.BaseMagicDefend + " ( +" + (MagicDefendLevelList[Level - 1] - MagicDefendLevelList[Level - 2]) + " )" );
+                    TextWindow.ChangeMessage( "ã¼ã†ãã‚‡ï¼š" + Player.BaseDefend + " ( +" + (DefendLevelList[Level - 1] - DefendLevelList[Level - 2]) + " )" );
+                    TextWindow.AddMessage( "ã¾ã»ã†ï¼š  " + Player.BaseMagic + " ( +" + (MagicLevelList[Level - 1] - MagicLevelList[Level - 2]) + " )" );
+                    TextWindow.AddMessage( "ã¾ã¼ã†ï¼š  " + Player.BaseMagicDefend + " ( +" + (MagicDefendLevelList[Level - 1] - MagicDefendLevelList[Level - 2]) + " )" );
                     break;
                 case ResultState.Quarter:
                     if( QuarterLevelList[Level - 1] > QuarterLevelList[Level - 2] )
                     {
-                        TextWindow.ChangeMessage( "ƒIƒNƒX‚Í@" + NumQuarter + "‚Â‚ß‚Ì@ƒNƒI[ƒ^[‚ğ@‚Ä‚É‚¢‚ê‚½I" );
+                        TextWindow.ChangeMessage( "ã‚ªã‚¯ã‚¹ã¯ã€€" + NumQuarter + "ã¤ã‚ã®ã€€ã‚¯ã‚ªãƒ¼ã‚¿ãƒ¼ã‚’ã€€ã¦ã«ã„ã‚ŒãŸï¼" );
                         if( NumQuarter < 4 )
                         {
-                            TextWindow.AddMessage( "4‚Ô‚ñ‚Ì" + NumQuarter + "‚Ì‚¿‚©‚ç‚ª@‚Æ‚«‚Í‚È‚½‚ê‚½B" );
-                            TextWindow.AddMessage( "‚ ‚Æ" + (4 - NumQuarter) + "‚ÂI" );
+                            TextWindow.AddMessage( "4ã¶ã‚“ã®" + NumQuarter + "ã®ã¡ã‹ã‚‰ãŒã€€ã¨ãã¯ãªãŸã‚ŒãŸã€‚" );
+                            TextWindow.AddMessage( "ã‚ã¨" + (4 - NumQuarter) + "ã¤ï¼" );
                         }
                         else
                         {
-                            TextWindow.AddMessage( "‚µ‚©‚µ‚Ü‚¾@‚©‚­‚³‚ê‚½‚¿‚©‚ç‚ª@‚ ‚é‚æ‚¤‚¾B" );
+                            TextWindow.AddMessage( "ã—ã‹ã—ã¾ã ã€€ã‹ãã•ã‚ŒãŸã¡ã‹ã‚‰ãŒã€€ã‚ã‚‹ã‚ˆã†ã ã€‚" );
                         }
                         quarterRing.SetBlinkTime( 10.0f );
                         resultRemainTime += resultRemainTime;
@@ -118,7 +118,7 @@ public class PlayerConductor : MonoBehaviour {
                 case ResultState.Moon1:
                     if( CanUseInvert )
                     {
-                        TextWindow.ChangeMessage( "‚©‚­‚³‚ê‚½@‚Â‚«‚Ì‚¿‚©‚ç‚ğ@‚Ä‚É‚¢‚ê‚½B" );
+                        TextWindow.ChangeMessage( "ã‹ãã•ã‚ŒãŸã€€ã¤ãã®ã¡ã‹ã‚‰ã‚’ã€€ã¦ã«ã„ã‚ŒãŸã€‚" );
                         commandGraph.InvertStrategy.Commands[0].Acquire();
                         commandGraph.Select( commandGraph.InvertStrategy.Commands[0] );
                         isProceeded = true;
@@ -134,9 +134,9 @@ public class PlayerConductor : MonoBehaviour {
                 case ResultState.Moon2:
                     if( CanUseInvert )
                     {
-                        int startIndex = "<color=red>‚Ü‚Ù‚¤</color>".Length;
-                        TextWindow.AddMessage( new GUIMessage( "<color=red>‚Ü‚Ù‚¤</color>‚É‚æ‚è@‚Â‚«‚ª‚İ‚¿‚½‚Æ‚«A", null, null, startIndex ) );
-                        TextWindow.AddMessage( "‚Ä‚ñ‚¿‚Ì@‚·‚×‚Ä‚ğ@‚İ‚©‚½‚É@‚Å‚«‚é‚¾‚ë‚¤B" );
+                        int startIndex = "<color=red>ã¾ã»ã†</color>".Length;
+                        TextWindow.AddMessage( new GUIMessage( "<color=red>ã¾ã»ã†</color>ã«ã‚ˆã‚Šã€€ã¤ããŒã¿ã¡ãŸã¨ãã€", null, null, startIndex ) );
+                        TextWindow.AddMessage( "ã¦ã‚“ã¡ã®ã€€ã™ã¹ã¦ã‚’ã€€ã¿ã‹ãŸã«ã€€ã§ãã‚‹ã ã‚ã†ã€‚" );
                         resultRemainTime += resultRemainTime * 2;
                     }
                     else
@@ -170,9 +170,9 @@ public class PlayerConductor : MonoBehaviour {
         SetLevelParams();
         if( Level > 1 )
         {
-            TextWindow.ChangeMessage( "ƒIƒNƒX‚Í@ƒŒƒxƒ‹" + Level + "‚É@‚ ‚ª‚Á‚½I" );
-            TextWindow.AddMessage( "‚³‚¢‚¾‚¢HPF" + Player.HitPoint + " ( +" + (HPLevelList[Level - 1] - HPLevelList[Level - 2]) + " )" );
-            TextWindow.AddMessage( "‚±‚¤‚°‚«F  " + Player.BasePower + " ( +" + (AttackLevelList[Level - 1] - AttackLevelList[Level - 2]) + " )" );
+            TextWindow.ChangeMessage( "ã‚ªã‚¯ã‚¹ã¯ã€€ãƒ¬ãƒ™ãƒ«" + Level + "ã«ã€€ã‚ãŒã£ãŸï¼" );
+            TextWindow.AddMessage( "ã•ã„ã ã„HPï¼š" + Player.HitPoint + " ( +" + (HPLevelList[Level - 1] - HPLevelList[Level - 2]) + " )" );
+            TextWindow.AddMessage( "ã“ã†ã’ãï¼š  " + Player.BasePower + " ( +" + (AttackLevelList[Level - 1] - AttackLevelList[Level - 2]) + " )" );
             resultRemainTime = DefaultResultTime;
             SEPlayer.Play( "levelUp" );
         }

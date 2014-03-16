@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -48,7 +48,7 @@ public class BattleConductor : MonoBehaviour {
 			{
                 GameContext.VoxSystem.SetState( VoxState.SunSet );
 				GameContext.ChangeState( GameState.Endro );
-                TextWindow.ChangeMessage( "‚Ä‚«‚ğ@‚â‚Á‚Â‚¯‚½I" );
+                TextWindow.ChangeMessage( "ã¦ãã‚’ã€€ã‚„ã£ã¤ã‘ãŸï¼" );
 			}
             break;
 		case GameState.Endro:
@@ -140,7 +140,7 @@ public class BattleConductor : MonoBehaviour {
 	}
 	public void OnPlayerLose()
     {
-        TextWindow.ChangeMessage( "ƒIƒNƒX‚Í@‚¿‚©‚ç‚Â‚«‚½", "ƒ{[ƒ‹‚ğ@‚¨‚µ‚Ä@‚Ó‚Á‚©‚Â‚ğ@‚¢‚Ì‚ë‚¤");
+        TextWindow.ChangeMessage( "ã‚ªã‚¯ã‚¹ã¯ã€€ã¡ã‹ã‚‰ã¤ããŸ", "ãƒœãƒ¼ãƒ«ã‚’ã€€ãŠã—ã¦ã€€ãµã£ã‹ã¤ã‚’ã€€ã„ã®ã‚ã†");
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
         GameContext.VoxSystem.SetState( VoxState.SunSet );
@@ -150,7 +150,7 @@ public class BattleConductor : MonoBehaviour {
 	}
     public void OnPlayerRunaway()
     {
-        TextWindow.ChangeMessage( "ƒIƒNƒX‚Í@‚É‚°‚¾‚µ‚½", "ƒ{[ƒ‹‚ğ@‚¨‚µ‚Ä@‚³‚¢‚¹‚ñ@‚Å‚«‚Ü‚·" );
+        TextWindow.ChangeMessage( "ã‚ªã‚¯ã‚¹ã¯ã€€ã«ã’ã ã—ãŸ", "ãƒœãƒ¼ãƒ«ã‚’ã€€ãŠã—ã¦ã€€ã•ã„ã›ã‚“ã€€ã§ãã¾ã™" );
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
         GameContext.VoxSystem.SetState( VoxState.SunSet );

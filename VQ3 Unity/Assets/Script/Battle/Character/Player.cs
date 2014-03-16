@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class Player : Character {
@@ -78,12 +78,12 @@ public class Player : Character {
         if( damage <= 0 )
         {
             (Instantiate( DefendAnimPrefab, ownerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
-            TextWindow.AddMessage( "ƒIƒNƒX‚Í@‚Ú‚¤‚¬‚å‚Å@‚¤‚¯‚«‚Á‚½" );
+            TextWindow.AddMessage( "ã‚ªã‚¯ã‚¹ã¯ã€€ã¼ã†ãŽã‚‡ã§ã€€ã†ã‘ãã£ãŸ" );
         }
         else
         {
             HPBar.OnDamage( damage );
-            TextWindow.AddMessage( "ƒIƒNƒX‚Í " + damage + " ‚Ìƒ_ƒ[ƒW‚ð@‚¤‚¯‚½" );
+            TextWindow.AddMessage( "ã‚ªã‚¯ã‚¹ã¯ " + damage + " ã®ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ã€€ã†ã‘ãŸ" );
         }
 
         if( HitPoint <= 0 )
