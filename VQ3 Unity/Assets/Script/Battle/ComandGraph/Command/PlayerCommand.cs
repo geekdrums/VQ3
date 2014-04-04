@@ -5,18 +5,32 @@ using System.Linq;
 using System.Text;
 
 [ExecuteInEditMode]
-public class Command : MonoNode
+public class PlayerCommand : CommandBase, IVoxNode
 {
-    static readonly float radius = 7.5f;
-
     public string MusicBlockName;
-    public List<Skill> _skillList;
-    public string _timingStr = "0,1,2,3";
     public float latitude;
     public float longitude;
     public int AcquireLevel = 1;
     public string[] DescribeTexts;
     public string[] AcquireTexts;
+    public List<MonoBehaviour> links;
+    public float radius = 1.0f;
+    public float Radius()
+    {
+        return radius;
+    }
+    public Transform Transform()
+    {
+        return transform;
+    }
+    public IEnumerable<IVoxNode> LinkedNodes()
+    {
+        return links.ConvertAll<IVoxNode>( ( MonoBehaviour mb ) => mb as IVoxNode );
+    }
+    public bool IsLinkedTo( IVoxNode node )
+    {
+        return LinkedNodes().Contains<IVoxNode>( node );
+    }
 
     public Strategy ParentStrategy { get; protected set; }
     public bool IsLinked { get; protected set; }
@@ -25,7 +39,17 @@ public class Command : MonoNode
     public bool IsAcquired { get; protected set; }
     public bool IsTargetSelectable { get { return _skillList.Find( ( Skill s ) => s.IsTargetSelectable ) != null; } }
 
-    protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
+    public override void Parse()
+    {
+        base.Parse();
+
+        IsLinked = true;
+        IsAcquired = AcquireLevel <= GameContext.PlayerConductor.Level;
+        if( !IsAcquired )
+        {
+            GetComponent<TextMesh>().color = Color.clear;
+        }
+    }
 
     void Start()
     {
@@ -39,37 +63,9 @@ public class Command : MonoNode
     {
 #if UNITY_EDITOR
         if( UnityEditor.EditorApplication.isPlaying ) return;
-        transform.localPosition = Quaternion.AngleAxis( latitude, Vector3.right ) * Quaternion.AngleAxis( longitude, Vector3.down ) * Vector3.back * radius;
+        transform.localPosition = Quaternion.AngleAxis( latitude, Vector3.right ) * Quaternion.AngleAxis( longitude, Vector3.down ) * Vector3.back * 7.5f;
         transform.localRotation = Quaternion.LookRotation( -transform.localPosition );
 #endif
-    }
-
-    void Parse()
-    {
-#if UNITY_EDITOR
-        if( !UnityEditor.EditorApplication.isPlaying ) return;
-#endif
-        string[] timingStrs = _timingStr.Split( ",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
-        if( timingStrs.Length != _skillList.Count )
-        {
-            Debug.LogError("invalid skill list! _skillList.Count = " + _skillList.Count + ", timingStrs.Length = " + timingStrs.Length);
-            return;
-        }
-        for( int i=0; i<timingStrs.Length; i++ )
-        {
-            string[] barBeatUnitStr = timingStrs[i].Split( " ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
-            int bar = int.Parse( barBeatUnitStr[0] );
-            int beat = barBeatUnitStr.Length > 1 ? int.Parse( barBeatUnitStr[1] ) : 0;
-            int unit = barBeatUnitStr.Length > 2 ? int.Parse( barBeatUnitStr[2] ) : 0;
-            SkillDictionary.Add( new Timing( bar, beat, unit ).totalUnit, _skillList[i] );
-            _skillList[i].Parse();
-        }
-        IsLinked = true;
-        IsAcquired = AcquireLevel <= GameContext.PlayerConductor.Level;
-        if( !IsAcquired )
-        {
-            GetComponent<TextMesh>().color = Color.clear;
-        }
     }
 
     public virtual GameObject GetCurrentSkill()
@@ -93,9 +89,9 @@ public class Command : MonoNode
                 if( skill.Actions == null ) skill.Parse();
                 foreach( ActionSet a in skill.Actions )
                 {
-                    if( a.GetModule<MagicModule>() != null )
+                    if( a.GetModule<AttackModule>() != null )
                     {
-                        sum += a.GetModule<MagicModule>().VoxPoint;
+                        sum += a.GetModule<AttackModule>().VP;
                     }
                 }
             }
@@ -114,24 +110,24 @@ public class Command : MonoNode
     }
 
 
-    public IEnumerable<Command> LinkedCommands
+    public IEnumerable<PlayerCommand> LinkedCommands
     {
         get
         {
             if( ParentStrategy != null )
             {
-                foreach( Command c in ParentStrategy.LinkedCommands )
+                foreach( PlayerCommand c in ParentStrategy.LinkedCommands )
                 {
                     yield return c;
                 }
             }
-            foreach( MonoNode link in links )
+            foreach( IVoxNode link in links )
             {
                 Strategy linkedStrategy = link as Strategy;
-                Command linkedCommand = link as Command;
+                PlayerCommand linkedCommand = link as PlayerCommand;
                 if( linkedStrategy != null )
                 {
-                    foreach( Command c in linkedStrategy.Commands )
+                    foreach( PlayerCommand c in linkedStrategy.Commands )
                     {
                         yield return c;
                     }

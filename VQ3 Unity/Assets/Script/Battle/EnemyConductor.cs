@@ -17,16 +17,16 @@ public class EnemyConductor : MonoBehaviour {
     Encounter CurrentEncounter;
 
     public int EnemyCount { get { return Enemies.Count + (WeatherEnemy != null ? 1 : 0); } }
-    public int DeltaVP
+    public int VPtolerance
     {
         get
         {
             int res = 0;
             foreach( Enemy e in Enemies )
             {
-                res += e.DeltaVP;
+                res += e.VPtolerance;
             }
-            return res;
+            return Mathf.Min( 100, res );
         }
     }
     public Enemy targetEnemy { get; private set; }
@@ -156,36 +156,9 @@ public class EnemyConductor : MonoBehaviour {
             {
 				e.BeAttacked( attack, skill );
 				isSucceeded = true;
-			}
+            }
+            GameContext.VoxSystem.AddVPVT( attack.VP, attack.VT );
 		}
-		MagicModule magic = Action.GetModule<MagicModule>();
-        if( magic != null && skill.isPlayerSkill )
-		{
-            foreach( Enemy e in GetTargetEnemies( magic, skill ) )
-            {
-				e.BeMagicAttacked( magic, skill );
-				isSucceeded = true;
-			}
-			GameContext.VoxSystem.AddVP( magic.VoxPoint );
-        }
-        DefendModule defend = Action.GetModule<DefendModule>();
-        if( defend != null && !skill.isPlayerSkill )
-        {
-            foreach( Enemy e in GetTargetEnemies( defend, skill ) )
-            {
-                e.Defend( defend );
-                isSucceeded = true;
-            }
-        }
-        MagicDefendModule magicDefend = Action.GetModule<MagicDefendModule>();
-        if( magicDefend != null && !skill.isPlayerSkill )
-        {
-            foreach( Enemy e in GetTargetEnemies( magicDefend, skill ) )
-            {
-                e.MagicDefend( magicDefend );
-                isSucceeded = true;
-            }
-        }
         HealModule heal = Action.GetModule<HealModule>();
         if( heal != null && !skill.isPlayerSkill )
         {
@@ -195,7 +168,6 @@ public class EnemyConductor : MonoBehaviour {
                 isSucceeded = true;
             }
         }
-
         WeatherModule weather = Action.GetModule<WeatherModule>();
         if( WeatherEnemy != null && weather != null )
         {
@@ -208,7 +180,6 @@ public class EnemyConductor : MonoBehaviour {
             }
             isSucceeded = true;
         }
-
         EnemySpawnModule spawner = Action.GetModule<EnemySpawnModule>();
         if( spawner != null && Enemies.Count < 3 )
         {
@@ -305,6 +276,8 @@ public class EnemyConductor : MonoBehaviour {
 
     public void CheckCommand()
     {
+        if( GameContext.VoxSystem.state == VoxState.Invert ) return;
+
         //if( nextTarget != null )
         //{
         //    targetEnemy = nextTarget;
@@ -379,11 +352,11 @@ public class EnemyConductor : MonoBehaviour {
     {
         foreach( Enemy e in Enemies )
         {
-            e.TurnInit();
+            e.InvertInit();
         }
     }
 
-    public void OnNextCommandChanged( Command NextCommand )
+    public void OnNextCommandChanged( PlayerCommand NextCommand )
     {
         /*
         if( Enemies.Count > 0 )

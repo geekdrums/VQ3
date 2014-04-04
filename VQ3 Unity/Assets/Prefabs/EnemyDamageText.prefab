@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 23: {fileID: 2300004}
   - 114: {fileID: 11400000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyDamageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,6 +74,7 @@ MonoBehaviour:
   RendererPrefab: {fileID: 100000, guid: 57d965ef0041ac146bb81944b0c79230, type: 2}
   Interval: 1.5
   align: 1
+  counterScale: 1
   damageColor: {r: 1, g: .274509817, b: .760784328, a: .925490201}
   healColor: {r: .270588249, g: .847058833, b: 1, a: .909803927}
 --- !u!1001 &100100000

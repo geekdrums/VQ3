@@ -15,8 +15,8 @@ public enum VoxButton
 public class CommandGraph : MonoBehaviour {
 
     public GameObject EdgePrefab;
-    public Command IntroCommand;
-    public Command DefaultCommand;
+    public PlayerCommand IntroCommand;
+    public PlayerCommand DefaultCommand;
     public Strategy InvertStrategy;
     public GameObject VoxBall;
     public GameObject SelectSpot;
@@ -25,10 +25,10 @@ public class CommandGraph : MonoBehaviour {
     public float ROTATE_COEFF;
     //public float SELECT_DISTANCE;
 
-    public List<Command> CommandNodes { get; private set; }
+    public List<PlayerCommand> CommandNodes { get; private set; }
     public List<Strategy> StrategyNodes { get; private set; }
-    public Command NextCommand { get; private set; }
-    public Command CurrentCommand { get; private set; }
+    public PlayerCommand NextCommand { get; private set; }
+    public PlayerCommand CurrentCommand { get; private set; }
     public VoxButton CurrentButton { get; private set; }
 
     bool IsLinkedToInvert { get { return ( CurrentCommand.ParentStrategy != null && CurrentCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) ) || CurrentCommand.IsLinkedTo( InvertStrategy ); } }
@@ -52,30 +52,30 @@ public class CommandGraph : MonoBehaviour {
         foreach( Strategy strategy in GetComponentsInChildren<Strategy>() )
         {
             StrategyNodes.Add( strategy );
-            foreach( MonoNode link in strategy.links )
+            foreach( IVoxNode link in strategy.links )
             {
                 InstantiateLine( strategy, link );
             }
-            foreach( Command command in strategy.Commands )
+            foreach( PlayerCommand command in strategy.Commands )
             {
-                foreach( MonoNode link in command.links )
+                foreach( IVoxNode link in command.links )
                 {
                     InstantiateLine( command, link );
                 }
                 command.SetLink( false );
             }
         }
-        CommandNodes = new List<Command>();
-        foreach( Command command in GetComponentsInChildren<Command>() )
+        CommandNodes = new List<PlayerCommand>();
+        foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
         {
             CommandNodes.Add( command );
-            foreach( MonoNode link in command.links )
+            foreach( IVoxNode link in command.links )
             {
                 InstantiateLine( command, link );
             }
             command.SetLink( false );
         }
-        foreach( MonoNode link in IntroCommand.links )
+        foreach( IVoxNode link in IntroCommand.links )
         {
             InstantiateLine( IntroCommand, link );
         }
@@ -85,14 +85,14 @@ public class CommandGraph : MonoBehaviour {
         CurrentButton = VoxButton.None;
     }
 
-    void InstantiateLine( MonoNode from, MonoNode to )
+    void InstantiateLine( IVoxNode from, IVoxNode to )
     {
         LineRenderer edge = (Instantiate( EdgePrefab ) as GameObject).GetComponent<LineRenderer>();
-        edge.transform.position = from.transform.position;
-        edge.transform.parent = from.transform;
-        Vector3 direction = to.transform.position - from.transform.position;
-        edge.SetPosition( 0, direction.normalized * from.radius );
-        edge.SetPosition( 1, direction.normalized * ( direction.magnitude - to.radius ) );
+        edge.transform.position = from.Transform().position;
+        edge.transform.parent = from.Transform();
+        Vector3 direction = to.Transform().position - from.Transform().position;
+        edge.SetPosition( 0, direction.normalized * from.Radius() );
+        edge.SetPosition( 1, direction.normalized * ( direction.magnitude - to.Radius() ) );
     }
 
     // Update is called once per frame
@@ -207,9 +207,9 @@ public class CommandGraph : MonoBehaviour {
 
     void SelectNearestNode()
     {
-        Command selectedCommand = null;// CurrentCommand;
+        PlayerCommand selectedCommand = null;// CurrentCommand;
         float minDistance = 10000;//(SelectSpot.transform.position - CurrentCommand.transform.position).magnitude;
-        foreach( Command command in GetLinkedCommands() )
+        foreach( PlayerCommand command in GetLinkedCommands() )
         {
             if( !command.IsUsable() ) continue;
             float d = (SelectSpot.transform.position - command.transform.position).magnitude;
@@ -226,11 +226,11 @@ public class CommandGraph : MonoBehaviour {
         }
     }
 
-    IEnumerable<Command> GetLinkedCommands()
+    IEnumerable<PlayerCommand> GetLinkedCommands()
     {
         if( GameContext.VoxSystem.state == VoxState.Eclipse )
         {
-            foreach( Command c in InvertStrategy.Commands )
+            foreach( PlayerCommand c in InvertStrategy.Commands )
             {
                 yield return c;
             }
@@ -239,14 +239,14 @@ public class CommandGraph : MonoBehaviour {
         {
             if( RemainInvertTime > 1 )
             {
-                foreach( Command c in InvertStrategy.Commands )
+                foreach( PlayerCommand c in InvertStrategy.Commands )
                 {
                     yield return c;
                 }
             }
             else
             {
-                foreach( Command c in CurrentCommand.LinkedCommands )
+                foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
                 {
                     if( !(c is InvertCommand) )
                     {
@@ -258,7 +258,7 @@ public class CommandGraph : MonoBehaviour {
         else
         {
             yield return CurrentCommand;
-            foreach( Command c in CurrentCommand.LinkedCommands )
+            foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
             {
                 yield return c;
             }
@@ -297,7 +297,7 @@ public class CommandGraph : MonoBehaviour {
             {
                 if( NextCommand.ParentStrategy == InvertStrategy )
                 {
-                    foreach( Command c in InvertStrategy.LinkedCommands )
+                    foreach( PlayerCommand c in InvertStrategy.LinkedCommands )
                     {
                         if( c.ParentStrategy != InvertStrategy )
                         {
@@ -317,7 +317,7 @@ public class CommandGraph : MonoBehaviour {
                 willEclipse = GameContext.VoxSystem.WillEclipse;
                 if( willEclipse )
                 {
-                    RemainInvertTime = 2;
+                    RemainInvertTime = GameContext.VoxSystem.InvertTime;
                 }
             }
             Music.SetNextBlock( NextCommand.GetBlockName() + (willEclipse ? "Trans" : "") );
@@ -326,7 +326,7 @@ public class CommandGraph : MonoBehaviour {
 
     public void CheckCommand()
     {
-        Command OldCommand = CurrentCommand;
+        PlayerCommand OldCommand = CurrentCommand;
         CurrentCommand = NextCommand;
 
         VoxState desiredState = GetDesiredVoxState();
@@ -338,12 +338,12 @@ public class CommandGraph : MonoBehaviour {
         if( OldCommand != null )
         {
             OldCommand.SetLink( false );
-            foreach( Command c in OldCommand.LinkedCommands )
+            foreach( PlayerCommand c in OldCommand.LinkedCommands )
             {
                 c.SetLink( false );
             }
         }
-        foreach( Command c in GetLinkedCommands() )
+        foreach( PlayerCommand c in GetLinkedCommands() )
         {
             c.SetLink( true );
         }
@@ -351,9 +351,9 @@ public class CommandGraph : MonoBehaviour {
         CurrentCommand.SetCurrent();
     }
 
-    public Command CheckAcquireCommand( int Level )
+    public PlayerCommand CheckAcquireCommand( int Level )
     {
-        foreach( Command command in CommandNodes )
+        foreach( PlayerCommand command in CommandNodes )
         {
             if( command.AcquireLevel <= Level && !command.IsAcquired )
             {
@@ -365,7 +365,7 @@ public class CommandGraph : MonoBehaviour {
 
     public void OnBattleStart()
     {
-        foreach( Command command in CommandNodes )
+        foreach( PlayerCommand command in CommandNodes )
         {
             command.SetLink(false);
         }
@@ -375,7 +375,7 @@ public class CommandGraph : MonoBehaviour {
         //transform.rotation = targetRotation;
     }
 
-    public void Select( Command command )
+    public void Select( PlayerCommand command )
     {
         if( NextCommand != null ) NextCommand.Deselect();
         NextCommand = command;

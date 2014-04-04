@@ -5,7 +5,7 @@ public class Player : Character {
     GameObject UIParent;
     HPBar HPBar;
 
-    public GameObject DefendAnimPrefab;
+    //public GameObject DefendAnimPrefab;
 
 	// Use this for initialization
 	void Start()
@@ -38,53 +38,42 @@ public class Player : Character {
 		return "Player";
 	}
 
-    public override void TurnInit()
+    public override void TurnInit( CommandBase command )
     {
-        base.TurnInit();
+        base.TurnInit( command );
         if( HPBar != null ) HPBar.OnTurnStart();
     }
-    public override void BePhysicDamaged( int damage, Character ownerCharacter )
+    public override void BeAttacked(AttackModule attack, Skill skill)
     {
         int oldHP = HitPoint;
-        base.BePhysicDamaged( damage, ownerCharacter );
-        damage = oldHP - HitPoint;
-        if( damage <= 0 )
+        base.BeAttacked( attack, skill );
+        int damage = oldHP - HitPoint;
+
+        if( attack.isPhysic )
         {
-            SEPlayer.Play( ActionResult.PlayerDefend, ownerCharacter, damage );
+            SEPlayer.Play( ActionResult.PlayerPhysicDamage, skill.OwnerCharacter, damage );
         }
         else
         {
-            SEPlayer.Play( ActionResult.PlayerPhysicDamage, ownerCharacter, damage );
-        }
-    }
-    public override void BeMagicDamaged( int damage, Character ownerCharacter )
-    {
-        int oldHP = HitPoint;
-        base.BeMagicDamaged( damage, ownerCharacter );
-        damage = oldHP - HitPoint;
-        if( damage <= 0 )
-        {
-            SEPlayer.Play( ActionResult.PlayerDefend, ownerCharacter, damage );
-        }
-        else
-        {
-            SEPlayer.Play( ActionResult.PlayerMagicDamage, ownerCharacter, damage );
+            SEPlayer.Play( ActionResult.PlayerMagicDamage, skill.OwnerCharacter, damage );
         }
     }
     protected override void BeDamaged( int damage, Character ownerCharacter )
     {
         base.BeDamaged( damage, ownerCharacter );
 
-        if( damage <= 0 )
-        {
-            (Instantiate( DefendAnimPrefab, ownerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
-            TextWindow.AddMessage( "オクスは　ぼうぎょで　うけきった" );
-        }
-        else
-        {
-            HPBar.OnDamage( damage );
-            TextWindow.AddMessage( "オクスは " + damage + " のダメージを　うけた" );
-        }
+        HPBar.OnDamage( damage );
+        TextWindow.AddMessage( "オクスは " + damage + " のダメージを　うけた" );
+        //if( damage <= 0 )
+        //{
+        //    (Instantiate( DefendAnimPrefab, ownerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
+        //    TextWindow.AddMessage( "オクスは　ぼうぎょで　うけきった" );
+        //}
+        //else
+        //{
+        //    HPBar.OnDamage( damage );
+        //    TextWindow.AddMessage( "オクスは " + damage + " のダメージを　うけた" );
+        //}
 
         if( HitPoint <= 0 )
         {
@@ -105,6 +94,8 @@ public class Player : Character {
     public void OnBattleStart()
     {
         HitPoint = MaxHP;
-        TurnInit();
+        PhysicDefend = 0;
+        MagicDefend = 0;
+        TurnDamage = 0;
     }
 }

@@ -20,14 +20,15 @@ public class ActionSet : IEnumerable<IActionModule>
             }
 			else if ( str.StartsWith( "Attack " ) )
             {
-                res.Modules.Add( new AttackModule( int.Parse( parameters[1] ), (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ),
-                    (parameters.Length > 3 ? int.Parse( parameters[3] ) : -1) ) );
+                res.Modules.Add( new AttackModule( int.Parse( parameters[1] ), int.Parse( parameters[2] ), int.Parse( parameters[3] ), true,
+                    (TargetType)Enum.Parse( typeof( TargetType ), parameters[4] ), (parameters.Length > 5 ? int.Parse( parameters[5] ) : -1) ) );
             }
             else if( str.StartsWith( "Magic " ) )
             {
-                res.Modules.Add( new MagicModule( int.Parse( parameters[1] ), int.Parse( parameters[2] ), (TargetType)Enum.Parse( typeof( TargetType ), parameters[3] ),
-                    (parameters.Length > 4 ? int.Parse( parameters[4] ) : -1) ) );
+                res.Modules.Add( new AttackModule( int.Parse( parameters[1] ), int.Parse( parameters[2] ), int.Parse( parameters[3] ), false,
+                    (TargetType)Enum.Parse( typeof( TargetType ), parameters[4] ), (parameters.Length > 5 ? int.Parse( parameters[5] ) : -1) ) );
             }
+            /*
             else if( str.StartsWith( "Defend " ) )
             {
                 res.Modules.Add( new DefendModule( int.Parse( parameters[1] ),
@@ -38,6 +39,7 @@ public class ActionSet : IEnumerable<IActionModule>
                 res.Modules.Add( new MagicDefendModule( int.Parse( parameters[1] ),
                     parameters.Length > 2 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ) : TargetType.Self ) );
             }
+            */
 			else if ( str.StartsWith( "Heal " ) )
 			{
 				res.Modules.Add( new HealModule( int.Parse( parameters[1] ),

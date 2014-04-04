@@ -47,11 +47,17 @@ public class WeatherEnemy : Enemy
         }
     }
 
-    public override void BePhysicDamaged( int damage, Character ownerCharacter )
+    public override void BeAttacked( AttackModule attack, Skill skill )
     {
-        SEPlayer.Play( "PhysicNoDamage" );
-        Debug.Log( this.ToString() + "was attacked but no damage." );
-        //base.BePhysicDamaged( damage, ownerCharacter );
+        if( attack.isPhysic )
+        {
+            SEPlayer.Play( "PhysicNoDamage" );
+            Debug.Log( this.ToString() + "was attacked but no damage." );
+        }
+        else
+        {
+            base.BeAttacked( attack, skill );
+        }
     }
 
     public void ReceiveWeatherModule( WeatherModule wm )

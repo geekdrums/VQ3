@@ -22,7 +22,7 @@ public class Enemy : Character
     public EnemySpecies Speceis;
     public List<BattleState> States;
     public StateChangeCondition[] conditions;
-    public int DeltaVP;
+    public int VPtolerance;
 
     public EnemyCommand currentCommand { get; protected set; }
     public int commandExecBar { get; protected set; }
@@ -176,18 +176,26 @@ public class Enemy : Character
         }
     }
 
-    public override void TurnInit()
+    public override void TurnInit( CommandBase command )
     {
-        base.TurnInit();
+        base.TurnInit( command );
+        HPCircle.OnTurnStart();
+    }
+    public void InvertInit()
+    {
+        PhysicDefend = 0;
+        MagicDefend = 0;
+        TurnDamage = 0;
         HPCircle.OnTurnStart();
     }
     public EnemyCommand CheckCommand()
     {
-        TurnInit();
         CheckState();
 
         currentCommand = currentState.pattern[turnCount % currentState.pattern.Length];
         ++turnCount;
+
+        TurnInit( currentCommand );
 
         return currentCommand;
     }
@@ -221,53 +229,56 @@ public class Enemy : Character
         }
     }
 
-    public override void BePhysicDamaged( int damage, Character ownerCharacter )
+    public override void BeAttacked(AttackModule attack, Skill skill)
     {
-        base.BePhysicDamaged( damage, ownerCharacter );
+        int oldHP = HitPoint;
+ 	    base.BeAttacked(attack, skill);
+        int damage = oldHP - HitPoint;
 
-        switch( Speceis )
+        if( attack.isPhysic )
         {
-        case EnemySpecies.Human:
-        case EnemySpecies.Thing:
-        case EnemySpecies.Fairy:
-        case EnemySpecies.Jewel:
-            lastDamageResult = ActionResult.PhysicDamage;
-            break;
-        case EnemySpecies.Spirit:
-        case EnemySpecies.Dragon:
-            lastDamageResult = ActionResult.PhysicGoodDamage;
-            break;
-        case EnemySpecies.Beast:
-            lastDamageResult = ActionResult.PhysicBadDamage;
-            break;
-        case EnemySpecies.Weather:
-            break;
+            switch( Speceis )
+            {
+            case EnemySpecies.Human:
+            case EnemySpecies.Thing:
+            case EnemySpecies.Fairy:
+            case EnemySpecies.Jewel:
+                lastDamageResult = ActionResult.PhysicDamage;
+                break;
+            case EnemySpecies.Spirit:
+            case EnemySpecies.Dragon:
+                lastDamageResult = ActionResult.PhysicGoodDamage;
+                break;
+            case EnemySpecies.Beast:
+                lastDamageResult = ActionResult.PhysicBadDamage;
+                break;
+            case EnemySpecies.Weather:
+                break;
+            }
+            SEPlayer.Play( lastDamageResult, skill.OwnerCharacter, damage );
         }
-        SEPlayer.Play( lastDamageResult, ownerCharacter, damage );
-    }
-    public override void BeMagicDamaged( int damage, Character ownerCharacter )
-    {
-        base.BeMagicDamaged( damage, ownerCharacter );
-
-        switch( Speceis )
+        else
         {
-        case EnemySpecies.Human:
-        case EnemySpecies.Thing:
-        case EnemySpecies.Spirit:
-        case EnemySpecies.Weather:
-            lastDamageResult = ActionResult.MagicDamage;
-            break;
-        case EnemySpecies.Fairy:
-        case EnemySpecies.Beast:
-            lastDamageResult = ActionResult.MagicGoodDamage;
-            break;
-        case EnemySpecies.Dragon:
-            lastDamageResult = ActionResult.MagicBadDamage;
-            break;
-        case EnemySpecies.Jewel:
-            break;
+            switch( Speceis )
+            {
+            case EnemySpecies.Human:
+            case EnemySpecies.Thing:
+            case EnemySpecies.Spirit:
+            case EnemySpecies.Weather:
+                lastDamageResult = ActionResult.MagicDamage;
+                break;
+            case EnemySpecies.Fairy:
+            case EnemySpecies.Beast:
+                lastDamageResult = ActionResult.MagicGoodDamage;
+                break;
+            case EnemySpecies.Dragon:
+                lastDamageResult = ActionResult.MagicBadDamage;
+                break;
+            case EnemySpecies.Jewel:
+                break;
+            }
+            SEPlayer.Play( lastDamageResult, skill.OwnerCharacter, damage );
         }
-        SEPlayer.Play( lastDamageResult, ownerCharacter, damage );
     }
     protected override void BeDamaged( int damage, Character ownerCharacter )
     {
