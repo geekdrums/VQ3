@@ -22,11 +22,15 @@ public class Character : MonoBehaviour {
 
     protected int PhysicDefend;
     protected int MagicDefend;
+<<<<<<< HEAD
     protected int HealPercent;
+=======
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec
     protected int TurnDamage;
 
     public bool isAlive { get { return HitPoint > 0; } }
     public int MaxHP { get; protected set; }
+<<<<<<< HEAD
     public float PhysicDefendCoeff { get { return (100.0f - PhysicDefend - PhysicDefendEnhance.currentParam) / 100.0f; } }
     public float MagicDefendCoeff { get { return (100.0f - MagicDefend - MagicDefendEnhance.currentParam) / 100.0f; } }
     public float PhysicAttack { get { return BasePower * (100 + PhysicAttackEnhance.currentParam) / 100.0f; } }
@@ -38,6 +42,13 @@ public class Character : MonoBehaviour {
     protected EnhanceParameter MagicDefendEnhance = new EnhanceParameter( EnhanceParamType.Shell, -50, -33, 33, 50 );
     protected EnhanceParameter HitPointEnhance = new EnhanceParameter( EnhanceParamType.Regene, -10, -5, 5, 10 );
     protected List<EnhanceParameter> ActiveEnhanceParams = new List<EnhanceParameter>();
+=======
+    //TODO: add parameter coeffs
+    public float PhysicDefendCoeff { get { return (100.0f - PhysicDefend) / 100.0f; } }
+    public float MagicDefendCoeff { get { return (100.0f - MagicDefend) / 100.0f; } }
+    //public float PowerCoeff { get { return BasePower; } }
+    //public float MagicCoeff { get { return BaseMagic; } }
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec
 
     protected float damageTime;
     protected Vector3 initialPosition;
@@ -54,7 +65,10 @@ public class Character : MonoBehaviour {
     {
         PhysicDefend = command.PhysicDefend;
         MagicDefend = command.MagicDefend;
+<<<<<<< HEAD
         HealPercent = command.HealPercent;
+=======
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec
         TurnDamage = 0;
         foreach( EnhanceParameter enhanceParam in ActiveEnhanceParams )
         {
@@ -67,12 +81,20 @@ public class Character : MonoBehaviour {
         float damage = 0;
         if( attack.isPhysic )
         {
+<<<<<<< HEAD
             damage = skill.OwnerCharacter.PhysicAttack * (attack.Power / 100.0f) * PhysicDefendCoeff;
+=======
+            damage = skill.OwnerCharacter.BasePower * (attack.Power / 100.0f) * PhysicDefendCoeff;
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec
             damage *= ((100.0f - DAMAGE_RANGE) + Random.Range( 0, DAMAGE_RANGE ) + Random.Range( 0, DAMAGE_RANGE )) / 100.0f;
         }
         else
         {
+<<<<<<< HEAD
             damage = skill.OwnerCharacter.MagicAttack * (attack.Power / 100.0f) * MagicDefendCoeff;
+=======
+            damage = skill.OwnerCharacter.BaseMagic * (attack.Power / 100.0f) * MagicDefendCoeff;
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec
             damage *= ((100.0f - MAGIC_DAMAGE_RANGE) + Random.Range( 0, MAGIC_DAMAGE_RANGE ) + Random.Range( 0, MAGIC_DAMAGE_RANGE )) / 100.0f;
         }
         BeDamaged( Mathf.Max( 0, (int)damage ), skill.OwnerCharacter );
@@ -86,7 +108,24 @@ public class Character : MonoBehaviour {
         int RelativeMaxHP = (MaxHP < GameContext.PlayerConductor.PlayerMaxHP ? MaxHP : GameContext.PlayerConductor.PlayerMaxHP);
         damageTime += 0.15f + ((float)d / (float)RelativeMaxHP) * 0.7f;
         damageTime = Mathf.Min( damageTime, (float)Music.mtUnit * 8 );
+<<<<<<< HEAD
     }
+=======
+    }
+
+    /*
+	public void Defend( DefendModule defend )
+	{
+        PhysicDefend = defend.DefendPower;
+	}
+
+    public void MagicDefend( MagicDefendModule magicDefend )
+    {
+        MagicDefend = magicDefend.MagicDefendPower;
+    }
+    */
+
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec
 	public virtual void Heal( HealModule heal )
 	{
         int h = Mathf.Min( MaxHP - HitPoint, (int)(MaxHP * ( (float)heal.HealPoint/100.0f )) );

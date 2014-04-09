@@ -29,7 +29,10 @@ public class CommandGraph : MonoBehaviour {
     public List<Strategy> StrategyNodes { get; private set; }
     public PlayerCommand NextCommand { get; private set; }
     public PlayerCommand CurrentCommand { get; private set; }
+<<<<<<< HEAD:VQ3 Unity/Assets/Script/Battle/ComandGraph/CommandGraph.cs
     public PlayerCommand OldCommand { get; private set; }
+=======
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec:VQ3 Unity/Assets/Script/Battle/ComandGraph/CommandGraph.cs
     public VoxButton CurrentButton { get; private set; }
 
     bool IsLinkedToInvert { get { return ( CurrentCommand.ParentStrategy != null && CurrentCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) ) || CurrentCommand.IsLinkedTo( InvertStrategy ); } }
@@ -71,8 +74,11 @@ public class CommandGraph : MonoBehaviour {
         foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
         {
             CommandNodes.Add( command );
+<<<<<<< HEAD:VQ3 Unity/Assets/Script/Battle/ComandGraph/CommandGraph.cs
             command.SetLink( false );
             if( command.ParentCommand != null ) continue;
+=======
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec:VQ3 Unity/Assets/Script/Battle/ComandGraph/CommandGraph.cs
             foreach( IVoxNode link in command.links )
             {
                 InstantiateLine( command, link );
@@ -342,6 +348,10 @@ public class CommandGraph : MonoBehaviour {
 
     public void CheckCommand()
     {
+<<<<<<< HEAD:VQ3 Unity/Assets/Script/Battle/ComandGraph/CommandGraph.cs
+=======
+        PlayerCommand OldCommand = CurrentCommand;
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec:VQ3 Unity/Assets/Script/Battle/ComandGraph/CommandGraph.cs
         CurrentCommand = NextCommand;
 
         VoxState desiredState = GetDesiredVoxState();

@@ -10,7 +10,10 @@ public class CommandBase : MonoBehaviour
     public string _timingStr = "0 2 0";
     public int PhysicDefend;
     public int MagicDefend;
+<<<<<<< HEAD:VQ3 Unity/Assets/Script/Battle/ComandGraph/Command/CommandBase.cs
     public int HealPercent;
+=======
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec:VQ3 Unity/Assets/Script/Battle/ComandGraph/Command/CommandBase.cs
 
     protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
 

@@ -45,13 +45,17 @@ public class PlayerCommand : CommandBase, IVoxNode
     {
         base.Parse();
 
+<<<<<<< HEAD:VQ3 Unity/Assets/Script/Battle/ComandGraph/Command/PlayerCommand.cs
         if( !UnityEditor.EditorApplication.isPlaying ) return;
+=======
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec:VQ3 Unity/Assets/Script/Battle/ComandGraph/Command/PlayerCommand.cs
         IsLinked = true;
         IsAcquired = AcquireLevel <= GameContext.PlayerConductor.Level;
         if( !IsAcquired )
         {
             GetComponent<TextMesh>().color = Color.clear;
         }
+<<<<<<< HEAD:VQ3 Unity/Assets/Script/Battle/ComandGraph/Command/PlayerCommand.cs
         NumLoopVariations = 1;
         foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
         {
@@ -65,6 +69,8 @@ public class PlayerCommand : CommandBase, IVoxNode
                 }
             }
         }
+=======
+>>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec:VQ3 Unity/Assets/Script/Battle/ComandGraph/Command/PlayerCommand.cs
     }
 
     void Start()
