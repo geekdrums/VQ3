@@ -7,7 +7,7 @@ public class HPCircle : MonoBehaviour {
     public GameObject RedCircle;
     public float RedCircleScaleCoeff;
     public Color invertColor;
-    Color initialColor;
+    //Color initialColor;
 
     Enemy ownerEnemy;
 
@@ -32,7 +32,7 @@ public class HPCircle : MonoBehaviour {
         targetRedScale = Vector3.zero;
 
         CurrentCircle.transform.localScale = -Vector3.one;
-        initialColor = CurrentCircle.GetComponent<SpriteRenderer>().color;
+        //initialColor = CurrentCircle.GetComponent<SpriteRenderer>().color;
     }
 
     // Update is called once per frame
@@ -61,6 +61,10 @@ public class HPCircle : MonoBehaviour {
                 targetRedScale = initialScale * Mathf.Sqrt( (float)(TurnStartHP - ownerEnemy.HitPoint) / (float)ownerEnemy.MaxHP );
             }
         }
+    }
+    public void OnUpdateHP()
+    {
+        OnHeal();
     }
     public void OnTurnStart()
     {

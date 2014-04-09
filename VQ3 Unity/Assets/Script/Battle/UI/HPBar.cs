@@ -51,6 +51,16 @@ public class HPBar : MonoBehaviour {
         latestDamageText = (Instantiate( damageTextPrefab, nextDamageTextPosition, Quaternion.identity ) as GameObject);
         latestDamageText.GetComponent<DamageText>().Initialize( -heal, nextDamageTextPosition );
     }
+    public void OnUpdateHP()
+    {
+        UpdateHPText();
+        CurrentBar.transform.localScale = targetScale;
+        if( Player.HitPoint > TurnStartHP )
+        {
+            TurnStartHP = Player.HitPoint;
+            RedBar.transform.localScale = targetScale;
+        }
+    }
     public void OnTurnStart()
     {
         UpdateHPText();

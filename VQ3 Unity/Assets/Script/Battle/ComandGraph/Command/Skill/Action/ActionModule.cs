@@ -57,15 +57,23 @@ public class AnimModule : TargetModule
 
 public class AttackModule : TargetModule
 {
-	public AttackModule( int AttackPower, TargetType TargetType = TargetType.Left, int AnimIndex = -1 )
+	public AttackModule( int Power, int VoxPoint, int VoxTime, bool isPhysic,
+        TargetType TargetType = TargetType.Left, int AnimIndex = -1 )
         : base( TargetType, AnimIndex )
 	{
-		this.AttackPower = AttackPower;
+        this.Power = Power;
+        this.VP = VoxPoint;
+        this.VT = VoxTime;
+        this.isPhysic = isPhysic;
 	}
 
-	public int AttackPower { get; private set; }
+    public int Power { get; private set; }
+    public int VP { get; private set; }
+    public int VT { get; private set; }
+    public bool isPhysic;
 }
 
+/*
 public class MagicModule : TargetModule
 {
     public MagicModule( int MagicPower, int VoxPoint, TargetType TargetType = TargetType.Left, int AnimIndex = -1 )
@@ -100,6 +108,7 @@ public class MagicDefendModule : TargetModule
 
     public int MagicDefendPower { get; private set; }
 }
+*/
 
 public class HealModule : TargetModule
 {
@@ -110,6 +119,21 @@ public class HealModule : TargetModule
 	}
 
 	public int HealPoint { get; private set; }
+}
+
+public class EnhanceModule : TargetModule
+{
+    public EnhanceModule( EnhanceParamType type, int phase, int turn, TargetType targetType = TargetType.Player )
+        : base( targetType )
+    {
+        this.type = type;
+        this.phase = phase;
+        this.turn = turn;
+	}
+
+    public EnhanceParamType type { get; private set; }
+    public int phase { get; private set; }
+    public int turn { get; private set; }
 }
 
 public class WeatherModule : IActionModule

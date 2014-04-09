@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 public enum EStrategy
 {
@@ -12,18 +14,37 @@ public enum EStrategy
 	Count
 }
 
-public class Strategy : MonoNode
+public class Strategy : MonoBehaviour, IVoxNode
 {
     public int Exp;
-    public List<Command> Commands;
+    public List<PlayerCommand> Commands;
+    public List<MonoBehaviour> links;
+    public float radius = 1.0f;
+    public float Radius()
+    {
+        return radius;
+    }
+    public Transform Transform()
+    {
+        return transform;
+    }
+    public IEnumerable<IVoxNode> LinkedNodes()
+    {
+        return links.ConvertAll<IVoxNode>( ( MonoBehaviour mb ) => mb as IVoxNode );
+    }
+    public bool IsLinkedTo( IVoxNode node )
+    {
+        return LinkedNodes().Contains<IVoxNode>( node );
+    }
 
 	public EStrategy StrategyName { get; protected set; }
+
 
     void Awake()
     {
         this.StrategyName = (EStrategy)Enum.Parse( typeof( EStrategy ), name.Remove( name.IndexOf( "Strategy" ) ) );
         Vector3 sumPosition = Vector3.zero;
-        foreach( Command c in Commands )
+        foreach( PlayerCommand c in Commands )
         {
             c.SetParent( this );
             sumPosition += c.transform.localPosition;
@@ -32,21 +53,21 @@ public class Strategy : MonoNode
         transform.localRotation = Quaternion.LookRotation( -transform.localPosition );
     }
 
-    public IEnumerable<Command> LinkedCommands
+    public IEnumerable<PlayerCommand> LinkedCommands
     {
         get
         {
-            foreach( Command c in Commands )
+            foreach( PlayerCommand c in Commands )
             {
                 yield return c;
             }
-            foreach( MonoNode link in links )
+            foreach( IVoxNode link in links )
             {
                 Strategy linkedStrategy = link as Strategy;
-                Command linkedCommand = link as Command;
+                PlayerCommand linkedCommand = link as PlayerCommand;
                 if( linkedStrategy != null )
                 {
-                    foreach( Command c in linkedStrategy.Commands )
+                    foreach( PlayerCommand c in linkedStrategy.Commands )
                     {
                         yield return c;
                     }

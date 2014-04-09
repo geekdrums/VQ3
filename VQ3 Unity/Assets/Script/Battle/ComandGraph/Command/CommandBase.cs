@@ -1,23 +1,24 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-public class EnemyCommand : MonoBehaviour
+public class CommandBase : MonoBehaviour
 {
     public List<Skill> _skillList;
     public string _timingStr = "0 2 0";
-    //public List<int> probabilityList;
-    //public string currentState;
-    public string nextState;
-    //public EnemyCommand nextCommand;
-    public bool isPassive;
-
-    public string DescribeText;
+    public int PhysicDefend;
+    public int MagicDefend;
+    public int HealPercent;
 
     protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
 
-    public void Parse()
+    public virtual void Parse()
     {
+#if UNITY_EDITOR
+        if( !UnityEditor.EditorApplication.isPlaying ) return;
+#endif
         string[] timingStrs = _timingStr.Split( ",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
         if( timingStrs.Length != _skillList.Count )
         {
@@ -31,26 +32,7 @@ public class EnemyCommand : MonoBehaviour
             int beat = barBeatUnitStr.Length > 1 ? int.Parse( barBeatUnitStr[1] ) : 0;
             int unit = barBeatUnitStr.Length > 2 ? int.Parse( barBeatUnitStr[2] ) : 0;
             SkillDictionary.Add( new Timing( bar, beat, unit ).totalUnit, _skillList[i] );
+            _skillList[i].Parse();
         }
     }
-
-    public Skill GetCurrentSkill( int startBar )
-    {
-        int totalUnit = Music.Just.totalUnit - startBar * Music.mtBar;
-        return SkillDictionary.ContainsKey( totalUnit ) ? SkillDictionary[totalUnit] : null;
-    }
-    /*
-    public int GetProbability( int enemyState )
-    {
-        if( 0 <= enemyState && enemyState < probabilityList.Count )
-        {
-            return probabilityList[enemyState];
-        }
-        else
-        {
-            //Debug.LogError( "enemyState : " + enemyState + " is out of range! probabilityList.Count = " + probabilityList.Count  );
-            return 0;
-        }
-    }
-    */
 }

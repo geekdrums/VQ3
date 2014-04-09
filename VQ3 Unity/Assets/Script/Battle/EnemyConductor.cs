@@ -17,21 +17,19 @@ public class EnemyConductor : MonoBehaviour {
     Encounter CurrentEncounter;
 
     public int EnemyCount { get { return Enemies.Count + (WeatherEnemy != null ? 1 : 0); } }
-    public int DeltaVP
+    public int VPtolerance
     {
         get
         {
             int res = 0;
             foreach( Enemy e in Enemies )
             {
-                res += e.DeltaVP;
+                res += e.VPtolerance;
             }
-            return res;
+            return Mathf.Min( 100, res );
         }
     }
     public Enemy targetEnemy { get; private set; }
-    Enemy nextTarget;
-    Camera mainCamera;
 
 	Color _baseColor;
 	public Color baseColor
@@ -52,7 +50,6 @@ public class EnemyConductor : MonoBehaviour {
 	void Start () {
 		GameContext.EnemyConductor = this;
 		baseColor = Color.black;
-        mainCamera = GameObject.Find( "Main Camera" ).GetComponent<Camera>();
 	}
 	
 	// Update is called once per frame
@@ -156,36 +153,9 @@ public class EnemyConductor : MonoBehaviour {
             {
 				e.BeAttacked( attack, skill );
 				isSucceeded = true;
-			}
+            }
+            GameContext.VoxSystem.AddVPVT( attack.VP, attack.VT );
 		}
-		MagicModule magic = Action.GetModule<MagicModule>();
-        if( magic != null && skill.isPlayerSkill )
-		{
-            foreach( Enemy e in GetTargetEnemies( magic, skill ) )
-            {
-				e.BeMagicAttacked( magic, skill );
-				isSucceeded = true;
-			}
-			GameContext.VoxSystem.AddVP( magic.VoxPoint );
-        }
-        DefendModule defend = Action.GetModule<DefendModule>();
-        if( defend != null && !skill.isPlayerSkill )
-        {
-            foreach( Enemy e in GetTargetEnemies( defend, skill ) )
-            {
-                e.Defend( defend );
-                isSucceeded = true;
-            }
-        }
-        MagicDefendModule magicDefend = Action.GetModule<MagicDefendModule>();
-        if( magicDefend != null && !skill.isPlayerSkill )
-        {
-            foreach( Enemy e in GetTargetEnemies( magicDefend, skill ) )
-            {
-                e.MagicDefend( magicDefend );
-                isSucceeded = true;
-            }
-        }
         HealModule heal = Action.GetModule<HealModule>();
         if( heal != null && !skill.isPlayerSkill )
         {
@@ -195,7 +165,6 @@ public class EnemyConductor : MonoBehaviour {
                 isSucceeded = true;
             }
         }
-
         WeatherModule weather = Action.GetModule<WeatherModule>();
         if( WeatherEnemy != null && weather != null )
         {
@@ -208,7 +177,6 @@ public class EnemyConductor : MonoBehaviour {
             }
             isSucceeded = true;
         }
-
         EnemySpawnModule spawner = Action.GetModule<EnemySpawnModule>();
         if( spawner != null && Enemies.Count < 3 )
         {
@@ -229,10 +197,9 @@ public class EnemyConductor : MonoBehaviour {
         }
         else
         {
-            //if( nextTarget != null && !Enemies.Contains( nextTarget ) ) nextTarget = Enemies[(Enemies.Count - 1) / 2];
             if( !Enemies.Contains( targetEnemy ) )
             {
-                targetEnemy = (nextTarget != null && Enemies.Contains( nextTarget ) ? nextTarget : Enemies[(Enemies.Count - 1) / 2]);
+                targetEnemy = Enemies[(Enemies.Count - 1) / 2];
                 GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
             }
         }
@@ -303,13 +270,18 @@ public class EnemyConductor : MonoBehaviour {
 		return Res;
 	}
 
+    public void UpdateHealHP()
+    {
+        foreach( Enemy enemy in Enemies )
+        {
+            enemy.UpdateHealHP();
+        }
+    }
+
     public void CheckCommand()
     {
-        //if( nextTarget != null )
-        //{
-        //    targetEnemy = nextTarget;
-        //    GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
-        //}
+        if( GameContext.VoxSystem.state == VoxState.Invert ) return;
+
         int execIndex = 0;
         foreach( Enemy enemy in Enemies )
         {
@@ -379,47 +351,14 @@ public class EnemyConductor : MonoBehaviour {
     {
         foreach( Enemy e in Enemies )
         {
-            e.TurnInit();
+            e.InvertInit();
         }
-    }
-
-    public void OnNextCommandChanged( Command NextCommand )
-    {
-        /*
-        if( Enemies.Count > 0 )
-        {
-            if( NextCommand.IsTargetSelectable )
-            {
-                if( nextTarget == null ) nextTarget = targetEnemy;
-                GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
-            }
-            else if( nextTarget != null )
-            {
-                nextTarget = null;
-                GameContext.VoxSystem.SetNextTargetEnemy( null );
-            }
-        }
-        */
     }
 
     public void OnArrowPushed( bool LorR )
     {
         if( Enemies.Count > 0 )
         {
-            /*
-            int targetIndex = Enemies.IndexOf( nextTarget );
-            if( LorR )
-            {
-                targetIndex = (targetIndex - 1 + Enemies.Count) % Enemies.Count;
-                nextTarget = Enemies[targetIndex];
-            }
-            else
-            {
-                targetIndex = (targetIndex + 1) % Enemies.Count;
-                nextTarget = Enemies[targetIndex];
-            }
-            GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
-            */
             int targetIndex = Enemies.IndexOf( targetEnemy );
             if( LorR )
             {

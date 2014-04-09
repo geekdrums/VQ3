@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class QuarterCommand : Command
+public class QuarterCommand : PlayerCommand
 {
     public override string GetBlockName()
     {

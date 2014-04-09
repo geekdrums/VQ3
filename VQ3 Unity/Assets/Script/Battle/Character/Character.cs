@@ -1,31 +1,43 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
+public enum EnhanceParamType
+{
+    Brave,
+    Faith,
+    Protes,
+    Shell,
+    Regene,
+}
 public class Character : MonoBehaviour {
     protected static readonly float DAMAGE_RANGE = 12.0f;
     protected static readonly float MAGIC_DAMAGE_RANGE = 8.0f;
     protected static readonly int LEAST_DAMAGE_RANGE = 3;
     protected static readonly int LEAST_MAGIC_DAMAGE_RANGE = 2;
-    protected static readonly float DEFEND_COEFF = 1.0f / 2.0f;
-
+    
     public int HitPoint;
     public int BasePower;
     public int BaseMagic;
-    public int BaseDefend;
-    public int BaseMagicDefend;
 
-    protected int SkillDefend;
-    protected int SkillMagicDefend;
-    protected int SkillPower;
-    protected int SkillMagic;
+    protected int PhysicDefend;
+    protected int MagicDefend;
+    protected int HealPercent;
     protected int TurnDamage;
 
     public bool isAlive { get { return HitPoint > 0; } }
     public int MaxHP { get; protected set; }
-    public float DefendPower { get { return BaseDefend * ( 100.0f + SkillDefend )/100.0f; } }
-    public float MagicDefendPower { get { return BaseMagicDefend * (100.0f + SkillMagicDefend) / 100.0f; } }
-    public float AttackPower { get { return BasePower * (100.0f + SkillPower) / 100.0f; } }
-    public float MagicPower { get { return BaseMagic * (100.0f + SkillMagic) / 100.0f; } }
+    public float PhysicDefendCoeff { get { return (100.0f - PhysicDefend - PhysicDefendEnhance.currentParam) / 100.0f; } }
+    public float MagicDefendCoeff { get { return (100.0f - MagicDefend - MagicDefendEnhance.currentParam) / 100.0f; } }
+    public float PhysicAttack { get { return BasePower * (100 + PhysicAttackEnhance.currentParam) / 100.0f; } }
+    public float MagicAttack { get { return BaseMagic * (100 + MagicAttackEnhance.currentParam) / 100.0f; } }
+
+    protected EnhanceParameter PhysicAttackEnhance = new EnhanceParameter( EnhanceParamType.Brave, - 80, -40, 40, 80 );
+    protected EnhanceParameter MagicAttackEnhance = new EnhanceParameter( EnhanceParamType.Faith, -80, -40, 40, 80 );
+    protected EnhanceParameter PhysicDefendEnhance = new EnhanceParameter( EnhanceParamType.Protes, -50, -33, 33, 50 );
+    protected EnhanceParameter MagicDefendEnhance = new EnhanceParameter( EnhanceParamType.Shell, -50, -33, 33, 50 );
+    protected EnhanceParameter HitPointEnhance = new EnhanceParameter( EnhanceParamType.Regene, -10, -5, 5, 10 );
+    protected List<EnhanceParameter> ActiveEnhanceParams = new List<EnhanceParameter>();
 
     protected float damageTime;
     protected Vector3 initialPosition;
@@ -38,68 +50,43 @@ public class Character : MonoBehaviour {
 	// ======================
 	// Battle
 	// ======================
-    public virtual void TurnInit()
+    public virtual void TurnInit( CommandBase command )
     {
-        SkillPower = 0;
-        SkillMagic = 0;
-        SkillDefend = 0;
-        SkillMagicDefend = 0;
+        PhysicDefend = command.PhysicDefend;
+        MagicDefend = command.MagicDefend;
+        HealPercent = command.HealPercent;
         TurnDamage = 0;
-    }
-	public void BeAttacked( AttackModule attack, Skill skill )
-	{
-        float damage = skill.OwnerCharacter.AttackPower * (attack.AttackPower / 100.0f) - DefendPower * DEFEND_COEFF;
-        damage *= ((100.0f - DAMAGE_RANGE) + Random.Range( 0, DAMAGE_RANGE ) + Random.Range( 0, DAMAGE_RANGE )) / 100.0f;
-        BePhysicDamaged( Mathf.Max( 0, (int)damage ), skill.OwnerCharacter );
-	}
-    public virtual void BePhysicDamaged( int damage, Character ownerCharacter )
-    {
-        if( damage == 0 && SkillDefend <= 0 )
+        foreach( EnhanceParameter enhanceParam in ActiveEnhanceParams )
         {
-            damage = Random.Range( 1, LEAST_DAMAGE_RANGE );
+            enhanceParam.OnTurnStart();
         }
-        BeDamaged( damage, ownerCharacter );
-        //SEPlayer.Play( ActionResult.Damaged, this, damage );
+        ActiveEnhanceParams.RemoveAll( ( EnhanceParameter enhanceParam ) => enhanceParam.remainTurn <= 0 );
+    }
+	public virtual void BeAttacked( AttackModule attack, Skill skill )
+	{
+        float damage = 0;
+        if( attack.isPhysic )
+        {
+            damage = skill.OwnerCharacter.PhysicAttack * (attack.Power / 100.0f) * PhysicDefendCoeff;
+            damage *= ((100.0f - DAMAGE_RANGE) + Random.Range( 0, DAMAGE_RANGE ) + Random.Range( 0, DAMAGE_RANGE )) / 100.0f;
+        }
+        else
+        {
+            damage = skill.OwnerCharacter.MagicAttack * (attack.Power / 100.0f) * MagicDefendCoeff;
+            damage *= ((100.0f - MAGIC_DAMAGE_RANGE) + Random.Range( 0, MAGIC_DAMAGE_RANGE ) + Random.Range( 0, MAGIC_DAMAGE_RANGE )) / 100.0f;
+        }
+        BeDamaged( Mathf.Max( 0, (int)damage ), skill.OwnerCharacter );
         Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
-    }
-
-    public void BeMagicAttacked( MagicModule magic, Skill skill )
-    {
-        float damage = skill.OwnerCharacter.MagicPower * (magic.MagicPower / 100.0f) - MagicDefendPower * DEFEND_COEFF;
-        damage *= ((100.0f - MAGIC_DAMAGE_RANGE) + Random.Range( 0, MAGIC_DAMAGE_RANGE ) + Random.Range( 0, MAGIC_DAMAGE_RANGE )) / 100.0f;
-        BeMagicDamaged( Mathf.Max( 0, (int)damage ), skill.OwnerCharacter );
 	}
-    public virtual void BeMagicDamaged( int damage, Character ownerCharacter )
-    {
-        if( damage == 0 && SkillMagicDefend <= 0 )
-        {
-            damage = Random.Range( 1, LEAST_MAGIC_DAMAGE_RANGE );
-        }
-        BeDamaged( damage, ownerCharacter );
-        //SEPlayer.Play( ActionResult.MagicDamaged, this, damage );
-        Debug.Log( this.ToString() + " was MagicAttacked! " + damage + "Damage! HitPoint is " + HitPoint );
-    }
-
     protected virtual void BeDamaged( int damage, Character ownerCharacter )
-	{
+    {
         int d = Mathf.Max( 0, damage );
         HitPoint = Mathf.Clamp( HitPoint - d, 0, HitPoint );
         TurnDamage += d;
         int RelativeMaxHP = (MaxHP < GameContext.PlayerConductor.PlayerMaxHP ? MaxHP : GameContext.PlayerConductor.PlayerMaxHP);
         damageTime += 0.15f + ((float)d / (float)RelativeMaxHP) * 0.7f;
         damageTime = Mathf.Min( damageTime, (float)Music.mtUnit * 8 );
-	}
-
-	public void Defend( DefendModule defend )
-	{
-        SkillDefend = defend.DefendPower;
-	}
-
-    public void MagicDefend( MagicDefendModule magicDefend )
-    {
-        SkillMagicDefend = magicDefend.MagicDefendPower;
     }
-
 	public virtual void Heal( HealModule heal )
 	{
         int h = Mathf.Min( MaxHP - HitPoint, (int)(MaxHP * ( (float)heal.HealPoint/100.0f )) );
@@ -109,4 +96,71 @@ public class Character : MonoBehaviour {
             Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
         }
 	}
+    public virtual void Enhance( EnhanceModule enhance )
+    {
+        EnhanceParameter TargetParameter = null;
+        switch( enhance.type )
+        {
+        case EnhanceParamType.Brave: TargetParameter = PhysicAttackEnhance; break;
+        case EnhanceParamType.Faith: TargetParameter = MagicAttackEnhance; break;
+        case EnhanceParamType.Protes: TargetParameter = PhysicDefendEnhance; break;
+        case EnhanceParamType.Shell: TargetParameter = MagicDefendEnhance; break;
+        case EnhanceParamType.Regene: TargetParameter = HitPointEnhance; break;
+        }
+        TargetParameter.SetPhase( TargetParameter.phase + enhance.phase, enhance.turn );
+        if( TargetParameter.phase == 0 && ActiveEnhanceParams.Contains( TargetParameter ) ) ActiveEnhanceParams.Remove( TargetParameter );
+        else if( TargetParameter.phase != 0 && !ActiveEnhanceParams.Contains( TargetParameter ) ) ActiveEnhanceParams.Add( TargetParameter );
+    }
+    public virtual void UpdateHealHP()
+    {
+        int mt = Music.Just.totalUnit;
+        if( mt <= 0 ) return;
+        else
+        {
+            int HealHP = (int)(MaxHP * (HealPercent + HitPointEnhance.currentParam) / 100.0f);
+            int previousHealHP = HealHP * (mt-1) / 64;// 4 bars
+            int currentHealHP  = HealHP * mt / 64;
+            HitPoint += (currentHealHP - previousHealHP);
+            HitPoint = Mathf.Clamp( HitPoint, 0, MaxHP );
+        }
+    }
+
+    public class EnhanceParameter
+    {
+        readonly int[] goodPhaseParams;
+        readonly int[] badPhaseParams;
+
+        public EnhanceParamType type { get; private set; }
+        public int phase{ get; private set; }
+        public int remainTurn{ get; private set; }
+        public int currentParam { get { return (phase == 0 ? 0 : (phase > 0 ? goodPhaseParams[phase - 1] : badPhaseParams[phase + 1])); } }
+        
+        public EnhanceParameter( EnhanceParamType type, params int[] badAndGoodParams )
+        {
+            this.type = type;
+            int numBadParam = 0;
+            for( int i = 0; i < badAndGoodParams.Length; i++ )
+            {
+                if( badAndGoodParams[i] > 0 ) { numBadParam = i; break; }
+            }
+            badPhaseParams = new int[numBadParam];
+            goodPhaseParams = new int[badAndGoodParams.Length - numBadParam];
+            for( int i = 0; i < badAndGoodParams.Length; i++ )
+            {
+                if( i < numBadParam ) badPhaseParams[i] = badAndGoodParams[i];
+                else goodPhaseParams[i - numBadParam] = badAndGoodParams[i];
+            }
+        }
+
+        public void SetPhase( int phase, int turn )
+        {
+            this.phase = Mathf.Clamp( phase, -badPhaseParams.Length, goodPhaseParams.Length );
+            this.remainTurn = ( phase == 0 ? 0 : turn );
+        }
+        public void OnTurnStart()
+        {
+            --remainTurn;
+            if( remainTurn <= 0 ) phase = 0;
+        }
+    }
 }

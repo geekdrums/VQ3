@@ -90,6 +90,8 @@ public class BattleConductor : MonoBehaviour {
         {
             GameContext.PlayerConductor.CheckSkill();
             GameContext.EnemyConductor.CheckSkill();
+            GameContext.PlayerConductor.UpdateHealHP();
+            GameContext.EnemyConductor.UpdateHealHP();
 
             List<Pair<ActionSet, Skill>> CurrentActions = new List<Pair<ActionSet, Skill>>();
             foreach( Pair<Timing, Skill> stPair in Skills )

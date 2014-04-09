@@ -12,11 +12,9 @@ public class PlayerConductor : MonoBehaviour {
     public List<int> HPLevelList;
     public List<int> QuarterLevelList;
     public List<int> AttackLevelList;
-    public List<int> DefendLevelList;
     public List<int> MagicLevelList;
-    public List<int> MagicDefendLevelList;
 	
-    Command CurrentCommand;
+    PlayerCommand CurrentCommand;
 
     Player Player;
     public int NumQuarter { get; private set; }
@@ -62,7 +60,7 @@ public class PlayerConductor : MonoBehaviour {
                 isProceeded = true;
                 if( GameContext.FieldConductor.RState == ResultState.Command )
                 {
-                    Command acquiredCommand = commandGraph.CheckAcquireCommand( Level );
+                    PlayerCommand acquiredCommand = commandGraph.CheckAcquireCommand( Level );
                     if( acquiredCommand != null && acquiredCommand != commandGraph.InvertStrategy.Commands[0] )
                     {
                         TextWindow.ChangeMessage( acquiredCommand.AcquireTexts );
@@ -86,9 +84,8 @@ public class PlayerConductor : MonoBehaviour {
                 switch( GameContext.FieldConductor.RState )
                 {
                 case ResultState.Status2:
-                    TextWindow.ChangeMessage( "ぼうぎょ：" + Player.BaseDefend + " ( +" + (DefendLevelList[Level - 1] - DefendLevelList[Level - 2]) + " )" );
+                    TextWindow.ChangeMessage( "こうげき：  " + Player.BasePower + " ( +" + (AttackLevelList[Level - 1] - AttackLevelList[Level - 2]) + " )" );
                     TextWindow.AddMessage( "まほう：  " + Player.BaseMagic + " ( +" + (MagicLevelList[Level - 1] - MagicLevelList[Level - 2]) + " )" );
-                    TextWindow.AddMessage( "まぼう：  " + Player.BaseMagicDefend + " ( +" + (MagicDefendLevelList[Level - 1] - MagicDefendLevelList[Level - 2]) + " )" );
                     break;
                 case ResultState.Quarter:
                     if( QuarterLevelList[Level - 1] > QuarterLevelList[Level - 2] )
@@ -123,7 +120,7 @@ public class PlayerConductor : MonoBehaviour {
                         commandGraph.Select( commandGraph.InvertStrategy.Commands[0] );
                         isProceeded = true;
                         resultRemainTime += resultRemainTime * 3;
-                        GameContext.VoxSystem.AddVP( (int)VoxSystem.InvertVP );
+                        GameContext.VoxSystem.AddVPVT( (int)VoxSystem.InvertVP, 0 );
                         SEPlayer.Play( "moon" );
                     }
                     else
@@ -157,11 +154,8 @@ public class PlayerConductor : MonoBehaviour {
         NumQuarter = QuarterLevelList[Level - 1];
         Player.HitPoint = HPLevelList[Level - 1];
         Player.BasePower = AttackLevelList[Level - 1];
-        Player.BaseDefend = DefendLevelList[Level - 1];
         Player.BaseMagic = MagicLevelList[Level - 1];
-        Player.BaseMagicDefend = MagicDefendLevelList[Level - 1];
         Player.Initialize();
-        Player.TurnInit();
         LevelCounter.count = Level;
     }
 
@@ -172,7 +166,6 @@ public class PlayerConductor : MonoBehaviour {
         {
             TextWindow.ChangeMessage( "オクスは　レベル" + Level + "に　あがった！" );
             TextWindow.AddMessage( "さいだいHP：" + Player.HitPoint + " ( +" + (HPLevelList[Level - 1] - HPLevelList[Level - 2]) + " )" );
-            TextWindow.AddMessage( "こうげき：  " + Player.BasePower + " ( +" + (AttackLevelList[Level - 1] - AttackLevelList[Level - 2]) + " )" );
             resultRemainTime = DefaultResultTime;
             SEPlayer.Play( "levelUp" );
         }
@@ -182,7 +175,7 @@ public class PlayerConductor : MonoBehaviour {
     {
         commandGraph.CheckCommand();
         CurrentCommand = commandGraph.CurrentCommand;
-        Player.TurnInit();
+        Player.TurnInit( CurrentCommand );
         TextWindow.ChangeMessage( CurrentCommand.DescribeTexts );
 	}
     public void CheckSkill()
@@ -212,26 +205,8 @@ public class PlayerConductor : MonoBehaviour {
 		AttackModule attack = Action.GetModule<AttackModule>();
         if( attack != null && !skill.isPlayerSkill )
 		{
-			Player.BeAttacked( attack, skill );
-			isSucceeded = true;
-        }
-        MagicModule magic = Action.GetModule<MagicModule>();
-        if( magic != null && !skill.isPlayerSkill )
-        {
-            Player.BeMagicAttacked( magic, skill );
-            isSucceeded = true;
-            GameContext.VoxSystem.AddVP( magic.VoxPoint );
-        }
-		DefendModule defend = Action.GetModule<DefendModule>();
-        if( defend != null && skill.isPlayerSkill )
-		{
-			Player.Defend( defend );
-			isSucceeded = true;
-        }
-        MagicDefendModule magicDefend = Action.GetModule<MagicDefendModule>();
-        if( magicDefend != null && skill.isPlayerSkill )
-        {
-            Player.MagicDefend( magicDefend );
+            Player.BeAttacked( attack, skill );
+            GameContext.VoxSystem.AddVPVT( attack.VP, attack.VT );
             isSucceeded = true;
         }
 		HealModule heal = Action.GetModule<HealModule>();
@@ -240,21 +215,32 @@ public class PlayerConductor : MonoBehaviour {
 			Player.Heal( heal );
 			isSucceeded = true;
         }
+		EnhanceModule enhance = Action.GetModule<EnhanceModule>();
+        if( enhance != null && enhance.TargetType == TargetType.Player )
+		{
+            Player.Enhance( enhance );
+			isSucceeded = true;
+        }
 		return isSucceeded;
 	}
+
+    public void UpdateHealHP()
+    {
+        Player.UpdateHealHP();
+    }
 
 
     public void OnPlayerWin()
     {
-        Player.TurnInit();
+        Player.TurnInit( CurrentCommand );
     }
     public void OnPlayerLose()
     {
-        Player.TurnInit();
+        Player.TurnInit( CurrentCommand );
     }
     public void OnContinue()
     {
         Player.HitPoint = Player.MaxHP;
-        Player.TurnInit();
+        Player.TurnInit( CurrentCommand );
     }
 }
