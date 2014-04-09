@@ -282,14 +282,6 @@ public class EnemyConductor : MonoBehaviour {
     {
         if( GameContext.VoxSystem.state == VoxState.Invert ) return;
 
-<<<<<<< HEAD
-=======
-        //if( nextTarget != null )
-        //{
-        //    targetEnemy = nextTarget;
-        //    GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
-        //}
->>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec
         int execIndex = 0;
         foreach( Enemy enemy in Enemies )
         {
@@ -363,28 +355,6 @@ public class EnemyConductor : MonoBehaviour {
         }
     }
 
-<<<<<<< HEAD
-=======
-    public void OnNextCommandChanged( PlayerCommand NextCommand )
-    {
-        /*
-        if( Enemies.Count > 0 )
-        {
-            if( NextCommand.IsTargetSelectable )
-            {
-                if( nextTarget == null ) nextTarget = targetEnemy;
-                GameContext.VoxSystem.SetNextTargetEnemy( nextTarget );
-            }
-            else if( nextTarget != null )
-            {
-                nextTarget = null;
-                GameContext.VoxSystem.SetNextTargetEnemy( null );
-            }
-        }
-        */
-    }
-
->>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec
     public void OnArrowPushed( bool LorR )
     {
         if( Enemies.Count > 0 )

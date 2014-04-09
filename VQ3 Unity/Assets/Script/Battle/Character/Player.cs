@@ -105,10 +105,7 @@ public class Player : Character {
         HitPoint = MaxHP;
         PhysicDefend = 0;
         MagicDefend = 0;
-<<<<<<< HEAD
         HealPercent = 0;
-=======
->>>>>>> 85910d9ad2d94a2b40c99570530e553b0e0057ec
         TurnDamage = 0;
     }
 }
