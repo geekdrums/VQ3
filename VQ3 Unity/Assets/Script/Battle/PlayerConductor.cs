@@ -21,6 +21,7 @@ public class PlayerConductor : MonoBehaviour {
     public int PlayerHP { get { return Player.HitPoint; } }
     public int PlayerMaxHP { get { return Player.MaxHP; } }
     public bool CanUseInvert { get { return Level >= 8; } }
+    public int WaitCount { get; private set; }
 
     float resultRemainTime;
     readonly float DefaultResultTime = 0.4f;
@@ -61,7 +62,7 @@ public class PlayerConductor : MonoBehaviour {
                 if( GameContext.FieldConductor.RState == ResultState.Command )
                 {
                     PlayerCommand acquiredCommand = commandGraph.CheckAcquireCommand( Level );
-                    if( acquiredCommand != null && acquiredCommand != commandGraph.InvertStrategy.Commands[0] )
+                    if( acquiredCommand != null )//&& acquiredCommand != commandGraph.InvertStrategy.Commands[0] )
                     {
                         TextWindow.ChangeMessage( acquiredCommand.AcquireTexts );
                         acquiredCommand.Acquire();
@@ -116,8 +117,8 @@ public class PlayerConductor : MonoBehaviour {
                     if( CanUseInvert )
                     {
                         TextWindow.ChangeMessage( "かくされた　つきのちからを　てにいれた。" );
-                        commandGraph.InvertStrategy.Commands[0].Acquire();
-                        commandGraph.Select( commandGraph.InvertStrategy.Commands[0] );
+                        //commandGraph.InvertStrategy.Commands[0].Acquire();
+                        //commandGraph.Select( commandGraph.InvertStrategy.Commands[0] );
                         isProceeded = true;
                         resultRemainTime += resultRemainTime * 3;
                         GameContext.VoxSystem.AddVPVT( (int)VoxSystem.InvertVP, 0 );
@@ -177,10 +178,20 @@ public class PlayerConductor : MonoBehaviour {
         CurrentCommand = commandGraph.CurrentCommand;
         Player.TurnInit( CurrentCommand );
         TextWindow.ChangeMessage( CurrentCommand.DescribeTexts );
+        WaitCount = 0;
 	}
+    public void CheckWaitCommand()
+    {
+        commandGraph.CheckCommand();
+        CurrentCommand = null;
+        Player.DefaultInit();
+        TextWindow.ChangeMessage( "オクスは　じっと　まっている" );
+        ++WaitCount;
+	}
+    
     public void CheckSkill()
     {
-        if( Music.Just.bar >= NumQuarter ) return;
+        if( Music.Just.bar >= NumQuarter || CurrentCommand  == null ) return;
         GameObject playerSkill = CurrentCommand.GetCurrentSkill();
         if( playerSkill != null )
         {
@@ -194,6 +205,7 @@ public class PlayerConductor : MonoBehaviour {
     {
         Player.OnBattleStart();
         commandGraph.OnBattleStart();
+        WaitCount = 0;
         Music.SetAisac( "IsTransition", 0 );
         Music.SetAisac( "TrackVolume1", 1 );
         Music.SetAisac( "TrackVolume2", 1 );
@@ -232,15 +244,15 @@ public class PlayerConductor : MonoBehaviour {
 
     public void OnPlayerWin()
     {
-        Player.TurnInit( CurrentCommand );
+        Player.DefaultInit();
     }
     public void OnPlayerLose()
     {
-        Player.TurnInit( CurrentCommand );
+        Player.DefaultInit();
     }
     public void OnContinue()
     {
         Player.HitPoint = Player.MaxHP;
-        Player.TurnInit( CurrentCommand );
+        Player.DefaultInit();
     }
 }

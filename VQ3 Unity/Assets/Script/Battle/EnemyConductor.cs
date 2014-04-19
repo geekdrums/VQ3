@@ -11,6 +11,8 @@ public class EnemyConductor : MonoBehaviour {
     public GameObject damageTextPrefab;
     public GameObject HPCirclePrefab;
     public GameObject shortTextWindowPrefab;
+    public EnemyCommand PhysicDefaultCommand;
+    public EnemyCommand MagicDefaultCommand;
 
     List<Enemy> Enemies = new List<Enemy>();
     WeatherEnemy WeatherEnemy;
@@ -50,6 +52,8 @@ public class EnemyConductor : MonoBehaviour {
 	void Start () {
 		GameContext.EnemyConductor = this;
 		baseColor = Color.black;
+        PhysicDefaultCommand.Parse();
+        MagicDefaultCommand.Parse();
 	}
 	
 	// Update is called once per frame
@@ -332,6 +336,27 @@ public class EnemyConductor : MonoBehaviour {
             }
         }
         */
+    }
+    public void CheckWaitCommand()
+    {
+        int index = GameContext.PlayerConductor.WaitCount % Enemies.Count;
+        for( int i=0;i<Enemies.Count; i++ )
+        {
+            if( i == index )
+            {
+                Enemies[i].SetWaitCommand( Enemies[i].PhysicAttack >= Enemies[i].MagicAttack ? PhysicDefaultCommand : MagicDefaultCommand );
+            }
+            else
+            {
+                Enemies[i].SetWaitCommand( null );
+            }
+            Enemies[i].SetExecBar( 0 );
+        }
+        if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
+        {
+            WeatherEnemy.SetWaitCommand( null );
+            WeatherEnemy.SetExecBar( 0 );
+        }
     }
 
     public void CheckSkill()

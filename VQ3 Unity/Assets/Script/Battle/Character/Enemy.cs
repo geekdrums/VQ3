@@ -200,6 +200,11 @@ public class Enemy : Character
 
         return currentCommand;
     }
+    public void SetWaitCommand( EnemyCommand WaitCommand )
+    {
+        DefaultInit();
+        currentCommand = WaitCommand;
+    }
     public void SetExecBar( int bar )
     {
         commandExecBar = bar;

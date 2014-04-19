@@ -45,30 +45,10 @@ public class ActionSet : IEnumerable<IActionModule>
 				res.Modules.Add( new HealModule( int.Parse( parameters[1] ),
                     parameters.Length > 2 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[2] ) : TargetType.Self ) );
             }
-            else if( str.StartsWith( "Brave " ) )
+            else if( str.StartsWith( "Enhance " ) )
             {
-                res.Modules.Add( new EnhanceModule( EnhanceParamType.Brave, int.Parse( parameters[1] ), int.Parse( parameters[2] ),
-                    parameters.Length > 3 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[3] ) : TargetType.Player ) );
-            }
-            else if( str.StartsWith( "Faith " ) )
-            {
-                res.Modules.Add( new EnhanceModule( EnhanceParamType.Faith, int.Parse( parameters[1] ), int.Parse( parameters[2] ), 
-                    parameters.Length > 3 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[3] ) : TargetType.Player ) );
-            }
-            else if( str.StartsWith( "Protes " ) )
-            {
-                res.Modules.Add( new EnhanceModule( EnhanceParamType.Protes, int.Parse( parameters[1] ), int.Parse( parameters[2] ),
-                    parameters.Length > 3 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[3] ) : TargetType.Player ) );
-            }
-            else if( str.StartsWith( "Shell " ) )
-            {
-                res.Modules.Add( new EnhanceModule( EnhanceParamType.Shell, int.Parse( parameters[1] ), int.Parse( parameters[2] ),
-                    parameters.Length > 3 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[3] ) : TargetType.Player ) );
-            }
-            else if( str.StartsWith( "Regene " ) )
-            {
-                res.Modules.Add( new EnhanceModule( EnhanceParamType.Regene, int.Parse( parameters[1] ), int.Parse( parameters[2] ),
-                    parameters.Length > 3 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[3] ) : TargetType.Player ) );
+                res.Modules.Add( new EnhanceModule( (EnhanceParamType)Enum.Parse( typeof( EnhanceParamType ), parameters[1] ), int.Parse( parameters[2] ), int.Parse( parameters[3] ),
+                    parameters.Length > 4 ? (TargetType)Enum.Parse( typeof( TargetType ), parameters[4] ) : TargetType.Player ) );
             }
             else if( str.StartsWith( "Weather " ) )
             {

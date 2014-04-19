@@ -4,6 +4,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+public enum StatusIcon
+{
+    AAA,
+    AA,
+    A,
+    WWW,
+    WW,
+    W,
+    LLL,
+    LL,
+    L,
+    FFF,
+    FF,
+    F,
+    DD,
+    D,
+    SS,
+    S,
+    _SS,
+    _S,
+    HH,
+    H,
+    RR,
+    R,
+    _RR,
+    _R,
+    PP,
+    P,
+    _PP,
+    _P,
+    MM,
+    M,
+    _MM,
+    _M,
+    E,
+    V,
+    none,
+    Count
+}
+
 [ExecuteInEditMode]
 public class PlayerCommand : CommandBase, IVoxNode
 {
@@ -14,6 +54,7 @@ public class PlayerCommand : CommandBase, IVoxNode
     public string[] DescribeTexts;
     public string[] AcquireTexts;
     public List<MonoBehaviour> links;
+    public List<StatusIcon> icons;
     public float radius = 1.0f;
     public float Radius()
     {
@@ -41,16 +82,19 @@ public class PlayerCommand : CommandBase, IVoxNode
     public PlayerCommand ParentCommand { get; protected set; }
     public int NumLoopVariations { get; protected set; }
 
+    protected TextMesh textMesh;
+
     public override void Parse()
     {
         base.Parse();
-
+#if UNITY_EDITOR
         if( !UnityEditor.EditorApplication.isPlaying ) return;
+#endif
         IsLinked = true;
         IsAcquired = AcquireLevel <= GameContext.PlayerConductor.Level;
         if( !IsAcquired )
         {
-            GetComponent<TextMesh>().color = Color.clear;
+            SetColor( Color.clear );
         }
         NumLoopVariations = 1;
         foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
@@ -73,15 +117,21 @@ public class PlayerCommand : CommandBase, IVoxNode
         IsLinked = false;
         IsCurrent = false;
         IsSelected = false;
+        textMesh = GetComponent<TextMesh>();
+    }
+
+    void OnValidate()
+    {
+        OnValidatePosition();
+    }
+    public void OnValidatePosition()
+    {
+        transform.localPosition = Quaternion.AngleAxis( longitude, Vector3.down ) * Quaternion.AngleAxis( latitude, Vector3.right ) * Vector3.back * 6.5f;
+        transform.localRotation = Quaternion.LookRotation( -transform.localPosition );
     }
 
     void Update()
     {
-#if UNITY_EDITOR
-        if( UnityEditor.EditorApplication.isPlaying ) return;
-        transform.localPosition = Quaternion.AngleAxis( latitude, Vector3.right ) * Quaternion.AngleAxis( longitude, Vector3.down ) * Vector3.back * 7.5f;
-        transform.localRotation = Quaternion.LookRotation( -transform.localPosition );
-#endif
     }
 
     public virtual GameObject GetCurrentSkill()
@@ -172,13 +222,13 @@ public class PlayerCommand : CommandBase, IVoxNode
         IsLinked = linked;
         if( IsUsable() )
         {
-            GetComponent<TextMesh>().color = Color.black;
+            SetColor( Color.black );
         }
         else
         {
             if( IsAcquired )
             {
-                GetComponent<TextMesh>().color = Color.gray;
+                SetColor( Color.gray );
             }
         }
     }
@@ -187,7 +237,7 @@ public class PlayerCommand : CommandBase, IVoxNode
         if( IsAcquired )
         {
             IsCurrent = true;
-            GetComponent<TextMesh>().color = Color.red;
+            SetColor( Color.red );
         }
     }
     public void Select()
@@ -195,10 +245,7 @@ public class PlayerCommand : CommandBase, IVoxNode
         if( IsAcquired )
         {
             IsSelected = true;
-            if( !IsCurrent )
-            {
-                GetComponent<TextMesh>().color = Color.magenta;
-            }
+            SetColor( Color.magenta );
         }
     }
     public void Deselect()
@@ -206,15 +253,25 @@ public class PlayerCommand : CommandBase, IVoxNode
         if( IsAcquired )
         {
             IsSelected = false;
-            if( !IsCurrent )
-            {
-                GetComponent<TextMesh>().color = Color.black;
-            }
+            SetColor( IsCurrent ? Color.red : Color.black );
         }
     }
     public void Acquire()
     {
         IsAcquired = true;
-        GetComponent<TextMesh>().color = Color.gray;
+        SetColor( Color.gray );
+    }
+    public void SetPush( bool isPushing )
+    {
+        if( isPushing ) SetColor( Color.white );
+        else SetColor( IsCurrent ? Color.red : ( IsSelected ? Color.magenta : Color.black ) );
+    }
+
+    protected virtual void SetColor( Color color )
+    {
+        if( textMesh != null )
+        {
+            textMesh.color = color;
+        }
     }
 }

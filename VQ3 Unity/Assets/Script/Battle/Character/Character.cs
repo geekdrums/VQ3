@@ -6,9 +6,10 @@ public enum EnhanceParamType
 {
     Brave,
     Faith,
-    Protes,
-    Shell,
+    Shield,
     Regene,
+    Esna,
+    Despell,
 }
 public class Character : MonoBehaviour {
     protected static readonly float DAMAGE_RANGE = 12.0f;
@@ -27,15 +28,14 @@ public class Character : MonoBehaviour {
 
     public bool isAlive { get { return HitPoint > 0; } }
     public int MaxHP { get; protected set; }
-    public float PhysicDefendCoeff { get { return (100.0f - PhysicDefend - PhysicDefendEnhance.currentParam) / 100.0f; } }
-    public float MagicDefendCoeff { get { return (100.0f - MagicDefend - MagicDefendEnhance.currentParam) / 100.0f; } }
+    public float PhysicDefendCoeff { get { return (100.0f - PhysicDefend - DefendEnhance.currentParam) / 100.0f; } }
+    public float MagicDefendCoeff { get { return (100.0f - MagicDefend - DefendEnhance.currentParam) / 100.0f; } }
     public float PhysicAttack { get { return BasePower * (100 + PhysicAttackEnhance.currentParam) / 100.0f; } }
     public float MagicAttack { get { return BaseMagic * (100 + MagicAttackEnhance.currentParam) / 100.0f; } }
 
     protected EnhanceParameter PhysicAttackEnhance = new EnhanceParameter( EnhanceParamType.Brave, - 80, -40, 40, 80 );
     protected EnhanceParameter MagicAttackEnhance = new EnhanceParameter( EnhanceParamType.Faith, -80, -40, 40, 80 );
-    protected EnhanceParameter PhysicDefendEnhance = new EnhanceParameter( EnhanceParamType.Protes, -50, -33, 33, 50 );
-    protected EnhanceParameter MagicDefendEnhance = new EnhanceParameter( EnhanceParamType.Shell, -50, -33, 33, 50 );
+    protected EnhanceParameter DefendEnhance = new EnhanceParameter( EnhanceParamType.Shield, -50, -33, 33, 50 );
     protected EnhanceParameter HitPointEnhance = new EnhanceParameter( EnhanceParamType.Regene, -10, -5, 5, 10 );
     protected List<EnhanceParameter> ActiveEnhanceParams = new List<EnhanceParameter>();
 
@@ -61,6 +61,13 @@ public class Character : MonoBehaviour {
             enhanceParam.OnTurnStart();
         }
         ActiveEnhanceParams.RemoveAll( ( EnhanceParameter enhanceParam ) => enhanceParam.remainTurn <= 0 );
+    }
+    public virtual void DefaultInit()
+    {
+        PhysicDefend = 0;
+        MagicDefend = 0;
+        HealPercent = 0;
+        TurnDamage = 0;
     }
 	public virtual void BeAttacked( AttackModule attack, Skill skill )
 	{
@@ -99,17 +106,42 @@ public class Character : MonoBehaviour {
     public virtual void Enhance( EnhanceModule enhance )
     {
         EnhanceParameter TargetParameter = null;
+        int dPhase = enhance.phase;
         switch( enhance.type )
         {
         case EnhanceParamType.Brave: TargetParameter = PhysicAttackEnhance; break;
         case EnhanceParamType.Faith: TargetParameter = MagicAttackEnhance; break;
-        case EnhanceParamType.Protes: TargetParameter = PhysicDefendEnhance; break;
-        case EnhanceParamType.Shell: TargetParameter = MagicDefendEnhance; break;
+        case EnhanceParamType.Shield: TargetParameter = DefendEnhance; break;
         case EnhanceParamType.Regene: TargetParameter = HitPointEnhance; break;
+        case EnhanceParamType.Esna:
+            foreach( EnhanceParameter activeEnhance in ActiveEnhanceParams )
+            {
+                if( enhance.phase < 0 )
+                {
+                    TargetParameter = activeEnhance;
+                    dPhase = -activeEnhance.phase;
+                    break;
+                }
+            }
+            break;
+        case EnhanceParamType.Despell:
+            foreach( EnhanceParameter activeEnhance in ActiveEnhanceParams )
+            {
+                if( enhance.phase > 0 )
+                {
+                    TargetParameter = activeEnhance;
+                    dPhase = -activeEnhance.phase;
+                    break;
+                }
+            }
+            break;
         }
-        TargetParameter.SetPhase( TargetParameter.phase + enhance.phase, enhance.turn );
-        if( TargetParameter.phase == 0 && ActiveEnhanceParams.Contains( TargetParameter ) ) ActiveEnhanceParams.Remove( TargetParameter );
-        else if( TargetParameter.phase != 0 && !ActiveEnhanceParams.Contains( TargetParameter ) ) ActiveEnhanceParams.Add( TargetParameter );
+        if( TargetParameter != null )
+        {
+            TargetParameter.SetPhase( TargetParameter.phase + dPhase, enhance.turn );
+            if( TargetParameter.phase == 0 && ActiveEnhanceParams.Contains( TargetParameter ) ) ActiveEnhanceParams.Remove( TargetParameter );
+            else if( TargetParameter.phase != 0 && !ActiveEnhanceParams.Contains( TargetParameter ) ) ActiveEnhanceParams.Add( TargetParameter );
+        }
     }
     public virtual void UpdateHealHP()
     {

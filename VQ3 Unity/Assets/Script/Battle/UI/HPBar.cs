@@ -33,9 +33,9 @@ public class HPBar : MonoBehaviour {
         UpdateHPText();
         CurrentBar.transform.localScale = targetScale;
 
-        Vector3 nextDamageTextPosition = (latestDamageText == null ? damageTextPrefab.transform.position : latestDamageText.GetComponent<DamageText>().initialPosition + Vector3.right);
-        latestDamageText = (Instantiate( damageTextPrefab, nextDamageTextPosition, Quaternion.identity ) as GameObject);
-        latestDamageText.GetComponent<DamageText>().Initialize( damage, nextDamageTextPosition );
+        //Vector3 nextDamageTextPosition = (latestDamageText == null ? damageTextPrefab.transform.position : latestDamageText.GetComponent<DamageText>().initialPosition + Vector3.right);
+        //latestDamageText = (Instantiate( damageTextPrefab, nextDamageTextPosition, Quaternion.identity ) as GameObject);
+        //latestDamageText.GetComponent<DamageText>().Initialize( damage, nextDamageTextPosition );
     }
     public void OnHeal( int heal )
     {
@@ -47,9 +47,9 @@ public class HPBar : MonoBehaviour {
             RedBar.transform.localScale = targetScale;
         }
 
-        Vector3 nextDamageTextPosition = (latestDamageText == null ? damageTextPrefab.transform.position : latestDamageText.transform.position + Vector3.right);
-        latestDamageText = (Instantiate( damageTextPrefab, nextDamageTextPosition, Quaternion.identity ) as GameObject);
-        latestDamageText.GetComponent<DamageText>().Initialize( -heal, nextDamageTextPosition );
+        //Vector3 nextDamageTextPosition = (latestDamageText == null ? damageTextPrefab.transform.position : latestDamageText.transform.position + Vector3.right);
+        //latestDamageText = (Instantiate( damageTextPrefab, nextDamageTextPosition, Quaternion.identity ) as GameObject);
+        //latestDamageText.GetComponent<DamageText>().Initialize( -heal, nextDamageTextPosition );
     }
     public void OnUpdateHP()
     {
@@ -71,7 +71,7 @@ public class HPBar : MonoBehaviour {
 
     void UpdateHPText()
     {
-        hpText.text = "HP" + Player.HitPoint + "/" + Player.MaxHP;
+        hpText.text = "HP:" + Player.HitPoint + "/" + Player.MaxHP;
         if( (float)Player.HitPoint / Player.MaxHP <= 0.25f )
         {
             hpText.color = Color.gray;

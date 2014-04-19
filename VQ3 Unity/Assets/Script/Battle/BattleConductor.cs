@@ -6,7 +6,7 @@ public class BattleConductor : MonoBehaviour {
 
     //public TitleLogo titleLogo;
 
-    public GameObject skillParent;    
+    public GameObject skillParent;
     List<Pair<Timing, Skill>> Skills;
 
     void Awake()
@@ -83,8 +83,16 @@ public class BattleConductor : MonoBehaviour {
 
         if( Music.IsJustChangedAt( 0 ) )
         {
-            GameContext.PlayerConductor.CheckCommand();
-            GameContext.EnemyConductor.CheckCommand();
+            if( Music.GetCurrentBlockName() == "wait" )
+            {
+                GameContext.PlayerConductor.CheckWaitCommand();
+                GameContext.EnemyConductor.CheckWaitCommand();
+            }
+            else
+            {
+                GameContext.PlayerConductor.CheckCommand();
+                GameContext.EnemyConductor.CheckCommand();
+            }
         }
         if( Music.isJustChanged )
         {
