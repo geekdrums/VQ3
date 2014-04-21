@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public enum StatusIcon
+public enum EStatusIcon
 {
     AAA,
     AA,
@@ -18,10 +18,6 @@ public enum StatusIcon
     FFF,
     FF,
     F,
-    DD,
-    D,
-    SS,
-    S,
     _SS,
     _S,
     HH,
@@ -38,6 +34,10 @@ public enum StatusIcon
     M,
     _MM,
     _M,
+    SS,
+    S,
+    DD,
+    D,
     E,
     V,
     none,
@@ -54,7 +54,7 @@ public class PlayerCommand : CommandBase, IVoxNode
     public string[] DescribeTexts;
     public string[] AcquireTexts;
     public List<MonoBehaviour> links;
-    public List<StatusIcon> icons;
+    public List<EStatusIcon> icons;
     public float radius = 1.0f;
     public float Radius()
     {

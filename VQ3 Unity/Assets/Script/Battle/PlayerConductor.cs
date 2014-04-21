@@ -215,11 +215,18 @@ public class PlayerConductor : MonoBehaviour {
 	{
 		bool isSucceeded = false;
 		AttackModule attack = Action.GetModule<AttackModule>();
-        if( attack != null && !skill.isPlayerSkill )
+        if( attack != null )
 		{
-            Player.BeAttacked( attack, skill );
-            GameContext.VoxSystem.AddVPVT( attack.VP, attack.VT );
-            isSucceeded = true;
+            if( skill.isPlayerSkill )
+            {
+                commandGraph.OnReactEvent( attack.isPhysic ? IconReactType.OnAttack : IconReactType.OnMagic );
+            }
+            else
+            {
+                Player.BeAttacked( attack, skill );
+                GameContext.VoxSystem.AddVPVT( attack.VP, attack.VT );
+                isSucceeded = true;
+            }
         }
 		HealModule heal = Action.GetModule<HealModule>();
         if( heal != null && skill.isPlayerSkill )

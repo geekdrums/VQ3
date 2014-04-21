@@ -4,7 +4,8 @@ using System.Collections;
 public class Player : Character {
     GameObject UIParent;
     HPBar HPBar;
-
+    EnhanceIcons EnhanceIcons;
+    CommandGraph commandGraph;
     //public GameObject DefendAnimPrefab;
 
 	// Use this for initialization
@@ -13,6 +14,8 @@ public class Player : Character {
         Initialize();
         UIParent = GameObject.Find( "UI" );
         HPBar = UIParent.GetComponentInChildren<HPBar>();
+        EnhanceIcons = UIParent.GetComponentInChildren<EnhanceIcons>();
+        commandGraph = GameObject.Find( "CommandGraph" ).GetComponent<CommandGraph>();
         initialPosition = UIParent.transform.position;
         HPBar.OnTurnStart();
 	}
@@ -63,6 +66,7 @@ public class Player : Character {
         base.BeDamaged( damage, ownerCharacter );
 
         HPBar.OnDamage( damage );
+        commandGraph.OnReactEvent( IconReactType.OnDamage );
         TextWindow.AddMessage( "オクスは " + damage + " のダメージを　うけた" );
         //if( damage <= 0 )
         //{
@@ -89,6 +93,20 @@ public class Player : Character {
             HPBar.OnHeal( HitPoint - oldHitPoint );
             SEPlayer.Play( ActionResult.PlayerHeal, this, HitPoint - oldHitPoint );
         }
+    }
+    public override void Enhance( EnhanceModule enhance )
+    {
+        base.Enhance( enhance );
+        switch( enhance.type )
+        {
+        case EnhanceParamType.Brave: commandGraph.OnReactEvent( IconReactType.OnBrave ); break;
+        case EnhanceParamType.Faith: commandGraph.OnReactEvent( IconReactType.OnFaith ); break;
+        case EnhanceParamType.Shield: commandGraph.OnReactEvent( IconReactType.OnShield ); break;
+        case EnhanceParamType.Regene: commandGraph.OnReactEvent( IconReactType.OnRegene ); break;
+        case EnhanceParamType.Esna: commandGraph.OnReactEvent( IconReactType.OnEsna ); break;
+        }
+        
+        EnhanceIcons.OnUpdateParam( GetActiveEnhance( enhance.type ) );
     }
     public override void UpdateHealHP()
     {

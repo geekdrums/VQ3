@@ -11,6 +11,44 @@ public enum EnhanceParamType
     Esna,
     Despell,
 }
+public class EnhanceParameter
+{
+    readonly int[] goodPhaseParams;
+    readonly int[] badPhaseParams;
+
+    public EnhanceParamType type { get; private set; }
+    public int phase { get; private set; }
+    public int remainTurn { get; private set; }
+    public int currentParam { get { return (phase == 0 ? 0 : (phase > 0 ? goodPhaseParams[phase - 1] : badPhaseParams[phase + 1])); } }
+
+    public EnhanceParameter( EnhanceParamType type, params int[] badAndGoodParams )
+    {
+        this.type = type;
+        int numBadParam = 0;
+        for( int i = 0; i < badAndGoodParams.Length; i++ )
+        {
+            if( badAndGoodParams[i] > 0 ) { numBadParam = i; break; }
+        }
+        badPhaseParams = new int[numBadParam];
+        goodPhaseParams = new int[badAndGoodParams.Length - numBadParam];
+        for( int i = 0; i < badAndGoodParams.Length; i++ )
+        {
+            if( i < numBadParam ) badPhaseParams[i] = badAndGoodParams[i];
+            else goodPhaseParams[i - numBadParam] = badAndGoodParams[i];
+        }
+    }
+
+    public void SetPhase( int phase, int turn )
+    {
+        this.phase = Mathf.Clamp( phase, -badPhaseParams.Length, goodPhaseParams.Length );
+        this.remainTurn = (phase == 0 ? 0 : turn);
+    }
+    public void OnTurnStart()
+    {
+        --remainTurn;
+        if( remainTurn <= 0 ) phase = 0;
+    }
+}
 public class Character : MonoBehaviour {
     protected static readonly float DAMAGE_RANGE = 12.0f;
     protected static readonly float MAGIC_DAMAGE_RANGE = 8.0f;
@@ -32,6 +70,7 @@ public class Character : MonoBehaviour {
     public float MagicDefendCoeff { get { return (100.0f - MagicDefend - DefendEnhance.currentParam) / 100.0f; } }
     public float PhysicAttack { get { return BasePower * (100 + PhysicAttackEnhance.currentParam) / 100.0f; } }
     public float MagicAttack { get { return BaseMagic * (100 + MagicAttackEnhance.currentParam) / 100.0f; } }
+    public EnhanceParameter GetActiveEnhance( EnhanceParamType type ) { return ActiveEnhanceParams.Find( ( EnhanceParameter enhance ) => enhance.type == type ); }
 
     protected EnhanceParameter PhysicAttackEnhance = new EnhanceParameter( EnhanceParamType.Brave, - 80, -40, 40, 80 );
     protected EnhanceParameter MagicAttackEnhance = new EnhanceParameter( EnhanceParamType.Faith, -80, -40, 40, 80 );
@@ -154,45 +193,6 @@ public class Character : MonoBehaviour {
             int currentHealHP  = HealHP * mt / 64;
             HitPoint += (currentHealHP - previousHealHP);
             HitPoint = Mathf.Clamp( HitPoint, 0, MaxHP );
-        }
-    }
-
-    public class EnhanceParameter
-    {
-        readonly int[] goodPhaseParams;
-        readonly int[] badPhaseParams;
-
-        public EnhanceParamType type { get; private set; }
-        public int phase{ get; private set; }
-        public int remainTurn{ get; private set; }
-        public int currentParam { get { return (phase == 0 ? 0 : (phase > 0 ? goodPhaseParams[phase - 1] : badPhaseParams[phase + 1])); } }
-        
-        public EnhanceParameter( EnhanceParamType type, params int[] badAndGoodParams )
-        {
-            this.type = type;
-            int numBadParam = 0;
-            for( int i = 0; i < badAndGoodParams.Length; i++ )
-            {
-                if( badAndGoodParams[i] > 0 ) { numBadParam = i; break; }
-            }
-            badPhaseParams = new int[numBadParam];
-            goodPhaseParams = new int[badAndGoodParams.Length - numBadParam];
-            for( int i = 0; i < badAndGoodParams.Length; i++ )
-            {
-                if( i < numBadParam ) badPhaseParams[i] = badAndGoodParams[i];
-                else goodPhaseParams[i - numBadParam] = badAndGoodParams[i];
-            }
-        }
-
-        public void SetPhase( int phase, int turn )
-        {
-            this.phase = Mathf.Clamp( phase, -badPhaseParams.Length, goodPhaseParams.Length );
-            this.remainTurn = ( phase == 0 ? 0 : turn );
-        }
-        public void OnTurnStart()
-        {
-            --remainTurn;
-            if( remainTurn <= 0 ) phase = 0;
         }
     }
 }

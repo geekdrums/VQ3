@@ -41,6 +41,11 @@ public class CommandGraph : MonoBehaviour {
     public PlayerCommand OldCommand { get; private set; }
     public VoxButton CurrentButton { get; private set; }
 
+    public Color IconAPColor;
+    public Color IconWLFMColor;
+    public Color IconDSColor;
+    public Color IconHRColor;
+
     bool IsInvert { get { return CurrentCommand is InvertCommand; } }
     int RemainInvertTime;
     int CommandLoopCount;
@@ -178,35 +183,35 @@ public class CommandGraph : MonoBehaviour {
                 playerCommand.longitude = int.Parse( propertyTexts[(int)CommandListProperty.Longitude] );
                 playerCommand.latitude = int.Parse( propertyTexts[(int)CommandListProperty.Latitude] );
                 playerCommand.MusicBlockName = propertyTexts[(int)CommandListProperty.Music];
-                playerCommand.GetComponent<TextMesh>().text = propertyTexts[(int)CommandListProperty.Icon];
-                playerCommand.GetComponent<TextMesh>().fontSize = 10;
+                playerCommand.GetComponent<TextMesh>().text = commandName.Insert( 2, "\n" );
+                playerCommand.GetComponent<TextMesh>().fontSize = 8;
                 string iconStr = propertyTexts[(int)CommandListProperty.Icon];
-                playerCommand.icons = new List<StatusIcon>();
-                for( int i = 0; i < (int)StatusIcon.Count; i++ )
+                playerCommand.icons = new List<EStatusIcon>();
+                for( int i = 0; i < (int)EStatusIcon.Count; i++ )
                 {
-                    if( iconStr.Contains( ((StatusIcon)i).ToString() ) )
+                    if( iconStr.Contains( ((EStatusIcon)i).ToString() ) )
                     {
-                        playerCommand.icons.Add( (StatusIcon)i );
-                        iconStr = iconStr.Replace( ((StatusIcon)i).ToString(), "" );
+                        playerCommand.icons.Add( (EStatusIcon)i );
+                        iconStr = iconStr.Replace( ((EStatusIcon)i).ToString(), "" );
                         if( iconStr == "" ) break;
                     }
                 }
                 
-                if( playerCommand.icons.Contains( StatusIcon.DD ) )
+                if( playerCommand.icons.Contains( EStatusIcon.DD ) )
                 {
                     playerCommand.PhysicDefend = 70;
                     playerCommand.MagicDefend = 70;
                 }
-                else if( playerCommand.icons.Contains( StatusIcon.D ) )
+                else if( playerCommand.icons.Contains( EStatusIcon.D ) )
                 {
                     playerCommand.PhysicDefend = 45;
                     playerCommand.MagicDefend = 45;
                 }
-                if( playerCommand.icons.Contains( StatusIcon.HH ) )
+                if( playerCommand.icons.Contains( EStatusIcon.HH ) )
                 {
                     playerCommand.HealPercent = 40;
                 }
-                else if( playerCommand.icons.Contains( StatusIcon.H ) )
+                else if( playerCommand.icons.Contains( EStatusIcon.H ) )
                 {
                     playerCommand.HealPercent = 20;
                 }
@@ -320,24 +325,23 @@ public class CommandGraph : MonoBehaviour {
         RaycastHit hit;
         Physics.Raycast( ray.origin, ray.direction, out hit, Mathf.Infinity );
 
-        CurrentButton = VoxButton.None;
-        if( hit.collider == VoxBall.collider )
+        if( Input.GetMouseButtonDown( 0 ) )
         {
-            CurrentButton = VoxButton.Ball;
-        }
-        else if( hit.collider == RightArrow.collider )
-        {
-            CurrentButton = VoxButton.ArrowRight;
-        }
-
-        if( CurrentButton == VoxButton.Ball )
-        {
-            if( Input.GetMouseButtonDown( 0 ) )
+            CurrentButton = VoxButton.None;
+            if( hit.collider == VoxBall.collider )
             {
-                PushCommandButton( hit.collider.ClosestPointOnBounds( hit.point ) );
+                CurrentButton = VoxButton.Ball;
+                PushCommandButton( hit.point );
                 ballTouchStartPosition = hit.point;
             }
-            if( Input.GetMouseButton( 0 ) )
+            else if( hit.collider == RightArrow.collider )
+            {
+                CurrentButton = VoxButton.ArrowRight;
+            }
+        }
+        if( Input.GetMouseButton( 0 ) )
+        {
+            if( CurrentButton == VoxButton.Ball )
             {
                 Vector3 deltaV = Input.mousePosition - oldMousePosition;
                 transform.rotation *= (Quaternion.Inverse( transform.rotation )
@@ -345,13 +349,16 @@ public class CommandGraph : MonoBehaviour {
                     * Quaternion.AngleAxis( deltaV.x * ROTATE_COEFF, -transform.up ) * transform.rotation);
                 oldMousePosition = Input.mousePosition;
 
-                if( PushingCommand != null && (ballTouchStartPosition - hit.point).magnitude > BUTTON_RADIUS/2 )
+                if( PushingCommand != null && (ballTouchStartPosition - hit.point).magnitude > BUTTON_RADIUS / 2 )
                 {
                     PushingCommand.SetPush( false );
                     PushingCommand = null;
                 }
             }
-            if( Input.GetMouseButtonUp( 0 ) )
+        }
+        if( Input.GetMouseButtonUp( 0 ) )
+        {
+            if( CurrentButton == VoxButton.Ball )
             {
                 if( PushingCommand != null )
                 {
@@ -370,6 +377,7 @@ public class CommandGraph : MonoBehaviour {
                     }
                 }
             }
+            CurrentButton = VoxButton.None;
         }
             //Quaternion oldRotation = transform.rotation;
             //Vector3 up = transform.up;
@@ -417,7 +425,7 @@ public class CommandGraph : MonoBehaviour {
         CurrentBar.transform.localPosition = Vector3.Lerp( CurrentBar.transform.localPosition, initialCurrentBarPosition, 0.2f );
         if( NextCommand != null )
         {
-            NextCommandText.color = Color.white;
+            NextCommandText.color = Color.white * 0.8f;
         }
         else
         {
@@ -564,10 +572,10 @@ public class CommandGraph : MonoBehaviour {
 
     void SetCommandIcons( GameObject CommandText, PlayerCommand command )
     {
-        StatusIcon[] icons = new StatusIcon[3];
+        EStatusIcon[] icons = new EStatusIcon[3];
         if( command == null )
         {
-            icons[0] = icons[1] = icons[2] = StatusIcon.none;
+            icons[0] = icons[1] = icons[2] = EStatusIcon.none;
         }
         else
         {
@@ -575,19 +583,76 @@ public class CommandGraph : MonoBehaviour {
             {
                 if( i < command.icons.Count )
                 {
-                    icons[2 - i] = command.icons[i];
+                    icons[i] = command.icons[i];
                 }
                 else
                 {
-                    icons[2 - i] = StatusIcon.none;
+                    icons[i] = EStatusIcon.none;
                 }
             }
         }
         int index = 0;
-        foreach( SpriteRenderer spriteRenderer in CommandText.GetComponentsInChildren<SpriteRenderer>() )
+        foreach( StatusIcon statusIcon in CommandText.GetComponentsInChildren<StatusIcon>() )
         {
-            spriteRenderer.sprite = CommandIcons.Find( ( Sprite sprite ) => sprite.name == icons[index].ToString() );
-            if( spriteRenderer.sprite == null ) spriteRenderer.sprite = CommandIcons[CommandIcons.Count-1];
+            string iconName = icons[index].ToString();
+            Sprite iconSpr = CommandIcons.Find( ( Sprite sprite ) => sprite.name == iconName );
+            Color targetColor = Color.white;
+            IconReactType reactType = IconReactType.None;
+            if( iconSpr == null ) iconSpr = CommandIcons[CommandIcons.Count - 1];
+            else
+            {
+                if( iconName.Contains( "W" ) || iconName.Contains( "L" ) || iconName.Contains( "F" ) )
+                {
+                    targetColor = IconWLFMColor;
+                    reactType = IconReactType.OnMagic;
+                }
+                else if( iconName.Contains( "M" ) )
+                {
+                    targetColor = IconWLFMColor;
+                    reactType = IconReactType.OnFaith;
+                }
+                else if( iconName.Contains( "A" ) )
+                {
+                    targetColor = IconAPColor;
+                    reactType = IconReactType.OnAttack;
+                }
+                else if( iconName.Contains( "P" ) )
+                {
+                    targetColor = IconAPColor;
+                    reactType = IconReactType.OnBrave;
+                }
+                else if( iconName.Contains( "D" ) )
+                {
+                    targetColor = IconDSColor;
+                    reactType = IconReactType.OnDamage;
+                }
+                else if( iconName.Contains( "S" ) )
+                {
+                    targetColor = IconDSColor;
+                    reactType = IconReactType.OnShield;
+                }
+                else if( iconName.Contains( "H" ) )
+                {
+                    targetColor = IconHRColor;
+                    reactType = IconReactType.OnHeal;
+                }
+                else if( iconName.Contains( "R" ) )
+                {
+                    targetColor = IconHRColor;
+                    reactType = IconReactType.OnRegene;
+                }
+                else if( iconName.Contains( "E" ) )
+                {
+                    targetColor = IconHRColor;
+                    reactType = IconReactType.OnEsna;
+                }
+                else if( iconName.Contains( "V" ) )
+                {
+                    targetColor = IconWLFMColor;
+                    reactType = IconReactType.OnInvert;
+                }
+            }
+            statusIcon.SetSprite( iconSpr, icons[index], targetColor, reactType );
             ++index;
         }
     }
@@ -669,6 +734,13 @@ public class CommandGraph : MonoBehaviour {
         //targetRotation = Quaternion.Inverse( command.transform.localRotation ) * offsetRotation;
     }
 
+    public void OnReactEvent( IconReactType type )
+    {
+        foreach( StatusIcon statusIcon in CurrentCommandText.GetComponentsInChildren<StatusIcon>() )
+        {
+            statusIcon.ReactEvent( type );
+        }
+    }
 
     VoxState GetDesiredVoxState()
     {
