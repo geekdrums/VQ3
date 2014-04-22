@@ -4,8 +4,8 @@
  *  Tool Ver.          : CRI Atom Craft LE Ver.1.32.00
  *  File Path          : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/VQ3ADX.acf
  *  File Name          : VQ3ADX.acf
- *  File Size          : 3,040 bytes
- *  Date Time          : 2014/02/04 3:25
+ *  File Size          : 3,072 bytes
+ *  Date Time          : 2014/04/22 13:39
  *  Target             : Public
  *  Categories         : 1
  *  AISAC Controls     : 16
@@ -13,7 +13,7 @@
  *  Voice Limit Groups : 1
  *  DSP BUS Settings   : 1
  *  DSP BUS Settings Snapshot  : 0
- *  Game Variables     : 1
+ *  Game Variables     : 2
  *  Project Comment    : 
  *===========================================================================*/
 
@@ -24,20 +24,20 @@
 #define CRI_VQ3ADX_ACF_VOICELIMITGROUPNUM (1)
 #define CRI_VQ3ADX_ACF_DSPSETTINGNUM (1)
 #define CRI_VQ3ADX_ACF_DSPSETTINGSNAPSHOTNUM (0)
-#define CRI_VQ3ADX_ACF_GAMEVARIABLENUM (1)
+#define CRI_VQ3ADX_ACF_GAMEVARIABLENUM (2)
 
 /* Category List (Category ID) */
 #define CRI_VQ3ADX_ACF_CATEGORY_CATEGORY_0  ( 0) /* CategoryGroup_0/Category_0  */
 
 /* AISAC Control List (AISAC Control ID) */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_LEVEL                  ( 0) /* Level  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_ISTRANSITION           ( 1) /* IsTransition  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL00         ( 0) /* AisacControl00  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL01         ( 1) /* AisacControl01  */
 #define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUME1           ( 2) /* TrackVolume1  */
 #define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUME2           ( 3) /* TrackVolume2  */
 #define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUMEENERGY      ( 4) /* TrackVolumeEnergy  */
 #define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUMETRANSITION  ( 5) /* TrackVolumeTransition  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL06         ( 6) /* AisacControl06  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL07         ( 7) /* AisacControl07  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUMELOOP        ( 6) /* TrackVolumeLoop  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_ISTRANSITION           ( 7) /* IsTransition  */
 #define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL08         ( 8) /* AisacControl08  */
 #define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL09         ( 9) /* AisacControl09  */
 #define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL10         (10) /* AisacControl10  */
@@ -58,7 +58,8 @@
 
 
 /* Game Variable (Game Variable Index) */
-#define CRI_VQ3ADX_ACF_GAMEVARIABLE_DEFAULT  "Default" /*   */
+#define CRI_VQ3ADX_ACF_GAMEVARIABLE_DEFAULT       "Default"      /*   */
+#define CRI_VQ3ADX_ACF_GAMEVARIABLE_ISTRANSITION  "IsTransition" /*   */
 
 /* end of file */
 

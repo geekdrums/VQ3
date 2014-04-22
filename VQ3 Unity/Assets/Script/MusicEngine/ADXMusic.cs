@@ -130,7 +130,7 @@ public class ADXMusic : MonoBehaviour
 	/// <summary>
 	/// returns time based in beat.
 	/// </summary>
-	public static double MusicalTime { get { return Now.totalUnit + lagUnit; } }
+    public static double MusicalTime { get { return Just.totalUnit + Current.dtFromJust_/Current.MusicTimeUnit; } }
 	public static int mtBar { get { return Current.mtBar_; } }
 	public static int mtBeat { get { return Current.mtBeat_; } }
 	public static double mtUnit { get { return Current.MusicTimeUnit; } }

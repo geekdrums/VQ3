@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.1.32.00
-* Date Time          : 2014/04/18 16:01
+* Date Time          : 2014/04/22 21:31
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -22,14 +22,14 @@ public partial class CriAtomAcfInfo
     static partial void GetCueInfoInternal()
     {
         acfInfo = new AcfInfo("ACF", 0, "", "VQ3ADX.acf","4675cac8-829d-4d86-8dae-b0ebac5cf3ee","DspBusSetting_0");
-        acfInfo.aisacControlNameList.Add("Level");
-        acfInfo.aisacControlNameList.Add("IsTransition");
+        acfInfo.aisacControlNameList.Add("AisacControl00");
+        acfInfo.aisacControlNameList.Add("AisacControl01");
         acfInfo.aisacControlNameList.Add("TrackVolume1");
         acfInfo.aisacControlNameList.Add("TrackVolume2");
         acfInfo.aisacControlNameList.Add("TrackVolumeEnergy");
         acfInfo.aisacControlNameList.Add("TrackVolumeTransition");
-        acfInfo.aisacControlNameList.Add("AisacControl06");
-        acfInfo.aisacControlNameList.Add("AisacControl07");
+        acfInfo.aisacControlNameList.Add("TrackVolumeLoop");
+        acfInfo.aisacControlNameList.Add("IsTransition");
         acfInfo.aisacControlNameList.Add("AisacControl08");
         acfInfo.aisacControlNameList.Add("AisacControl09");
         acfInfo.aisacControlNameList.Add("AisacControl10");
@@ -44,6 +44,7 @@ public partial class CriAtomAcfInfo
         acfInfo.acbInfoList.Add(newAcbInfo);
         newAcbInfo.cueInfoList.Add(1, new CueInfo("BattleMusic", 1, ""));
         newAcbInfo.cueInfoList.Add(2, new CueInfo("continue", 2, ""));
+        newAcbInfo.cueInfoList.Add(3, new CueInfo("Invert", 3, ""));
         newAcbInfo = new AcbInfo("SE", 1, "", "SE.acb", "SE.awb","61f6c484-c862-4d1d-b6ad-5f194ae823c8");
         acfInfo.acbInfoList.Add(newAcbInfo);
         newAcbInfo.cueInfoList.Add(2, new CueInfo("PhysicGoodDamage", 2, ""));

@@ -206,9 +206,6 @@ public class PlayerConductor : MonoBehaviour {
         Player.OnBattleStart();
         commandGraph.OnBattleStart();
         WaitCount = 0;
-        Music.SetAisac( "IsTransition", 0 );
-        Music.SetAisac( "TrackVolume1", 1 );
-        Music.SetAisac( "TrackVolume2", 1 );
     }
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )

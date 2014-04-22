@@ -22,8 +22,8 @@ public class VoxSystem : MonoBehaviour{
     int currentVT = 0;
 
     public VoxState state { get; private set; }
-    public bool WillEclipse { get { return currentVP >= InvertVP; } }
-    public int InvertTime { get { return Mathf.Clamp( (int)(MaxInvertTime * ((float)currentVT / MaxVT)), 2, MaxInvertTime ); } }
+    public bool IsReadyEclipse { get { return currentVP >= InvertVP; } }
+    public int InvertTime { get; private set; }
 
     #region animation property
     //game objects
@@ -35,6 +35,8 @@ public class VoxSystem : MonoBehaviour{
     public GameObject[] sunLights;
     public GameObject mainLight;
     public GameObject FireOrigin;
+    public Color FireColor;
+    public Color InvertFireColor;
 
     //animation preferences
     public Color BGColor;
@@ -65,7 +67,7 @@ public class VoxSystem : MonoBehaviour{
 
     //target parameters
     //Color targetTextColor;
-    Color targetMoonColor;
+    //Color targetMoonColor;
     Color targetBGColor;
     float targetMainLightScale;
     float[] targetLightAngles;
@@ -99,7 +101,7 @@ public class VoxSystem : MonoBehaviour{
         initialMoonColor = voxMoon.Color;
         initialMainLightScale = mainLight.transform.localScale.x;
         targetMainLightScale = initialMainLightScale;
-        voxMoon.transform.localScale = Vector3.zero;
+        //voxMoon.transform.localScale = Vector3.zero;
 
         lightAngles = new float[sunLights.Length];
         initialLightAngles = new float[sunLights.Length];
@@ -149,19 +151,27 @@ public class VoxSystem : MonoBehaviour{
 	{
         if( GameContext.CurrentState == GameState.Field ) return;
 
+        if( GameContext.PlayerConductor.CanUseInvert )
+        {
+            UpdateVT();
+        }
 		switch ( state )
 		{
         case VoxState.Sun:
-            if( GameContext.PlayerConductor.CanUseInvert )
-            {
-                UpdateVT();
-            }
             UpdateLightAngles();
             break;
         case VoxState.Eclipse:
             EclipseUpdate();
             break;
         case VoxState.Invert:
+            if( Music.IsNowChangedAt( 0 ) )
+            {
+                --InvertTime;
+            }
+            if( Music.IsJustChangedAt( 3, 2 ) && InvertTime == 1 )
+            {
+                SetState( VoxState.Revert );
+            }
             break;
         case VoxState.Revert:
             break;
@@ -176,41 +186,68 @@ public class VoxSystem : MonoBehaviour{
     {
         if( Music.isJustChanged && currentVT > 0 )
         {
-            --currentVT;
-            VTText.text = "VT:" + currentVT.ToString();
-            if( currentVT <= 0 )
+            if( state == VoxState.Sun ||
+              ( state == VoxState.Eclipse && ( Music.Just.bar < 2 || !IsReadyEclipse ) ) )
             {
-                currentVP = 0;
-                Music.SetAisac( "TrackVolumeEnergy", 0 );
-                VPText.text = "VP:" + currentVP.ToString() + "%";
+                --currentVT;
+                VTText.text = "VT:" + currentVT.ToString();
+                if( currentVT <= 0 )
+                {
+                    currentVP = 0;
+                    Music.SetAisac( "TrackVolumeEnergy", 0 );
+                    VPText.text = "VP:" + currentVP.ToString() + "%";
+                    foreach( GameObject fireline in VTFires )
+                    {
+                        fireline.GetComponent<LineRenderer>().SetColors( Color.white, FireColor );
+                    }
+                }
             }
-            else if( WillEclipse )
+            else if( state == VoxState.Invert )
             {
-                //targetTextColor = (Music.Just.unit == 2 ? Color.clear : Color.white);
+                VTText.text = "VT: " + InvertTime + "TURN";
             }
         }
 
         float targetFireScale = ((float)currentVT / MaxVT);
-        FireOrigin.transform.localScale = new Vector3( 1, Mathf.Lerp( FireOrigin.transform.localScale.y, targetFireScale, 0.2f ), 1 );
-        int fIndex = 0;
-        //for( int i = 0; i < VTFireNum; i++ )
-        foreach( float delta in FireDeltaQueue )
+        if( state == VoxState.Invert || state == VoxState.Revert )
         {
-            if( fIndex < ((float)currentVP / InvertVP) * VTFireNum )
+            FireOrigin.transform.localScale = new Vector3( 1, Mathf.Lerp( FireOrigin.transform.localScale.y, (float)InvertTime / MaxInvertTime, 0.1f ), 1 );
+            for( int i = 0; i < VTFireNum; i++ )
             {
-                VTFires[fIndex].transform.localScale = new Vector3( 1, Mathf.Lerp( VTFires[fIndex].transform.localScale.y, Mathf.Min( 1.0f, targetFireScale + delta ), 0.1f ), 1 );
-                targetFireScale *= fireLinearFactor;
+                VTFires[i].transform.localScale = new Vector3( 1, Mathf.Lerp( VTFires[i].transform.localScale.y, (float)InvertTime / MaxInvertTime, 0.1f ), 1 );
             }
-            else if( fIndex - 1 < ((float)currentVP / InvertVP) * VTFireNum )
+        }
+        else if( IsReadyEclipse )
+        {
+            float delta = FireDeltaQueue.Peek();
+            FireOrigin.transform.localScale = new Vector3( 1, Mathf.Lerp( FireOrigin.transform.localScale.y, Mathf.Min( 1.0f, targetFireScale + delta ), 0.1f ), 1 );
+            for( int i = 0; i < VTFireNum; i++ )
             {
-                targetFireScale *= Mathf.Max( 0.0f, ((float)currentVP / InvertVP) * VTFireNum - (float)(fIndex - 1) );
-                VTFires[fIndex].transform.localScale = new Vector3( 1, Mathf.Lerp( VTFires[fIndex].transform.localScale.y, targetFireScale + delta, 0.1f ), 1 );
+                VTFires[i].transform.localScale = new Vector3( 1, Mathf.Lerp( VTFires[i].transform.localScale.y, Mathf.Min( 1.0f, targetFireScale + delta ), 0.1f ), 1 );
             }
-            else
+        }
+        else
+        {
+            FireOrigin.transform.localScale = new Vector3( 1, Mathf.Lerp( FireOrigin.transform.localScale.y, targetFireScale, 0.2f ), 1 );
+            int fIndex = 0;
+            foreach( float delta in FireDeltaQueue )
             {
-                VTFires[fIndex].transform.localScale = new Vector3( 1, Mathf.Lerp( VTFires[fIndex].transform.localScale.y, 0, 0.1f ), 1 );
+                if( fIndex < ((float)currentVP / InvertVP) * VTFireNum )
+                {
+                    VTFires[fIndex].transform.localScale = new Vector3( 1, Mathf.Lerp( VTFires[fIndex].transform.localScale.y, Mathf.Min( 1.0f, targetFireScale + delta ), 0.1f ), 1 );
+                    targetFireScale *= fireLinearFactor;
+                }
+                else if( fIndex - 1 < ((float)currentVP / InvertVP) * VTFireNum )
+                {
+                    targetFireScale *= Mathf.Max( 0.0f, ((float)currentVP / InvertVP) * VTFireNum - (float)(fIndex - 1) );
+                    VTFires[fIndex].transform.localScale = new Vector3( 1, Mathf.Lerp( VTFires[fIndex].transform.localScale.y, targetFireScale + delta, 0.1f ), 1 );
+                }
+                else
+                {
+                    VTFires[fIndex].transform.localScale = new Vector3( 1, Mathf.Lerp( VTFires[fIndex].transform.localScale.y, 0, 0.1f ), 1 );
+                }
+                fIndex++;
             }
-            fIndex++;
         }
         if( Music.isJustChanged )
         {
@@ -218,7 +255,6 @@ public class VoxSystem : MonoBehaviour{
             FireDeltaQueue.Enqueue( Mathf.Sin( Mathf.Lerp( fireMinSpeed, fireMaxSpeed, ((float)currentVT / MaxVT) ) * (float)Music.MusicalTime )
                 * Mathf.Lerp( fireMinHeight, fireMaxHeight, ((float)currentVT / MaxVT) ) + fireMinHeight );
         }
-
     }
 
     void UpdateLightAngles()
@@ -243,11 +279,14 @@ public class VoxSystem : MonoBehaviour{
     }
     void EclipseUpdate()
     {
-        if( Music.Just.bar < 3 )
+        if( Music.Just.bar < 3 || !IsReadyEclipse )
         {
             float t = (float)Music.MusicalTime / (Music.mtBar * 3);
+            if( !IsReadyEclipse && Music.Just.bar >= 2 )
+            {
+                t = (2.0f / 3.0f) * ( Mathf.Max( 0, 1.0f - (float)(Music.MusicalTime - Music.mtBar * 2) / Music.mtBar ) );
+            }
             voxMoon.transform.position = Vector3.Lerp( initialMoonPosition, voxSun.transform.position + Vector3.back * 0.2f, (-Mathf.Cos( t * Mathf.PI ) + 1) / 2 );
-                //Vector3.Slerp( initialMoonPosition, voxSun.transform.position + Vector3.back * 0.2f, (-Mathf.Cos( t * Mathf.PI ) + 1) / 2 );
             BGColor = Color.Lerp( BGColor, Color.Lerp( initialBGColor, Color.black, 1.0f / (1.0f + (voxMoon.transform.position - voxSun.transform.position).magnitude) ), 0.3f );
             BGOffset = Vector3.Lerp( Vector3.zero, Vector3.forward * 10, t * t );
             for( int i = 0; i < lightAngles.Length; i++ )
@@ -258,71 +297,76 @@ public class VoxSystem : MonoBehaviour{
             voxRing.SetSize( initialRingRadius + t * 2.0f );
             voxSun.GrowSize = t * 0.4f;
             voxSun.SetTargetColor( Color.white * ( 1.0f - t*0.2f ) );
+        }
 
-            /*
-            t = Mathf.Max( 0.0f, (float)Music.MusicalTime - Music.mtBar * 2 ) / Music.mtBar;
-            for( int i = 0; i < VTFireNum; i++ )
+        if( Music.IsNowChangedAt( 2 ) )
+        {
+            //CriAtomExAcb ACBData;
+            //CriAtomEx.CueInfo CueInfo;
+            //ACBData = CriAtom.GetAcb( Music.CurrentMusicName );
+            //ACBData.GetCueInfo( "Invert", out CueInfo );
+            //print( CueInfo.gameVariableInfo.name );
+            //CueInfo.gameVariableInfo.gameValue = IsReadyEclipse ? 1 : 0;
+            Music.SetAisac( "TrackVolumeTransition", IsReadyEclipse ? 1 : 0 );
+            Music.SetAisac( "TrackVolumeLoop", IsReadyEclipse ? 0 : 1 );
+            if( IsReadyEclipse )
             {
-                if( currentVT > VTPerLine * (i/2)*2 )
+                TextWindow.ChangeMessage( "くろいつきが　せかいを　はんてんさせる" );
+                InvertTime = Mathf.Clamp( (int)(MaxInvertTime * ((float)currentVT / MaxVT)), 1, MaxInvertTime - 1 ) + 1;
+                GameContext.PlayerConductor.commandGraph.OnReactEvent( IconReactType.OnInvert );
+            }
+            else
+            {
+                TextWindow.ChangeMessage( "しかし　VPが　たりなかったようだ" );
+            }
+        }
+        if( IsReadyEclipse )
+        {
+            if( animation.isPlaying )
+            {
+                for( int i = 0; i < lightAngles.Length; i++ )
                 {
-                    VTFires[i].transform.localPosition = Vector3.Lerp( VTFires[i].transform.localPosition, new Vector3( VTFires[i].transform.localPosition.x, VTFireHeight + (float)Music.MusicalTime/4, 0 ), 0.2f );
+                    lightAngles[i] = (targetLightAngle + 90) * (1.0f + i * 0.3f) - 90;
                 }
-                else
+            }
+            if( Music.IsJustChangedAt( 3 ) )
+            {
+                voxMoon.transform.position = voxSun.transform.position + Vector3.back * 0.1f + Vector3.down * 0.1f;
+                BGColor = Color.black;
+                animation["EclipseAnim"].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
+                animation.Play();
+                GameContext.EnemyConductor.OnInvert();
+                /*
+                FireOrigin.transform.localPosition = Vector3.zero;
+                FireOrigin.GetComponent<LineRenderer>().SetColors( Color.white, initialFireColor );
+                for( int i = 0; i < VTFireNum; i++ )
                 {
-                    VTFires[i].transform.localPosition = Vector3.Lerp( VTFires[i].transform.localPosition, new Vector3( VTFires[i].transform.localPosition.x, 0, 0 ), 0.2f );
+                    VTFires[i].transform.localPosition = new Vector3( VTFires[i].transform.localPosition.x, 0, 0 );
+                    VTFires[i].GetComponent<LineRenderer>().SetColors( Color.white, initialFireColor );
                 }
+                */
             }
-            */
-        }
-        else if( animation.isPlaying )
-        {
-            for( int i = 0; i < lightAngles.Length; i++ )
+            else if( Music.IsJustChangedAt( 3, 2 ) )
             {
-                lightAngles[i] = (targetLightAngle + 90) * (1.0f + i * 0.3f) - 90;
-            }
-        }
+                animation.Stop();
+                GameContext.EnemyConductor.baseColor = Color.white;
+                BGOffset = Vector3.zero;
+                voxRing.SetColor( Color.clear );
+                voxRing.SetWidth( initialRingWidth );
+                voxRing.SetSize( initialRingRadius );
+                voxSun.transform.localScale = Vector3.zero;
 
-        if( Music.IsJustChangedAt( 2 ) )
-        {
-            TextWindow.ChangeMessage( "くろいつきが　せかいを　はんてんさせる" );
-        }
-        else if( Music.IsJustChangedAt( 3 ) )
-        {
-            voxMoon.transform.position = voxSun.transform.position + Vector3.back * 0.1f + Vector3.down * 0.1f;
-            BGColor = Color.black;
-            animation["EclipseAnim"].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
-            animation.Play();
-            GameContext.EnemyConductor.OnInvert();
-            /*
-            FireOrigin.transform.localPosition = Vector3.zero;
-            FireOrigin.GetComponent<LineRenderer>().SetColors( Color.white, initialFireColor );
-            for( int i = 0; i < VTFireNum; i++ )
-            {
-                VTFires[i].transform.localPosition = new Vector3( VTFires[i].transform.localPosition.x, 0, 0 );
-                VTFires[i].GetComponent<LineRenderer>().SetColors( Color.white, initialFireColor );
+                Enemy refleshTarget = currentTargetEnemy;
+                currentTargetEnemy = null;
+                SetTargetEnemy( refleshTarget );
+                for( int i = 0; i < sunLights.Length; i++ )
+                {
+                    sunLights[i].transform.localPosition = Vector3.right * (i < 2 ? i - 5 : i + 2) * 0.55f;
+                    sunLights[i].transform.localScale = new Vector3( 0.1f, sunLights[i].transform.localScale.y, sunLights[i].transform.localScale.z );
+                    sunLights[i].transform.rotation = Quaternion.AngleAxis( lightAngles[i], Vector3.forward );
+                }
+                mainLight.transform.rotation = Quaternion.AngleAxis( targetLightAngle, Vector3.forward );
             }
-            */
-        }
-        else if( Music.IsJustChangedAt( 3, 2 ) )
-        {
-            animation.Stop();
-            GameContext.EnemyConductor.baseColor = Color.white;
-            BGOffset = Vector3.zero;
-            voxRing.SetColor( Color.clear );
-            voxRing.SetWidth( initialRingWidth );
-            voxRing.SetSize( initialRingRadius );
-            voxSun.transform.localScale = Vector3.zero;
-
-            Enemy refleshTarget = currentTargetEnemy;
-            currentTargetEnemy = null;
-            SetTargetEnemy( refleshTarget );
-            for( int i = 0; i < sunLights.Length; i++ )
-            {
-                sunLights[i].transform.localPosition = Vector3.right * (i < 2 ? i - 5 : i + 2) * 0.55f;
-                sunLights[i].transform.localScale = new Vector3( 0.1f, sunLights[i].transform.localScale.y, sunLights[i].transform.localScale.z );
-                sunLights[i].transform.rotation = Quaternion.AngleAxis( lightAngles[i], Vector3.forward );
-            }
-            mainLight.transform.rotation = Quaternion.AngleAxis( targetLightAngle, Vector3.forward );
         }
 	}
 
@@ -351,8 +395,8 @@ public class VoxSystem : MonoBehaviour{
         }
 
         //VPText.color = Color.Lerp( VPText.color, targetTextColor, 0.05f );
-        voxMoon.SetColor( Color.Lerp( voxMoon.Color, targetMoonColor, 0.1f ) );
-        voxMoon.transform.localScale = Vector3.Lerp( voxMoon.transform.localScale, Vector3.one * ((float)currentVP / InvertVP), 0.2f );
+        //voxMoon.SetColor( Color.Lerp( voxMoon.Color, targetMoonColor, 0.1f ) );
+        //voxMoon.transform.localScale = Vector3.Lerp( voxMoon.transform.localScale, Vector3.one * ((float)currentVP / InvertVP), 0.2f );
 
         transform.localPosition = Vector3.Lerp( transform.localPosition, targetSunPosition, 0.1f );
         voxSun.transform.localScale = Vector3.Lerp( voxSun.transform.localScale, targetSunScale, 0.05f );
@@ -364,11 +408,14 @@ public class VoxSystem : MonoBehaviour{
 	{
         if( state != newState )
         {
+            VoxState oldState = state;
             state = newState;
             switch( state )
             {
             case VoxState.Sun:
             case VoxState.Revert:
+                if( oldState != VoxState.Eclipse ) AddVPVT( -currentVP, -currentVT );
+
                 useTargetBGColor = true;
                 useTargetLightAngles = true;
                 useTargetLightScales = true;
@@ -379,18 +426,11 @@ public class VoxSystem : MonoBehaviour{
                     targetLightScales[i] = initialLightScales[i];
                     sunLights[i].transform.localPosition = Vector3.zero;
                 }
-
-                //if( GameContext.PlayerConductor.CanUseInvert )
-                //{
-                //    targetTextColor = Color.black;
-                //}
-                targetMoonColor = initialMoonColor;
-                AddVPVT( -currentVP, -currentVT );
                 GameContext.EnemyConductor.baseColor = Color.black;
                 voxRing.SetTargetColor( Color.white );
                 voxSun.transform.localScale = Vector3.one;
                 voxSun.SetTargetColor( Color.white );
-                voxMoon.transform.localScale = Vector3.zero;
+                //voxMoon.transform.localScale = Vector3.zero;
                 voxMoon.transform.position = initialMoonPosition;
                 
                 targetBGColor = initialBGColor;
@@ -415,7 +455,7 @@ public class VoxSystem : MonoBehaviour{
                 break;
             case VoxState.Invert:
                 BGColor = Color.black;
-                targetMoonColor = Color.black;
+                //targetMoonColor = Color.black;
                 break;
             case VoxState.SunSet:
                 useTargetBGColor = true;
@@ -451,10 +491,19 @@ public class VoxSystem : MonoBehaviour{
             VPText.text = "VP:" + currentVP.ToString() + "%";
             VTText.text = "VT:" + currentVT.ToString();
 
-            if( state == VoxState.Sun && WillEclipse )
+            if( IsReadyEclipse )
             {
-                //targetTextColor = Color.white;
-                targetMoonColor = Color.black;
+                foreach( GameObject fireline in VTFires )
+                {
+                    fireline.GetComponent<LineRenderer>().SetColors( Color.white, InvertFireColor );
+                }
+            }
+            else
+            {
+                foreach( GameObject fireline in VTFires )
+                {
+                    fireline.GetComponent<LineRenderer>().SetColors( Color.white, FireColor );
+                }
             }
         }
 	}
@@ -478,7 +527,7 @@ public class VoxSystem : MonoBehaviour{
 
     public void SetBlinkMoonColor( Color color )
     {
-        targetMoonColor = color;
+        //targetMoonColor = color;
         //targetTextColor = Color.black;
         //VPText.text = "VP:0/" + InvertVP;
     }

@@ -25,6 +25,7 @@ public class CommandGraph : MonoBehaviour {
     public GameObject TimeBar;
     public GameObject CurrentBar;
     public GameObject NextBar;
+    public GameObject SelectSpot;
     public float MAX_LATITUDE;
     public float ROTATE_COEFF;
     public float BUTTON_RADIUS;
@@ -45,9 +46,10 @@ public class CommandGraph : MonoBehaviour {
     public Color IconWLFMColor;
     public Color IconDSColor;
     public Color IconHRColor;
+    public Color IconVColor;
 
     bool IsInvert { get { return CurrentCommand is InvertCommand; } }
-    int RemainInvertTime;
+    bool IsLastInvert { get { return IsInvert && (GameContext.VoxSystem.InvertTime == 1 || (CurrentCommand as InvertCommand).isLast); } }
     int CommandLoopCount;
 
     Camera MainCamera;
@@ -56,6 +58,7 @@ public class CommandGraph : MonoBehaviour {
     Timing AllowInputStart = new Timing( 0, 0, 1 );
     Vector3 oldMousePosition;
     Quaternion targetRotation;
+    Quaternion offsetRotation;
     Vector3 initialRightArrowPosition;
     Vector3 ballTouchStartPosition;
     string initialNextText;
@@ -71,7 +74,7 @@ public class CommandGraph : MonoBehaviour {
         StrategyNodes.AddRange( GetComponentsInChildren<Strategy>() );
         CommandNodes = new List<PlayerCommand>();
         CommandNodes.AddRange( GetComponentsInChildren<PlayerCommand>() );
-        //offsetRotation = Quaternion.LookRotation( transform.position - SelectSpot.transform.position );
+        offsetRotation = Quaternion.LookRotation( transform.position - SelectSpot.transform.position );
         //initialPosition = transform.localPosition;
         initialRightArrowPosition = RightArrow.transform.localPosition;
         CurrentButton = VoxButton.None;
@@ -297,17 +300,6 @@ public class CommandGraph : MonoBehaviour {
             UpdateCommandLine();
             break;
         case GameState.Battle:
-            if( AllowInputStart <= Music.Just && Music.Just < AllowInputEnd )
-            {
-                //if( Music.isJustChanged ) SelectNearestNode();
-                if( GameContext.VoxSystem.state == VoxState.Invert )
-                {
-                    if( Music.IsJustChangedAt( 3, 2 ) && RemainInvertTime == 1 )
-                    {
-                        GameContext.VoxSystem.SetState( VoxState.Revert );
-                    }
-                }
-            }
             if( Music.IsJustChangedAt( AllowInputEnd ) || 
                 ( Music.GetCurrentBlockName() == "wait" && Music.IsJustChangedAt( WaitInputEnd ) ) )
             {
@@ -355,6 +347,10 @@ public class CommandGraph : MonoBehaviour {
                     PushingCommand = null;
                 }
             }
+        }
+        else if( NextCommand != null )
+        {
+            transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
         }
         if( Input.GetMouseButtonUp( 0 ) )
         {
@@ -438,8 +434,10 @@ public class CommandGraph : MonoBehaviour {
         PushingCommand = null;
         PlayerCommand selectedCommand = null;
         float minDistance = 99999;
+        print( CurrentCommand.name );
         foreach( PlayerCommand command in GetLinkedCommands() )
         {
+            print( command.name );
             if( command == null || !command.IsUsable() ) continue;
             float d = (pushingPosition - command.transform.position).magnitude;
             if( d < minDistance )
@@ -480,7 +478,7 @@ public class CommandGraph : MonoBehaviour {
 
     IEnumerable<PlayerCommand> GetLinkedCommands()
     {
-        if( GameContext.VoxSystem.state == VoxState.Invert && RemainInvertTime == 1 )
+        if( GameContext.VoxSystem.state == VoxState.Invert && GameContext.VoxSystem.InvertTime == 1 )
         {
             foreach( PlayerCommand c in IntroCommand.LinkedCommands )
             {
@@ -494,7 +492,6 @@ public class CommandGraph : MonoBehaviour {
             {
                 yield return c;
             }
-            //yield return IntroCommand;
         }
     }
 
@@ -505,19 +502,33 @@ public class CommandGraph : MonoBehaviour {
             return;
         }
 
-
-        if( NextCommand == IntroCommand )
+        if( NextCommand == null || NextCommand == IntroCommand )
         {
-            Music.SetNextBlock( "intro" );//runaway
-            return;
+            if( GameContext.VoxSystem.state == VoxState.Eclipse && GameContext.VoxSystem.IsReadyEclipse )
+            {
+                foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
+                {
+                    if( c is InvertCommand )
+                    {
+                        Select( c );
+                        break;
+                    }
+                }
+            }
+            else if( IsInvert && !IsLastInvert )
+            {
+                NextCommand = CurrentCommand;
+            }
+            else
+            {
+                if( IsInvert ) CurrentCommand = IntroCommand;
+                NextCommand = null;
+                OldCommand = null;
+                Music.SetNextBlock( "wait" );
+            }
         }
 
-        if( NextCommand == null )
-        {
-            OldCommand = null;
-            Music.SetNextBlock( "wait" );
-        }
-        else
+        if( NextCommand != null )
         {
             OldCommand = (CurrentCommand != null && CurrentCommand.ParentCommand != null ? CurrentCommand.ParentCommand : CurrentCommand);
             if( OldCommand == NextCommand )
@@ -534,40 +545,7 @@ public class CommandGraph : MonoBehaviour {
 
             Music.SetNextBlock( NextCommand.GetBlockName() );
         }
-        /*
-        if( IsInvert )
-        {
-            --RemainInvertTime;
-            if( RemainInvertTime == 0 )
-            {
-                if( NextCommand.ParentStrategy == InvertStrategy )
-                {
-                    foreach( PlayerCommand c in InvertStrategy.LinkedCommands )
-                    {
-                        if( c.ParentStrategy != InvertStrategy )
-                        {
-                            NextCommand = c;
-                            break;
-                        }
-                    }
-                }
-                Music.SetNextBlock( NextCommand.GetBlockName() );
-            }
-        }
-        else
-        {
-            bool willEclipse = false;
-            if( GameContext.PlayerConductor.CanUseInvert && ( NextCommand.IsLinkedTo( InvertStrategy ) || ( NextCommand.ParentStrategy != null && NextCommand.ParentStrategy.IsLinkedTo( InvertStrategy ) ) ) )
-            {
-                willEclipse = GameContext.VoxSystem.WillEclipse;
-                if( willEclipse )
-                {
-                    RemainInvertTime = GameContext.VoxSystem.InvertTime;
-                }
-            }
-            Music.SetNextBlock( NextCommand.GetBlockName() + (willEclipse ? "Trans" : "") );
-        }
-        */
+        
     }
 
     void SetCommandIcons( GameObject CommandText, PlayerCommand command )
@@ -648,7 +626,7 @@ public class CommandGraph : MonoBehaviour {
                 }
                 else if( iconName.Contains( "V" ) )
                 {
-                    targetColor = IconWLFMColor;
+                    targetColor = IconVColor;
                     reactType = IconReactType.OnInvert;
                 }
             }
@@ -681,6 +659,12 @@ public class CommandGraph : MonoBehaviour {
             CurrentBar.transform.localPosition = initialNextBarPosition;
             SetCommandIcons( CurrentCommandText.gameObject, CurrentCommand );
             SetCommandIcons( NextCommandText.gameObject, null );
+
+            if( IsLastInvert )
+            {
+                Select( IntroCommand );
+                IntroCommand.Deselect();
+            }
         }
         else
         {
@@ -718,7 +702,7 @@ public class CommandGraph : MonoBehaviour {
         CommandLoopCount = 0;
         Select( IntroCommand );
         CheckCommand();
-        transform.rotation = Quaternion.Inverse( CurrentCommand.transform.localRotation );// *offsetRotation;
+        transform.rotation = Quaternion.Inverse( CurrentCommand.transform.localRotation ) * offsetRotation;
         targetTimeBarScale.x = 0;
         CurrentBar.transform.localPosition = initialCurrentBarPosition;
         TimeBar.transform.localScale = targetTimeBarScale;
@@ -731,7 +715,7 @@ public class CommandGraph : MonoBehaviour {
         NextCommand.Select();
         NextCommandText.text = NextCommand.name;
         SetCommandIcons( NextCommandText.gameObject, NextCommand );
-        //targetRotation = Quaternion.Inverse( command.transform.localRotation ) * offsetRotation;
+        targetRotation = Quaternion.Inverse( command.transform.localRotation ) * offsetRotation;
     }
 
     public void OnReactEvent( IconReactType type )
@@ -740,23 +724,28 @@ public class CommandGraph : MonoBehaviour {
         {
             statusIcon.ReactEvent( type );
         }
+        if( type == IconReactType.OnInvert )
+        {
+            if( NextCommand != null && !(NextCommand is InvertCommand) ) NextCommand.Deselect();
+            CurrentCommand.SetLink( false );
+            foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
+            {
+                c.SetLink( c is InvertCommand );
+            }
+        }
     }
 
     VoxState GetDesiredVoxState()
     {
-        if( !GameContext.PlayerConductor.CanUseInvert ) return VoxState.Sun;
-        /*if( IsLinkedToInvert )
+        if( !GameContext.PlayerConductor.CanUseInvert || Music.GetCurrentBlockName() == "wait" )
         {
-            if( GameContext.VoxSystem.WillEclipse )
-            {
-                return VoxState.Eclipse;
-            }
-            else
-            {
-                return VoxState.Sun;
-            }
+            return VoxState.Sun;
         }
-        else */if( IsInvert )
+        else if( CurrentCommand.icons.Contains( EStatusIcon.V ) )
+        {
+            return VoxState.Eclipse;
+        }
+        else if( IsInvert )
         {
             return VoxState.Invert;
         }
