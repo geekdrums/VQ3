@@ -22,6 +22,7 @@ public class CommandGraph : MonoBehaviour {
     public PlayerCommand IntroCommand;
     public GameObject VoxBall;
     public GameObject RightArrow;
+    public GameObject LeftArrow;
     public GameObject TimeBar;
     public GameObject CurrentBar;
     public GameObject NextBar;
@@ -33,6 +34,7 @@ public class CommandGraph : MonoBehaviour {
     public TextMesh CurrentCommandText;
     public TextMesh NextCommandText;
     public List<Sprite> CommandIcons;
+    public MidairPrimitive AxisRing;
 
     public List<PlayerCommand> CommandNodes { get; private set; }
     public List<Strategy> StrategyNodes { get; private set; }
@@ -60,6 +62,7 @@ public class CommandGraph : MonoBehaviour {
     Quaternion targetRotation;
     Quaternion offsetRotation;
     Vector3 initialRightArrowPosition;
+    Vector3 initialLeftArrowPosition;
     Vector3 ballTouchStartPosition;
     string initialNextText;
     Vector3 maxTimeBarScale;
@@ -77,6 +80,7 @@ public class CommandGraph : MonoBehaviour {
         offsetRotation = Quaternion.LookRotation( transform.position - SelectSpot.transform.position );
         //initialPosition = transform.localPosition;
         initialRightArrowPosition = RightArrow.transform.localPosition;
+        initialLeftArrowPosition = LeftArrow.transform.localPosition;
         CurrentButton = VoxButton.None;
         CurrentCommand = IntroCommand;
         initialNextText = NextCommandText.text;
@@ -278,7 +282,7 @@ public class CommandGraph : MonoBehaviour {
         {
         case GameState.Continue:
             if( GameContext.CurrentState == GameState.Continue && (!Music.IsPlaying() || Music.Just.totalUnit > 4)
-                && Input.GetMouseButtonUp( 0 ) && CurrentButton == VoxButton.Reset )
+                && Input.GetMouseButtonUp( 0 ) )
             {
                 GameContext.ChangeState( GameState.Intro );
             }
@@ -308,6 +312,8 @@ public class CommandGraph : MonoBehaviour {
             UpdateCommandLine();
             break;
         }
+
+        AxisRing.SetTargetColor( ( GameContext.CurrentState == GameState.Battle && NextCommand != null ? Color.magenta : Color.white ) );
     }
 
     void UpdateInput()
@@ -329,6 +335,12 @@ public class CommandGraph : MonoBehaviour {
             else if( hit.collider == RightArrow.collider )
             {
                 CurrentButton = VoxButton.ArrowRight;
+                GameContext.EnemyConductor.OnArrowPushed( false );
+            }
+            else if( hit.collider == LeftArrow.collider )
+            {
+                CurrentButton = VoxButton.ArrowLeft;
+                GameContext.EnemyConductor.OnArrowPushed( true );
             }
         }
         if( Input.GetMouseButton( 0 ) )
@@ -347,14 +359,30 @@ public class CommandGraph : MonoBehaviour {
                     PushingCommand = null;
                 }
             }
+
+            if( CurrentButton == VoxButton.ArrowRight )
+            {
+                RightArrow.transform.localPosition = Vector3.MoveTowards( RightArrow.transform.localPosition,
+                    initialRightArrowPosition + (Input.GetMouseButton( 0 ) ? Vector3.forward * 0.3f : Vector3.zero), 0.1f );
+            }
+            else if( CurrentButton == VoxButton.ArrowLeft )
+            {
+                LeftArrow.transform.localPosition = Vector3.MoveTowards( LeftArrow.transform.localPosition,
+                    initialLeftArrowPosition + (Input.GetMouseButton( 0 ) ? Vector3.forward * 0.3f : Vector3.zero), 0.1f );
+            }
         }
-        else if( NextCommand != null )
+        else
         {
-            transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
+            if( NextCommand != null )
+            {
+                transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
+            }
+            RightArrow.transform.localPosition = Vector3.MoveTowards( RightArrow.transform.localPosition, initialRightArrowPosition, 0.1f );
+            LeftArrow.transform.localPosition = Vector3.MoveTowards( LeftArrow.transform.localPosition, initialLeftArrowPosition, 0.1f );
         }
         if( Input.GetMouseButtonUp( 0 ) )
         {
-            if( CurrentButton == VoxButton.Ball )
+            if( CurrentButton == VoxButton.Ball && Music.Just < AllowInputEnd )
             {
                 if( PushingCommand != null )
                 {
@@ -400,15 +428,6 @@ public class CommandGraph : MonoBehaviour {
             //transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
         }*/
 
-        if( CurrentButton == VoxButton.ArrowRight )
-        {
-            RightArrow.transform.localPosition = Vector3.MoveTowards( RightArrow.transform.localPosition,
-                initialRightArrowPosition + ( Input.GetMouseButton( 0 ) ? Vector3.forward * 0.3f : Vector3.zero ), 0.1f );
-            if( Input.GetMouseButtonDown( 0 ) )
-            {
-                GameContext.EnemyConductor.OnArrowPushed( false );
-            }
-        }
     }
 
 
@@ -434,10 +453,8 @@ public class CommandGraph : MonoBehaviour {
         PushingCommand = null;
         PlayerCommand selectedCommand = null;
         float minDistance = 99999;
-        print( CurrentCommand.name );
         foreach( PlayerCommand command in GetLinkedCommands() )
         {
-            print( command.name );
             if( command == null || !command.IsUsable() ) continue;
             float d = (pushingPosition - command.transform.position).magnitude;
             if( d < minDistance )

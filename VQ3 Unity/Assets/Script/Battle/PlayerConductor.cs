@@ -4,20 +4,20 @@ using System.Collections.Generic;
 
 public class PlayerConductor : MonoBehaviour {
     public CommandGraph commandGraph;
-    public QuarterRing quarterRing;
+    //public QuarterRing quarterRing;
     public Color MoonGetColor;
-    public CounterSprite LevelCounter;
+    //public CounterSprite LevelCounter;
     public int Level = 1;
 
-    public List<int> HPLevelList;
-    public List<int> QuarterLevelList;
-    public List<int> AttackLevelList;
-    public List<int> MagicLevelList;
+    //public List<int> HPLevelList;
+    //public List<int> QuarterLevelList;
+    //public List<int> AttackLevelList;
+    //public List<int> MagicLevelList;
 	
     PlayerCommand CurrentCommand;
 
     Player Player;
-    public int NumQuarter { get; private set; }
+    //public int NumQuarter { get; private set; }
     public int PlayerHP { get { return Player.HitPoint; } }
     public int PlayerMaxHP { get { return Player.MaxHP; } }
     public bool CanUseInvert { get { return Level >= 8; } }
@@ -38,6 +38,7 @@ public class PlayerConductor : MonoBehaviour {
 	{
 	}
 
+    /*
     public void UpdateResult()
     {
         resultRemainTime -= Time.deltaTime;
@@ -149,15 +150,16 @@ public class PlayerConductor : MonoBehaviour {
 
         }
     }
+    */
 
     void SetLevelParams()
     {
-        NumQuarter = QuarterLevelList[Level - 1];
-        Player.HitPoint = HPLevelList[Level - 1];
-        Player.BasePower = AttackLevelList[Level - 1];
-        Player.BaseMagic = MagicLevelList[Level - 1];
+        //NumQuarter = QuarterLevelList[Level - 1];
+        Player.HitPoint = 500 + Level * 100; //HPLevelList[Level - 1];
+        Player.BasePower = 50 + Level * 10; //AttackLevelList[Level - 1];
+        Player.BaseMagic = 40 + Level * 9; //MagicLevelList[Level - 1];
         Player.Initialize();
-        LevelCounter.count = Level;
+        //LevelCounter.count = Level;
     }
 
     public void OnLevelUp()
@@ -166,9 +168,15 @@ public class PlayerConductor : MonoBehaviour {
         if( Level > 1 )
         {
             TextWindow.ChangeMessage( "オクスは　レベル" + Level + "に　あがった！" );
-            TextWindow.AddMessage( "さいだいHP：" + Player.HitPoint + " ( +" + (HPLevelList[Level - 1] - HPLevelList[Level - 2]) + " )" );
-            resultRemainTime = DefaultResultTime;
-            SEPlayer.Play( "levelUp" );
+            //TextWindow.AddMessage( "さいだいHP：" + Player.HitPoint + " ( +" + (HPLevelList[Level - 1] - HPLevelList[Level - 2]) + " )" );
+            //resultRemainTime = DefaultResultTime;
+            //SEPlayer.Play( "levelUp" );
+            PlayerCommand acquiredCommand = commandGraph.CheckAcquireCommand( Level );
+            while( acquiredCommand != null )//&& acquiredCommand != commandGraph.InvertStrategy.Commands[0] )
+            {
+                acquiredCommand.Acquire();
+                acquiredCommand = commandGraph.CheckAcquireCommand( Level );
+            }
         }
     }
 
@@ -191,7 +199,7 @@ public class PlayerConductor : MonoBehaviour {
     
     public void CheckSkill()
     {
-        if( Music.Just.bar >= NumQuarter || CurrentCommand  == null ) return;
+        if( CurrentCommand  == null ) return;
         GameObject playerSkill = CurrentCommand.GetCurrentSkill();
         if( playerSkill != null )
         {

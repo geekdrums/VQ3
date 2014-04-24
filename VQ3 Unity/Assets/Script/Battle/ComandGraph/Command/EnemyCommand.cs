@@ -8,6 +8,7 @@ public class EnemyCommand : CommandBase
     public bool isPassive;
 
     public string DescribeText;
+    public string ShortText;
 
     public Skill GetCurrentSkill( int startBar )
     {

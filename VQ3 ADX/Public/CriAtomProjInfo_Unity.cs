@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.1.32.00
-* Date Time          : 2014/04/22 21:31
+* Date Time          : 2014/04/25 0:54
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -70,5 +70,8 @@ public partial class CriAtomAcfInfo
         newAcbInfo.cueInfoList.Add(20, new CueInfo("quarter4", 20, ""));
         newAcbInfo.cueInfoList.Add(21, new CueInfo("moon", 21, ""));
         newAcbInfo.cueInfoList.Add(22, new CueInfo("levelUp", 22, ""));
+        newAcbInfo.cueInfoList.Add(23, new CueInfo("enhance", 23, ""));
+        newAcbInfo.cueInfoList.Add(24, new CueInfo("invert", 24, ""));
+        newAcbInfo.cueInfoList.Add(25, new CueInfo("jam", 25, ""));
     }
 }

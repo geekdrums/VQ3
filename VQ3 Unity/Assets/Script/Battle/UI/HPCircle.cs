@@ -4,6 +4,7 @@ using System.Collections;
 public class HPCircle : MonoBehaviour {
 
     public GameObject CurrentCircle;
+    public GameObject MaxCircle;
     public GameObject RedCircle;
     public float RedCircleScaleCoeff;
     public Color invertColor;
@@ -40,6 +41,7 @@ public class HPCircle : MonoBehaviour {
     {
         CurrentCircle.transform.localScale = Vector3.Lerp( CurrentCircle.transform.localScale, targetCurrentScale, 0.2f );
         RedCircle.transform.localScale = Vector3.Lerp( RedCircle.transform.localScale, targetRedScale * RedCircleScaleCoeff, 0.2f );
+        MaxCircle.transform.localEulerAngles = Vector3.Lerp( MaxCircle.transform.localScale, initialScale, 0.2f );
     }
 
     public void OnDamage()

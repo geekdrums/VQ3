@@ -116,7 +116,9 @@ public class BattleConductor : MonoBehaviour {
             {
                 bool isSucceeded = false;
                 isSucceeded |= GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Skill>() );
+                if( GameContext.CurrentState == GameState.Continue ) break;
                 isSucceeded |=  GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Skill>() );
+                if( GameContext.CurrentState == GameState.Endro ) break;
                 if( isSucceeded )
                 {
                     act.Get<Skill>().OnExecuted( act.Get<ActionSet>() );

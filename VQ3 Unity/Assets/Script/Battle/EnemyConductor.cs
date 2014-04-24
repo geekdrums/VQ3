@@ -97,11 +97,6 @@ public class EnemyConductor : MonoBehaviour {
     public void SetEncounter( Encounter encounter )
     {
         CurrentEncounter = encounter;
-        foreach( Enemy e in Enemies )
-        {
-            Destroy( e.gameObject );
-        }
-        Enemies.Clear();
         TextWindow.ClearMessages();
         int l = encounter.Enemies.Length;
         for( int i = 0; i < l; ++i )
@@ -116,7 +111,7 @@ public class EnemyConductor : MonoBehaviour {
     {
         GameObject TempObj;
         TempObj = (GameObject)Instantiate( enemyPrefab, new Vector3( EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 4, 0 ), enemyPrefab.transform.rotation );
-        TempObj.renderer.material.color = baseColor;
+        //TempObj.renderer.material.color = baseColor;
         Enemy enemy = TempObj.GetComponent<Enemy>();
         WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
         if( we != null )
@@ -130,6 +125,7 @@ public class EnemyConductor : MonoBehaviour {
         }
         enemy.transform.parent = transform;
         enemy.ChangeState( initialState );
+        enemy.outlineSprite.color = enemy.currentState.color;
         enemy.DisplayName += (char)((int)'A' + Enemies.FindAll( ( Enemy e ) => e.DisplayName.StartsWith( enemy.DisplayName ) && e.DisplayName.Length == enemy.DisplayName.Length + 1 ).Count);
     }
 
@@ -363,7 +359,7 @@ public class EnemyConductor : MonoBehaviour {
     {
         int CurrentIndex = Music.Just.bar;
         if( GameContext.VoxSystem.state == VoxState.Invert ) return;
-        if( GameContext.VoxSystem.state == VoxState.Eclipse && CurrentIndex >= 2 ) return;
+        if( GameContext.VoxSystem.state == VoxState.Eclipse && GameContext.VoxSystem.IsReadyEclipse && CurrentIndex >= 2 ) return;
 
         foreach( Enemy e in Enemies )
         {
@@ -401,15 +397,22 @@ public class EnemyConductor : MonoBehaviour {
 
     public void OnPlayerWin()
     {
+        Cleanup();
     }
     public void OnPlayerLose()
     {
+        Cleanup();
         foreach( Enemy e in Enemies )
         {
             e.OnPlayerLose();
         }
     }
     public void OnContinue()
+    {
+        SetEncounter( CurrentEncounter );
+    }
+
+    void Cleanup()
     {
         foreach( Enemy e in Enemies )
         {
@@ -420,7 +423,74 @@ public class EnemyConductor : MonoBehaviour {
         if( WeatherEnemy != null )
         {
             Destroy( WeatherEnemy.gameObject );
+            WeatherEnemy = null;
         }
-        SetEncounter( CurrentEncounter );
+        Enemies.Clear();
     }
+
+
+    [System.Serializable]
+    public class StateSet
+    {
+        public string nameList;
+        public string this[int i]
+        {
+            get
+            {
+                return nameList.Split( ' ' )[i];
+            }
+        }
+    }
+    /*
+    public enum ConditionType
+    {
+        ItsHP,
+        PlayerHP,
+        TotalTurnCout,
+        OnDead,
+        OnChanged,
+        Count
+    }
+    public struct ConditionParts
+    {
+        public ConditionType conditionType;
+        public int MaxValue;
+        public int MinValue;
+    }
+    [System.Serializable]
+    public class StateSetCondition : IEnumerable<ConditionParts>
+    {
+        public List<string> _conditions;
+        public string StateNameList;
+
+        List<ConditionParts> conditionParts = new List<ConditionParts>();
+
+        public void Parse()
+        {
+            foreach( string str in _conditions )
+            {
+                string[] conditionParams = str.Split( ' ' );
+                if( conditionParams.Length != 3 ) Debug.LogError( "condition param must be TYPE MIN MAX format. ->" + str );
+                else
+                {
+                    conditionParts.Add( new ConditionParts()
+                    {
+                        conditionType = (ConditionType)System.Enum.Parse( typeof( ConditionType ), conditionParams[0] ),
+                        MinValue = conditionParams[1] == "-" ? -9999999 : int.Parse( conditionParams[1] ),
+                        MaxValue = conditionParams[2] == "-" ? +9999999 : int.Parse( conditionParams[2] ),
+                    } );
+                }
+            }
+        }
+
+        public IEnumerator<ConditionParts> GetEnumerator()
+        {
+            foreach( ConditionParts parts in conditionParts ) yield return parts;
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+    */
 }

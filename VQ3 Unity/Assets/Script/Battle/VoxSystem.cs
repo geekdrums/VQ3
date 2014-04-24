@@ -15,7 +15,7 @@ public class VoxSystem : MonoBehaviour{
     public static readonly int InvertVP = 100;
     public static readonly int MaxInvertTime = 5;
     public static readonly int MaxVT = 16*4*4;
-    public static readonly int VTFireNum = 19;
+    public static readonly int VTFireNum = 20;
     public static readonly int VTPerLine = MaxVT / VTFireNum;
     public static readonly float VTFireHeight = 23.0f;
 	int currentVP = 0;
@@ -375,6 +375,7 @@ public class VoxSystem : MonoBehaviour{
         if( useTargetBGColor ) BGColor = Color.Lerp( BGColor, targetBGColor, 0.1f );
         mainCamera.backgroundColor = BGColor;
         GameContext.BattleConductor.transform.position = BGOffset;
+        GameContext.BattleConductor.transform.localScale = Vector3.one * 21.0f / (21.0f + BGOffset.magnitude);
 
         if( useTargetMainLightScale )
         {
@@ -472,6 +473,7 @@ public class VoxSystem : MonoBehaviour{
                     targetLightScales[i] = 0;
                 }
                 targetMainLightScale = 0;
+                voxMoon.transform.position = initialMoonPosition;
                 break;
             }
         }
@@ -481,6 +483,7 @@ public class VoxSystem : MonoBehaviour{
     {
         if( GameContext.PlayerConductor.CanUseInvert )
         {
+            bool oldIsReadyEclipse = IsReadyEclipse;
             currentVP = Mathf.Clamp( currentVP + (int)(VP * (100.0f - GameContext.EnemyConductor.VPtolerance) / 100.0f), 0, InvertVP );
             currentVT = Mathf.Clamp( currentVT + VT, 0, MaxVT );
             if( currentVT <= 0 )
@@ -491,15 +494,18 @@ public class VoxSystem : MonoBehaviour{
             VPText.text = "VP:" + currentVP.ToString() + "%";
             VTText.text = "VT:" + currentVT.ToString();
 
-            if( IsReadyEclipse )
+            if( IsReadyEclipse && !oldIsReadyEclipse )
             {
+                FireOrigin.GetComponent<LineRenderer>().SetColors( Color.white, InvertFireColor );
                 foreach( GameObject fireline in VTFires )
                 {
                     fireline.GetComponent<LineRenderer>().SetColors( Color.white, InvertFireColor );
                 }
+                SEPlayer.Play( "invert" );
             }
-            else
+            else if( oldIsReadyEclipse && !IsReadyEclipse )
             {
+                FireOrigin.GetComponent<LineRenderer>().SetColors( Color.white, FireColor );
                 foreach( GameObject fireline in VTFires )
                 {
                     fireline.GetComponent<LineRenderer>().SetColors( Color.white, FireColor );

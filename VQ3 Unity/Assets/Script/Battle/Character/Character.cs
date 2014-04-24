@@ -48,6 +48,11 @@ public class EnhanceParameter
         --remainTurn;
         if( remainTurn <= 0 ) phase = 0;
     }
+    public void Init()
+    {
+        phase = 0;
+        remainTurn = 0;
+    }
 }
 public class Character : MonoBehaviour {
     protected static readonly float DAMAGE_RANGE = 12.0f;

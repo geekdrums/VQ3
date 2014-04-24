@@ -97,6 +97,14 @@ public class Player : Character {
     public override void Enhance( EnhanceModule enhance )
     {
         base.Enhance( enhance );
+        if( enhance.phase >= 0 )
+        {
+            SEPlayer.Play( "enhance" );
+        }
+        else
+        {
+            SEPlayer.Play( "jam" );
+        }
         switch( enhance.type )
         {
         case EnhanceParamType.Brave: commandGraph.OnReactEvent( IconReactType.OnBrave ); break;
@@ -125,5 +133,12 @@ public class Player : Character {
         MagicDefend = 0;
         HealPercent = 0;
         TurnDamage = 0;
+        HPBar.OnUpdateHP();
+        foreach( EnhanceParameter enhanceParam in ActiveEnhanceParams )
+        {
+            enhanceParam.Init();
+            EnhanceIcons.OnUpdateParam( enhanceParam );
+        }
+        ActiveEnhanceParams.Clear();
     }
 }

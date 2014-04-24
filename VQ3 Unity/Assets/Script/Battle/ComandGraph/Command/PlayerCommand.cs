@@ -90,6 +90,7 @@ public class PlayerCommand : CommandBase, IVoxNode
 #if UNITY_EDITOR
         if( !UnityEditor.EditorApplication.isPlaying ) return;
 #endif
+        textMesh = GetComponent<TextMesh>();
         IsLinked = true;
         IsAcquired = AcquireLevel <= GameContext.PlayerConductor.Level;
         if( !IsAcquired )
@@ -117,7 +118,6 @@ public class PlayerCommand : CommandBase, IVoxNode
         IsLinked = false;
         IsCurrent = false;
         IsSelected = false;
-        textMesh = GetComponent<TextMesh>();
     }
 
     void OnValidate()

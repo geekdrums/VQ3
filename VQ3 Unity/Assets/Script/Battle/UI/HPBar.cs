@@ -72,13 +72,13 @@ public class HPBar : MonoBehaviour {
     void UpdateHPText()
     {
         hpText.text = "HP:" + Player.HitPoint + "/" + Player.MaxHP;
-        if( (float)Player.HitPoint / Player.MaxHP <= 0.25f )
-        {
-            hpText.color = Color.gray;
-        }
-        else
-        {
-            hpText.color = Color.white;
-        }
+        //if( (float)Player.HitPoint / Player.MaxHP <= 0.25f )
+        //{
+        //    hpText.color = Color.gray;
+        //}
+        //else
+        //{
+        //    hpText.color = Color.white;
+        //}
     }
 }

@@ -17,20 +17,24 @@ public enum EnemySpecies
 public class Enemy : Character
 {
     static readonly float DamageTrembleTime = 0.025f;
+    static readonly Timing StateChangeTiming = new Timing(3,0,0);
 
     public string DisplayName;
     public EnemySpecies Speceis;
     public List<BattleState> States;
     public StateChangeCondition[] conditions;
     public int VPtolerance;
+    public SpriteRenderer outlineSprite;
 
     public EnemyCommand currentCommand { get; protected set; }
     public int commandExecBar { get; protected set; }
     public BattleState currentState { get; protected set; }
+    public BattleState oldState { get; protected set; }
 
     protected HPCircle HPCircle;
     protected int turnCount;
     protected ActionResult lastDamageResult;
+    protected SpriteRenderer spriteRenderer;
 
     // Use this for initialization
     protected virtual void Start()
@@ -51,12 +55,39 @@ public class Enemy : Character
         HPCircle.Initialize( this );
         HPCircle.OnTurnStart();
         initialPosition = transform.localPosition;
+
+        foreach( StateChangeCondition condition in conditions )
+        {
+            condition.Parse();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateAnimation();
+
+        if( GameContext.CurrentState == GameState.Battle )
+        {
+            if( Music.IsJustChangedAt( commandExecBar ) && currentCommand != null && currentCommand.ShortText != "" )
+            {
+                ShortTextWindow shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
+                shortText.Initialize( currentCommand.ShortText );
+                shortText.transform.position = new Vector3( transform.position.x * 0.7f, shortText.transform.position.y, shortText.transform.position.z );
+                //shortText.transform.parent = transform;
+            }
+            if( Music.IsJustChangedAt( StateChangeTiming ) )
+            {
+                oldState = currentState;
+                CheckState();
+            }
+            else if( Music.Just > StateChangeTiming && ( oldState != null && oldState != currentState ) )
+            {
+                float mt = (float)Music.MusicalTime - StateChangeTiming.totalUnit;
+                float t = (mt >= 12 ? 1.0f : (2.0f - Mathf.Cos( Mathf.PI * mt / 4.0f )) / 2.0f);
+                outlineSprite.color = Color.Lerp( oldState.color, currentState.color, t );
+            }
+        }
     }
     protected virtual void UpdateAnimation()
     {
@@ -69,19 +100,21 @@ public class Enemy : Character
                     transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 1.5f ) * 1.3f;
                 }
             }
-            renderer.material.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
+            spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
+            outlineSprite.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : currentState.color);
+
             damageTime -= Time.deltaTime;
             if( damageTime <= 0 )
             {
                 transform.localPosition = initialPosition;
                 if( HitPoint <= 0 )
                 {
-                    renderer.material.color = Color.clear;
+                    spriteRenderer.color = Color.clear;
                     Destroy( this.gameObject );
                 }
                 else
                 {
-                    renderer.material.color = GameContext.EnemyConductor.baseColor;
+                    spriteRenderer.color = GameContext.EnemyConductor.baseColor;
                 }
             }
         }
@@ -100,41 +133,44 @@ public class Enemy : Character
         {
             foreach( StateChangeCondition condition in conditions )
             {
-                int CompareValue = 0;
-                switch( condition.conditionType )
+                bool flag = true;
+                foreach( ConditionParts parts in condition )
                 {
-                case ConditionType.PlayerHP:
-                    CompareValue = GameContext.PlayerConductor.PlayerHP;
-                    break;
-                case ConditionType.TurnCout:
-                    CompareValue = turnCount;
-                    break;
-                case ConditionType.EnemyCount:
-                    CompareValue = GameContext.EnemyConductor.EnemyCount;
-                    break;
-                default:
-                    continue;
-                }
-                int d = (CompareValue - condition.Value);
-                if( condition.FromState == "" || condition.FromState == currentState.name )
-                {
-                    if( d * condition.Sign > 0 || (d == 0 && condition.Sign == 0) )
+                    int CompareValue = 0;
+                    switch( parts.conditionType )
                     {
-                        ChangeState( condition.ToState );
+                    case ConditionType.MyHP:
+                        CompareValue = HitPoint;
                         break;
+                    case ConditionType.PlayerHP:
+                        CompareValue = GameContext.PlayerConductor.PlayerHP;
+                        break;
+                    case ConditionType.TurnCount:
+                        CompareValue = turnCount;
+                        break;
+                    case ConditionType.EnemyCount:
+                        CompareValue = GameContext.EnemyConductor.EnemyCount;
+                        break;
+                    default:
+                        continue;
                     }
+                    flag &= (parts.MinValue <= CompareValue && CompareValue <= parts.MaxValue);
+                    if( !flag ) break;
                 }
-                else if( condition.ViceVersa && (condition.ToState == currentState.name) )
+                if( flag && ( condition.FromState == "" || condition.FromState == currentState.name ) && condition.ToState != currentState.name )
                 {
-                    if( d * condition.Sign < 0 && condition.FromState != "" )
-                    {
-                        ChangeState( condition.FromState );
-                        break;
-                    }
+                    ChangeState( condition.ToState );
+                    break;
+                }
+                else if( !flag && condition.ViceVersa && condition.ToState == currentState.name && condition.FromState != currentState.name )
+                {
+                    ChangeState( condition.FromState );
+                    break;
                 }
             }
         }
     }
+    /*
     protected virtual void CheckStateOnDamage( int damage )
     {
         foreach( StateChangeCondition condition in conditions )
@@ -175,6 +211,7 @@ public class Enemy : Character
             }
         }
     }
+    */
 
     public override void TurnInit( CommandBase command )
     {
@@ -188,11 +225,10 @@ public class Enemy : Character
         HealPercent = 0;
         TurnDamage = 0;
         HPCircle.OnTurnStart();
+        currentCommand = null;
     }
     public EnemyCommand CheckCommand()
     {
-        CheckState();
-
         currentCommand = currentState.pattern[turnCount % currentState.pattern.Length];
         ++turnCount;
 
@@ -215,13 +251,13 @@ public class Enemy : Character
         {
             currentState = States.Find( ( BattleState state ) => state.name == name );
             turnCount = 0;
-            if( currentState.DescribeText != "" )
-            {
-                ShortTextWindow shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
-                shortText.Initialize( currentState.DescribeText );
-                shortText.transform.position = new Vector3( transform.position.x*0.7f, shortText.transform.position.y, shortText.transform.position.z );
-                //shortText.transform.parent = transform;
-            }
+            //if( currentState.DescribeText != "" )
+            //{
+            //    ShortTextWindow shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
+            //    shortText.Initialize( currentState.DescribeText );
+            //    shortText.transform.position = new Vector3( transform.position.x*0.7f, shortText.transform.position.y, shortText.transform.position.z );
+            //    //shortText.transform.parent = transform;
+            //}
         }
     }
     public void CheckSkill()
@@ -291,10 +327,10 @@ public class Enemy : Character
         base.BeDamaged( damage, ownerCharacter );
         CreateDamageText( damage );
         HPCircle.OnDamage();
-        if( HitPoint > 0 )
-        {
-            CheckStateOnDamage( damage );
-        }
+        //if( HitPoint > 0 )
+        //{
+        //    CheckStateOnDamage( damage );
+        //}
     }
     public override void Heal( HealModule heal )
     {
@@ -312,7 +348,8 @@ public class Enemy : Character
 
     public void OnBaseColorChanged( Color newColor )
     {
-        renderer.material.color = newColor;
+        if( spriteRenderer == null ) spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.color = newColor;
         if( HPCircle != null )
         {
             //HPCircle.CurrentCircle.GetComponent<SpriteRenderer>().color = newColor;
@@ -345,26 +382,58 @@ public class Enemy : Character
         public string name;
         public EnemyCommand[] pattern;
         public string DescribeText;
+        public Color color = Color.clear;
     }
 
     public enum ConditionType
     {
         MyHP,
         PlayerHP,
-        OneDamage,
-        TurnDamage,
-        TurnCout,
+        TurnCount,
         EnemyCount,
         Count
     }
-    [System.Serializable]
-    public class StateChangeCondition
+    public struct ConditionParts
     {
         public ConditionType conditionType;
-        public int Value;
-        public int Sign;// -1:lower, 0:equal, 1:higher
+        public int MaxValue;
+        public int MinValue;
+    }
+    [System.Serializable]
+    public class StateChangeCondition : IEnumerable<ConditionParts>
+    {
+        public List<string> _conditions;
         public string FromState;
         public string ToState;
         public bool ViceVersa;
+
+        List<ConditionParts> conditionParts = new List<ConditionParts>();
+
+        public void Parse()
+        {
+            foreach( string str in _conditions )
+            {
+                string[] conditionParams = str.Split( ' ' );
+                if( conditionParams.Length != 3 ) Debug.LogError( "condition param must be TYPE MIN MAX format. ->" + str );
+                else
+                {
+                    conditionParts.Add( new ConditionParts()
+                    {
+                        conditionType = (ConditionType)System.Enum.Parse( typeof( ConditionType ), conditionParams[0] ),
+                        MinValue = conditionParams[1] == "-" ? -9999999 : int.Parse( conditionParams[1] ),
+                        MaxValue = conditionParams[2] == "-" ? +9999999 : int.Parse( conditionParams[2] ),
+                    } );
+                }
+            }
+        }
+
+        public IEnumerator<ConditionParts> GetEnumerator()
+        {
+            foreach( ConditionParts parts in conditionParts ) yield return parts;
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

@@ -1,22 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Encounter : MonoBehaviour {
 
-    [System.Serializable]
-    public class StateSet
-    {
-        public string nameList;
-        public string this[int i]
-        {
-            get{
-                return nameList.Split( ' ' )[i];
-            }
-        }
-    }
-
+    public int Level;
     public GameObject[] Enemies;
-    public StateSet[] StateSets;
+    public EnemyConductor.StateSet[] StateSets;
 
 	// Use this for initialization
 	void Start () {
@@ -33,4 +23,5 @@ public class Encounter : MonoBehaviour {
     {
 		return true;//Music.Just.bar >= 2;
     }
+
 }

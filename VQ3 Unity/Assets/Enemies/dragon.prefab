@@ -8,10 +8,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 114: {fileID: 11400000}
   - 212: {fileID: 21200000}
   m_Layer: 0
-  m_Name: dragon
+  m_Name: outlineDragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,6 +112,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &100014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400012}
+  - 114: {fileID: 11400000}
+  - 212: {fileID: 21200002}
+  m_Layer: 0
+  m_Name: dragon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -120,16 +136,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: .180000007, y: -.109999999, z: .180000007}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 400014}
-  - {fileID: 400004}
-  - {fileID: 400008}
-  - {fileID: 400002}
-  - {fileID: 400010}
-  - {fileID: 400006}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 400012}
 --- !u!4 &400002
 Transform:
   m_ObjectHideFlags: 1
@@ -140,7 +150,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
-  m_Father: {fileID: 400000}
+  m_Father: {fileID: 400012}
 --- !u!4 &400004
 Transform:
   m_ObjectHideFlags: 1
@@ -151,7 +161,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
-  m_Father: {fileID: 400000}
+  m_Father: {fileID: 400012}
 --- !u!4 &400006
 Transform:
   m_ObjectHideFlags: 1
@@ -162,7 +172,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
-  m_Father: {fileID: 400000}
+  m_Father: {fileID: 400012}
 --- !u!4 &400008
 Transform:
   m_ObjectHideFlags: 1
@@ -173,7 +183,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
-  m_Father: {fileID: 400000}
+  m_Father: {fileID: 400012}
 --- !u!4 &400010
 Transform:
   m_ObjectHideFlags: 1
@@ -184,7 +194,25 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
-  m_Father: {fileID: 400000}
+  m_Father: {fileID: 400012}
+--- !u!4 &400012
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 400000}
+  - {fileID: 400014}
+  - {fileID: 400004}
+  - {fileID: 400008}
+  - {fileID: 400002}
+  - {fileID: 400010}
+  - {fileID: 400006}
+  m_Father: {fileID: 0}
 --- !u!4 &400014
 Transform:
   m_ObjectHideFlags: 1
@@ -195,21 +223,21 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
-  m_Father: {fileID: 400000}
+  m_Father: {fileID: 400012}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
+  m_GameObject: {fileID: 100014}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 200
-  BasePower: 65
-  BaseMagic: 70
+  HitPoint: 10000
+  BasePower: 500
+  BaseMagic: 1500
   DisplayName: "\u30C9\u30E9\u30B4\u30F3"
   Speceis: 5
   States:
@@ -217,45 +245,35 @@ MonoBehaviour:
     pattern:
     - {fileID: 11400004}
     - {fileID: 11400002}
-    DescribeText: "\u306D\u3080\u3063\u3066\u3044\u308B"
+    DescribeText: 
+    color: {r: 0, g: 0, b: 0, a: 0}
   - name: Wake
     pattern:
     - {fileID: 11400010}
+    - {fileID: 11400010}
     - {fileID: 11400006}
-    DescribeText: "\u304A\u304D\u3042\u304C\u3063\u305F"
+    - {fileID: 11400006}
+    - {fileID: 11400006}
+    DescribeText: 
+    color: {r: 0, g: 0, b: 0, a: 0}
   - name: Pinch
     pattern:
     - {fileID: 11400008}
     DescribeText: 
-  - name: Wait
-    pattern:
-    - {fileID: 11400012}
-    DescribeText: "\u3088\u3046\u3059\u3092\u307F\u3066\u3044\u308B"
-  - name: Wake2
-    pattern:
-    - {fileID: 11400010}
-    - {fileID: 11400006}
-    DescribeText: 
+    color: {r: 0, g: 0, b: 0, a: 0}
   conditions:
-  - conditionType: 4
-    Value: 2
-    Sign: 1
+  - _conditions:
+    - TurnCount 3 -
     FromState: Sleep
     ToState: Wake
     ViceVersa: 0
-  - conditionType: 3
-    Value: 35
-    Sign: 1
-    FromState: Sleep
-    ToState: Wake
-    ViceVersa: 0
-  - conditionType: 0
-    Value: 30
-    Sign: -1
+  - _conditions:
+    - MyHP 0 5000
     FromState: Wake
     ToState: Pinch
-    ViceVersa: 1
+    ViceVersa: 0
   VPtolerance: 0
+  outlineSprite: {fileID: 21200000}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -272,9 +290,11 @@ MonoBehaviour:
   _timingStr: 0
   PhysicDefend: 0
   MagicDefend: 0
+  HealPercent: 10
   nextState: 
   isPassive: 0
   DescribeText: "\u306F\u3000\u306D\u307C\u3051\u3066\u3000\u3057\u3063\u307D\u3092\u3000\u3075\u3063\u305F"
+  ShortText: "\u306D\u304C\u3048\u308A"
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -291,9 +311,11 @@ MonoBehaviour:
   _timingStr: 0
   PhysicDefend: 0
   MagicDefend: 0
+  HealPercent: 10
   nextState: 
-  isPassive: 1
+  isPassive: 0
   DescribeText: "\u306F\u3000\u306D\u3080\u3063\u3066\u3044\u308B"
+  ShortText: "\u306D\u3066\u3044\u308B"
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -310,9 +332,11 @@ MonoBehaviour:
   _timingStr: 0 0 0
   PhysicDefend: 50
   MagicDefend: 70
+  HealPercent: 0
   nextState: 
   isPassive: 0
   DescribeText: "\u306F\u3000\u306F\u3052\u3057\u3044\u3000\u307B\u306E\u304A\u3092\u3000\u306F\u3044\u305F\uFF01"
+  ShortText: "\u3057\u3083\u304F\u306D\u3064"
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -329,9 +353,11 @@ MonoBehaviour:
   _timingStr: 0 3 0
   PhysicDefend: 0
   MagicDefend: 0
+  HealPercent: 0
   nextState: Sleep
   isPassive: 0
   DescribeText: "\u306F\u3000\u3050\u3046\u3050\u3046\u3068\u3000\u306D\u3080\u308A\u306F\u3058\u3081\u305F"
+  ShortText: "\u306D\u3080\u308B"
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,10 +373,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8c59f0377c440ea4cbf98a4cb4c3fabe, type: 2}
   _timingStr: 0 0 0
   PhysicDefend: 50
-  MagicDefend: 60
+  MagicDefend: 70
+  HealPercent: 0
   nextState: 
-  isPassive: 1
+  isPassive: 0
   DescribeText: "\u306F\u3000\u307B\u306E\u304A\u3092\u3000\u304F\u3061\u306B\u3000\u3075\u304F\u3093\u3060"
+  ShortText: "\u3072\u3092\u3000\u305F\u3081\u308B"
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -367,9 +395,11 @@ MonoBehaviour:
   _timingStr: 0 0 0
   PhysicDefend: 0
   MagicDefend: 0
+  HealPercent: 0
   nextState: Wake2
-  isPassive: 1
+  isPassive: 0
   DescribeText: "\u306F\u3000\u3088\u3046\u3059\u3092\u3000\u307F\u3066\u3044\u308B"
+  ShortText: "\u3088\u3046\u3059\u307F"
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -392,7 +422,30 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_SortingLayerID: 4087608993
   m_Sprite: {fileID: 21300000, guid: 2d7f7a12f693f0a43886ec03bbb95d62, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+--- !u!212 &21200002
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100014}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 3343315803b791b418bb63fa5f7ed706, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: -1
+  m_SortingOrder: 0
+  m_SortingLayerID: 4087608993
+  m_Sprite: {fileID: 21300000, guid: 2d7f7a12f693f0a43886ec03bbb95d62, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -402,6 +455,6 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 100000}
+  m_RootGameObject: {fileID: 100014}
   m_IsPrefabParent: 1
   m_IsExploded: 1

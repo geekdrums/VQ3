@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum ResultState
 {
@@ -16,11 +17,11 @@ public class FieldConductor : MonoBehaviour {
     [System.Serializable]
     public class LevelEncounter
     {
-        public Encounter[] Encounters;
+        public List<Encounter> Encounters = new List<Encounter>();
     }
 
-    public LevelEncounter[] LevelEncounters;
-	public int encounterCount;
+    LevelEncounter[] LevelEncounters;
+	int encounterCount;
 
     public ResultState RState { get; private set; }
     LevelEncounter CurrentLevel { get { return LevelEncounters[GameContext.PlayerConductor.Level - 1]; } }
@@ -29,6 +30,16 @@ public class FieldConductor : MonoBehaviour {
     void Start()
     {
         GameContext.FieldConductor = this;
+
+        LevelEncounters = new LevelEncounter[50];
+        for( int i = 0; i < 50; i++ )
+        {
+            LevelEncounters[i] = new LevelEncounter();
+        }
+        foreach( Encounter encounter in GetComponentsInChildren<Encounter>() )
+        {
+            LevelEncounters[encounter.Level-1].Encounters.Add( encounter );
+        }
 	}
 	
 	// Update is called once per frame
@@ -36,7 +47,7 @@ public class FieldConductor : MonoBehaviour {
         switch( GameContext.CurrentState )
         {
         case GameState.Field:
-            if( encounterCount >= CurrentLevel.Encounters.Length )
+            if( encounterCount >= CurrentLevel.Encounters.Count )
             {
                 if( GameContext.PlayerConductor.Level >= LevelEncounters.Length ) return;
                 else
@@ -44,8 +55,8 @@ public class FieldConductor : MonoBehaviour {
                     GameContext.PlayerConductor.Level++;
                     GameContext.PlayerConductor.OnLevelUp();
                     encounterCount = 0;
-                    RState = ResultState.Status1;
-                    GameContext.ChangeState( GameState.Result );
+                    //RState = ResultState.Status1;
+                    //GameContext.ChangeState( GameState.Result );
                 }
             }
             else
@@ -53,9 +64,9 @@ public class FieldConductor : MonoBehaviour {
                 CheckEncount();
             }
             break;
-        case GameState.Result:
-            GameContext.PlayerConductor.UpdateResult();
-            break;
+        //case GameState.Result:
+        //    GameContext.PlayerConductor.UpdateResult();
+        //    break;
         default:
             break;
         }

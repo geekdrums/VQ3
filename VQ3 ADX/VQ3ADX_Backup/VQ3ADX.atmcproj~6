@@ -6,15 +6,15 @@
       <Orca OrcaName="VQ3ADX" OoUniqId="f6c477d2-fafd-4a2e-a457-37957ca232cb" ProjectFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX.atmcproj" BuildRootPath="" VersionInfo="Ver.1.32.00" MaterialRootPath="Materials" RecentProjectPaths="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX.atmcproj,C:/Users/geekdrums/Documents/CriAtomCraft/RIPG.atmcproj" CurrentTargetConfig="/CRI Atom Craft/VQ3ADX/全体設定/ターゲットコンフィグ/Public" CurrentPreviewTargetConfig="/CRI Atom Craft/VQ3ADX/全体設定/ターゲットコンフィグ/Public" CurrentLanguageSetting="/CRI Atom Craft/VQ3ADX/全体設定/言語設定/Default" UnityInfoOutputFlag="True" MakeInGameAcbFlag="False" AcbInfoFileOutputFlag="True" AcfOutputFlag="True" CharacterCodeType="ShiftJis" PostProcessOutputAcbPath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoProject">
         <Orca OrcaName="全体設定" OoUniqId="4675cac8-829d-4d86-8dae-b0ebac5cf3ee" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGlobalFolder">
           <Orca OrcaName="グローバルAISAC" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGlobalAisacFolder" />
-          <Orca OrcaName="AISACコントロール" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControlFolder">
-            <Orca OrcaName="Level" ControlId="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
-            <Orca OrcaName="IsTransition" ControlId="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+          <Orca OrcaName="AISACコントロール" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControlFolder">
+            <Orca OrcaName="AisacControl00" ControlId="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="AisacControl01" ControlId="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
             <Orca OrcaName="TrackVolume1" ControlId="2" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
             <Orca OrcaName="TrackVolume2" ControlId="3" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
             <Orca OrcaName="TrackVolumeEnergy" ControlId="4" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
             <Orca OrcaName="TrackVolumeTransition" ControlId="5" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
             <Orca OrcaName="TrackVolumeLoop" ControlId="6" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
-            <Orca OrcaName="AisacControl07" ControlId="7" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+            <Orca OrcaName="IsTransition" ControlId="7" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
             <Orca OrcaName="AisacControl08" ControlId="8" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
             <Orca OrcaName="AisacControl09" ControlId="9" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
             <Orca OrcaName="AisacControl10" ControlId="10" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
@@ -43,7 +43,7 @@
             </Orca>
           </Orca>
           <Orca OrcaName="REACT" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoReactFolder" />
-          <Orca OrcaName="ボイスリミットグループ" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoVoiceLimitGroupFolder">
+          <Orca OrcaName="ボイスリミットグループ" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoVoiceLimitGroupFolder">
             <Orca OrcaName="VoiceLimitGroup_0" VoiceLimitNum="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoVoiceLimitGroup" />
           </Orca>
           <Orca OrcaName="ゲーム変数" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariableFolder">
