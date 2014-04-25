@@ -35,6 +35,7 @@ public class CommandGraph : MonoBehaviour {
     public TextMesh NextCommandText;
     public List<Sprite> CommandIcons;
     public MidairPrimitive AxisRing;
+    public Strategy PilgrimStrategy;
 
     public List<PlayerCommand> CommandNodes { get; private set; }
     public List<Strategy> StrategyNodes { get; private set; }
@@ -49,6 +50,11 @@ public class CommandGraph : MonoBehaviour {
     public Color IconDSColor;
     public Color IconHRColor;
     public Color IconVColor;
+
+    public Color initialLineColor;
+    public Color selectLineColor;
+    Color initialLineColorEnd;
+    Color selectLineColorEnd;
 
     bool IsInvert { get { return CurrentCommand is InvertCommand; } }
     bool IsLastInvert { get { return IsInvert && (GameContext.VoxSystem.InvertTime == 1 || (CurrentCommand as InvertCommand).isLast); } }
@@ -89,6 +95,11 @@ public class CommandGraph : MonoBehaviour {
         TimeBar.transform.localScale = targetTimeBarScale;
         initialCurrentBarPosition = CurrentBar.transform.localPosition;
         initialNextBarPosition = NextBar.transform.localPosition;
+
+        initialLineColorEnd = initialLineColor;
+        initialLineColorEnd.a = 0;
+        selectLineColorEnd = selectLineColor;
+        selectLineColorEnd.a = 0;
     }
 
     void InitializeLinks()
@@ -190,7 +201,7 @@ public class CommandGraph : MonoBehaviour {
                 playerCommand.longitude = int.Parse( propertyTexts[(int)CommandListProperty.Longitude] );
                 playerCommand.latitude = int.Parse( propertyTexts[(int)CommandListProperty.Latitude] );
                 playerCommand.MusicBlockName = propertyTexts[(int)CommandListProperty.Music];
-                playerCommand.GetComponent<TextMesh>().text = commandName.Insert( 2, "\n" );
+                playerCommand.GetComponent<TextMesh>().text = commandName.Insert( 2, "\n" );//propertyTexts[(int)CommandListProperty.Icon];
                 playerCommand.GetComponent<TextMesh>().fontSize = 8;
                 string iconStr = propertyTexts[(int)CommandListProperty.Icon];
                 playerCommand.icons = new List<EStatusIcon>();
@@ -203,6 +214,7 @@ public class CommandGraph : MonoBehaviour {
                         if( iconStr == "" ) break;
                     }
                 }
+                if( categoryName == "G" ) playerCommand.SetParent( PilgrimStrategy );
                 
                 if( playerCommand.icons.Contains( EStatusIcon.DD ) )
                 {
@@ -216,11 +228,11 @@ public class CommandGraph : MonoBehaviour {
                 }
                 if( playerCommand.icons.Contains( EStatusIcon.HH ) )
                 {
-                    playerCommand.HealPercent = 40;
+                    playerCommand.HealPercent = 50;
                 }
                 else if( playerCommand.icons.Contains( EStatusIcon.H ) )
                 {
-                    playerCommand.HealPercent = 20;
+                    playerCommand.HealPercent = 25;
                 }
                 playerCommand.OnValidatePosition();
                 if( propertyTexts[(int)CommandListProperty.Music] == "intro" )
@@ -657,17 +669,37 @@ public class CommandGraph : MonoBehaviour {
         if( OldCommand != null )
         {
             OldCommand.SetLink( false );
+            foreach( LineRenderer line in OldCommand.linkLines )
+            {
+                line.SetColors( initialLineColor, initialLineColorEnd );
+            }
             foreach( PlayerCommand c in OldCommand.LinkedCommands )
             {
                 c.SetLink( false );
+                foreach( LineRenderer line in c.linkLines )
+                {
+                    line.SetColors( initialLineColor, initialLineColorEnd );
+                }
             }
+
         }
         if( NextCommand != null )
         {
             CurrentCommand = NextCommand;
+            foreach( LineRenderer line in CurrentCommand.linkLines )
+            {
+                line.SetColors( selectLineColor, selectLineColorEnd );
+            }
             foreach( PlayerCommand c in GetLinkedCommands() )
             {
                 c.SetLink( true );
+                if( c.IsUsable() )
+                {
+                    foreach( LineRenderer line in c.linkLines )
+                    {
+                        line.SetColors( selectLineColor, selectLineColorEnd );
+                    }
+                }
             }
             CurrentCommand.SetCurrent();
             NextCommand = null;
@@ -712,7 +744,11 @@ public class CommandGraph : MonoBehaviour {
     {
         foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
         {
-            command.SetLink(false);
+            command.SetLink( false );
+            foreach( LineRenderer line in command.linkLines )
+            {
+                line.SetColors( initialLineColor, initialLineColorEnd );
+            }
         }
         OldCommand = null;
         NextCommand = null;

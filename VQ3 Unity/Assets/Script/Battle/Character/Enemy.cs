@@ -76,7 +76,7 @@ public class Enemy : Character
                 shortText.transform.position = new Vector3( transform.position.x * 0.7f, shortText.transform.position.y, shortText.transform.position.z );
                 //shortText.transform.parent = transform;
             }
-            if( Music.IsJustChangedAt( StateChangeTiming ) )
+            if( Music.IsJustChangedAt( StateChangeTiming ) && currentState.name != "Invert" )
             {
                 oldState = currentState;
                 CheckState();
@@ -226,13 +226,35 @@ public class Enemy : Character
         TurnDamage = 0;
         HPCircle.OnTurnStart();
         currentCommand = null;
+
+        oldState = currentState;
+        BattleState invertState = States.Find( ( BattleState state ) => state.name == "Invert" );
+        if( invertState == null )
+        {
+            invertState = new BattleState();
+            invertState.name = "Invert";
+            invertState.color = Color.clear;
+        }
+        currentState = invertState;
+    }
+    public void OnRevert()
+    {
+        BattleState nextState = oldState;
+        oldState = currentState;
+        currentState = nextState;
     }
     public EnemyCommand CheckCommand()
     {
-        currentCommand = currentState.pattern[turnCount % currentState.pattern.Length];
+        if( currentState.pattern != null && currentState.pattern.Length > 0 )
+        {
+            currentCommand = currentState.pattern[turnCount % currentState.pattern.Length];
+            TurnInit( currentCommand );
+        }
+        else
+        {
+            currentCommand = null;
+        }
         ++turnCount;
-
-        TurnInit( currentCommand );
 
         return currentCommand;
     }
@@ -381,7 +403,6 @@ public class Enemy : Character
     {
         public string name;
         public EnemyCommand[] pattern;
-        public string DescribeText;
         public Color color = Color.clear;
     }
 

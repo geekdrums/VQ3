@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoint: 1000
-  BasePower: 300
+  BasePower: 270
   BaseMagic: 0
   DisplayName: "\u30DF\u30DF\u30C3\u30AF"
   Speceis: 1
@@ -160,18 +160,16 @@ MonoBehaviour:
   - name: Default
     pattern:
     - {fileID: 11400006}
-    DescribeText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   - name: Critical
     pattern:
     - {fileID: 11400004}
     - {fileID: 11400002}
     - {fileID: 11400002}
-    DescribeText: 
     color: {r: 1, g: 0, b: 0, a: 1}
   conditions:
   - _conditions:
-    - TurnCount 2 -
+    - TurnCount 3 -
     FromState: Default
     ToState: Critical
     ViceVersa: 0
@@ -201,7 +199,6 @@ MonoBehaviour:
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  isPassive: 0
   DescribeText: "\u306F\u3000\u3068\u3064\u305C\u3093\u3000\u304A\u305D\u3044\u304B\u304B\u3063\u3066\u304D\u305F\uFF01"
   ShortText: "\u304A\u305D\u3044\u304B\u304B\u308B"
 --- !u!114 &11400004
@@ -222,7 +219,6 @@ MonoBehaviour:
   MagicDefend: 30
   HealPercent: 0
   nextState: 
-  isPassive: 0
   DescribeText: "\u306F\u3000\u3081\u3092  \u306E\u305E\u304B\u305B\u3066\u3044\u308B"
   ShortText: "\u308F\u3089\u3063\u3066\u3044\u308B"
 --- !u!114 &11400006
@@ -243,7 +239,6 @@ MonoBehaviour:
   MagicDefend: 10
   HealPercent: 0
   nextState: 
-  isPassive: 0
   DescribeText: "\u306E\u3000\u3053\u3046\u3052\u304D\uFF01"
   ShortText: "\u3053\u3046\u3052\u304D"
 --- !u!212 &21200000

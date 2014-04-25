@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class EnemyCommand : CommandBase
 {
     public string nextState;
-    public bool isPassive;
 
     public string DescribeText;
     public string ShortText;

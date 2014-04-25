@@ -59,7 +59,7 @@ public class EnhanceIcons : MonoBehaviour {
             case EnhanceParamType.Regene: iconChar = 'R'; break;
             }
             string iconName = new string( iconChar, Mathf.Abs( enhance.phase ) );
-            if( enhance.phase < 0 ) iconName.Insert( 0, "_" );
+            if( enhance.phase < 0 ) iconName = iconName.Insert( 0, "-" );
             iconSpr = iconSprites.Find( ( Sprite spr ) => spr.name == iconName );
             if( iconSpr != null )
             {

@@ -81,6 +81,7 @@ public class PlayerCommand : CommandBase, IVoxNode
     public bool IsTargetSelectable { get { return _skillList.Find( ( Skill s ) => s.IsTargetSelectable ) != null; } }
     public PlayerCommand ParentCommand { get; protected set; }
     public int NumLoopVariations { get; protected set; }
+    public LineRenderer[] linkLines { get; protected set; }
 
     protected TextMesh textMesh;
 
@@ -118,6 +119,7 @@ public class PlayerCommand : CommandBase, IVoxNode
         IsLinked = false;
         IsCurrent = false;
         IsSelected = false;
+        linkLines = GetComponentsInChildren<LineRenderer>();
     }
 
     void OnValidate()

@@ -63,17 +63,17 @@ public class EnemyConductor : MonoBehaviour {
             if( Music.IsJustChangedBar() && Music.Just.bar >= 1 )
             {
                 List<string> messages = new List<string>();
-                if( Music.Just.bar == 1 )
-                {
-                    foreach( Enemy passiveEnemy in from e in Enemies where e.currentCommand != null && e.currentCommand.isPassive select e )
-                    {
-                        messages.Add( passiveEnemy.DisplayName + passiveEnemy.currentCommand.DescribeText );
-                    }
-                    if( WeatherEnemy != null && WeatherEnemy.currentCommand != null && WeatherEnemy.currentCommand.isPassive )
-                    {
-                        messages.Add( WeatherEnemy.currentCommand.DescribeText );
-                    }
-                }
+                //if( Music.Just.bar == 1 )
+                //{
+                //    foreach( Enemy passiveEnemy in from e in Enemies where e.currentCommand != null && e.currentCommand.isPassive select e )
+                //    {
+                //        messages.Add( passiveEnemy.DisplayName + passiveEnemy.currentCommand.DescribeText );
+                //    }
+                //    if( WeatherEnemy != null && WeatherEnemy.currentCommand != null && WeatherEnemy.currentCommand.isPassive )
+                //    {
+                //        messages.Add( WeatherEnemy.currentCommand.DescribeText );
+                //    }
+                //}
                 if( messages.Count == 0 && ( Music.Just.bar < 2 || GameContext.VoxSystem.state == VoxState.Sun ) )
                 {
                     Enemy enemy = Enemies.Find( ( Enemy e ) => e.commandExecBar == Music.Just.bar );
@@ -280,34 +280,20 @@ public class EnemyConductor : MonoBehaviour {
 
     public void CheckCommand()
     {
-        if( GameContext.VoxSystem.state == VoxState.Invert ) return;
+        //if( GameContext.VoxSystem.state == VoxState.Invert ) return;
 
         int execIndex = 0;
         foreach( Enemy enemy in Enemies )
         {
             enemy.CheckCommand();
-            if( enemy.currentCommand.isPassive )
-            {
-                enemy.SetExecBar( 0 );
-            }
-            else
-            {
-                enemy.SetExecBar( CommandExecBars[execIndex] );
-                ++execIndex;
-            }
+            enemy.SetExecBar( CommandExecBars[execIndex] );
+            ++execIndex;
         }
 
         if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
         {
             WeatherEnemy.CheckCommand();
-            if( WeatherEnemy.currentCommand.isPassive )
-            {
-                WeatherEnemy.SetExecBar( 0 );
-            }
-            else
-            {
-                WeatherEnemy.SetExecBar( CommandExecBars[execIndex] );
-            }
+            WeatherEnemy.SetExecBar( CommandExecBars[execIndex] );
         }
 
         /*
@@ -358,7 +344,7 @@ public class EnemyConductor : MonoBehaviour {
     public void CheckSkill()
     {
         int CurrentIndex = Music.Just.bar;
-        if( GameContext.VoxSystem.state == VoxState.Invert ) return;
+        //if( GameContext.VoxSystem.state == VoxState.Invert ) return;
         if( GameContext.VoxSystem.state == VoxState.Eclipse && GameContext.VoxSystem.IsReadyEclipse && CurrentIndex >= 2 ) return;
 
         foreach( Enemy e in Enemies )
@@ -373,6 +359,13 @@ public class EnemyConductor : MonoBehaviour {
         foreach( Enemy e in Enemies )
         {
             e.InvertInit();
+        }
+    }
+    public void OnRevert()
+    {
+        foreach( Enemy e in Enemies )
+        {
+            e.OnRevert();
         }
     }
 

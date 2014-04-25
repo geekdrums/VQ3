@@ -171,6 +171,7 @@ public class VoxSystem : MonoBehaviour{
             if( Music.IsJustChangedAt( 3, 2 ) && InvertTime == 1 )
             {
                 SetState( VoxState.Revert );
+                GameContext.EnemyConductor.OnRevert();
             }
             break;
         case VoxState.Revert:

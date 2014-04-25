@@ -19,7 +19,7 @@ public class EnhanceParameter
     public EnhanceParamType type { get; private set; }
     public int phase { get; private set; }
     public int remainTurn { get; private set; }
-    public int currentParam { get { return (phase == 0 ? 0 : (phase > 0 ? goodPhaseParams[phase - 1] : badPhaseParams[phase + 1])); } }
+    public int currentParam { get { return (phase == 0 ? 0 : (phase > 0 ? goodPhaseParams[phase - 1] : badPhaseParams[-phase - 1])); } }
 
     public EnhanceParameter( EnhanceParamType type, params int[] badAndGoodParams )
     {
@@ -33,7 +33,7 @@ public class EnhanceParameter
         goodPhaseParams = new int[badAndGoodParams.Length - numBadParam];
         for( int i = 0; i < badAndGoodParams.Length; i++ )
         {
-            if( i < numBadParam ) badPhaseParams[i] = badAndGoodParams[i];
+            if( i < numBadParam ) badPhaseParams[numBadParam-i-1] = badAndGoodParams[i];
             else goodPhaseParams[i - numBadParam] = badAndGoodParams[i];
         }
     }
