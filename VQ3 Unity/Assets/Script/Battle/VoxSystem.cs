@@ -312,13 +312,13 @@ public class VoxSystem : MonoBehaviour{
             Music.SetAisac( "TrackVolumeLoop", IsReadyEclipse ? 0 : 1 );
             if( IsReadyEclipse )
             {
-                TextWindow.ChangeMessage( "くろいつきが　せかいを　はんてんさせる" );
+                TextWindow.ChangeMessage( BattleMessageType.Invert, "くろいつきが　せかいを　はんてんさせる" );
                 InvertTime = Mathf.Clamp( (int)(MaxInvertTime * ((float)currentVT / MaxVT)), 1, MaxInvertTime - 1 ) + 1;
                 GameContext.PlayerConductor.commandGraph.OnReactEvent( IconReactType.OnInvert );
             }
             else
             {
-                TextWindow.ChangeMessage( "しかし　VPが　たりなかったようだ" );
+                TextWindow.ChangeMessage( BattleMessageType.Invert, "しかし　VPが　たりなかったようだ" );
             }
         }
         if( IsReadyEclipse )

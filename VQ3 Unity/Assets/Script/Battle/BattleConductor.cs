@@ -46,9 +46,10 @@ public class BattleConductor : MonoBehaviour {
             UpdateBattle();
 			if ( Music.IsJustChangedAt(0) && Music.GetCurrentBlockName() == "endro" )
 			{
+                TextWindow.ClearTutorialMessage();
                 GameContext.VoxSystem.SetState( VoxState.SunSet );
 				GameContext.ChangeState( GameState.Endro );
-                TextWindow.ChangeMessage( "てきを　やっつけた！" );
+                TextWindow.ChangeMessage( BattleMessageType.Result, "てきを　やっつけた！" );
 			}
             break;
 		case GameState.Endro:
@@ -152,7 +153,8 @@ public class BattleConductor : MonoBehaviour {
 	}
 	public void OnPlayerLose()
     {
-        TextWindow.ChangeMessage( "オクスは　ちからつきた", "ボールを　おして　ふっかつを　いのろう");
+        TextWindow.ClearTutorialMessage();
+        TextWindow.ChangeMessage( BattleMessageType.Result, "オクスは　ちからつきた" );
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
         GameContext.VoxSystem.SetState( VoxState.SunSet );
@@ -162,7 +164,8 @@ public class BattleConductor : MonoBehaviour {
 	}
     public void OnPlayerRunaway()
     {
-        TextWindow.ChangeMessage( "オクスは　にげだした", "ボールを　おして　さいせん　できます" );
+        TextWindow.ClearTutorialMessage();
+        TextWindow.ChangeMessage( BattleMessageType.Result, "オクスは　にげだした" );
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
         GameContext.VoxSystem.SetState( VoxState.SunSet );

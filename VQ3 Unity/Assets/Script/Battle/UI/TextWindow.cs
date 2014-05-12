@@ -3,114 +3,190 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum BattleMessageType
+{
+    Damage,
+    Heal,
+    Enhance,
+    EnemyEmerge,
+    PlayerCommaand,
+    PlayerWait,
+    CommandSelect,
+    Invert,
+    Result,
+    Tutorial,
+}
+
 public class GUIMessage
 {
-	public readonly string Text;
+	public string Text;
 	public int CurrentIndex;
-	Func<bool> isEndPred;
-	Action OnEndShowEvent;
+    public BattleMessageType Type;
 
-	public bool IsEnd { get { return CurrentIndex >= Text.Length - 1 && ( isEndPred == null || isEndPred() ); } }
-	public void OnEndShow()
-	{
-		if ( OnEndShowEvent != null )
-		{
-			OnEndShowEvent();
-		}
-	}
+	public bool IsEnd { get { return CurrentIndex >= Text.Length - 1; } }
+    public string DisplayText
+    {
+        get
+        {
+            int textIndex = -1;
+            int tagStartIndex = -1;
+            bool isTagClosed = true;
+            string tagText = "";
+            for( int i = 0; i < CurrentIndex; i++ )
+            {
+                if( textIndex + 1 >= Text.Length ) break;
+                ++textIndex;
+                if( Text[textIndex] == '<' )
+                {
+                    isTagClosed = !isTagClosed;
+                    tagStartIndex = textIndex + 1;
+                    while( Text[textIndex] != '>' )
+                    {
+                        if( !isTagClosed && Text[textIndex] == '=' )
+                        {
+                            tagText = Text.Substring( tagStartIndex, textIndex - tagStartIndex );
+                        }
+                        ++textIndex;
+                    }
+                }
+            }
+            string res = Text.Substring( 0, Mathf.Min( textIndex + 1, Text.Length ) );
+            if( !isTagClosed )
+            {
+                res += "</" + tagText + ">";
+            }
+            //TODO: replace [Icon:name] to spaces
+            return res;
+        }
+    }
 
-	public GUIMessage( string Text, Func<bool> isEnd = null, Action OnEndShow = null, int startIndex = 0 )
+	public GUIMessage( string Text, BattleMessageType type, int startIndex = 0 )
 	{
 		this.Text = Text;
         this.CurrentIndex = startIndex;
-		if ( isEnd != null )
-		{
-			this.isEndPred = isEnd;
-		}
-		this.OnEndShowEvent = OnEndShow;
+        this.Type = type;
 	}
+}
+
+public enum TutorialMessageType
+{
+    None,
+    Const,
+    Loop,
+}
+
+[System.Serializable]
+public class TutorialMessage
+{
+    public string[] Texts;
+    public Color BaseColor;
+    public List<BattleMessageType> ApproveMessageTypes;
+    public TutorialMessageType Type;
+
+    public string DisplayText
+    {
+        get
+        {
+            switch( Type )
+            {
+            case TutorialMessageType.Const:
+                return Texts[0];
+            default:
+                return Texts[0];
+            }
+        }
+    }
 }
 
 public class TextWindow : MonoBehaviour {
 
 	static TextWindow instance;
-    TextMesh[] displayTexts;
+    TextMesh displayText;
 
-	List<GUIMessage> Messages = new List<GUIMessage>();
+	GUIMessage message = new GUIMessage( "", BattleMessageType.Damage );
+    TutorialMessage tutorialMessage;
     bool useNextCursor = false;
     float blinkTime;
+    float displayMusicTime;
+    Vector3 initialTutorialBasePosition;
 
+    public GameObject textBase;
+    public GameObject textBaseTutorial;
     public float BlinkInterval;
 
 	// Use this for initialization
 	void Start () {
 		instance = this;
-        displayTexts = GetComponentsInChildren<TextMesh>();
-        for( int i = 0; i < displayTexts.Length; i++ )
-        {
-            displayTexts[i].text = "";
-        }
+        displayText = GetComponentInChildren<TextMesh>();
+        displayText.text = "";
+        initialTutorialBasePosition = textBaseTutorial.transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        for( int i = 0; i < Messages.Count; i++ )
+        ++message.CurrentIndex;
+        displayText.text = message.DisplayText;
+        if( Music.isJustChanged )
         {
-            ++Messages[i].CurrentIndex;
-            displayTexts[i].text = Messages[i].Text.Substring( 0, Mathf.Min( Messages[i].CurrentIndex + 1, Messages[i].Text.Length ) );
+            ++displayMusicTime;
+            if( tutorialMessage != null && message.Type != BattleMessageType.Tutorial && displayMusicTime >= 16 )
+            {
+                ChangeMessage_( tutorialMessage.DisplayText, BattleMessageType.Tutorial );
+            }
         }
         if( useNextCursor )
         {
             blinkTime += Time.deltaTime;
-            if( Messages[Messages.Count - 1].IsEnd && (blinkTime % (BlinkInterval*2) ) >= BlinkInterval )
+            if( message.IsEnd && (blinkTime % (BlinkInterval * 2)) >= BlinkInterval )
             {
-                displayTexts[Messages.Count - 1].text += " >";
+                displayText.text += " >";
             }
         }
+        textBaseTutorial.transform.position = Vector3.Lerp( textBaseTutorial.transform.position, (message.Type == BattleMessageType.Tutorial ? textBase.transform.position : initialTutorialBasePosition), 0.2f );
 	}
 
-    public static void ClearMessages()
+    void ChangeMessage_( string text, BattleMessageType type )
     {
-        instance.ClearMessages_();
+        if( tutorialMessage != null )
+        {
+            if( type != BattleMessageType.Tutorial && !tutorialMessage.ApproveMessageTypes.Contains( type ) ) return;
+        }
+        this.message.Text = text;
+        this.message.Type = type;
+        this.message.CurrentIndex = 0;
+        displayMusicTime = 0;
+        displayText.color = (type == BattleMessageType.Tutorial ? Color.white : (tutorialMessage != null ? tutorialMessage.BaseColor : Color.black));
     }
-	public static void AddMessage( params string[] NewMessages )
-	{
-		foreach ( string message in NewMessages )
-		{
-			instance.AddMessage_( new GUIMessage(message) );
-		}
-	}
-	public static void AddMessage( GUIMessage NewMessage )
-	{
-		instance.AddMessage_( NewMessage );
-	}
-    public static void ChangeMessage( params string[] NewMessages )
+    void SetNextCursor_( bool use )
     {
-        ClearMessages();
-        AddMessage( NewMessages );
+        useNextCursor = use;
+        blinkTime = 0;
+    }
+    void SetTutorialMessage_( TutorialMessage tm )
+    {
+        tutorialMessage = tm;
+        textBaseTutorial.renderer.material.color = tm.BaseColor;
+        ChangeMessage_( tm.DisplayText, BattleMessageType.Tutorial );
+    }
+    void ClearTutorialMessage_()
+    {
+        tutorialMessage = null;
+    }
+
+    public static void ChangeMessage( BattleMessageType type, string NewMessage )
+    {
+        instance.ChangeMessage_( NewMessage, type );
     }
     public static void SetNextCursor( bool use )
     {
         instance.SetNextCursor_( use );
     }
-
-	void AddMessage_( GUIMessage NewMessage )
-	{
-        Messages.Add( NewMessage );
-        if( Messages.Count > displayTexts.Length ) Messages.RemoveAt( 0 );
-	}
-    void ClearMessages_()
+    public static void SetTutorialMessage( TutorialMessage tm )
     {
-        Messages.Clear();
-        for( int i = 0; i < displayTexts.Length; i++ )
-        {
-            displayTexts[i].text = "";
-        }
+        instance.SetTutorialMessage_( tm );
     }
-
-    void SetNextCursor_( bool use )
+    public static void ClearTutorialMessage()
     {
-        useNextCursor = use;
-        blinkTime = 0;
+        instance.ClearTutorialMessage_();
     }
 }

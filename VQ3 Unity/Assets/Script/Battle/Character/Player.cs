@@ -67,7 +67,7 @@ public class Player : Character {
 
         HPBar.OnDamage( damage );
         commandGraph.OnReactEvent( IconReactType.OnDamage );
-        TextWindow.AddMessage( "オクスは " + damage + " のダメージを　うけた" );
+        TextWindow.ChangeMessage( BattleMessageType.Damage, "オクスは <color=red>" + damage + "</color> のダメージを　うけた" );
         //if( damage <= 0 )
         //{
         //    (Instantiate( DefendAnimPrefab, ownerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;

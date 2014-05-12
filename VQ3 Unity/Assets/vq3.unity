@@ -1863,6 +1863,11 @@ MonoBehaviour:
   - {fileID: 100006, guid: fb410b5af26263e46b62dc9fa53ae7d9, type: 2}
   StateSets:
   - nameList: Default
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &141330992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3604,6 +3609,11 @@ MonoBehaviour:
   - {fileID: 100000, guid: 796bfaf5a0b1c124bbe8661b4079c57f, type: 2}
   StateSets:
   - nameList: Default
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &273875731
 GameObject:
   m_ObjectHideFlags: 0
@@ -4641,6 +4651,11 @@ MonoBehaviour:
   - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
   StateSets:
   - nameList: Default
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &391807560
 GameObject:
   m_ObjectHideFlags: 0
@@ -4977,6 +4992,11 @@ MonoBehaviour:
   - {fileID: 100000, guid: 44f59b5ed47003442848b5785e88d3a3, type: 2}
   StateSets:
   - nameList: Default
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &458034459
 GameObject:
   m_ObjectHideFlags: 0
@@ -6912,6 +6932,50 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
+--- !u!1 &711870522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 711870523}
+  - 114: {fileID: 711870524}
+  m_Layer: 0
+  m_Name: Dialog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &711870523
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 711870522}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.2016649, y: -2.21990252, z: 1.93798828}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1555709509}
+  - {fileID: 894232371}
+  - {fileID: 1114236759}
+  m_Father: {fileID: 2084352198}
+--- !u!114 &711870524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 711870522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2268af502b2c4e643bda6eebe0f0a29f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textBase: {fileID: 894232370}
+  textBaseTutorial: {fileID: 1114236758}
+  BlinkInterval: .200000003
 --- !u!1 &731077464
 GameObject:
   m_ObjectHideFlags: 0
@@ -8714,6 +8778,11 @@ MonoBehaviour:
   - {fileID: 100000, guid: f6172776a42393e41a2ebe7a852709fa, type: 2}
   StateSets:
   - nameList: Blaster
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!4 &864733825
 Transform:
   m_ObjectHideFlags: 0
@@ -8785,7 +8854,6 @@ GameObject:
   - 4: {fileID: 894232371}
   - 33: {fileID: 894232374}
   - 23: {fileID: 894232373}
-  - 114: {fileID: 894232372}
   m_Layer: 0
   m_Name: TextWindow
   m_TagString: Untagged
@@ -8800,23 +8868,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 894232370}
   m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: -2.91718102, z: -6.88131714}
-  m_LocalScale: {x: 2.26999998, y: 1, z: .0923516899}
-  m_Children:
-  - {fileID: 1555709509}
-  m_Father: {fileID: 2084352198}
---- !u!114 &894232372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 894232370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2268af502b2c4e643bda6eebe0f0a29f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BlinkInterval: .200000003
+  m_LocalPosition: {x: 11.2016649, y: -.590097427, z: -8.81930542}
+  m_LocalScale: {x: 2.88553309, y: 1.27116001, z: .117393769}
+  m_Children: []
+  m_Father: {fileID: 711870523}
 --- !u!23 &894232373
 Renderer:
   m_ObjectHideFlags: 0
@@ -8829,7 +8884,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: e5b95c3520a9e074da0ab445b0687b9c, type: 2}
+  - {fileID: 2100000, guid: 6178eb90f091bb6419a185cb83d32f42, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -8955,6 +9010,11 @@ MonoBehaviour:
   - {fileID: 100000, guid: fc9d85b32cd0f9d41abf46732c85eb73, type: 2}
   StateSets:
   - nameList: Default
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &903896964
 GameObject:
   m_ObjectHideFlags: 0
@@ -10767,6 +10827,62 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
+--- !u!1 &1114236758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100000, guid: 01a0e176d5f10d74ca478e3ad9e7da5b, type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1114236759}
+  - 33: {fileID: 1114236762}
+  - 23: {fileID: 1114236761}
+  m_Layer: 0
+  m_Name: TutorialTextBase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1114236759
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: 01a0e176d5f10d74ca478e3ad9e7da5b, type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1114236758}
+  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: 37, y: -.590097427, z: -8.81930542}
+  m_LocalScale: {x: 2.88553309, y: 1.27116001, z: .117394}
+  m_Children: []
+  m_Father: {fileID: 711870523}
+--- !u!23 &1114236761
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1114236758}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 2840a7221cf5d1e43b533985b43dd3e1, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!33 &1114236762
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1114236758}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!43 &1120204555
 Mesh:
   m_ObjectHideFlags: 0
@@ -13601,6 +13717,11 @@ MonoBehaviour:
   - {fileID: 100014, guid: 0160515317ee5f843adad6c431147059, type: 2}
   StateSets:
   - nameList: Wake
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1448240809
 GameObject:
   m_ObjectHideFlags: 0
@@ -14581,11 +14702,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1555709508}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: -4.85340405, y: .193183884, z: 3.65977621}
-  m_LocalScale: {x: .0440528654, y: 1.08282173, z: .0999999866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .352060318, y: -.111130714, z: -9}
+  m_LocalScale: {x: .127115995, y: .127116561, z: .12711601}
   m_Children: []
-  m_Father: {fileID: 894232371}
+  m_Father: {fileID: 711870523}
 --- !u!102 &1555709510
 TextMesh:
   serializedVersion: 3
@@ -14911,6 +15032,12 @@ MonoBehaviour:
   - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
   StateSets:
   - nameList: Default
+  tutorialMessage:
+    Texts:
+    - "\u3066\u304D\u306E\u3000\u305F\u3044\u308A\u3087\u304F\u306F\u3000\u304B\u3052\u306E\u3000\u304A\u304A\u304D\u3055\u3067\u3000\u308F\u304B\u308B"
+    BaseColor: {r: 0, g: .71034503, b: 1, a: 1}
+    ApproveMessageTypes: 00000000
+    Type: 1
 --- !u!1 &1576438797
 GameObject:
   m_ObjectHideFlags: 0
@@ -17443,6 +17570,11 @@ MonoBehaviour:
   - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
   StateSets:
   - nameList: Default
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1810801320
 GameObject:
   m_ObjectHideFlags: 0
@@ -20698,8 +20830,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1151705213}
+  - {fileID: 711870523}
   - {fileID: 155232415}
-  - {fileID: 894232371}
   - {fileID: 1296941552}
   - {fileID: 141330993}
   m_Father: {fileID: 0}

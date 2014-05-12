@@ -7,6 +7,7 @@ public class Encounter : MonoBehaviour {
     public int Level;
     public GameObject[] Enemies;
     public EnemyConductor.StateSet[] StateSets;
+    public TutorialMessage tutorialMessage;
 
 	// Use this for initialization
 	void Start () {

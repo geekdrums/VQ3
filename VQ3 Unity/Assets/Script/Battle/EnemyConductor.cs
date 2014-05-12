@@ -62,6 +62,7 @@ public class EnemyConductor : MonoBehaviour {
         {
             if( Music.IsJustChangedBar() && Music.Just.bar >= 1 )
             {
+                /*
                 List<string> messages = new List<string>();
                 //if( Music.Just.bar == 1 )
                 //{
@@ -90,6 +91,7 @@ public class EnemyConductor : MonoBehaviour {
                 {
                     TextWindow.ChangeMessage( messages.ToArray() );
                 }
+                */
             }
         }
 	}
@@ -97,7 +99,6 @@ public class EnemyConductor : MonoBehaviour {
     public void SetEncounter( Encounter encounter )
     {
         CurrentEncounter = encounter;
-        TextWindow.ClearMessages();
         int l = encounter.Enemies.Length;
         for( int i = 0; i < l; ++i )
         {
@@ -105,6 +106,11 @@ public class EnemyConductor : MonoBehaviour {
         }
         targetEnemy = Enemies[(Enemies.Count - 1) / 2];
         GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
+
+        if( encounter.tutorialMessage.Type != TutorialMessageType.None )
+        {
+            TextWindow.SetTutorialMessage( encounter.tutorialMessage );
+        }
     }
 
     void SpawnEnemy( GameObject enemyPrefab, string initialState, int index, int l )
@@ -121,7 +127,7 @@ public class EnemyConductor : MonoBehaviour {
         else
         {
             Enemies.Add( enemy );
-            TextWindow.AddMessage( new GUIMessage( enemy.DisplayName + " があらわれた！" ) );
+            TextWindow.ChangeMessage( BattleMessageType.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
         }
         enemy.transform.parent = transform;
         enemy.ChangeState( initialState );

@@ -139,7 +139,7 @@ public sealed class CriAtomWindow : EditorWindow
 				}
 				EditorGUILayout.EndScrollView();
 			} else {
-				EditorGUILayout.HelpBox("Can not found(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error);
+                EditorGUILayout.HelpBox( "Can not found(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error );
 			}
 		}
 	}
@@ -153,7 +153,7 @@ public sealed class CriAtomWindow : EditorWindow
 
 		EditorGUILayout.LabelField("Cue ID", this.selectedCueId.ToString());
 		if (CriAtomAcfInfo.acfInfo.acbInfoList == null || CriAtomAcfInfo.acfInfo.acbInfoList.Count <= (selectedCueSheetId)) {
-			EditorGUILayout.HelpBox("Can not Get CueSheet Info!!!(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error);
+            EditorGUILayout.HelpBox( "Can not Get CueSheet Info!!!(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error );
 			GUIImportAssetsFromAtomCraft();
 		} else {
 			var acbInfo = CriAtomAcfInfo.acfInfo.acbInfoList[selectedCueSheetId];
@@ -163,7 +163,7 @@ public sealed class CriAtomWindow : EditorWindow
 				EditorGUILayout.LabelField("Comment", cueInfo.comment, EditorStyles.wordWrappedLabel, GUILayout.Height(28));
 				EditorGUILayout.Space();
 			} else {
-				EditorGUILayout.HelpBox("Can not Get Cue Info!!!(CueID:" + this.selectedCueId.ToString() + ")", MessageType.Error);
+                EditorGUILayout.HelpBox( "Can not Get Cue Info!!!(CueID:" + this.selectedCueId.ToString() + ")", MessageType.Error );
 			}
 		}
 		#endregion
@@ -270,7 +270,7 @@ public sealed class CriAtomWindow : EditorWindow
 		this.windowRect = GUILayout.Window(0, windowRect, ScalingWindow, "resizeable", GUILayout.MinHeight(80), GUILayout.MaxHeight(200));
 		
 		if (CriAtomAcfInfo.acfInfo == null) {
-			EditorGUILayout.HelpBox("Can not Get CueSheet Info!!!(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error);
+            EditorGUILayout.HelpBox( "Can not Get CueSheet Info!!!(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error );
 			GUIImportAssetsFromAtomCraft();
 			return;
 		}

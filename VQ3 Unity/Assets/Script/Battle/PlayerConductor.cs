@@ -167,7 +167,7 @@ public class PlayerConductor : MonoBehaviour {
         SetLevelParams();
         if( Level > 1 )
         {
-            TextWindow.ChangeMessage( "オクスは　レベル" + Level + "に　あがった！" );
+            TextWindow.ChangeMessage( BattleMessageType.Result, "オクスは　レベル" + Level + "に　あがった！" );
             //TextWindow.AddMessage( "さいだいHP：" + Player.HitPoint + " ( +" + (HPLevelList[Level - 1] - HPLevelList[Level - 2]) + " )" );
             //resultRemainTime = DefaultResultTime;
             //SEPlayer.Play( "levelUp" );
@@ -185,7 +185,7 @@ public class PlayerConductor : MonoBehaviour {
         commandGraph.CheckCommand();
         CurrentCommand = commandGraph.CurrentCommand;
         Player.TurnInit( CurrentCommand );
-        TextWindow.ChangeMessage( CurrentCommand.DescribeTexts );
+        TextWindow.ChangeMessage( BattleMessageType.PlayerCommaand, ( CurrentCommand.DescribeTexts.Length > 0 ? CurrentCommand.DescribeTexts[0] : "" ) );
         WaitCount = 0;
 	}
     public void CheckWaitCommand()
@@ -193,7 +193,7 @@ public class PlayerConductor : MonoBehaviour {
         commandGraph.CheckCommand();
         CurrentCommand = null;
         Player.DefaultInit();
-        TextWindow.ChangeMessage( "オクスは　じっと　まっている" );
+        TextWindow.ChangeMessage( BattleMessageType.PlayerWait, "オクスは　じっと　まっている" );
         ++WaitCount;
 	}
     
