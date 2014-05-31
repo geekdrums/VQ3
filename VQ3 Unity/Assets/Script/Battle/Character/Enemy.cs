@@ -24,7 +24,7 @@ public class Enemy : Character
     public List<BattleState> States;
     public StateChangeCondition[] conditions;
     public int VPtolerance;
-    public SpriteRenderer outlineSprite;
+    //public SpriteRenderer outlineSprite;
 
     public EnemyCommand currentCommand { get; protected set; }
     public int commandExecBar { get; protected set; }
@@ -35,6 +35,8 @@ public class Enemy : Character
     protected int turnCount;
     protected ActionResult lastDamageResult;
     protected SpriteRenderer spriteRenderer;
+    protected List<EnemyCommandIcon> commandIcons;
+    protected ShortTextWindow shortText;
 
     // Use this for initialization
     protected virtual void Start()
@@ -71,22 +73,46 @@ public class Enemy : Character
         {
             if( Music.IsJustChangedAt( commandExecBar ) && currentCommand != null && currentCommand.ShortText != "" )
             {
-                ShortTextWindow shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
-                shortText.Initialize( currentCommand.ShortText );
-                shortText.transform.position = new Vector3( transform.position.x * 0.7f, shortText.transform.position.y, shortText.transform.position.z );
-                //shortText.transform.parent = transform;
+                if( shortText != null )
+                {
+                    Destroy( shortText.gameObject );
+                    shortText = null;
+                }
+                if( !GameContext.VoxSystem.IsInverting )
+                {
+                    shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
+                    shortText.Initialize( currentCommand.ShortText );
+                    shortText.transform.position = new Vector3( transform.position.x, shortText.transform.position.y, shortText.transform.position.z );
+                    //shortText.transform.parent = transform;
+                }
             }
             if( Music.IsJustChangedAt( StateChangeTiming ) && currentState.name != "Invert" )
             {
                 oldState = currentState;
                 CheckState();
+                
+                if( oldState == currentState && turnCount >= currentState.pattern.Length )
+                {
+                    for( int i = 0; i < commandIcons.Count; i++ )
+                    {
+                        if( i < currentState.pattern.Length )
+                        {
+                            commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[i].Icon.ToString() ) );
+                            commandIcons[i].SetIndex( i, currentState.pattern.Length );
+                        }
+                        else
+                        {
+                            commandIcons[i].SetIcon( null );
+                        }
+                    }
+                }
             }
-            else if( Music.Just > StateChangeTiming && ( oldState != null && oldState != currentState ) )
-            {
-                float mt = (float)Music.MusicalTime - StateChangeTiming.totalUnit;
-                float t = (mt >= 12 ? 1.0f : (2.0f - Mathf.Cos( Mathf.PI * mt / 4.0f )) / 2.0f);
-                outlineSprite.color = Color.Lerp( oldState.color, currentState.color, t );
-            }
+            //else if( Music.Just > StateChangeTiming && ( oldState != null && oldState != currentState ) )
+            //{
+            //    float mt = (float)Music.MusicalTime - StateChangeTiming.totalUnit;
+            //    float t = (mt >= 12 ? 1.0f : (2.0f - Mathf.Cos( Mathf.PI * mt / 4.0f )) / 2.0f);
+            //    outlineSprite.color = Color.Lerp( oldState.color, currentState.color, t );
+            //}
         }
     }
     protected virtual void UpdateAnimation()
@@ -101,7 +127,7 @@ public class Enemy : Character
                 }
             }
             spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
-            outlineSprite.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : currentState.color);
+            //outlineSprite.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : currentState.color);
 
             damageTime -= Time.deltaTime;
             if( damageTime <= 0 )
@@ -129,6 +155,7 @@ public class Enemy : Character
     protected virtual void CheckState()
     {
         if( currentCommand != null && currentCommand.nextState != "" ) ChangeState( currentCommand.nextState );
+        else if( turnCount >= currentState.pattern.Length && currentState.nextState != "" ) ChangeState( currentState.nextState );
         else
         {
             foreach( StateChangeCondition condition in conditions )
@@ -170,48 +197,6 @@ public class Enemy : Character
             }
         }
     }
-    /*
-    protected virtual void CheckStateOnDamage( int damage )
-    {
-        foreach( StateChangeCondition condition in conditions )
-        {
-            int CompareValue = 0;
-            switch( condition.conditionType )
-            {
-            case ConditionType.MyHP:
-                CompareValue = HitPoint;
-                break;
-            case ConditionType.OneDamage:
-                CompareValue = damage;
-                break;
-            case ConditionType.TurnDamage:
-                CompareValue = TurnDamage;
-                break;
-            default:
-                continue;
-            }
-            int d = (CompareValue - condition.Value);
-            if( ( condition.FromState == "" || condition.FromState == currentState.name ) && condition.ToState != currentState.name )
-            {
-                if( d * condition.Sign > 0 || (d == 0 && condition.Sign == 0) )
-                {
-                    ChangeState( condition.ToState );
-                    currentCommand = null;//cancel command
-                    break;
-                }
-            }
-            else if( condition.ViceVersa && (condition.ToState == currentState.name) && condition.FromState != currentState.name )
-            {
-                if( d * condition.Sign < 0 && condition.FromState != "" )
-                {
-                    ChangeState( condition.FromState );
-                    currentCommand = null;//cancel command
-                    break;
-                }
-            }
-        }
-    }
-    */
 
     public override void TurnInit( CommandBase command )
     {
@@ -233,7 +218,7 @@ public class Enemy : Character
         {
             invertState = new BattleState();
             invertState.name = "Invert";
-            invertState.color = Color.clear;
+            //invertState.color = Color.clear;
         }
         currentState = invertState;
     }
@@ -249,6 +234,10 @@ public class Enemy : Character
         {
             currentCommand = currentState.pattern[turnCount % currentState.pattern.Length];
             TurnInit( currentCommand );
+            for( int i = 0; i < commandIcons.Count; i++ )
+            {
+                commandIcons[i].SetIndex( i, currentState.pattern.Length - (turnCount % currentState.pattern.Length) - 1 );
+            }
         }
         else
         {
@@ -273,6 +262,18 @@ public class Enemy : Character
         {
             currentState = States.Find( ( BattleState state ) => state.name == name );
             turnCount = 0;
+            for( int i = 0; i < commandIcons.Count; i++ )
+            {
+                if( i < currentState.pattern.Length )
+                {
+                    commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString() ) );
+                    commandIcons[i].SetIndex( i, currentState.pattern.Length );
+                }
+                else
+                {
+                    commandIcons[i].SetIcon( null );
+                }
+            }
             //if( currentState.DescribeText != "" )
             //{
             //    ShortTextWindow shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
@@ -281,6 +282,24 @@ public class Enemy : Character
             //    //shortText.transform.parent = transform;
             //}
         }
+    }
+    public void InitState( string name )
+    {
+        commandIcons = new List<EnemyCommandIcon>();
+        int maxCommandNNnum = 0;
+        foreach( BattleState state in States )
+        {
+            maxCommandNNnum = Mathf.Max( maxCommandNNnum, state.pattern.Length );
+        }
+        for( int i = 0; i < maxCommandNNnum; i++ )
+        {
+            commandIcons.Add( (Instantiate( GameContext.EnemyConductor.commandIconPrefab ) as GameObject).GetComponent<EnemyCommandIcon>() );
+            commandIcons[i].transform.parent = transform;
+            commandIcons[i].transform.localPosition = Vector3.zero;
+            commandIcons[i].SetIcon( null );
+        }
+
+        ChangeState( name );
     }
     public void CheckSkill()
     {
@@ -353,6 +372,14 @@ public class Enemy : Character
         //{
         //    CheckStateOnDamage( damage );
         //}
+        if( HitPoint <= 0 )
+        {
+            if( shortText != null )
+            {
+                Destroy( shortText.gameObject );
+                shortText = null;
+            }
+        }
     }
     public override void Heal( HealModule heal )
     {
@@ -403,7 +430,8 @@ public class Enemy : Character
     {
         public string name;
         public EnemyCommand[] pattern;
-        public Color color = Color.clear;
+        public string nextState;
+        //public Color color = Color.clear;
     }
 
     public enum ConditionType

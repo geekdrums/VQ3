@@ -23,6 +23,7 @@ public class VoxSystem : MonoBehaviour{
 
     public VoxState state { get; private set; }
     public bool IsReadyEclipse { get { return currentVP >= InvertVP; } }
+    public bool IsInverting { get { return state == VoxState.Eclipse && IsReadyEclipse && Music.Just.bar >= 2; } }
     public int InvertTime { get; private set; }
 
     #region animation property

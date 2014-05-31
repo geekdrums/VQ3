@@ -77,8 +77,8 @@ public class Character : MonoBehaviour {
     public float MagicAttack { get { return BaseMagic * (100 + MagicAttackEnhance.currentParam) / 100.0f; } }
     public EnhanceParameter GetActiveEnhance( EnhanceParamType type ) { return ActiveEnhanceParams.Find( ( EnhanceParameter enhance ) => enhance.type == type ); }
 
-    protected EnhanceParameter PhysicAttackEnhance = new EnhanceParameter( EnhanceParamType.Brave, - 80, -40, 40, 80 );
-    protected EnhanceParameter MagicAttackEnhance = new EnhanceParameter( EnhanceParamType.Faith, -80, -40, 40, 80 );
+    protected EnhanceParameter PhysicAttackEnhance = new EnhanceParameter( EnhanceParamType.Brave, - 80, -40, 50, 80 );
+    protected EnhanceParameter MagicAttackEnhance = new EnhanceParameter( EnhanceParamType.Faith, -80, -40, 50, 80 );
     protected EnhanceParameter DefendEnhance = new EnhanceParameter( EnhanceParamType.Shield, -50, -33, 33, 50 );
     protected EnhanceParameter HitPointEnhance = new EnhanceParameter( EnhanceParamType.Regene, -10, -5, 5, 10 );
     protected List<EnhanceParameter> ActiveEnhanceParams = new List<EnhanceParameter>();

@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class Player : Character {
+
+    public float DamageShake;
+
     GameObject UIParent;
     HPBar HPBar;
     EnhanceIcons EnhanceIcons;
@@ -26,7 +29,7 @@ public class Player : Character {
 		{
 			if ( (int)( damageTime/0.05f ) != (int)( (damageTime+Time.deltaTime)/0.05f ) )
 			{
-                UIParent.transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 2.0f );
+                UIParent.transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 2.0f ) * DamageShake;
 			}
 			damageTime -= Time.deltaTime;
 			if ( damageTime <= 0 )

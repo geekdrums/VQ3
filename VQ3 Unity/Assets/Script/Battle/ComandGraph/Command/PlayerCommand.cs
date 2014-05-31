@@ -40,6 +40,7 @@ public enum EStatusIcon
     D,
     E,
     V,
+    rest,
     none,
     Count
 }
@@ -51,8 +52,8 @@ public class PlayerCommand : CommandBase, IVoxNode
     public float latitude;
     public float longitude;
     public int AcquireLevel = 1;
-    public string[] DescribeTexts;
-    public string[] AcquireTexts;
+    public string DescribeText;
+    public string AcquireText;
     public List<MonoBehaviour> links;
     public List<EStatusIcon> icons;
     public float radius = 1.0f;

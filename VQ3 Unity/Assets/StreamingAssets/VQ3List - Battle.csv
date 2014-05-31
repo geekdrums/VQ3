@@ -1,0 +1,18 @@
+Lv,Enemy,State,Turn,目的,Tutorial,ApproveMessages
+1,will,Default,3,コマンドの選び方の伝達,つぎの　おんがくを　えらんで。　たたかわなくては。,CommandSelect PlayerCommand
+,helm,Default,4,HPバーの伝達,たたかいが　おわれば　HPはかいふくする。,Damage
+2,will will,Default Default,2,ダイナモの威力の伝達,,
+,will helm,Default Default,3,ダイナモの防御力の伝達,おんがくによって　まもりの　ちからも　かわる,Damage
+,mimic,Critical,3,AI変化の可能性の伝達,,
+3,will mimic,Default Critical,4,防御の活用の伝達,おんがくは　りんせつした　ものから　えらべる,
+,helm mimic,Default Critical,5,敵の行動のパターン性の伝達,てきの　こうどうを　よそくできないだろうか？,EnemyCommand
+,armor,Default,8,敵の行動パターンの応用,,
+4,helm mimic helm,Default Default Default,4,イグニスの威力の伝達,まほうと　こうげきは　てきによって　こうかがちがう,
+,helm armor,Default Default,6,魔法の相性の確認,,
+,mimic armor,Critical Default,7,敵の行動のパターン性の応用,,
+,igna,Default,5,後半の行動パターン変化の伝達,,
+5,will will will,Default Default Default,4,攻撃上昇の伝達,エルダインで　ちからを　あげられる,CommandSelect PlayerCommand
+,igna igna,Default Default,8,攻撃上昇の確認,,
+,hitokage,Default,6,回復を使う敵の伝達,,
+,igna hitokage,Default Heal,10,仲間を回復する敵の伝達,,
+6,hitokage hitokage,Heal Heal,7,VPゲージの伝達,VPがたまると　つきをかかげることが　できる,Invert

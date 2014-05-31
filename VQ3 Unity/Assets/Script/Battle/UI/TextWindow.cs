@@ -9,12 +9,14 @@ public enum BattleMessageType
     Heal,
     Enhance,
     EnemyEmerge,
-    PlayerCommaand,
+    EnemyCommand,
+    PlayerCommand,
     PlayerWait,
     CommandSelect,
     Invert,
     Result,
     Tutorial,
+    AcquireCommand
 }
 
 public class GUIMessage

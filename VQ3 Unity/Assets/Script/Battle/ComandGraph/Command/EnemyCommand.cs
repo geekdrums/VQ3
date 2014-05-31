@@ -6,8 +6,9 @@ public class EnemyCommand : CommandBase
 {
     public string nextState;
 
-    public string DescribeText;
+    //public string DescribeText;
     public string ShortText;
+    public EStatusIcon Icon;
 
     public Skill GetCurrentSkill( int startBar )
     {

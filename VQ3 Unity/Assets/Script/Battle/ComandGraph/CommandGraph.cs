@@ -168,10 +168,12 @@ public class CommandGraph : MonoBehaviour {
         Link5,
         Longitude,
         Latitude,
+        Optima,
+        AcquireText,
     }
     void UpdateCommandList()
     {
-        string path = Application.streamingAssetsPath + "/VQ3List.csv";
+        string path = Application.streamingAssetsPath + "/VQ3List - Command.csv";
         StreamReader reader = File.OpenText( path );
         if( reader != null )
         {
@@ -203,6 +205,7 @@ public class CommandGraph : MonoBehaviour {
                 playerCommand.MusicBlockName = propertyTexts[(int)CommandListProperty.Music];
                 playerCommand.GetComponent<TextMesh>().text = commandName.Insert( 2, "\n" );//propertyTexts[(int)CommandListProperty.Icon];
                 playerCommand.GetComponent<TextMesh>().fontSize = 8;
+                playerCommand.AcquireText = propertyTexts[(int)CommandListProperty.AcquireText];
                 string iconStr = propertyTexts[(int)CommandListProperty.Icon];
                 playerCommand.icons = new List<EStatusIcon>();
                 for( int i = 0; i < (int)EStatusIcon.Count; i++ )
@@ -355,7 +358,29 @@ public class CommandGraph : MonoBehaviour {
                 GameContext.EnemyConductor.OnArrowPushed( true );
             }
         }
-        if( Input.GetMouseButton( 0 ) )
+        else if( Input.GetMouseButtonUp( 0 ) )
+        {
+            if( CurrentButton == VoxButton.Ball && Music.Just < AllowInputEnd )
+            {
+                if( PushingCommand != null )
+                {
+                    //if( PushingCommand.IsSelected )
+                    //{
+                    //    PushingCommand.Deselect();
+                    //    NextCommand = null;
+                    //    NextCommandText.text = initialNextText;
+                    //    SEPlayer.Play( "tickback" );
+                    //    SetCommandIcons( NextCommandText.gameObject, null );
+                    //}
+                    //else
+                    //{
+                    Select( PushingCommand );
+                    SEPlayer.Play( "tick" );
+                    //}
+                }
+            }
+        }
+        else if( Input.GetMouseButton( 0 ) )
         {
             if( CurrentButton == VoxButton.Ball )
             {
@@ -385,35 +410,13 @@ public class CommandGraph : MonoBehaviour {
         }
         else
         {
+            CurrentButton = VoxButton.None;
             if( NextCommand != null )
             {
                 transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
             }
             RightArrow.transform.localPosition = Vector3.MoveTowards( RightArrow.transform.localPosition, initialRightArrowPosition, 0.1f );
             LeftArrow.transform.localPosition = Vector3.MoveTowards( LeftArrow.transform.localPosition, initialLeftArrowPosition, 0.1f );
-        }
-        if( Input.GetMouseButtonUp( 0 ) )
-        {
-            if( CurrentButton == VoxButton.Ball && Music.Just < AllowInputEnd )
-            {
-                if( PushingCommand != null )
-                {
-                    if( PushingCommand.IsSelected )
-                    {
-                        PushingCommand.Deselect();
-                        NextCommand = null;
-                        NextCommandText.text = initialNextText;
-                        SEPlayer.Play( "tickback" );
-                        SetCommandIcons( NextCommandText.gameObject, null );
-                    }
-                    else
-                    {
-                        Select( PushingCommand );
-                        SEPlayer.Play( "tick" );
-                    }
-                }
-            }
-            CurrentButton = VoxButton.None;
         }
             //Quaternion oldRotation = transform.rotation;
             //Vector3 up = transform.up;

@@ -9,6 +9,8 @@ public class EnemyConductor : MonoBehaviour {
     static readonly int[] CommandExecBars = new int[3] { 2, 3, 1 };
 
     public GameObject damageTextPrefab;
+    public GameObject commandIconPrefab;
+    public List<Sprite> EnemyCommandIcons;
     public GameObject HPCirclePrefab;
     public GameObject shortTextWindowPrefab;
     public EnemyCommand PhysicDefaultCommand;
@@ -130,8 +132,8 @@ public class EnemyConductor : MonoBehaviour {
             TextWindow.ChangeMessage( BattleMessageType.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
         }
         enemy.transform.parent = transform;
-        enemy.ChangeState( initialState );
-        enemy.outlineSprite.color = enemy.currentState.color;
+        enemy.InitState( initialState );
+        //enemy.outlineSprite.color = enemy.currentState.color;
         enemy.DisplayName += (char)((int)'A' + Enemies.FindAll( ( Enemy e ) => e.DisplayName.StartsWith( enemy.DisplayName ) && e.DisplayName.Length == enemy.DisplayName.Length + 1 ).Count);
     }
 
@@ -264,7 +266,7 @@ public class EnemyConductor : MonoBehaviour {
             Enemy weakest = skill.OwnerCharacter as Enemy;
             foreach( Enemy enemy in Enemies )
             {
-                if( enemy.HitPoint < minHP )
+                if( enemy.HitPoint < minHP && enemy.HitPoint < enemy.MaxHP )
                 {
                     weakest = enemy;
                     minHP = enemy.HitPoint;
@@ -349,9 +351,9 @@ public class EnemyConductor : MonoBehaviour {
 
     public void CheckSkill()
     {
-        int CurrentIndex = Music.Just.bar;
+        //int CurrentIndex = Music.Just.bar;
         //if( GameContext.VoxSystem.state == VoxState.Invert ) return;
-        if( GameContext.VoxSystem.state == VoxState.Eclipse && GameContext.VoxSystem.IsReadyEclipse && CurrentIndex >= 2 ) return;
+        if( GameContext.VoxSystem.IsInverting ) return;//state == VoxState.Eclipse && GameContext.VoxSystem.IsReadyEclipse && CurrentIndex >= 2 ) return;
 
         foreach( Enemy e in Enemies )
         {
@@ -431,6 +433,11 @@ public class EnemyConductor : MonoBehaviour {
     [System.Serializable]
     public class StateSet
     {
+        public StateSet( string states )
+        {
+            nameList = states;
+        }
+
         public string nameList;
         public string this[int i]
         {
