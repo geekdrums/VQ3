@@ -11,8 +11,12 @@ public enum ResultState
 public enum EncounterListProperty
 {
     Level,
-    Enemy,
-    State,
+    Enemy1,
+    Enemy2,
+    Enemy3,
+    State1,
+    State2,
+    State3,
     Turn,
     Purpose,
     Tutorial,
@@ -32,6 +36,9 @@ public class FieldConductor : MonoBehaviour {
     public bool UPDATE_BUTTON;
 
     public int encounterCount;
+    public bool UseDebugPlay;
+    int targetPlayerLevel;
+    int targetEncounterCount;
     LevelEncounter[] LevelEncounters;
 
     public ResultState RState { get; private set; }
@@ -51,8 +58,63 @@ public class FieldConductor : MonoBehaviour {
         {
             LevelEncounters[encounter.Level-1].Encounters.Add( encounter );
         }
+
+        targetPlayerLevel = GameContext.PlayerConductor.Level;
+        targetEncounterCount = encounterCount;
 	}
-	
+
+    void OnGUI()
+    {
+        if( UseDebugPlay )
+        {
+            GUI.color = Color.black;
+            GUI.Label( new Rect( 0, 0, 50, 20 ), "Level" );
+            if( GUI.Button( new Rect( 50, 0, 20, 20 ), "<" ) )
+            {
+                --targetPlayerLevel;
+            }
+            GUI.Label( new Rect( 80, 0, 30, 20 ), targetPlayerLevel.ToString() );
+            if( GUI.Button( new Rect( 100, 0, 20, 20 ), ">" ) )
+            {
+                ++targetPlayerLevel;
+            }
+            targetPlayerLevel = Mathf.Clamp( targetPlayerLevel, 1, 50 );
+
+            GUI.Label( new Rect( 150, 0, 50, 20 ), "Encount" );
+            if( GUI.Button( new Rect( 200, 0, 20, 20 ), "<" ) )
+            {
+                --targetEncounterCount;
+            }
+            GUI.Label( new Rect( 230, 0, 30, 20 ), targetEncounterCount.ToString() );
+            if( GUI.Button( new Rect( 250, 0, 20, 20 ), ">" ) )
+            {
+                ++targetEncounterCount;
+            }
+            int maxEncounterCount = LevelEncounters[targetPlayerLevel].Encounters.Count;
+            if( maxEncounterCount > 0 )
+            {
+                targetEncounterCount += maxEncounterCount;
+                targetEncounterCount %= maxEncounterCount;
+            }
+            else
+            {
+                targetEncounterCount = 0;
+            }
+
+            if( GUI.Button( new Rect( 300, 0, 50, 20 ), "Play" ) )
+            {
+                TextWindow.ClearTutorialMessage();
+                GameContext.EnemyConductor.OnPlayerWin();
+                GameContext.PlayerConductor.OnPlayerWin();
+                GameContext.PlayerConductor.Level = targetPlayerLevel;
+                GameContext.PlayerConductor.OnLevelUp();
+                GameContext.PlayerConductor.CheckAcquireCommands();
+                encounterCount = targetEncounterCount;
+                CheckEncount();
+            }
+        }
+    }
+
 	// Update is called once per frame
     void Update()
     {
@@ -67,6 +129,7 @@ public class FieldConductor : MonoBehaviour {
             return;
         }
 #endif
+
         switch( GameContext.CurrentState )
         {
         case GameState.Field:
@@ -147,14 +210,26 @@ public class FieldConductor : MonoBehaviour {
                 Encounter encounter = encounterObj.AddComponent<Encounter>();
 
                 encounter.Level = level;
-                string[] enemyNames = propertyTexts[(int)EncounterListProperty.Enemy].Split( spaceSeparator, System.StringSplitOptions.None );
-                encounter.Enemies = new GameObject[enemyNames.Length];
-                for( int i = 0; i < enemyNames.Length; i++ )
+                List<string> enemyNames = new List<string>();
+                for( int i = 0; i < 3; i++ )
+                {
+                    string nameProp = propertyTexts[i+(int)EncounterListProperty.Enemy1];
+                    if( nameProp != "" )
+                    {
+                        enemyNames.Add( nameProp );
+                    }
+                    else break;
+                }
+                //string[] enemyNames = propertyTexts[(int)EncounterListProperty.Enemy].Split( spaceSeparator, System.StringSplitOptions.None );
+                encounter.Enemies = new GameObject[enemyNames.Count];
+                encounter.StateSets = new EnemyConductor.StateSet[1];
+                string stateSet = "";
+                for( int i = 0; i < enemyNames.Count; i++ )
                 {
                     encounter.Enemies[i] = EnemyPrefabs.Find( ( GameObject e ) => e.name == enemyNames[i] );
+                    stateSet += ( propertyTexts[i + (int)EncounterListProperty.State1] != "" ? propertyTexts[i + (int)EncounterListProperty.State1] : "Default" ) + " ";
                 }
-                encounter.StateSets = new EnemyConductor.StateSet[1];
-                encounter.StateSets[0] = new EnemyConductor.StateSet( propertyTexts[(int)EncounterListProperty.State] );
+                encounter.StateSets[0] = new EnemyConductor.StateSet( stateSet );
 
                 if( propertyTexts[(int)EncounterListProperty.Tutorial] != "" )
                 {

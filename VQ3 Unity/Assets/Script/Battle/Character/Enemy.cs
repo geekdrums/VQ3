@@ -62,6 +62,8 @@ public class Enemy : Character
         {
             condition.Parse();
         }
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -97,7 +99,7 @@ public class Enemy : Character
                     {
                         if( i < currentState.pattern.Length )
                         {
-                            commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[i].Icon.ToString() ) );
+                            commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString().Replace( '_', '-' ) ) );
                             commandIcons[i].SetIndex( i, currentState.pattern.Length );
                         }
                         else
@@ -266,7 +268,7 @@ public class Enemy : Character
             {
                 if( i < currentState.pattern.Length )
                 {
-                    commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString() ) );
+                    commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString().Replace( '_', '-' )  ) );
                     commandIcons[i].SetIndex( i, currentState.pattern.Length );
                 }
                 else

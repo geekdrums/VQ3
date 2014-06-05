@@ -742,6 +742,17 @@ public class CommandGraph : MonoBehaviour {
         }
         return null;
     }
+    public PlayerCommand CheckForgetCommand( int Level )
+    {
+        foreach( PlayerCommand command in CommandNodes )
+        {
+            if( command.AcquireLevel > Level && command.IsAcquired )
+            {
+                return command;
+            }
+        }
+        return null;
+    }
 
     public void OnBattleStart()
     {

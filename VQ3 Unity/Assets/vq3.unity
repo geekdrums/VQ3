@@ -283,6 +283,54 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
+--- !u!1 &14126325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 14126326}
+  - 114: {fileID: 14126327}
+  m_Layer: 0
+  m_Name: Encounter0203
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &14126326
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 14126325}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &14126327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 14126325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 2
+  Enemies:
+  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
+  StateSets:
+  - nameList: 'Critical '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &19098635
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,56 +980,55 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &79613589
+--- !u!1 &91025354
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 79613590}
-  - 114: {fileID: 79613591}
+  - 4: {fileID: 91025355}
+  - 114: {fileID: 91025356}
   m_Layer: 0
-  m_Name: Encounter0302
+  m_Name: Encounter0701
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &79613590
+--- !u!4 &91025355
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 79613589}
+  m_GameObject: {fileID: 91025354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1475455511}
---- !u!114 &79613591
+--- !u!114 &91025356
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 79613589}
+  m_GameObject: {fileID: 91025354}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 3
+  Level: 7
   Enemies:
-  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
-  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
+  - {fileID: 100000, guid: e68f610207e69a94a8e5a046bc8167a0, type: 2}
+  - {fileID: 100000, guid: e68f610207e69a94a8e5a046bc8167a0, type: 2}
   StateSets:
-  - nameList: Default Critical
+  - nameList: 'Default Default '
   tutorialMessage:
-    Texts:
-    - "\u3066\u304D\u306E\u3000\u3053\u3046\u3069\u3046\u3092\u3000\u3088\u305D\u304F\u3067\u304D\u306A\u3044\u3060\u308D\u3046\u304B\uFF1F"
-    BaseColor: {r: 0, g: 1, b: 1, a: 1}
-    ApproveMessageTypes: 04000000
-    Type: 1
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &104704466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,6 +1703,55 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 141330992}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &144167863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 144167864}
+  - 114: {fileID: 144167865}
+  m_Layer: 0
+  m_Name: Encounter1002
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &144167864
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 144167863}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &144167865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 144167863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 10
+  Enemies:
+  - {fileID: 100000, guid: 796bfaf5a0b1c124bbe8661b4079c57f, type: 2}
+  - {fileID: 100000, guid: 977cea260f99f264ebca689a0e04c863, type: 2}
+  StateSets:
+  - nameList: 'Default Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &155004784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2097,6 +2193,54 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2026910084}
+--- !u!1 &173007426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 173007427}
+  - 114: {fileID: 173007428}
+  m_Layer: 0
+  m_Name: Encounter0902
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &173007427
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 173007426}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &173007428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 173007426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 9
+  Enemies:
+  - {fileID: 100000, guid: f4068912a80be49498c48523c096d45e, type: 2}
+  StateSets:
+  - nameList: 'Jam '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &173644065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2676,56 +2820,54 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &206730384
+--- !u!1 &225984711
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 206730385}
-  - 114: {fileID: 206730386}
+  - 4: {fileID: 225984712}
+  - 114: {fileID: 225984713}
   m_Layer: 0
-  m_Name: Encounter0202
+  m_Name: Encounter0604
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &206730385
+--- !u!4 &225984712
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 206730384}
+  m_GameObject: {fileID: 225984711}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1475455511}
---- !u!114 &206730386
+--- !u!114 &225984713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 206730384}
+  m_GameObject: {fileID: 225984711}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 2
+  Level: 6
   Enemies:
-  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
-  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
+  - {fileID: 100000, guid: e68f610207e69a94a8e5a046bc8167a0, type: 2}
   StateSets:
-  - nameList: Default Default
+  - nameList: 'Default '
   tutorialMessage:
-    Texts:
-    - "\u304A\u3093\u304C\u304F\u306B\u3088\u3063\u3066\u3000\u307E\u3082\u308A\u306E\u3000\u3061\u304B\u3089\u3082\u3000\u304B\u308F\u308B"
-    BaseColor: {r: 0, g: 1, b: 1, a: 1}
-    ApproveMessageTypes: 00000000
-    Type: 1
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &230772500
 GameObject:
   m_ObjectHideFlags: 0
@@ -3409,57 +3551,55 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &251742710
+--- !u!1 &265926683
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 251742711}
-  - 114: {fileID: 251742712}
+  - 4: {fileID: 265926684}
+  - 114: {fileID: 265926685}
   m_Layer: 0
-  m_Name: Encounter0401
+  m_Name: Encounter0903
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &251742711
+--- !u!4 &265926684
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 251742710}
+  m_GameObject: {fileID: 265926683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1475455511}
---- !u!114 &251742712
+--- !u!114 &265926685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 251742710}
+  m_GameObject: {fileID: 265926683}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 4
+  Level: 9
   Enemies:
-  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
-  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
-  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
+  - {fileID: 100000, guid: 796bfaf5a0b1c124bbe8661b4079c57f, type: 2}
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
   StateSets:
-  - nameList: Default Default Default
+  - nameList: 'Default Default '
   tutorialMessage:
-    Texts:
-    - "\u307E\u307B\u3046\u3068\u3000\u3053\u3046\u3052\u304D\u306F\u3000\u3066\u304D\u306B\u3088\u3063\u3066\u3000\u3053\u3046\u304B\u304C\u3061\u304C\u3046"
-    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
     ApproveMessageTypes: 
-    Type: 1
+    Type: 0
 --- !u!1 &273875731
 GameObject:
   m_ObjectHideFlags: 0
@@ -3751,55 +3891,6 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &298730223
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 298730225}
-  - 114: {fileID: 298730224}
-  m_Layer: 0
-  m_Name: Encounter0201
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &298730224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 298730223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 2
-  Enemies:
-  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
-  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
-  StateSets:
-  - nameList: Default Default
-  tutorialMessage:
-    Texts: []
-    BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    ApproveMessageTypes: 
-    Type: 0
---- !u!4 &298730225
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 298730223}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
 --- !u!1 &299448218
 GameObject:
   m_ObjectHideFlags: 0
@@ -4079,6 +4170,56 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &309666196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 309666197}
+  - 114: {fileID: 309666198}
+  m_Layer: 0
+  m_Name: Encounter0202
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &309666197
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 309666196}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &309666198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 309666196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 2
+  Enemies:
+  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
+  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
+  StateSets:
+  - nameList: 'Default Default '
+  tutorialMessage:
+    Texts:
+    - "\u304A\u3093\u304C\u304F\u306B\u3088\u3063\u3066\u3000\u307E\u3082\u308A\u306E\u3000\u3061\u304B\u3089\u3082\u3000\u304B\u308F\u308B"
+    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    ApproveMessageTypes: 00000000
+    Type: 1
 --- !u!1 &313610058
 GameObject:
   m_ObjectHideFlags: 0
@@ -4106,6 +4247,104 @@ Transform:
   m_Children:
   - {fileID: 1675493089}
   m_Father: {fileID: 1261502657}
+--- !u!1 &322197402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 322197403}
+  - 114: {fileID: 322197404}
+  m_Layer: 0
+  m_Name: Encounter0702
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &322197403
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 322197402}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &322197404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 322197402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 7
+  Enemies:
+  - {fileID: 100000, guid: e68f610207e69a94a8e5a046bc8167a0, type: 2}
+  - {fileID: 100000, guid: 977cea260f99f264ebca689a0e04c863, type: 2}
+  StateSets:
+  - nameList: 'Default Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
+--- !u!1 &323357924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 323357925}
+  - 114: {fileID: 323357926}
+  m_Layer: 0
+  m_Name: Encounter0802
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &323357925
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 323357924}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &323357926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 323357924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 8
+  Enemies:
+  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
+  StateSets:
+  - nameList: 'Default Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &332475573
 GameObject:
   m_ObjectHideFlags: 0
@@ -4710,6 +4949,54 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &402644682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 402644683}
+  - 114: {fileID: 402644684}
+  m_Layer: 0
+  m_Name: Encounter1004
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &402644683
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 402644682}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &402644684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 402644682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 10
+  Enemies:
+  - {fileID: 100014, guid: 0160515317ee5f843adad6c431147059, type: 2}
+  StateSets:
+  - nameList: 'Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &406095448
 GameObject:
   m_ObjectHideFlags: 0
@@ -5070,103 +5357,6 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &432782715
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 432782716}
-  - 114: {fileID: 432782717}
-  m_Layer: 0
-  m_Name: Encounter0503
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &432782716
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 432782715}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &432782717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 432782715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 5
-  Enemies:
-  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
-  StateSets:
-  - nameList: Default
-  tutorialMessage:
-    Texts: []
-    BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    ApproveMessageTypes: 
-    Type: 0
---- !u!1 &436829093
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 436829094}
-  - 114: {fileID: 436829095}
-  m_Layer: 0
-  m_Name: Encounter0502
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &436829094
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 436829093}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &436829095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 436829093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 5
-  Enemies:
-  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
-  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
-  StateSets:
-  - nameList: Default Default
-  tutorialMessage:
-    Texts: []
-    BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    ApproveMessageTypes: 
-    Type: 0
 --- !u!1 &452266801
 GameObject:
   m_ObjectHideFlags: 0
@@ -5798,6 +5988,55 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &566472169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 566472170}
+  - 114: {fileID: 566472171}
+  m_Layer: 0
+  m_Name: Encounter1001
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &566472170
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 566472169}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &566472171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 566472169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 10
+  Enemies:
+  - {fileID: 100000, guid: f4068912a80be49498c48523c096d45e, type: 2}
+  - {fileID: 100000, guid: 796bfaf5a0b1c124bbe8661b4079c57f, type: 2}
+  StateSets:
+  - nameList: 'Jam Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &577789927
 GameObject:
   m_ObjectHideFlags: 0
@@ -6171,6 +6410,54 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &595486083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 595486084}
+  - 114: {fileID: 595486085}
+  m_Layer: 0
+  m_Name: Encounter0503
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &595486084
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 595486083}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &595486085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 595486083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 5
+  Enemies:
+  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
+  StateSets:
+  - nameList: 'Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &603856499
 GameObject:
   m_ObjectHideFlags: 0
@@ -6474,55 +6761,6 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &610401022
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 610401023}
-  - 114: {fileID: 610401024}
-  m_Layer: 0
-  m_Name: Encounter0102
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &610401023
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 610401022}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &610401024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 610401022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 1
-  Enemies:
-  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
-  StateSets:
-  - nameList: Default
-  tutorialMessage:
-    Texts:
-    - "\u305F\u305F\u304B\u3044\u304C\u3000\u304A\u308F\u308C\u3070\u3000HP\u306F\u304B\u3044\u3075\u304F\u3059\u308B\u3002"
-    BaseColor: {r: 0, g: 1, b: 1, a: 1}
-    ApproveMessageTypes: 00000000
-    Type: 1
 --- !u!1 &613842463
 GameObject:
   m_ObjectHideFlags: 0
@@ -6629,56 +6867,6 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!1 &614261986
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 614261987}
-  - 114: {fileID: 614261988}
-  m_Layer: 0
-  m_Name: Encounter0301
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &614261987
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 614261986}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &614261988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 614261986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 3
-  Enemies:
-  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
-  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
-  StateSets:
-  - nameList: Default Critical
-  tutorialMessage:
-    Texts:
-    - "\u304A\u3093\u304C\u304F\u306F\u3000\u308A\u3093\u305B\u3064\u3057\u305F\u3000\u3082\u306E\u304B\u3089\u3000\u3048\u3089\u3079\u308B"
-    BaseColor: {r: 0, g: 1, b: 1, a: 1}
-    ApproveMessageTypes: 
-    Type: 1
 --- !u!1 &642197340
 GameObject:
   m_ObjectHideFlags: 0
@@ -8377,6 +8565,105 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &803692852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 803692853}
+  - 114: {fileID: 803692854}
+  m_Layer: 0
+  m_Name: Encounter0502
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &803692853
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 803692852}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &803692854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 803692852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 5
+  Enemies:
+  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
+  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
+  StateSets:
+  - nameList: 'Default Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
+--- !u!1 &806317069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 806317070}
+  - 114: {fileID: 806317071}
+  m_Layer: 0
+  m_Name: Encounter0801
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &806317070
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 806317069}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &806317071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 806317069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 8
+  Enemies:
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
+  - {fileID: 100000, guid: e68f610207e69a94a8e5a046bc8167a0, type: 2}
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
+  StateSets:
+  - nameList: 'Default Default Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &807280705
 GameObject:
   m_ObjectHideFlags: 0
@@ -8714,54 +9001,6 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!1 &832457311
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 832457312}
-  - 114: {fileID: 832457313}
-  m_Layer: 0
-  m_Name: Encounter0303
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &832457312
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 832457311}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &832457313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 832457311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 3
-  Enemies:
-  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
-  StateSets:
-  - nameList: Default
-  tutorialMessage:
-    Texts: []
-    BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    ApproveMessageTypes: 
-    Type: 0
 --- !u!1 &833329585
 GameObject:
   m_ObjectHideFlags: 0
@@ -9047,6 +9286,56 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_Sprite: {fileID: 21300048, guid: 2085f53889922b445a0e16170b907d83, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &882590197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 882590198}
+  - 114: {fileID: 882590199}
+  m_Layer: 0
+  m_Name: Encounter0601
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &882590198
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 882590197}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &882590199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 882590197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 6
+  Enemies:
+  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
+  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
+  StateSets:
+  - nameList: 'Heal Heal '
+  tutorialMessage:
+    Texts:
+    - "VP\u304C\u305F\u307E\u308B\u3068\u3000\u3064\u304D\u3092\u304B\u304B\u3052\u308B\u3053\u3068\u304C\u3000\u3067\u304D\u308B"
+    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    ApproveMessageTypes: 08000000
+    Type: 1
 --- !u!1 &885446105
 GameObject:
   m_ObjectHideFlags: 0
@@ -9114,6 +9403,54 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &888685335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 888685336}
+  - 114: {fileID: 888685337}
+  m_Layer: 0
+  m_Name: Encounter0602
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &888685336
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 888685335}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &888685337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 888685335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 6
+  Enemies:
+  - {fileID: 100000, guid: 977cea260f99f264ebca689a0e04c863, type: 2}
+  StateSets:
+  - nameList: 'Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &893852478
 GameObject:
   m_ObjectHideFlags: 0
@@ -9599,6 +9936,54 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &931417625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 931417626}
+  - 114: {fileID: 931417627}
+  m_Layer: 0
+  m_Name: Encounter0404
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &931417626
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 931417625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &931417627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 931417625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 4
+  Enemies:
+  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
+  StateSets:
+  - nameList: 'Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &936033491
 GameObject:
   m_ObjectHideFlags: 0
@@ -9666,6 +10051,55 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &946987447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 946987448}
+  - 114: {fileID: 946987449}
+  m_Layer: 0
+  m_Name: Encounter0904
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &946987448
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 946987447}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &946987449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 946987447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 9
+  Enemies:
+  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
+  - {fileID: 100000, guid: f4068912a80be49498c48523c096d45e, type: 2}
+  StateSets:
+  - nameList: 'Default Jam '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &958149236
 GameObject:
   m_ObjectHideFlags: 0
@@ -10152,54 +10586,57 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &998833174
+--- !u!1 &996066038
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 998833175}
-  - 114: {fileID: 998833176}
+  - 4: {fileID: 996066039}
+  - 114: {fileID: 996066040}
   m_Layer: 0
-  m_Name: Encounter0404
+  m_Name: Encounter0501
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &998833175
+--- !u!4 &996066039
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 998833174}
+  m_GameObject: {fileID: 996066038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1475455511}
---- !u!114 &998833176
+--- !u!114 &996066040
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 998833174}
+  m_GameObject: {fileID: 996066038}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 4
+  Level: 5
   Enemies:
-  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
+  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
+  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
+  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
   StateSets:
-  - nameList: Default
+  - nameList: 'Default Default Default '
   tutorialMessage:
-    Texts: []
-    BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    ApproveMessageTypes: 
-    Type: 0
+    Texts:
+    - "\u30A8\u30EB\u30C0\u30A4\u30F3\u3067\u3000\u3061\u304B\u3089\u3092\u3000\u3042\u3052\u3089\u308C\u308B"
+    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    ApproveMessageTypes: 0700000005000000
+    Type: 1
 --- !u!1 &1006746813
 GameObject:
   m_ObjectHideFlags: 0
@@ -10376,6 +10813,55 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &1023725580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1023725581}
+  - 114: {fileID: 1023725582}
+  m_Layer: 0
+  m_Name: Encounter0101
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1023725581
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1023725580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1023725582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1023725580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 1
+  Enemies:
+  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
+  StateSets:
+  - nameList: 'Default '
+  tutorialMessage:
+    Texts:
+    - "\u3064\u304E\u306E\u3000\u304A\u3093\u304C\u304F\u3092\u3000\u3048\u3089\u3093\u3067\u3002\u3000\u305F\u305F\u304B\u308F\u306A\u304F\u3066\u306F\u3002"
+    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    ApproveMessageTypes: 0700000005000000
+    Type: 1
 --- !u!1 &1033565315
 GameObject:
   m_ObjectHideFlags: 0
@@ -10547,56 +11033,6 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!1 &1035759169
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1035759170}
-  - 114: {fileID: 1035759171}
-  m_Layer: 0
-  m_Name: Encounter0601
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1035759170
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1035759169}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &1035759171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1035759169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 6
-  Enemies:
-  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
-  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
-  StateSets:
-  - nameList: Heal Heal
-  tutorialMessage:
-    Texts:
-    - "VP\u304C\u305F\u307E\u308B\u3068\u3000\u3064\u304D\u3092\u304B\u304B\u3052\u308B\u3053\u3068\u304C\u3000\u3067\u304D\u308B"
-    BaseColor: {r: 0, g: 1, b: 1, a: 1}
-    ApproveMessageTypes: 08000000
-    Type: 1
 --- !u!1 &1048813214
 GameObject:
   m_ObjectHideFlags: 0
@@ -10971,6 +11407,56 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &1074768059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1074768060}
+  - 114: {fileID: 1074768061}
+  m_Layer: 0
+  m_Name: Encounter0301
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1074768060
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1074768059}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1074768061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1074768059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 3
+  Enemies:
+  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
+  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
+  StateSets:
+  - nameList: 'Default Critical '
+  tutorialMessage:
+    Texts:
+    - "\u304A\u3093\u304C\u304F\u306F\u3000\u308A\u3093\u305B\u3064\u3057\u305F\u3000\u3082\u306E\u304B\u3089\u3000\u3048\u3089\u3079\u308B"
+    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    ApproveMessageTypes: 
+    Type: 1
 --- !u!1 &1079163216
 GameObject:
   m_ObjectHideFlags: 0
@@ -11736,55 +12222,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1114236758}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1116546613
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1116546614}
-  - 114: {fileID: 1116546615}
-  m_Layer: 0
-  m_Name: Encounter0101
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1116546614
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1116546613}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &1116546615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1116546613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 1
-  Enemies:
-  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
-  StateSets:
-  - nameList: Default
-  tutorialMessage:
-    Texts:
-    - "\u3064\u304E\u306E\u3000\u304A\u3093\u304C\u304F\u3092\u3000\u3048\u3089\u3093\u3067\u3002\u3000\u305F\u305F\u304B\u308F\u306A\u304F\u3066\u306F\u3002"
-    BaseColor: {r: 0, g: 1, b: 1, a: 1}
-    ApproveMessageTypes: 0700000005000000
-    Type: 1
 --- !u!43 &1120204555
 Mesh:
   m_ObjectHideFlags: 0
@@ -11931,57 +12368,6 @@ Mesh:
     m_Extent: {x: 4.50000095, y: 4.5247879, z: 0}
   m_MeshUsageFlags: 0
   m_MeshOptimized: 0
---- !u!1 &1121976518
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1121976519}
-  - 114: {fileID: 1121976520}
-  m_Layer: 0
-  m_Name: Encounter0501
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1121976519
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1121976518}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &1121976520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1121976518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 5
-  Enemies:
-  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
-  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
-  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
-  StateSets:
-  - nameList: Default Default Default
-  tutorialMessage:
-    Texts:
-    - "\u30A8\u30EB\u30C0\u30A4\u30F3\u3067\u3000\u3061\u304B\u3089\u3092\u3000\u3042\u3052\u3089\u308C\u308B"
-    BaseColor: {r: 0, g: 1, b: 1, a: 1}
-    ApproveMessageTypes: 0700000005000000
-    Type: 1
 --- !u!1 &1129070322
 GameObject:
   m_ObjectHideFlags: 0
@@ -12460,55 +12846,6 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &1195809131
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1195809132}
-  - 114: {fileID: 1195809133}
-  m_Layer: 0
-  m_Name: Encounter0403
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1195809132
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1195809131}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &1195809133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1195809131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 4
-  Enemies:
-  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
-  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
-  StateSets:
-  - nameList: Critical Default
-  tutorialMessage:
-    Texts: []
-    BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    ApproveMessageTypes: 
-    Type: 0
 --- !u!1 &1197126725
 GameObject:
   m_ObjectHideFlags: 0
@@ -12986,6 +13323,55 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &1232538968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1232538969}
+  - 114: {fileID: 1232538970}
+  m_Layer: 0
+  m_Name: Encounter0402
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1232538969
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1232538968}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1232538970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1232538968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 4
+  Enemies:
+  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
+  StateSets:
+  - nameList: 'Default Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1247894988
 GameObject:
   m_ObjectHideFlags: 0
@@ -13592,6 +13978,55 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &1315943081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1315943082}
+  - 114: {fileID: 1315943083}
+  m_Layer: 0
+  m_Name: Encounter0901
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1315943082
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1315943081}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1315943083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1315943081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 9
+  Enemies:
+  - {fileID: 100000, guid: 796bfaf5a0b1c124bbe8661b4079c57f, type: 2}
+  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
+  StateSets:
+  - nameList: 'Default Heal '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1316004198
 GameObject:
   m_ObjectHideFlags: 0
@@ -14089,6 +14524,105 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &1351349359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1351349360}
+  - 114: {fileID: 1351349361}
+  m_Layer: 0
+  m_Name: Encounter0302
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1351349360
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1351349359}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1351349361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1351349359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 3
+  Enemies:
+  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
+  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
+  StateSets:
+  - nameList: 'Default Critical '
+  tutorialMessage:
+    Texts:
+    - "\u3066\u304D\u306E\u3000\u3053\u3046\u3069\u3046\u3092\u3000\u3088\u305D\u304F\u3067\u304D\u306A\u3044\u3060\u308D\u3046\u304B\uFF1F"
+    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    ApproveMessageTypes: 04000000
+    Type: 1
+--- !u!1 &1360097789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1360097790}
+  - 114: {fileID: 1360097791}
+  m_Layer: 0
+  m_Name: Encounter1003
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1360097790
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1360097789}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1360097791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1360097789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 10
+  Enemies:
+  - {fileID: 100000, guid: f4068912a80be49498c48523c096d45e, type: 2}
+  - {fileID: 100000, guid: f4068912a80be49498c48523c096d45e, type: 2}
+  StateSets:
+  - nameList: 'Jam Jam '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1367465338
 GameObject:
   m_ObjectHideFlags: 0
@@ -15088,6 +15622,103 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &1441297618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1441297619}
+  - 114: {fileID: 1441297620}
+  m_Layer: 0
+  m_Name: Encounter0504
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1441297619
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1441297618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1441297620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1441297618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 5
+  Enemies:
+  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
+  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
+  StateSets:
+  - nameList: 'Default Heal '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
+--- !u!1 &1441714329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1441714330}
+  - 114: {fileID: 1441714331}
+  m_Layer: 0
+  m_Name: Encounter0303
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1441714330
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1441714329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1441714331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1441714329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 3
+  Enemies:
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
+  StateSets:
+  - nameList: 'Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1442510180
 GameObject:
   m_ObjectHideFlags: 0
@@ -15400,23 +16031,41 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1116546614}
-  - {fileID: 610401023}
-  - {fileID: 298730225}
-  - {fileID: 206730385}
-  - {fileID: 2137833082}
-  - {fileID: 614261987}
-  - {fileID: 79613590}
-  - {fileID: 832457312}
-  - {fileID: 251742711}
-  - {fileID: 2054245784}
-  - {fileID: 1195809132}
-  - {fileID: 998833175}
-  - {fileID: 1121976519}
-  - {fileID: 436829094}
-  - {fileID: 432782716}
-  - {fileID: 1485362220}
-  - {fileID: 1035759170}
+  - {fileID: 1023725581}
+  - {fileID: 1794443711}
+  - {fileID: 1825014358}
+  - {fileID: 309666197}
+  - {fileID: 14126326}
+  - {fileID: 1074768060}
+  - {fileID: 1351349360}
+  - {fileID: 1441714330}
+  - {fileID: 1907797928}
+  - {fileID: 1232538969}
+  - {fileID: 1515178873}
+  - {fileID: 931417626}
+  - {fileID: 996066039}
+  - {fileID: 803692853}
+  - {fileID: 595486084}
+  - {fileID: 1441297619}
+  - {fileID: 882590198}
+  - {fileID: 888685336}
+  - {fileID: 2038803687}
+  - {fileID: 225984712}
+  - {fileID: 91025355}
+  - {fileID: 322197403}
+  - {fileID: 1553181836}
+  - {fileID: 806317070}
+  - {fileID: 323357925}
+  - {fileID: 1828790996}
+  - {fileID: 1315943082}
+  - {fileID: 173007427}
+  - {fileID: 265926684}
+  - {fileID: 946987448}
+  - {fileID: 566472170}
+  - {fileID: 144167864}
+  - {fileID: 1360097790}
+  - {fileID: 402644683}
+  - {fileID: 1530050704}
   m_Father: {fileID: 1261502657}
 --- !u!114 &1475455512
 MonoBehaviour:
@@ -15436,8 +16085,14 @@ MonoBehaviour:
   - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
   - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
   - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
+  - {fileID: 100000, guid: e68f610207e69a94a8e5a046bc8167a0, type: 2}
+  - {fileID: 100000, guid: 977cea260f99f264ebca689a0e04c863, type: 2}
+  - {fileID: 100000, guid: 796bfaf5a0b1c124bbe8661b4079c57f, type: 2}
+  - {fileID: 100000, guid: f4068912a80be49498c48523c096d45e, type: 2}
+  - {fileID: 100014, guid: 0160515317ee5f843adad6c431147059, type: 2}
   UPDATE_BUTTON: 0
   encounterCount: 0
+  UseDebugPlay: 1
 --- !u!1 &1481223223
 GameObject:
   m_ObjectHideFlags: 0
@@ -15505,55 +16160,6 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &1485362219
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1485362220}
-  - 114: {fileID: 1485362221}
-  m_Layer: 0
-  m_Name: Encounter0504
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1485362220
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1485362219}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &1485362221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1485362219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 5
-  Enemies:
-  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
-  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
-  StateSets:
-  - nameList: Default Heal
-  tutorialMessage:
-    Texts: []
-    BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    ApproveMessageTypes: 
-    Type: 0
 --- !u!1 &1488064545
 GameObject:
   m_ObjectHideFlags: 0
@@ -15977,6 +16583,55 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
+--- !u!1 &1515178872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1515178873}
+  - 114: {fileID: 1515178874}
+  m_Layer: 0
+  m_Name: Encounter0403
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1515178873
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1515178872}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1515178874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1515178872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 4
+  Enemies:
+  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
+  StateSets:
+  - nameList: 'Critical Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1527042719
 GameObject:
   m_ObjectHideFlags: 0
@@ -16033,6 +16688,56 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1527042719}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1530050702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1530050704}
+  - 114: {fileID: 1530050703}
+  m_Layer: 0
+  m_Name: Encounter1101
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1530050703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1530050702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 11
+  Enemies:
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
+  - {fileID: 100000, guid: 796bfaf5a0b1c124bbe8661b4079c57f, type: 2}
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
+  StateSets:
+  - nameList: 'Default Default Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
+--- !u!4 &1530050704
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1530050702}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
 --- !u!1 &1539920481
 GameObject:
   m_ObjectHideFlags: 0
@@ -16301,6 +17006,55 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &1553181835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1553181836}
+  - 114: {fileID: 1553181837}
+  m_Layer: 0
+  m_Name: Encounter0703
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1553181836
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1553181835}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1553181837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1553181835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 7
+  Enemies:
+  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
+  - {fileID: 100000, guid: e68f610207e69a94a8e5a046bc8167a0, type: 2}
+  StateSets:
+  - nameList: 'Default Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1554500414
 GameObject:
   m_ObjectHideFlags: 0
@@ -18965,6 +19719,55 @@ Material:
         first:
           name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &1794443710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1794443711}
+  - 114: {fileID: 1794443712}
+  m_Layer: 0
+  m_Name: Encounter0102
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1794443711
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1794443710}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1794443712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1794443710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 1
+  Enemies:
+  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
+  StateSets:
+  - nameList: 'Default '
+  tutorialMessage:
+    Texts:
+    - "\u305F\u305F\u304B\u3044\u304C\u3000\u304A\u308F\u308C\u3070\u3000HP\u306F\u304B\u3044\u3075\u304F\u3059\u308B\u3002"
+    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    ApproveMessageTypes: 00000000
+    Type: 1
 --- !u!1 &1795363870
 GameObject:
   m_ObjectHideFlags: 0
@@ -19459,6 +20262,55 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
+--- !u!1 &1825014357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1825014358}
+  - 114: {fileID: 1825014359}
+  m_Layer: 0
+  m_Name: Encounter0201
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1825014358
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1825014357}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1825014359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1825014357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 2
+  Enemies:
+  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
+  - {fileID: 100000, guid: 8675ee2e69543904e9946215c13ababf, type: 2}
+  StateSets:
+  - nameList: 'Default Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1825999546
 GameObject:
   m_ObjectHideFlags: 0
@@ -19589,6 +20441,54 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2026910084}
+--- !u!1 &1828790995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1828790996}
+  - 114: {fileID: 1828790997}
+  m_Layer: 0
+  m_Name: Encounter0803
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1828790996
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1828790995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1828790997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1828790995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 8
+  Enemies:
+  - {fileID: 100000, guid: 796bfaf5a0b1c124bbe8661b4079c57f, type: 2}
+  StateSets:
+  - nameList: 'Default '
+  tutorialMessage:
+    Texts: []
+    BaseColor: {r: 0, g: 0, b: 0, a: 0}
+    ApproveMessageTypes: 
+    Type: 0
 --- !u!1 &1832560347
 GameObject:
   m_ObjectHideFlags: 0
@@ -19992,6 +20892,57 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 681572036}
+--- !u!1 &1907797927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1907797928}
+  - 114: {fileID: 1907797929}
+  m_Layer: 0
+  m_Name: Encounter0401
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1907797928
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1907797927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &1907797929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1907797927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 4
+  Enemies:
+  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
+  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
+  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
+  StateSets:
+  - nameList: 'Default Default Default '
+  tutorialMessage:
+    Texts:
+    - "\u307E\u307B\u3046\u3068\u3000\u3053\u3046\u3052\u304D\u306F\u3000\u3066\u304D\u306B\u3088\u3063\u3066\u3000\u3053\u3046\u304B\u304C\u3061\u304C\u3046"
+    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    ApproveMessageTypes: 
+    Type: 1
 --- !u!1 &1923832137
 GameObject:
   m_ObjectHideFlags: 0
@@ -21277,6 +22228,56 @@ Transform:
   m_Children:
   - {fileID: 372054734}
   m_Father: {fileID: 155232415}
+--- !u!1 &2038803686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2038803687}
+  - 114: {fileID: 2038803688}
+  m_Layer: 0
+  m_Name: Encounter0603
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2038803687
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2038803686}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1475455511}
+--- !u!114 &2038803688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2038803686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 6
+  Enemies:
+  - {fileID: 100000, guid: 8a65f7544e69b124badf09cbeae911e5, type: 2}
+  - {fileID: 100000, guid: 9cd59b0f1799fa24b99fb8a97b9f656b, type: 2}
+  StateSets:
+  - nameList: 'Default Heal '
+  tutorialMessage:
+    Texts:
+    - "VT\u306F\u3000\u3058\u304B\u3093\u304C\u305F\u3064\u3068\u3000\u304D\u3048\u3066\u3057\u307E\u3046"
+    BaseColor: {r: 0, g: 1, b: 1, a: 1}
+    ApproveMessageTypes: 08000000
+    Type: 1
 --- !u!21 &2040190598
 Material:
   serializedVersion: 3
@@ -21389,55 +22390,6 @@ LineRenderer:
       serializedVersion: 2
       rgba: 9803157
   m_UseWorldSpace: 0
---- !u!1 &2054245783
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2054245784}
-  - 114: {fileID: 2054245785}
-  m_Layer: 0
-  m_Name: Encounter0402
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2054245784
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2054245783}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &2054245785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2054245783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 4
-  Enemies:
-  - {fileID: 100000, guid: ea60ff9c472462e479b76ccc3675d7dd, type: 2}
-  - {fileID: 100000, guid: e71e660e5920e844bbc9f08e294667ac, type: 2}
-  StateSets:
-  - nameList: Default Default
-  tutorialMessage:
-    Texts: []
-    BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    ApproveMessageTypes: 
-    Type: 0
 --- !u!1 &2061313633
 GameObject:
   m_ObjectHideFlags: 0
@@ -22379,55 +23331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   commandGraph: {fileID: 38929925}
   MoonGetColor: {r: .639705896, g: .481531113, b: .141111583, a: 0}
-  Level: 1
---- !u!1 &2137833081
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2137833082}
-  - 114: {fileID: 2137833083}
-  m_Layer: 0
-  m_Name: Encounter0203
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2137833082
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2137833081}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1475455511}
---- !u!114 &2137833083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2137833081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ded414fcf28eb8a488c9efa7d216e4dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 2
-  Enemies:
-  - {fileID: 100000, guid: 0cd4901ebcbfdc845bdb8328a924e688, type: 2}
-  StateSets:
-  - nameList: Critical
-  tutorialMessage:
-    Texts: []
-    BaseColor: {r: 0, g: 0, b: 0, a: 0}
-    ApproveMessageTypes: 
-    Type: 0
+  Level: 6
 --- !u!1 &2142067981
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,8 +18,6 @@ public enum EStatusIcon
     FFF,
     FF,
     F,
-    _SS,
-    _S,
     HH,
     H,
     RR,
@@ -36,6 +34,8 @@ public enum EStatusIcon
     _M,
     SS,
     S,
+    _SS,
+    _S,
     DD,
     D,
     E,
@@ -263,6 +263,12 @@ public class PlayerCommand : CommandBase, IVoxNode
     {
         IsAcquired = true;
         SetColor( Color.gray );
+    }
+    public void Forget()
+    {
+        IsSelected = false;
+        IsAcquired = false;
+        SetColor( Color.clear );
     }
     public void SetPush( bool isPushing )
     {

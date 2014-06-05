@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: MagicDefaultCommand
+  m_Name: magic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,18 +35,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
+  m_Script: {fileID: 11500000, guid: eb4918957b1785b44b4981e05af947f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400000, guid: d51c20c3ef71d114e95848b29ee29217, type: 2}
-  _timingStr: 0 2 0
-  PhysicDefend: 0
-  MagicDefend: 0
-  HealPercent: 0
-  nextState: 
-  isPassive: 0
-  DescribeText: "\u306E\u3000\u307E\u307B\u3046\u3053\u3046\u3052\u304D"
+  isPlayerSkill: 0
+  _actionStr:
+  - Magic 50 0 0 Player
+  _rhythmStr: nn ta
+  _rhythmBaseTime: 1
+  _prefabs: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -99,6 +99,22 @@ public class PlayerConductor : MonoBehaviour {
         }
     }
 
+    public void CheckAcquireCommands()
+    {
+        PlayerCommand acquiredCommand = commandGraph.CheckAcquireCommand( Level );
+        while( acquiredCommand != null )
+        {
+            acquiredCommand.Acquire();
+            acquiredCommand = commandGraph.CheckAcquireCommand( Level );
+        }
+        PlayerCommand forgetCommand = commandGraph.CheckForgetCommand( Level );
+        while( forgetCommand != null )
+        {
+            forgetCommand.Forget();
+            forgetCommand = commandGraph.CheckAcquireCommand( Level );
+        }
+    }
+
 	public void CheckCommand()
     {
         commandGraph.CheckCommand();
