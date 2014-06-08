@@ -7,11 +7,11 @@ public enum EnemySpecies
     Spirit,
     Fairy,
     Human,
-    Jewel,
+    Thing,
     Beast,
     Dragon,
+    Jewel,
     Weather,
-    Thing
 }
 
 public class Enemy : Character

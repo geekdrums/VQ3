@@ -59,8 +59,13 @@ public class FieldConductor : MonoBehaviour {
             LevelEncounters[encounter.Level-1].Encounters.Add( encounter );
         }
 
-        targetPlayerLevel = GameContext.PlayerConductor.Level;
-        targetEncounterCount = encounterCount;
+#if UNITY_EDITOR
+        if( UnityEditor.EditorApplication.isPlaying )
+        {
+            targetPlayerLevel = GameContext.PlayerConductor.Level;
+            targetEncounterCount = encounterCount;
+        }
+#endif
 	}
 
     void OnGUI()

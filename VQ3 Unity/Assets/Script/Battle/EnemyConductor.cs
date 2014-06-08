@@ -332,14 +332,15 @@ public class EnemyConductor : MonoBehaviour {
         int index = GameContext.PlayerConductor.WaitCount % Enemies.Count;
         for( int i=0;i<Enemies.Count; i++ )
         {
-            if( i == index )
-            {
-                Enemies[i].SetWaitCommand( Enemies[i].PhysicAttack >= Enemies[i].MagicAttack ? PhysicDefaultCommand : MagicDefaultCommand );
-            }
-            else
-            {
-                Enemies[i].SetWaitCommand( null );
-            }
+            //if( i == index )
+            //{
+            //    Enemies[i].SetWaitCommand( Enemies[i].PhysicAttack >= Enemies[i].MagicAttack ? PhysicDefaultCommand : MagicDefaultCommand );
+            //}
+            //else
+            //{
+            //    Enemies[i].SetWaitCommand( null );
+            //}
+            Enemies[i].SetWaitCommand( null );
             Enemies[i].SetExecBar( 0 );
         }
         if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )

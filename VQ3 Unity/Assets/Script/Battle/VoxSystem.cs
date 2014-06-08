@@ -52,6 +52,7 @@ public class VoxSystem : MonoBehaviour{
     public float fireMinHeight;
     public float fireMaxHeight;
     public float fireLinearFactor;
+    public Vector3 waitBGOffset;
 
     //initial parameters
     Color initialBGColor;
@@ -160,6 +161,7 @@ public class VoxSystem : MonoBehaviour{
 		{
         case VoxState.Sun:
             UpdateLightAngles();
+            UpdateBGOffset();
             break;
         case VoxState.Eclipse:
             EclipseUpdate();
@@ -279,6 +281,13 @@ public class VoxSystem : MonoBehaviour{
             lightAngles[i] += (Mathf.Abs( d ) < lightMinSpeed ? 0 : d);
         }
     }
+
+    void UpdateBGOffset()
+    {
+        string blockName = Music.GetCurrentBlockName();
+        BGOffset = Vector3.Lerp( BGOffset, (blockName == "intro" || blockName == "wait") ? waitBGOffset : Vector3.zero, 0.1f );
+    }
+
     void EclipseUpdate()
     {
         if( Music.Just.bar < 3 || !IsReadyEclipse )

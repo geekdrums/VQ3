@@ -8,7 +8,7 @@ public class WeatherEnemy : Enemy
     public string WeatherName;
     public ParticleSystem weatherParticle;
 
-    public bool IsSubstance { get { return currentState.name != WeatherState; } }
+    public bool IsSubstance { get { return currentState != null && currentState.name != WeatherState; } }
 
     string WeatherState;
     string SubstanceState;
