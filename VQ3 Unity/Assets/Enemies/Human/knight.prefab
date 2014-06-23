@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 400002}
   - 114: {fileID: 11400004}
   m_Layer: 0
-  m_Name: Heal
+  m_Name: Wait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,23 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: Racle
+  m_Name: Attack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400006}
+  - 114: {fileID: 11400008}
+  m_Layer: 0
+  m_Name: Critical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,8 +91,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .800000012, y: .800000012, z: 1}
   m_Children:
-  - {fileID: 400008}
   - {fileID: 400004}
+  - {fileID: 400008}
+  - {fileID: 400006}
   - {fileID: 400002}
   m_Father: {fileID: 0}
 --- !u!4 &400002
@@ -96,6 +113,17 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
+--- !u!4 &400006
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -123,9 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 600
-  BasePower: 0
-  BaseMagic: 220
+  HitPoint: 1000
+  BasePower: 300
+  BaseMagic: 0
   DisplayName: "\u30CA\u30A4\u30C8"
   Speceis: 2
   States:
@@ -133,25 +161,19 @@ MonoBehaviour:
     pattern:
     - {fileID: 11400002}
     - {fileID: 11400002}
-    nextState: Heal
-  - name: Heal
+    - {fileID: 11400002}
+    nextState: Critical
+  - name: Critical
     pattern:
     - {fileID: 11400004}
-    - {fileID: 11400004}
-    - {fileID: 11400004}
-    - {fileID: 11400004}
+    - {fileID: 11400008}
     nextState: Default
   - name: Invert
     pattern:
     - {fileID: 11400006}
     nextState: 
-  conditions:
-  - _conditions:
-    - MyHP - 300
-    FromState: Default
-    ToState: Heal
-    ViceVersa: 0
-  VPtolerance: 0
+  conditions: []
+  VPtolerance: 20
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,14 +186,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
+  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
   _timingStr: 0 0 3
   PhysicDefend: 0
   MagicDefend: 20
   HealPercent: 0
   nextState: 
-  ShortText: "\u3089\u3044\u3052\u304D"
-  Icon: 8
+  ShortText: "\u305F\u305F\u304B\u3046"
+  Icon: 2
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -183,15 +205,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400008, guid: b4103494e6d597e4faa0f7c543d42dde, type: 2}
-  _timingStr: 0
+  _skillList: []
+  _timingStr: 
   PhysicDefend: 0
   MagicDefend: 20
   HealPercent: 0
   nextState: 
-  ShortText: "\u304B\u3044\u3075\u304F"
-  Icon: 13
+  ShortText: "\u304B\u307E\u3048\u308B"
+  Icon: 35
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,6 +232,28 @@ MonoBehaviour:
   nextState: 
   ShortText: 
   Icon: 34
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillList:
+  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
+  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
+  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
+  _timingStr: 0 0 3,0 1 2,0 2 1
+  PhysicDefend: 0
+  MagicDefend: 20
+  HealPercent: 0
+  nextState: 
+  ShortText: "\u307F\u3060\u308C\u304E\u308A"
+  Icon: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

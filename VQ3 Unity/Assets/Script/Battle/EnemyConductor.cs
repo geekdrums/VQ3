@@ -125,14 +125,17 @@ public class EnemyConductor : MonoBehaviour {
         if( we != null )
         {
             WeatherEnemy = we;
+            WeatherEnemy.InitState( WeatherEnemy.WeatherName );
         }
         else
         {
             Enemies.Add( enemy );
             TextWindow.ChangeMessage( BattleMessageType.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
+            enemy.InitState( initialState );
         }
+        enemy.transform.localPosition += transform.position;
+        enemy.transform.localScale *= transform.lossyScale.x;
         enemy.transform.parent = transform;
-        enemy.InitState( initialState );
         //enemy.outlineSprite.color = enemy.currentState.color;
         enemy.DisplayName += (char)((int)'A' + Enemies.FindAll( ( Enemy e ) => e.DisplayName.StartsWith( enemy.DisplayName ) && e.DisplayName.Length == enemy.DisplayName.Length + 1 ).Count);
     }
@@ -174,16 +177,19 @@ public class EnemyConductor : MonoBehaviour {
             }
         }
         WeatherModule weather = Action.GetModule<WeatherModule>();
-        if( WeatherEnemy != null && weather != null )
+        if( weather != null )
         {
-            bool IsOldSubstance = WeatherEnemy.IsSubstance;
-            WeatherEnemy.ReceiveWeatherModule( weather );
-            if( IsOldSubstance != WeatherEnemy.IsSubstance )
+            if( WeatherEnemy != null )
             {
-                if( IsOldSubstance ) Enemies.Remove( WeatherEnemy );
-                else Enemies.Add( WeatherEnemy );
+                bool IsOldSubstance = WeatherEnemy.IsSubstance;
+                WeatherEnemy.ReceiveWeatherModule( weather );
+                if( IsOldSubstance != WeatherEnemy.IsSubstance )
+                {
+                    if( IsOldSubstance ) Enemies.Remove( WeatherEnemy );
+                    else Enemies.Add( WeatherEnemy );
+                }
+                isSucceeded = true;
             }
-            isSucceeded = true;
         }
         EnemySpawnModule spawner = Action.GetModule<EnemySpawnModule>();
         if( spawner != null && Enemies.Count < 3 )

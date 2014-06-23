@@ -43,7 +43,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: Igna
+  m_Name: Jamil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,9 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 1000
+  HitPoint: 1200
   BasePower: 0
-  BaseMagic: 160
+  BaseMagic: 500
   DisplayName: "\u30AA\u30CB\u30D3"
   Speceis: 0
   States:
@@ -105,11 +105,14 @@ MonoBehaviour:
     pattern:
     - {fileID: 11400002}
     - {fileID: 11400002}
-    - {fileID: 11400002}
+    nextState: Ignada
+  - name: Ignada
+    pattern:
     - {fileID: 11400006}
-    nextState: 
+    - {fileID: 11400006}
+    nextState: Default
   conditions: []
-  VPtolerance: 30
+  VPtolerance: 40
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,14 +125,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
+  - {fileID: 11400000, guid: 553968536dea3c3478d338ffe9898528, type: 2}
   _timingStr: 0 1
-  PhysicDefend: -50
+  PhysicDefend: -100
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: "\u30D2\u30CE\u30B3"
-  Icon: 11
+  ShortText: "\u30B8\u30E3\u30DF\u30EB"
+  Icon: 25
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,11 +148,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
   - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
   _timingStr: 0 1, 0 1 2
-  PhysicDefend: -50
+  PhysicDefend: -100
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: "\u30AA\u30CB\u30CE\u30B3"
+  ShortText: "\u30A4\u30B0\u30CA\u30C0"
   Icon: 10
 --- !u!212 &21200000
 SpriteRenderer:

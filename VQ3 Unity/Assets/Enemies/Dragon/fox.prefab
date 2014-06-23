@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400002}
+  m_Layer: 0
+  m_Name: Wave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +26,7 @@ GameObject:
   - 4: {fileID: 400002}
   - 114: {fileID: 11400010}
   m_Layer: 0
-  m_Name: IgnisSave
+  m_Name: Wait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +42,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400006}
   m_Layer: 0
-  m_Name: Ignis
+  m_Name: Deshield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,6 +65,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: .5, y: .5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400012}
 --- !u!4 &400002
 Transform:
   m_ObjectHideFlags: 1
@@ -81,8 +108,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .800000012, y: .800000012, z: 1}
   m_Children:
-  - {fileID: 400008}
+  - {fileID: 400000}
   - {fileID: 400002}
+  - {fileID: 400008}
   m_Father: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -103,17 +131,37 @@ MonoBehaviour:
   States:
   - name: Default
     pattern:
-    - {fileID: 11400010}
-    - {fileID: 11400010}
-    nextState: Fire
-  - name: Fire
+    - {fileID: 11400002}
+    - {fileID: 11400002}
+    - {fileID: 11400002}
+    nextState: Curse
+  - name: Curse
     pattern:
-    - {fileID: 11400006}
-    - {fileID: 11400006}
+    - {fileID: 11400010}
     - {fileID: 11400006}
     nextState: Default
   conditions: []
-  VPtolerance: 0
+  VPtolerance: 10
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillList:
+  - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
+  _timingStr: 0 0 0
+  PhysicDefend: 0
+  MagicDefend: 80
+  HealPercent: 0
+  nextState: 
+  ShortText: "\u30A6\u30A7\u30FC\u30D6"
+  Icon: 3
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,14 +174,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 52f248a6f52ab7344844d0f5655841df, type: 2}
-  _timingStr: 0 0 0
+  - {fileID: 11400000, guid: 4cd48b2376fdddf4c89b7dcdb00ba194, type: 2}
+  - {fileID: 11400000, guid: 4cd48b2376fdddf4c89b7dcdb00ba194, type: 2}
+  _timingStr: 0 0 0,0 1 0
   PhysicDefend: 0
   MagicDefend: 80
   HealPercent: 0
   nextState: 
-  ShortText: "\u3057\u3083\u304F\u306D\u3064"
-  Icon: 9
+  ShortText: "\u306E\u308D\u3046"
+  Icon: 28
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,7 +201,7 @@ MonoBehaviour:
   MagicDefend: 80
   HealPercent: 0
   nextState: 
-  ShortText: "\u3072\u3092\u3000\u305F\u3081\u308B"
+  ShortText: "\u3068\u306A\u3048\u308B"
   Icon: 35
 --- !u!212 &21200002
 SpriteRenderer:

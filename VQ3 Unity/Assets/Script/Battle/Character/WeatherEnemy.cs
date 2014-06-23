@@ -62,12 +62,12 @@ public class WeatherEnemy : Enemy
 
     public void ReceiveWeatherModule( WeatherModule wm )
     {
+        print( "ReceiveWeatherModule " + DensityPoint + " " + wm.Point );
         if( this.WeatherName == wm.WeatherName )
         {
             if( IsSubstance && wm.Point > 0 )
             {
                 DensityPoint += wm.Point;
-                print( DensityPoint );
                 if( DensityPoint >= MaxDensityPoint )
                 {
                     DensityPoint = MaxDensityPoint;

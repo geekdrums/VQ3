@@ -43,7 +43,23 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: InvertAttack
+  m_Name: Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400006}
+  - 114: {fileID: 11400006}
+  m_Layer: 0
+  m_Name: Wait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +75,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400008}
   m_Layer: 0
-  m_Name: Critical
+  m_Name: InvertAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,6 +94,7 @@ Transform:
   - {fileID: 400002}
   - {fileID: 400008}
   - {fileID: 400004}
+  - {fileID: 400006}
   m_Father: {fileID: 0}
 --- !u!4 &400002
 Transform:
@@ -96,6 +113,17 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
+--- !u!4 &400006
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -131,17 +159,24 @@ MonoBehaviour:
   States:
   - name: Default
     pattern:
+    - {fileID: 11400006}
     - {fileID: 11400004}
-    - {fileID: 11400004}
-    - {fileID: 11400004}
-    - {fileID: 11400008}
     nextState: 
-  - name: Invert
+  - name: Spawn
     pattern:
     - {fileID: 11400002}
     nextState: 
-  conditions: []
-  VPtolerance: 0
+  - name: Invert
+    pattern:
+    - {fileID: 11400008}
+    nextState: 
+  conditions:
+  - _conditions:
+    - EnemyCount 0 1
+    FromState: Default
+    ToState: Spawn
+    ViceVersa: 0
+  VPtolerance: 10
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,14 +189,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
+  - {fileID: 11400008, guid: 09406776e08436c4a85f6e939e6dbc18, type: 2}
   _timingStr: 0 1 0
-  PhysicDefend: 80
-  MagicDefend: 0
+  PhysicDefend: 90
+  MagicDefend: 25
   HealPercent: 0
-  nextState: 
-  ShortText: "\u3042\u304C\u304D"
-  Icon: 2
+  nextState: Default
+  ShortText: "\u306A\u304B\u307E\u3092\u3088\u3076"
+  Icon: 32
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -176,12 +211,31 @@ MonoBehaviour:
   _skillList:
   - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
   _timingStr: 0 1 0
-  PhysicDefend: 80
+  PhysicDefend: 90
+  MagicDefend: 25
+  HealPercent: 0
+  nextState: 
+  ShortText: "\u304A\u305D\u3046"
+  Icon: 2
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillList: []
+  _timingStr: 
+  PhysicDefend: 0
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: "\u3053\u3046\u3052\u304D"
-  Icon: 2
+  ShortText: "\u3088\u3046\u3059\u3092\u307F\u308B"
+  Icon: 35
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,14 +249,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillList:
   - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  - {fileID: 11400000, guid: fd339432e94dde54382e8149f2e6f478, type: 2}
-  _timingStr: 0 1 0,0 1 1
-  PhysicDefend: 80
+  _timingStr: 0 1 0
+  PhysicDefend: 30
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: "\u3075\u307F\u3064\u3051"
-  Icon: 0
+  ShortText: "\u304B\u307F\u3064\u304F"
+  Icon: 2
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

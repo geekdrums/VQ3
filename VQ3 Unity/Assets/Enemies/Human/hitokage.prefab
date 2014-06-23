@@ -139,7 +139,6 @@ MonoBehaviour:
     - {fileID: 11400004}
     - {fileID: 11400004}
     - {fileID: 11400004}
-    - {fileID: 11400004}
     nextState: Default
   - name: Invert
     pattern:
@@ -151,7 +150,7 @@ MonoBehaviour:
     FromState: Default
     ToState: Heal
     ViceVersa: 0
-  VPtolerance: 0
+  VPtolerance: 20
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: E_Poison
+  m_Name: Wait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,15 +35,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb4918957b1785b44b4981e05af947f1, type: 3}
+  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerSkill: 0
-  _actionStr:
-  - Enhance Regene -1 6
-  _rhythmStr: ta
-  _rhythmBaseTime: 1
-  _prefabs: []
+  _skillList: []
+  _timingStr: 
+  PhysicDefend: 0
+  MagicDefend: 0
+  HealPercent: 0
+  nextState: 
+  ShortText: "\u305F\u3081\u308B"
+  Icon: 35
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

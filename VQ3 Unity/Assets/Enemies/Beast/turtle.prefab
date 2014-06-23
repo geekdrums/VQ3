@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 400002}
   - 114: {fileID: 11400004}
   m_Layer: 0
-  m_Name: Attack
+  m_Name: PoisonAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,23 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: InvertAttack
+  m_Name: InvertWait
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400006}
+  - 114: {fileID: 11400006}
+  m_Layer: 0
+  m_Name: Wait2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,6 +81,38 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &100010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400010}
+  - 114: {fileID: 11400010}
+  m_Layer: 0
+  m_Name: Wait
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100012
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400012}
+  - 114: {fileID: 11400012}
+  m_Layer: 0
+  m_Name: InvertAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -75,9 +123,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .699999988, y: .699999988, z: 1}
   m_Children:
+  - {fileID: 400004}
   - {fileID: 400002}
   - {fileID: 400008}
-  - {fileID: 400004}
+  - {fileID: 400012}
+  - {fileID: 400010}
+  - {fileID: 400006}
   m_Father: {fileID: 0}
 --- !u!4 &400002
 Transform:
@@ -101,12 +152,45 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
+--- !u!4 &400006
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
 --- !u!4 &400008
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
+--- !u!4 &400010
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100010}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
+--- !u!4 &400012
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -131,17 +215,23 @@ MonoBehaviour:
   States:
   - name: Default
     pattern:
-    - {fileID: 11400004}
-    - {fileID: 11400004}
-    - {fileID: 11400004}
+    - {fileID: 11400010}
+    - {fileID: 11400010}
     - {fileID: 11400008}
-    nextState: 
+    nextState: Poison
+  - name: Poison
+    pattern:
+    - {fileID: 11400006}
+    - {fileID: 11400006}
+    - {fileID: 11400004}
+    nextState: Default
   - name: Invert
     pattern:
     - {fileID: 11400002}
+    - {fileID: 11400012}
     nextState: 
   conditions: []
-  VPtolerance: 0
+  VPtolerance: 10
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,15 +243,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  _timingStr: 0 1 0
-  PhysicDefend: 80
+  _skillList: []
+  _timingStr: 
+  PhysicDefend: 0
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: "\u3042\u304C\u304D"
-  Icon: 2
+  ShortText: "\u306B\u3089\u3080"
+  Icon: 34
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -175,13 +264,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillList:
   - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  _timingStr: 0 1 0
+  - {fileID: 11400000, guid: 903cba33a7ce4f549aeb39dd2ab2f0a3, type: 2}
+  - {fileID: 11400000, guid: 903cba33a7ce4f549aeb39dd2ab2f0a3, type: 2}
+  _timingStr: 0 1 0,0 1 1,0 1 2
   PhysicDefend: 80
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: "\u3053\u3046\u3052\u304D"
-  Icon: 2
+  ShortText: "\u3069\u304F\u3070\u308A"
+  Icon: 16
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillList: []
+  _timingStr: 
+  PhysicDefend: 80
+  MagicDefend: 0
+  HealPercent: 0
+  nextState: 
+  ShortText: "\u305F\u3081\u3053\u3080"
+  Icon: 35
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,6 +313,45 @@ MonoBehaviour:
   nextState: 
   ShortText: "\u3075\u307F\u3064\u3051"
   Icon: 0
+--- !u!114 &11400010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillList: []
+  _timingStr: 
+  PhysicDefend: 80
+  MagicDefend: 0
+  HealPercent: 0
+  nextState: 
+  ShortText: "\u3072\u304D\u3053\u3082\u308B"
+  Icon: 35
+--- !u!114 &11400012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillList:
+  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
+  _timingStr: 0 1 0
+  PhysicDefend: 0
+  MagicDefend: 0
+  HealPercent: 0
+  nextState: 
+  ShortText: "\u3044\u304B\u308A"
+  Icon: 2
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

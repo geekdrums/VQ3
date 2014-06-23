@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 400002}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: PowerAttack2
+  m_Name: Wait2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,23 +43,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400004}
   m_Layer: 0
-  m_Name: Attack3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100006
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400006}
-  - 114: {fileID: 11400006}
-  m_Layer: 0
-  m_Name: Attack2
+  m_Name: Wait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +75,7 @@ GameObject:
   - 4: {fileID: 400010}
   - 114: {fileID: 11400010}
   m_Layer: 0
-  m_Name: PowerAttack1
+  m_Name: Raclite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,10 +92,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400008}
-  - {fileID: 400006}
+  - {fileID: 400010}
   - {fileID: 400004}
   - {fileID: 400002}
-  - {fileID: 400010}
   m_Father: {fileID: 0}
 --- !u!4 &400002
 Transform:
@@ -120,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.437133014, y: -3.53309011, z: 11.1010742}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -131,18 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.437133014, y: -3.53309011, z: 11.1010742}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400000}
---- !u!4 &400006
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.437133014, y: -3.53309011, z: 11.1010742}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -180,24 +152,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoint: 3000
-  BasePower: 750
-  BaseMagic: 0
+  BasePower: 0
+  BaseMagic: 750
   DisplayName: "\u30BF\u30F3\u30AF"
   Speceis: 3
   States:
   - name: Default
     pattern:
-    - {fileID: 11400008}
-    - {fileID: 11400006}
     - {fileID: 11400004}
-    nextState: 
-  - name: Disaster
-    pattern:
+    - {fileID: 11400004}
+    - {fileID: 11400004}
     - {fileID: 11400010}
+    nextState: Attack
+  - name: Attack
+    pattern:
     - {fileID: 11400002}
-    nextState: 
+    - {fileID: 11400008}
+    - {fileID: 11400002}
+    - {fileID: 11400008}
+    nextState: Default
   conditions: []
-  VPtolerance: 45
+  VPtolerance: 20
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -209,17 +184,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  _timingStr: 0 2 0,0 3 0,1 0 0
+  _skillList: []
+  _timingStr: 
   PhysicDefend: 90
   MagicDefend: 90
   HealPercent: 0
-  nextState: Default
-  ShortText: M7
-  Icon: 1
+  nextState: 
+  ShortText: "\u305D\u3046\u3066\u3093"
+  Icon: 35
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -231,35 +203,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  _timingStr: 0 2 0
-  PhysicDefend: 90
-  MagicDefend: 90
-  HealPercent: 0
-  nextState: Disaster
-  ShortText: M4.8
-  Icon: 2
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  _timingStr: 0 2 0
+  _skillList: []
+  _timingStr: 
   PhysicDefend: 90
   MagicDefend: 90
   HealPercent: 0
   nextState: 
-  ShortText: M4.0
-  Icon: 2
+  ShortText: "\u3061\u304F\u3067\u3093"
+  Icon: 35
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -272,13 +223,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
+  - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
   _timingStr: 0 2 0
   PhysicDefend: 90
   MagicDefend: 90
   HealPercent: 0
   nextState: 
-  ShortText: M3.2
+  ShortText: "\u30B7\u30E7\u30C3\u30C8"
   Icon: 2
 --- !u!114 &11400010
 MonoBehaviour:
@@ -292,15 +243,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  - {fileID: 11400000, guid: 125682c0f4d76cf47a5e50dd73218961, type: 2}
-  _timingStr: 0 2 0,0 3 0
+  - {fileID: 11400000, guid: 76ee1af36b3222c47b12598067000ecf, type: 2}
+  _timingStr: 0 2 0
   PhysicDefend: 90
   MagicDefend: 90
   HealPercent: 0
   nextState: 
-  ShortText: M5.5
-  Icon: 1
+  ShortText: "\u3067\u3093\u3058\u307B\u3046"
+  Icon: 6
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

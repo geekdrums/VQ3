@@ -17,22 +17,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &100002
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400002}
-  - 114: {fileID: 11400006}
-  m_Layer: 0
-  m_Name: Wait
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,7 +28,7 @@ GameObject:
   - 198: {fileID: 19800000}
   - 199: {fileID: 19900000}
   m_Layer: 0
-  m_Name: Rain
+  m_Name: MistParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,23 +44,7 @@ GameObject:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: Amagoi
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100008
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400008}
-  - 114: {fileID: 11400004}
-  m_Layer: 0
-  m_Name: RainThunder
+  m_Name: Mist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +60,7 @@ GameObject:
   - 4: {fileID: 400012}
   - 114: {fileID: 11400008}
   m_Layer: 0
-  m_Name: RainHeal
+  m_Name: Heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,20 +79,7 @@ Transform:
   - {fileID: 400006}
   - {fileID: 400012}
   - {fileID: 400004}
-  - {fileID: 400008}
-  - {fileID: 400002}
   m_Father: {fileID: 0}
---- !u!4 &400002
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .714285731, y: .714285731, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400000}
 --- !u!4 &400004
 Transform:
   m_ObjectHideFlags: 1
@@ -142,17 +97,6 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .714285731, y: .714285731, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400000}
---- !u!4 &400008
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .714285731, y: .714285731, z: 1}
@@ -186,27 +130,18 @@ MonoBehaviour:
   DisplayName: 
   Speceis: 7
   States:
-  - name: Rain
+  - name: Mist
     pattern:
     - {fileID: 11400008}
-    - {fileID: 11400004}
     nextState: 
   - name: Substance
     pattern:
     - {fileID: 11400002}
     nextState: 
-  - name: Default
-    pattern:
-    - {fileID: 11400006}
-    nextState: 
-  conditions:
-  - _conditions: []
-    FromState: Substance
-    ToState: Wait
-    ViceVersa: 0
+  conditions: []
   VPtolerance: 0
   DensityPoint: 15
-  WeatherName: Rain
+  WeatherName: Mist
   weatherParticle: {fileID: 19800000}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -220,55 +155,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400008, guid: f7d75333cea2bc04b956e17f8dc191dc, type: 2}
+  - {fileID: 11400008, guid: 113e073b1acf1194295410e28e13248a, type: 2}
   _timingStr: 0
   PhysicDefend: 0
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: 
-  Icon: 0
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400000, guid: bd6e15dfe38bae9459894676abfd71fa, type: 2}
-  - {fileID: 11400008, guid: 6e7378ad393c0ef4a9c48199865dc7cb, type: 2}
-  _timingStr: 0 1,0 3
-  PhysicDefend: 0
-  MagicDefend: 0
-  HealPercent: 0
-  nextState: 
-  ShortText: 
-  Icon: 0
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillList:
-  - {fileID: 11400000, guid: 8c59f0377c440ea4cbf98a4cb4c3fabe, type: 2}
-  _timingStr: 0
-  PhysicDefend: 0
-  MagicDefend: 0
-  HealPercent: 0
-  nextState: 
-  ShortText: 
-  Icon: 0
+  ShortText: "\u3058\u3087\u3046\u306F\u3064"
+  Icon: 34
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -287,8 +181,8 @@ MonoBehaviour:
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: 
-  Icon: 0
+  ShortText: "\u304D\u308A\u304C\u304B\u304B\u308B"
+  Icon: 13
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1396,7 +1290,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_SortingLayerID: 4087608993
   m_Sprite: {fileID: 21300000, guid: 4857aab55c7ca9649a4b2e9f77bf4031, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

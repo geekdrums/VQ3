@@ -43,7 +43,7 @@ GameObject:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400002}
   m_Layer: 0
-  m_Name: Racle
+  m_Name: Igna
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,12 +131,12 @@ MonoBehaviour:
   States:
   - name: Default
     pattern:
-    - {fileID: 11400002}
-    - {fileID: 11400002}
-    nextState: Jam
-  - name: Jam
-    pattern:
     - {fileID: 11400004}
+    - {fileID: 11400004}
+    nextState: Igna
+  - name: Igna
+    pattern:
+    - {fileID: 11400002}
     - {fileID: 11400002}
     - {fileID: 11400002}
     nextState: Default
@@ -145,7 +145,7 @@ MonoBehaviour:
     - {fileID: 11400006}
     nextState: 
   conditions: []
-  VPtolerance: 0
+  VPtolerance: 20
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,8 +164,8 @@ MonoBehaviour:
   MagicDefend: 20
   HealPercent: 0
   nextState: 
-  ShortText: "\u305B\u3093\u3077\u3046"
-  Icon: 4
+  ShortText: "\u30A4\u30B0\u30CA"
+  Icon: 11
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,13 +178,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
+  - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
+  - {fileID: 11400000, guid: 6759385db59e11a4498c6cbcd489b957, type: 2}
   - {fileID: 11400000, guid: 4cd48b2376fdddf4c89b7dcdb00ba194, type: 2}
-  _timingStr: 0 1 0
+  _timingStr: 0 1 0,0 1 1,0 2 0
   PhysicDefend: 0
   MagicDefend: 20
   HealPercent: 0
   nextState: 
-  ShortText: "\u306E\u308D\u3044"
+  ShortText: "\u30C7\u30AC\u30EB"
   Icon: 29
 --- !u!114 &11400006
 MonoBehaviour:

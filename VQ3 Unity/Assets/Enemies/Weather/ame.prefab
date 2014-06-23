@@ -195,15 +195,7 @@ MonoBehaviour:
     pattern:
     - {fileID: 11400002}
     nextState: 
-  - name: Default
-    pattern:
-    - {fileID: 11400006}
-    nextState: 
-  conditions:
-  - _conditions: []
-    FromState: Substance
-    ToState: Wait
-    ViceVersa: 0
+  conditions: []
   VPtolerance: 0
   DensityPoint: 15
   WeatherName: Rain
@@ -227,7 +219,7 @@ MonoBehaviour:
   HealPercent: 0
   nextState: 
   ShortText: 
-  Icon: 0
+  Icon: 34
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,7 +240,7 @@ MonoBehaviour:
   HealPercent: 0
   nextState: 
   ShortText: 
-  Icon: 0
+  Icon: 8
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -288,7 +280,7 @@ MonoBehaviour:
   HealPercent: 0
   nextState: 
   ShortText: 
-  Icon: 0
+  Icon: 13
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1396,7 +1388,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_SortingLayerID: 4087608993
   m_Sprite: {fileID: 21300000, guid: 9ce59af7507ec534daf2eb1110b558e8, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

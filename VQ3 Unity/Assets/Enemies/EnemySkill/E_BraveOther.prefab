@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: E_Poison
+  m_Name: E_BraveOther
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 0
   _actionStr:
-  - Enhance Regene -1 6
+  - Enhance Brave 1 5 Other
   _rhythmStr: ta
   _rhythmBaseTime: 1
   _prefabs: []

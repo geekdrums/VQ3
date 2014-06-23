@@ -88,7 +88,8 @@ public class Enemy : Character
                     //shortText.transform.parent = transform;
                 }
             }
-            if( Music.IsJustChangedAt( StateChangeTiming ) && currentState.name != "Invert" )
+            if( Music.IsJustChangedAt( StateChangeTiming )
+                && (currentState.name != "Invert" || GameContext.VoxSystem.InvertTime == 1) )
             {
                 oldState = currentState;
                 CheckState();

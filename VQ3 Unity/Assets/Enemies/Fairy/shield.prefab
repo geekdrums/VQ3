@@ -27,6 +27,22 @@ GameObject:
   - 4: {fileID: 400002}
   - 114: {fileID: 11400006}
   m_Layer: 0
+  m_Name: Defend
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400004}
+  - 114: {fileID: 11400002}
+  m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,6 +59,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: .600000024, y: .600000024, z: 1}
   m_Children:
+  - {fileID: 400004}
   - {fileID: 400002}
   m_Father: {fileID: 0}
 --- !u!4 &400002
@@ -51,6 +68,17 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
+--- !u!4 &400004
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -67,26 +95,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 220
-  BasePower: 200
+  HitPoint: 400
+  BasePower: 400
   BaseMagic: 0
   DisplayName: "\u30B7\u30FC\u30EB\u30C9"
   Speceis: 1
   States:
   - name: Default
     pattern:
+    - {fileID: 11400002}
+    - {fileID: 11400002}
+    - {fileID: 11400002}
+    nextState: Defend
+  - name: Defend
+    pattern:
     - {fileID: 11400006}
     - {fileID: 11400006}
     - {fileID: 11400006}
-    nextState: 
+    nextState: Default
   conditions: []
   VPtolerance: 0
---- !u!114 &11400006
+--- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
+  m_GameObject: {fileID: 100004}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
@@ -99,8 +133,27 @@ MonoBehaviour:
   MagicDefend: -100
   HealPercent: 0
   nextState: 
-  ShortText: "\u3053\u3046\u3052\u304D"
+  ShortText: "\u305F\u3044\u3042\u305F\u308A"
   Icon: 2
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65e31f40c1f3334f9c5c34f4b08638b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillList: []
+  _timingStr: 
+  PhysicDefend: 50
+  MagicDefend: 0
+  HealPercent: 0
+  nextState: 
+  ShortText: "\u307E\u3082\u308B"
+  Icon: 31
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

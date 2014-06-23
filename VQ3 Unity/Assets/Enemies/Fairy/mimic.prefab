@@ -134,18 +134,13 @@ MonoBehaviour:
     - {fileID: 11400006}
     - {fileID: 11400006}
     - {fileID: 11400006}
-    nextState: 
+    nextState: Critical
   - name: Critical
     pattern:
     - {fileID: 11400004}
     - {fileID: 11400002}
-    nextState: 
-  conditions:
-  - _conditions:
-    - TurnCount 3 -
-    FromState: Default
-    ToState: Critical
-    ViceVersa: 0
+    nextState: Default
+  conditions: []
   VPtolerance: 0
 --- !u!114 &11400002
 MonoBehaviour:
@@ -165,7 +160,7 @@ MonoBehaviour:
   PhysicDefend: 0
   MagicDefend: -100
   HealPercent: 0
-  nextState: Default
+  nextState: 
   ShortText: "\u304A\u305D\u3044\u304B\u304B\u308B"
   Icon: 0
 --- !u!114 &11400004

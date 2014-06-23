@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: E_Poison
+  m_Name: magicCanon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,9 +40,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 0
   _actionStr:
-  - Enhance Regene -1 6
+  - Magic 120 0 0 Player
   _rhythmStr: ta
-  _rhythmBaseTime: 1
+  _rhythmBaseTime: 4
   _prefabs: []
 --- !u!1001 &100100000
 Prefab:

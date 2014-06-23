@@ -43,7 +43,7 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400006}
   m_Layer: 0
-  m_Name: Barrier
+  m_Name: Lugarea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,17 +98,19 @@ MonoBehaviour:
   HitPoint: 10
   BasePower: 0
   BaseMagic: 60
-  DisplayName: "\u30D1\u30FC\u30EB"
+  DisplayName: "\u30AF\u30EA\u30B9\u30BF\u30EB"
   Speceis: 6
   States:
   - name: Default
     pattern:
-    - {fileID: 11400002}
-    nextState: 
-  - name: Defender
-    pattern:
     - {fileID: 11400006}
-    nextState: 
+    nextState: Attack
+  - name: Attack
+    pattern:
+    - {fileID: 11400002}
+    - {fileID: 11400002}
+    - {fileID: 11400002}
+    nextState: Default
   conditions: []
   VPtolerance: 0
 --- !u!114 &11400002
@@ -129,8 +131,8 @@ MonoBehaviour:
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: 
-  Icon: 0
+  ShortText: "\u30E9\u30AF\u30EB"
+  Icon: 8
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,14 +145,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400008, guid: 586f41ba65d093c4a9826325cb13ae41, type: 2}
+  - {fileID: 11400000, guid: 4cd48b2376fdddf4c89b7dcdb00ba194, type: 2}
   _timingStr: 0
   PhysicDefend: 0
   MagicDefend: 0
   HealPercent: 0
   nextState: 
-  ShortText: 
-  Icon: 0
+  ShortText: "\u30EB\u30AC\u30EC\u30A2"
+  Icon: 29
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
