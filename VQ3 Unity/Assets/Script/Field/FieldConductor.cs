@@ -34,6 +34,8 @@ public class FieldConductor : MonoBehaviour {
 
     public List<GameObject> EnemyPrefabs;
     public bool UPDATE_BUTTON;
+    public float guiHeight;
+    public Color guiColor;
 
     public int encounterCount;
     public bool UseDebugPlay;
@@ -72,26 +74,26 @@ public class FieldConductor : MonoBehaviour {
     {
         if( UseDebugPlay )
         {
-            GUI.color = Color.black;
-            GUI.Label( new Rect( 0, 0, 50, 20 ), "Level" );
-            if( GUI.Button( new Rect( 50, 0, 20, 20 ), "<" ) )
+            GUI.color = guiColor;
+            GUI.Label( new Rect( 0, guiHeight, 50, 20 ), "Level" );
+            if( GUI.Button( new Rect( 50, guiHeight, 20, 20 ), "<" ) )
             {
                 --targetPlayerLevel;
             }
-            GUI.Label( new Rect( 80, 0, 30, 20 ), targetPlayerLevel.ToString() );
-            if( GUI.Button( new Rect( 100, 0, 20, 20 ), ">" ) )
+            GUI.Label( new Rect( 80, guiHeight, 30, 20 ), targetPlayerLevel.ToString() );
+            if( GUI.Button( new Rect( 100, guiHeight, 20, 20 ), ">" ) )
             {
                 ++targetPlayerLevel;
             }
             targetPlayerLevel = Mathf.Clamp( targetPlayerLevel, 1, 50 );
 
-            GUI.Label( new Rect( 150, 0, 50, 20 ), "Encount" );
-            if( GUI.Button( new Rect( 200, 0, 20, 20 ), "<" ) )
+            GUI.Label( new Rect( 150, guiHeight, 50, 20 ), "Encount" );
+            if( GUI.Button( new Rect( 200, guiHeight, 20, 20 ), "<" ) )
             {
                 --targetEncounterCount;
             }
-            GUI.Label( new Rect( 230, 0, 30, 20 ), targetEncounterCount.ToString() );
-            if( GUI.Button( new Rect( 250, 0, 20, 20 ), ">" ) )
+            GUI.Label( new Rect( 230, guiHeight, 30, 20 ), targetEncounterCount.ToString() );
+            if( GUI.Button( new Rect( 250, guiHeight, 20, 20 ), ">" ) )
             {
                 ++targetEncounterCount;
             }
@@ -106,7 +108,7 @@ public class FieldConductor : MonoBehaviour {
                 targetEncounterCount = 0;
             }
 
-            if( GUI.Button( new Rect( 300, 0, 50, 20 ), "Play" ) )
+            if( GUI.Button( new Rect( 300, guiHeight, 50, 20 ), "Play" ) )
             {
                 TextWindow.ClearTutorialMessage();
                 GameContext.EnemyConductor.OnPlayerWin();

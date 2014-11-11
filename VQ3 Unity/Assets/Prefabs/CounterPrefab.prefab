@@ -23,10 +23,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: .0169219971, y: -.0114688873, z: -1.07398891}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39,19 +40,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NumberSprites:
-  - {fileID: 21300000, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
-  - {fileID: 21300002, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
-  - {fileID: 21300004, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
-  - {fileID: 21300006, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
-  - {fileID: 21300008, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
-  - {fileID: 21300010, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
-  - {fileID: 21300012, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
-  - {fileID: 21300014, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
-  - {fileID: 21300016, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
-  - {fileID: 21300018, guid: 09da740c2e6927941a59be2daafa89e3, type: 3}
+  - {fileID: 21300000, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  - {fileID: 21300002, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  - {fileID: 21300004, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  - {fileID: 21300006, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  - {fileID: 21300008, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  - {fileID: 21300010, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  - {fileID: 21300012, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  - {fileID: 21300014, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  - {fileID: 21300016, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  - {fileID: 21300018, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
+  MarkSprites:
+  - {fileID: 21300000, guid: c00b458083c21eb45960fcbd7996a2ce, type: 3}
+  - {fileID: 21300002, guid: c00b458083c21eb45960fcbd7996a2ce, type: 3}
+  - {fileID: 21300004, guid: c00b458083c21eb45960fcbd7996a2ce, type: 3}
+  - {fileID: 21300006, guid: c00b458083c21eb45960fcbd7996a2ce, type: 3}
+  - {fileID: 21300008, guid: c00b458083c21eb45960fcbd7996a2ce, type: 3}
   RendererPrefab: {fileID: 100000, guid: 57d965ef0041ac146bb81944b0c79230, type: 2}
-  Interval: 1.5
+  Interval: .529999971
   align: 1
+  CounterScale: 1.20000005
+  SignificantDigits: 0
+  count_: 12
+  counterColor_: {r: 0, g: 0, b: 0, a: 1}
+  optionFlags_: 0
+  NumberParent: {fileID: 0}
+  digits_:
+  - {fileID: 0}
+  - {fileID: 0}
+  dotSprite_: {fileID: 0}
+  prefixSprit_: {fileID: 0}
+  suffixSprite_: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -20,7 +20,7 @@ public class PlayerConductor : MonoBehaviour {
     //public int NumQuarter { get; private set; }
     public int PlayerHP { get { return Player.HitPoint; } }
     public int PlayerMaxHP { get { return Player.MaxHP; } }
-    public bool CanUseInvert { get { return Level >= 6; } }
+    public bool CanUseInvert { get { return Level >= 8; } }
     public int WaitCount { get; private set; }
 
     float resultRemainTime;

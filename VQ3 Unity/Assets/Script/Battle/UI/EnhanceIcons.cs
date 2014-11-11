@@ -13,7 +13,7 @@ public class EnhanceIcons : MonoBehaviour {
     Player Player;
     Vector3 maxLineScale;
     readonly int maxTurnCount = 4;
-    List<EnhanceParameter> enhanceParams = new List<EnhanceParameter>();
+    //List<EnhanceParameter> enhanceParams = new List<EnhanceParameter>();
 
 	// Use this for initialization
     void Start()

@@ -4,8 +4,8 @@
  *  Tool Ver.        : CRI Atom Craft LE Ver.1.32.00
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/SE.acb
  *  File Name        : SE.acb
- *  File Size        : 1,741,376 bytes
- *  Date Time        : 2014/04/25 0:54
+ *  File Size        : 1,742,016 bytes
+ *  Date Time        : 2014/06/24 17:45
  *  Target           : Public
  *  Cues             : 26
  *  CueSheet Comment : 

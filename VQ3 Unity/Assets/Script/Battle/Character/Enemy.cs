@@ -30,6 +30,7 @@ public class Enemy : Character
     public int commandExecBar { get; protected set; }
     public BattleState currentState { get; protected set; }
     public BattleState oldState { get; protected set; }
+    public Vector3 targetLocalPosition { get; protected set; }
 
     protected HPCircle HPCircle;
     protected int turnCount;
@@ -37,6 +38,7 @@ public class Enemy : Character
     protected SpriteRenderer spriteRenderer;
     protected List<EnemyCommandIcon> commandIcons;
     protected ShortTextWindow shortText;
+
 
     // Use this for initialization
     protected virtual void Start()
@@ -57,6 +59,7 @@ public class Enemy : Character
         HPCircle.Initialize( this );
         HPCircle.OnTurnStart();
         initialPosition = transform.localPosition;
+        targetLocalPosition = initialPosition;
 
         foreach( StateChangeCondition condition in conditions )
         {
@@ -91,7 +94,7 @@ public class Enemy : Character
             if( Music.IsJustChangedAt( StateChangeTiming )
                 && (currentState.name != "Invert" || GameContext.VoxSystem.InvertTime == 1) )
             {
-                oldState = currentState;
+                if( currentState.name != "Invert" ) oldState = currentState;
                 CheckState();
                 
                 if( oldState == currentState && turnCount >= currentState.pattern.Length )
@@ -147,13 +150,14 @@ public class Enemy : Character
                 }
             }
         }
+        transform.localPosition = Vector3.Lerp( transform.localPosition, targetLocalPosition, 0.1f );
     }
 
-    protected void CreateDamageText( int damage )
+    protected void CreateDamageText( int damage, ActionResult actResult )
     {
         if( damage == 0 ) return;
         GameObject damageText = (Instantiate( GameContext.EnemyConductor.damageTextPrefab ) as GameObject);
-        damageText.GetComponent<DamageText>().Initialize( damage, transform.position + Vector3.back * 3 + Random.onUnitSphere );
+        damageText.GetComponent<DamageText>().Initialize( damage, actResult, transform.position + Vector3.back * 3 + Random.onUnitSphere * 2 );
     }
     protected virtual void CheckState()
     {
@@ -221,6 +225,8 @@ public class Enemy : Character
         {
             invertState = new BattleState();
             invertState.name = "Invert";
+            invertState.pattern = new EnemyCommand[0];
+            invertState.nextState = "";
             //invertState.color = Color.clear;
         }
         currentState = invertState;
@@ -264,6 +270,11 @@ public class Enemy : Character
         if( currentState == null || currentState.name != name )
         {
             currentState = States.Find( ( BattleState state ) => state.name == name );
+            if( currentState == null )
+            {
+                currentState = oldState;
+                print( "ChangeState Failed: " + name );
+            }
             turnCount = 0;
             for( int i = 0; i < commandIcons.Count; i++ )
             {
@@ -317,10 +328,6 @@ public class Enemy : Character
 
     public override void BeAttacked(AttackModule attack, Skill skill)
     {
-        int oldHP = HitPoint;
- 	    base.BeAttacked(attack, skill);
-        int damage = oldHP - HitPoint;
-
         if( attack.isPhysic )
         {
             switch( Speceis )
@@ -336,12 +343,18 @@ public class Enemy : Character
                 lastDamageResult = ActionResult.PhysicGoodDamage;
                 break;
             case EnemySpecies.Beast:
-                lastDamageResult = ActionResult.PhysicBadDamage;
+                if( GameContext.VoxSystem.state == VoxState.Invert )
+                {
+                    lastDamageResult = ActionResult.PhysicDamage;
+                }
+                else
+                {
+                    lastDamageResult = ActionResult.PhysicBadDamage;
+                }
                 break;
             case EnemySpecies.Weather:
                 break;
             }
-            SEPlayer.Play( lastDamageResult, skill.OwnerCharacter, damage );
         }
         else
         {
@@ -358,19 +371,30 @@ public class Enemy : Character
                 lastDamageResult = ActionResult.MagicGoodDamage;
                 break;
             case EnemySpecies.Dragon:
-                lastDamageResult = ActionResult.MagicBadDamage;
+                if( GameContext.VoxSystem.state == VoxState.Invert )
+                {
+                    lastDamageResult = ActionResult.MagicDamage;
+                }
+                else
+                {
+                    lastDamageResult = ActionResult.MagicBadDamage;
+                }
                 break;
             case EnemySpecies.Jewel:
                 break;
             }
-            SEPlayer.Play( lastDamageResult, skill.OwnerCharacter, damage );
         }
+        int oldHP = HitPoint;
+        base.BeAttacked( attack, skill );
+        int damage = oldHP - HitPoint;
+        SEPlayer.Play( lastDamageResult, skill.OwnerCharacter, damage );
+
     }
     protected override void BeDamaged( int damage, Character ownerCharacter )
     {
         base.BeDamaged( damage, ownerCharacter );
-        CreateDamageText( damage );
-        HPCircle.OnDamage();
+        CreateDamageText( damage, lastDamageResult );
+        HPCircle.OnDamage(damage);
         //if( HitPoint > 0 )
         //{
         //    CheckStateOnDamage( damage );
@@ -388,14 +412,20 @@ public class Enemy : Character
     {
         int oldHitPoint = HitPoint;
         base.Heal( heal );
-        CreateDamageText( -(HitPoint - oldHitPoint) );
-        HPCircle.OnHeal();
+        CreateDamageText( -(HitPoint - oldHitPoint), ActionResult.EnemyHeal );
+        HPCircle.OnHeal( HitPoint - oldHitPoint );
         SEPlayer.Play( ActionResult.EnemyHeal, this, HitPoint - oldHitPoint );
     }
     public override void UpdateHealHP()
     {
         base.UpdateHealHP();
         HPCircle.OnUpdateHP();
+    }
+
+    public void SetTargetPosition( Vector3 target )
+    {
+        targetLocalPosition = target;
+        initialPosition = target;
     }
 
     public void OnBaseColorChanged( Color newColor )

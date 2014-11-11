@@ -104,7 +104,7 @@ public class EnemyConductor : MonoBehaviour {
         int l = encounter.Enemies.Length;
         for( int i = 0; i < l; ++i )
         {
-            SpawnEnemy( encounter.Enemies[i], encounter.StateSets[0][i], i, l );
+            SpawnEnemy( encounter.Enemies[i], encounter.StateSets[0][i], GetSpawnPosition( i, l ) );
         }
         targetEnemy = Enemies[(Enemies.Count - 1) / 2];
         GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
@@ -115,10 +115,12 @@ public class EnemyConductor : MonoBehaviour {
         }
     }
 
-    void SpawnEnemy( GameObject enemyPrefab, string initialState, int index, int l )
+    Vector3 GetSpawnPosition( int index, int l ) { return new Vector3( EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 4, 0 ); }
+
+    void SpawnEnemy( GameObject enemyPrefab, string initialState, Vector3 spawnPosition )
     {
         GameObject TempObj;
-        TempObj = (GameObject)Instantiate( enemyPrefab, new Vector3( EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 4, 0 ), enemyPrefab.transform.rotation );
+        TempObj = (GameObject)Instantiate( enemyPrefab, spawnPosition, enemyPrefab.transform.rotation );
         //TempObj.renderer.material.color = baseColor;
         Enemy enemy = TempObj.GetComponent<Enemy>();
         WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
@@ -136,6 +138,7 @@ public class EnemyConductor : MonoBehaviour {
         enemy.transform.localPosition += transform.position;
         enemy.transform.localScale *= transform.lossyScale.x;
         enemy.transform.parent = transform;
+        enemy.SetTargetPosition( enemy.transform.localPosition );
         //enemy.outlineSprite.color = enemy.currentState.color;
         enemy.DisplayName += (char)((int)'A' + Enemies.FindAll( ( Enemy e ) => e.DisplayName.StartsWith( enemy.DisplayName ) && e.DisplayName.Length == enemy.DisplayName.Length + 1 ).Count);
     }
@@ -153,6 +156,7 @@ public class EnemyConductor : MonoBehaviour {
                 {
                     anim.SetTargetEnemy( e );
                     skill.transform.position = e.transform.position + Vector3.back * 0.1f;
+                    skill.transform.localScale *= transform.lossyScale.x;
                     break;
                 }
             }
@@ -194,8 +198,10 @@ public class EnemyConductor : MonoBehaviour {
         EnemySpawnModule spawner = Action.GetModule<EnemySpawnModule>();
         if( spawner != null && Enemies.Count < 3 )
         {
-            SpawnEnemy( spawner.EnemyPrefab, spawner.InitialState, (Enemies.Count == 1 ? 0 : 2), 3 );
+            for( int i = 0; i < Enemies.Count; i++ ) Enemies[i].SetTargetPosition( GetSpawnPosition( i, Enemies.Count + 1 ) );
+            SpawnEnemy( spawner.EnemyPrefab, spawner.InitialState, GetSpawnPosition( Enemies.Count, Enemies.Count + 1 ) );
             isSucceeded = true;
+            GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
         }
         
 
@@ -335,7 +341,7 @@ public class EnemyConductor : MonoBehaviour {
     }
     public void CheckWaitCommand()
     {
-        int index = GameContext.PlayerConductor.WaitCount % Enemies.Count;
+        //int index = GameContext.PlayerConductor.WaitCount % Enemies.Count;
         for( int i=0;i<Enemies.Count; i++ )
         {
             //if( i == index )

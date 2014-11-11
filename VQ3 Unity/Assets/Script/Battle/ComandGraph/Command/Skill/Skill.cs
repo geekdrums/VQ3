@@ -79,7 +79,7 @@ public class Skill : MonoBehaviour
             SkillAnim = GetComponentInChildren<Animation>();
             if( SkillAnim.GetClip( AnimName ) != null )
             {
-                SkillAnim[AnimName].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
+                SkillAnim[AnimName].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
                 SkillAnim.Play( AnimName );
             }
         }

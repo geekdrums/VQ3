@@ -4,8 +4,6 @@ using System.Collections;
 public class DamageText : CounterSprite {
 
     public Vector3 initialPosition { get; private set; }
-    public Color damageColor;
-    public Color healColor;
 
     float time = 0;
 	// Use this for initialization
@@ -14,6 +12,12 @@ public class DamageText : CounterSprite {
 	
 	// Update is called once per frame
 	void Update () {
+#if UNITY_EDITOR
+        if( UnityEditor.EditorApplication.isPlaying == false )
+        {
+            return;
+        }
+#endif
         time += Time.deltaTime;
         float theta = time * (Mathf.PI * 2) * 8.0f;
         if( theta <= Mathf.PI * 2 )
@@ -28,14 +32,34 @@ public class DamageText : CounterSprite {
 	}
 
 
-    public void Initialize( int damage, Vector3 initialPos )
+    public void Initialize( int damage, ActionResult actResult, Vector3 initialPos )
     {
-        count = Mathf.Abs( damage );
-        foreach( SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>() )
+        Count = Mathf.Abs( damage );
+        switch( actResult )
         {
-            //sprite.gameObject.renderer.material.SetColor( "Tint", (damage < 0 ? healColor : damageColor) );
-            sprite.renderer.material.color = (damage < 0 ? healColor : damageColor);
-            //sprite.color = (damage < 0 ? healColor : damageColor);
+        case ActionResult.MagicDamage:
+        case ActionResult.PhysicDamage:
+            CounterColor = ColorManager.Accent.Damage;
+            transform.localScale = Vector3.one;
+            break;
+        case ActionResult.MagicBadDamage:
+        case ActionResult.PhysicBadDamage:
+            CounterColor = ColorManager.Base.MiddleBack;
+            transform.localScale = Vector3.one * 0.7f;
+            break;
+        case ActionResult.MagicGoodDamage:
+        case ActionResult.PhysicGoodDamage:
+            CounterColor = ColorManager.Accent.Critical;
+            transform.localScale = Vector3.one * 1.3f;
+            break;
+        case ActionResult.EnemyHeal:
+            CounterColor = ColorManager.Accent.Heal;
+            transform.localScale = Vector3.one;
+            break;
+        default:
+            CounterColor = Color.black;
+            transform.localScale = Vector3.one;
+            break;
         }
         initialPosition = initialPos;
     }

@@ -78,4 +78,5 @@ public static class GameContext
     public static EnemyConductor EnemyConductor;
     public static PlayerConductor PlayerConductor;
     public static VoxSystem VoxSystem;
+    public static Camera MainCamera = GameObject.Find( "Main Camera" ).GetComponent<Camera>();
 }

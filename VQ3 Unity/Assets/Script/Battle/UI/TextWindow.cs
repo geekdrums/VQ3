@@ -110,10 +110,10 @@ public class TextWindow : MonoBehaviour {
     bool useNextCursor = false;
     float blinkTime;
     float displayMusicTime;
-    Vector3 initialTutorialBasePosition;
+    //Vector3 initialTutorialBasePosition;
 
     public GameObject textBase;
-    public GameObject textBaseTutorial;
+    //public GameObject textBaseTutorial;
     public float BlinkInterval;
 
 	// Use this for initialization
@@ -121,7 +121,7 @@ public class TextWindow : MonoBehaviour {
 		instance = this;
         displayText = GetComponentInChildren<TextMesh>();
         displayText.text = "";
-        initialTutorialBasePosition = textBaseTutorial.transform.position;
+        //initialTutorialBasePosition = textBaseTutorial.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -144,7 +144,7 @@ public class TextWindow : MonoBehaviour {
                 displayText.text += " >";
             }
         }
-        textBaseTutorial.transform.position = Vector3.Lerp( textBaseTutorial.transform.position, (message.Type == BattleMessageType.Tutorial ? textBase.transform.position : initialTutorialBasePosition), 0.2f );
+        //textBaseTutorial.transform.position = Vector3.Lerp( textBaseTutorial.transform.position, (message.Type == BattleMessageType.Tutorial ? textBase.transform.position : initialTutorialBasePosition), 0.2f );
 	}
 
     void ChangeMessage_( string text, BattleMessageType type )
@@ -157,7 +157,7 @@ public class TextWindow : MonoBehaviour {
         this.message.Type = type;
         this.message.CurrentIndex = 0;
         displayMusicTime = 0;
-        displayText.color = (type == BattleMessageType.Tutorial ? Color.white : (tutorialMessage != null ? tutorialMessage.BaseColor : Color.black));
+        displayText.color = Color.white;//(type == BattleMessageType.Tutorial ? Color.white : (tutorialMessage != null ? tutorialMessage.BaseColor : Color.black));
     }
     void SetNextCursor_( bool use )
     {
@@ -167,7 +167,7 @@ public class TextWindow : MonoBehaviour {
     void SetTutorialMessage_( TutorialMessage tm )
     {
         tutorialMessage = tm;
-        textBaseTutorial.renderer.material.color = tm.BaseColor;
+        //textBaseTutorial.renderer.material.color = tm.BaseColor;
         ChangeMessage_( tm.DisplayText, BattleMessageType.Tutorial );
     }
     void ClearTutorialMessage_()

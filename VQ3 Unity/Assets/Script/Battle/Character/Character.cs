@@ -55,8 +55,8 @@ public class EnhanceParameter
     }
 }
 public class Character : MonoBehaviour {
-    protected static readonly float DAMAGE_RANGE = 12.0f;
-    protected static readonly float MAGIC_DAMAGE_RANGE = 8.0f;
+    protected static readonly float DAMAGE_RANGE = 0.0f;//12.0f;
+    protected static readonly float MAGIC_DAMAGE_RANGE = 0.0f;//8.0f;
     protected static readonly int LEAST_DAMAGE_RANGE = 3;
     protected static readonly int LEAST_MAGIC_DAMAGE_RANGE = 2;
     
@@ -136,7 +136,7 @@ public class Character : MonoBehaviour {
         TurnDamage += d;
         int RelativeMaxHP = (MaxHP < GameContext.PlayerConductor.PlayerMaxHP ? MaxHP : GameContext.PlayerConductor.PlayerMaxHP);
         damageTime += 0.15f + ((float)d / (float)RelativeMaxHP) * 0.7f;
-        damageTime = Mathf.Min( damageTime, (float)Music.mtUnit * 8 );
+        damageTime = Mathf.Min( damageTime, (float)Music.MusicTimeUnit * 8 );
     }
 	public virtual void Heal( HealModule heal )
 	{

@@ -20,7 +20,7 @@ public class StatusIcon : MonoBehaviour {
 
     public IconReactType reactType;
 
-    EStatusIcon icon;
+    //EStatusIcon icon;
     Color targetColor;
     SpriteRenderer spriteRenderer;
 
@@ -53,7 +53,7 @@ public class StatusIcon : MonoBehaviour {
     public void SetSprite( Sprite sprite, EStatusIcon icon, Color color, IconReactType type )
     {
         spriteRenderer.sprite = sprite;
-        this.icon = icon;
+        //this.icon = icon;
         this.targetColor = color;
         this.reactType = ( reactType == IconReactType.ForceNone ? IconReactType.ForceNone : type );
         if( reactType == IconReactType.None )

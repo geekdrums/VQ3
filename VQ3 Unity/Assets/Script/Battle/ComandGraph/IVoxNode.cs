@@ -9,4 +9,5 @@ public interface IVoxNode
     float Radius();
     Transform Transform();
     IEnumerable<IVoxNode> LinkedNodes();
+    void OnEdgeCreated( LineRenderer edge );
 }

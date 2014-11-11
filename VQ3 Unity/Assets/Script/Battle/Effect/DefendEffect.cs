@@ -6,7 +6,7 @@ public class DefendEffect : CommandEffect{
 	// Use this for initialization
 	void Start()
     {
-        animation["DefendAnim"].speed = 1 / (float)(Music.mtBeat * Music.mtUnit);
+        animation["DefendAnim"].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
         Initialize();
 	}
 	

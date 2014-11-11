@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E2B0199C-F72E-B8F2-D486-1F22FDBEAA06}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace></RootNamespace>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_4_5_4;UNITY_4_5;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_PRO_LICENSE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_4_5_4;UNITY_4_5;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_PRO_LICENSE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="Boo.Lang" />
+    <Reference Include="UnityScript.Lang" />
+    <Reference Include="UnityEngine">
+      <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="UnityVS.VQ3 Unity.CSharp.Plugins.csproj">
+      <Project>{FC4DC4B7-BBE3-FFFC-EE95-4AB581586EBA}</Project>
+      <Name>UnityVS.VQ3 Unity.CSharp.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Script\Battle\BattleConductor.cs" />
+    <Compile Include="Assets\Script\Battle\Character\Character.cs" />
+    <Compile Include="Assets\Script\Battle\Character\Enemy.cs" />
+    <Compile Include="Assets\Script\Battle\Character\JewelEnemy.cs" />
+    <Compile Include="Assets\Script\Battle\Character\Player.cs" />
+    <Compile Include="Assets\Script\Battle\Character\WeatherEnemy.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Command\CommandBase.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Command\EnemyCommand.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Command\EnemyCommandIcon.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Command\InvertCommand.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Command\PlayerCommand.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Command\QuarterCommand.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Command\Skill\Action\ActionModule.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Command\Skill\Action\ActionSet.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Command\Skill\Skill.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\CommandGraph.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\IVoxNode.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\Strategy.cs" />
+    <Compile Include="Assets\Script\Battle\Effect\AttackEffect.cs" />
+    <Compile Include="Assets\Script\Battle\Effect\CommandEffect.cs" />
+    <Compile Include="Assets\Script\Battle\Effect\DamageText.cs" />
+    <Compile Include="Assets\Script\Battle\Effect\DefendEffect.cs" />
+    <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
+    <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
+    <Compile Include="Assets\Script\Battle\UI\EnhanceIcons.cs" />
+    <Compile Include="Assets\Script\Battle\UI\HPBar.cs" />
+    <Compile Include="Assets\Script\Battle\UI\HPCircle.cs" />
+    <Compile Include="Assets\Script\Battle\UI\ShortTextWindow.cs" />
+    <Compile Include="Assets\Script\Battle\UI\StatusIcon.cs" />
+    <Compile Include="Assets\Script\Battle\UI\TextWindow.cs" />
+    <Compile Include="Assets\Script\Battle\UI\TitleLogo.cs" />
+    <Compile Include="Assets\Script\Battle\VoxSystem.cs" />
+    <Compile Include="Assets\Script\Field\Encounter.cs" />
+    <Compile Include="Assets\Script\Field\FieldConductor.cs" />
+    <Compile Include="Assets\Script\GameContext.cs" />
+    <Compile Include="Assets\Script\MusicEngine\Elements\Chord.cs" />
+    <Compile Include="Assets\Script\MusicEngine\Elements\Note.cs" />
+    <Compile Include="Assets\Script\MusicEngine\Elements\Scale.cs" />
+    <Compile Include="Assets\Script\MusicEngine\Elements\Tone.cs" />
+    <Compile Include="Assets\Script\MusicEngine\Motif\Motif.cs" />
+    <Compile Include="Assets\Script\MusicEngine\Motif\Phrase.cs" />
+    <Compile Include="Assets\Script\MusicEngine\Motif\Rhythm.cs" />
+    <Compile Include="Assets\Script\MusicEngine\Music.cs" />
+    <Compile Include="Assets\Script\Utils\ColorManager.cs" />
+    <Compile Include="Assets\Script\Utils\CounterSprite.cs" />
+    <Compile Include="Assets\Script\Utils\MidairPrimitive.cs" />
+    <Compile Include="Assets\Script\Utils\SEPlayer.cs" />
+    <Compile Include="Assets\Script\Utils\Utils.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsAnimation.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsAssetDatabase.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsDefines.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsFpsCounter.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsInterpolation.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsKeyAttr.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsKeyFrame.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsPart.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsPartsRes.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsShaderContainer.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsShaderManager.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsSprite.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsStructs.cs" />
+    <Compile Include="Assets\SpriteStudio\Runtime\SsUtilities.cs" />
+    <None Include="Assets\SpriteStudio\Documents\English\history.txt" />
+    <None Include="Assets\SpriteStudio\Documents\English\readme.txt" />
+    <None Include="Assets\SpriteStudio\Documents\English\sample.txt" />
+    <None Include="Assets\SpriteStudio\Documents\English\script.txt" />
+    <None Include="Assets\SpriteStudio\Documents\English\usage.txt" />
+    <None Include="Assets\SpriteStudio\Documents\Japanese\history.txt" />
+    <None Include="Assets\SpriteStudio\Documents\Japanese\readme.txt" />
+    <None Include="Assets\SpriteStudio\Documents\Japanese\sample.txt" />
+    <None Include="Assets\SpriteStudio\Documents\Japanese\script.txt" />
+    <None Include="Assets\SpriteStudio\Documents\Japanese\usage.txt" />
+    <None Include="Assets\SpriteStudio\readme.txt" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorAddAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorAddAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorMixAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorMixAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorMulAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorMulAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorNonAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorNonAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorSubAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsAddColorSubAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorAddAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorAddAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorMixAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorMixAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorMulAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorMulAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorNonAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorNonAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorSubAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMixColorSubAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorAddAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorAddAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorMixAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorMixAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorMulAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorMulAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorNonAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorNonAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorSubAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsMulColorSubAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorAddAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorAddAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorMixAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorMixAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorMulAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorMulAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorNonAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorNonAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorSubAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsNonColorSubAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorAddAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorAddAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorMixAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorMixAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorMulAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorMulAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorNonAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorNonAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorSubAlpha.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\_SsSubColorSubAlphaMulMatCol.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\SsCgShaderTemplate.txt" />
+    <None Include="Assets\SpriteStudio\Shaders\SsShaderTemplate.txt" />
+    <None Include="Assets\SpriteStudio\Shaders\SsUnified.shader" />
+    <None Include="Assets\SpriteStudio\Shaders\SsUnifiedShaderTemplate.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
+</Project>

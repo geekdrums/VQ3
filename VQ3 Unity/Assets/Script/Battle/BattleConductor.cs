@@ -35,7 +35,7 @@ public class BattleConductor : MonoBehaviour {
 		case GameState.Intro:
             if( Music.IsJustChangedAt( 0 ) || Music.IsJustChangedAt( 4 ) )
             {
-                if( Music.GetCurrentBlockName() != "intro" )
+                if( Music.CurrentBlockName != "intro" )
                 {
                     GameContext.ChangeState( GameState.Battle );
                     UpdateBattle();
@@ -44,7 +44,7 @@ public class BattleConductor : MonoBehaviour {
 			break;
 		case GameState.Battle:
             UpdateBattle();
-			if ( Music.IsJustChangedAt(0) && Music.GetCurrentBlockName() == "endro" )
+            if( Music.IsJustChangedAt( 0 ) && Music.CurrentBlockName == "endro" )
 			{
                 TextWindow.ClearTutorialMessage();
                 GameContext.VoxSystem.SetState( VoxState.SunSet );
@@ -71,12 +71,12 @@ public class BattleConductor : MonoBehaviour {
 
     void UpdateBattle()
     {
-        if( Music.GetCurrentBlockName() == "endro" || Music.GetNextBlockName() == "endro" )
+        if( Music.CurrentBlockName == "endro" || Music.NextBlockName == "endro" )
         {
             Skills.RemoveAll( ( Pair<Timing, Skill> cmd ) => cmd.Get<Skill>().CheckIsEnd( cmd.Get<Timing>() ) );
             return;
         }
-        else if( Music.GetCurrentBlockName() == "intro" )
+        else if( Music.CurrentBlockName == "intro" )
         {
             OnPlayerRunaway();
             return;
@@ -84,7 +84,7 @@ public class BattleConductor : MonoBehaviour {
 
         if( Music.IsJustChangedAt( 0 ) )
         {
-            if( Music.GetCurrentBlockName() == "wait" )
+            if( Music.CurrentBlockName == "wait" )
             {
                 GameContext.PlayerConductor.CheckWaitCommand();
                 GameContext.EnemyConductor.CheckWaitCommand();
@@ -95,7 +95,10 @@ public class BattleConductor : MonoBehaviour {
                 GameContext.EnemyConductor.CheckCommand();
             }
         }
-        if( Music.isJustChanged )
+        if( Music.CurrentBlockName == "wait" )
+        {
+        }
+        else if( Music.isJustChanged )
         {
             GameContext.PlayerConductor.CheckSkill();
             GameContext.EnemyConductor.CheckSkill();
@@ -123,6 +126,10 @@ public class BattleConductor : MonoBehaviour {
                 if( isSucceeded )
                 {
                     act.Get<Skill>().OnExecuted( act.Get<ActionSet>() );
+                }
+                if( Music.NextBlockName == "endro" )
+                {
+                    break;
                 }
             }
 
