@@ -144,11 +144,15 @@ public class Music : MonoBehaviour
         }
         public void Pause()
         {
-            source.Stop();
+			source.Pause(true);
         }
+		public void Resume()
+		{
+			source.Pause(false);
+		}
         public bool IsPlaying()
         {
-            return source.status == CriAtomSource.Status.Playing;
+			return source.status == CriAtomSource.Status.Playing;
         }
         public void SetVolume( float volume )
         {
@@ -263,6 +267,10 @@ public class Music : MonoBehaviour
     {
         return (Now - timing) + (float)lagUnit;
     }
+	public static float MusicalSin( int cycle = 1, int offset = 0 )
+	{
+		return (Mathf.Sin((float)(Mathf.PI * (Music.MusicalTime - offset) / cycle)) + 1.0f) / 2.0f;
+	}
     #endregion
 
     #region public static functions
@@ -278,7 +286,7 @@ public class Music : MonoBehaviour
     public static void QuantizePlay( CriAtomSource source ) { Current.QuantizedCue.Add( source ); }
     public static bool IsPlaying() { return Current != null && Current.MusicSource.IsPlaying(); }
 	public static void Pause() { Current.MusicSource.Pause(); }
-	public static void Resume() { Current.MusicSource.Play(); }
+	public static void Resume() { Current.MusicSource.Resume(); }
 	public static void Stop() { Current.MusicSource.Stop(); }
 
     public static void SetNextBlock( string blockName )

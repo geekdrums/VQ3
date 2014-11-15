@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -57,6 +57,7 @@ public class CounterSprite : MonoBehaviour {
         None = 0,
         Percent = 1,
         Sign = 2,
+		PercentAndSign = Percent | Sign,
         //Numerator
         //Denominator
     }
@@ -168,10 +169,11 @@ public class CounterSprite : MonoBehaviour {
 
     public void UpdateSprite()
     {
-        if( PrefabUtility.GetPrefabType( this ) == PrefabType.Prefab || NumberParent == null ) return;
-
+#if UNITY_EDITOR
+		if( UnityEditor.PrefabUtility.GetPrefabType(this) == UnityEditor.PrefabType.Prefab || NumberParent == null ) return;
+#endif
         //digits
-        int numDigits = Mathf.Max( 1, Mathf.CeilToInt( Mathf.Log10( (int)Count + 0.5f ) ) ) + SignificantDigits;
+        int numDigits = Mathf.Max( 1, Mathf.CeilToInt( Mathf.Log10( (int)Mathf.Abs( Count ) + 0.5f ) ) ) + SignificantDigits;
         for( int i = 0; i < numDigits; i++ )
         {
             if( i >= digits_.Count )
@@ -254,7 +256,7 @@ public class CounterSprite : MonoBehaviour {
         }
 
         //update numbers
-        int restCount = (int)(count_ * Mathf.Pow(10,SignificantDigits));
+		int restCount = (int)Mathf.Abs((count_ * Mathf.Pow(10, SignificantDigits)));
         int[] numbers = new int[numDigits];
         for( int i = 0; i < digits_.Count; i++ )
         {

@@ -236,7 +236,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: .843594134, y: 1.05985129, z: 0}
   m_LocalScale: {x: .800000012, y: .800000012, z: 1}
   m_Children:
   - {fileID: 400016}
@@ -272,9 +272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e5ccf3f42ba894bb5c799ea37c539d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 4000
-  BasePower: 400
-  BaseMagic: 500
+  HitPoint: 4500
+  BasePower: 1000
+  BaseMagic: 400
   DisplayName: "\u30C9\u30E9\u30B4\u30F3"
   Speceis: 5
   States:
@@ -296,7 +296,7 @@ MonoBehaviour:
     - {fileID: 11400010}
     nextState: Default
   conditions: []
-  VPtolerance: 50
+  VPtolerance: 60
   ShadowSprite: {fileID: 21200002}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -350,14 +350,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillList:
-  - {fileID: 11400000, guid: f357d7e8773200d4ba9b5cfa9bdd639f, type: 2}
+  - {fileID: 11400000, guid: 4cd48b2376fdddf4c89b7dcdb00ba194, type: 2}
   _timingStr: 0 3 2
   PhysicDefend: 50
   MagicDefend: 90
   HealPercent: 0
   nextState: 
   ShortText: "\u3044\u304B\u304F"
-  Icon: 21
+  Icon: 29
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1

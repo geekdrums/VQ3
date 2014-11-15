@@ -3,6 +3,7 @@ using System.Collections;
 
 public class DamageText : CounterSprite {
 
+	static Vector3 PositionOffeset = new Vector3(-2, 3, 0);
     public Vector3 initialPosition { get; private set; }
 
     float time = 0;
@@ -31,6 +32,11 @@ public class DamageText : CounterSprite {
         }
 	}
 
+	public void AddDamage( int damage )
+	{
+		Count += damage;
+		time = 0;
+	}
 
     public void Initialize( int damage, ActionResult actResult, Vector3 initialPos )
     {
@@ -62,12 +68,18 @@ public class DamageText : CounterSprite {
         case ActionResult.EnemyHeal:
             CounterColor = ColorManager.Accent.Heal;
             transform.localScale = Vector3.one;
-            break;
+			break;
+		case ActionResult.PlayerPhysicDamage:
+		case ActionResult.PlayerMagicDamage:
+			CounterColor = ColorManager.Accent.PlayerDamage;
+			transform.localScale = Vector3.one;
+			break;
         default:
             CounterColor = Color.black;
             transform.localScale = Vector3.one;
             break;
         }
-        initialPosition = initialPos;
+		initialPosition = initialPos + PositionOffeset;
+		GetComponentInChildren<TextMesh>().color = CounterColor;
     }
 }

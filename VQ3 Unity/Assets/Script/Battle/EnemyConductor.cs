@@ -169,7 +169,7 @@ public class EnemyConductor : MonoBehaviour {
 				e.BeAttacked( attack, skill );
 				isSucceeded = true;
             }
-            GameContext.VoxSystem.AddVPVT( attack.VP, attack.VT );
+			GameContext.VoxSystem.AddVPVT((int)(attack.VP*(skill.OwnerCharacter as Player).VPCoeff), (int)(attack.VT*(skill.OwnerCharacter as Player).VTCoeff));
 		}
         HealModule heal = Action.GetModule<HealModule>();
         if( heal != null && !skill.isPlayerSkill )

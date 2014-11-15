@@ -52,7 +52,8 @@ public class ThemeColor
 public class AccentColor
 {
     public Color Damage;
-    public Color Critical;
+	public Color Critical;
+	public Color PlayerDamage;
     public Color Heal;
     public Color Buff;
     public Color DeBuff;
@@ -104,7 +105,7 @@ public class ColorManager : MonoBehaviour
     public Material ThemeShadeMaterial;
 
     public Material AccentDamageMaterial;
-    public Material AccentCriticalMaterial;
+	public Material AccentCriticalMaterial;
     public Material AccentHealMaterial;
     public Material AccentBuffMaterial;
     public Material AccentDeBuffMaterial;
@@ -114,6 +115,11 @@ public class ColorManager : MonoBehaviour
 
     public CounterSprite[] BaseFrontCounters;
     public CounterSprite[] BaseBackCounters;
+	public MidairPrimitive[] BaseBackPrimitives;
+	public MidairPrimitive[] BaseFrontPrimitives;
+	public MidairPrimitive[] BaseLightPrimitives;
+	public Material[] BaseBackMaterials;
+	public Material[] BaseFrontMaterials;
 
     public static BaseColor Base { get; private set; }
 
@@ -168,6 +174,26 @@ public class ColorManager : MonoBehaviour
         {
             counter.CounterColor = Base.Back;
         }
+		foreach( MidairPrimitive primitive in instance.BaseBackPrimitives )
+		{
+			primitive.SetColor(Base.Back);
+		}
+		foreach( MidairPrimitive primitive in instance.BaseFrontPrimitives )
+		{
+			primitive.SetColor(Base.Front);
+		}
+		foreach( MidairPrimitive primitive in instance.BaseLightPrimitives )
+		{
+			primitive.SetColor(Base.Light);
+		}
+		foreach( Material material in instance.BaseBackMaterials)
+		{
+			material.color = Base.Back;
+		}
+		foreach( Material material in instance.BaseFrontMaterials )
+		{
+			material.color = Base.Front;
+		}
     }
     public static void SetThemeColor( EThemeColor themeColor )
     {

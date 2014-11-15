@@ -64,6 +64,7 @@ public class DragonEnemy : Enemy {
 		base.OnRevert();
 		firePower_ = 0;
 		ShadowSprite.color = Color.clear;
+		transform.localScale = initialScale;
 	}
 
 	public override void TurnInit( CommandBase command )

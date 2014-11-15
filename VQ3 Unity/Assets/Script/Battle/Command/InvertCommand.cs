@@ -8,7 +8,11 @@ using System.Text;
 public class InvertCommand : PlayerCommand
 {
     public int DepthLevel;
-    public bool IsLast { get { return DepthLevel >= 2; } }
+	public bool IsLast { get { return DepthLevel >= 2; } }
+
+	public MidairPrimitive CenterRect1 { get { return plane1.GetComponent<MidairPrimitive>(); } }
+	public MidairPrimitive CenterRect2 { get { return plane2.GetComponent<MidairPrimitive>(); } }
+
 
     public override void SetLink( bool linked )
     {
@@ -35,6 +39,18 @@ public class InvertCommand : PlayerCommand
 #if UNITY_EDITOR
         if( !UnityEditor.EditorApplication.isPlaying ) return;
 #endif
+		if( ParentCommand != null ) return;
         UpdateIcon();
+
+		if( GameContext.VoxSystem.state != VoxState.Invert )
+		{
+			CenterRect1.SetSize(0);
+			CenterRect2.SetSize(0);
+		}
+		else
+		{
+			CenterRect1.SetSize(7 + Music.MusicalSin(4) * 2 - 1);
+			CenterRect2.SetSize(9 + Music.MusicalSin(4,2) * 2 - 1);
+		}
     }
 }

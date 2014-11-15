@@ -18,8 +18,8 @@ public class VoxSystem : MonoBehaviour{
     public static readonly int CeilVT = 16 * 4 * 2;
     public static readonly int VPFireNum = 20;
     public static readonly float VTFireHeight = 2.0f;
-	int currentVP = 0;
-    int currentVT = 0;
+	public int currentVP { get; private set; }
+	public int currentVT { get; private set; }
 
     public VoxState state { get; private set; }
     public bool IsReadyEclipse { get { return currentVP >= InvertVP; } }
@@ -40,9 +40,6 @@ public class VoxSystem : MonoBehaviour{
     public GameObject VPEndLine;
     public Material FireLineMaterial;
     public Material BGMaterial;
-    public Material CircleMaskMaterial;
-    public MidairPrimitive FrameWindow;
-    public MidairPrimitive RingBase;
 
     //animation preferences
     public Color BGColor;
@@ -63,7 +60,7 @@ public class VoxSystem : MonoBehaviour{
     //initial parameters
     //Color initialBGColor;
     //Color initialMoonColor;
-    Color initialNextLightColor;
+    //Color initialNextLightColor;
     //Color initialFireColor;
     Vector3 initialSunPosition;
     Vector3 initialMoonPosition;
@@ -84,7 +81,7 @@ public class VoxSystem : MonoBehaviour{
     Vector3 targetSunScale;
     Vector3 targetVPCountPosition = Vector3.zero;
 
-    bool useTargetBGColor = true;
+    //bool useTargetBGColor = true;
     bool useTargetMainLightScale = true;
     bool useTargetLightAngles = true;
     bool useTargetLightScales = true;
@@ -101,10 +98,6 @@ public class VoxSystem : MonoBehaviour{
         GameContext.VoxSystem = this;
         state = VoxState.SunSet;
         ColorManager.SetBaseColor( EBaseColor.Black );
-        CircleMaskMaterial.color = ColorManager.Base.Back;
-        FrameWindow.SetColor( ColorManager.Base.Back );
-        RingBase.SetColor( ColorManager.Base.Back );
-        FireLineMaterial.color = ColorManager.Base.Front;
 
         //initialBGColor = GameContext.MainCamera.backgroundColor;
         BGColor = ColorManager.Theme.Light;
@@ -158,6 +151,7 @@ public class VoxSystem : MonoBehaviour{
         VPEndLine.transform.localScale = new Vector3( 1, 0, 1 );
 
         VTCeil.transform.localPosition = Vector3.zero;
+		FireLineMaterial.color = ColorManager.Base.Front;
     }
 
     // Update is called once per frame
@@ -187,11 +181,9 @@ public class VoxSystem : MonoBehaviour{
             {
                 SetState( VoxState.Revert );
                 GameContext.EnemyConductor.OnRevert();
+				GameContext.PlayerConductor.OnRevert();
                 ColorManager.SetBaseColor( EBaseColor.Black );
-                CircleMaskMaterial.color = ColorManager.Base.Back;
-                FrameWindow.SetColor( ColorManager.Base.Back );
-                RingBase.SetColor( ColorManager.Base.Back );
-                FireLineMaterial.color = ColorManager.Base.Front;
+				FireLineMaterial.color = ColorManager.Base.Front;
             }
             break;
         case VoxState.Revert:
@@ -202,7 +194,10 @@ public class VoxSystem : MonoBehaviour{
             break;
         }
 
-		UpdateAnimation();
+		if( Music.IsPlaying() )
+		{ 
+			UpdateAnimation();
+		}
 	}
 
     void UpdateVT()
@@ -368,7 +363,8 @@ public class VoxSystem : MonoBehaviour{
                 BGColor = Color.black;
                 animation["EclipseAnim"].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
                 animation.Play();
-                GameContext.EnemyConductor.OnInvert();
+				GameContext.EnemyConductor.OnInvert();
+				GameContext.PlayerConductor.commandGraph.SelectInitialInvertCommand();
                 /*
                 FireOrigin.transform.localPosition = Vector3.zero;
                 FireOrigin.GetComponent<LineRenderer>().SetColors( Color.white, initialFireColor );
@@ -384,9 +380,6 @@ public class VoxSystem : MonoBehaviour{
                 animation.Stop();
                 GameContext.EnemyConductor.baseColor = Color.white;
                 ColorManager.SetBaseColor( EBaseColor.White );
-                CircleMaskMaterial.color = ColorManager.Base.Back;
-                FrameWindow.SetColor( ColorManager.Base.Back );
-                RingBase.SetColor( ColorManager.Base.Back );
                 targetBGColor = ColorManager.Base.Front;
                 BGOffset = Vector3.zero;
                 voxRing.SetColor( Color.clear );
@@ -405,6 +398,13 @@ public class VoxSystem : MonoBehaviour{
                 }
                 mainLight.transform.rotation = Quaternion.AngleAxis( targetLightAngle, Vector3.forward );
             }
+			else if( Music.IsNowChangedAt(3,3) )
+			{
+				if( GameContext.PlayerConductor.commandGraph.NextCommand == null )
+				{
+					Music.Pause();
+				}
+			}
         }
 
         BGColor = Color.Lerp( BGColor, targetBGColor, 0.1f );
@@ -457,7 +457,7 @@ public class VoxSystem : MonoBehaviour{
             case VoxState.Revert:
                 if( oldState != VoxState.Eclipse ) AddVPVT( -currentVP, -currentVT );
 
-                useTargetBGColor = true;
+                //useTargetBGColor = true;
                 useTargetLightAngles = true;
                 useTargetLightScales = true;
                 for( int i = 0; i < lightAngles.Length; i++ )
@@ -488,7 +488,7 @@ public class VoxSystem : MonoBehaviour{
 
                 break;
             case VoxState.Eclipse:
-                useTargetBGColor = false;
+                //useTargetBGColor = false;
                 useTargetLightAngles = false;
                 useTargetLightScales = false;
                 BGColor = ColorManager.Theme.Light;
@@ -500,7 +500,7 @@ public class VoxSystem : MonoBehaviour{
                 //targetMoonColor = Color.black;
                 break;
             case VoxState.SunSet:
-                useTargetBGColor = true;
+                //useTargetBGColor = true;
                 useTargetLightAngles = true;
                 useTargetLightScales = true;
                 AddVPVT( -currentVP, -currentVT );

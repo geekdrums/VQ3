@@ -72,14 +72,17 @@ public class Character : MonoBehaviour {
     public bool isAlive { get { return HitPoint > 0; } }
     public int MaxHP { get; protected set; }
     public float PhysicDefendCoeff { get { return (100.0f - PhysicDefend - DefendEnhance.currentParam) / 100.0f; } }
-    public float MagicDefendCoeff { get { return (100.0f - MagicDefend - DefendEnhance.currentParam) / 100.0f; } }
+	public float MagicDefendCoeff { get { return (100.0f - MagicDefend - DefendEnhance.currentParam) / 100.0f; } }
+	public float VTCoeff { get { return (100 + PhysicAttackEnhance.currentParam) / 100.0f; } }
+	public float VPCoeff { get { return (100 + MagicAttackEnhance.currentParam) / 100.0f; } }
+	public float DefendEnhParam { get { return DefendEnhance.currentParam; } }
     public float PhysicAttack { get { return BasePower * (100 + PhysicAttackEnhance.currentParam) / 100.0f; } }
     public float MagicAttack { get { return BaseMagic * (100 + MagicAttackEnhance.currentParam) / 100.0f; } }
     public EnhanceParameter GetActiveEnhance( EnhanceParamType type ) { return ActiveEnhanceParams.Find( ( EnhanceParameter enhance ) => enhance.type == type ); }
 
-    protected EnhanceParameter PhysicAttackEnhance = new EnhanceParameter( EnhanceParamType.Brave, - 80, -40, 50, 80 );
-    protected EnhanceParameter MagicAttackEnhance = new EnhanceParameter( EnhanceParamType.Faith, -80, -40, 50, 80 );
-    protected EnhanceParameter DefendEnhance = new EnhanceParameter( EnhanceParamType.Shield, -80, -50, 33, 50 );
+    protected EnhanceParameter PhysicAttackEnhance = new EnhanceParameter( EnhanceParamType.Brave, -50, -30, 30, 50 );
+    protected EnhanceParameter MagicAttackEnhance = new EnhanceParameter( EnhanceParamType.Faith, -50, -30, 30, 50 );
+    protected EnhanceParameter DefendEnhance = new EnhanceParameter( EnhanceParamType.Shield, -45, -30, 30, 45 );
     protected EnhanceParameter HitPointEnhance = new EnhanceParameter( EnhanceParamType.Regene, -10, -5, 5, 10 );
     protected List<EnhanceParameter> ActiveEnhanceParams = new List<EnhanceParameter>();
 

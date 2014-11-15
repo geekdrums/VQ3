@@ -18,6 +18,9 @@ public enum VoxButton
 [ExecuteInEditMode]
 public class CommandGraph : MonoBehaviour {
 
+	public static Timing AllowInputEnd = new Timing(3, 3, 3);
+	public static Timing WaitInputEnd = new Timing(0, 3, 3);
+
     public GameObject CommandIconPrefab;
     public GameObject RevertCommandIconPrefab;
     public GameObject InvertCommandIconPrefab;
@@ -31,6 +34,7 @@ public class CommandGraph : MonoBehaviour {
 
     public MidairPrimitive CurrentRect;
     public MidairPrimitive TouchRect;
+	public MidairPrimitive NextRect;
 
     public CommandPanel Panel;
 
@@ -74,8 +78,6 @@ public class CommandGraph : MonoBehaviour {
     bool IsLastInvert { get { return IsInvert && (GameContext.VoxSystem.InvertTime == 1 || (CurrentCommand as InvertCommand).IsLast); } }
     int CommandLoopCount;
 
-    Timing AllowInputEnd = new Timing( 3, 3, 3 );
-    Timing WaitInputEnd = new Timing( 0, 3, 3 );
     //Timing AllowInputStart = new Timing( 0, 0, 1 );
     Vector3 ballTouchStartPosition;
     Vector3 oldMousePosition;
@@ -110,8 +112,9 @@ public class CommandGraph : MonoBehaviour {
         //initialNextBarPosition = NextBar.transform.localPosition;
 
         CurrentRect.transform.parent = IntroCommand.transform;
-        CurrentRect.transform.localPosition = Vector3.up;
+        CurrentRect.transform.localPosition = Vector3.forward;
         CurrentRect.transform.localScale = Vector3.one;
+		NextRect.transform.localScale = Vector3.zero;
         TouchRect.SetColor( Color.clear );
         //TouchRect.GetComponentInChildren<TextMesh>().text = "";
     }
@@ -203,6 +206,8 @@ public class CommandGraph : MonoBehaviour {
     }
     void UpdateCommandList()
     {
+		CurrentRect.transform.parent = transform;
+		NextRect.transform.parent = transform;
         foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
         {
             DestroyImmediate( command.gameObject );
@@ -298,21 +303,21 @@ public class CommandGraph : MonoBehaviour {
                 
                 if( playerCommand.icons.Contains( EStatusIcon.DD ) )
                 {
-                    playerCommand.PhysicDefend = 70;
-                    playerCommand.MagicDefend = 70;
+                    playerCommand.PhysicDefend = 60;
+                    playerCommand.MagicDefend = 60;
                 }
                 else if( playerCommand.icons.Contains( EStatusIcon.D ) )
                 {
-                    playerCommand.PhysicDefend = 45;
-                    playerCommand.MagicDefend = 45;
+                    playerCommand.PhysicDefend = 40;
+                    playerCommand.MagicDefend = 40;
                 }
                 if( playerCommand.icons.Contains( EStatusIcon.HH ) )
                 {
-                    playerCommand.HealPercent = 50;
+                    playerCommand.HealPercent = 40;
                 }
                 else if( playerCommand.icons.Contains( EStatusIcon.H ) )
                 {
-                    playerCommand.HealPercent = 25;
+                    playerCommand.HealPercent = 22;
                 }
                 if( propertyTexts[(int)CommandListProperty.Music] == "intro" )
                 {
@@ -409,6 +414,11 @@ public class CommandGraph : MonoBehaviour {
         {
             AxisRing.ArcRate = (float)(1.0f - Music.MusicalTime / 64.0);
         }
+		if( NextCommand != null )
+		{
+			NextRect.SetSize(6 + Music.MusicalSin(4));
+			NextRect.SetColor(Color.Lerp(Color.white, Color.clear, Music.MusicalSin(4) * 0.5f));
+		}
         //AxisRing.SetTargetColor( ( GameContext.CurrentState == GameState.Battle && NextCommand != null ? Color.magenta : Color.white ) );
     }
 
@@ -456,18 +466,24 @@ public class CommandGraph : MonoBehaviour {
                     TouchRect.GrowSize = 0;
                     TouchRect.SetSize( 0 );
                     TouchRect.SetWidth( 0 );
+					PlayerCommand pushCommand = PushingCommand;
+					if( PushingCommand == (CurrentCommand != null && CurrentCommand.ParentCommand != null ? CurrentCommand.ParentCommand : CurrentCommand) )
+					{
+						pushCommand = PushingCommand.FindLoopVariation(CommandLoopCount+1);
+					}
                     if( NextCommand != null )
                     {
                         if( GameContext.CurrentState != GameState.Intro )
                         {
                             NextCommand.Deselect();
                             NextCommand = null;
-                            Panel.Show( TouchRect.transform.position, PushingCommand );
+							Panel.Show(TouchRect.transform.position, pushCommand);
+							NextRect.transform.localScale = Vector3.zero;
                         }
                     }
                     else
                     {
-                        Panel.Show( TouchRect.transform.position, PushingCommand );
+						Panel.Show(TouchRect.transform.position, pushCommand);
                     }
                 }
             }
@@ -602,7 +618,7 @@ public class CommandGraph : MonoBehaviour {
         PushingCommand = null;
         PlayerCommand selectedCommand = null;
         float minDistance = 99999;
-        foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() ) //GetLinkedCommands() )
+		foreach( PlayerCommand command in GetLinkedCommands() )//GetComponentsInChildren<PlayerCommand>() ) 
         {
             if( command == null || command == IntroCommand /*|| !command.IsUsable()*/ ) continue;
             float d = (pushingPosition - command.transform.position).magnitude;
@@ -828,8 +844,9 @@ public class CommandGraph : MonoBehaviour {
             CurrentCommand = NextCommand;
             themeColor = CurrentCommand.themeColor;
             CurrentRect.transform.parent = CurrentCommand.transform;
-            CurrentRect.transform.localPosition = Vector3.up;
+            CurrentRect.transform.localPosition = Vector3.forward;
             CurrentRect.transform.localScale = Vector3.one;
+			NextRect.transform.localScale = Vector3.zero;
             foreach( PlayerCommand c in GetLinkedCommands() )
             {
                 if( c != IntroCommand ) c.SetLink( true );
@@ -847,8 +864,6 @@ public class CommandGraph : MonoBehaviour {
                 Select( IntroCommand );
                 IntroCommand.Deselect();
             }
-
-            AxisRing.SetColor( ColorManager.Theme.Light );
             AxisRing.SetAnimationSize( 6.7f, 7.5f );
             Panel.Hide();
         }
@@ -863,7 +878,16 @@ public class CommandGraph : MonoBehaviour {
         {
             GameContext.VoxSystem.SetState( desiredState );
         }
-        ColorManager.SetThemeColor( themeColor );
+		ColorManager.SetThemeColor(themeColor);
+
+		if( CurrentCommand is InvertCommand )
+		{
+			AxisRing.SetColor(Color.black);
+		}
+		else
+		{
+			AxisRing.SetColor(ColorManager.Theme.Light);
+		}
     }
 
     public PlayerCommand CheckAcquireCommand( int Level )
@@ -909,14 +933,46 @@ public class CommandGraph : MonoBehaviour {
 
     public void Select( PlayerCommand command )
     {
+		if( CurrentCommand == IntroCommand && command != IntroCommand )
+		{
+			IntroCommand.renderer.enabled = false;
+			foreach( LineRenderer line in IntroCommand.linkLines )
+			{
+				line.renderer.enabled = false;
+			}
+		}
+		else if( command == IntroCommand )
+		{
+			IntroCommand.renderer.enabled = true;
+			foreach( LineRenderer line in IntroCommand.linkLines )
+			{
+				line.renderer.enabled = true;
+			}
+		}
         if( NextCommand != null ) NextCommand.Deselect();
         NextCommand = command;
-        NextCommand.Select();
+		NextCommand.Select();
+		NextRect.transform.parent = NextCommand.transform;
+		NextRect.transform.localPosition = Vector3.forward;
+		NextRect.transform.localScale = Vector3.one;
+
         //NextCommandText.text = NextCommand.name;
         //SetCommandIcons( NextCommandText.gameObject, NextCommand );
         targetRotation = Quaternion.Inverse( Quaternion.LookRotation( -command.transform.localPosition ) ) * offsetRotation;
         //Quaternion.Inverse( command.transform.localRotation ) * offsetRotation;
     }
+
+	public void SelectInitialInvertCommand()
+	{
+		foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
+		{
+			if( c is InvertCommand )
+			{
+				if( NextCommand != c ) Panel.Show(SelectSpot.transform.position, c);
+				break;
+			}
+		}
+	}
 
     public void OnReactEvent( IconReactType type )
     {

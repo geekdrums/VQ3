@@ -10,15 +10,22 @@ public class CommandPanel : MonoBehaviour {
     public MidairPrimitive DFRect;
     public MidairPrimitive VTRect;
     public MidairPrimitive VPRect;
-    public MidairPrimitive ENHRect;
+	public MidairPrimitive ENHRect;
+	public MidairPrimitive RevertRect;
+	public MidairPrimitive RevertCircleEdge;
+	public MidairPrimitive RevertArc;
+	public MidairPrimitive InvertRect;
     public CounterSprite ATCount;
     public CounterSprite HLCount;
     public CounterSprite DFCount;
     public CounterSprite VTCount;
-    public CounterSprite VPCount;
+	public CounterSprite VPCount;
+	public CounterSprite InvertAtCount;
     public SpriteRenderer ENHIcon;
     public TextMesh NameText;
-    public TextMesh OKText;
+	public TextMesh OKText;
+	public TextMesh AtText;
+	public TextMesh InvertAtText;
     public MidairPrimitive LeftButton;
     public MidairPrimitive RightButton;
     public MidairPrimitive PanelMask;
@@ -26,6 +33,7 @@ public class CommandPanel : MonoBehaviour {
     public GameObject HitPlane;
 
     float RingSize { get { return GameContext.PlayerConductor.commandGraph.AxisRing.Radius; } }
+	Color TextColor { get { return (command_ is RevertCommand ? Color.black : Color.white); } }
 
     Vector3 initialPosition_;
     PlayerCommand command_;
@@ -111,16 +119,16 @@ public class CommandPanel : MonoBehaviour {
             {
                 if( hit.collider == HitPlane.collider && buttonType == ButtonType.OK )
                 {
-                    Color halfTransWhite = Color.Lerp( Color.clear, Color.white, 0.5f );
-                    OKText.color = halfTransWhite;
-                    LeftButton.SetTargetColor( halfTransWhite );
-                    RightButton.SetTargetColor( halfTransWhite );
+					Color halfTrans = Color.Lerp(Color.clear, TextColor, 0.5f);
+					OKText.color = halfTrans;
+					LeftButton.SetTargetColor(halfTrans);
+					RightButton.SetTargetColor(halfTrans);
                     Frame.SetGrowSize( 0.5f );
                     Frame.SetTargetSize( 4.0f );
                 }
                 else
                 {
-                    OKText.color = Color.white;
+					OKText.color = TextColor;
                     LeftButton.SetTargetColor( Color.white );
                     RightButton.SetTargetColor( Color.white );
                     Frame.SetGrowSize( 0.0f );
@@ -131,7 +139,7 @@ public class CommandPanel : MonoBehaviour {
             {
                 PanelMask.SetTargetColor( Color.clear );
                 GraphMask.SetTargetColor( ColorManager.MakeAlpha( Color.black, 0.8f ) );
-                if( hit.collider == HitPlane.collider )
+                if( hit.collider == HitPlane.collider && Music.Just < CommandGraph.AllowInputEnd )
                 {
                     Frame.SetSize( 4.17f );
                     EnterState( State.DecideAnim );
@@ -147,21 +155,38 @@ public class CommandPanel : MonoBehaviour {
                         counter.transform.localScale = Vector3.zero;
                     }
                     ENHIcon.renderer.enabled = false;
+
+					Music.Resume();
                 }
                 else
                 {
-                    OKText.color = Color.white;
-                    LeftButton.SetTargetColor( Color.white );
-                    RightButton.SetTargetColor( Color.white );
+                    OKText.color = TextColor;
+					LeftButton.SetTargetColor(TextColor);
+					RightButton.SetTargetColor(TextColor);
                     Frame.SetTargetSize( 4.17f );
                 }
             }
             else
             {
-                float sin = (Mathf.Sin( (float)(Mathf.PI * Music.MusicalTime / 4.0f) ) + 1.0f) / 2.0f;
-                OKText.color = Color.Lerp( Color.clear, Color.white, 0.5f + sin / 2.0f );
-                Frame.SetGrowSize( sin * 0.3f );
+				OKText.color = Color.Lerp(Color.clear, TextColor, 0.5f + Music.MusicalSin(4) / 2.0f);
+				Frame.SetGrowSize(Music.MusicalSin(4) * 0.3f);
             }
+
+			if( command_ is RevertCommand )
+			{
+				RevertArc.SetTargetArc((float)GameContext.VoxSystem.currentVP/VoxSystem.InvertVP);
+
+				if( GameContext.VoxSystem.state != VoxState.Invert && GameContext.VoxSystem.IsReadyEclipse )
+				{
+					RevertCircleEdge.SetGrowSize(Music.MusicalSin(4)*0.5f);
+					RevertArc.SetColor(Color.black);
+				}
+				else
+				{
+					RevertCircleEdge.SetGrowSize(0.2f);
+					RevertArc.SetColor(Color.white);
+				}
+			}
             break;
         case State.DecideAnim:
             if( animation.isPlaying == false )
@@ -203,7 +228,7 @@ public class CommandPanel : MonoBehaviour {
                 transform.position = initialPosition_;
                 break;
             case State.DecideAnim:
-                GameContext.PlayerConductor.commandGraph.Select( command_ );
+                GameContext.PlayerConductor.commandGraph.Select( ( command_.ParentCommand != null ? command_.ParentCommand : command_ ) );
                 break;
             case State.Decided:
                 HitPlane.collider.enabled = false;
@@ -255,23 +280,76 @@ public class CommandPanel : MonoBehaviour {
 
         ThemeColor themeColor = ColorManager.GetThemeColor( command.themeColor );
         BaseColor baseColor = ColorManager.Base;
-        Frame.SetColor( themeColor.Light );
+		if( command is InvertCommand )
+		{
+			Frame.SetColor(Color.black);
+		}
+		else
+		{
+			Frame.SetColor(themeColor.Light);
+		}
         Frame.Num = 4;
         Frame.SetSize( 4.17f );
         Frame.RecalculatePolygon();
 
-        ATCount.Count = command.GetAtk();
-        ATRect.SetColor( command.GetAtkColor() );
         HLCount.Count = command.GetHeal();
         HLRect.SetColor( command.GetHealColor() );
         DFCount.Count = command.GetDefend();
         DFRect.SetColor( command.GetDefColor() );
-        VTCount.Count = command.GetVT();
-        VTRect.SetColor( command.GetVTColor() );
-        VPCount.Count = command.GetVP();
-        VPRect.SetColor( command.GetVPColor() );
-        ENHRect.SetColor( command.GetEnhColor() );
-        ENHIcon.sprite = command.GetEnhIconSprite();
+
+		ATRect.SetColor(Color.clear);
+		InvertRect.SetColor(Color.clear);
+		InvertAtCount.CounterColor = Color.clear;
+		InvertAtText.color = Color.clear;
+		RevertRect.SetColor(Color.clear);
+		RevertArc.SetColor(Color.clear);
+		RevertCircleEdge.SetColor(Color.clear);
+		if( command is InvertCommand )
+		{
+			OKText.color = Color.black;
+			BaseRect.SetColor(Color.white);
+			InvertRect.SetColor(Color.black);
+			InvertAtCount.CounterColor = ColorManager.Accent.Critical;
+			InvertAtText.color = Color.white;
+			AtText.color = Color.clear;
+			InvertAtCount.Count = command.GetAtk();
+			VTRect.SetColor(Color.clear);
+			VPRect.SetColor(Color.clear);
+			ENHRect.SetColor(Color.clear);
+			ATCount.CounterColor = Color.clear;
+			VTCount.CounterColor = Color.clear;
+			VPCount.CounterColor = Color.clear;
+		}
+		else
+		{
+			if( command is RevertCommand )
+			{
+				OKText.color = Color.black;
+				BaseRect.SetColor(Color.white);
+				RevertRect.SetColor(Color.black);
+				RevertCircleEdge.SetColor(Color.white);
+				RevertArc.SetWidth(0.9f);
+				RevertArc.SetColor(Color.white);
+				RevertArc.SetArc((float)GameContext.VoxSystem.currentVP/VoxSystem.InvertVP);
+			}
+			else
+			{
+				OKText.color = Color.white;
+				BaseRect.SetColor(Color.black);
+			}
+			AtText.color = Color.black;
+			ATCount.CounterColor = Color.black;
+			VTCount.CounterColor = Color.black;
+			VPCount.CounterColor = Color.black;
+			ATCount.Count = command.GetAtk();
+			ATRect.SetColor(command.GetAtkColor());
+			VTCount.Count = command.GetVT();
+			VTRect.SetColor(command.GetVTColor());
+			VPCount.Count = command.GetVP();
+			VPRect.SetColor(command.GetVPColor());
+			ENHRect.SetColor(command.GetEnhColor());
+			ENHIcon.sprite = command.GetEnhIconSprite();
+		}
     }
 
     public void Hide()

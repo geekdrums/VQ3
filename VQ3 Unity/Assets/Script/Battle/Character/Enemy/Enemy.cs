@@ -34,10 +34,11 @@ public class Enemy : Character
 
     protected HPCircle HPCircle;
     protected int turnCount;
-    protected ActionResult lastDamageResult;
+	protected ActionResult lastDamageResult;
+	protected DamageText lastDamageText;
     protected SpriteRenderer spriteRenderer;
     protected List<EnemyCommandIcon> commandIcons;
-    protected ShortTextWindow shortText;
+	protected ShortTextWindow shortText;
 
 
     // Use this for initialization
@@ -125,13 +126,13 @@ public class Enemy : Character
     {
         if( damageTime > 0 )
         {
-            if( lastDamageResult == ActionResult.PhysicGoodDamage || lastDamageResult == ActionResult.MagicGoodDamage )
-            {
+			//if( lastDamageResult == ActionResult.PhysicGoodDamage || lastDamageResult == ActionResult.MagicGoodDamage )
+			//{
                 if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
                 {
                     transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 1.5f ) * 1.3f;
                 }
-            }
+            //}
             spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
             //outlineSprite.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : currentState.color);
 
@@ -156,8 +157,16 @@ public class Enemy : Character
     protected void CreateDamageText( int damage, ActionResult actResult )
     {
         if( damage == 0 ) return;
-        GameObject damageText = (Instantiate( GameContext.EnemyConductor.damageTextPrefab ) as GameObject);
-        damageText.GetComponent<DamageText>().Initialize( damage, actResult, transform.position + Vector3.back * 3 + Random.onUnitSphere * 2 );
+		if( lastDamageText != null )
+		{
+			lastDamageText.AddDamage(damage);
+		}
+		else
+		{ 
+			GameObject damageText = (Instantiate( GameContext.EnemyConductor.damageTextPrefab ) as GameObject);
+			lastDamageText = damageText.GetComponent<DamageText>();
+			lastDamageText.Initialize(damage, actResult, transform.position + Vector3.back * 3 + Random.rotation * Vector3.up * 2);
+		}
     }
     protected virtual void CheckState()
     {
@@ -209,6 +218,10 @@ public class Enemy : Character
     {
         base.TurnInit( command );
         HPCircle.OnTurnStart();
+		if( GameContext.VoxSystem.state != VoxState.Invert )
+		{
+			lastDamageText = null;
+		}
     }
     public void InvertInit()
     {

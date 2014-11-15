@@ -64,8 +64,8 @@ public class PlayerCommand : CommandBase
     protected static float ScaleCoeff = 0.05f;
     protected static float MaskColorCoeff = 0.06f;
     protected static float MaskStartPos = 3.0f;
-    protected static Color UnlinkedLineColor = ColorManager.MakeAlpha( Color.white, 0.3f );
-    protected static Color PrelinkedLineColor = ColorManager.MakeAlpha( Color.white, 0.5f );
+    protected static Color UnlinkedLineColor = ColorManager.MakeAlpha( Color.white, 0.2f );
+    protected static Color PrelinkedLineColor = ColorManager.MakeAlpha( Color.white, 0.2f );
     protected static Vector3 SelectSpot
     {
         get
@@ -78,7 +78,7 @@ public class PlayerCommand : CommandBase
         }
     }
     protected static GameObject selectSpot_;
-    protected static Quaternion InitialRotation = Quaternion.Euler( new Vector3( 45, 90, -90 ) );
+    //protected static Quaternion InitialRotation = Quaternion.Euler( new Vector3( 45, 90, -90 ) );
 
     //
     // editor params
@@ -413,7 +413,7 @@ public class PlayerCommand : CommandBase
         if( GetComponentInParent<CommandGraph>() == null ) return;
         transform.localPosition = Quaternion.AngleAxis( longitude, Vector3.down ) * Quaternion.AngleAxis( latitude, Vector3.right ) * Vector3.back * GetComponentInParent<CommandGraph>().SphereRadius;
         transform.localScale = MaxScale * (1.0f - (this.transform.position - SelectSpot).magnitude * ScaleCoeff);
-        transform.rotation = InitialRotation;
+        transform.rotation = Quaternion.identity;
     }
 
     public virtual void ValidateColor()
@@ -456,11 +456,12 @@ public class PlayerCommand : CommandBase
             themeColor = EThemeColor.Yellow;
         }
 
-        Material baseMat = new Material( Shader.Find( "Diffuse" ) );
-        baseMat.hideFlags = HideFlags.DontSave;
-        baseMat.color = ColorManager.GetThemeColor( themeColor ).Bright;
-        baseMat.name = "baseMat";
-        this.renderer.material = baseMat;
+		//Material baseMat = new Material( Shader.Find( "Diffuse" ) );
+		//baseMat.hideFlags = HideFlags.DontSave;
+		//baseMat.color = ColorManager.GetThemeColor( themeColor ).Bright;
+		//baseMat.name = "baseMat";
+		//this.renderer.material = baseMat;
+		this.GetComponent<MidairPrimitive>().SetColor(ColorManager.GetThemeColor(themeColor).Bright);
 
         if( iconStr.Contains( 'D' ) )
         {
@@ -535,29 +536,29 @@ public class PlayerCommand : CommandBase
 #if UNITY_EDITOR
         if( !UnityEditor.EditorApplication.isPlaying ) return;
 #endif
+		if( ParentCommand != null ) return;
         UpdateIcon();
     }
 
     protected void UpdateIcon()
     {
-        CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
-        MaxScale = commandGraph.MaxScale;
-        ScaleCoeff = commandGraph.ScaleCoeff;
-        MaskColorCoeff = commandGraph.MaskColorCoeff;
-        MaskStartPos = commandGraph.MaskStartPos;
         if( Music.isJustChanged )
-        {
-            float distance = (this.transform.position - SelectSpot).magnitude;
-            transform.localScale = MaxScale * (1.0f - distance * ScaleCoeff);
-            float alpha = (distance + MaskStartPos) * MaskColorCoeff;
+		{
+			CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
+			float alpha = 0;
+			float distance = (this.transform.position - SelectSpot).magnitude;
+			if( IsLinked )
+			{
+				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 1.2f;
+			}
+			else
+			{
+				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+				alpha = Mathf.Clamp( (distance + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff, 0.7f, 1.0f );
+			}
             maskPlane.renderer.material.color = ColorManager.MakeAlpha( Color.black, alpha );
-            foreach( LineRenderer line in linkLines )
-            {
-                Color lineColor = ColorManager.MakeAlpha( Color.white, 1.0f - alpha );
-                line.SetColors( lineColor, lineColor );
-            }
         }
-        transform.rotation = InitialRotation;
+        transform.rotation = Quaternion.identity;
     }
 
     #endregion
@@ -634,7 +635,7 @@ public class PlayerCommand : CommandBase
             SetColor( Color.black );
             foreach( LineRenderer line in linkLines )
             {
-                //line.SetColors( PrelinkedLineColor, PrelinkedLineColor );
+                line.SetColors( PrelinkedLineColor, PrelinkedLineColor );
                 line.SetWidth( 0.1f, 0.1f );
             }
         }
@@ -646,7 +647,7 @@ public class PlayerCommand : CommandBase
             }
             foreach( LineRenderer line in linkLines )
             {
-                //line.SetColors( UnlinkedLineColor, UnlinkedLineColor );
+                line.SetColors( UnlinkedLineColor, UnlinkedLineColor );
                 line.SetWidth( 0.05f, 0.05f );
             }
         }
@@ -659,7 +660,7 @@ public class PlayerCommand : CommandBase
             SetColor( Color.red );
             foreach( LineRenderer line in linkLines )
             {
-                //line.SetColors( Color.white, Color.white );
+                line.SetColors( Color.white, Color.white );
                 line.SetWidth( 0.3f, 0.3f );
             }
         }

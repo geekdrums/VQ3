@@ -38,6 +38,7 @@ public class HPPanel : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
+		if( Music.isJustChanged ) RedArc.renderer.enabled = Music.Just.totalUnit % 3 <= 1;
 	}
 
 
@@ -46,8 +47,8 @@ public class HPPanel : MonoBehaviour {
         turnStartHP_ = Player.HitPoint;
         MaxHPCount.Count = Player.MaxHP;
         DamageCount.transform.localScale = Vector3.zero;
-        DamageCircle.SetWidth( 0 );
-        DefendCircle.SetColor( ColorManager.Base.Middle );
+		DamageCircle.SetWidth(0);
+		DefendCircle.SetSize(0);
         CurrentArc.SetColor( ColorManager.Base.Front );
         CurrentHPCount.CounterColor = ColorManager.Base.Front;
         MaxHPCount.CounterColor = ColorManager.Base.Front;
@@ -57,29 +58,29 @@ public class HPPanel : MonoBehaviour {
         currentCommand_ = command;
         UpdateHPText();
         turnStartHP_ = Player.HitPoint;
-        CurrentArc.ArcRate = targetArcRate;
-        RedArc.ArcRate = targetArcRate;
+		CurrentArc.SetTargetArc( targetArcRate );
+		RedArc.SetTargetArc( targetArcRate );
 
-        float defend = command.GetDefend() / 100.0f;
+		float defend = (Player.DefendEnhParam + command.GetDefend()) / 100.0f;
         if( defend <= 0 )
         {
-            DefendCircle.SetTargetWidth( 0.1f );
+            DefendCircle.SetTargetSize( 0.0f );
             DefendCircle.SetColor( ColorManager.Base.Middle );
         }
         else
         {
-            DefendCircle.SetTargetWidth( 0.1f + defend*defend );
+			DefendCircle.SetTargetSize(CurrentArc.Radius * defend);
             DefendCircle.SetColor( ColorManager.Theme.Shade );
         }
         if( command.HealPercent > 0 )
         {
-            CurrentHPCount.CounterColor = ColorManager.Theme.Light;
+            //CurrentHPCount.CounterColor = ColorManager.Theme.Light;
             MaxHPCount.CounterColor = ColorManager.Theme.Light;
             CurrentArc.SetColor( ColorManager.Theme.Light );
         }
         else
         {
-            CurrentHPCount.CounterColor = ColorManager.Base.Front;
+            //CurrentHPCount.CounterColor = ColorManager.Base.Front;
             MaxHPCount.CounterColor = ColorManager.Base.Front;
             CurrentArc.SetColor( ColorManager.Base.Front );
         }
@@ -90,10 +91,10 @@ public class HPPanel : MonoBehaviour {
     {
         UpdateHPText();
         //CurrentBar.transform.localScale = targetScale;
-        CurrentArc.ArcRate = targetArcRate;
-        DamageCount.Count = turnStartHP_ - Player.HitPoint;
-        DamageCircle.SetAnimationSize( DefendCircle.WholeRadius / 2, DefendCircle.WholeRadius );
-        DamageCircle.SetAnimationWidth( DefendCircle.WholeRadius * 10, 0 );
+        CurrentArc.SetTargetArc( targetArcRate );
+        //DamageCount.Count = turnStartHP_ - Player.HitPoint;
+		DamageCircle.SetAnimationSize(DefendCircle.Radius / 2, CurrentArc.Radius);
+		DamageCircle.SetAnimationWidth(CurrentArc.Radius, 0);
 
         //Vector3 nextDamageTextPosition = (latestDamageText == null ? damageTextPrefab.transform.position : latestDamageText.GetComponent<DamageText>().initialPosition + Vector3.right);
         //latestDamageText = (Instantiate( damageTextPrefab, nextDamageTextPosition, Quaternion.identity ) as GameObject);
@@ -103,18 +104,18 @@ public class HPPanel : MonoBehaviour {
     {
         UpdateHPText();
         //CurrentBar.transform.localScale = targetScale;
-        CurrentArc.ArcRate = targetArcRate;
+		CurrentArc.SetTargetArc( targetArcRate );
         if( Player.HitPoint >= turnStartHP_ )
         {
             turnStartHP_ = Player.HitPoint;
-            RedArc.ArcRate = targetArcRate;
-            DamageCount.transform.localScale = Vector3.zero;
+			RedArc.SetTargetArc( targetArcRate );
+            //DamageCount.transform.localScale = Vector3.zero;
             //RedBar.transform.localScale = targetScale;
         }
         else
         {
-            DamageCount.Count = turnStartHP_ - Player.HitPoint;
-            DamageCount.transform.localScale = Vector3.one;
+            //DamageCount.Count = turnStartHP_ - Player.HitPoint;
+            //DamageCount.transform.localScale = Vector3.one;
         }
 
         //Vector3 nextDamageTextPosition = (latestDamageText == null ? damageTextPrefab.transform.position : latestDamageText.transform.position + Vector3.right);
@@ -124,17 +125,17 @@ public class HPPanel : MonoBehaviour {
     public void OnUpdateHP()
     {
         UpdateHPText();
-        CurrentArc.ArcRate = targetArcRate;
+		CurrentArc.SetTargetArc( targetArcRate );
         if( Player.HitPoint >= turnStartHP_ )
         {
             turnStartHP_ = Player.HitPoint;
-            RedArc.ArcRate = targetArcRate;
-            DamageCount.transform.localScale = Vector3.zero;
+			RedArc.SetTargetArc(targetArcRate);
+            //DamageCount.transform.localScale = Vector3.zero;
         }
         else
         {
-            DamageCount.Count = turnStartHP_ - Player.HitPoint;
-            DamageCount.transform.localScale = Vector3.one;
+            //DamageCount.Count = turnStartHP_ - Player.HitPoint;
+            //DamageCount.transform.localScale = Vector3.one;
         }
     }
 

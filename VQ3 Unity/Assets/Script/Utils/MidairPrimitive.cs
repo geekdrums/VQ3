@@ -31,6 +31,7 @@ public class MidairPrimitive : MonoBehaviour {
     float targetWidth;
     float targetRadius;
     Color targetColor;
+	float targetArcRate;
     float currentArcRate;
     float linearFactor = 0.3f;
     float minDistance = 0.05f;
@@ -43,6 +44,7 @@ public class MidairPrimitive : MonoBehaviour {
         get
         {
             Mesh mesh = null;
+#if UNITY_EDITOR
             if( UnityEditor.EditorApplication.isPlaying )
             {
                 mesh = GetComponent<MeshFilter>().mesh;
@@ -50,8 +52,11 @@ public class MidairPrimitive : MonoBehaviour {
             else
             {
                 mesh = RecalculatePolygon();
-            }
-            return mesh;
+			}
+#else
+            mesh = GetComponent<MeshFilter>().mesh;
+#endif
+			return mesh;
         }
     }
 
@@ -62,6 +67,7 @@ public class MidairPrimitive : MonoBehaviour {
         Width = 0x1,
         Radius = 0x2,
         Color = 0x4,
+		Arc = 0x8,
     }
     public AnimationParams animParam = AnimationParams.None;
 
@@ -71,6 +77,7 @@ public class MidairPrimitive : MonoBehaviour {
         targetWidth = Width;
         targetRadius = Radius;
         targetColor = Color;
+		targetArcRate = ArcRate;
         ownerAnimation = GetComponentInParent<Animation>();
         RecalculatePolygon();
         InitMaterial();
@@ -127,6 +134,7 @@ public class MidairPrimitive : MonoBehaviour {
             updateRadius = true;
         }
         if( Radius == targetRadius ) animParam &= ~AnimationParams.Radius;
+
         d = Mathf.Abs( Width - targetWidth );
         bool updateWidth = false;
         if( d > float.Epsilon )
@@ -135,6 +143,15 @@ public class MidairPrimitive : MonoBehaviour {
             updateWidth = true;
         }
         if( Width == targetWidth ) animParam &= ~AnimationParams.Width;
+
+		d = Mathf.Abs(ArcRate - targetArcRate);
+		bool updateArc = false;
+		if( d > float.Epsilon )
+		{
+			ArcRate = (d > minDistance ? Mathf.Lerp(ArcRate, targetArcRate, linearFactor) : targetArcRate);
+			updateArc = true;
+		}
+		if( ArcRate == targetArcRate ) animParam &= ~AnimationParams.Arc;
 
         if( updateRadius )
         {
@@ -146,6 +163,11 @@ public class MidairPrimitive : MonoBehaviour {
             RecalculateWidth();
             if( GrowChild != null ) GrowChild.SetWidth( Width + GrowSize * 2 );
         }
+		if( updateArc )
+		{
+			UpdateArc();
+			if( GrowChild != null ) GrowChild.SetArc(ArcRate);
+		}
 
         if( GrowChild != null ) GrowChild.SetColor( ColorManager.MakeAlpha( Color, GrowAlpha ) );
         if( ColorManager.Distance( Color, targetColor ) < minDistance )
@@ -167,6 +189,7 @@ public class MidairPrimitive : MonoBehaviour {
             GrowChild.SetSize( Radius + GrowSize );
             GrowChild.SetWidth( Width + GrowSize * 2 );
             GrowChild.SetColor( ColorManager.MakeAlpha( Color, GrowAlpha ) );
+			GrowChild.SetArc(ArcRate);
         }
     }
 
@@ -282,6 +305,7 @@ public class MidairPrimitive : MonoBehaviour {
         //if( Width > Radius ) Width = Radius;
 
         Mesh mesh = null;
+#if UNITY_EDITOR
         if( UnityEditor.EditorApplication.isPlaying )
         {
             mesh = GetComponent<MeshFilter>().mesh;
@@ -290,9 +314,12 @@ public class MidairPrimitive : MonoBehaviour {
         {
             mesh = new Mesh();
             mesh.hideFlags = HideFlags.DontSave;
-        }
+		}
+#else
+        mesh = GetComponent<MeshFilter>().mesh;
+#endif
 
-        int vertexCount = ArcN * 2 + 2;
+		int vertexCount = ArcN * 2 + 2;
         bool isNChanged = (mesh.vertices.Length != vertexCount || meshVertices == null || meshVertices.Length != vertexCount);
         if( isNChanged )
         {
@@ -381,20 +408,29 @@ public class MidairPrimitive : MonoBehaviour {
     }
 
     public void SetTargetSize( float newTargetSize )
-    {
+	{
+		if( targetRadius == newTargetSize ) return;
         targetRadius = newTargetSize;
         animParam |= AnimationParams.Radius;
     }
     public void SetTargetWidth( float newTargetWidth )
-    {
+	{
+		if( targetWidth == newTargetWidth ) return;
         targetWidth = newTargetWidth;
         animParam |= AnimationParams.Width;
     }
-    public void SetTargetColor( Color newTargetColor )
-    {
-        targetColor = newTargetColor;
-        animParam |= AnimationParams.Color;
-     }
+	public void SetTargetColor( Color newTargetColor )
+	{
+		if( targetColor == newTargetColor ) return;
+		targetColor = newTargetColor;
+		animParam |= AnimationParams.Color;
+	}
+	public void SetTargetArc( float newTargetArcRate )
+	{
+		if( targetArcRate == newTargetArcRate ) return;
+		targetArcRate = newTargetArcRate;
+		animParam |= AnimationParams.Arc;
+	}
 
     public void SetAnimationSize(  float startSize, float endSize )
     {
@@ -411,9 +447,15 @@ public class MidairPrimitive : MonoBehaviour {
         SetColor( startColor );
         SetTargetColor( endColor );
     }
+	public void SetAnimationArc( float startArc, float endArc )
+	{
+		SetArc(startArc);
+		SetTargetArc(endArc);
+	}
 
     public void SetSize( float newSize )
     {
+		//if( Radius == newSize ) return;
         animParam &= ~AnimationParams.Radius;
         targetRadius = newSize;
         Radius = targetRadius;
@@ -424,7 +466,8 @@ public class MidairPrimitive : MonoBehaviour {
         }
     }
     public void SetWidth( float newWidth )
-    {
+	{
+		//if( Width == newWidth ) return;
         animParam &= ~AnimationParams.Width;
         targetWidth = newWidth;
         Width = targetWidth;
@@ -435,7 +478,8 @@ public class MidairPrimitive : MonoBehaviour {
         }
     }
     public void SetColor( Color newTargetColor )
-    {
+	{
+		//if( Color == newTargetColor ) return;
         animParam &= ~AnimationParams.Color;
         targetColor = newTargetColor;
         Color = targetColor;
@@ -462,6 +506,19 @@ public class MidairPrimitive : MonoBehaviour {
         //renderer.material.color = Color;
         renderer.material.color = Color;
     }
+
+	public void SetArc( float newArc )
+	{
+		//if( ArcRate == newArc ) return;
+		animParam &= ~AnimationParams.Arc;
+		targetArcRate = newArc;
+		ArcRate = targetArcRate;
+		UpdateArc();
+		if( GrowChild != null )
+		{
+			GrowChild.SetArc(Width + GrowSize * 2);
+		}
+	}
 
     void InitMaterial()
     {

@@ -169,7 +169,7 @@ public class PlayerConductor : MonoBehaviour {
             else
             {
                 Player.BeAttacked( attack, skill );
-                GameContext.VoxSystem.AddVPVT( attack.VP, attack.VT );
+				GameContext.VoxSystem.AddVPVT((int)(attack.VP * Player.VPCoeff), (int)(attack.VT*Player.VTCoeff));
                 isSucceeded = true;
             }
         }
@@ -198,7 +198,10 @@ public class PlayerConductor : MonoBehaviour {
         Player.UpdateHealHP();
     }
 
-
+	public void OnRevert()
+	{
+		Player.CheckDangerMode();
+	}
     public void OnPlayerWin()
     {
         Player.DefaultInit();

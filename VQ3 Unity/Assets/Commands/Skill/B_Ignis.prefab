@@ -27,6 +27,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -43,9 +44,9 @@ MonoBehaviour:
   - Magic 45 5 3 Select
   - Magic 45 5 3 Select
   - Magic 45 5 3 Select
-  - Magic 50 15 12 Select
-  - Magic 55 15 12 Select
-  - Magic 55 15 12 Select, Weather Rain -15
+  - Magic 50 15 6 Select
+  - Magic 55 15 6 Select
+  - Magic 55 15 6 Select, Weather Rain -15
   _rhythmStr: nn nn nn ta nn nn ta nn nn ta nn nn ta nn nn ta nn nn ta
   _rhythmBaseTime: 4
   _prefabs: []
