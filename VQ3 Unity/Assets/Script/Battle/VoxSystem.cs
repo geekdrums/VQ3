@@ -441,7 +441,7 @@ public class VoxSystem : MonoBehaviour{
         transform.localPosition = Vector3.Lerp( transform.localPosition, targetSunPosition, 0.1f );
         voxSun.transform.localScale = Vector3.Lerp( voxSun.transform.localScale, targetSunScale, 0.05f );
         voxRing.transform.localScale = Vector3.Lerp( voxRing.transform.localScale, targetSunScale, 0.05f );
-        VPCount.transform.localPosition = Vector3.Lerp( VPCount.transform.localPosition, targetVPCountPosition, 0.2f );
+        //VPCount.transform.localPosition = Vector3.Lerp( VPCount.transform.localPosition, targetVPCountPosition, 0.2f );
  	}
     
 

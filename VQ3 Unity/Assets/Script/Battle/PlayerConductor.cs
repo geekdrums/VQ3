@@ -154,6 +154,11 @@ public class PlayerConductor : MonoBehaviour {
 	public bool ReceiveAction( ActionSet Action, Skill skill )
 	{
 		bool isSucceeded = false;
+		AnimModule anim = Action.GetModule<AnimModule>();
+		if( anim != null && !skill.isPlayerSkill )
+		{
+			isSucceeded = true;
+		}
 		AttackModule attack = Action.GetModule<AttackModule>();
         if( attack != null )
 		{
@@ -180,6 +185,11 @@ public class PlayerConductor : MonoBehaviour {
             Player.Enhance( enhance );
 			isSucceeded = true;
         }
+		WaitModule wait = Action.GetModule<WaitModule>();
+		if( wait != null && !skill.isPlayerSkill )
+		{
+			isSucceeded = true;
+		}
 		return isSucceeded;
 	}
 

@@ -184,6 +184,8 @@ public class CommandGraph : MonoBehaviour {
         Level,
         Category,
         Name,
+        Longitude,
+        Latitude,
         EnglishName,
         Icon,
         Music,
@@ -196,10 +198,8 @@ public class CommandGraph : MonoBehaviour {
         Skill2,
         Skill3,
         Skill4,
-        Longitude,
-        Latitude,
         Optima,
-        AcquireText,
+        //AcquireText,
     }
     void UpdateCommandList()
     {
@@ -282,7 +282,7 @@ public class CommandGraph : MonoBehaviour {
 
                 //playerCommand.GetComponent<TextMesh>().text = commandName.Insert( 2, "\n" );//propertyTexts[(int)CommandListProperty.Icon];
                 //playerCommand.GetComponent<TextMesh>().fontSize = 8;
-                playerCommand.AcquireText = propertyTexts[(int)CommandListProperty.AcquireText];
+                //playerCommand.AcquireText = propertyTexts[(int)CommandListProperty.AcquireText];
                 string iconStr = propertyTexts[(int)CommandListProperty.Icon];
                 playerCommand.icons = new List<EStatusIcon>();
                 for( int i = 0; i < (int)EStatusIcon.Count; i++ )
@@ -694,7 +694,7 @@ public class CommandGraph : MonoBehaviour {
             }
             else if( IsInvert && !IsLastInvert )
             {
-                NextCommand = CurrentCommand;
+				NextCommand = (CurrentCommand != null && CurrentCommand.ParentCommand != null ? CurrentCommand.ParentCommand : CurrentCommand); ;
             }
             else
             {
@@ -716,7 +716,7 @@ public class CommandGraph : MonoBehaviour {
             }
             else
             {
-                CommandLoopCount = 1;
+                CommandLoopCount = 0;
             }
             //TODO: Add variation logic here( former block, parameter, etc... )
 

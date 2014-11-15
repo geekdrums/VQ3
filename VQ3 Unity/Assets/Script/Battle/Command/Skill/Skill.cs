@@ -14,7 +14,7 @@ public class Skill : MonoBehaviour
     //public GameObject bgEffefctPrefab;
     //public string DescribeText;
 
-	public ActionSet[] Actions { get; protected set; }
+	public List<ActionSet> Actions { get; protected set; }
     public bool IsTargetSelectable { get; protected set; }
 	protected Rhythm ActionRhythm;
 	protected Animation SkillAnim;
@@ -42,11 +42,11 @@ public class Skill : MonoBehaviour
         {
             ActionRhythm = Rhythm.ONE_NOTE_RHYTHM;
         }
-        Actions = new ActionSet[_actionStr.Length];
+		Actions = new List<ActionSet>();// ActionSet[_actionStr.Length];
         IsTargetSelectable = false;
         for( int i = 0; i < _actionStr.Length; ++i )
         {
-            Actions[i] = ActionSet.Parse( _actionStr[i], this );
+            Actions.Add( ActionSet.Parse( _actionStr[i], this ) );
             if( !IsTargetSelectable && Actions[i].GetModule<TargetModule>() != null
                 && Actions[i].GetModule<TargetModule>().TargetType == TargetType.Select )
             {
@@ -83,11 +83,13 @@ public class Skill : MonoBehaviour
                 SkillAnim.Play( AnimName );
             }
         }
+		OwnerCharacter.OnExecuted(this, act);
 	}
 
 	public Skill( Rhythm rhythm, bool isPlayer = true, params ActionSet[] inActions )
 	{
-		Actions = inActions;
+		Actions = new List<ActionSet>();
+		Actions.AddRange( inActions );
 		ActionRhythm = rhythm;
 		isPlayerSkill = isPlayer;
 	}
@@ -104,7 +106,7 @@ public class Skill : MonoBehaviour
         {
 			int noteIndex = ActionRhythm.GetNoteIndex( mt );
 			int toneIndex = ActionRhythm.GetToneIndex( noteIndex );
-			if ( 0 <= toneIndex && toneIndex < Actions.Length )
+			if ( 0 <= toneIndex && toneIndex < Actions.Count )
 			{
 				return Actions[toneIndex];
 			}

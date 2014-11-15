@@ -58,6 +58,10 @@ public class ActionSet : IEnumerable<IActionModule>
             {
                 res.Modules.Add( new EnemySpawnModule( ownerSkill._prefabs.Find( (GameObject obj)=> obj.name == parameters[1] ), parameters[2] ) );
             }
+			else if( str.StartsWith( "Wait " ) )
+			{
+				res.Modules.Add(new WaitModule());
+			}
         }
         return res;
     }

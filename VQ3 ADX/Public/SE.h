@@ -4,8 +4,8 @@
  *  Tool Ver.        : CRI Atom Craft LE Ver.1.32.00
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/SE.acb
  *  File Name        : SE.acb
- *  File Size        : 1,742,016 bytes
- *  Date Time        : 2014/06/24 17:45
+ *  File Size        : 1,726,432 bytes
+ *  Date Time        : 2014/11/13 6:35
  *  Target           : Public
  *  Cues             : 26
  *  CueSheet Comment : 
@@ -26,9 +26,8 @@
 #define CRI_SE_PHYSICDAMAGE        (  5) /*   */
 #define CRI_SE_PHYSICBADDAMAGE     (  6) /*   */
 #define CRI_SE_PHYSICNODAMAGE      (  7) /*   */
-#define CRI_SE_MAGICDAMAGE         (  8) /*   */
-#define CRI_SE_MAGICGOODDAMAGE     (  9) /*   */
-#define CRI_SE_MAGICBADDAMAGE      ( 10) /*   */
+#define CRI_SE_MAGICBADDAMAGE      (  8) /*   */
+#define CRI_SE_MAGICDAMAGE         (  9) /*   */
 #define CRI_SE_MAGICNODAMAGE       ( 11) /*   */
 #define CRI_SE_PLAYERMAGICDAMAGE   ( 12) /*   */
 #define CRI_SE_SELECT              ( 13) /*   */
@@ -44,6 +43,7 @@
 #define CRI_SE_ENHANCE             ( 23) /*   */
 #define CRI_SE_INVERT              ( 24) /*   */
 #define CRI_SE_JAM                 ( 25) /*   */
+#define CRI_SE_MAGICGOODDAMAGE     ( 26) /*   */
 
 /* Block List (Block Index) */
 

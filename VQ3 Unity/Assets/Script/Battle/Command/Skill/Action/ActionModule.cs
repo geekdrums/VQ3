@@ -159,3 +159,10 @@ public class EnemySpawnModule : IActionModule
     public GameObject EnemyPrefab { get; private set; }
     public string InitialState { get; private set; }
 }
+
+public class WaitModule : IActionModule
+{
+	public WaitModule()
+	{
+	}
+}

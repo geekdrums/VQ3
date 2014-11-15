@@ -16,8 +16,8 @@ public enum EnemySpecies
 
 public class Enemy : Character
 {
-    static readonly float DamageTrembleTime = 0.025f;
-    static readonly Timing StateChangeTiming = new Timing(3,0,0);
+    protected static readonly float DamageTrembleTime = 0.025f;
+    protected static readonly Timing StateChangeTiming = new Timing(3,0,0);
 
     public string DisplayName;
     public EnemySpecies Speceis;
@@ -70,7 +70,7 @@ public class Enemy : Character
     }
 
     // Update is called once per frame
-    void Update()
+	public virtual void Update()
     {
         UpdateAnimation();
 
@@ -97,21 +97,21 @@ public class Enemy : Character
                 if( currentState.name != "Invert" ) oldState = currentState;
                 CheckState();
                 
-                if( oldState == currentState && turnCount >= currentState.pattern.Length )
-                {
-                    for( int i = 0; i < commandIcons.Count; i++ )
-                    {
-                        if( i < currentState.pattern.Length )
-                        {
-                            commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString().Replace( '_', '-' ) ) );
-                            commandIcons[i].SetIndex( i, currentState.pattern.Length );
-                        }
-                        else
-                        {
-                            commandIcons[i].SetIcon( null );
-                        }
-                    }
-                }
+				//if( oldState == currentState && turnCount >= currentState.pattern.Length )
+				//{
+				//	for( int i = 0; i < commandIcons.Count; i++ )
+				//	{
+				//		if( i < currentState.pattern.Length )
+				//		{
+				//			commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString().Replace( '_', '-' ) ) );
+				//			commandIcons[i].SetIndex( i, currentState.pattern.Length );
+				//		}
+				//		else
+				//		{
+				//			commandIcons[i].SetIcon( null );
+				//		}
+				//	}
+				//}
             }
             //else if( Music.Just > StateChangeTiming && ( oldState != null && oldState != currentState ) )
             //{
@@ -150,7 +150,7 @@ public class Enemy : Character
                 }
             }
         }
-        transform.localPosition = Vector3.Lerp( transform.localPosition, targetLocalPosition, 0.1f );
+        //transform.localPosition = Vector3.Lerp( transform.localPosition, targetLocalPosition, 0.1f );
     }
 
     protected void CreateDamageText( int damage, ActionResult actResult )
@@ -231,7 +231,7 @@ public class Enemy : Character
         }
         currentState = invertState;
     }
-    public void OnRevert()
+    public virtual void OnRevert()
     {
         BattleState nextState = oldState;
         oldState = currentState;
@@ -243,10 +243,10 @@ public class Enemy : Character
         {
             currentCommand = currentState.pattern[turnCount % currentState.pattern.Length];
             TurnInit( currentCommand );
-            for( int i = 0; i < commandIcons.Count; i++ )
-            {
-                commandIcons[i].SetIndex( i, currentState.pattern.Length - (turnCount % currentState.pattern.Length) - 1 );
-            }
+			//for( int i = 0; i < commandIcons.Count; i++ )
+			//{
+			//	commandIcons[i].SetIndex( i, currentState.pattern.Length - (turnCount % currentState.pattern.Length) - 1 );
+			//}
         }
         else
         {
@@ -276,18 +276,18 @@ public class Enemy : Character
                 print( "ChangeState Failed: " + name );
             }
             turnCount = 0;
-            for( int i = 0; i < commandIcons.Count; i++ )
-            {
-                if( i < currentState.pattern.Length )
-                {
-                    commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString().Replace( '_', '-' )  ) );
-                    commandIcons[i].SetIndex( i, currentState.pattern.Length );
-                }
-                else
-                {
-                    commandIcons[i].SetIcon( null );
-                }
-            }
+			//for( int i = 0; i < commandIcons.Count; i++ )
+			//{
+			//	if( i < currentState.pattern.Length )
+			//	{
+			//		commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString().Replace( '_', '-' )  ) );
+			//		commandIcons[i].SetIndex( i, currentState.pattern.Length );
+			//	}
+			//	else
+			//	{
+			//		commandIcons[i].SetIcon( null );
+			//	}
+			//}
             //if( currentState.DescribeText != "" )
             //{
             //    ShortTextWindow shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
@@ -299,19 +299,19 @@ public class Enemy : Character
     }
     public void InitState( string name )
     {
-        commandIcons = new List<EnemyCommandIcon>();
-        int maxCommandNNnum = 0;
-        foreach( BattleState state in States )
-        {
-            maxCommandNNnum = Mathf.Max( maxCommandNNnum, state.pattern.Length );
-        }
-        for( int i = 0; i < maxCommandNNnum; i++ )
-        {
-            commandIcons.Add( (Instantiate( GameContext.EnemyConductor.commandIconPrefab ) as GameObject).GetComponent<EnemyCommandIcon>() );
-            commandIcons[i].transform.parent = transform;
-            commandIcons[i].transform.localPosition = Vector3.zero;
-            commandIcons[i].SetIcon( null );
-        }
+		//commandIcons = new List<EnemyCommandIcon>();
+		//int maxCommandNNnum = 0;
+		//foreach( BattleState state in States )
+		//{
+		//	maxCommandNNnum = Mathf.Max( maxCommandNNnum, state.pattern.Length );
+		//}
+		//for( int i = 0; i < maxCommandNNnum; i++ )
+		//{
+		//	commandIcons.Add( (Instantiate( GameContext.EnemyConductor.commandIconPrefab ) as GameObject).GetComponent<EnemyCommandIcon>() );
+		//	commandIcons[i].transform.parent = transform;
+		//	commandIcons[i].transform.localPosition = Vector3.zero;
+		//	commandIcons[i].SetIcon( null );
+		//}
 
         ChangeState( name );
     }
@@ -338,9 +338,9 @@ public class Enemy : Character
             case EnemySpecies.Jewel:
                 lastDamageResult = ActionResult.PhysicDamage;
                 break;
-            case EnemySpecies.Spirit:
-            case EnemySpecies.Dragon:
-                lastDamageResult = ActionResult.PhysicGoodDamage;
+			case EnemySpecies.Spirit:
+			case EnemySpecies.Dragon:
+				lastDamageResult = ActionResult.PhysicGoodDamage;
                 break;
             case EnemySpecies.Beast:
                 if( GameContext.VoxSystem.state == VoxState.Invert )
@@ -370,15 +370,16 @@ public class Enemy : Character
             case EnemySpecies.Beast:
                 lastDamageResult = ActionResult.MagicGoodDamage;
                 break;
-            case EnemySpecies.Dragon:
-                if( GameContext.VoxSystem.state == VoxState.Invert )
-                {
-                    lastDamageResult = ActionResult.MagicDamage;
-                }
-                else
-                {
-                    lastDamageResult = ActionResult.MagicBadDamage;
-                }
+			case EnemySpecies.Dragon:
+				lastDamageResult = ActionResult.MagicDamage;
+				//if( GameContext.VoxSystem.state == VoxState.Invert )
+				//{
+				//	lastDamageResult = ActionResult.MagicDamage;
+				//}
+				//else
+				//{
+				//	lastDamageResult = ActionResult.MagicBadDamage;
+				//}
                 break;
             case EnemySpecies.Jewel:
                 break;

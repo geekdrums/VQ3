@@ -200,4 +200,8 @@ public class Character : MonoBehaviour {
             HitPoint = Mathf.Clamp( HitPoint, 0, MaxHP );
         }
     }
+
+	public virtual void OnExecuted( Skill skill, ActionSet act )
+	{
+	}
 }

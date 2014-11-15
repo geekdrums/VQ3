@@ -50,7 +50,14 @@ public class DamageText : CounterSprite {
         case ActionResult.MagicGoodDamage:
         case ActionResult.PhysicGoodDamage:
             CounterColor = ColorManager.Accent.Critical;
-            transform.localScale = Vector3.one * 1.3f;
+			if( GameContext.VoxSystem.state == VoxState.Invert )
+			{
+				transform.localScale = Vector3.one * 1.3f;
+			}
+			else
+			{
+				transform.localScale = Vector3.one * 1.0f;
+			}
             break;
         case ActionResult.EnemyHeal:
             CounterColor = ColorManager.Accent.Heal;
