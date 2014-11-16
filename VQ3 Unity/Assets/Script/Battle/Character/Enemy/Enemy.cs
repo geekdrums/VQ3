@@ -355,15 +355,16 @@ public class Enemy : Character
 			case EnemySpecies.Dragon:
 				lastDamageResult = ActionResult.PhysicGoodDamage;
                 break;
-            case EnemySpecies.Beast:
-                if( GameContext.VoxSystem.state == VoxState.Invert )
-                {
-                    lastDamageResult = ActionResult.PhysicDamage;
-                }
-                else
-                {
-                    lastDamageResult = ActionResult.PhysicBadDamage;
-                }
+			case EnemySpecies.Beast:
+				lastDamageResult = ActionResult.PhysicDamage;
+				//if( GameContext.VoxSystem.state == VoxState.Invert )
+				//{
+				//	lastDamageResult = ActionResult.PhysicDamage;
+				//}
+				//else
+				//{
+				//	lastDamageResult = ActionResult.PhysicBadDamage;
+				//}
                 break;
             case EnemySpecies.Weather:
                 break;

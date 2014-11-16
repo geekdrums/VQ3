@@ -120,7 +120,7 @@ public class PlayerConductor : MonoBehaviour {
         commandGraph.CheckCommand();
         CurrentCommand = commandGraph.CurrentCommand;
         Player.TurnInit( CurrentCommand );
-        TextWindow.ChangeMessage( BattleMessageType.PlayerCommand, CurrentCommand.DescribeText );
+		TextWindow.ChangeMessage(BattleMessageType.PlayerCommand, CurrentCommand.DescribeText + System.Environment.NewLine + CurrentCommand.DescribeText2);
         WaitCount = 0;
 	}
     public void CheckWaitCommand()
@@ -128,7 +128,10 @@ public class PlayerConductor : MonoBehaviour {
         commandGraph.CheckCommand();
         CurrentCommand = null;
         Player.DefaultInit();
-        TextWindow.ChangeMessage( BattleMessageType.PlayerWait, "オクスは　じっと　まっている" );
+		if( WaitCount == 0 )
+		{
+			TextWindow.ChangeMessage(BattleMessageType.PlayerWait, "オクスは　じっと　まっている");
+		}
         ++WaitCount;
 	}
     
@@ -149,6 +152,8 @@ public class PlayerConductor : MonoBehaviour {
         Player.OnBattleStart();
         commandGraph.OnBattleStart();
         WaitCount = 0;
+		ColorManager.SetBaseColor(EBaseColor.Black);
+		ColorManager.SetThemeColor(EThemeColor.White);
     }
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )
@@ -198,6 +203,10 @@ public class PlayerConductor : MonoBehaviour {
         Player.UpdateHealHP();
     }
 
+	public void OnReadyEclipse()
+	{
+		Player.EnhanceCutIn.SetReadyEclipse();
+	}
 	public void OnRevert()
 	{
 		Player.CheckDangerMode();

@@ -140,22 +140,25 @@ public class FieldConductor : MonoBehaviour {
         switch( GameContext.CurrentState )
         {
         case GameState.Field:
-            if( encounterCount >= CurrentLevel.Encounters.Count )
-            {
-                if( GameContext.PlayerConductor.Level >= LevelEncounters.Length ) return;
-                else
-                {
-                    GameContext.PlayerConductor.Level++;
-                    GameContext.PlayerConductor.OnLevelUp();
-                    encounterCount = 0;
-                    RState = ResultState.Command;
-                    GameContext.ChangeState( GameState.Result );
-                }
-            }
-            else
-            {
-                CheckEncount();
-            }
+			if( Input.GetMouseButtonUp(0) )
+			{
+				if( encounterCount >= CurrentLevel.Encounters.Count )
+				{
+					if( GameContext.PlayerConductor.Level >= LevelEncounters.Length ) return;
+					else
+					{
+						GameContext.PlayerConductor.Level++;
+						GameContext.PlayerConductor.OnLevelUp();
+						encounterCount = 0;
+						RState = ResultState.Command;
+						GameContext.ChangeState(GameState.Result);
+					}
+				}
+				else
+				{
+					CheckEncount();
+				}
+			}
             break;
         case GameState.Result:
             GameContext.PlayerConductor.UpdateResult();

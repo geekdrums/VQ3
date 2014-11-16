@@ -341,7 +341,8 @@ public class VoxSystem : MonoBehaviour{
             {
                 TextWindow.ChangeMessage( BattleMessageType.Invert, "くろいつきが　せかいを　はんてんさせる" );
                 InvertTime = Mathf.Clamp( (int)(currentVT / 64.0f) + 1, 2, MaxInvertTime );//Mathf.Clamp( (int)(MaxInvertTime * ((float)currentVT / MaxVT)), 1, MaxInvertTime - 1 ) + 1;
-                GameContext.PlayerConductor.commandGraph.OnReactEvent( IconReactType.OnInvert );
+				GameContext.PlayerConductor.commandGraph.OnReactEvent(IconReactType.OnInvert);
+				Music.SetAisac(8, 1);
             }
             else
             {
@@ -550,6 +551,7 @@ public class VoxSystem : MonoBehaviour{
             {
                 FireLineMaterial.color = ColorManager.Accent.Break;
                 SEPlayer.Play( "invert" );
+				GameContext.PlayerConductor.OnReadyEclipse();
             }
             else if( oldIsReadyEclipse && !IsReadyEclipse )
             {

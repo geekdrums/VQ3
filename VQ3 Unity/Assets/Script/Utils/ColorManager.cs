@@ -120,6 +120,7 @@ public class ColorManager : MonoBehaviour
 	public MidairPrimitive[] BaseLightPrimitives;
 	public Material[] BaseBackMaterials;
 	public Material[] BaseFrontMaterials;
+	public TextMesh[] BaseFrontTextMeshes;
 
     public static BaseColor Base { get; private set; }
 
@@ -193,6 +194,10 @@ public class ColorManager : MonoBehaviour
 		foreach( Material material in instance.BaseFrontMaterials )
 		{
 			material.color = Base.Front;
+		}
+		foreach( TextMesh textMesh in instance.BaseFrontTextMeshes )
+		{
+			textMesh.color = Base.Front;
 		}
     }
     public static void SetThemeColor( EThemeColor themeColor )

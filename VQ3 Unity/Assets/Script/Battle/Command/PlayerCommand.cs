@@ -88,7 +88,8 @@ public class PlayerCommand : CommandBase
     public float longitude;
     public int AcquireLevel = 1;
     public string DescribeText;
-    public string AcquireText;
+	public string DescribeText2;
+	public string AcquireText;
     public string NameText;
     public List<PlayerCommand> links;
     public List<EStatusIcon> icons;

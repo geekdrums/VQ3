@@ -4,8 +4,8 @@
  *  Tool Ver.        : CRI Atom Craft LE Ver.1.32.00
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/BattleMusic.acb
  *  File Name        : BattleMusic.acb
- *  File Size        : 6,884,992 bytes
- *  Date Time        : 2014/04/22 21:31
+ *  File Size        : 6,885,088 bytes
+ *  Date Time        : 2014/11/16 7:49
  *  Target           : Public
  *  Cues             : 3
  *  CueSheet Comment : 
@@ -17,6 +17,7 @@
 #define CRI_BATTLEMUSIC_AISACCONTROL_TRACKVOLUMEENERGY      ( 4) /* TrackVolumeEnergy  */
 #define CRI_BATTLEMUSIC_AISACCONTROL_TRACKVOLUMETRANSITION  ( 5) /* TrackVolumeTransition  */
 #define CRI_BATTLEMUSIC_AISACCONTROL_TRACKVOLUMELOOP        ( 6) /* TrackVolumeLoop  */
+#define CRI_BATTLEMUSIC_AISACCONTROL_AISACCONTROL08         ( 8) /* AisacControl08  */
 
 /* Cue List (Cue ID) */
 #define CRI_BATTLEMUSIC_BATTLEMUSIC  ( 1) /*   */

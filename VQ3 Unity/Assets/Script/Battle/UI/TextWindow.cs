@@ -157,7 +157,7 @@ public class TextWindow : MonoBehaviour {
         this.message.Type = type;
         this.message.CurrentIndex = 0;
         displayMusicTime = 0;
-        displayText.color = Color.white;//(type == BattleMessageType.Tutorial ? Color.white : (tutorialMessage != null ? tutorialMessage.BaseColor : Color.black));
+        //displayText.color = Color.white;//(type == BattleMessageType.Tutorial ? Color.white : (tutorialMessage != null ? tutorialMessage.BaseColor : Color.black));
     }
     void SetNextCursor_( bool use )
     {

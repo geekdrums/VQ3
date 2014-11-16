@@ -109,7 +109,7 @@ public class Player : Character {
 		CheckDangerMode();
         //HPBar.OnDamage( damage );
         commandGraph.OnReactEvent( IconReactType.OnDamage );
-        TextWindow.ChangeMessage( BattleMessageType.Damage, "オクスは <color=red>" + damage + "</color> のダメージを　うけた" );
+        //TextWindow.ChangeMessage( BattleMessageType.Damage, "オクスは <color=red>" + damage + "</color> のダメージを　うけた" );
         //if( damage <= 0 )
         //{
         //    (Instantiate( DefendAnimPrefab, ownerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
@@ -199,6 +199,7 @@ public class Player : Character {
 				{
 					IsDangerMode = false;
 					ColorManager.SetBaseColor(EBaseColor.Black);
+					Music.SetAisac(8, 1);
 				}
 			}
 			else
@@ -208,6 +209,7 @@ public class Player : Character {
 					IsDangerMode = true;
 					ColorManager.SetBaseColor(EBaseColor.Red);
 					EnhanceCutIn.SetDanger();
+					Music.SetAisac(8, 0);
 				}
 			}
 		}

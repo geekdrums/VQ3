@@ -34,6 +34,7 @@ public class DragonEnemy : Enemy {
 			if( skill.name.StartsWith( "breath" ) )
 			{
 				firePower_ = 3;
+				SEPlayer.Play("breath");
 			}
 			else if( skill.name.StartsWith( "ignis" ) && skill.Actions.IndexOf(act) == 0 )
 			{
@@ -45,15 +46,21 @@ public class DragonEnemy : Enemy {
 			}
 			break;
 		case "Breath":
+			if( skill.name.StartsWith("breath") )
+			{
+				SEPlayer.Play("breath");
+			}
 			break;
 		case "Crow":
 			if( skill.name.StartsWith( "moveBack" ) )
 			{
 				transform.localScale = initialScale;
+				SEPlayer.Play("footstep");
 			}
 			else if( skill.name.StartsWith( "move" ) )
 			{
 				transform.localScale = initialScale * 1.7f;
+				SEPlayer.Play("footstep");
 			}
 			break;
 		}

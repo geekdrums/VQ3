@@ -49,7 +49,7 @@ public class BattleConductor : MonoBehaviour {
                 TextWindow.ClearTutorialMessage();
                 GameContext.VoxSystem.SetState( VoxState.SunSet );
 				GameContext.ChangeState( GameState.Endro );
-                TextWindow.ChangeMessage( BattleMessageType.Result, "てきを　やっつけた！" );
+                TextWindow.ChangeMessage( BattleMessageType.Result, "てきを　たおした" );
 			}
             break;
 		case GameState.Endro:

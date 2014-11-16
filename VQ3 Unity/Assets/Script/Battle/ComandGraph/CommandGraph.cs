@@ -387,7 +387,6 @@ public class CommandGraph : MonoBehaviour {
                 if( Music.isJustChanged && NextCommand != null && NextCommand != IntroCommand && !Input.GetMouseButton( 0 ) )
                 {
                     SetNextBlock();
-                    SEPlayer.Play( "select" );
                 }
             }
             if( Music.IsJustChangedAt( AllowInputEnd ) )
@@ -406,7 +405,7 @@ public class CommandGraph : MonoBehaviour {
             break;
         }
 
-        if( Music.CurrentBlockName == "wait" )
+        if( Music.CurrentBlockName == "wait" || GameContext.CurrentState != GameState.Battle )
         {
             AxisRing.ArcRate = 0.0f;
         }
@@ -959,7 +958,8 @@ public class CommandGraph : MonoBehaviour {
         //NextCommandText.text = NextCommand.name;
         //SetCommandIcons( NextCommandText.gameObject, NextCommand );
         targetRotation = Quaternion.Inverse( Quaternion.LookRotation( -command.transform.localPosition ) ) * offsetRotation;
-        //Quaternion.Inverse( command.transform.localRotation ) * offsetRotation;
+		//Quaternion.Inverse( command.transform.localRotation ) * offsetRotation;
+		if( command != IntroCommand ) SEPlayer.Play("select");
     }
 
 	public void SelectInitialInvertCommand()
