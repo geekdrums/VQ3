@@ -172,8 +172,8 @@ public class CommandGraph : MonoBehaviour {
         edge.SetVertexCount( 2 );
         edge.SetPosition( 0, from.transform.localPosition );
         edge.SetPosition( 1, to.transform.localPosition );
-        from.OnEdgeCreated( edge );
-        to.OnEdgeCreated( edge );
+		from.OnEdgeCreated(edge.GetComponent<CommandEdge>());
+		to.OnEdgeCreated(edge.GetComponent<CommandEdge>());
         //edge.SetVertexCount( 8 );
         //for( int i = 0; i < 8; i++ )
         //{
@@ -381,14 +381,14 @@ public class CommandGraph : MonoBehaviour {
             }
             break;
         case GameState.Intro:
-            if( Music.NextBlockName == "intro" && Music.Just.totalUnit > 4 )
-            {
-                //if( Music.isJustChanged ) SelectNearestNode();
-                if( Music.isJustChanged && NextCommand != null && NextCommand != IntroCommand && !Input.GetMouseButton( 0 ) )
-                {
-                    SetNextBlock();
-                }
-            }
+			//if( Music.NextBlockName == "intro" && Music.Just.totalUnit > 4 )
+			//{
+			//	//if( Music.isJustChanged ) SelectNearestNode();
+			//	if( Music.isJustChanged && NextCommand != null && NextCommand != IntroCommand && !Input.GetMouseButton( 0 ) )
+			//	{
+			//		SetNextBlock();
+			//	}
+			//}
             if( Music.IsJustChangedAt( AllowInputEnd ) )
             {
                 SetNextBlock();
@@ -405,7 +405,7 @@ public class CommandGraph : MonoBehaviour {
             break;
         }
 
-        if( Music.CurrentBlockName == "wait" || GameContext.CurrentState != GameState.Battle )
+        if( Music.CurrentBlockName == "wait" || ( GameContext.CurrentState != GameState.Battle && GameContext.CurrentState != GameState.Intro ) )
         {
             AxisRing.ArcRate = 0.0f;
         }
@@ -562,6 +562,11 @@ public class CommandGraph : MonoBehaviour {
             if( NextCommand != null )
             {
                 transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
+				if( NextCommand == IntroCommand && Quaternion.Angle(transform.rotation,targetRotation) < 0.1f )
+				{
+					NextCommand = null;
+					transform.rotation = targetRotation;
+				}
             }
             //RightArrow.transform.localPosition = Vector3.MoveTowards( RightArrow.transform.localPosition, initialRightArrowPosition, 0.1f );
             //LeftArrow.transform.localPosition = Vector3.MoveTowards( LeftArrow.transform.localPosition, initialLeftArrowPosition, 0.1f );
@@ -835,6 +840,10 @@ public class CommandGraph : MonoBehaviour {
             OldCommand.SetLink( false );
             foreach( PlayerCommand c in OldCommand.LinkedCommands )
             {
+				foreach( CommandEdge edge in c.linkLines )
+				{
+					edge.Reset();
+				}
                 c.SetLink( false );
             }
         }
@@ -848,7 +857,8 @@ public class CommandGraph : MonoBehaviour {
 			NextRect.transform.localScale = Vector3.zero;
             foreach( PlayerCommand c in GetLinkedCommands() )
             {
-                if( c != IntroCommand ) c.SetLink( true );
+                //if( c != IntroCommand )
+					c.SetLink( true );
             }
             CurrentCommand.SetCurrent();
             NextCommand = null;
@@ -860,11 +870,20 @@ public class CommandGraph : MonoBehaviour {
 
             if( IsLastInvert )
             {
-                Select( IntroCommand );
-                IntroCommand.Deselect();
+				Select(IntroCommand);
+				IntroCommand.SetCurrent();
+				IntroCommand.SetLink(true);
+				foreach( PlayerCommand c in IntroCommand.LinkedCommands )
+				{
+					c.SetLink(true);
+				}
+				CurrentRect.transform.parent = IntroCommand.transform;
+				CurrentRect.transform.localPosition = Vector3.forward;
+				CurrentRect.transform.localScale = Vector3.one;
             }
             AxisRing.SetAnimationSize( 6.7f, 7.5f );
             Panel.Hide();
+			CommandSphere.collider.enabled = true;
         }
         else
         {
@@ -885,7 +904,7 @@ public class CommandGraph : MonoBehaviour {
 		}
 		else
 		{
-			AxisRing.SetColor(ColorManager.Theme.Light);
+			AxisRing.SetColor(ColorManager.Theme.Bright);
 		}
     }
 
@@ -930,22 +949,34 @@ public class CommandGraph : MonoBehaviour {
         //TimeBar.transform.localScale = targetTimeBarScale;
     }
 
+	public void Deselect()
+	{
+		NextCommand.Deselect();
+		NextCommand = null;
+		CommandSphere.collider.enabled = true;
+		NextRect.transform.localScale = Vector3.zero;
+	}
+
     public void Select( PlayerCommand command )
     {
-		if( CurrentCommand == IntroCommand && command != IntroCommand )
+		if( command != IntroCommand )
+		{
+			CommandSphere.collider.enabled = false;
+		}
+		if( ( CurrentCommand == IntroCommand || ( CurrentCommand is InvertCommand && (CurrentCommand as InvertCommand).IsLast ) ) && command != IntroCommand )
 		{
 			IntroCommand.renderer.enabled = false;
-			foreach( LineRenderer line in IntroCommand.linkLines )
+			foreach( CommandEdge line in IntroCommand.linkLines )
 			{
-				line.renderer.enabled = false;
+				line.SetEnabled(false);
 			}
 		}
 		else if( command == IntroCommand )
 		{
 			IntroCommand.renderer.enabled = true;
-			foreach( LineRenderer line in IntroCommand.linkLines )
+			foreach( CommandEdge line in IntroCommand.linkLines )
 			{
-				line.renderer.enabled = true;
+				line.SetEnabled(true);
 			}
 		}
         if( NextCommand != null ) NextCommand.Deselect();
@@ -954,6 +985,7 @@ public class CommandGraph : MonoBehaviour {
 		NextRect.transform.parent = NextCommand.transform;
 		NextRect.transform.localPosition = Vector3.forward;
 		NextRect.transform.localScale = Vector3.one;
+		NextRect.transform.localRotation = Quaternion.identity;
 
         //NextCommandText.text = NextCommand.name;
         //SetCommandIcons( NextCommandText.gameObject, NextCommand );
@@ -964,6 +996,10 @@ public class CommandGraph : MonoBehaviour {
 
 	public void SelectInitialInvertCommand()
 	{
+		if( NextCommand != null )
+		{
+			Deselect();
+		}
 		foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
 		{
 			if( c is InvertCommand )
@@ -972,6 +1008,7 @@ public class CommandGraph : MonoBehaviour {
 				break;
 			}
 		}
+		CommandSphere.collider.enabled = false;
 	}
 
     public void OnReactEvent( IconReactType type )

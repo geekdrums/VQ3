@@ -66,7 +66,12 @@ public class CommandPanel : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update()
+	{
+		Ray ray = GameContext.MainCamera.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+		Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity);
+
         switch( state )
         {
         case State.HideAnim:
@@ -90,10 +95,6 @@ public class CommandPanel : MonoBehaviour {
             }
             break;
         case State.Show:
-            Ray ray = GameContext.MainCamera.ScreenPointToRay( Input.mousePosition );
-            RaycastHit hit;
-            Physics.Raycast( ray.origin, ray.direction, out hit, Mathf.Infinity );
-
             if( Input.GetMouseButtonDown( 0 ) )
             {
                 if( hit.collider == HitPlane.collider )
@@ -139,7 +140,8 @@ public class CommandPanel : MonoBehaviour {
             {
                 PanelMask.SetTargetColor( Color.clear );
                 GraphMask.SetTargetColor( ColorManager.MakeAlpha( Color.black, 0.8f ) );
-                if( hit.collider == HitPlane.collider && Music.Just < CommandGraph.AllowInputEnd )
+				bool isSelectable = (command_ is RevertCommand == false || GameContext.VoxSystem.GetWillEclipse((int)VPCount.Count));
+				if( hit.collider == HitPlane.collider && Music.Just < CommandGraph.AllowInputEnd && isSelectable )
                 {
                     Frame.SetSize( 4.17f );
                     EnterState( State.DecideAnim );
@@ -155,6 +157,10 @@ public class CommandPanel : MonoBehaviour {
                         counter.transform.localScale = Vector3.zero;
                     }
                     ENHIcon.renderer.enabled = false;
+
+					OKText.renderer.enabled = true;
+					OKText.color = Color.white;
+					OKText.text = "X" + System.Environment.NewLine + "CANCEL";
 
 					Music.Resume();
                 }
@@ -176,15 +182,17 @@ public class CommandPanel : MonoBehaviour {
 			{
 				RevertArc.SetTargetArc((float)GameContext.VoxSystem.currentVP/VoxSystem.InvertVP);
 
-				if( GameContext.VoxSystem.state != VoxState.Invert && GameContext.VoxSystem.IsReadyEclipse )
+				if( GameContext.VoxSystem.GetWillEclipse((int)VPCount.Count) )
 				{
-					RevertCircleEdge.SetGrowSize(Music.MusicalSin(4)*0.5f);
-					RevertArc.SetColor(Color.black);
+					RevertCircleEdge.SetColor(Color.clear);
+					RevertArc.SetColor(Color.clear);
+					RevertRect.SetTargetColor(Color.clear);
 				}
 				else
 				{
-					RevertCircleEdge.SetGrowSize(0.2f);
+					RevertCircleEdge.SetColor(Color.white);
 					RevertArc.SetColor(Color.white);
+					RevertRect.SetTargetColor(Color.black);
 				}
 			}
             break;
@@ -194,8 +202,35 @@ public class CommandPanel : MonoBehaviour {
                 EnterState( State.Decided );
             }
             break;
-        case State.Decided:
-            break;
+		case State.Decided:
+			{
+				if( Input.GetMouseButtonUp(0) && Music.Just < CommandGraph.AllowInputEnd )
+				{
+					GameContext.PlayerConductor.commandGraph.Deselect();
+					EnterState(State.ShowAnim);
+					OKText.text = "OK";
+					animation["panelDecideAnim"].time = animation["panelDecideAnim"].length;
+					animation["panelDecideAnim"].speed = -2.0f;
+					animation.Play("panelDecideAnim");
+					foreach( TextMesh textMesh in GetComponentsInChildren<TextMesh>() )
+					{
+						textMesh.renderer.enabled = true;
+					}
+					foreach( CounterSprite counter in GetComponentsInChildren<CounterSprite>() )
+					{
+						counter.transform.localScale = Vector3.one;
+					}
+				}
+				else if( Input.GetMouseButton(0) )
+				{
+					OKText.color = Color.Lerp(Color.clear, TextColor, 0.5f);
+				}
+				else
+				{
+					OKText.color = Color.white;
+				}
+			}
+			break;
         case State.ExecuteAnim:
             if( Frame.animParam == MidairPrimitive.AnimationParams.None )
             {
@@ -227,14 +262,14 @@ public class CommandPanel : MonoBehaviour {
             case State.Show:
                 transform.position = initialPosition_;
                 break;
-            case State.DecideAnim:
+			case State.DecideAnim:
                 GameContext.PlayerConductor.commandGraph.Select( ( command_.ParentCommand != null ? command_.ParentCommand : command_ ) );
                 break;
             case State.Decided:
-                HitPlane.collider.enabled = false;
-                LeftButton.collider.enabled = false;
-                RightButton.collider.enabled = false;
-                GraphMask.SetTargetColor( Color.clear );
+				//HitPlane.collider.enabled = false;
+				//LeftButton.collider.enabled = false;
+				//RightButton.collider.enabled = false;
+                //GraphMask.SetTargetColor( Color.clear );
                 break;
             case State.ExecuteAnim:
                 break;
@@ -253,18 +288,14 @@ public class CommandPanel : MonoBehaviour {
             animation["panelAnim"].speed = 1;
             animation.Play( "panelAnim" );
             break;
-        //case State.Decided:
-        //    animation["panelDecideAnim"].time = animation["panelDecideAnim"].length;
-        //    animation["panelDecideAnim"].speed = -0.1f;
-        //    animation.Play( "panelDecideAnim" );
-        //    break;
         default:
             return;
         }
 
+		EnterState(State.ShowAnim);
+		OKText.text = "OK";
         PanelMask.SetTargetColor( Color.clear );
         GraphMask.SetTargetColor( ColorManager.MakeAlpha( Color.black, 0.8f ) );
-        EnterState( State.ShowAnim );
         transform.localScale = Vector3.one;
         foreach( TextMesh textMesh in GetComponentsInChildren<TextMesh>() )
         {
@@ -286,7 +317,7 @@ public class CommandPanel : MonoBehaviour {
 		}
 		else
 		{
-			Frame.SetColor(themeColor.Light);
+			Frame.SetColor(themeColor.Bright);
 		}
         Frame.Num = 4;
         Frame.SetSize( 4.17f );
@@ -354,6 +385,7 @@ public class CommandPanel : MonoBehaviour {
 
     public void Hide()
     {
+		if( GameContext.VoxSystem.IsInverting && command_ is InvertCommand ) return;
         switch( state )
         {
         case State.Show:
@@ -369,10 +401,12 @@ public class CommandPanel : MonoBehaviour {
             animation["panelAnim"].speed = -1;
             break;
         case State.DecideAnim:
-        case State.Decided:
-            EnterState( State.ExecuteAnim );
-            Frame.SetTargetSize( RingSize );
-            Frame.SetTargetColor( Color.clear );
+		case State.Decided:
+			OKText.renderer.enabled = false;
+			EnterState(State.ExecuteAnim);
+			Frame.SetTargetSize(RingSize);
+			Frame.SetTargetColor(Color.clear);
+			GraphMask.SetTargetColor(Color.clear);
             break;
         }
     }

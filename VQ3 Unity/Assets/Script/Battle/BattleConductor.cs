@@ -15,8 +15,9 @@ public class BattleConductor : MonoBehaviour {
         Application.platform == RuntimePlatform.OSXPlayer ||
         Application.platform == RuntimePlatform.LinuxPlayer )
         {
-            Screen.SetResolution( 480, 720, false );
+            //Screen.SetResolution( 480, 720, false );
             //Screen.SetResolution( 400, 600, false );
+			Screen.SetResolution(640, 960, false);
         }
     }
 

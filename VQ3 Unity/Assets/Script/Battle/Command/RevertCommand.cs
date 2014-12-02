@@ -20,7 +20,7 @@ public class RevertCommand : PlayerCommand
         IsLinked = false;
         IsCurrent = false;
         IsSelected = false;
-        if( linkLines == null ) linkLines = new List<LineRenderer>();
+        if( linkLines == null ) linkLines = new List<CommandEdge>();
         ValidatePosition();
         ValidateIcons();
         ValidateColor();
@@ -81,6 +81,8 @@ public class RevertCommand : PlayerCommand
 			EyeArc.SetColor(Color.white);
 			GrowEdge.SetGrowSize(0.5f);
 			EyeEdge.SetTargetWidth(0.5f);
+			EyeArc.transform.localPosition = centerEyePosition;
+			EyeArc.SetTargetWidth(EyeEdge.Radius - EyeEdge.Width);
 		}
     }
 }

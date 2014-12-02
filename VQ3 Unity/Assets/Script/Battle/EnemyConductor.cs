@@ -115,7 +115,7 @@ public class EnemyConductor : MonoBehaviour {
         }
     }
 
-    Vector3 GetSpawnPosition( int index, int l ) { return new Vector3( EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 4, 3 ); }
+    Vector3 GetSpawnPosition( int index, int l ) { return new Vector3( EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 3.0f, 3 ); }
 
     void SpawnEnemy( GameObject enemyPrefab, string initialState, Vector3 spawnPosition )
     {

@@ -23,6 +23,7 @@ public class VoxSystem : MonoBehaviour{
 
     public VoxState state { get; private set; }
     public bool IsReadyEclipse { get { return currentVP >= InvertVP; } }
+	public bool GetWillEclipse( int addVP ) { return currentVP + (int)(addVP * (100.0f - GameContext.EnemyConductor.VPtolerance) / 100.0f) >= InvertVP; }
     public bool IsInverting { get { return state == VoxState.Eclipse && IsReadyEclipse && Music.Just.bar >= 2; } }
     public int InvertTime { get; private set; }
 
@@ -343,6 +344,8 @@ public class VoxSystem : MonoBehaviour{
                 InvertTime = Mathf.Clamp( (int)(currentVT / 64.0f) + 1, 2, MaxInvertTime );//Mathf.Clamp( (int)(MaxInvertTime * ((float)currentVT / MaxVT)), 1, MaxInvertTime - 1 ) + 1;
 				GameContext.PlayerConductor.commandGraph.OnReactEvent(IconReactType.OnInvert);
 				Music.SetAisac(8, 1);
+				GameContext.PlayerConductor.commandGraph.Panel.Hide();
+				GameContext.PlayerConductor.commandGraph.CommandSphere.collider.enabled = false;
             }
             else
             {
@@ -457,6 +460,7 @@ public class VoxSystem : MonoBehaviour{
             case VoxState.Sun:
             case VoxState.Revert:
                 if( oldState != VoxState.Eclipse ) AddVPVT( -currentVP, -currentVT );
+				FireLineMaterial.color = ColorManager.Base.Front;
 
                 //useTargetBGColor = true;
                 useTargetLightAngles = true;

@@ -54,7 +54,7 @@ public class Enemy : Character
         {
             c.Parse();
         }
-        HPCircle = (Instantiate( GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * 5.0f, Quaternion.identity ) as GameObject).GetComponent<HPCircle>();
+        HPCircle = (Instantiate( GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * 4.5f, Quaternion.identity ) as GameObject).GetComponent<HPCircle>();
         HPCircle.transform.parent = transform;
         HPCircle.transform.localScale *= Mathf.Min( 1.5f, Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP ) );
         HPCircle.Initialize( this );

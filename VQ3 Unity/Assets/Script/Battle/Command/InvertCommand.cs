@@ -25,7 +25,7 @@ public class InvertCommand : PlayerCommand
         IsLinked = false;
         IsCurrent = false;
         IsSelected = false;
-        if( linkLines == null ) linkLines = new List<LineRenderer>();
+        if( linkLines == null ) linkLines = new List<CommandEdge>();
         ValidatePosition();
         ValidateIcons();
         ValidateColor();

@@ -64,8 +64,6 @@ public class PlayerCommand : CommandBase
     protected static float ScaleCoeff = 0.05f;
     protected static float MaskColorCoeff = 0.06f;
     protected static float MaskStartPos = 3.0f;
-    protected static Color UnlinkedLineColor = ColorManager.MakeAlpha( Color.white, 0.2f );
-    protected static Color PrelinkedLineColor = ColorManager.MakeAlpha( Color.white, 0.2f );
     protected static Vector3 SelectSpot
     {
         get
@@ -109,17 +107,18 @@ public class PlayerCommand : CommandBase
     //
     // graphics properties
     //
-    public List<LineRenderer> linkLines = new List<LineRenderer>();
-    public void OnEdgeCreated( LineRenderer edge )
+	public List<CommandEdge> linkLines = new List<CommandEdge>();
+	public void OnEdgeCreated( CommandEdge edge )
     {
-        if( linkLines == null ) linkLines = new List<LineRenderer>();
+		if( linkLines == null ) linkLines = new List<CommandEdge>();
         linkLines.Add( edge );
+		edge.SetParent(this);
     }
     private GameObject DefPlane { get { return plane1; } }
     private GameObject HealPlane { get { return plane2; } }
     private GameObject EnhPlane { get { return centerPlane; } }
     private GameObject EnhIcon { get { return centerIcon; } }
-    public EThemeColor themeColor { get; protected set; }
+	public EThemeColor themeColor { get; protected set; }
 
     //
     // battle related properties
@@ -425,12 +424,6 @@ public class PlayerCommand : CommandBase
         maskMat.color = ColorManager.MakeAlpha( Color.black, alpha );
         maskMat.name = "maskMat";
         maskPlane.renderer.material = maskMat;
-
-        foreach( LineRenderer line in linkLines )
-        {
-            Color lineColor = ColorManager.MakeAlpha( Color.white, 1.0f - alpha );
-            line.SetColors( lineColor, lineColor );
-        }
     }
 
     public virtual void ValidateIcons()
@@ -634,10 +627,9 @@ public class PlayerCommand : CommandBase
         if( IsUsable() )
         {
             SetColor( Color.black );
-            foreach( LineRenderer line in linkLines )
+			foreach( CommandEdge line in linkLines )
             {
-                line.SetColors( PrelinkedLineColor, PrelinkedLineColor );
-                line.SetWidth( 0.1f, 0.1f );
+				line.SetState(EdgeState.PreLinked);
             }
         }
         else
@@ -646,10 +638,9 @@ public class PlayerCommand : CommandBase
             {
                 SetColor( Color.gray );
             }
-            foreach( LineRenderer line in linkLines )
-            {
-                line.SetColors( UnlinkedLineColor, UnlinkedLineColor );
-                line.SetWidth( 0.05f, 0.05f );
+			foreach( CommandEdge line in linkLines )
+			{
+				line.SetState(EdgeState.Unlinked);
             }
         }
     }
@@ -659,10 +650,9 @@ public class PlayerCommand : CommandBase
         {
             IsCurrent = true;
             SetColor( Color.red );
-            foreach( LineRenderer line in linkLines )
-            {
-                line.SetColors( Color.white, Color.white );
-                line.SetWidth( 0.3f, 0.3f );
+			foreach( CommandEdge line in linkLines )
+			{
+				line.SetState(EdgeState.Linked);
             }
         }
     }
