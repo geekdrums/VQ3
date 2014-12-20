@@ -34,6 +34,23 @@ public class InvertCommand : PlayerCommand
     {
 
     }
+	protected override void UpdateIcon()
+	{
+		if( Music.isJustChanged )
+		{
+			CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
+			float distance = ((ParentCommand != null ? ParentCommand.transform.position : this.transform.position) - SelectSpot).magnitude;
+			if( IsLinked )
+			{
+				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;//temp
+			}
+			else
+			{
+				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+			}
+		}
+		transform.rotation = Quaternion.identity;
+	}
     void Update()
     {
 #if UNITY_EDITOR

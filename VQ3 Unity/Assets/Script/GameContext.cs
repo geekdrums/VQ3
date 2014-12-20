@@ -51,6 +51,7 @@ public static class GameContext
 		{
         case GameState.Intro:
 			Music.Play( "BattleMusic", "intro" );
+			ColorManager.SetBaseColor(EBaseColor.Black);
             PlayerConductor.OnBattleStarted();
 			break;
 		case GameState.Endro:

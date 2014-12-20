@@ -534,13 +534,13 @@ public class PlayerCommand : CommandBase
         UpdateIcon();
     }
 
-    protected void UpdateIcon()
+    protected virtual void UpdateIcon()
     {
         if( Music.isJustChanged )
 		{
 			CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
 			float alpha = 0;
-			float distance = (this.transform.position - SelectSpot).magnitude;
+			float distance = ( (ParentCommand != null ? ParentCommand.transform.position : this.transform.position ) - SelectSpot).magnitude;
 			if( IsLinked )
 			{
 				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 1.2f;

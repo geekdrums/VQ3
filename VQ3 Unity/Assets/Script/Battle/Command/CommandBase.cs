@@ -22,7 +22,7 @@ public class CommandBase : MonoBehaviour
         string[] timingStrs = _timingStr.Split( ",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
         if( timingStrs.Length != _skillList.Count )
         {
-            Debug.LogError( "invalid skill list! _skillList.Count = " + _skillList.Count + ", timingStrs.Length = " + timingStrs.Length );
+            Debug.LogError( this.name + " has invalid skill list! _skillList.Count = " + _skillList.Count + ", timingStrs.Length = " + timingStrs.Length );
             return;
         }
         for( int i = 0; i < timingStrs.Length; i++ )

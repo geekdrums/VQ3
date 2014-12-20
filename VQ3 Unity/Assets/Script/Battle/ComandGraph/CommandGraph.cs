@@ -201,8 +201,8 @@ public class CommandGraph : MonoBehaviour {
         Skill2,
         Skill3,
         Skill4,
-        Optima,
-        //AcquireText,
+		DescribeText1,
+		DescribeText2,
     }
     void UpdateCommandList()
     {
@@ -269,6 +269,7 @@ public class CommandGraph : MonoBehaviour {
                 skillTexts[2] = propertyTexts[(int)CommandListProperty.Skill3];
                 skillTexts[3] = propertyTexts[(int)CommandListProperty.Skill4];
                 playerCommand._timingStr = "";
+				playerCommand._skillList.Clear();
                 foreach( string skillText in skillTexts )
                 {
                     if( skillText == "" ) break;
@@ -288,6 +289,8 @@ public class CommandGraph : MonoBehaviour {
                 //playerCommand.GetComponent<TextMesh>().text = commandName.Insert( 2, "\n" );//propertyTexts[(int)CommandListProperty.Icon];
                 //playerCommand.GetComponent<TextMesh>().fontSize = 8;
                 //playerCommand.AcquireText = propertyTexts[(int)CommandListProperty.AcquireText];
+				playerCommand.DescribeText = propertyTexts[(int)CommandListProperty.DescribeText1];
+				playerCommand.DescribeText2 = propertyTexts[(int)CommandListProperty.DescribeText2];
                 string iconStr = propertyTexts[(int)CommandListProperty.Icon];
                 playerCommand.icons = new List<EStatusIcon>();
                 for( int i = 0; i < (int)EStatusIcon.Count; i++ )
@@ -431,7 +434,7 @@ public class CommandGraph : MonoBehaviour {
         {
             oldMousePosition = Input.mousePosition;
             CurrentButton = VoxButton.None;
-            if( hit.collider == CommandSphere.collider )
+            if( hit.collider == CommandSphere.collider && GameContext.VoxSystem.IsInverting == false )
             {
                 CurrentButton = VoxButton.Ball;
                 if( Panel.state != CommandPanel.State.Show )
@@ -1008,7 +1011,7 @@ public class CommandGraph : MonoBehaviour {
 				break;
 			}
 		}
-		CommandSphere.collider.enabled = false;
+		//CommandSphere.collider.enabled = false;
 	}
 
     public void OnReactEvent( IconReactType type )
@@ -1017,18 +1020,18 @@ public class CommandGraph : MonoBehaviour {
         //{
         //    statusIcon.ReactEvent( type );
         //}
-        if( type == IconReactType.OnInvert )
-        {
-            if( NextCommand != null && !(NextCommand is InvertCommand) ) NextCommand.Deselect();
-            CurrentCommand.SetLink( false );
-            foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
-            {
-                if( c != NextCommand )
-                {
-                    c.SetLink( c is InvertCommand );
-                }
-            }
-        }
+		//if( type == IconReactType.OnInvert )
+		//{
+		//	if( NextCommand != null && !(NextCommand is InvertCommand) ) NextCommand.Deselect();
+		//	CurrentCommand.SetLink( false );
+		//	foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
+		//	{
+		//		if( c != NextCommand )
+		//		{
+		//			c.SetLink( c is InvertCommand );
+		//		}
+		//	}
+		//}
     }
 
     VoxState GetDesiredVoxState()

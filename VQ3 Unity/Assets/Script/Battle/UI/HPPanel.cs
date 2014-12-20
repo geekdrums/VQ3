@@ -49,7 +49,9 @@ public class HPPanel : MonoBehaviour {
         DamageCount.transform.localScale = Vector3.zero;
 		DamageCircle.SetWidth(0);
 		DefendCircle.SetSize(0);
-        CurrentArc.SetColor( ColorManager.Base.Front );
+		CurrentArc.SetColor(ColorManager.Base.Front);
+		CurrentArc.SetTargetArc(targetArcRate);
+		UpdateHPText();
         CurrentHPCount.CounterColor = ColorManager.Base.Front;
         MaxHPCount.CounterColor = ColorManager.Base.Front;
     }

@@ -345,7 +345,7 @@ public class VoxSystem : MonoBehaviour{
 				GameContext.PlayerConductor.commandGraph.OnReactEvent(IconReactType.OnInvert);
 				Music.SetAisac(8, 1);
 				GameContext.PlayerConductor.commandGraph.Panel.Hide();
-				GameContext.PlayerConductor.commandGraph.CommandSphere.collider.enabled = false;
+				//GameContext.PlayerConductor.commandGraph.CommandSphere.collider.enabled = false;
             }
             else
             {
