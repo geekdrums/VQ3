@@ -55,8 +55,6 @@ public class EnhanceParameter
     }
 }
 public class Character : MonoBehaviour {
-    protected static readonly float DAMAGE_RANGE = 0.0f;//12.0f;
-    protected static readonly float MAGIC_DAMAGE_RANGE = 0.0f;//8.0f;
     protected static readonly int LEAST_DAMAGE_RANGE = 3;
     protected static readonly int LEAST_MAGIC_DAMAGE_RANGE = 2;
     
@@ -64,15 +62,13 @@ public class Character : MonoBehaviour {
     public int BasePower;
     public int BaseMagic;
 
-    protected int PhysicDefend;
-    protected int MagicDefend;
+    protected int DefendPercent;
     protected int HealPercent;
     protected int TurnDamage;
 
     public bool isAlive { get { return HitPoint > 0; } }
     public int MaxHP { get; protected set; }
-    public float PhysicDefendCoeff { get { return (100.0f - PhysicDefend - DefendEnhance.currentParam) / 100.0f; } }
-	public float MagicDefendCoeff { get { return (100.0f - MagicDefend - DefendEnhance.currentParam) / 100.0f; } }
+	public float DefendCoeff { get { return (100.0f - DefendPercent - DefendEnhance.currentParam) / 100.0f; } }
 	public float VTCoeff { get { return (100 + PhysicAttackEnhance.currentParam) / 100.0f; } }
 	public float VPCoeff { get { return (100 + MagicAttackEnhance.currentParam) / 100.0f; } }
 	public float DefendEnhParam { get { return DefendEnhance.currentParam; } }
@@ -99,8 +95,7 @@ public class Character : MonoBehaviour {
 	// ======================
     public virtual void TurnInit( CommandBase command )
     {
-        PhysicDefend = command.PhysicDefend;
-        MagicDefend = command.MagicDefend;
+		DefendPercent = command.DefendPercent;
         HealPercent = command.HealPercent;
         TurnDamage = 0;
         foreach( EnhanceParameter enhanceParam in ActiveEnhanceParams )
@@ -111,25 +106,18 @@ public class Character : MonoBehaviour {
     }
     public virtual void DefaultInit()
     {
-        PhysicDefend = 0;
-        MagicDefend = 0;
+		DefendPercent = 0;
         HealPercent = 0;
         TurnDamage = 0;
     }
 	public virtual void BeAttacked( AttackModule attack, Skill skill )
 	{
         float damage = 0;
-        if( attack.isPhysic )
-        {
-            damage = skill.OwnerCharacter.PhysicAttack * (attack.Power / 100.0f) * PhysicDefendCoeff;
-            damage *= ((100.0f - DAMAGE_RANGE) + Random.Range( 0, DAMAGE_RANGE ) + Random.Range( 0, DAMAGE_RANGE )) / 100.0f;
-        }
-        else
-        {
-            damage = skill.OwnerCharacter.MagicAttack * (attack.Power / 100.0f) * MagicDefendCoeff;
-            damage *= ((100.0f - MAGIC_DAMAGE_RANGE) + Random.Range( 0, MAGIC_DAMAGE_RANGE ) + Random.Range( 0, MAGIC_DAMAGE_RANGE )) / 100.0f;
-        }
-        BeDamaged( Mathf.Max( 0, (int)damage ), skill.OwnerCharacter );
+		float basePower = (attack.type == AttackType.Attack || attack.type == AttackType.Vox) ? skill.OwnerCharacter.PhysicAttack : skill.OwnerCharacter.MagicAttack;
+		damage = basePower * (attack.Power / 100.0f) * DefendCoeff;
+		int damageResult = Mathf.Max(0, (int)damage);
+        BeDamaged( damageResult, skill.OwnerCharacter );
+		attack.SetDamageResult(damageResult);
         Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
 	}
     protected virtual void BeDamaged( int damage, Character ownerCharacter )
@@ -138,7 +126,7 @@ public class Character : MonoBehaviour {
         HitPoint = Mathf.Clamp( HitPoint - d, 0, HitPoint );
         TurnDamage += d;
         int RelativeMaxHP = (MaxHP < GameContext.PlayerConductor.PlayerMaxHP ? MaxHP : GameContext.PlayerConductor.PlayerMaxHP);
-        damageTime += 0.15f + ((float)d / (float)RelativeMaxHP) * 0.7f;
+        damageTime += 0.15f + ((float)d / (float)RelativeMaxHP);
         damageTime = Mathf.Min( damageTime, (float)Music.MusicTimeUnit * 8 );
     }
 	public virtual void Heal( HealModule heal )
@@ -149,6 +137,15 @@ public class Character : MonoBehaviour {
             HitPoint += h;
             Debug.Log( this.ToString() + " used Heal! HitPoint is " + HitPoint );
         }
+	}
+	public virtual void Drain( DrainModule drain, int drainDamage )
+	{
+		int h = Mathf.Min(MaxHP - HitPoint, (int)(drain.Rate * drainDamage));
+		if( h > 0 )
+		{
+			HitPoint += h;
+			Debug.Log(this.ToString() + " used Drain! HitPoint is " + HitPoint);
+		}
 	}
     public virtual void Enhance( EnhanceModule enhance )
     {
@@ -205,6 +202,10 @@ public class Character : MonoBehaviour {
     }
 
 	public virtual void OnExecuted( Skill skill, ActionSet act )
+	{
+	}
+
+	public virtual void OnSkillEnd( Skill skill )
 	{
 	}
 }

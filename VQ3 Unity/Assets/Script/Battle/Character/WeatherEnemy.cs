@@ -49,7 +49,7 @@ public class WeatherEnemy : Enemy
 
     public override void BeAttacked( AttackModule attack, Skill skill )
     {
-        if( attack.isPhysic )
+        if( attack.type != AttackType.Dain && attack.type != AttackType.Vox )
         {
             SEPlayer.Play( "PhysicNoDamage" );
             Debug.Log( this.ToString() + "was attacked but no damage." );

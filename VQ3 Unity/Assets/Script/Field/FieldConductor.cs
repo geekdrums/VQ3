@@ -5,6 +5,7 @@ using System.IO;
 
 public enum ResultState
 {
+	StarPoint,
     Command,
     End
 }
@@ -18,9 +19,6 @@ public enum EncounterListProperty
     State2,
     State3,
     Turn,
-    Purpose,
-    Tutorial,
-    ApproveMessages,
 }
 
 [ExecuteInEditMode]
@@ -36,6 +34,7 @@ public class FieldConductor : MonoBehaviour {
     public bool UPDATE_BUTTON;
     public float guiHeight;
     public Color guiColor;
+	public CommandExplanation CommandExp;
 
     public int encounterCount;
     public bool UseDebugPlay;
@@ -49,7 +48,7 @@ public class FieldConductor : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        GameContext.FieldConductor = this;
+		GameContext.FieldConductor = this;
 
         LevelEncounters = new LevelEncounter[50];
         for( int i = 0; i < 50; i++ )
@@ -61,11 +60,12 @@ public class FieldConductor : MonoBehaviour {
             LevelEncounters[encounter.Level-1].Encounters.Add( encounter );
         }
 
+
 #if UNITY_EDITOR
         if( UnityEditor.EditorApplication.isPlaying )
         {
             targetPlayerLevel = GameContext.PlayerConductor.Level;
-            targetEncounterCount = encounterCount;
+			targetEncounterCount = encounterCount;
         }
 #endif
 	}
@@ -110,7 +110,6 @@ public class FieldConductor : MonoBehaviour {
 
             if( GUI.Button( new Rect( 300, guiHeight, 50, 20 ), "Play" ) )
             {
-                TextWindow.ClearTutorialMessage();
                 GameContext.EnemyConductor.OnPlayerWin();
                 GameContext.PlayerConductor.OnPlayerWin();
                 GameContext.PlayerConductor.Level = targetPlayerLevel;
@@ -139,26 +138,30 @@ public class FieldConductor : MonoBehaviour {
 
         switch( GameContext.CurrentState )
         {
-        case GameState.Field:
-			if( Input.GetMouseButtonUp(0) )
+		case GameState.Init:
+			if( GameContext.PlayerConductor.Level == 1 )
 			{
-				if( encounterCount >= CurrentLevel.Encounters.Count )
+				GameContext.ChangeState(GameState.Field);
+			}
+			else
+			{
+				foreach( Encounter encounter in GetComponentsInChildren<Encounter>() )
 				{
-					if( GameContext.PlayerConductor.Level >= LevelEncounters.Length ) return;
-					else
+					if( encounter.Level < GameContext.PlayerConductor.Level )
 					{
-						GameContext.PlayerConductor.Level++;
-						GameContext.PlayerConductor.OnLevelUp();
-						encounterCount = 0;
-						RState = ResultState.Command;
-						GameContext.ChangeState(GameState.Result);
+						GameContext.PlayerConductor.TotalSP += encounter.AcquireStars;
+						GameContext.PlayerConductor.RemainSP += encounter.AcquireStars;
 					}
 				}
-				else
-				{
-					CheckEncount();
-				}
+				GameContext.ChangeState(GameState.SetMenu);
+				CommandExp.SetEnemy(CurrentLevel.Encounters[encounterCount].Enemies[0].GetComponent<Enemy>());
 			}
+			break;
+        case GameState.Field:
+			//if( Input.GetMouseButtonUp(0) )
+			//{
+			CheckEncount();
+			//}
             break;
         case GameState.Result:
             GameContext.PlayerConductor.UpdateResult();
@@ -168,8 +171,22 @@ public class FieldConductor : MonoBehaviour {
         }
 	}
 
+	public void CheckResult()
+	{
+		GameContext.PlayerConductor.CheckResult(CurrentLevel.Encounters[encounterCount-1].AcquireStars);
+		if( encounterCount >= CurrentLevel.Encounters.Count )
+		{
+			GameContext.PlayerConductor.Level++;
+			GameContext.PlayerConductor.OnLevelUp();
+			encounterCount = 0;
+		}
+		RState = ResultState.StarPoint;
+	}
+
     void CheckEncount()
-    {
+	{
+		if( GameContext.PlayerConductor.Level >= LevelEncounters.Length ) return;
+
         Music.Stop();
         TextWindow.SetNextCursor( false );
         GameContext.EnemyConductor.SetEncounter( CurrentLevel.Encounters[encounterCount] );
@@ -182,9 +199,21 @@ public class FieldConductor : MonoBehaviour {
         ++RState;
         if( RState == ResultState.End )
         {
-            GameContext.ChangeState( GameState.Field );
+			GameContext.ChangeState(GameState.SetMenu);
+			CommandExp.SetEnemy(CurrentLevel.Encounters[encounterCount].Enemies[0].GetComponent<Enemy>());
         }
     }
+
+	public void OnContinue()
+	{
+		//encounterCount--;
+	}
+
+	public void OnPlayerLose()
+	{
+		encounterCount--;
+		CommandExp.SetEnemy(CurrentLevel.Encounters[encounterCount].Enemies[0].GetComponent<Enemy>());
+	}
 
     void UpdateEncounterList()
     {
@@ -230,7 +259,6 @@ public class FieldConductor : MonoBehaviour {
                     }
                     else break;
                 }
-                //string[] enemyNames = propertyTexts[(int)EncounterListProperty.Enemy].Split( spaceSeparator, System.StringSplitOptions.None );
                 encounter.Enemies = new GameObject[enemyNames.Count];
                 encounter.StateSets = new EnemyConductor.StateSet[1];
                 string stateSet = "";
@@ -240,24 +268,6 @@ public class FieldConductor : MonoBehaviour {
                     stateSet += ( propertyTexts[i + (int)EncounterListProperty.State1] != "" ? propertyTexts[i + (int)EncounterListProperty.State1] : "Default" ) + " ";
                 }
                 encounter.StateSets[0] = new EnemyConductor.StateSet( stateSet );
-
-                if( propertyTexts[(int)EncounterListProperty.Tutorial] != "" )
-                {
-                    encounter.tutorialMessage = new TutorialMessage();
-                    encounter.tutorialMessage.Type = TutorialMessageType.Const;
-                    encounter.tutorialMessage.Texts = new string[1];
-                    encounter.tutorialMessage.Texts[0] = propertyTexts[(int)EncounterListProperty.Tutorial];
-                    encounter.tutorialMessage.ApproveMessageTypes = new List<BattleMessageType>();
-                    encounter.tutorialMessage.BaseColor = Color.cyan;
-                    if( propertyTexts[(int)EncounterListProperty.ApproveMessages] != "" )
-                    {
-                        foreach( string approveMessage in propertyTexts[(int)EncounterListProperty.ApproveMessages].Split( spaceSeparator, System.StringSplitOptions.None ) )
-                        {
-                            encounter.tutorialMessage.ApproveMessageTypes.Add( (BattleMessageType)System.Enum.Parse( typeof( BattleMessageType ), approveMessage ) );
-                        }
-                    }
-                }
-
             }
         }
     }

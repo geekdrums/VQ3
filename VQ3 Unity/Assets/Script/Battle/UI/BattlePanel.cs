@@ -72,15 +72,15 @@ public class BattlePanel : MonoBehaviour {
             Rect.SetColor( command.GetDefColor() );
             break;
         case EBattlePanelType.HL:
-            Count.Count = command.GetHeal();
+			Count.Count = command.GetHeal();
             Rect.SetColor( command.GetHealColor() );
             break;
         case EBattlePanelType.VT:
-            Count.Count = command.GetVT();
+			Count.Count = command.GetVT();
             Rect.SetColor( command.GetVTColor() );
             break;
         case EBattlePanelType.VP:
-            Count.Count = command.GetVP();
+			Count.Count = command.GetVP();
             Rect.SetColor( command.GetVPColor() );
             break;
         }

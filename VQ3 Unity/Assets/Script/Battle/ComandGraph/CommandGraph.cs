@@ -8,10 +8,7 @@ public enum VoxButton
 {
     None,
     Ball,
-    ArrowRight,
-    ArrowLeft,
-    Enter,
-    Reset,
+	OK,
     Count
 }
 
@@ -21,10 +18,12 @@ public class CommandGraph : MonoBehaviour {
 	public static Timing AllowInputEnd = new Timing(3, 3, 3);
 	public static Timing WaitInputEnd = new Timing(0, 3, 3);
 
-    public GameObject CommandIconPrefab;
+	public GameObject CommandIconPrefab;
+	public GameObject IntroCommandIconPrefab;
     public GameObject RevertCommandIconPrefab;
     public GameObject InvertCommandIconPrefab;
     public GameObject EdgePrefab;
+	public GameObject CommandDataPrefab;
     public List<GameObject> SkillPrefabs;
 
     public GameObject CommandSphere;
@@ -44,107 +43,65 @@ public class CommandGraph : MonoBehaviour {
     public float MaskStartPos = 3.0f;
     public float SphereRadius = 6.5f;
     public float TouchRectCoeff = 1.7f;
-    //public GameObject RightArrow;
-    //public GameObject LeftArrow;
-    //public GameObject TimeBar;
-    //public GameObject CurrentBar;
-    //public GameObject NextBar;
     public float MAX_LATITUDE;
     public float ROTATE_COEFF;
     public float BUTTON_RADIUS;
     public bool UPDATE_BUTTON;
-    //public TextMesh CurrentCommandText;
-    //public TextMesh NextCommandText;
-    //public List<Sprite> CommandIcons;
     public MidairPrimitive AxisRing;
-    //public Strategy PilgrimStrategy;
+	public TextMesh ButtonText;
 
     public PlayerCommand IntroCommand;
     public List<PlayerCommand> CommandNodes { get; private set; }
-    //public List<Strategy> StrategyNodes { get; private set; }
     public PlayerCommand NextCommand { get; private set; }
     public PlayerCommand PushingCommand { get; private set; }
     public PlayerCommand CurrentCommand { get; private set; }
     public PlayerCommand OldCommand { get; private set; }
     public VoxButton CurrentButton { get; private set; }
 
-    //public Color IconAPColor;
-    //public Color IconWLFMColor;
-    //public Color IconDSColor;
-    //public Color IconHRColor;
-    //public Color IconVColor;
-
     bool IsInvert { get { return CurrentCommand is InvertCommand; } }
     bool IsLastInvert { get { return IsInvert && (GameContext.VoxSystem.InvertTime == 1 || (CurrentCommand as InvertCommand).IsLast); } }
+	bool IsOKButtonVisible { get { return GameContext.CurrentState == GameState.Endro || GameContext.CurrentState == GameState.Result || GameContext.CurrentState == GameState.Continue; } }
     int CommandLoopCount;
+	float SphereLatitude
+	{
+		get
+		{
+			Quaternion up = Quaternion.LookRotation(Vector3.up, Vector3.up);
+			Quaternion down = Quaternion.LookRotation(Vector3.down, Vector3.up);
+			Quaternion rotUp = Quaternion.LookRotation(transform.up, Vector3.up);
+			Quaternion rotDown = Quaternion.LookRotation(-transform.up, Vector3.up);
+			return Mathf.Min(Quaternion.Angle(rotUp, up), Quaternion.Angle(rotDown, down), Quaternion.Angle(rotUp, down), Quaternion.Angle(rotDown, up));
+		}
+	}
 
-    //Timing AllowInputStart = new Timing( 0, 0, 1 );
     Vector3 ballTouchStartPosition;
     Vector3 oldMousePosition;
     Quaternion targetRotation;
     Quaternion offsetRotation;
 
-    //Vector3 initialRightArrowPosition;
-    //Vector3 initialLeftArrowPosition;
-    //string initialNextText;
-    //Vector3 maxTimeBarScale;
-    //Vector3 targetTimeBarScale;
-    //Vector3 initialCurrentBarPosition;
-    //Vector3 initialNextBarPosition;
-
 	// Use this for initialization
 	void Start () {
-        //StrategyNodes = new List<Strategy>();
-        //StrategyNodes.AddRange( GetComponentsInChildren<Strategy>() );
         CommandNodes = new List<PlayerCommand>();
         CommandNodes.AddRange( GetComponentsInChildren<PlayerCommand>() );
         offsetRotation = Quaternion.LookRotation( transform.position - SelectSpot.transform.position );
-        //initialPosition = transform.localPosition;
-        //initialRightArrowPosition = RightArrow.transform.localPosition;
-        //initialLeftArrowPosition = LeftArrow.transform.localPosition;
         CurrentButton = VoxButton.None;
         CurrentCommand = IntroCommand;
-        //initialNextText = NextCommandText.text;
-        //maxTimeBarScale = new Vector3( CurrentBar.transform.localScale.x, TimeBar.transform.localScale.y, TimeBar.transform.localScale.z );
-        //targetTimeBarScale = new Vector3( 0, TimeBar.transform.localScale.y, TimeBar.transform.localScale.z );
-        //TimeBar.transform.localScale = targetTimeBarScale;
-        //initialCurrentBarPosition = CurrentBar.transform.localPosition;
-        //initialNextBarPosition = NextBar.transform.localPosition;
 
-        CurrentRect.transform.parent = IntroCommand.transform;
-        CurrentRect.transform.localPosition = Vector3.forward;
-        CurrentRect.transform.localScale = Vector3.one;
+        CurrentRect.transform.parent = this.transform;
+        CurrentRect.transform.localPosition = Vector3.zero;
+		CurrentRect.transform.localScale = Vector3.zero;
+		CurrentRect.transform.localRotation = Quaternion.identity;
 		NextRect.transform.localScale = Vector3.zero;
-        TouchRect.SetColor( Color.clear );
-        //TouchRect.GetComponentInChildren<TextMesh>().text = "";
+		TouchRect.SetColor(Color.clear);
+		ButtonText.text = "";
     }
 
     void InitializeLinks()
     {
-        //StrategyNodes = new List<Strategy>();
-        //StrategyNodes.AddRange( GetComponentsInChildren<Strategy>() );
-        //foreach( Strategy strategy in StrategyNodes )
-        //{
-        //    foreach( IVoxNode link in strategy.links )
-        //    {
-        //        InstantiateLine( strategy, link );
-        //    }
-        //    foreach( PlayerCommand command in strategy.Commands )
-        //    {
-        //        foreach( IVoxNode link in command.links )
-        //        {
-        //            InstantiateLine( command, link );
-        //        }
-        //        command.SetLink( false );
-        //    }
-        //}
-        CommandNodes = new List<PlayerCommand>();
-        CommandNodes.AddRange( GetComponentsInChildren<PlayerCommand>() );
         List<Pair<PlayerCommand, PlayerCommand>> commandPairs = new List<Pair<PlayerCommand, PlayerCommand>>();
         foreach( PlayerCommand command in CommandNodes )
         {
             command.SetLink( false );
-            if( command.ParentCommand != null ) continue;
             foreach( PlayerCommand link in command.links )
             {
                 if( null == commandPairs.Find( ( Pair<PlayerCommand, PlayerCommand> pair ) =>
@@ -154,10 +111,10 @@ public class CommandGraph : MonoBehaviour {
                 }
             }
         }
-        foreach( PlayerCommand link in IntroCommand.links )
-        {
-            commandPairs.Add( new Pair<PlayerCommand, PlayerCommand>( link, IntroCommand ) );
-        }
+		//foreach( PlayerCommand link in IntroCommand.links )
+		//{
+		//	commandPairs.Add( new Pair<PlayerCommand, PlayerCommand>( link, IntroCommand ) );
+		//}
         foreach( Pair<PlayerCommand, PlayerCommand> pair in commandPairs )
         {
             InstantiateLine( pair.first, pair.second );
@@ -184,28 +141,34 @@ public class CommandGraph : MonoBehaviour {
 #if UNITY_EDITOR
     enum CommandListProperty
     {
-        Level,
-        Category,
-        Name,
+		__LineStart,
+        AcquireLevel,
+		Name,
+		EnglishName,
+		Icon,
+		Category,
         Longitude,
         Latitude,
-        EnglishName,
-        Icon,
-        Music,
+		CommandLevel,
+		RequireStar,
+		InitialStar,
+		Defend,
+		Heal,
+		Music,
+		Skill1,
+		Skill2,
+		Skill3,
+		Skill4,
         Link1,
         Link2,
         Link3,
         Link4,
         Link5,
-        Skill1,
-        Skill2,
-        Skill3,
-        Skill4,
-		DescribeText1,
-		DescribeText2,
+		DescribeText,
+		ExplanationText,
     }
     void UpdateCommandList()
-    {
+	{
 		CurrentRect.transform.parent = transform;
 		NextRect.transform.parent = transform;
         foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
@@ -215,134 +178,130 @@ public class CommandGraph : MonoBehaviour {
         foreach( LineRenderer commandEdge in EdgeSphere.GetComponentsInChildren<LineRenderer>() )
         {
             DestroyImmediate( commandEdge.gameObject );
-        }
+		}
+		CommandNodes = new List<PlayerCommand>();
 
         string path = Application.streamingAssetsPath + "/VQ3List - Command.csv";
         StreamReader reader = File.OpenText( path );
         if( reader != null )
         {
-            CommandNodes = new List<PlayerCommand>();
-            //CommandNodes.AddRange( GetComponentsInChildren<PlayerCommand>() );
             Dictionary<PlayerCommand, string[]> LinkDictionary = new Dictionary<PlayerCommand, string[]>(); 
-            string line = reader.ReadLine();
-            char[] separator = new char[]{','};
-            while( (line = reader.ReadLine()) != null )
-            {
+			PlayerCommand playerCommand = null;
+			reader.ReadLine();
+			string lines = reader.ReadToEnd();
+			string[] lineSeparator = new string[] { "__" };
+			string[] lineTexts = lines.Split(lineSeparator, System.StringSplitOptions.RemoveEmptyEntries);
+			char[] separator = new char[] { ',' };
+			foreach( string line in lineTexts )
+			{
                 string[] propertyTexts = line.Split(separator, System.StringSplitOptions.None);
-                string commandName = propertyTexts[(int)CommandListProperty.Name];
-                string categoryName = propertyTexts[(int)CommandListProperty.Category];
-                if( commandName == "" || categoryName  == "" ) continue;
-                PlayerCommand playerCommand = CommandNodes.Find( ( PlayerCommand command ) => command.name == commandName );
-                if( playerCommand == null )
-                {
-                    GameObject commandObj = null;
 
-                    if( categoryName == "V" )
-                    {
-                        commandObj = Instantiate( InvertCommandIconPrefab ) as GameObject;
-                    }
-                    else if( categoryName == "R" )
-                    {
-                        commandObj = Instantiate( RevertCommandIconPrefab ) as GameObject;
-                    }
-                    else
-                    {
-                        commandObj = Instantiate( CommandIconPrefab ) as GameObject;
-                    }
-                    commandObj.name = commandName;
-                    commandObj.transform.parent = this.transform;
-                    playerCommand = commandObj.GetComponent<PlayerCommand>();
-                    CommandNodes.Add( playerCommand );
-                }
-                LinkDictionary.Add( playerCommand, new string[] { 
+				GameObject commandDataObj = Instantiate(CommandDataPrefab) as GameObject;
+				PlayerCommandData commandData = commandDataObj.GetComponent<PlayerCommandData>();
+
+				commandData.MusicBlockName = propertyTexts[(int)CommandListProperty.Music];
+				commandData.DefendPercent = int.Parse(propertyTexts[(int)CommandListProperty.Defend]);
+				commandData.HealPercent = int.Parse(propertyTexts[(int)CommandListProperty.Heal]);
+				commandData.CommandLevel = int.Parse(propertyTexts[(int)CommandListProperty.CommandLevel]);
+				commandData.RequireSP = int.Parse(propertyTexts[(int)CommandListProperty.RequireStar]);
+
+				string[] skillTexts = new string[4];
+				skillTexts[0] = propertyTexts[(int)CommandListProperty.Skill1];
+				skillTexts[1] = propertyTexts[(int)CommandListProperty.Skill2];
+				skillTexts[2] = propertyTexts[(int)CommandListProperty.Skill3];
+				skillTexts[3] = propertyTexts[(int)CommandListProperty.Skill4];
+				commandData._timingStr = "";
+				commandData._skillList = new List<Skill>();
+				foreach( string skillText in skillTexts )
+				{
+					if( skillText == "" ) break;
+					string skillName = skillText.Substring(0, skillText.IndexOf(" "));
+					Skill skill = SkillPrefabs.Find(( GameObject obj ) => obj.name == skillName).GetComponent<Skill>();
+					if( skill != null )
+					{
+						commandData._skillList.Add(skill);
+						commandData._timingStr += skillText.Substring(skillText.IndexOf(" ")) + ",";
+					}
+					else
+					{
+						Debug.Log("Can't find " + skillText);
+					}
+				}
+				commandData.DescribeText = propertyTexts[(int)CommandListProperty.DescribeText].Replace("\"","");
+				commandData.ExplanationText = propertyTexts[(int)CommandListProperty.ExplanationText].Replace("\"", "");
+
+				string commandName = propertyTexts[(int)CommandListProperty.Name];
+				if( commandName == "" && playerCommand  != null )
+				{
+					commandData.OwnerCommand = playerCommand;
+					commandData.transform.parent = playerCommand.transform;
+					commandData.transform.localPosition = Vector3.zero;
+					commandData.DescribeText = playerCommand.commandData[0].DescribeText;
+					commandData.ExplanationText = playerCommand.commandData[0].ExplanationText;
+					commandData.name = playerCommand.name + commandData.CommandLevel.ToString();
+					playerCommand.commandData.Add(commandData);
+				}
+				else
+				{
+					GameObject commandObj = null;
+					string categoryName = propertyTexts[(int)CommandListProperty.Category];
+					if( categoryName == "V" )
+					{
+						commandObj = Instantiate(InvertCommandIconPrefab) as GameObject;
+					}
+					else if( categoryName == "R" )
+					{
+						commandObj = Instantiate(RevertCommandIconPrefab) as GameObject;
+					}
+					else if( categoryName == "I" )
+					{
+						commandObj = Instantiate(IntroCommandIconPrefab) as GameObject;
+						IntroCommand = commandObj.GetComponent<PlayerCommand>();
+					}
+					else
+					{
+						commandObj = Instantiate(CommandIconPrefab) as GameObject;
+					}
+					commandObj.name = commandName;
+					commandObj.transform.parent = this.transform;
+					playerCommand = commandObj.GetComponent<PlayerCommand>();
+					CommandNodes.Add(playerCommand);
+					LinkDictionary.Add(playerCommand, new string[] { 
                     propertyTexts[(int)CommandListProperty.Link1],propertyTexts[(int)CommandListProperty.Link2],propertyTexts[(int)CommandListProperty.Link3],
-                    propertyTexts[(int)CommandListProperty.Link4],propertyTexts[(int)CommandListProperty.Link5] } );
-                playerCommand.AcquireLevel = int.Parse( propertyTexts[(int)CommandListProperty.Level] );
-                playerCommand.longitude = int.Parse( propertyTexts[(int)CommandListProperty.Longitude] );
-                playerCommand.latitude = int.Parse( propertyTexts[(int)CommandListProperty.Latitude] );
-                playerCommand.MusicBlockName = propertyTexts[(int)CommandListProperty.Music];
-                playerCommand.NameText = propertyTexts[(int)CommandListProperty.EnglishName];
+                    propertyTexts[(int)CommandListProperty.Link4],propertyTexts[(int)CommandListProperty.Link5] });
+					playerCommand.acquireLevel = int.Parse(propertyTexts[(int)CommandListProperty.AcquireLevel]);
+					playerCommand.longitude = int.Parse(propertyTexts[(int)CommandListProperty.Longitude]);
+					playerCommand.latitude = int.Parse(propertyTexts[(int)CommandListProperty.Latitude]);
+					playerCommand.nameText = propertyTexts[(int)CommandListProperty.EnglishName];
+					playerCommand.iconStr = propertyTexts[(int)CommandListProperty.Icon];
+					playerCommand.numSP = int.Parse( propertyTexts[(int)CommandListProperty.InitialStar] );
 
-                string[] skillTexts = new string[4];
-                skillTexts[0] = propertyTexts[(int)CommandListProperty.Skill1];
-                skillTexts[1] = propertyTexts[(int)CommandListProperty.Skill2];
-                skillTexts[2] = propertyTexts[(int)CommandListProperty.Skill3];
-                skillTexts[3] = propertyTexts[(int)CommandListProperty.Skill4];
-                playerCommand._timingStr = "";
-				playerCommand._skillList.Clear();
-                foreach( string skillText in skillTexts )
-                {
-                    if( skillText == "" ) break;
-                    string skillName = skillText.Substring(0,skillText.IndexOf(" ") );
-                    Skill skill = SkillPrefabs.Find( ( GameObject obj ) => obj.name == skillName ).GetComponent<Skill>();
-                    if( skill != null )
-                    {
-                        playerCommand._skillList.Add( skill );
-                        playerCommand._timingStr += skillText.Substring( skillText.IndexOf( " " ) ) + ",";
-                    }
-                    else
-                    {
-                        Debug.Log( "Can't find " + skillText );
-                    }
-                }
+					playerCommand.ValidatePosition();
 
-                //playerCommand.GetComponent<TextMesh>().text = commandName.Insert( 2, "\n" );//propertyTexts[(int)CommandListProperty.Icon];
-                //playerCommand.GetComponent<TextMesh>().fontSize = 8;
-                //playerCommand.AcquireText = propertyTexts[(int)CommandListProperty.AcquireText];
-				playerCommand.DescribeText = propertyTexts[(int)CommandListProperty.DescribeText1];
-				playerCommand.DescribeText2 = propertyTexts[(int)CommandListProperty.DescribeText2];
-                string iconStr = propertyTexts[(int)CommandListProperty.Icon];
-                playerCommand.icons = new List<EStatusIcon>();
-                for( int i = 0; i < (int)EStatusIcon.Count; i++ )
-                {
-                    if( iconStr.Contains( ((EStatusIcon)i).ToString() ) )
-                    {
-                        playerCommand.icons.Add( (EStatusIcon)i );
-                        iconStr = iconStr.Replace( ((EStatusIcon)i).ToString(), "" );
-                        if( iconStr == "" ) break;
-                    }
-                }
-                //if( categoryName == "G" ) playerCommand.SetParent( PilgrimStrategy );
-                
-                if( playerCommand.icons.Contains( EStatusIcon.DD ) )
-                {
-                    playerCommand.PhysicDefend = 60;
-                    playerCommand.MagicDefend = 60;
-                }
-                else if( playerCommand.icons.Contains( EStatusIcon.D ) )
-                {
-                    playerCommand.PhysicDefend = 40;
-                    playerCommand.MagicDefend = 40;
-                }
-                if( playerCommand.icons.Contains( EStatusIcon.HH ) )
-                {
-                    playerCommand.HealPercent = 40;
-                }
-                else if( playerCommand.icons.Contains( EStatusIcon.H ) )
-                {
-                    playerCommand.HealPercent = 22;
-                }
-                if( propertyTexts[(int)CommandListProperty.Music] == "intro" )
-                {
-                    IntroCommand = playerCommand;
-                }
-                playerCommand.ValidatePosition();
+					commandData.OwnerCommand = playerCommand;
+					commandData.transform.parent = playerCommand.transform;
+					commandData.transform.localPosition = Vector3.zero;
+					commandData.name = playerCommand.name + commandData.CommandLevel.ToString();
+					playerCommand.commandData = new List<PlayerCommandData>();
+					playerCommand.commandData.Add(commandData);
+				}
             }
-            foreach( PlayerCommand playerCommand in CommandNodes )
+
+            foreach( PlayerCommand commandNode in CommandNodes )
             {
-                if( !LinkDictionary.ContainsKey( playerCommand ) )
+				if( !LinkDictionary.ContainsKey(commandNode) )
                 {
                     continue;
                 }
-                playerCommand.links = new List<PlayerCommand>();
-                foreach( string linkStr in LinkDictionary[playerCommand] )
+				commandNode.links = new List<PlayerCommand>();
+				foreach( string linkStr in LinkDictionary[commandNode] )
                 {
                     if( linkStr != "" )
                     {
                         PlayerCommand linkNode = CommandNodes.Find( ( PlayerCommand command ) => command.name == linkStr );
                         if( linkNode != null )
                         {
-                            playerCommand.links.Add( linkNode );
+							commandNode.links.Add(linkNode);
                         }
                     }
                 }
@@ -376,14 +335,19 @@ public class CommandGraph : MonoBehaviour {
 
         switch( GameContext.CurrentState )
         {
-        case GameState.Continue:
-            if( GameContext.CurrentState == GameState.Continue && (!Music.IsPlaying() || Music.Just.totalUnit > 4)
-                && Input.GetMouseButtonUp( 0 ) )
-            {
-                GameContext.ChangeState( GameState.Intro );
-            }
+		case GameState.Continue:
+			if( Music.IsJustChangedAt(0) )
+			{
+				ShowOKButton();
+				ButtonText.text = "Continue";
+			}
             break;
-        case GameState.Intro:
+		case GameState.Intro:
+			if( Music.IsJustChangedAt(0) )
+			{
+				AxisRing.SetWidth(0.8f);
+				ButtonText.text = "";
+			}
 			//if( Music.NextBlockName == "intro" && Music.Just.totalUnit > 4 )
 			//{
 			//	//if( Music.isJustChanged ) SelectNearestNode();
@@ -396,7 +360,7 @@ public class CommandGraph : MonoBehaviour {
             {
                 SetNextBlock();
             }
-            //UpdateCommandLine();
+			AxisRing.SetArc( (float)(1.0f - Music.MusicalTime / 64.0) );
             break;
         case GameState.Battle:
             if( Music.IsJustChangedAt( AllowInputEnd ) ||
@@ -404,24 +368,36 @@ public class CommandGraph : MonoBehaviour {
             {
                 SetNextBlock();
             }
-            //UpdateCommandLine();
+			if( Music.CurrentBlockName == "wait" )
+			{
+				AxisRing.SetArc( 0.0f );
+			}
+			else
+			{
+				AxisRing.SetArc( (float)(1.0f - Music.MusicalTime / 64.0) );
+			}
             break;
-        }
-
-        if( Music.CurrentBlockName == "wait" || ( GameContext.CurrentState != GameState.Battle && GameContext.CurrentState != GameState.Intro ) )
-        {
-            AxisRing.ArcRate = 0.0f;
-        }
-        else
-        {
-            AxisRing.ArcRate = (float)(1.0f - Music.MusicalTime / 64.0);
+		case GameState.Endro:
+			if( Music.IsJustChangedAt(0) )
+			{
+				ShowOKButton();
+				ButtonText.text = "OK";
+			}
+			break;
+		case GameState.SetMenu:
+			if( Music.IsJustChangedAt(0) )
+			{
+				AxisRing.SetWidth(0.8f);
+				AxisRing.SetTargetArc(0.0f);
+				ButtonText.text = "";
+			}
+			break;
         }
 		if( NextCommand != null )
 		{
 			NextRect.SetSize(6 + Music.MusicalSin(4));
 			NextRect.SetColor(Color.Lerp(Color.white, Color.clear, Music.MusicalSin(4) * 0.5f));
 		}
-        //AxisRing.SetTargetColor( ( GameContext.CurrentState == GameState.Battle && NextCommand != null ? Color.magenta : Color.white ) );
     }
 
     void UpdateInput()
@@ -431,75 +407,100 @@ public class CommandGraph : MonoBehaviour {
         Physics.Raycast( ray.origin, ray.direction, out hit, Mathf.Infinity );
 
         if( Input.GetMouseButtonDown( 0 ) )
-        {
-            oldMousePosition = Input.mousePosition;
-            CurrentButton = VoxButton.None;
-            if( hit.collider == CommandSphere.collider && GameContext.VoxSystem.IsInverting == false )
-            {
-                CurrentButton = VoxButton.Ball;
-                if( Panel.state != CommandPanel.State.Show )
-                {
-                    PushCommandButton( hit.point );
-                }
-                ballTouchStartPosition = hit.point;
-            }
-            //else if( hit.collider == RightArrow.collider )
-            //{
-            //    CurrentButton = VoxButton.ArrowRight;
-            //    GameContext.EnemyConductor.OnArrowPushed( false );
-            //}
-            //else if( hit.collider == LeftArrow.collider )
-            //{
-            //    CurrentButton = VoxButton.ArrowLeft;
-            //    GameContext.EnemyConductor.OnArrowPushed( true );
-            //}
+		{
+			CurrentButton = VoxButton.None;
+			if( IsOKButtonVisible )
+			{
+				if( hit.collider == CommandSphere.collider )
+				{
+					CurrentButton = VoxButton.OK;
+				}
+			}
+			else
+			{
+				oldMousePosition = Input.mousePosition;
+				if( hit.collider == CommandSphere.collider && GameContext.VoxSystem.IsInverting == false )
+				{
+					CurrentButton = VoxButton.Ball;
+					if( Panel.state != CommandPanel.State.Show )
+					{
+						PushCommandButton(hit.point);
+					}
+					ballTouchStartPosition = hit.point;
+				}
+			}
         }
         else if( Input.GetMouseButtonUp( 0 ) )
         {
-            if( CurrentButton == VoxButton.Ball && Music.Just < AllowInputEnd )
-            {
-                if( Panel.state == CommandPanel.State.Show )
-                {
-                    PushingCommand = null;
-                    Panel.Hide();
-                }
-                else if( PushingCommand != null )
-                {
-                    TouchRect.GrowSize = 0;
-                    TouchRect.SetSize( 0 );
-                    TouchRect.SetWidth( 0 );
+			if( IsOKButtonVisible && hit.collider == CommandSphere.collider  && CurrentButton == VoxButton.OK )
+			{
+				PushOKButton();
+			}
+			else if( CurrentButton == VoxButton.Ball && (Music.Just < AllowInputEnd || GameContext.CurrentState == GameState.SetMenu) )
+			{
+				if( Panel.state == CommandPanel.State.Show )
+				{
+					PushingCommand = null;
+					Panel.Hide();
+				}
+				else if( PushingCommand != null )
+				{
+					TouchRect.GrowSize = 0;
+					TouchRect.SetSize(0);
+					TouchRect.SetWidth(0);
 					PlayerCommand pushCommand = PushingCommand;
-					if( PushingCommand == (CurrentCommand != null && CurrentCommand.ParentCommand != null ? CurrentCommand.ParentCommand : CurrentCommand) )
+					//if( PushingCommand == CurrentCommand )
+					//{
+					//	pushCommand = PushingCommand.FindLoopVariation(CommandLoopCount+1);
+					//}
+					if( NextCommand != null )
 					{
-						pushCommand = PushingCommand.FindLoopVariation(CommandLoopCount+1);
-					}
-                    if( NextCommand != null )
-                    {
-                        if( GameContext.CurrentState != GameState.Intro )
-                        {
-                            NextCommand.Deselect();
-                            NextCommand = null;
+						if( GameContext.CurrentState != GameState.Intro )
+						{
+							NextCommand.Deselect();
+							NextCommand = null;
 							Panel.Show(TouchRect.transform.position, pushCommand);
 							NextRect.transform.localScale = Vector3.zero;
-                        }
-                    }
-                    else
-                    {
+						}
+					}
+					else
+					{
 						Panel.Show(TouchRect.transform.position, pushCommand);
-                    }
-                }
-            }
-            else if( hit.collider == AreaRect.collider )
-            {
-                if( Panel.state == CommandPanel.State.Show )
-                {
-                    Panel.Hide();
-                }
-            }
+					}
+				}
+			}
+			else if( hit.collider == AreaRect.collider )
+			{
+				if( Panel.state == CommandPanel.State.Show )
+				{
+					Panel.Hide();
+				}
+			}
         }
         else if( Input.GetMouseButton( 0 ) )
         {
-            if( CurrentButton == VoxButton.Ball )
+			if( IsOKButtonVisible )
+			{
+				if( hit.collider == CommandSphere.collider && CurrentButton == VoxButton.OK )
+				{
+					AxisRing.SetTargetSize(7.0f);
+					AxisRing.SetTargetColor(ColorManager.Base.Light);
+					if( AxisRing.Width > 1.0f )
+					{
+						ButtonText.color = Color.black;
+					}
+				}
+				else
+				{
+					AxisRing.SetTargetSize(7.5f);
+					AxisRing.SetTargetColor(ColorManager.Base.Shade);
+					if( AxisRing.Width > 1.0f )
+					{
+						ButtonText.color = Color.white;
+					}
+				}
+			}
+            else if( CurrentButton == VoxButton.Ball )
             {
                 Quaternion oldRotation = transform.rotation;
 
@@ -512,16 +513,9 @@ public class CommandGraph : MonoBehaviour {
                 SelectSpot.transform.parent = transform;
                 transform.rotation = Quaternion.Inverse( Quaternion.LookRotation( -SelectSpot.transform.localPosition ) ) * offsetRotation;
                 SelectSpot.transform.parent = transform.parent;
-
-                Quaternion up = Quaternion.LookRotation( Vector3.up, Vector3.up );
-                Quaternion down = Quaternion.LookRotation( Vector3.down, Vector3.up );
-                Quaternion rotUp = Quaternion.LookRotation( transform.up, Vector3.up );
-                Quaternion rotDown = Quaternion.LookRotation( -transform.up, Vector3.up );
-                float angle = Mathf.Min( Quaternion.Angle( rotUp, up ), Quaternion.Angle( rotDown, down ), Quaternion.Angle( rotUp, down ), Quaternion.Angle( rotDown, up ) );
-                if( angle > MAX_LATITUDE )
-                {
+				if( SphereLatitude > MAX_LATITUDE )
+				{
                     transform.rotation = oldRotation;
-                    //transform.rotation *= Quaternion.FromToRotation( transform.up, Quaternion.RotateTowards( up, rotUp, MAX_LATITUDE ) * Vector3.up );
                 }
 
                 //touch rect
@@ -547,87 +541,31 @@ public class CommandGraph : MonoBehaviour {
                     }
                 }
             }
-
-            //if( CurrentButton == VoxButton.ArrowRight )
-            //{
-            //    RightArrow.transform.localPosition = Vector3.MoveTowards( RightArrow.transform.localPosition,
-            //        initialRightArrowPosition + (Input.GetMouseButton( 0 ) ? Vector3.forward * 0.3f : Vector3.zero), 0.1f );
-            //}
-            //else if( CurrentButton == VoxButton.ArrowLeft )
-            //{
-            //    LeftArrow.transform.localPosition = Vector3.MoveTowards( LeftArrow.transform.localPosition,
-            //        initialLeftArrowPosition + (Input.GetMouseButton( 0 ) ? Vector3.forward * 0.3f : Vector3.zero), 0.1f );
-            //}
         }
         else
         {
             CurrentButton = VoxButton.None;
-            if( NextCommand != null )
+			if( NextCommand != null || GameContext.CurrentState == GameState.Result )
             {
-                transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
+				transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.1f);
 				if( NextCommand == IntroCommand && Quaternion.Angle(transform.rotation,targetRotation) < 0.1f )
 				{
 					NextCommand = null;
 					transform.rotation = targetRotation;
 				}
             }
-            //RightArrow.transform.localPosition = Vector3.MoveTowards( RightArrow.transform.localPosition, initialRightArrowPosition, 0.1f );
-            //LeftArrow.transform.localPosition = Vector3.MoveTowards( LeftArrow.transform.localPosition, initialLeftArrowPosition, 0.1f );
         }
-            //Quaternion oldRotation = transform.rotation;
-            //Vector3 up = transform.up;
-            //transform.rotation = Quaternion.LookRotation( transform.forward, new Vector3( 0, up.y, up.z ) );
-            /*
-            Quaternion up = Quaternion.LookRotation( Vector3.up, Vector3.up );
-            Quaternion down = Quaternion.LookRotation( Vector3.down, Vector3.up );
-            Quaternion rotUp = Quaternion.LookRotation( transform.up, Vector3.up );
-            Quaternion rotDown = Quaternion.LookRotation( -transform.up, Vector3.up );
-            float angle = Mathf.Min( Quaternion.Angle( rotUp, up ), Quaternion.Angle( rotDown, down ), Quaternion.Angle( rotUp, down ), Quaternion.Angle( rotDown, up ) );
-            print( angle );
-            if( angle > MAX_LATITUDE )
-            {
-                //transform.rotation = oldRotation;
-                //transform.rotation *= Quaternion.FromToRotation( transform.up, Quaternion.RotateTowards( up, rotUp, MAX_LATITUDE ) * Vector3.up );
-            }
-            */
-            /*
-            transform.localPosition = Vector3.MoveTowards( transform.localPosition, initialPosition + Vector3.forward * 0.2f, 0.1f );
-        }
-        else
-        {
-            transform.localPosition = Vector3.MoveTowards( transform.localPosition, initialPosition, 0.1f );
-            //transform.rotation = Quaternion.Lerp( transform.rotation, targetRotation, 0.1f );
-        }*/
 
         EdgeSphere.transform.rotation = transform.rotation;
     }
-
-
-    //void UpdateCommandLine()
-    //{
-    //    bool isWait = Music.CurrentBlockName == "wait";
-    //    float mt = (float)Music.MusicalTime;
-    //    targetTimeBarScale.x = maxTimeBarScale.x * (mt / (isWait ? 16.0f : 64.0f));
-    //    TimeBar.transform.localScale = Vector3.Lerp( TimeBar.transform.localScale, targetTimeBarScale, 0.2f );
-    //    CurrentBar.transform.localPosition = Vector3.Lerp( CurrentBar.transform.localPosition, initialCurrentBarPosition, 0.2f );
-    //    if( NextCommand != null )
-    //    {
-    //        NextCommandText.color = Color.white * 0.8f;
-    //    }
-    //    else
-    //    {
-    //        NextCommandText.color = new Color( 1, 1, 1, (mt < 4 ? 0 : Mathf.Abs( Mathf.Sin( Mathf.PI * mt / (2 * (isWait ? 1 : Mathf.Pow( 2, 3 - Music.Just.bar ) )) ) )) );
-    //    }
-    //}
 
     void PushCommandButton( Vector3 pushingPosition )
     {
         PushingCommand = null;
         PlayerCommand selectedCommand = null;
         float minDistance = 99999;
-		foreach( PlayerCommand command in GetLinkedCommands() )//GetComponentsInChildren<PlayerCommand>() ) 
+		foreach( PlayerCommand command in GetLinkedCommands() )
         {
-            if( command == null || command == IntroCommand /*|| !command.IsUsable()*/ ) continue;
             float d = (pushingPosition - command.transform.position).magnitude;
             if( d < minDistance )
             {
@@ -648,49 +586,96 @@ public class CommandGraph : MonoBehaviour {
             rectPos.x = Mathf.Clamp( rectPos.x, -AxisRing.Radius + TouchRect.Radius * TouchRectCoeff, AxisRing.Radius - TouchRect.Radius * TouchRectCoeff );
             rectPos.y = Mathf.Clamp( rectPos.y, -AxisRing.Radius + TouchRect.Radius * TouchRectCoeff, AxisRing.Radius - TouchRect.Radius * TouchRectCoeff );
             TouchRect.transform.localPosition = rectPos;
-            //TouchRect.GetComponentInChildren<TextMesh>().text = PushingCommand.NameText.ToUpper();
-            //TouchRect.GetComponentInChildren<TextMesh>().transform.localPosition
         }
     }
 
-    /*
-    void SelectNearestNode()
-    {
-        PlayerCommand selectedCommand = CurrentCommand;
-        float minDistance = (SelectSpot.transform.position - CurrentCommand.transform.position).magnitude;
-        foreach( PlayerCommand command in GetLinkedCommands() )
-        {
-            if( command == null || !command.IsUsable() ) continue;
-            float d = (SelectSpot.transform.position - command.transform.position).magnitude;
-            if( d < minDistance )
-            {
-                minDistance = d;
-                selectedCommand = command;
-            }
-        }
-        if( NextCommand != selectedCommand )//&& selectedCommand != IntroCommand )
-        {
-            Select( selectedCommand );
-            SEPlayer.Play( selectedCommand == CurrentCommand ? "tickback" : "tick" );
-        }
-    }
-    */
+	void PushOKButton()
+	{
+		AxisRing.SetTargetSize(7.5f);
+		AxisRing.SetTargetWidth(7.5f);
+		AxisRing.SetTargetColor(ColorManager.Base.Shade);
+		ButtonText.color = Color.white;
+		switch( GameContext.CurrentState )
+		{
+		case GameState.Endro:
+			if( !Music.IsPlaying() || Music.Just.totalUnit > 8 )
+			{
+				GameContext.BattleConductor.ClearSkills();
+				GameContext.ChangeState(GameState.Result);
+				ColorManager.SetBaseColor(EBaseColor.Black);
+				CurrentRect.transform.localScale = Vector3.zero;
+				NextRect.transform.localScale = Vector3.zero;
+			}
+			break;
+		case GameState.Result:
+			GameContext.PlayerConductor.ProceedResult();
+			if( GameContext.CurrentState == GameState.SetMenu )
+			{
+				NextCommand = null;
+				CurrentRect.transform.localScale = Vector3.zero;
+				NextRect.transform.localScale = Vector3.zero;
+			}
+			break;
+		case GameState.Continue:
+			if( !Music.IsPlaying() || Music.Just.totalUnit > 4 )
+			{
+				GameContext.ChangeState(GameState.SetMenu);
+				GameContext.FieldConductor.OnPlayerLose();
+				NextCommand = null;
+				CurrentRect.transform.localScale = Vector3.zero;
+				NextRect.transform.localScale = Vector3.zero;
+			}
+			break;
+		}
+	}
+
+	void ShowOKButton()
+	{
+		AxisRing.SetTargetWidth(7.5f);
+		AxisRing.SetTargetArc(1.0f);
+		AxisRing.SetColor(ColorManager.Base.Shade);
+		Panel.Hide();
+		CommandSphere.collider.enabled = true;
+	}
+
+	public void ShowAcquireCommand( PlayerCommand command )
+	{
+		targetRotation = Quaternion.Inverse(Quaternion.LookRotation(-command.transform.localPosition)) * offsetRotation;
+		AxisRing.SetTargetWidth(0.8f);
+		ButtonText.color = Color.clear;
+	}
 
     IEnumerable<PlayerCommand> GetLinkedCommands()
     {
-        if( GameContext.VoxSystem.state == VoxState.Invert && GameContext.VoxSystem.InvertTime == 1 )
+		if( GameContext.CurrentState == GameState.SetMenu )
+		{
+			foreach( PlayerCommand c in CommandNodes )
+			{
+				if( c.state != CommandState.DontKnow )
+				{
+					yield return c;
+				}
+			}
+		}
+        else if( GameContext.VoxSystem.state == VoxState.Invert && GameContext.VoxSystem.InvertTime == 1 )
         {
             foreach( PlayerCommand c in IntroCommand.LinkedCommands )
             {
-                yield return c;
+				if( c != null && c.IsUsable() )
+				{
+					yield return c;
+				}
             }
         }
         else
         {
-            yield return CurrentCommand;
+			if( CurrentCommand.IsUsable() ) yield return CurrentCommand;
             foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
             {
-                yield return c;
+				if( c != null && c.IsUsable() )
+				{
+					yield return c;
+				}
             }
         }
     }
@@ -717,7 +702,7 @@ public class CommandGraph : MonoBehaviour {
             }
             else if( IsInvert && !IsLastInvert )
             {
-				NextCommand = (CurrentCommand != null && CurrentCommand.ParentCommand != null ? CurrentCommand.ParentCommand : CurrentCommand); ;
+				NextCommand = CurrentCommand;
             }
             else
             {
@@ -730,12 +715,12 @@ public class CommandGraph : MonoBehaviour {
 
         if( NextCommand != null )
         {
-            OldCommand = (CurrentCommand != null && CurrentCommand.ParentCommand != null ? CurrentCommand.ParentCommand : CurrentCommand);
+            OldCommand = CurrentCommand;
             if( OldCommand == NextCommand )
             {
                 CommandLoopCount++;
-                NextCommand = NextCommand.FindLoopVariation( CommandLoopCount );
-                if( NextCommand == null ) Debug.LogError( OldCommand.name + CommandLoopCount.ToString() + "variation not found!" );
+                //NextCommand = NextCommand.FindLoopVariation( CommandLoopCount );
+                //if( NextCommand == null ) Debug.LogError( OldCommand.name + CommandLoopCount.ToString() + "variation not found!" );
             }
             else
             {
@@ -748,93 +733,6 @@ public class CommandGraph : MonoBehaviour {
         
     }
 
-    //void SetCommandIcons( GameObject CommandText, PlayerCommand command )
-    //{
-    //    EStatusIcon[] icons = new EStatusIcon[3];
-    //    if( command == null )
-    //    {
-    //        icons[0] = icons[1] = icons[2] = EStatusIcon.none;
-    //    }
-    //    else
-    //    {
-    //        for( int i = 0; i < 3; i++ )
-    //        {
-    //            if( i < command.icons.Count )
-    //            {
-    //                icons[i] = command.icons[i];
-    //            }
-    //            else
-    //            {
-    //                icons[i] = EStatusIcon.none;
-    //            }
-    //        }
-    //    }
-    //    int index = 0;
-    //    foreach( StatusIcon statusIcon in CommandText.GetComponentsInChildren<StatusIcon>() )
-    //    {
-    //        string iconName = icons[index].ToString();
-    //        Sprite iconSpr = CommandIcons.Find( ( Sprite sprite ) => sprite.name == iconName );
-    //        Color targetColor = Color.white;
-    //        IconReactType reactType = IconReactType.None;
-    //        if( iconSpr == null ) iconSpr = CommandIcons[CommandIcons.Count - 1];
-    //        else
-    //        {
-    //            if( iconName.Contains( "W" ) || iconName.Contains( "L" ) || iconName.Contains( "F" ) )
-    //            {
-    //                targetColor = IconWLFMColor;
-    //                reactType = IconReactType.OnMagic;
-    //            }
-    //            else if( iconName.Contains( "M" ) )
-    //            {
-    //                targetColor = IconWLFMColor;
-    //                reactType = IconReactType.OnFaith;
-    //            }
-    //            else if( iconName.Contains( "A" ) )
-    //            {
-    //                targetColor = IconAPColor;
-    //                reactType = IconReactType.OnAttack;
-    //            }
-    //            else if( iconName.Contains( "P" ) )
-    //            {
-    //                targetColor = IconAPColor;
-    //                reactType = IconReactType.OnBrave;
-    //            }
-    //            else if( iconName.Contains( "D" ) )
-    //            {
-    //                targetColor = IconDSColor;
-    //                reactType = IconReactType.OnDamage;
-    //            }
-    //            else if( iconName.Contains( "S" ) )
-    //            {
-    //                targetColor = IconDSColor;
-    //                reactType = IconReactType.OnShield;
-    //            }
-    //            else if( iconName.Contains( "H" ) )
-    //            {
-    //                targetColor = IconHRColor;
-    //                reactType = IconReactType.OnHeal;
-    //            }
-    //            else if( iconName.Contains( "R" ) )
-    //            {
-    //                targetColor = IconHRColor;
-    //                reactType = IconReactType.OnRegene;
-    //            }
-    //            else if( iconName.Contains( "E" ) )
-    //            {
-    //                targetColor = IconHRColor;
-    //                reactType = IconReactType.OnEsna;
-    //            }
-    //            else if( iconName.Contains( "V" ) )
-    //            {
-    //                targetColor = IconVColor;
-    //                reactType = IconReactType.OnInvert;
-    //            }
-    //        }
-    //        statusIcon.SetSprite( iconSpr, icons[index], targetColor, reactType );
-    //        ++index;
-    //    }
-    //}
-
     public void CheckCommand()
     {
         EThemeColor themeColor = CurrentCommand.themeColor;
@@ -845,7 +743,10 @@ public class CommandGraph : MonoBehaviour {
             {
 				foreach( CommandEdge edge in c.linkLines )
 				{
-					edge.Reset();
+					if( edge.State < EdgeState.Unacquired )
+					{
+						edge.State = EdgeState.Unlinked;
+					}
 				}
                 c.SetLink( false );
             }
@@ -856,20 +757,15 @@ public class CommandGraph : MonoBehaviour {
             themeColor = CurrentCommand.themeColor;
             CurrentRect.transform.parent = CurrentCommand.transform;
             CurrentRect.transform.localPosition = Vector3.forward;
-            CurrentRect.transform.localScale = Vector3.one;
+			CurrentRect.transform.localScale = Vector3.one;
+			CurrentRect.transform.localRotation = Quaternion.identity;
 			NextRect.transform.localScale = Vector3.zero;
             foreach( PlayerCommand c in GetLinkedCommands() )
             {
-                //if( c != IntroCommand )
-					c.SetLink( true );
+				c.SetLink(true);
             }
             CurrentCommand.SetCurrent();
             NextCommand = null;
-            //CurrentCommandText.text = CurrentCommand.name;
-            //NextCommandText.text = initialNextText;
-            //CurrentBar.transform.localPosition = initialNextBarPosition;
-            //SetCommandIcons( CurrentCommandText.gameObject, CurrentCommand );
-            //SetCommandIcons( NextCommandText.gameObject, null );
 
             if( IsLastInvert )
             {
@@ -883,15 +779,11 @@ public class CommandGraph : MonoBehaviour {
 				CurrentRect.transform.parent = IntroCommand.transform;
 				CurrentRect.transform.localPosition = Vector3.forward;
 				CurrentRect.transform.localScale = Vector3.one;
+				CurrentRect.transform.localRotation = Quaternion.identity;
             }
             AxisRing.SetAnimationSize( 6.7f, 7.5f );
             Panel.Hide();
 			CommandSphere.collider.enabled = true;
-        }
-        else
-        {
-            //CurrentCommandText.text = "";
-            //SetCommandIcons( CurrentCommandText.gameObject, null );
         }
 
         VoxState desiredState = GetDesiredVoxState();
@@ -915,7 +807,7 @@ public class CommandGraph : MonoBehaviour {
     {
         foreach( PlayerCommand command in CommandNodes )
         {
-            if( command.AcquireLevel <= Level && !command.IsAcquired )
+            if( command.acquireLevel <= Level && command.state == CommandState.DontKnow )
             {
                 return command;
             }
@@ -926,7 +818,7 @@ public class CommandGraph : MonoBehaviour {
     {
         foreach( PlayerCommand command in CommandNodes )
         {
-            if( command.AcquireLevel > Level && command.IsAcquired )
+			if( command.acquireLevel > Level && command.state > CommandState.DontKnow )
             {
                 return command;
             }
@@ -939,17 +831,28 @@ public class CommandGraph : MonoBehaviour {
         foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
         {
             command.SetLink( false );
-        }
+		}
+		foreach( CommandEdge edge in EdgeSphere.GetComponentsInChildren<CommandEdge>() )
+		{
+			if( edge.IsUsable )
+			{
+				edge.State = EdgeState.Unlinked;
+			}
+			else
+			{
+				edge.State = EdgeState.DontKnow;
+			}
+		}
         OldCommand = null;
         NextCommand = null;
         CommandLoopCount = 0;
         Select( IntroCommand );
         CheckCommand();
-        transform.rotation = Quaternion.Inverse( Quaternion.LookRotation( -IntroCommand.transform.localPosition ) ) * offsetRotation;
-        // Quaternion.Inverse( CurrentCommand.transform.localRotation ) * offsetRotation;
-        //targetTimeBarScale.x = 0;
-        //CurrentBar.transform.localPosition = initialCurrentBarPosition;
-        //TimeBar.transform.localScale = targetTimeBarScale;
+		transform.rotation = Quaternion.Inverse(Quaternion.LookRotation(-IntroCommand.transform.localPosition)) * offsetRotation;
+		CurrentRect.transform.parent = IntroCommand.transform;
+		CurrentRect.transform.localPosition = Vector3.forward;
+		CurrentRect.transform.localScale = Vector3.one;
+		CurrentRect.transform.localRotation = Quaternion.identity;
     }
 
 	public void Deselect()
@@ -966,7 +869,7 @@ public class CommandGraph : MonoBehaviour {
 		{
 			CommandSphere.collider.enabled = false;
 		}
-		if( ( CurrentCommand == IntroCommand || ( CurrentCommand is InvertCommand && (CurrentCommand as InvertCommand).IsLast ) ) && command != IntroCommand )
+		if( ( CurrentCommand == IntroCommand || ( CurrentCommand is InvertCommand /*&& (CurrentCommand as InvertCommand).IsLast */) ) && command != IntroCommand )
 		{
 			IntroCommand.renderer.enabled = false;
 			foreach( CommandEdge line in IntroCommand.linkLines )
@@ -990,10 +893,7 @@ public class CommandGraph : MonoBehaviour {
 		NextRect.transform.localScale = Vector3.one;
 		NextRect.transform.localRotation = Quaternion.identity;
 
-        //NextCommandText.text = NextCommand.name;
-        //SetCommandIcons( NextCommandText.gameObject, NextCommand );
         targetRotation = Quaternion.Inverse( Quaternion.LookRotation( -command.transform.localPosition ) ) * offsetRotation;
-		//Quaternion.Inverse( command.transform.localRotation ) * offsetRotation;
 		if( command != IntroCommand ) SEPlayer.Play("select");
     }
 
@@ -1014,33 +914,13 @@ public class CommandGraph : MonoBehaviour {
 		//CommandSphere.collider.enabled = false;
 	}
 
-    public void OnReactEvent( IconReactType type )
-    {
-        //foreach( StatusIcon statusIcon in CurrentCommandText.GetComponentsInChildren<StatusIcon>() )
-        //{
-        //    statusIcon.ReactEvent( type );
-        //}
-		//if( type == IconReactType.OnInvert )
-		//{
-		//	if( NextCommand != null && !(NextCommand is InvertCommand) ) NextCommand.Deselect();
-		//	CurrentCommand.SetLink( false );
-		//	foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
-		//	{
-		//		if( c != NextCommand )
-		//		{
-		//			c.SetLink( c is InvertCommand );
-		//		}
-		//	}
-		//}
-    }
-
     VoxState GetDesiredVoxState()
     {
         if( !GameContext.PlayerConductor.CanUseInvert || Music.CurrentBlockName == "wait" )
         {
             return VoxState.Sun;
         }
-        else if( CurrentCommand.icons.Contains( EStatusIcon.V ) )
+        else if( CurrentCommand is RevertCommand )
         {
             return VoxState.Eclipse;
         }
@@ -1053,4 +933,32 @@ public class CommandGraph : MonoBehaviour {
             return VoxState.Sun;
         }
     }
+
+	public void CheckLinkedFromIntro()
+	{
+		IntroCommand.renderer.enabled = true;
+		foreach( CommandEdge line in IntroCommand.linkLines )
+		{
+			line.SetEnabled(true);
+		}
+		foreach( CommandEdge commandEdge in EdgeSphere.GetComponentsInChildren<CommandEdge>() )
+		{
+			if( commandEdge.Command1.state == CommandState.DontKnow || commandEdge.Command2.state == CommandState.DontKnow )
+			{
+				commandEdge.State = EdgeState.DontKnow;
+			}
+			else
+			{
+				commandEdge.State = EdgeState.Unacquired;
+			}
+		}
+		foreach( CommandEdge commandEdge in IntroCommand.linkLines )
+		{
+			if( commandEdge.GetOtherSide(IntroCommand).currentLevel > 0 )
+			{
+				commandEdge.State = EdgeState.Linked;
+				commandEdge.GetOtherSide(IntroCommand).SetLinkedFromIntro();
+			}
+		}
+	}
 }

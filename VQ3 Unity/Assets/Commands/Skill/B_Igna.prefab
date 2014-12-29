@@ -27,6 +27,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40,10 +41,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 1
   _actionStr:
-  - Magic 45 15 7 All,Weather Rain -5
+  - Magic 45 15 7 Select,Weather Rain -5
   _rhythmStr: nn nn nn ta
   _rhythmBaseTime: 2
   _prefabs: []
+  animRandomRange: {x: 0, y: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

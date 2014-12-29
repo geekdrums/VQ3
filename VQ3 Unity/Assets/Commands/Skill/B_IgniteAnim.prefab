@@ -1785,10 +1785,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 1
   _actionStr:
-  - Anim Select IgniteStartAnim
+  - Anim All IgniteStartAnim
   _rhythmStr: ta
   _rhythmBaseTime: 4
   _prefabs: []
+  animRandomRange: {x: 0, y: 0}
+  animRandomExcludeRange: {x: 0, y: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

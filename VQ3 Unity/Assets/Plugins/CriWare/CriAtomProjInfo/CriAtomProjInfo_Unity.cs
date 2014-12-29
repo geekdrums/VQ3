@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.1.32.00
-* Date Time          : 2014/11/16 7:49
+* Date Time          : 2014/12/29 15:19
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -45,6 +45,7 @@ public partial class CriAtomAcfInfo
         newAcbInfo.cueInfoList.Add(1, new CueInfo("BattleMusic", 1, ""));
         newAcbInfo.cueInfoList.Add(2, new CueInfo("continue", 2, ""));
         newAcbInfo.cueInfoList.Add(3, new CueInfo("Invert", 3, ""));
+        newAcbInfo.cueInfoList.Add(4, new CueInfo("ambient", 4, ""));
         newAcbInfo = new AcbInfo("SE", 1, "", "SE.acb", "SE.awb","61f6c484-c862-4d1d-b6ad-5f194ae823c8");
         acfInfo.acbInfoList.Add(newAcbInfo);
         newAcbInfo.cueInfoList.Add(2, new CueInfo("PhysicGoodDamage", 2, ""));
@@ -75,5 +76,6 @@ public partial class CriAtomAcfInfo
         newAcbInfo.cueInfoList.Add(25, new CueInfo("jam", 25, ""));
         newAcbInfo.cueInfoList.Add(27, new CueInfo("footstep", 27, ""));
         newAcbInfo.cueInfoList.Add(28, new CueInfo("breath", 28, ""));
+        newAcbInfo.cueInfoList.Add(29, new CueInfo("poisonBreath", 29, ""));
     }
 }

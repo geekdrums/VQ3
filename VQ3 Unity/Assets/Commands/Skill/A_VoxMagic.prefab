@@ -663,10 +663,13 @@ MonoBehaviour:
   isPlayerSkill: 1
   _actionStr:
   - Anim Select BreakAttackAnim
-  - Attack 160 0 0 Anim 0
+  - Vox 160 0 0 Anim 0
   _rhythmStr: ta nn nn ta
   _rhythmBaseTime: 2
   _prefabs: []
+  animRandomRange: {x: 0, y: 0}
+  animRandomExcludeRange: {x: 0, y: 0}
+  characterAnimName: 
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

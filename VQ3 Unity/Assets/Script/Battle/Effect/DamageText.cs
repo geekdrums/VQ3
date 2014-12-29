@@ -7,6 +7,9 @@ public class DamageText : CounterSprite {
     public Vector3 initialPosition { get; private set; }
 
     float time = 0;
+	ActionResult actionResult;
+	Color initialColor;
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -30,6 +33,14 @@ public class DamageText : CounterSprite {
         {
             Destroy( gameObject );
         }
+		//if( Music.isJustChanged || Music.isNowChanged )
+		//{
+		//	if( actionResult.ToString().EndsWith("GoodDamage") )
+		//	{
+		//		CounterColor = Music.isJustChanged ? initialColor : Color.white;
+		//		GetComponentInChildren<TextMesh>().color = CounterColor;
+		//	}
+		//}
 	}
 
 	public void AddDamage( int damage )
@@ -40,22 +51,23 @@ public class DamageText : CounterSprite {
 
     public void Initialize( int damage, ActionResult actResult, Vector3 initialPos )
     {
+		actionResult = actResult;
         Count = Mathf.Abs( damage );
         switch( actResult )
         {
         case ActionResult.MagicDamage:
         case ActionResult.PhysicDamage:
-            CounterColor = ColorManager.Accent.Damage;
+			initialColor = ColorManager.Accent.Damage;
             transform.localScale = Vector3.one;
             break;
         case ActionResult.MagicBadDamage:
         case ActionResult.PhysicBadDamage:
-            CounterColor = ColorManager.Base.MiddleBack;
+			initialColor = ColorManager.Base.MiddleBack;
             transform.localScale = Vector3.one * 0.7f;
             break;
         case ActionResult.MagicGoodDamage:
         case ActionResult.PhysicGoodDamage:
-            CounterColor = ColorManager.Accent.Critical;
+			initialColor = ColorManager.Accent.Critical;
 			if( GameContext.VoxSystem.state == VoxState.Invert )
 			{
 				transform.localScale = Vector3.one * 1.3f;
@@ -66,20 +78,33 @@ public class DamageText : CounterSprite {
 			}
             break;
         case ActionResult.EnemyHeal:
-            CounterColor = ColorManager.Accent.Heal;
+			initialColor = ColorManager.Accent.Heal;
             transform.localScale = Vector3.one;
+			foreach( TextMesh text in GetComponentsInChildren<TextMesh>() )
+			{
+				text.text = "HEAL";
+			}
 			break;
 		case ActionResult.PlayerPhysicDamage:
 		case ActionResult.PlayerMagicDamage:
-			CounterColor = ColorManager.Accent.PlayerDamage;
+			initialColor = ColorManager.Accent.PlayerDamage;
 			transform.localScale = Vector3.one;
 			break;
+		case ActionResult.VPDrain:
+			initialColor = ColorManager.Accent.Drain;
+			transform.localScale = Vector3.one;
+			foreach( TextMesh text in GetComponentsInChildren<TextMesh>() )
+			{
+				text.text = "VP DRAIN";
+			}
+			break;
         default:
-            CounterColor = Color.black;
+			initialColor = ColorManager.Accent.Drain;
             transform.localScale = Vector3.one;
             break;
         }
 		initialPosition = initialPos + PositionOffeset;
+		CounterColor = initialColor;
 		GetComponentInChildren<TextMesh>().color = CounterColor;
     }
 }

@@ -36,7 +36,7 @@ public class CounterSprite : MonoBehaviour {
         1.2f,//Percent,
         0.5f,//Slash,
         0.9f,//Plus,
-        0.9f //Minus,
+        0.9f,//Minus,
     };
     static float[] CounterIntervals = new float[10]
     {
@@ -58,8 +58,8 @@ public class CounterSprite : MonoBehaviour {
         Percent = 1,
         Sign = 2,
 		PercentAndSign = Percent | Sign,
-        //Numerator
-        //Denominator
+        Numerator = 4,
+        Denominator = 8,
     }
 
     public Sprite[] NumberSprites;
@@ -86,11 +86,14 @@ public class CounterSprite : MonoBehaviour {
         get { return counterColor_; }
         set
         {
-            counterColor_ = value;
-            foreach( SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>() )
-            {
-                sprite.color = CounterColor;
-            }
+			if( counterColor_ != value )
+			{
+				counterColor_ = value;
+				foreach( SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>() )
+				{
+					sprite.color = CounterColor;
+				}
+			}
         }
     }
     public Color counterColor_;
@@ -103,51 +106,19 @@ public class CounterSprite : MonoBehaviour {
     public SpriteRenderer dotSprite_ = null;
     public SpriteRenderer prefixSprit_ = null;
     public SpriteRenderer suffixSprite_ = null;
+	private Mark prefixMark_ = Mark.Count;
+	private Mark suffixMark_ = Mark.Count;
+	public float Width { get; private set; }
+	public float Height { get; private set; }
 
 	// Use this for initialization
     void Start()
     {
-        //if( NumberParent != null )
-        //{
-        //    int index = 0;
-        //    for( int i = 0; i < NumberParent.transform.childCount; ++i )
-        //    {
-        //        SpriteRenderer child = NumberParent.transform.GetChild( index ).GetComponent<SpriteRenderer>();
-        //        if( digits_.Contains( child ) == false && child != dotSprite_ && child != prefixSprit_ && child != suffixSprite_ )
-        //        {
-        //            DestroyImmediate( NumberParent.transform.GetChild( index ).gameObject );
-        //        }
-        //        else
-        //        {
-        //            ++index;
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    CreateNumberParent();
-        //}
-        UpdateSprite();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-#if UNITY_EDITOR
-        //if( !UnityEditor.EditorApplication.isPlaying )
-        //{
-        //    if( NumberParent == null )
-        //    {
-        //        for( int i = 0; i < transform.childCount; ++i )
-        //        {
-        //            DestroyImmediate( transform.GetChild( 0 ).gameObject );
-        //        }
-        //        CreateNumberParent();
-        //        UpdateSprite();
-        //    }
-        //    return;
-        //}
-#endif
     }
 
     void CreateNumberParent()
@@ -210,50 +181,67 @@ public class CounterSprite : MonoBehaviour {
         //options
         if( HasFlag( Options.Sign ) )
         {
-            if( prefixSprit_ == null )
-            {
-                prefixSprit_ = (Instantiate( RendererPrefab ) as GameObject).GetComponent<SpriteRenderer>();
-                prefixSprit_.transform.parent = NumberParent.transform;
-                prefixSprit_.name = "prefix";
-            }
-            prefixSprit_.transform.localScale = Vector3.one * CounterScale;
             if( count_ >= 0 )
             {
-                prefixSprit_.sprite = MarkSprites[(int)Mark.Plus];
+				prefixMark_ = Mark.Plus;
             }
             else
             {
-                prefixSprit_.sprite = MarkSprites[(int)Mark.Minus];
-            }
-            prefixSprit_.enabled = true;
+				prefixMark_ = Mark.Minus;
+			}
         }
-        else
-        {
-            if( prefixSprit_ != null )
-            {
-                prefixSprit_.enabled = false;
-            }
-        }
+		else if( HasFlag(Options.Denominator) )
+		{
+			prefixMark_ = Mark.Slash;
+		}
+		else
+		{
+			prefixMark_ = Mark.Count;
+			if( prefixSprit_ != null )
+			{
+				prefixSprit_.enabled = false;
+			}
+		}
+		if( prefixMark_ != Mark.Count )
+		{
+			if( prefixSprit_ == null )
+			{
+				prefixSprit_ = (Instantiate(RendererPrefab) as GameObject).GetComponent<SpriteRenderer>();
+				prefixSprit_.transform.parent = NumberParent.transform;
+				prefixSprit_.name = "prefix";
+			}
+			prefixSprit_.transform.localScale = Vector3.one * CounterScale;
+			prefixSprit_.sprite = MarkSprites[(int)prefixMark_];
+			prefixSprit_.enabled = true;
+		}
 
         if( HasFlag( Options.Percent ) )
         {
-            if( suffixSprite_ == null )
-            {
-                suffixSprite_ = (Instantiate( RendererPrefab ) as GameObject).GetComponent<SpriteRenderer>();
-                suffixSprite_.transform.parent = NumberParent.transform;
-                suffixSprite_.name = "suffix";
-            }
-            suffixSprite_.transform.localScale = Vector3.one * CounterScale;
-            suffixSprite_.sprite = MarkSprites[(int)Mark.Percent];
-            suffixSprite_.enabled = true;
-        }
+			suffixMark_ = Mark.Percent;
+		}
+		else if( HasFlag(Options.Numerator) )
+		{
+			suffixMark_ = Mark.Slash;
+		}
         else
         {
             if( suffixSprite_ != null )
             {
                 suffixSprite_.enabled = false;
             }
-        }
+		}
+		if( suffixMark_ != Mark.Count )
+		{
+			if( suffixSprite_ == null )
+			{
+				suffixSprite_ = (Instantiate(RendererPrefab) as GameObject).GetComponent<SpriteRenderer>();
+				suffixSprite_.transform.parent = NumberParent.transform;
+				suffixSprite_.name = "suffix";
+			}
+			suffixSprite_.transform.localScale = Vector3.one * CounterScale;
+			suffixSprite_.sprite = MarkSprites[(int)suffixMark_];
+			suffixSprite_.enabled = true;
+		}
 
         //update numbers
 		int restCount = (int)Mathf.Abs((count_ * Mathf.Pow(10, SignificantDigits)));
@@ -277,11 +265,11 @@ public class CounterSprite : MonoBehaviour {
         //positions
         Vector3 vInterval = Vector3.left * Interval * CounterScale;
         Vector3 currentPos = Vector3.zero;
-        if( HasFlag( Options.Percent ) )
+        if( suffixMark_ != Mark.Count )
         {
-            currentPos += vInterval * MarksIntervals[(int)Mark.Percent] / 2;
+			currentPos += vInterval * MarksIntervals[(int)suffixMark_] / 2;
             suffixSprite_.transform.localPosition = currentPos;
-            currentPos += vInterval * MarksIntervals[(int)Mark.Percent] / 2;
+			currentPos += vInterval * MarksIntervals[(int)suffixMark_] / 2;
         }
         for( int i = 0; i < numDigits; i++ )
         {
@@ -296,38 +284,40 @@ public class CounterSprite : MonoBehaviour {
             }
         }
         //currentPos -= vInterval/2;
-        if( HasFlag( Options.Sign ) )
+        if( prefixMark_ != Mark.Count )
         {
-            currentPos += vInterval * MarksIntervals[(int)Mark.Plus] / 2;
+			currentPos += vInterval * MarksIntervals[(int)prefixMark_] / 2;
             prefixSprit_.transform.localPosition = currentPos;
-            currentPos += vInterval * MarksIntervals[(int)Mark.Plus] / 2;
+			currentPos += vInterval * MarksIntervals[(int)prefixMark_] / 2;
         }
 
         //align
-        float alignX = 0;
+		float alignX = 0;
+		Width = Mathf.Abs( currentPos.x );
         switch( align )
         {
         case CounterAlign.Right:
             alignX = 0;
             break;
         case CounterAlign.Center:
-            alignX = -currentPos.x * 0.5f;
+			alignX = Width * 0.5f;
             break;
         case CounterAlign.Left:
-            alignX = -currentPos.x;
+			alignX = Width;
             break;
         }
         float alignY = 0;
+		Height = Mathf.Abs( Interval * CounterScale * 1.2f );
         switch( vAlign )
         {
         case CounterVerticalAlign.Top:
-            alignY = -Interval * CounterScale * 1.2f / 2;
+			alignY = -Height / 2;
             break;
         case CounterVerticalAlign.Center:
             alignY = 0;
             break;
         case CounterVerticalAlign.Bottom:
-            alignY = Interval * CounterScale * 1.2f / 2;
+			alignY = Height / 2;
             break;
         }
         NumberParent.transform.localPosition = new Vector3( alignX, alignY, 0 );

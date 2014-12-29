@@ -62,7 +62,24 @@ public class EnemyConductor : MonoBehaviour {
 	void Update () {
         if( GameContext.CurrentState == GameState.Battle )
         {
-            if( Music.IsJustChangedBar() && Music.Just.bar >= 1 )
+			if( Input.GetMouseButtonUp(0) )
+			{
+				Ray ray = GameContext.MainCamera.ScreenPointToRay(Input.mousePosition);
+				RaycastHit hit;
+				Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity);
+
+				foreach( Enemy e in Enemies )
+				{
+					if( e.collider == hit.collider )
+					{
+						targetEnemy = e;
+						GameContext.VoxSystem.SetTargetEnemy(targetEnemy);
+						break;
+					}
+				}
+			}
+            
+			if( Music.IsJustChangedBar() && Music.Just.bar >= 1 )
             {
                 /*
                 List<string> messages = new List<string>();
@@ -104,23 +121,20 @@ public class EnemyConductor : MonoBehaviour {
         int l = encounter.Enemies.Length;
         for( int i = 0; i < l; ++i )
         {
-            SpawnEnemy( encounter.Enemies[i], encounter.StateSets[0][i], GetSpawnPosition( i, l ) );
+			SpawnEnemy(encounter.Enemies[i], encounter.StateSets[0][i], GetInitSpawnPosition(i, l));
         }
-        targetEnemy = Enemies[(Enemies.Count - 1) / 2];
+        targetEnemy = Enemies[0];
         GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
-
-        if( encounter.tutorialMessage.Type != TutorialMessageType.None )
-        {
-            TextWindow.SetTutorialMessage( encounter.tutorialMessage );
-        }
     }
 
-    Vector3 GetSpawnPosition( int index, int l ) { return new Vector3( EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 3.0f, 3 ); }
+	Vector3 GetInitSpawnPosition( int index, int l ) { return new Vector3( EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 3.0f, 5 ); }
+	Vector3 GetSpawnPosition( int index, int l ) { return new Vector3((index == 0 ? 0 : (index == 1 ? EnemyInterval : -EnemyInterval)), 3.0f, 5); }
+
 
     void SpawnEnemy( GameObject enemyPrefab, string initialState, Vector3 spawnPosition )
     {
         GameObject TempObj;
-        TempObj = (GameObject)Instantiate( enemyPrefab, spawnPosition, enemyPrefab.transform.rotation );
+        TempObj = (GameObject)Instantiate( enemyPrefab );
         //TempObj.renderer.material.color = baseColor;
         Enemy enemy = TempObj.GetComponent<Enemy>();
         WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
@@ -132,10 +146,10 @@ public class EnemyConductor : MonoBehaviour {
         else
         {
             Enemies.Add( enemy );
-            TextWindow.ChangeMessage( BattleMessageType.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
+            TextWindow.ChangeMessage( MessageCategory.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
             enemy.InitState( initialState );
         }
-        enemy.transform.localPosition += transform.position;
+		enemy.transform.localPosition = spawnPosition;
         enemy.transform.localScale *= transform.lossyScale.x;
         enemy.transform.parent = transform;
         enemy.SetTargetPosition( enemy.transform.localPosition );
@@ -148,18 +162,23 @@ public class EnemyConductor : MonoBehaviour {
 		bool isSucceeded = false;
         AnimModule anim = Action.GetModule<AnimModule>();
         if( anim != null && skill.isPlayerSkill )
-        {
-            foreach( Enemy e in GetTargetEnemies( anim, skill ) )
-            {
-                isSucceeded = true;
-                if( anim.IsLocal )
-                {
-                    anim.SetTargetEnemy( e );
-                    skill.transform.position = e.transform.position + Vector3.back * 0.1f;
-                    skill.transform.localScale *= transform.lossyScale.x;
-                    break;
-                }
-            }
+		{
+			if( anim.IsLocal )
+			{
+				foreach( Enemy e in GetTargetEnemies(anim, skill) )
+				{
+					isSucceeded = true;
+					anim.SetTargetEnemy(e);
+					skill.transform.localPosition = e.transform.localPosition + Vector3.back * 3.0f;
+					skill.transform.localScale *= transform.lossyScale.x;
+					break;
+				}
+			}
+			else
+			{
+				skill.transform.localScale *= transform.lossyScale.x;
+				isSucceeded = true;
+			}
         }
 		AttackModule attack = Action.GetModule<AttackModule>();
         if( attack != null && skill.isPlayerSkill )
@@ -179,7 +198,13 @@ public class EnemyConductor : MonoBehaviour {
                 e.Heal( heal );
                 isSucceeded = true;
             }
-        }
+		}
+		DrainModule drain = Action.GetModule<DrainModule>();
+		if( drain != null && !skill.isPlayerSkill )
+		{
+			skill.OwnerCharacter.Drain(drain, skill.Actions[drain.AttackIndex].GetModule<AttackModule>().DamageResult);
+			isSucceeded = true;
+		}
         WeatherModule weather = Action.GetModule<WeatherModule>();
         if( weather != null )
         {
@@ -422,8 +447,9 @@ public class EnemyConductor : MonoBehaviour {
         }
     }
     public void OnContinue()
-    {
-        SetEncounter( CurrentEncounter );
+	{
+		Cleanup();
+        //SetEncounter( CurrentEncounter );
     }
 
     void Cleanup()

@@ -41,10 +41,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 1
   _actionStr:
-  - Enhance Brave 1 5
+  - Enhance Brave 1 6
   _rhythmStr: nn ta
   _rhythmBaseTime: 1
   _prefabs: []
+  animRandomRange: {x: 0, y: 0}
+  animRandomExcludeRange: {x: 0, y: 0}
+  characterAnimName: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

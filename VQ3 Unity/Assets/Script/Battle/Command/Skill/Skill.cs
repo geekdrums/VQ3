@@ -11,8 +11,9 @@ public class Skill : MonoBehaviour
     public string _rhythmStr;
     public int _rhythmBaseTime = 4;
     public List<GameObject> _prefabs;
-    //public GameObject bgEffefctPrefab;
-    //public string DescribeText;
+	public Vector2 animRandomRange = Vector2.zero;
+	public Vector2 animRandomExcludeRange = Vector2.zero;
+	public string characterAnimName;
 
 	public List<ActionSet> Actions { get; protected set; }
     public bool IsTargetSelectable { get; protected set; }
@@ -57,30 +58,34 @@ public class Skill : MonoBehaviour
 
     // Use this for initialization
     void Start()
-    {
-        //if( isPlayerSkill )
-        //{
-        //    GameContext.BattleConductor.SetBGEffect( bgEffefctPrefab );
-        //}
+	{
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isEnd && (SkillAnim == null || !SkillAnim.isPlaying)) Destroy(this.gameObject);
+		if( isEnd && (SkillAnim == null || !SkillAnim.isPlaying) )
+		{
+			OwnerCharacter.OnSkillEnd(this);
+			Destroy(this.gameObject);
+		}
     }
 
 	public void OnExecuted( ActionSet act )
     {
         AnimModule anim = act.GetModule<AnimModule>();
         if( anim != null )
-        {
+		{
             string AnimName = anim.AnimName == "" ? name.Replace( "Command(Clone)", "Anim" ) : anim.AnimName;
-            SkillAnim = GetComponentInChildren<Animation>();
+			SkillAnim = GetComponentInChildren<Animation>();
             if( SkillAnim.GetClip( AnimName ) != null )
-            {
+			{
                 SkillAnim[AnimName].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
                 SkillAnim.Play( AnimName );
+				Vector2 randomUnit = UnityEngine.Random.insideUnitCircle;
+				SkillAnim.transform.localPosition += 
+					new Vector3(animRandomExcludeRange.x + randomUnit.x * (animRandomRange.x - animRandomExcludeRange.x),
+					animRandomExcludeRange.y + randomUnit.y * (animRandomRange.y - animRandomExcludeRange.y), 0);
             }
         }
 		OwnerCharacter.OnExecuted(this, act);

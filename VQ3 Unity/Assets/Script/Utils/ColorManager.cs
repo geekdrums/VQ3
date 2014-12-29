@@ -58,6 +58,7 @@ public class AccentColor
     public Color Buff;
     public Color DeBuff;
     public Color Break;
+	public Color Drain;
 }
 
 

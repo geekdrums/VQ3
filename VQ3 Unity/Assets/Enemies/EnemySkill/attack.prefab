@@ -57,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -.303243011, y: -.24161543, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400004}
@@ -82,7 +82,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.29097557, y: -3.73586917, z: 0}
+  m_LocalPosition: {x: .0517373085, y: -3.39956164, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -148,6 +148,9 @@ MonoBehaviour:
   _rhythmStr: ta nn ta
   _rhythmBaseTime: 4
   _prefabs: []
+  animRandomRange: {x: 6, y: 0}
+  animRandomExcludeRange: {x: 3, y: 0}
+  characterAnimName: 
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,7 +165,7 @@ MonoBehaviour:
   Num: 30
   ArcRate: 1
   Width: 5
-  Radius: 4
+  Radius: 0
   Color: {r: 0, g: 0, b: 0, a: 1}
   Angle: 0
   GrowSize: 0

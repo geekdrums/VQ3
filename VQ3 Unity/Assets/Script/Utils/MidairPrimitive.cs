@@ -203,10 +203,10 @@ public class MidairPrimitive : MonoBehaviour {
         }
     }
 
-    public void UpdateArc()
+    public void UpdateArc( bool force = false )
     {
         CheckVertex();
-        if( currentArcRate != ArcRate )
+		if( currentArcRate != ArcRate || force )
         {
             float OutR = Radius / Mathf.Cos( Mathf.PI / N );
             float InR = Mathf.Max( 0, (Radius - Width) ) / Mathf.Cos( Mathf.PI / N );

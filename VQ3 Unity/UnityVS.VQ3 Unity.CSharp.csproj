@@ -7,14 +7,16 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E2B0199C-F72E-B8F2-D486-1F22FDBEAA06}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>4.5.4f1</UnityVersion>
@@ -61,18 +63,22 @@
     <Compile Include="Assets\Script\Battle\Character\Character.cs" />
     <Compile Include="Assets\Script\Battle\Character\Enemy\DragonEnemy.cs" />
     <Compile Include="Assets\Script\Battle\Character\Enemy\Enemy.cs" />
+    <Compile Include="Assets\Script\Battle\Character\Enemy\HitokageEnemy.cs" />
+    <Compile Include="Assets\Script\Battle\Character\Enemy\WispEnemy.cs" />
     <Compile Include="Assets\Script\Battle\Character\JewelEnemy.cs" />
     <Compile Include="Assets\Script\Battle\Character\Player.cs" />
     <Compile Include="Assets\Script\Battle\Character\WeatherEnemy.cs" />
     <Compile Include="Assets\Script\Battle\ComandGraph\CommandEdge.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\CommandExplanation.cs" />
     <Compile Include="Assets\Script\Battle\ComandGraph\CommandGraph.cs" />
     <Compile Include="Assets\Script\Battle\ComandGraph\CommandPanel.cs" />
     <Compile Include="Assets\Script\Battle\Command\CommandBase.cs" />
     <Compile Include="Assets\Script\Battle\Command\EnemyCommand.cs" />
     <Compile Include="Assets\Script\Battle\Command\EnemyCommandIcon.cs" />
+    <Compile Include="Assets\Script\Battle\Command\IntroCommand.cs" />
     <Compile Include="Assets\Script\Battle\Command\InvertCommand.cs" />
     <Compile Include="Assets\Script\Battle\Command\PlayerCommand.cs" />
-    <Compile Include="Assets\Script\Battle\Command\QuarterCommand.cs" />
+    <Compile Include="Assets\Script\Battle\Command\PlayerCommandData.cs" />
     <Compile Include="Assets\Script\Battle\Command\RevertCommand.cs" />
     <Compile Include="Assets\Script\Battle\Command\Skill\Action\ActionModule.cs" />
     <Compile Include="Assets\Script\Battle\Command\Skill\Action\ActionSet.cs" />
@@ -88,8 +94,8 @@
     <Compile Include="Assets\Script\Battle\UI\EnhanceIcons.cs" />
     <Compile Include="Assets\Script\Battle\UI\HPCircle.cs" />
     <Compile Include="Assets\Script\Battle\UI\HPPanel.cs" />
+    <Compile Include="Assets\Script\Battle\UI\SPPanel.cs" />
     <Compile Include="Assets\Script\Battle\UI\ShortTextWindow.cs" />
-    <Compile Include="Assets\Script\Battle\UI\StatusIcon.cs" />
     <Compile Include="Assets\Script\Battle\UI\TextWindow.cs" />
     <Compile Include="Assets\Script\Battle\UI\TitleLogo.cs" />
     <Compile Include="Assets\Script\Battle\VoxSystem.cs" />

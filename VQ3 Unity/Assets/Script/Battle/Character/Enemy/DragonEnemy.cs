@@ -9,7 +9,7 @@ public class DragonEnemy : Enemy {
 	Vector3 initialScale;
 
 	// Use this for initialization
-	void Start()
+	public override void Start()
 	{
 		Initialize();
 		ShadowSprite.color = Color.clear;
@@ -46,9 +46,9 @@ public class DragonEnemy : Enemy {
 			}
 			break;
 		case "Breath":
-			if( skill.name.StartsWith("breath") )
+			if( skill.name.StartsWith("poisonBreath") )
 			{
-				SEPlayer.Play("breath");
+				SEPlayer.Play("poisonBreath");
 			}
 			break;
 		case "Crow":
@@ -68,7 +68,7 @@ public class DragonEnemy : Enemy {
 
 	public override void OnRevert()
 	{
-		base.OnRevert();
+		currentState = States.Find(( BattleState state ) => state.name == "Default");
 		firePower_ = 0;
 		ShadowSprite.color = Color.clear;
 		transform.localScale = initialScale;

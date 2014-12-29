@@ -12,6 +12,7 @@ public enum EnemySpecies
     Dragon,
     Jewel,
     Weather,
+	Boss,
 }
 
 public class Enemy : Character
@@ -24,6 +25,8 @@ public class Enemy : Character
     public List<BattleState> States;
     public StateChangeCondition[] conditions;
     public int VPtolerance;
+	public float ShadowOffset = 4.5f;
+	public string ExplanationText;
     //public SpriteRenderer outlineSprite;
 
     public EnemyCommand currentCommand { get; protected set; }
@@ -42,7 +45,7 @@ public class Enemy : Character
 
 
     // Use this for initialization
-    protected virtual void Start()
+	public virtual void Start()
     {
         Initialize();
     }
@@ -54,7 +57,7 @@ public class Enemy : Character
         {
             c.Parse();
         }
-        HPCircle = (Instantiate( GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * 4.5f, Quaternion.identity ) as GameObject).GetComponent<HPCircle>();
+		HPCircle = (Instantiate(GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * ShadowOffset + Vector3.forward * 2, Quaternion.identity) as GameObject).GetComponent<HPCircle>();
         HPCircle.transform.parent = transform;
         HPCircle.transform.localScale *= Mathf.Min( 1.5f, Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP ) );
         HPCircle.Initialize( this );
@@ -89,7 +92,6 @@ public class Enemy : Character
                     shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
                     shortText.Initialize( currentCommand.ShortText );
                     shortText.transform.position = new Vector3( transform.position.x, shortText.transform.position.y, shortText.transform.position.z );
-                    //shortText.transform.parent = transform;
                 }
             }
             if( Music.IsJustChangedAt( StateChangeTiming )
@@ -97,29 +99,7 @@ public class Enemy : Character
             {
                 if( currentState.name != "Invert" ) oldState = currentState;
                 CheckState();
-                
-				//if( oldState == currentState && turnCount >= currentState.pattern.Length )
-				//{
-				//	for( int i = 0; i < commandIcons.Count; i++ )
-				//	{
-				//		if( i < currentState.pattern.Length )
-				//		{
-				//			commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString().Replace( '_', '-' ) ) );
-				//			commandIcons[i].SetIndex( i, currentState.pattern.Length );
-				//		}
-				//		else
-				//		{
-				//			commandIcons[i].SetIcon( null );
-				//		}
-				//	}
-				//}
             }
-            //else if( Music.Just > StateChangeTiming && ( oldState != null && oldState != currentState ) )
-            //{
-            //    float mt = (float)Music.MusicalTime - StateChangeTiming.totalUnit;
-            //    float t = (mt >= 12 ? 1.0f : (2.0f - Mathf.Cos( Mathf.PI * mt / 4.0f )) / 2.0f);
-            //    outlineSprite.color = Color.Lerp( oldState.color, currentState.color, t );
-            //}
         }
     }
     protected virtual void UpdateAnimation()
@@ -130,7 +110,7 @@ public class Enemy : Character
 			//{
                 if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
                 {
-                    transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 1.5f ) * 1.3f;
+                    transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.2f, 2.0f ) * 2.0f;
                 }
             //}
             spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
@@ -157,15 +137,18 @@ public class Enemy : Character
     protected void CreateDamageText( int damage, ActionResult actResult )
     {
         if( damage == 0 ) return;
-		if( lastDamageText != null )
+		if( lastDamageText != null && damage > 0 )
 		{
 			lastDamageText.AddDamage(damage);
 		}
 		else
 		{ 
 			GameObject damageText = (Instantiate( GameContext.EnemyConductor.damageTextPrefab ) as GameObject);
-			lastDamageText = damageText.GetComponent<DamageText>();
-			lastDamageText.Initialize(damage, actResult, transform.position + Vector3.back * 3 + Random.rotation * Vector3.up * 2);
+			if( damage > 0 )
+			{
+				lastDamageText = damageText.GetComponent<DamageText>();
+			}
+			damageText.GetComponent<DamageText>().Initialize(damage, actResult, transform.position + Vector3.back * 3 + Random.rotation * Vector3.up * 2);
 		}
     }
     protected virtual void CheckState()
@@ -225,8 +208,7 @@ public class Enemy : Character
     }
     public void InvertInit()
     {
-        PhysicDefend = 0;
-        MagicDefend = 0;
+		DefendPercent = 0;
         HealPercent = 0;
         TurnDamage = 0;
         HPCircle.OnTurnStart();
@@ -240,26 +222,24 @@ public class Enemy : Character
             invertState.name = "Invert";
             invertState.pattern = new EnemyCommand[0];
             invertState.nextState = "";
-            //invertState.color = Color.clear;
         }
         currentState = invertState;
     }
     public virtual void OnRevert()
-    {
-        BattleState nextState = oldState;
-        oldState = currentState;
-        currentState = nextState;
-    }
+	{
+		if( currentState.name == "Invert" )
+		{
+			BattleState nextState = oldState;
+			oldState = currentState;
+			currentState = nextState;
+		}
+	}
     public EnemyCommand CheckCommand()
     {
         if( currentState.pattern != null && currentState.pattern.Length > 0 )
         {
             currentCommand = currentState.pattern[turnCount % currentState.pattern.Length];
             TurnInit( currentCommand );
-			//for( int i = 0; i < commandIcons.Count; i++ )
-			//{
-			//	commandIcons[i].SetIndex( i, currentState.pattern.Length - (turnCount % currentState.pattern.Length) - 1 );
-			//}
         }
         else
         {
@@ -289,43 +269,10 @@ public class Enemy : Character
                 print( "ChangeState Failed: " + name );
             }
             turnCount = 0;
-			//for( int i = 0; i < commandIcons.Count; i++ )
-			//{
-			//	if( i < currentState.pattern.Length )
-			//	{
-			//		commandIcons[i].SetIcon( GameContext.EnemyConductor.EnemyCommandIcons.Find( ( Sprite sprite ) => sprite.name == currentState.pattern[currentState.pattern.Length - i - 1].Icon.ToString().Replace( '_', '-' )  ) );
-			//		commandIcons[i].SetIndex( i, currentState.pattern.Length );
-			//	}
-			//	else
-			//	{
-			//		commandIcons[i].SetIcon( null );
-			//	}
-			//}
-            //if( currentState.DescribeText != "" )
-            //{
-            //    ShortTextWindow shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
-            //    shortText.Initialize( currentState.DescribeText );
-            //    shortText.transform.position = new Vector3( transform.position.x*0.7f, shortText.transform.position.y, shortText.transform.position.z );
-            //    //shortText.transform.parent = transform;
-            //}
         }
     }
     public void InitState( string name )
     {
-		//commandIcons = new List<EnemyCommandIcon>();
-		//int maxCommandNNnum = 0;
-		//foreach( BattleState state in States )
-		//{
-		//	maxCommandNNnum = Mathf.Max( maxCommandNNnum, state.pattern.Length );
-		//}
-		//for( int i = 0; i < maxCommandNNnum; i++ )
-		//{
-		//	commandIcons.Add( (Instantiate( GameContext.EnemyConductor.commandIconPrefab ) as GameObject).GetComponent<EnemyCommandIcon>() );
-		//	commandIcons[i].transform.parent = transform;
-		//	commandIcons[i].transform.localPosition = Vector3.zero;
-		//	commandIcons[i].SetIcon( null );
-		//}
-
         ChangeState( name );
     }
     public void CheckSkill()
@@ -341,81 +288,76 @@ public class Enemy : Character
 
     public override void BeAttacked(AttackModule attack, Skill skill)
     {
-        if( attack.isPhysic )
-        {
-            switch( Speceis )
-            {
-            case EnemySpecies.Human:
-            case EnemySpecies.Thing:
-            case EnemySpecies.Fairy:
-            case EnemySpecies.Jewel:
-                lastDamageResult = ActionResult.PhysicDamage;
-                break;
+		if( attack.type == AttackType.Vox )
+		{
+			lastDamageResult = ActionResult.PhysicGoodDamage;
+		}
+		else
+		{
+			switch( Speceis )
+			{
+			case EnemySpecies.Human:
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicDamage;
+				else lastDamageResult = ActionResult.MagicDamage;
+				break;
+			case EnemySpecies.Thing:
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicBadDamage;
+				else lastDamageResult = ActionResult.MagicBadDamage;
+				break;
+			case EnemySpecies.Fairy:
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicDamage;
+				else lastDamageResult = ActionResult.MagicGoodDamage;
+				break;
+			case EnemySpecies.Jewel:
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicDamage;
+				else lastDamageResult = ActionResult.NoDamage;
+				break;
 			case EnemySpecies.Spirit:
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicGoodDamage;
+				else lastDamageResult = ActionResult.MagicDamage;
+				break;
 			case EnemySpecies.Dragon:
-				lastDamageResult = ActionResult.PhysicGoodDamage;
-                break;
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicDamage;
+				else lastDamageResult = ActionResult.MagicBadDamage;
+				break;
 			case EnemySpecies.Beast:
-				lastDamageResult = ActionResult.PhysicDamage;
-				//if( GameContext.VoxSystem.state == VoxState.Invert )
-				//{
-				//	lastDamageResult = ActionResult.PhysicDamage;
-				//}
-				//else
-				//{
-				//	lastDamageResult = ActionResult.PhysicBadDamage;
-				//}
-                break;
-            case EnemySpecies.Weather:
-                break;
-            }
-        }
-        else
-        {
-            switch( Speceis )
-            {
-            case EnemySpecies.Human:
-            case EnemySpecies.Thing:
-            case EnemySpecies.Spirit:
-            case EnemySpecies.Weather:
-                lastDamageResult = ActionResult.MagicDamage;
-                break;
-            case EnemySpecies.Fairy:
-            case EnemySpecies.Beast:
-                lastDamageResult = ActionResult.MagicGoodDamage;
-                break;
-			case EnemySpecies.Dragon:
-				lastDamageResult = ActionResult.MagicDamage;
-				//if( GameContext.VoxSystem.state == VoxState.Invert )
-				//{
-				//	lastDamageResult = ActionResult.MagicDamage;
-				//}
-				//else
-				//{
-				//	lastDamageResult = ActionResult.MagicBadDamage;
-				//}
-                break;
-            case EnemySpecies.Jewel:
-                break;
-            }
-        }
-        int oldHP = HitPoint;
-        base.BeAttacked( attack, skill );
-        int damage = oldHP - HitPoint;
-        SEPlayer.Play( lastDamageResult, skill.OwnerCharacter, damage );
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicBadDamage;
+				else lastDamageResult = ActionResult.MagicDamage;
+				break;
+			case EnemySpecies.Weather:
+				if( attack.type != AttackType.Dain ) lastDamageResult = ActionResult.MagicDamage;
+				else lastDamageResult = ActionResult.NoDamage;
+				break;
+			case EnemySpecies.Boss:
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicBadDamage;
+				else lastDamageResult = ActionResult.MagicBadDamage;
+				break;
+			}
+			if( attack.type == AttackType.Vox ) lastDamageResult = ActionResult.PhysicGoodDamage;
+		}
+        
+		float typeCoeff = 1.0f;
+		if( lastDamageResult.ToString().EndsWith("GoodDamage") ) typeCoeff = 2.0f;
+		else if( lastDamageResult.ToString().EndsWith("BadDamage") ) typeCoeff = 0.1f;
+		else if( lastDamageResult.ToString().EndsWith("NoDamage") ) typeCoeff = 0.0f;//will not reach here
 
+		float damage = skill.OwnerCharacter.PhysicAttack * (attack.Power / 100.0f) * typeCoeff * DefendCoeff;
+        BeDamaged( Mathf.Max( 0, (int)damage ), skill.OwnerCharacter );
+        Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
+		
+		if( lastDamageResult != ActionResult.NoDamage )
+		{
+			SEPlayer.Play(lastDamageResult, skill.OwnerCharacter, (int)damage);
+		}
     }
     protected override void BeDamaged( int damage, Character ownerCharacter )
     {
         base.BeDamaged( damage, ownerCharacter );
         CreateDamageText( damage, lastDamageResult );
         HPCircle.OnDamage(damage);
-        //if( HitPoint > 0 )
-        //{
-        //    CheckStateOnDamage( damage );
-        //}
         if( HitPoint <= 0 )
         {
+			OnDead();
             if( shortText != null )
             {
                 Destroy( shortText.gameObject );
@@ -431,6 +373,14 @@ public class Enemy : Character
         HPCircle.OnHeal( HitPoint - oldHitPoint );
         SEPlayer.Play( ActionResult.EnemyHeal, this, HitPoint - oldHitPoint );
     }
+	public override void Drain(DrainModule drain, int drainDamage)
+	{
+		int oldHitPoint = HitPoint;
+ 		base.Drain(drain, drainDamage);
+		CreateDamageText(-(HitPoint - oldHitPoint), ActionResult.EnemyHeal);
+		HPCircle.OnHeal(HitPoint - oldHitPoint);
+		SEPlayer.Play(ActionResult.EnemyHeal, this, HitPoint - oldHitPoint);
+	}
     public override void UpdateHealHP()
     {
         base.UpdateHealHP();
@@ -449,7 +399,6 @@ public class Enemy : Character
         spriteRenderer.color = newColor;
         if( HPCircle != null )
         {
-            //HPCircle.CurrentCircle.GetComponent<SpriteRenderer>().color = newColor;
             HPCircle.OnBaseColorChanged();
         }
     }
@@ -457,16 +406,20 @@ public class Enemy : Character
     {
         HPCircle.SetActive( false );
     }
-    /*
-    public void OnContinue()
-    {
-        HitPoint = MaxHP;
-        currentState = States[initialStateIndex];
-        turnCount = 0;
-        HPCircle.SetActive( true );
-        TurnInit();
-    }
-    */
+
+	public override void OnExecuted( Skill skill, ActionSet act )
+	{
+		base.OnExecuted(skill, act);
+
+		if( skill.characterAnimName != "" && animation != null && animation.GetClip(skill.characterAnimName) != null )
+		{
+			animation[skill.characterAnimName].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
+			animation.Play(skill.characterAnimName);
+		}
+	}
+	public virtual void OnDead()
+	{
+	}
 
     public override string ToString()
     {
@@ -479,7 +432,6 @@ public class Enemy : Character
         public string name;
         public EnemyCommand[] pattern;
         public string nextState;
-        //public Color color = Color.clear;
     }
 
     public enum ConditionType

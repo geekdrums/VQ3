@@ -3,27 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerConductor : MonoBehaviour {
-    public CommandGraph commandGraph;
-    //public QuarterRing quarterRing;
-    public Color MoonGetColor;
-    //public CounterSprite LevelCounter;
+
+	public CommandGraph commandGraph;
+	public SPPanel SPPanel;
     public int Level = 1;
-
-    //public List<int> HPLevelList;
-    //public List<int> QuarterLevelList;
-    //public List<int> AttackLevelList;
-    //public List<int> MagicLevelList;
-	
-    PlayerCommand CurrentCommand;
-
-    Player Player;
-    //public int NumQuarter { get; private set; }
+	public int TotalSP;
+	public int RemainSP;
     public int PlayerHP { get { return Player.HitPoint; } }
-    public int PlayerMaxHP { get { return Player.MaxHP; } }
-    public bool CanUseInvert { get { return Level >= 8; } }
+	public int PlayerMaxHP { get { return Player.MaxHP; } }
+	public bool PlayerIsDanger { get { return Player.IsDangerMode; } }
+    public bool CanUseInvert { get { return Level >= 6; } }
     public int WaitCount { get; private set; }
 
+	PlayerCommand CurrentCommand;
+	Player Player;
     float resultRemainTime;
+	int resultGainSP;
     readonly float DefaultResultTime = 0.4f;
 
 	// Use this for initialization
@@ -38,6 +33,12 @@ public class PlayerConductor : MonoBehaviour {
 	{
 	}
 
+	public void CheckResult( int sp )
+	{
+		resultGainSP = sp;
+		SPPanel.ShowSPPanel();
+	}
+
     public void UpdateResult()
     {
         resultRemainTime -= Time.deltaTime;
@@ -45,41 +46,52 @@ public class PlayerConductor : MonoBehaviour {
         {
             TextWindow.SetNextCursor( true );
         }
-        if( resultRemainTime <= 0 && Input.GetMouseButtonUp( 0 ) && commandGraph.CurrentButton != VoxButton.None )
-        {
-            TextWindow.SetNextCursor( false );
-            resultRemainTime = DefaultResultTime;
-            print( GameContext.FieldConductor.RState );
-            if( GameContext.FieldConductor.RState == ResultState.Command )
-            {
-                PlayerCommand acquiredCommand = commandGraph.CheckAcquireCommand( Level );
-                if( acquiredCommand != null )
-                {
-                    TextWindow.ChangeMessage( BattleMessageType.AcquireCommand, acquiredCommand.AcquireText );
-                    acquiredCommand.Acquire();
-                    commandGraph.Select( acquiredCommand );
-                    SEPlayer.Play( "newCommand" );
-                }
-                else
-                {
-                    GameContext.FieldConductor.MoveNextResult();
-                }
-            }
-            else
-            {
-                GameContext.FieldConductor.MoveNextResult();
-            }
-        }
     }
+
+	public void ProceedResult()
+	{
+		if( resultRemainTime <= 0 )
+		{
+			TextWindow.SetNextCursor(false);
+			resultRemainTime = DefaultResultTime;
+			print(GameContext.FieldConductor.RState);
+			if( GameContext.FieldConductor.RState == ResultState.StarPoint )
+			{
+				RemainSP += resultGainSP;
+				TotalSP += resultGainSP;
+				SPPanel.UpdateSP();
+				TextWindow.ChangeMessage(MessageCategory.Result, resultGainSP + "SPを　てにいれた！");
+				SEPlayer.Play("newCommand");
+				GameContext.FieldConductor.MoveNextResult();
+			}
+			else if( GameContext.FieldConductor.RState == ResultState.Command )
+			{
+				PlayerCommand acquiredCommand = commandGraph.CheckAcquireCommand(Level);
+				if( acquiredCommand != null )
+				{
+					TextWindow.ChangeMessage(MessageCategory.AcquireCommand, acquiredCommand.name + "が　習得可能になった！");
+					acquiredCommand.Acquire();
+					commandGraph.ShowAcquireCommand(acquiredCommand);
+					SEPlayer.Play("newCommand");
+				}
+				else
+				{
+					GameContext.FieldConductor.MoveNextResult();
+				}
+			}
+			else
+			{
+				GameContext.FieldConductor.MoveNextResult();
+			}
+		}
+	}
 
     void SetLevelParams()
     {
-        //NumQuarter = QuarterLevelList[Level - 1];
-        Player.HitPoint = 500 + Level * 100; //HPLevelList[Level - 1];
-        Player.BasePower = 50 + Level * 10; //AttackLevelList[Level - 1];
-        Player.BaseMagic = 50 + Level * 10; //MagicLevelList[Level - 1];
+        Player.HitPoint = 500 + Level * 100;
+        Player.BasePower = 50 + Level * 10;
+        Player.BaseMagic = 50 + Level * 10;
         Player.Initialize();
-        //LevelCounter.count = Level;
     }
 
     public void OnLevelUp()
@@ -87,15 +99,9 @@ public class PlayerConductor : MonoBehaviour {
         SetLevelParams();
         if( Level > 1 )
         {
-            TextWindow.ChangeMessage( BattleMessageType.Result, "オクスは　レベル" + Level + "に　あがった！" );
+            TextWindow.ChangeMessage( MessageCategory.Result, "オクスは　レベル" + Level + "に　あがった！" );
             resultRemainTime = DefaultResultTime;
             SEPlayer.Play( "levelUp" );
-            //PlayerCommand acquiredCommand = commandGraph.CheckAcquireCommand( Level );
-            //while( acquiredCommand != null )//&& acquiredCommand != commandGraph.InvertStrategy.Commands[0] )
-            //{
-            //    acquiredCommand.Acquire();
-            //    acquiredCommand = commandGraph.CheckAcquireCommand( Level );
-            //}
         }
     }
 
@@ -119,8 +125,8 @@ public class PlayerConductor : MonoBehaviour {
     {
         commandGraph.CheckCommand();
         CurrentCommand = commandGraph.CurrentCommand;
-        Player.TurnInit( CurrentCommand );
-		TextWindow.ChangeMessage(BattleMessageType.PlayerCommand, CurrentCommand.DescribeText + System.Environment.NewLine + CurrentCommand.DescribeText2);
+        Player.TurnInit( CurrentCommand.currentData );
+		TextWindow.ChangeMessage(MessageCategory.PlayerCommand, CurrentCommand.currentData.DescribeText);
         WaitCount = 0;
 	}
     public void CheckWaitCommand()
@@ -130,7 +136,7 @@ public class PlayerConductor : MonoBehaviour {
         Player.DefaultInit();
 		if( WaitCount == 0 )
 		{
-			TextWindow.ChangeMessage(BattleMessageType.PlayerWait, "オクスは　じっと　まっている");
+			TextWindow.ChangeMessage(MessageCategory.PlayerWait, "オクスは　つぎの　いってを　かんがえている");
 		}
         ++WaitCount;
 	}
@@ -167,14 +173,15 @@ public class PlayerConductor : MonoBehaviour {
 		AttackModule attack = Action.GetModule<AttackModule>();
         if( attack != null )
 		{
-            if( skill.isPlayerSkill )
-            {
-                commandGraph.OnReactEvent( attack.isPhysic ? IconReactType.OnAttack : IconReactType.OnMagic );
-            }
-            else
+            if( skill.isPlayerSkill == false )
             {
                 Player.BeAttacked( attack, skill );
-				GameContext.VoxSystem.AddVPVT((int)(attack.VP * Player.VPCoeff), (int)(attack.VT*Player.VTCoeff));
+				int vpDamage = (int)(attack.VP * Player.VPCoeff);
+				if( vpDamage < 0 )
+				{
+					GameContext.VoxSystem.AddVPVT(vpDamage, 0);
+					Player.VPDrained(attack, skill, -vpDamage);
+				}
                 isSucceeded = true;
             }
         }
@@ -213,11 +220,11 @@ public class PlayerConductor : MonoBehaviour {
 	}
     public void OnPlayerWin()
     {
-        Player.DefaultInit();
+		Player.DefaultInit();
     }
     public void OnPlayerLose()
     {
-        Player.DefaultInit();
+		Player.DefaultInit();
     }
     public void OnContinue()
     {

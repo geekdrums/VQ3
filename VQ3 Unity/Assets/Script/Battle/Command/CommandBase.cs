@@ -8,11 +8,10 @@ public class CommandBase : MonoBehaviour
 {
     public List<Skill> _skillList;
     public string _timingStr = "0 2 0";
-    public int PhysicDefend;
-    public int MagicDefend;
+	public int DefendPercent;
     public int HealPercent;
 
-    protected Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
+    public Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
 
     public virtual void Parse()
     {

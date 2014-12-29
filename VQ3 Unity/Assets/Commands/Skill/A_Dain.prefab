@@ -544,10 +544,13 @@ MonoBehaviour:
   isPlayerSkill: 1
   _actionStr:
   - Anim Select AttackAnim
-  - Attack 50 3 40 Anim 0
+  - Dain 50 2 40 Anim 0
   _rhythmStr: ta ta
   _rhythmBaseTime: 1
   _prefabs: []
+  animRandomRange: {x: 0, y: 0}
+  animRandomExcludeRange: {x: 0, y: 0}
+  characterAnimName: 
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

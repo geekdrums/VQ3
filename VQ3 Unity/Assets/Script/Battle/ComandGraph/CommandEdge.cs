@@ -7,7 +7,8 @@ public enum EdgeState
 	Linked,
 	PreLinked,
 	Unlinked,
-	//Unacquired
+	Unacquired,
+	DontKnow,
 	None,
 }
 
@@ -26,6 +27,7 @@ public class CommandEdge : MonoBehaviour {
 	LineRenderer line_;
 	EdgeState state_ = EdgeState.None;
 	public bool IsInvert { get { return Command1 is InvertCommand || Command2 is InvertCommand; } }
+	public bool IsUsable { get { return Command1.state <= CommandState.Acquired && Command2.state <= CommandState.Acquired; } }
 	public PlayerCommand Command1;
 	public PlayerCommand Command2;
 
@@ -50,52 +52,64 @@ public class CommandEdge : MonoBehaviour {
 		else if( Command2 == null ) Command2 = command;
 	}
 
-	public void Reset()
+	public EdgeState State
 	{
-		state_ = EdgeState.None;
-	}
-
-	public void SetState( EdgeState state, bool force = false )
-	{
-		if( (int)state < (int)state_ || force )
+		get { return state_; }
+		set
 		{
-			state_ = state;
-			switch( state_ )
 			{
-			case EdgeState.Linked:
-				if( IsInvert )
+				state_ = value;
+				switch( state_ )
 				{
-					line_.SetColors(InvertLinkedLineColor, InvertLinkedLineColor);
-				}
-				else
-				{
-					line_.SetColors(LinkedLineColor, LinkedLineColor);
-				}
-				line_.SetWidth(LinkedLineWidth, LinkedLineWidth);
-				break;
-			case EdgeState.PreLinked:
-				if( IsInvert )
-				{
-					line_.SetColors(InvertPrelinkedLineColor, InvertPrelinkedLineColor);
-				}
-				else
-				{
-					line_.SetColors(PrelinkedLineColor, PrelinkedLineColor);
-				}
-				line_.SetWidth(PrelinkedLineWidth, PrelinkedLineWidth);
-				break;
-			case EdgeState.Unlinked:
-				if( IsInvert )
-				{
-					line_.SetColors(InvertUnlinkedLineColor, InvertUnlinkedLineColor);
-				}
-				else
-				{
+				case EdgeState.Linked:
+					if( IsInvert )
+					{
+						line_.SetColors(InvertLinkedLineColor, InvertLinkedLineColor);
+					}
+					else
+					{
+						line_.SetColors(LinkedLineColor, LinkedLineColor);
+					}
+					line_.SetWidth(LinkedLineWidth, LinkedLineWidth);
+					break;
+				case EdgeState.PreLinked:
+					if( IsInvert )
+					{
+						line_.SetColors(InvertPrelinkedLineColor, InvertPrelinkedLineColor);
+					}
+					else
+					{
+						line_.SetColors(PrelinkedLineColor, PrelinkedLineColor);
+					}
+					line_.SetWidth(PrelinkedLineWidth, PrelinkedLineWidth);
+					break;
+				case EdgeState.Unlinked:
+					if( IsInvert )
+					{
+						line_.SetColors(InvertUnlinkedLineColor, InvertUnlinkedLineColor);
+					}
+					else
+					{
+						line_.SetColors(UnlinkedLineColor, UnlinkedLineColor);
+					}
+					line_.SetWidth(UnlinkedLineWidth, UnlinkedLineWidth);
+					break;
+				case EdgeState.Unacquired:
 					line_.SetColors(UnlinkedLineColor, UnlinkedLineColor);
+					line_.SetWidth(UnlinkedLineWidth, UnlinkedLineWidth);
+					break;
+				case EdgeState.DontKnow:
+					line_.SetWidth(0, 0);
+					break;
 				}
-				line_.SetWidth(UnlinkedLineWidth, UnlinkedLineWidth);
-				break;
 			}
 		}
+	}
+
+	public PlayerCommand GetOtherSide( PlayerCommand oneSide )
+	{
+		if( Command1 == oneSide ) return Command2;
+		else if( Command2 == oneSide ) return Command1;
+		else return null;
 	}
 }

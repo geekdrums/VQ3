@@ -15,12 +15,8 @@ public class RevertCommand : PlayerCommand
 	Vector3 centerEyePosition;
 
     void Start()
-    {
-        Parse();
-        IsLinked = false;
-        IsCurrent = false;
-        IsSelected = false;
-        if( linkLines == null ) linkLines = new List<CommandEdge>();
+	{
+		ValidateState();
         ValidatePosition();
         ValidateIcons();
         ValidateColor();
@@ -29,9 +25,6 @@ public class RevertCommand : PlayerCommand
     public override void ValidateIcons()
     {
         ValidatePosition();
-
-        string iconStr = "";
-        foreach( EStatusIcon ic in icons ) iconStr += ic.ToString();
 
         themeColor = EThemeColor.White;
         if( iconStr.Contains( 'A' ) )

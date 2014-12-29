@@ -6,7 +6,7 @@ public class JewelEnemy : Enemy
 {
     public override void BeAttacked( AttackModule attack, Skill skill )
     {
-        if( attack.isPhysic )
+        if( attack.type == AttackType.Dain )
         {
             base.BeAttacked( attack, skill );
         }

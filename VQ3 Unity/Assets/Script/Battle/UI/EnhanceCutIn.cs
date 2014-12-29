@@ -43,7 +43,7 @@ public class EnhanceCutIn : MonoBehaviour {
 	{
 		transform.localScale = Vector3.one;
 		Counter.CounterColor = Color.clear;
-		Text.text = "INVERT READY";
+		Text.text = "BREAK READY";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.white;
 		animation["EnhCutInAnim"].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);

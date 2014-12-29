@@ -8,7 +8,7 @@ using System.Text;
 public class InvertCommand : PlayerCommand
 {
     public int DepthLevel;
-	public bool IsLast { get { return DepthLevel >= 2; } }
+	public bool IsLast { get { return DepthLevel >= 1; } }
 
 	public MidairPrimitive CenterRect1 { get { return plane1.GetComponent<MidairPrimitive>(); } }
 	public MidairPrimitive CenterRect2 { get { return plane2.GetComponent<MidairPrimitive>(); } }
@@ -20,12 +20,8 @@ public class InvertCommand : PlayerCommand
     }
 
     void Start()
-    {
-        Parse();
-        IsLinked = false;
-        IsCurrent = false;
-        IsSelected = false;
-        if( linkLines == null ) linkLines = new List<CommandEdge>();
+	{
+		ValidateState();
         ValidatePosition();
         ValidateIcons();
         ValidateColor();
@@ -34,20 +30,72 @@ public class InvertCommand : PlayerCommand
     {
 
     }
-	protected override void UpdateIcon()
+	//protected override void UpdateIcon()
+	//{
+	//	if( Music.isJustChanged )
+	//	{
+	//		CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
+	//		float distance = (this.transform.position - SelectSpot).magnitude;
+	//		if( state >= CommandState.Linked )
+	//		{
+	//			transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;//temp
+	//		}
+	//		else
+	//		{
+	//			transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+	//		}
+	//	}
+	//	transform.rotation = Quaternion.identity;
+	//}
+
+	protected virtual void UpdateIcon()
 	{
 		if( Music.isJustChanged )
 		{
 			CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
-			float distance = ((ParentCommand != null ? ParentCommand.transform.position : this.transform.position) - SelectSpot).magnitude;
-			if( IsLinked )
+			float alpha = 0;
+			float distance = (this.transform.position - SelectSpot).magnitude;
+			if( GameContext.CurrentState == GameState.SetMenu || GameContext.CurrentState == GameState.Result )
 			{
-				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;//temp
+				CenterRect1.SetColor(Color.white);
+				CenterRect2.SetColor(Color.white);
+				GetComponent<MidairPrimitive>().SetColor(Color.white);
+				if( state <= CommandState.Acquired )
+				{
+					transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 1.0f;
+				}
+				else if( state <= CommandState.NotAcquired )
+				{
+					transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+					alpha = 0.85f;
+				}
+				else//DontKnow
+				{
+					transform.localScale = Vector3.zero;
+				}
+				levelCounter.transform.localScale = Vector3.one;
 			}
 			else
 			{
-				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+				CenterRect1.SetColor(Color.black);
+				CenterRect2.SetColor(Color.black);
+				GetComponent<MidairPrimitive>().SetColor(Color.black);
+				if( state <= CommandState.Linked )
+				{
+					transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+				}
+				else if( state <= CommandState.Acquired )
+				{
+					transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+					alpha = Mathf.Clamp((distance + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff, 0.7f, 1.0f);
+				}
+				else//NotAcquired,DontKnow
+				{
+					transform.localScale = Vector3.zero;
+				}
+				levelCounter.transform.localScale = Vector3.zero;
 			}
+			maskPlane.renderer.material.color = ColorManager.MakeAlpha(Color.black, alpha);
 		}
 		transform.rotation = Quaternion.identity;
 	}
@@ -56,7 +104,6 @@ public class InvertCommand : PlayerCommand
 #if UNITY_EDITOR
         if( !UnityEditor.EditorApplication.isPlaying ) return;
 #endif
-		if( ParentCommand != null ) return;
         UpdateIcon();
 
 		if( GameContext.VoxSystem.state != VoxState.Invert )

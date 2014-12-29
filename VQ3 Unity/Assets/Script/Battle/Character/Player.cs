@@ -6,25 +6,23 @@ public class Player : Character {
     public float DamageShake;
 
     public GameObject UIParent;
+	public CommandPanel commandPanel;
     public CommandGraph commandGraph;
     public BattlePanel[] BattlePanels;
     public HPPanel HPPanel;
 	public EnhanceCutIn EnhanceCutIn;
 	public float DangerPercentage;
-    //HPBar HPBar;
-    //EnhanceIcons EnhanceIcons;
-    //public GameObject DefendAnimPrefab;
+	public int DangerHysteresis = 15;
+
 	DamageText lastDamageText;
 	public bool IsDangerMode { get; protected set; }
+	Vector3 initialCommandPanelPosition;
 
-	// Use this for initialization
 	void Start()
     {
         Initialize();
-        //HPBar = UIParent.GetComponentInChildren<HPBar>();
-        //EnhanceIcons = UIParent.GetComponentInChildren<EnhanceIcons>();
         initialPosition = UIParent.transform.position;
-        //HPBar.OnTurnStart();
+		initialCommandPanelPosition = commandPanel.transform.position;
         HPPanel.OnBattleStart();
 	}
 	
@@ -34,12 +32,24 @@ public class Player : Character {
 		{
 			if ( (int)( damageTime/0.05f ) != (int)( (damageTime+Time.deltaTime)/0.05f ) )
 			{
-                UIParent.transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.1f, 2.0f ) * DamageShake;
+                UIParent.transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.2f, 2.0f ) * DamageShake;
 			}
 			damageTime -= Time.deltaTime;
 			if ( damageTime <= 0 )
 			{
                 UIParent.transform.position = initialPosition;
+				commandPanel.transform.position = initialCommandPanelPosition;
+			}
+		}
+		if( GameContext.VoxSystem.state != VoxState.Invert )
+		{
+			if( IsDangerMode )
+			{
+				if( HitPoint > MaxHP * (DangerPercentage + DangerHysteresis) / 100.0f )
+				{
+					float rate = (((float)HitPoint / MaxHP) - DangerPercentage)/DangerHysteresis;
+					Music.SetAisac(8, rate);
+				}
 			}
 		}
 	}
@@ -54,7 +64,7 @@ public class Player : Character {
         base.TurnInit( command );
         foreach( BattlePanel battlePannel in BattlePanels )
         {
-            battlePannel.Set( command as PlayerCommand );
+			battlePannel.Set((command as PlayerCommandData).OwnerCommand);
         }
         foreach( EnhanceParameter enhanceParam in ActiveEnhanceParams )
         {
@@ -74,7 +84,7 @@ public class Player : Character {
                 break;
             }
         }
-        HPPanel.OnTurnStart( command as PlayerCommand );
+		HPPanel.OnTurnStart((command as PlayerCommandData).OwnerCommand);
     }
     public override void BeAttacked(AttackModule attack, Skill skill)
     {
@@ -82,7 +92,7 @@ public class Player : Character {
         base.BeAttacked( attack, skill );
         int damage = oldHP - HitPoint;
 
-        if( attack.isPhysic )
+        if( attack.type == AttackType.Attack )
         {
 			SEPlayer.Play(ActionResult.PlayerPhysicDamage, skill.OwnerCharacter, damage);
         }
@@ -98,28 +108,24 @@ public class Player : Character {
 		{
 			GameObject damageText = (Instantiate(GameContext.EnemyConductor.damageTextPrefab) as GameObject);
 			lastDamageText = damageText.GetComponent<DamageText>();
-			lastDamageText.Initialize(damage, (attack.isPhysic ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage), skill.GetComponentInChildren<Animation>().transform.position + Vector3.back);
+			Transform textPos = skill.transform.FindChild("DamageTextPos");
+			if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().transform;
+			lastDamageText.Initialize(damage, (attack.type == AttackType.Attack ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage), textPos.position + Vector3.back);
 		}
     }
+	public void VPDrained( AttackModule attack, Skill skill, int drainVP )
+	{
+		GameObject damageText = (Instantiate(GameContext.EnemyConductor.damageTextPrefab) as GameObject);
+		Transform textPos = skill.transform.FindChild("DamageTextPos");
+		if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().transform;
+		damageText.GetComponent<DamageText>().Initialize(drainVP, ActionResult.VPDrain, textPos.position + Vector3.right * 5 + Vector3.down * 2);
+	}
     protected override void BeDamaged( int damage, Character ownerCharacter )
     {
         base.BeDamaged( damage, ownerCharacter );
 
 		HPPanel.OnDamage(damage);
 		CheckDangerMode();
-        //HPBar.OnDamage( damage );
-        commandGraph.OnReactEvent( IconReactType.OnDamage );
-        //TextWindow.ChangeMessage( BattleMessageType.Damage, "オクスは <color=red>" + damage + "</color> のダメージを　うけた" );
-        //if( damage <= 0 )
-        //{
-        //    (Instantiate( DefendAnimPrefab, ownerCharacter.transform.position + new Vector3( 0, 0, -0.1f ), DefendAnimPrefab.transform.rotation ) as GameObject).transform.parent = transform;
-        //    TextWindow.AddMessage( "オクスは　ぼうぎょで　うけきった" );
-        //}
-        //else
-        //{
-        //    HPBar.OnDamage( damage );
-        //    TextWindow.AddMessage( "オクスは " + damage + " のダメージを　うけた" );
-        //}
 
         if( HitPoint <= 0 )
         {
@@ -152,27 +158,22 @@ public class Player : Character {
         switch( enhance.type )
         {
         case EnhanceParamType.Brave:
-            commandGraph.OnReactEvent( IconReactType.OnBrave );
             BattlePanels[(int)EBattlePanelType.VT].SetEnhance( PhysicAttackEnhance );
 			EnhanceCutIn.Set("VT", enhance.phase, PhysicAttackEnhance.currentParam);
             break;
         case EnhanceParamType.Faith:
-            commandGraph.OnReactEvent( IconReactType.OnFaith );
             BattlePanels[(int)EBattlePanelType.VP].SetEnhance( MagicAttackEnhance );
 			EnhanceCutIn.Set("VP", enhance.phase, MagicAttackEnhance.currentParam);
             break;
         case EnhanceParamType.Shield:
-            commandGraph.OnReactEvent( IconReactType.OnShield );
             BattlePanels[(int)EBattlePanelType.DF].SetEnhance( DefendEnhance );
 			EnhanceCutIn.Set("DEF", enhance.phase, DefendEnhance.currentParam);
             break;
         case EnhanceParamType.Regene:
-            commandGraph.OnReactEvent( IconReactType.OnRegene );
             BattlePanels[(int)EBattlePanelType.HL].SetEnhance( HitPointEnhance );
 			EnhanceCutIn.Set("HEAL", enhance.phase, HitPointEnhance.currentParam);
             break;
         case EnhanceParamType.Esna:
-            commandGraph.OnReactEvent( IconReactType.OnEsna );
             break;
         }
         
@@ -195,7 +196,7 @@ public class Player : Character {
 		{
 			if( IsDangerMode )
 			{
-				if( HitPoint > MaxHP * (DangerPercentage + 10) / 100.0f )
+				if( HitPoint > MaxHP * (DangerPercentage + DangerHysteresis) / 100.0f )
 				{
 					IsDangerMode = false;
 					ColorManager.SetBaseColor(EBaseColor.Black);
@@ -218,8 +219,7 @@ public class Player : Character {
     public void OnBattleStart()
     {
         HitPoint = MaxHP;
-        PhysicDefend = 0;
-        MagicDefend = 0;
+        DefendPercent = 0;
         HealPercent = 0;
         TurnDamage = 0;
         HPPanel.OnBattleStart();

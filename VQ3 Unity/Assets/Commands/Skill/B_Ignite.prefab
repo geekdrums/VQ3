@@ -2249,16 +2249,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 1
   _actionStr:
-  - Anim Center IgniteAnim
-  - Magic 45 5 3 Center
-  - Magic 45 5 3 Right
-  - Magic 45 5 3 Left
-  - Magic 50 15 6 All
-  - Magic 55 15 6 All
-  - Magic 55 15 6 All,Weather Rain -15
+  - Anim All IgniteAnim
+  - Magic 55 6 3 Center
+  - Magic 55 6 3 Right
+  - Magic 55 6 3 Left
+  - Magic 55 16 5 All
+  - Magic 55 16 5 All
+  - Magic 65 16 5 All,Weather Rain -15
   _rhythmStr: ta nn nn ta nn nn ta nn nn ta nn nn ta nn nn ta nn nn ta
   _rhythmBaseTime: 4
   _prefabs: []
+  animRandomRange: {x: 0, y: 0}
+  animRandomExcludeRange: {x: 0, y: 0}
+  characterAnimName: 
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

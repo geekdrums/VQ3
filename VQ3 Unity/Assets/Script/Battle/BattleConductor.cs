@@ -47,22 +47,15 @@ public class BattleConductor : MonoBehaviour {
             UpdateBattle();
             if( Music.IsJustChangedAt( 0 ) && Music.CurrentBlockName == "endro" )
 			{
-                TextWindow.ClearTutorialMessage();
                 GameContext.VoxSystem.SetState( VoxState.SunSet );
 				GameContext.ChangeState( GameState.Endro );
-                TextWindow.ChangeMessage( BattleMessageType.Result, "てきを　たおした" );
+                TextWindow.ChangeMessage( MessageCategory.Result, "まもののむれを　たおした" );
 			}
             break;
 		case GameState.Endro:
             if( Music.IsJustChangedAt( 0, 2 ) )
             {
                 TextWindow.SetNextCursor( true );
-                //titleLogo.animation.Play();
-            }
-            if( !Music.IsPlaying() || ( Music.Just.totalUnit > 8 && Input.GetMouseButtonUp( 0 ) && GameContext.PlayerConductor.commandGraph.CurrentButton != VoxButton.None) )
-            {
-                ClearSkills();
-                GameContext.ChangeState( GameState.Field );
             }
             break;
         case GameState.Continue:
@@ -138,10 +131,12 @@ public class BattleConductor : MonoBehaviour {
         }
     }
 
-    void ClearSkills()
+    public void ClearSkills()
     {
         for( int i = 0; i < skillParent.transform.childCount; i++ )
-        {
+		{
+			Skill skill = skillParent.transform.GetChild(i).GetComponent<Skill>();
+			skill.OwnerCharacter.OnSkillEnd(skill);
             Destroy( skillParent.transform.GetChild( i ).gameObject );
         }
         Skills.Clear();
@@ -161,8 +156,7 @@ public class BattleConductor : MonoBehaviour {
 	}
 	public void OnPlayerLose()
     {
-        TextWindow.ClearTutorialMessage();
-        TextWindow.ChangeMessage( BattleMessageType.Result, "オクスは　ちからつきた" );
+        TextWindow.ChangeMessage( MessageCategory.Result, "オクスは　ちからつきた" );
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
         GameContext.VoxSystem.SetState( VoxState.SunSet );
@@ -172,8 +166,7 @@ public class BattleConductor : MonoBehaviour {
 	}
     public void OnPlayerRunaway()
     {
-        TextWindow.ClearTutorialMessage();
-        TextWindow.ChangeMessage( BattleMessageType.Result, "オクスは　にげだした" );
+        TextWindow.ChangeMessage( MessageCategory.Result, "オクスは　にげだした" );
         GameContext.PlayerConductor.OnPlayerLose();
         GameContext.EnemyConductor.OnPlayerLose();
         GameContext.VoxSystem.SetState( VoxState.SunSet );

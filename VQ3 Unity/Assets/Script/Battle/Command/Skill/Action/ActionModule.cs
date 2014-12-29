@@ -55,60 +55,40 @@ public class AnimModule : TargetModule
     }
 }
 
+public enum AttackType
+{
+	Attack,
+	Magic,
+	Dain,
+	Lacl,
+	Aura,
+	Igna,
+	Vox,
+}
+
 public class AttackModule : TargetModule
 {
-	public AttackModule( int Power, int VoxPoint, int VoxTime, bool isPhysic,
-        TargetType TargetType = TargetType.Left, int AnimIndex = -1 )
-        : base( TargetType, AnimIndex )
+	public AttackModule( int power, int vp, int vt, AttackType type,
+        TargetType target = TargetType.Left, int animIndex = -1 )
+		: base(target, animIndex)
 	{
-        this.Power = Power;
-        this.VP = VoxPoint;
-        this.VT = VoxTime;
-        this.isPhysic = isPhysic;
+		this.Power = power;
+		this.VP = vp;
+		this.VT = vt;
+		this.type = type;
 	}
 
     public int Power { get; private set; }
     public int VP { get; private set; }
     public int VT { get; private set; }
-    public bool isPhysic;
-}
+	public AttackType type;
+	public int DamageResult { get; private set; }
 
-/*
-public class MagicModule : TargetModule
-{
-    public MagicModule( int MagicPower, int VoxPoint, TargetType TargetType = TargetType.Left, int AnimIndex = -1 )
-        : base( TargetType, AnimIndex )
+	public void SetDamageResult( int res )
 	{
-		this.MagicPower = MagicPower;
-        this.VoxPoint = VoxPoint;
+		DamageResult = res;
 	}
-
-	public int MagicPower { get; private set; }
-    public int VoxPoint { get; private set; }
 }
-
-public class DefendModule : TargetModule
-{
-	public DefendModule( int DefendPower, TargetType targetType = TargetType.Self )
-        : base( targetType )
-	{
-		this.DefendPower = DefendPower;
-	}
-
-	public int DefendPower { get; private set; }
-}
-
-public class MagicDefendModule : TargetModule
-{
-    public MagicDefendModule( int MagicDefendPower, TargetType targetType = TargetType.Self )
-        : base( targetType )
-    {
-        this.MagicDefendPower = MagicDefendPower;
-    }
-
-    public int MagicDefendPower { get; private set; }
-}
-*/
 
 public class HealModule : TargetModule
 {
@@ -134,6 +114,19 @@ public class EnhanceModule : TargetModule
     public EnhanceParamType type { get; private set; }
     public int phase { get; private set; }
     public int turn { get; private set; }
+}
+
+public class DrainModule : TargetModule
+{
+	public DrainModule( float rate, int attackIndex, TargetType target = TargetType.Player )
+		: base(target)
+	{
+		this.Rate = rate;
+		this.AttackIndex = attackIndex;
+	}
+
+	public float Rate { get; private set; }
+	public int AttackIndex { get; private set; }
 }
 
 public class WeatherModule : IActionModule

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class Encounter : MonoBehaviour {
 
     public int Level;
+	public int AcquireStars;
     public GameObject[] Enemies;
     public EnemyConductor.StateSet[] StateSets;
-    public TutorialMessage tutorialMessage;
 
 	// Use this for initialization
 	void Start () {

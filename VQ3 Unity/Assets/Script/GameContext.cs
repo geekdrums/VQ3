@@ -5,16 +5,20 @@ using System.Collections.Generic;
 //Game State
 public enum GameState
 {
-    Intro,
+	Init,
+	Field,
+	SetMenu,
+	//AskMenu,
+	Intro,
+	Battle,
+	Continue,
     Endro,
-    Battle,
-    Continue,
-    Field,
     Result
 }
 public static class GameContext
 {
-    public static GameState CurrentState = GameState.Field;
+	public static GameState CurrentState = GameState.Init;
+	public static bool IsBattleState { get { return GameState.Intro <= CurrentState && CurrentState <= GameState.Endro; } }
     public static void ChangeState( GameState NewState )
     {
         GameState OldState = CurrentState;
@@ -37,9 +41,9 @@ public static class GameContext
         case GameState.Continue:
             EnemyConductor.OnContinue();
             PlayerConductor.OnContinue();
-            VoxSystem.SetState( VoxState.Sun );
+			FieldConductor.OnContinue();
             break;
-        case GameState.Field:
+		case GameState.Field:
             break;
         case GameState.Result:
             break;
@@ -51,25 +55,30 @@ public static class GameContext
 		{
         case GameState.Intro:
 			Music.Play( "BattleMusic", "intro" );
+			VoxSystem.SetState(VoxState.Sun);
 			ColorManager.SetBaseColor(EBaseColor.Black);
             PlayerConductor.OnBattleStarted();
+			VoxSystem.OnBattleStarted();
 			break;
 		case GameState.Endro:
-			//Music.Play( "IntroEndro", "endro" );
 			break;
 		case GameState.Battle:
-            //if ( Music.UseADX )
-            //{
-            //    Music.Play( PlayerConductor.NextStrategyName, PlayerConductor.NextBlockName );
-            //}
             break;
         case GameState.Continue:
             break;
         case GameState.Field:
-            //Music.Play( "fieldMusic" );
             break;
         case GameState.Result:
+			FieldConductor.CheckResult();
             break;
+		case GameState.SetMenu:
+			Music.Play("ambient");
+			PlayerConductor.SPPanel.ShowSPPanel();
+			PlayerConductor.SPPanel.ShowBattleButton();
+			PlayerConductor.commandGraph.CheckLinkedFromIntro();
+			TextWindow.ChangeMessage(MessageCategory.Help, "SPを割り振って　戦闘で使用するコマンドを　選ぶことができます。");
+			ColorManager.SetBaseColor(EBaseColor.Black);
+			break;
         }
     }
 

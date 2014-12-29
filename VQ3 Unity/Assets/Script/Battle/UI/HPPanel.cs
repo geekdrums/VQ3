@@ -74,7 +74,7 @@ public class HPPanel : MonoBehaviour {
 			DefendCircle.SetTargetSize(CurrentArc.Radius * defend);
             DefendCircle.SetColor( ColorManager.Theme.Shade );
         }
-        if( command.HealPercent > 0 )
+		if( command.currentData.HealPercent > 0 )
         {
             //CurrentHPCount.CounterColor = ColorManager.Theme.Light;
             MaxHPCount.CounterColor = ColorManager.Theme.Light;
