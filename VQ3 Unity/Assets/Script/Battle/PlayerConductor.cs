@@ -131,7 +131,7 @@ public class PlayerConductor : MonoBehaviour {
 	}
     public void CheckWaitCommand()
     {
-        commandGraph.CheckCommand();
+        //commandGraph.CheckCommand();
         CurrentCommand = null;
         Player.DefaultInit();
 		if( WaitCount == 0 )

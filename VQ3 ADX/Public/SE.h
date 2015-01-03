@@ -4,14 +4,14 @@
  *  Tool Ver.        : CRI Atom Craft LE Ver.1.32.00
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/SE.acb
  *  File Name        : SE.acb
- *  File Size        : 1,713,440 bytes
- *  Date Time        : 2014/12/29 13:43
+ *  File Size        : 1,817,696 bytes
+ *  Date Time        : 2014/12/30 5:24
  *  Target           : Public
- *  Cues             : 29
+ *  Cues             : 33
  *  CueSheet Comment : 
  *===========================================================================*/
 
-#define CRI_SE_CUENUM (29)
+#define CRI_SE_CUENUM (33)
 
 /* AISAC Control List (AISAC Control ID) */
 // No AISAC Control
@@ -45,8 +45,12 @@
 #define CRI_SE_JAM                 ( 25) /*   */
 #define CRI_SE_MAGICGOODDAMAGE     ( 26) /*   */
 #define CRI_SE_FOOTSTEP            ( 27) /*   */
-#define CRI_SE_BREATH              ( 28) /*   */
+#define CRI_SE_FLARE               ( 28) /*   */
 #define CRI_SE_POISONBREATH        ( 29) /*   */
+#define CRI_SE_BREATH              ( 30) /*   */
+#define CRI_SE_COMMANDLEVELDOWN    ( 31) /*   */
+#define CRI_SE_COMMANDLEVELUP      ( 32) /*   */
+#define CRI_SE_SPAWN               ( 33) /*   */
 
 /* Block List (Block Index) */
 

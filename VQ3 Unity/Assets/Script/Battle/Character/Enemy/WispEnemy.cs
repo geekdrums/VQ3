@@ -74,6 +74,7 @@ public class WispEnemy : Enemy {
 			if( skill.name.StartsWith("blackflare") )
 			{
 				isFlarePlaying = true;
+				SEPlayer.Play("flare");
 			}
 			break;
 		}
@@ -81,6 +82,19 @@ public class WispEnemy : Enemy {
 
 	public override void OnDead()
 	{
+		base.OnDead();
+
+		isFlarePlaying = false;
+		if( sunSpot_ != null )
+		{
+			Destroy(sunSpot_.gameObject);
+		}
+	}
+
+	public override void InvertInit()
+	{
+		base.InvertInit();
+
 		isFlarePlaying = false;
 		if( sunSpot_ != null )
 		{

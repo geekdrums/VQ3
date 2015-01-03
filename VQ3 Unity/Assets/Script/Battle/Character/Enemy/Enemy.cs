@@ -206,7 +206,7 @@ public class Enemy : Character
 			lastDamageText = null;
 		}
     }
-    public void InvertInit()
+    public virtual void InvertInit()
     {
 		DefendPercent = 0;
         HealPercent = 0;

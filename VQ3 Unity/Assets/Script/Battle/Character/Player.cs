@@ -159,19 +159,19 @@ public class Player : Character {
         {
         case EnhanceParamType.Brave:
             BattlePanels[(int)EBattlePanelType.VT].SetEnhance( PhysicAttackEnhance );
-			EnhanceCutIn.Set("VT", enhance.phase, PhysicAttackEnhance.currentParam);
+			EnhanceCutIn.Set("持続", enhance.phase, PhysicAttackEnhance.currentParam);
             break;
         case EnhanceParamType.Faith:
             BattlePanels[(int)EBattlePanelType.VP].SetEnhance( MagicAttackEnhance );
-			EnhanceCutIn.Set("VP", enhance.phase, MagicAttackEnhance.currentParam);
+			EnhanceCutIn.Set("充填", enhance.phase, MagicAttackEnhance.currentParam);
             break;
         case EnhanceParamType.Shield:
             BattlePanels[(int)EBattlePanelType.DF].SetEnhance( DefendEnhance );
-			EnhanceCutIn.Set("DEF", enhance.phase, DefendEnhance.currentParam);
+			EnhanceCutIn.Set("防御", enhance.phase, DefendEnhance.currentParam);
             break;
         case EnhanceParamType.Regene:
             BattlePanels[(int)EBattlePanelType.HL].SetEnhance( HitPointEnhance );
-			EnhanceCutIn.Set("HEAL", enhance.phase, HitPointEnhance.currentParam);
+			EnhanceCutIn.Set("回復", enhance.phase, HitPointEnhance.currentParam);
             break;
         case EnhanceParamType.Esna:
             break;

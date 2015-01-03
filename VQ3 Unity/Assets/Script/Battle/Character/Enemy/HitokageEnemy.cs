@@ -84,6 +84,7 @@ public class HitokageEnemy : Enemy {
 			if( skill.name.StartsWith("flare") )
 			{
 				isFlarePlaying = true;
+				SEPlayer.Play("flare");
 			}
 			break;
 		case "Spawn":

@@ -35,6 +35,7 @@ public class FieldConductor : MonoBehaviour {
     public float guiHeight;
     public Color guiColor;
 	public CommandExplanation CommandExp;
+	public GameObject TitleBase;
 
     public int encounterCount;
     public bool UseDebugPlay;
@@ -49,6 +50,7 @@ public class FieldConductor : MonoBehaviour {
     void Start()
     {
 		GameContext.FieldConductor = this;
+		Music.Play("ambient");
 
         LevelEncounters = new LevelEncounter[50];
         for( int i = 0; i < 50; i++ )
@@ -139,29 +141,70 @@ public class FieldConductor : MonoBehaviour {
         switch( GameContext.CurrentState )
         {
 		case GameState.Init:
-			if( GameContext.PlayerConductor.Level == 1 )
+			for( int i=1; i<=8; ++i )
 			{
-				GameContext.ChangeState(GameState.Field);
-			}
-			else
-			{
-				foreach( Encounter encounter in GetComponentsInChildren<Encounter>() )
+				if( Input.GetKeyUp(i.ToString()) )
 				{
-					if( encounter.Level < GameContext.PlayerConductor.Level )
-					{
-						GameContext.PlayerConductor.TotalSP += encounter.AcquireStars;
-						GameContext.PlayerConductor.RemainSP += encounter.AcquireStars;
-					}
+					GameContext.PlayerConductor.Level = i;
+					GameContext.PlayerConductor.OnLevelUp();
+					SEPlayer.Play("levelUp");
+					break;
 				}
-				GameContext.ChangeState(GameState.SetMenu);
-				CommandExp.SetEnemy(CurrentLevel.Encounters[encounterCount].Enemies[0].GetComponent<Enemy>());
+			}
+			if( Input.GetMouseButtonUp(0) )
+			{
+				TitleBase.GetComponent<MidairPrimitive>().SetTargetWidth(0);
+				TitleBase.GetComponentInChildren<TextMesh>().transform.localScale = Vector3.zero;
+				if( GameContext.PlayerConductor.Level == 1 )
+				{
+					GameContext.ChangeState(GameState.Field);
+				}
+				else
+				{
+					foreach( Encounter encounter in GetComponentsInChildren<Encounter>() )
+					{
+						if( encounter.Level < GameContext.PlayerConductor.Level )
+						{
+							GameContext.PlayerConductor.TotalSP += encounter.AcquireStars;
+							GameContext.PlayerConductor.RemainSP += encounter.AcquireStars;
+						}
+					}
+					foreach( PlayerCommand command in GameContext.PlayerConductor.commandGraph.CommandNodes )
+					{
+						command.ValidateState();
+						if( command.state != CommandState.DontKnow )
+						{
+							for( int i=command.currentLevel; i<command.commandData.Count; ++i )
+							{
+								int needSP = command.commandData[command.currentLevel].RequireSP - (command.currentLevel == 0 ? 0 : command.commandData[command.currentLevel-1].RequireSP);
+								if( needSP <= GameContext.PlayerConductor.RemainSP )
+								{
+									command.LevelUp();
+								}
+							}
+						}
+					}
+					GameContext.PlayerConductor.commandGraph.CheckLinkedFromIntro();
+					GameContext.PlayerConductor.SPPanel.UpdateSP();
+					GameContext.ChangeState(GameState.SetMenu);
+					CommandExp.SetEnemy(CurrentLevel.Encounters[encounterCount].Enemies[0].GetComponent<Enemy>());
+				}
 			}
 			break;
         case GameState.Field:
-			//if( Input.GetMouseButtonUp(0) )
-			//{
-			CheckEncount();
-			//}
+			if( GameContext.PlayerConductor.Level >= LevelEncounters.Length
+				|| encounterCount >= CurrentLevel.Encounters.Count )
+			{
+				TitleBase.GetComponent<MidairPrimitive>().SetColor(Color.Lerp(Color.black, ColorManager.Base.Shade, Music.MusicalSin(8, 0) * 0.5f));
+				if( Input.GetMouseButtonUp(0) && (Music.MusicalTime >= 4 || Music.numRepeat > 0 ) )
+				{
+					Application.OpenURL("https://docs.google.com/forms/d/1eQEAI-gyjPcVhSoO7zByygKQGEys51npxhBRlnXditU/viewform");
+				}
+			}
+			else
+			{
+				CheckEncount();
+			}
             break;
         case GameState.Result:
             GameContext.PlayerConductor.UpdateResult();
@@ -185,8 +228,6 @@ public class FieldConductor : MonoBehaviour {
 
     void CheckEncount()
 	{
-		if( GameContext.PlayerConductor.Level >= LevelEncounters.Length ) return;
-
         Music.Stop();
         TextWindow.SetNextCursor( false );
         GameContext.EnemyConductor.SetEncounter( CurrentLevel.Encounters[encounterCount] );
@@ -199,8 +240,19 @@ public class FieldConductor : MonoBehaviour {
         ++RState;
         if( RState == ResultState.End )
         {
-			GameContext.ChangeState(GameState.SetMenu);
-			CommandExp.SetEnemy(CurrentLevel.Encounters[encounterCount].Enemies[0].GetComponent<Enemy>());
+			if( encounterCount < CurrentLevel.Encounters.Count )
+			{
+				GameContext.ChangeState(GameState.SetMenu);
+				CommandExp.SetEnemy(CurrentLevel.Encounters[encounterCount].Enemies[0].GetComponent<Enemy>());
+			}
+			else
+			{
+				GameContext.ChangeState(GameState.Field);
+				Music.Play("ambient");
+				TitleBase.GetComponent<MidairPrimitive>().SetTargetWidth(20);
+				TitleBase.GetComponentInChildren<TextMesh>().transform.localScale = Vector3.one * 0.5f;
+				TitleBase.GetComponentInChildren<TextMesh>().text += System.Environment.NewLine + "<size=40>ëÃå±î≈çUó™é“ÇÃèÿÇ÷</size>";
+			}
         }
     }
 

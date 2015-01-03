@@ -243,6 +243,7 @@ public class CommandPanel : MonoBehaviour
 			{
 				Frame.SetSize(4.17f);
 				command_.LevelDown();
+				SEPlayer.Play("commandLevelDown");
 				SPPanel.Set(command_, true);
 				this.Show(transform.position, command_);
 				GameContext.PlayerConductor.commandGraph.CheckLinkedFromIntro();
@@ -252,6 +253,7 @@ public class CommandPanel : MonoBehaviour
 			{
 				Frame.SetSize(4.17f);
 				command_.LevelUp();
+				SEPlayer.Play("commandLevelUp");
 				SPPanel.Set(command_, true);
 				this.Show(transform.position, command_);
 				GameContext.PlayerConductor.commandGraph.CheckLinkedFromIntro();

@@ -183,7 +183,8 @@ MonoBehaviour:
   - name: Spawn
     pattern:
     - {fileID: 11400008}
-    nextState: 
+    - {fileID: 11400008}
+    nextState: Default
   conditions:
   - _conditions:
     - EnemyCount 0 1

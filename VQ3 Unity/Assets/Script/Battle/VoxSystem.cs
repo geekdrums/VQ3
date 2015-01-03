@@ -508,7 +508,7 @@ public class VoxSystem : MonoBehaviour{
                 }
                 targetMainLightScale = initialMainLightScale;
 
-                voxRing.SetTargetWidth( initialRingWidth );
+                voxRing.SetWidth( initialRingWidth );
                 voxRing.SetTargetSize( initialRingRadius );
 
                 break;

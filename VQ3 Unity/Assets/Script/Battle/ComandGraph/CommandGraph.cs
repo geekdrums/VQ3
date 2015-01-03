@@ -781,8 +781,11 @@ public class CommandGraph : MonoBehaviour {
 				CurrentRect.transform.localScale = Vector3.one;
 				CurrentRect.transform.localRotation = Quaternion.identity;
             }
-            AxisRing.SetAnimationSize( 6.7f, 7.5f );
-            Panel.Hide();
+			if( Music.CurrentBlockName != "wait" )
+			{
+				AxisRing.SetAnimationSize(6.7f, 7.5f);
+				Panel.Hide();
+			}
 			CommandSphere.collider.enabled = true;
         }
 

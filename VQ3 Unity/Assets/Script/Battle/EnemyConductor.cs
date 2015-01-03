@@ -226,7 +226,8 @@ public class EnemyConductor : MonoBehaviour {
             for( int i = 0; i < Enemies.Count; i++ ) Enemies[i].SetTargetPosition( GetSpawnPosition( i, Enemies.Count + 1 ) );
             SpawnEnemy( spawner.EnemyPrefab, spawner.InitialState, GetSpawnPosition( Enemies.Count, Enemies.Count + 1 ) );
             isSucceeded = true;
-            GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
+			GameContext.VoxSystem.SetTargetEnemy(targetEnemy);
+			SEPlayer.Play("spawn");
         }
         
 
