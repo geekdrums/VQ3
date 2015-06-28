@@ -1,11 +1,11 @@
 /*===========================================================================*
  *  Header file for Atom CueSheet Binary
  *  Project          : VQ3ADX
- *  Tool Ver.        : CRI Atom Craft LE Ver.1.32.00
+ *  Tool Ver.        : CRI Atom Craft LE Ver.2.13.00
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/SE.acb
  *  File Name        : SE.acb
- *  File Size        : 1,817,696 bytes
- *  Date Time        : 2014/12/30 5:24
+ *  File Size        : 1,818,912 bytes
+ *  Date Time        : 2015/01/18 16:30
  *  Target           : Public
  *  Cues             : 33
  *  CueSheet Comment : 

@@ -395,8 +395,8 @@ public class CommandGraph : MonoBehaviour {
         }
 		if( NextCommand != null )
 		{
-			NextRect.SetSize(6 + Music.MusicalSin(4));
-			NextRect.SetColor(Color.Lerp(Color.white, Color.clear, Music.MusicalSin(4) * 0.5f));
+			NextRect.SetSize(6 + Music.MusicalCos(4));
+			NextRect.SetColor(Color.Lerp(Color.white, Color.clear, Music.MusicalCos(4) * 0.5f));
 		}
     }
 
@@ -411,7 +411,7 @@ public class CommandGraph : MonoBehaviour {
 			CurrentButton = VoxButton.None;
 			if( IsOKButtonVisible )
 			{
-				if( hit.collider == CommandSphere.collider )
+				if( hit.collider == CommandSphere.GetComponent<Collider>() )
 				{
 					CurrentButton = VoxButton.OK;
 				}
@@ -419,7 +419,7 @@ public class CommandGraph : MonoBehaviour {
 			else
 			{
 				oldMousePosition = Input.mousePosition;
-				if( hit.collider == CommandSphere.collider && GameContext.VoxSystem.IsInverting == false )
+				if( hit.collider == CommandSphere.GetComponent<Collider>() && GameContext.VoxSystem.IsInverting == false )
 				{
 					CurrentButton = VoxButton.Ball;
 					if( Panel.state != CommandPanel.State.Show )
@@ -432,7 +432,7 @@ public class CommandGraph : MonoBehaviour {
         }
         else if( Input.GetMouseButtonUp( 0 ) )
         {
-			if( IsOKButtonVisible && hit.collider == CommandSphere.collider  && CurrentButton == VoxButton.OK )
+			if( IsOKButtonVisible && hit.collider == CommandSphere.GetComponent<Collider>()  && CurrentButton == VoxButton.OK )
 			{
 				PushOKButton();
 			}
@@ -469,7 +469,7 @@ public class CommandGraph : MonoBehaviour {
 					}
 				}
 			}
-			else if( hit.collider == AreaRect.collider )
+			else if( hit.collider == AreaRect.GetComponent<Collider>() )
 			{
 				if( Panel.state == CommandPanel.State.Show )
 				{
@@ -481,7 +481,7 @@ public class CommandGraph : MonoBehaviour {
         {
 			if( IsOKButtonVisible )
 			{
-				if( hit.collider == CommandSphere.collider && CurrentButton == VoxButton.OK )
+				if( hit.collider == CommandSphere.GetComponent<Collider>() && CurrentButton == VoxButton.OK )
 				{
 					AxisRing.SetTargetSize(7.0f);
 					AxisRing.SetTargetColor(ColorManager.Base.Light);
@@ -598,7 +598,7 @@ public class CommandGraph : MonoBehaviour {
 		switch( GameContext.CurrentState )
 		{
 		case GameState.Endro:
-			if( !Music.IsPlaying() || Music.Just.totalUnit > 8 )
+			if( !Music.IsPlaying || Music.Just.MusicalTime > 8 )
 			{
 				GameContext.BattleConductor.ClearSkills();
 				GameContext.ChangeState(GameState.Result);
@@ -617,7 +617,7 @@ public class CommandGraph : MonoBehaviour {
 			}
 			break;
 		case GameState.Continue:
-			if( !Music.IsPlaying() || Music.Just.totalUnit > 4 )
+			if( !Music.IsPlaying || Music.Just.MusicalTime > 4 )
 			{
 				GameContext.ChangeState(GameState.SetMenu);
 				GameContext.FieldConductor.OnPlayerLose();
@@ -635,7 +635,7 @@ public class CommandGraph : MonoBehaviour {
 		AxisRing.SetTargetArc(1.0f);
 		AxisRing.SetColor(ColorManager.Base.Shade);
 		Panel.Hide();
-		CommandSphere.collider.enabled = true;
+		CommandSphere.GetComponent<Collider>().enabled = true;
 	}
 
 	public void ShowAcquireCommand( PlayerCommand command )
@@ -689,7 +689,7 @@ public class CommandGraph : MonoBehaviour {
 
         if( NextCommand == null || NextCommand == IntroCommand )
         {
-            if( GameContext.VoxSystem.state == VoxState.Eclipse && GameContext.VoxSystem.IsReadyEclipse )
+            if( GameContext.VoxSystem.state == VoxState.Eclipse && GameContext.VoxSystem.IsOverFlow )
             {
                 foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
                 {
@@ -786,7 +786,7 @@ public class CommandGraph : MonoBehaviour {
 				AxisRing.SetAnimationSize(6.7f, 7.5f);
 				Panel.Hide();
 			}
-			CommandSphere.collider.enabled = true;
+			CommandSphere.GetComponent<Collider>().enabled = true;
         }
 
         VoxState desiredState = GetDesiredVoxState();
@@ -862,7 +862,7 @@ public class CommandGraph : MonoBehaviour {
 	{
 		NextCommand.Deselect();
 		NextCommand = null;
-		CommandSphere.collider.enabled = true;
+		CommandSphere.GetComponent<Collider>().enabled = true;
 		NextRect.transform.localScale = Vector3.zero;
 	}
 
@@ -870,11 +870,11 @@ public class CommandGraph : MonoBehaviour {
     {
 		if( command != IntroCommand )
 		{
-			CommandSphere.collider.enabled = false;
+			CommandSphere.GetComponent<Collider>().enabled = false;
 		}
 		if( ( CurrentCommand == IntroCommand || ( CurrentCommand is InvertCommand /*&& (CurrentCommand as InvertCommand).IsLast */) ) && command != IntroCommand )
 		{
-			IntroCommand.renderer.enabled = false;
+			IntroCommand.GetComponent<Renderer>().enabled = false;
 			foreach( CommandEdge line in IntroCommand.linkLines )
 			{
 				line.SetEnabled(false);
@@ -882,7 +882,7 @@ public class CommandGraph : MonoBehaviour {
 		}
 		else if( command == IntroCommand )
 		{
-			IntroCommand.renderer.enabled = true;
+			IntroCommand.GetComponent<Renderer>().enabled = true;
 			foreach( CommandEdge line in IntroCommand.linkLines )
 			{
 				line.SetEnabled(true);
@@ -939,7 +939,7 @@ public class CommandGraph : MonoBehaviour {
 
 	public void CheckLinkedFromIntro()
 	{
-		IntroCommand.renderer.enabled = true;
+		IntroCommand.GetComponent<Renderer>().enabled = true;
 		foreach( CommandEdge line in IntroCommand.linkLines )
 		{
 			line.SetEnabled(true);

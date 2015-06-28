@@ -10,7 +10,7 @@ public class JewelEnemy : Enemy
 		base.Update();
 		if( currentState.name == "Drain" )
 		{
-			spriteRenderer.color = Color.Lerp(Color.black, Color.yellow, Music.MusicalSin(4, 0)*1.0f);
+			spriteRenderer.color = Color.Lerp(Color.black, Color.yellow, Music.MusicalCos(4, 0)*1.0f);
 		}
 		else
 		{

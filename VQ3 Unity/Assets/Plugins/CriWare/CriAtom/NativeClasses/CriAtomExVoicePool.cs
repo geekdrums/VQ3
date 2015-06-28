@@ -2,17 +2,14 @@
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011 CRI Middleware Co., Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom Native Wrapper
- * File     : CriAtomVoicePool.cs
+ * File     : CriAtomExVoicePool.cs
  *
  ****************************************************************************/
-using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 /*==========================================================================
  *      CRI Atom Native Wrapper
@@ -22,146 +19,91 @@ using System.Text;
  * @{
  */
 
-public class CriAtomExVoicePool : IDisposable
+
+/**
+ * <summary>ボイスプールの制御を行うためのクラスです。</summary>
+ * \par 説明:
+ * ボイスプールの制御を行うためのクラスです。<br/>
+ */
+public class CriAtomExVoicePool
 {
-	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-	public struct StandardConfig
-	{
-		public uint identifier;
-		public int num_voices;
-		public int max_channels;
-		public int max_sampling_rate;
-		public bool streaming_flag;
-		public CriAtomEx.SoundRendererType sound_renderer_type;
-		public int decode_latency;
-	}
-
-	/**
-	 * <summary>標準ボイスプールの作成</summary>
-	 * <param name="numVoices">ボイス数</param>
-	 * <param name="maxChannels">最大チャンネル数</param>
-	 * <param name="maxSamplingRate">最大サンプリングレート</param>
-	 * <param name="streamingFlag">ストリーム再生を行うかどうか</param>
-	 * <returns>CriAtomExVoicePoolオブジェクト</returns>
-	 * \par 説明：
-	 * 標準ボイスプールを作成します。<br/>
-	 * （標準ボイスは、ADXデータとHCAデータの両方の再生に対応したボイスです。）<br/>
-	 * <br/>
-	 * 本関数を実行することで、ADXとHCAの再生が可能なボイスがプールされます。<br/>
-	 * AtomExプレーヤでADXやHCAデータ（もしくはADXやHCAデータを含むキュー）の再生を行うと、
-	 * AtomExプレーヤは作成された標準ボイスプールからボイスを取得し、再生を行います。<br/>
-	 * <br/>
-	 * ボイスプールの作成に成功すると、戻り値としてCriAtomExVoicePoolオブジェクトが返されます。<br/>
-	 * ボイスプールの作成に失敗すると、本関数は null を返します。<br/>
-	 * ボイスプールの作成に失敗した理由については、エラーコールバックのメッセージで確認可能です。<br/>
-	 * \par 備考:
-	 * ボイスプール作成時には、第1引数（ numVoices ）で指定した数のボイスが作成されます。<br/>
-	 * 作成するボイスの数が多いほど、同時に再生可能な音声の数は増えますが、
-	 * 反面、使用するメモリは増加します。<br/>
-	 * <br/>
-	 * ボイスプール作成時には、ボイス数の他に、再生可能な音声のチャンネル数、
-	 * サンプリング周波数、ストリーム再生の有無を指定します。<br/>
-	 * <br/>
-	 * 最大チャンネル数（第2引数の numChannels ）は、
-	 * ボイスプール内のボイスが再生できる音声データのチャンネル数になります。<br/>
-	 * チャンネル数を少なくすることで、ボイスプールの作成に必要なメモリサイズは小さくなりますが、
-	 * 指定されたチャンネル数を越えるデータは再生できなくなります。<br/>
-	 * 例えば、ボイスプールをモノラルで作成した場合、ステレオのデータは再生できません。<br/>
-	 * （ステレオデータを再生する場合、AtomExプレーヤは、
-	 * ステレオが再生可能なボイスプールからのみボイスを取得します。）<br/>
-	 * ただし、ステレオのボイスプールを作成した場合、モノラルデータ再生時にステレオ
-	 * ボイスプールのボイスが使用される可能性はあります。<br/>
-	 * <br/>
-	 * 最大サンプリングレート（第3引数の maxSamplingRate ）についても、
-	 * 値を下げることでもボイスプールに必要なメモリサイズは小さくすることが可能ですが、指
-	 * 定されたサンプリングレートを越えるデータは再生できなくなります。<br/>
-	 * （指定されたサンプリングレート以下のデータのみが再生可能です。）<br/>
-	 * <br/>
-	 * ストリーミング再生の有無（第4引数の streamingFlag ）についても、
-	 * オンメモリ再生のみのボイスプールはストリーミング再生可能なボイスプールに比べ、
-	 * サイズが小さくなります。<br/>
-	 * <br/>
-	 * 尚、AtomExプレーヤがデータを再生した際に、
-	 * ボイスプール内のボイスが全て使用中であった場合、
-	 * ボイスプライオリティによる発音制御が行われます。<br/>
-	 * \attention
-	 * 本関数を実行する前に、ライブラリを初期化しておく必要があります。<br/>
-	 * <br/>
-	 * ストリーム再生用のボイスプールは、内部的にボイスの数分だけローダ（ CriFsLoader ）
-	 * を確保します。<br/>
-	 * ストリーム再生用のボイスプールを作成する場合、ボイス数分のローダが確保できる設定で
-	 * ライブラリを初期化する必要があります。<br/>
-	 * <br/>
-	 * 本関数は完了復帰型の関数です。<br/>
-	 * ボイスプールの作成にかかる時間は、プラットフォームによって異なります。<br/>
-	 * ゲームループ等の画面更新が必要なタイミングで本関数を実行するとミリ秒単位で
-	 * 処理がブロックされ、フレーム落ちが発生する恐れがあります。<br/>
-	 * ボイスプールの作成／破棄は、シーンの切り替わり等、負荷変動を許容できる
-	 * タイミングで行うようお願いいたします。<br/>
-	 * \sa CriAtomExVoicePool::Dispose
-	 */
-	public static CriAtomExVoicePool AllocateStandardVoicePool(
-		int numVoices, int maxChannels, int maxSamplingRate, bool streamingFlag)
-	{
-		var config = new StandardConfig();
-		config.identifier = 0;
-		config.num_voices = numVoices;
-		config.max_channels = maxChannels;
-		config.max_sampling_rate = maxSamplingRate;
-		config.streaming_flag = streamingFlag;
-		config.sound_renderer_type = CriAtomEx.SoundRendererType.Default;
-		config.decode_latency = 0;
-		IntPtr handle = criAtomExVoicePool_AllocateStandardVoicePool(ref config, IntPtr.Zero, 0);
-		if (handle == IntPtr.Zero) {
-			return null;
-		}
-		return new CriAtomExVoicePool(handle);
-	}
-
-	/**
-	 * <summary>ボイスプールの破棄</summary>
-	 * \par 説明:
-	 * 作成済みのボイスプールを破棄します。<br/>
-	 * \attention
-	 * 本関数は完了復帰型の関数です。<br/>
-	 * 音声再生中にボイスプールを破棄した場合、本関数内で再生停止を待ってから
-	 * リソースの解放が行われます。<br/>
-	 * （ファイルから再生している場合は、さらに読み込み完了待ちが行われます。）<br/>
-	 * そのため、本関数内で処理が長時間（数フレーム）ブロックされる可能性があります。<br/>
-	 * ボイスプールの作成／破棄は、シーンの切り替わり等、負荷変動を許容できる
-	 * タイミングで行うようお願いいたします。<br/>
-	 * \sa CriAtomExVoicePool::AllocateStandardVoicePool
-	 */
-	public void Dispose()
-	{
-		criAtomExVoicePool_Free(this.handle);
-		GC.SuppressFinalize(this);
-	}
-
-	#region Internal Members
-
-	private CriAtomExVoicePool(IntPtr handle)
-	{
-		this.handle = handle;
-	}
-
-	~CriAtomExVoicePool()
-	{
-		this.Dispose();
-	}
-
-	private IntPtr handle;
+	/* @cond DOXYGEN_IGNORE */
+	public const int StandardMemoryAsrVoicePoolId		= 0;	/**< ASRによる標準メモリ再生ボイスプールID */
+	public const int StandardStreamingAsrVoicePoolId	= 1;	/**< ASRによる標準ストリーミング再生ボイスプールをID */
+	public const int StandardMemoryNsrVoicePoolId		= 2;	/**< NSRによる標準メモリ再生ボイスプールID */
+	public const int StandardStreamingNsrVoicePoolId	= 3;	/**< NSRによる標準ストリーミング再生ボイスプールID */
+	/* @endcond */
 	
-	#endregion
+	/**
+	 * <summary>プラグイン内部で生成するボイスプールへアクセスするためのID</summary>
+	 * \sa CriAtomExVoicePool.GetNumUsedVoices
+	 */
+	public enum VoicePoolId
+	{
+		/* 機種共通のボイスプールID */
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN  || UNITY_STANDALONE_OSX || UNITY_ANDROID || UNITY_IPHONE || UNITY_WIIU || UNITY_PS3 || UNITY_PS4
+		StandardMemory			= StandardMemoryAsrVoicePoolId,		/**< 機種標準のメモリ再生ボイスプールID */
+		StandardStreaming		= StandardStreamingAsrVoicePoolId,	/**< 機種標準のストリーミング再生ボイスプールID */
+#elif UNITY_PSP2
+		StandardMemory			= StandardMemoryNsrVoicePoolId,		/**< 機種標準のメモリ再生ボイスプールID */
+		StandardStreaming		= StandardStreamingNsrVoicePoolId,	/**< 機種標準のストリーミング再生ボイスプールID */
+#else
+		#error unsupported platform
+#endif
+		HcaMxMemory				= 4,								/**< HCA-MXメモリ再生ボイスプールID */
+		HcaMxStreaming			= 5,								/**< HCA-MXストリーミング再生ボイスプールID */
+		
+		/* 機種固有のボイスプールID */
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN  || UNITY_STANDALONE_OSX || UNITY_IPHONE || UNITY_PS3
+#elif UNITY_ANDROID
+		LowLatencyMemory		= StandardMemoryNsrVoicePoolId,		/**< [Android] 低遅延メモリ再生ボイスプールID */
+		LowLatencyStreaming		= StandardStreamingNsrVoicePoolId,	/**< [Android] 低遅延ストリーミング再生ボイスプールID */
+#elif UNITY_WIIU
+		StandardMemoryNsr		= StandardMemoryNsrVoicePoolId,		/**< [Wii U] NSRによる標準メモリ再生ボイスプールID */
+		StandardStreamingNsr	= StandardStreamingNsrVoicePoolId,	/**< [Wii U] NSRによる標準ストリーミング再生ボイスプールID */
+		AdpcmMemory				= 6,								/**< [Wii U] ADPCMメモリ再生ボイスプールID */
+#elif UNITY_PSP2
+		Atrac9Memory			= 6,								/**< [VITA] ATRAC9メモリ再生ボイスプールID */	
+		Atrac9Streaming			= 7,								/**< [VITA] ATRAC9ストリーミング再生ボイスプールID */
+#elif UNITY_PS4
+		Atrac9Memory			= 6,								/**< [PS4] ATRAC9メモリ再生ボイスプールID */	
+		Atrac9Streaming			= 7,								/**< [PS4] ATRAC9ストリーミング再生ボイスプールID */
+#else
+		#error unsupported platform
+#endif
+	}
+	
+	/**
+	 * <summary>ボイスプールのボイス使用状況を表すための構造体</summary>
+	 * \sa CriAtomExVoicePool.GetNumUsedVoices
+	 */
+	public struct UsedVoicesInfo
+	{
+		public int numUsedVoices;	/**< 使用中のボイス数 */
+		public int numPoolVoices;	/**< ボイスプールのボイス数 */
+	}
+	
+	/**
+	 * <summary>ボイスプールのボイス使用状況取得</summary>
+	 * <param name="voicePoolId">DSPバス設定の名前</param>
+	 * <returns>ボイス使用状況</returns>
+	 * \par 説明:
+	 * 指定されたボイスプールのボイス使用状況を取得します。
+	 * \attention
+	 * 本関数はデバッグ目的でのみ使用してください。
+	 * \sa CriAtomExVoicePool::VoicePoolId, CriAtomExVoicePool::UsedVoicesInfo
+	 */
+	static public UsedVoicesInfo GetNumUsedVoices(VoicePoolId voicePoolId)
+	{
+		UsedVoicesInfo info;
+		criAtomUnity_GetNumUsedVoices((int)voicePoolId, out info.numUsedVoices, out info.numPoolVoices);
+		return info;
+	}
 
 	#region DLL Import
 
 	[DllImport(CriWare.pluginName)]
-	private static extern IntPtr criAtomExVoicePool_AllocateStandardVoicePool(
-		ref StandardConfig config, IntPtr work, int work_size);
-
-	[DllImport(CriWare.pluginName)]
-	private static extern IntPtr criAtomExVoicePool_Free(IntPtr handle);
+	private static extern void criAtomUnity_GetNumUsedVoices(int voice_pool_id, out int num_used_voices, out int num_pool_voices);
 	
 	#endregion
 }

@@ -16,7 +16,7 @@ public class InvertCommand : PlayerCommand
 
     public override void SetLink( bool linked )
     {
-        base.SetLink( linked && (GameContext.VoxSystem.state == VoxState.Invert || GameContext.VoxSystem.IsReadyEclipse) );
+        base.SetLink( linked && (GameContext.VoxSystem.state == VoxState.Invert || GameContext.VoxSystem.IsOverFlow) );
     }
 
     void Start()
@@ -48,9 +48,9 @@ public class InvertCommand : PlayerCommand
 	//	transform.rotation = Quaternion.identity;
 	//}
 
-	protected virtual void UpdateIcon()
+	protected override void UpdateIcon()
 	{
-		if( Music.isJustChanged )
+		if( Music.IsJustChanged )
 		{
 			CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
 			float alpha = 0;
@@ -95,7 +95,7 @@ public class InvertCommand : PlayerCommand
 				}
 				levelCounter.transform.localScale = Vector3.zero;
 			}
-			maskPlane.renderer.material.color = ColorManager.MakeAlpha(Color.black, alpha);
+			maskPlane.GetComponent<Renderer>().material.color = ColorManager.MakeAlpha(Color.black, alpha);
 		}
 		transform.rotation = Quaternion.identity;
 	}
@@ -113,8 +113,8 @@ public class InvertCommand : PlayerCommand
 		}
 		else
 		{
-			CenterRect1.SetSize(7 + Music.MusicalSin(4) * 2 - 1);
-			CenterRect2.SetSize(9 + Music.MusicalSin(4,2) * 2 - 1);
+			CenterRect1.SetSize(7 + Music.MusicalCos(4) * 2 - 1);
+			CenterRect2.SetSize(9 + Music.MusicalCos(4, 2) * 2 - 1);
 		}
     }
 }

@@ -1,0 +1,35 @@
+public class SE {
+	 public const int PLAYERHEAL = (0);
+	 public const int PLAYERPHYSICDAMAGE = (1);
+	 public const int PHYSICGOODDAMAGE = (2);
+	 public const int PLAYERDEFEND = (3);
+	 public const int ENEMYHEAL = (4);
+	 public const int PHYSICDAMAGE = (5);
+	 public const int PHYSICBADDAMAGE = (6);
+	 public const int PHYSICNODAMAGE = (7);
+	 public const int MAGICBADDAMAGE = (8);
+	 public const int MAGICDAMAGE = (9);
+	 public const int MAGICNODAMAGE = (11);
+	 public const int PLAYERMAGICDAMAGE = (12);
+	 public const int SELECT = (13);
+	 public const int TICK = (14);
+	 public const int TICKBACK = (15);
+	 public const int RUNAWAY = (16);
+	 public const int NEWCOMMAND = (17);
+	 public const int QUARTER2 = (18);
+	 public const int QUARTER3 = (19);
+	 public const int QUARTER4 = (20);
+	 public const int MOON = (21);
+	 public const int LEVELUP = (22);
+	 public const int ENHANCE = (23);
+	 public const int INVERT = (24);
+	 public const int JAM = (25);
+	 public const int MAGICGOODDAMAGE = (26);
+	 public const int FOOTSTEP = (27);
+	 public const int FLARE = (28);
+	 public const int POISONBREATH = (29);
+	 public const int BREATH = (30);
+	 public const int COMMANDLEVELDOWN = (31);
+	 public const int COMMANDLEVELUP = (32);
+	 public const int SPAWN = (33);
+}

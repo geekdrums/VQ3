@@ -24,7 +24,6 @@ public class Enemy : Character
     public EnemySpecies Speceis;
     public List<BattleState> States;
     public StateChangeCondition[] conditions;
-    public int VPtolerance;
 	public float ShadowOffset = 4.5f;
 	public string ExplanationText;
     //public SpriteRenderer outlineSprite;
@@ -411,10 +410,10 @@ public class Enemy : Character
 	{
 		base.OnExecuted(skill, act);
 
-		if( skill.characterAnimName != "" && animation != null && animation.GetClip(skill.characterAnimName) != null )
+		if( skill.characterAnimName != "" && GetComponent<Animation>() != null && GetComponent<Animation>().GetClip(skill.characterAnimName) != null )
 		{
-			animation[skill.characterAnimName].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
-			animation.Play(skill.characterAnimName);
+			GetComponent<Animation>()[skill.characterAnimName].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+			GetComponent<Animation>().Play(skill.characterAnimName);
 		}
 	}
 	public virtual void OnDead()

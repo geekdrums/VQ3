@@ -51,15 +51,17 @@ public class RevertCommand : PlayerCommand
 #if UNITY_EDITOR
         if( !UnityEditor.EditorApplication.isPlaying ) return;
 #endif
-        UpdateIcon();
-		EyeArc.SetTargetArc((float)GameContext.VoxSystem.currentVP/VoxSystem.InvertVP);
+		if( GameContext.CurrentState < GameState.Intro ) return;
 
-		if( GameContext.VoxSystem.state != VoxState.Invert && GameContext.VoxSystem.IsReadyEclipse )
+        UpdateIcon();
+		EyeArc.SetTargetArc((float)GameContext.VoxSystem.currentVP/GameContext.EnemyConductor.InvertVP);
+
+		if( GameContext.VoxSystem.state != VoxState.Invert && GameContext.VoxSystem.IsOverFlow )
 		{
 			CenterRect.SetColor(Color.white);
 			EyeEdge.SetColor(Color.clear);
 			EyeArc.SetColor(Color.black);
-			GrowEdge.SetGrowSize(Music.MusicalSin(4)*2);
+			GrowEdge.SetGrowSize(Music.MusicalCos(4)*2);
 			Vector3 lookDirection = (SelectSpot - EyeArc.transform.position);
 			lookDirection.z = 0;
 			float distance = lookDirection.magnitude;

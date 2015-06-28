@@ -7,7 +7,6 @@ public class DamageText : CounterSprite {
     public Vector3 initialPosition { get; private set; }
 
     float time = 0;
-	ActionResult actionResult;
 	Color initialColor;
 
 	// Use this for initialization
@@ -49,11 +48,10 @@ public class DamageText : CounterSprite {
 		time = 0;
 	}
 
-    public void Initialize( int damage, ActionResult actResult, Vector3 initialPos )
+	public void Initialize(int damage, ActionResult actionResult, Vector3 initialPos)
     {
-		actionResult = actResult;
         Count = Mathf.Abs( damage );
-        switch( actResult )
+		switch( actionResult )
         {
         case ActionResult.MagicDamage:
         case ActionResult.PhysicDamage:

@@ -1,11 +1,11 @@
 /*===========================================================================*
  *  Header file for Atom CueSheet Binary
  *  Project          : VQ3ADX
- *  Tool Ver.        : CRI Atom Craft LE Ver.1.32.00
+ *  Tool Ver.        : CRI Atom Craft LE Ver.2.13.00
  *  File Path        : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/BattleMusic.acb
  *  File Name        : BattleMusic.acb
- *  File Size        : 8,208,352 bytes
- *  Date Time        : 2015/01/01 4:49
+ *  File Size        : 8,208,960 bytes
+ *  Date Time        : 2015/01/18 16:30
  *  Target           : Public
  *  Cues             : 4
  *  CueSheet Comment : 

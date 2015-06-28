@@ -127,7 +127,7 @@ public class Character : MonoBehaviour {
         TurnDamage += d;
         int RelativeMaxHP = (MaxHP < GameContext.PlayerConductor.PlayerMaxHP ? MaxHP : GameContext.PlayerConductor.PlayerMaxHP);
         damageTime += 0.15f + ((float)d / (float)RelativeMaxHP);
-        damageTime = Mathf.Min( damageTime, (float)Music.MusicTimeUnit * 8 );
+        damageTime = Mathf.Min( damageTime, (float)Music.MusicalTimeUnit * 8 );
     }
 	public virtual void Heal( HealModule heal )
 	{
@@ -189,7 +189,7 @@ public class Character : MonoBehaviour {
     }
     public virtual void UpdateHealHP()
     {
-        int mt = Music.Just.totalUnit;
+        int mt = Music.Just.MusicalTime;
         if( mt <= 0 ) return;
         else
         {

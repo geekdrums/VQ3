@@ -210,7 +210,7 @@ public class PlayerConductor : MonoBehaviour {
         Player.UpdateHealHP();
     }
 
-	public void OnReadyEclipse()
+	public void OnOverFlowed()
 	{
 		Player.EnhanceCutIn.SetReadyEclipse();
 	}

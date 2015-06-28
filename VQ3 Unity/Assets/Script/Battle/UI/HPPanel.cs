@@ -38,7 +38,7 @@ public class HPPanel : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-		if( Music.isJustChanged ) RedArc.renderer.enabled = Music.Just.totalUnit % 3 <= 1;
+		if( Music.IsJustChanged ) RedArc.GetComponent<Renderer>().enabled = Music.Just.MusicalTime % 3 <= 1;
 	}
 
 
@@ -63,7 +63,7 @@ public class HPPanel : MonoBehaviour {
 		CurrentArc.SetTargetArc( targetArcRate );
 		RedArc.SetTargetArc( targetArcRate );
 
-		float defend = (Player.DefendEnhParam + command.GetDefend()) / 100.0f;
+		float defend = (Player.DefendEnhParam + currentCommand_.GetDefend()) / 100.0f;
         if( defend <= 0 )
         {
             DefendCircle.SetTargetSize( 0.0f );
@@ -74,7 +74,7 @@ public class HPPanel : MonoBehaviour {
 			DefendCircle.SetTargetSize(CurrentArc.Radius * defend);
             DefendCircle.SetColor( ColorManager.Theme.Shade );
         }
-		if( command.currentData.HealPercent > 0 )
+		if( currentCommand_.currentData.HealPercent > 0 )
         {
             //CurrentHPCount.CounterColor = ColorManager.Theme.Light;
             MaxHPCount.CounterColor = ColorManager.Theme.Light;

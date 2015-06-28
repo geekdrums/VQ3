@@ -19,11 +19,11 @@ public class ShortTextWindow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if( textMesh.text == "" && animation.isPlaying )
+        if( textMesh.text == "" && GetComponent<Animation>().isPlaying )
         {
             textMesh.text = text;
         }
-        if( Music.isJustChanged )
+        if( Music.IsJustChanged )
         {
             --remainingMT;
         }

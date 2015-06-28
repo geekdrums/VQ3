@@ -6,7 +6,7 @@ public class DefendEffect : CommandEffect{
 	// Use this for initialization
 	void Start()
     {
-        animation["DefendAnim"].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
+		GetComponent<Animation>()["DefendAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
         Initialize();
 	}
 	
@@ -15,7 +15,7 @@ public class DefendEffect : CommandEffect{
 	void Update () {
         UpdateAnimation();
 
-        if( !animation.isPlaying )
+        if( !GetComponent<Animation>().isPlaying )
         {
             Destroy( gameObject );
         }

@@ -1,14 +1,33 @@
-/****************************************************************************
+﻿/****************************************************************************
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011 CRI Middleware Co., Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom for Unity
- * File	 : CriAtom.cs
+ * File	    : CriAtom.cs
  *
  ****************************************************************************/
+/*---------------------------
+ * Sequence Callback Defines
+ *---------------------------*/
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_ANDROID || UNITY_IPHONE
+	#define CRIWARE_SUPPORT_SEQUENCE_CALLBACK
+	/* Callback Implentation Defines */
+	#if UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_ANDROID
+		#define CRIWARE_CALLBACK_IMPL_NATIVE2MANAGED
+	#elif UNITY_IPHONE
+		#define CRIWARE_CALLBACK_IMPL_UNITYSENDMESSAGE
+	#else
+		#error supported platform must select one of callback implementations
+	#endif
+#elif UNITY_WIIU || UNITY_PSP2 || UNITY_PS3 || UNITY_PS4
+	#define CRIWARE_UNSUPPORT_SEQUENCE_CALLBACK
+#else
+	#error undefined platform if supporting sequence callback
+#endif
+
 using UnityEngine;
 using System;
 using System.Collections;
@@ -19,10 +38,7 @@ using System.IO;
 public static class CriAtomPlugin
 {
 	#region Version Info.
-	public const string criAtomUnityEditorVersion = "Ver.0.20.00";
-	/*
-	 * Ver.0.20.00	新規作成	
-	 */
+	public const string criAtomUnityEditorVersion = "Ver.0.21.03";
 	#endregion
 
 	#region Editor/Runtime共通
@@ -51,15 +67,62 @@ public static class CriAtomPlugin
 		int num_standard_memory_voices, int num_standard_streaming_voices,
 		int num_hca_mx_memory_voices, int num_hca_mx_streaming_voices,
 		int output_sampling_rate, bool uses_in_game_preview,
-		float server_frequency, uint buffering_time_ios)
+		float server_frequency)
 	{
 		criAtomUnity_SetConfigParameters(max_virtual_voices,
 			num_standard_memory_voices, num_standard_streaming_voices,
 			num_hca_mx_memory_voices, num_hca_mx_streaming_voices,
 			output_sampling_rate, uses_in_game_preview,
-			server_frequency, buffering_time_ios);
+			server_frequency);
 	}
 	
+	public static void SetConfigAdditionalParameters_IOS(uint buffering_time_ios, bool override_ipod_music_ios)
+	{
+		criAtomUnity_SetConfigAdditionalParameters_IOS(buffering_time_ios, override_ipod_music_ios);
+	}
+
+	public static void SetConfigAdditionalParameters_ANDROID(int num_low_delay_memory_voices, int num_low_delay_streaming_voices,
+															 int sound_buffering_time,		  int sound_start_buffering_time)
+	{
+		criAtomUnity_SetConfigAdditionalParameters_ANDROID(num_low_delay_memory_voices, num_low_delay_streaming_voices, 
+														   sound_buffering_time,		sound_start_buffering_time);
+	}
+
+	public static void SetConfigAdditionalParameters_VITA(int num_atrac9_memory_voices, int num_atrac9_streaming_voices, int num_mana_decoders)
+	{
+		#if !UNITY_EDITOR && UNITY_PSP2
+		criAtomUnity_SetConfigAdditionalParameters_VITA(num_atrac9_memory_voices, num_atrac9_streaming_voices, num_mana_decoders);
+		#endif
+	}
+
+	public static void SetConfigAdditionalParameters_PS4(int num_atrac9_memory_voices, int num_atrac9_streaming_voices)
+	{
+		#if !UNITY_EDITOR && UNITY_PS4
+		criAtomUnity_SetConfigAdditionalParameters_PS4(num_atrac9_memory_voices, num_atrac9_streaming_voices);
+		#endif
+	}
+
+	public static int GetRequiredMaxVirtualVoices(CriAtomConfig atomConfig)
+	{
+		/* バーチャルボイスは、全ボイスプールのボイスの合計値よりも多くなくてはならない */
+		int requiredVirtualVoices = 0;
+
+		requiredVirtualVoices += atomConfig.standardVoicePoolConfig.memoryVoices;
+		requiredVirtualVoices += atomConfig.standardVoicePoolConfig.streamingVoices;
+		requiredVirtualVoices += atomConfig.hcaMxVoicePoolConfig.memoryVoices;
+		requiredVirtualVoices += atomConfig.hcaMxVoicePoolConfig.streamingVoices;
+
+		#if UNITY_ANDROID
+		requiredVirtualVoices += atomConfig.androidLowLatencyStandardVoicePoolConfig.memoryVoices;
+		requiredVirtualVoices += atomConfig.androidLowLatencyStandardVoicePoolConfig.streamingVoices;
+		#elif UNITY_PSP2
+		requiredVirtualVoices += atomConfig.vitaAtrac9VoicePoolConfig.memoryVoices;
+		requiredVirtualVoices += atomConfig.vitaAtrac9VoicePoolConfig.streamingVoices;
+		#endif
+
+		return requiredVirtualVoices;
+	}
+
 	public static void InitializeLibrary()
 	{
 		/* 初期化カウンタの更新 */
@@ -133,7 +196,23 @@ public static class CriAtomPlugin
 		int num_standard_memory_voices, int num_standard_streaming_voices,
 		int num_hca_mx_memory_voices, int num_hca_mx_streaming_voices,
 		int output_sampling_rate, bool uses_in_game_preview,
-		float server_frequency, uint buffering_time_ios);
+		float server_frequency);
+
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomUnity_SetConfigAdditionalParameters_IOS(uint buffering_time_ios, bool override_ipod_music_ios);
+
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomUnity_SetConfigAdditionalParameters_ANDROID(int num_low_delay_memory_voices, int num_low_delay_streaming_voices,
+																				  int sound_buffering_time,		   int sound_start_buffering_time);
+	#if !UNITY_EDITOR && UNITY_PSP2
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomUnity_SetConfigAdditionalParameters_VITA(int num_atrac9_memory_voices, int num_atrac9_streaming_voices, int num_mana_decoders);
+	#endif
+    
+    #if !UNITY_EDITOR && UNITY_PS4
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomUnity_SetConfigAdditionalParameters_PS4(int num_atrac9_memory_voices, int num_atrac9_streaming_voices);
+	#endif
 
 	[DllImport(CriWare.pluginName)]
 	private static extern void criAtomUnity_Initialize();
@@ -152,6 +231,9 @@ public static class CriAtomPlugin
 	
 	[DllImport(CriWare.pluginName)]
 	public static extern void criAtomUnity_ControlDataCompatibility(int code);
+
+	[DllImport(CriWare.pluginName)]
+	public static extern void criAtomUnitySeqencer_SetEventCallback(IntPtr cbfunc, string gameobj_name, string func_name, string separator_string);
 
 	#endregion
 }
@@ -180,13 +262,20 @@ public class CriAtom : MonoBehaviour
 
 	/* @cond DOXYGEN_IGNORE */
 	public string acfFile = "";
-	public CriAtomExPlayer player = null;
 	public CriAtomCueSheet[] cueSheets = {};
 	public string dspBusSetting = "";
 	public bool dontDestroyOnLoad = false;
 	private static CriAtom instance {
 		get; set;
 	}
+#if CRIWARE_SUPPORT_SEQUENCE_CALLBACK
+	private static CriAtomExSequencer.EventCbFunc eventUserCbFunc = null;
+	#if CRIWARE_CALLBACK_IMPL_UNITYSENDMESSAGE
+	//  no use of  event queue since event is directly passed  from native to managed
+	#elif CRIWARE_CALLBACK_IMPL_NATIVE2MANAGED
+	private static Queue<string> eventQueue = new Queue<string>();
+	#endif
+#endif	
 	/* @endcond */
 
 	#region Functions
@@ -244,17 +333,20 @@ public class CriAtom : MonoBehaviour
 	 * <param name="name">キューシート名</param>
 	 * <param name="acbFile">ACBファイルパス</param>
 	 * <param name="awbFile">AWBファイルパス</param>
+	 * <param name="binder">バインダオブジェクト(オプション)</param>
 	 * <returns>キューシートオブジェクト</returns>
 	 * \par 説明:
 	 * 引数に指定したファイルパス情報を元にキューシートの追加を行います。<br/>
-	 * 同時に複数のキューシートを登録することが可能です。
+	 * 同時に複数のキューシートを登録することが可能です。<br/>
+	 * <br/>
+	 * 各ファイルパスに対して相対パスを指定した場合は StreamingAssets フォルダからの相対でファイルをロードします。<br/>
+	 * 絶対パス、あるいはURLを指定した場合には指定したパスでファイルをロードします。<br/>
+	 * <br/>
+	 * CPKファイルにパッキングされたACBファイルとAWBファイルからキューシートを追加する場合は、
+	 * binder引数にCPKをバインドしたバインダを指定してください。<br/>
+	 * なお、バインダ機能はADX2LEではご利用になれません。<br/>
 	 */
-	public static CriAtomCueSheet AddCueSheet(string name, string acbFile, string awbFile)
-	{
-		return CriAtom.instance.AddCueSheetInternal(name, acbFile, awbFile, null);
-	}
-	
-	public static CriAtomCueSheet AddCueSheet(string name, string acbFile, string awbFile, CriFsBinder binder)
+	public static CriAtomCueSheet AddCueSheet(string name, string acbFile, string awbFile, CriFsBinder binder = null)
 	{
 		return CriAtom.instance.AddCueSheetInternal(name, acbFile, awbFile, binder);
 	}
@@ -333,11 +425,15 @@ public class CriAtom : MonoBehaviour
 	 */
 	public static void SetBusAnalyzer(bool sw)
 	{
+	#if !UNITY_EDITOR && UNITY_PSP2	
+		// unsupported
+	#else
 		if (sw) {
 			CriAtomExAsr.AttachBusAnalyzer(50, 1000);
 		} else {
 			CriAtomExAsr.DetachBusAnalyzer();
 		}
+	#endif
 	}
 
 	/**
@@ -348,43 +444,18 @@ public class CriAtom : MonoBehaviour
 	public static CriAtomExAsr.BusAnalyzerInfo GetBusAnalyzerInfo(int bus)
 	{
 		CriAtomExAsr.BusAnalyzerInfo info;
+	#if !UNITY_EDITOR && UNITY_PSP2
+		info = new CriAtomExAsr.BusAnalyzerInfo(null);
+	#else
 		CriAtomExAsr.GetBusAnalyzerInfo(bus, out info);
+	#endif
 		return info;
-	}
-	
-	public static CriAtomExPlayback Play(CriAtomCueSheet cueSheet, string cueName)
-	{
-		CriAtom.instance.player.SetCue(cueSheet.acb, cueName);
-		return CriAtom.instance.player.Start();
-	}
-
-	public static CriAtomExPlayback Play(string cueName)
-	{
-		CriAtom.instance.player.SetCue(null, cueName);
-		return CriAtom.instance.player.Start();
-	}
-	
-	public static CriAtomExPlayback Play(CriAtomCueSheet cueSheet, int cueId)
-	{
-		CriAtom.instance.player.SetCue(cueSheet.acb, cueId);
-		return CriAtom.instance.player.Start();
-	}
-
-	public static CriAtomExPlayback Play(int cueId)
-	{
-		CriAtom.instance.player.SetCue(null, cueId);
-		return CriAtom.instance.player.Start();
-	}
-
-	public static void Stop()
-	{
-		CriAtom.instance.player.Stop();
 	}
 
 	#endregion // Functions
 
 	/* @cond DOXYGEN_IGNORE */
-	#region Internal
+	#region Functions for internal use
 
 	private void Setup()
 	{
@@ -402,20 +473,16 @@ public class CriAtom : MonoBehaviour
 		}
 		
 		foreach (var cueSheet in this.cueSheets) {
-			cueSheet.acb = this.LoadAcbFile(cueSheet.acbFile, cueSheet.awbFile);
+			cueSheet.acb = this.LoadAcbFile(null, cueSheet.acbFile, cueSheet.awbFile);
 		}
 
 		if (this.dontDestroyOnLoad) {
 			GameObject.DontDestroyOnLoad(this.gameObject);
 		}
-
-		this.player = new CriAtomExPlayer();
 	}
 
 	private void Shutdown()
 	{
-		this.player.Dispose();
-
 		foreach (var cueCheet in this.cueSheets) {
 			if (cueCheet.acb != null) {
 				cueCheet.acb.Dispose();
@@ -464,7 +531,30 @@ public class CriAtom : MonoBehaviour
 		}
 		this.Shutdown();
 	}
-	
+
+	private void Update()
+	{
+#if CRIWARE_SUPPORT_SEQUENCE_CALLBACK
+	#if CRIWARE_CALLBACK_IMPL_UNITYSENDMESSAGE
+		// no need to invoke the delegate since it will be invoked via the callback directly.
+	#elif CRIWARE_CALLBACK_IMPL_NATIVE2MANAGED
+		if (eventUserCbFunc != null) {
+			int numQues = eventQueue.Count;
+			string msg;
+			
+			for (int i=0;i<numQues;i++) {
+				/* キューイングされたイベントがあればそれを実行する */
+				lock (((ICollection)eventQueue).SyncRoot)
+				{
+					msg = eventQueue.Dequeue();	/* デキューの瞬間だけ排他制御を行う */
+				}
+				eventUserCbFunc(msg);
+			}
+		}
+	#endif
+#endif
+	}
+
 	public CriAtomCueSheet GetCueSheetInternal(string name)
 	{
 		for (int i = 0; i < this.cueSheets.Length; i++) {
@@ -492,7 +582,7 @@ public class CriAtom : MonoBehaviour
 		cueSheet.acbFile = acbFile;
 		cueSheet.awbFile = awbFile;
 		if (Application.isPlaying) {
-			cueSheet.acb = this.LoadAcbFile(acbFile, awbFile);
+			cueSheet.acb = this.LoadAcbFile(binder, acbFile, awbFile);
 		}
 		return cueSheet;
 	}
@@ -520,6 +610,8 @@ public class CriAtom : MonoBehaviour
 		this.cueSheets = cueSheets;
 	}
 
+	/* 古いキューシートを登録解除して、新しいキューシートの登録を行う。
+	 * ただし同じキューシートの再登録は回避する */
 	private void MargeCueSheet(CriAtomCueSheet[] newCueSheets)
 	{
 		for (int i = 0; i < this.cueSheets.Length; ) {
@@ -544,25 +636,66 @@ public class CriAtom : MonoBehaviour
 		}
 	}
 
-	private CriAtomExAcb LoadAcbFile(string acbFile, string awbFile)
+	private CriAtomExAcb LoadAcbFile(CriFsBinder binder, string acbFile, string awbFile)
 	{
 		if (String.IsNullOrEmpty(acbFile)) {
 			return null;
 		}
 
 		string acbPath = acbFile;
-		if (!Path.IsPathRooted(acbPath) && acbPath.IndexOf(':') < 0) {
+		if ((binder == null) && CriWare.IsStreamingAssetsPath(acbPath)) {
 			acbPath = Path.Combine(CriWare.streamingAssetsPath, acbPath);
 		}
 
 		string awbPath = awbFile;
 		if (!String.IsNullOrEmpty(awbPath)) {
-			if (!Path.IsPathRooted(awbPath) && awbPath.IndexOf(':') < 0) {
+			if ((binder == null) && CriWare.IsStreamingAssetsPath(awbPath)) {
 				awbPath = Path.Combine(CriWare.streamingAssetsPath, awbPath);
 			}
 		}
 
-		return CriAtomExAcb.LoadAcbFile(null, acbPath, awbPath);
+		return CriAtomExAcb.LoadAcbFile(binder, acbPath, awbPath);
+	}
+
+#if CRIWARE_SUPPORT_SEQUENCE_CALLBACK
+	public void EventCallbackFromNative(string eventString)
+	{
+		if (eventUserCbFunc != null) {
+	#if CRIWARE_CALLBACK_IMPL_UNITYSENDMESSAGE
+			eventUserCbFunc(eventString);
+	#elif CRIWARE_CALLBACK_IMPL_NATIVE2MANAGED
+			/* イベントのキューイング */
+			/* 備考) iOS以外はCRI Atom内のスレッドから呼び出されるため */
+			lock (((ICollection)eventQueue).SyncRoot)
+			{
+				eventQueue.Enqueue(eventString);
+			}
+	#endif
+		}
+	}
+#endif
+
+	/* プラグイン内部用API */
+	public static void SetEventCallback(CriAtomExSequencer.EventCbFunc func, string separator)
+	{
+
+#if CRIWARE_SUPPORT_SEQUENCE_CALLBACK
+		/* ネイティブプラグインに関数ポインタを登録 */
+		IntPtr ptr = IntPtr.Zero;
+		eventUserCbFunc = func;
+		if (func != null) {
+	#if CRIWARE_CALLBACK_IMPL_UNITYSENDMESSAGE
+			ptr = IntPtr.Zero;
+	#elif CRIWARE_CALLBACK_IMPL_NATIVE2MANAGED
+			CriAtomExSequencer.EventCbFunc localFunc;
+			localFunc = new CriAtomExSequencer.EventCbFunc(CriAtom.instance.EventCallbackFromNative);
+			ptr = Marshal.GetFunctionPointerForDelegate(localFunc);
+	#endif
+			CriAtomPlugin.criAtomUnitySeqencer_SetEventCallback(ptr, CriAtom.instance.gameObject.name, "EventCallbackFromNative", separator);		
+		}	
+#elif CRIWARE_UNSUPPORT_SEQUENCE_CALLBACK
+		Debug.LogError("This platform does not support event callback feature.");
+#endif
 	}
 
 	#endregion

@@ -2,7 +2,7 @@
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011 CRI Middleware Co., Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom for Unity

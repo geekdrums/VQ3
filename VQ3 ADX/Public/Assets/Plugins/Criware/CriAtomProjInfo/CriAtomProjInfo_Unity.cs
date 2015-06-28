@@ -2,13 +2,13 @@
 *
 * CRI Middleware SDK
 *
-* Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+* Copyright (c) 2011-2012 CRI Middleware Co., Ltd.
 *
 * Library  : CRI Atom
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
-* Tool Ver.          : CRI Atom Craft LE Ver.1.32.00
-* Date Time          : 2015/01/01 4:49
+* Tool Ver.          : CRI Atom Craft LE Ver.2.13.00
+* Date Time          : 2015/06/28 20:16
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *

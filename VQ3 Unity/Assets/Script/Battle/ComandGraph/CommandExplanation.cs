@@ -27,11 +27,11 @@ public class CommandExplanation : MonoBehaviour {
 			Destroy(IconParent.transform.GetChild(0).gameObject);
 		}
 		commandData_ = data;
-		CommandName.text = data.OwnerCommand.nameText.ToUpper();
-		CommandNameJP.text = data.OwnerCommand.name;
+		CommandName.text = commandData_.OwnerCommand.nameText.ToUpper();
+		CommandNameJP.text = commandData_.OwnerCommand.name;
 		CommandNameJP.transform.localPosition = CommandName.transform.localPosition + Vector3.right * 1.2f * (CommandName.text.Length + 1) + Vector3.down;
-		Explanation.text = data.ExplanationText;
-		GameObject iconObj = Instantiate(data.OwnerCommand.gameObject) as GameObject;
+		Explanation.text = commandData_.ExplanationText;
+		GameObject iconObj = Instantiate(commandData_.OwnerCommand.gameObject) as GameObject;
 		iconObj.transform.parent = IconParent.transform;
 		iconObj.transform.localPosition = Vector3.zero;
 		iconObj.transform.localScale = Vector3.one;

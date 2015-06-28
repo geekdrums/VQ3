@@ -24,8 +24,8 @@ public class EnhanceCutIn : MonoBehaviour {
 		Counter.CounterColor = (phase >= 0 ? ColorManager.Accent.Buff : ColorManager.Accent.DeBuff);
 		Text.color = (phase >= 0 ? ColorManager.Accent.Buff : ColorManager.Accent.DeBuff);
 		Text.anchor = TextAnchor.MiddleRight;
-		animation["EnhCutInAnim"].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
-		animation.Play();
+		GetComponent<Animation>()["EnhCutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+		GetComponent<Animation>().Play();
 	}
 
 	public void SetDanger()
@@ -35,8 +35,8 @@ public class EnhanceCutIn : MonoBehaviour {
 		Text.text = "DANGER";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.red;
-		animation["EnhCutInAnim"].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
-		animation.Play();
+		GetComponent<Animation>()["EnhCutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+		GetComponent<Animation>().Play();
 	}
 
 	public void SetReadyEclipse()
@@ -46,7 +46,7 @@ public class EnhanceCutIn : MonoBehaviour {
 		Text.text = "BREAK READY";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.white;
-		animation["EnhCutInAnim"].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
-		animation.Play();
+		GetComponent<Animation>()["EnhCutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+		GetComponent<Animation>().Play();
 	}
 }

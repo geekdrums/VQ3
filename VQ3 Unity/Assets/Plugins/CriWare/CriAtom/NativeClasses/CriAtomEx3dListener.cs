@@ -2,11 +2,11 @@
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011 CRI Middleware Co., Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom Native Wrapper
- * File     : CriAtomEx.cs
+ * File     : CriAtomEx3dListener.cs
  *
  ****************************************************************************/
 using System;

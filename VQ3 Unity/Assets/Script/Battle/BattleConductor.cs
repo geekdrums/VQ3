@@ -92,7 +92,7 @@ public class BattleConductor : MonoBehaviour {
         if( Music.CurrentBlockName == "wait" )
         {
         }
-        else if( Music.isJustChanged )
+        else if( Music.IsJustChanged )
         {
             GameContext.PlayerConductor.CheckSkill();
             GameContext.EnemyConductor.CheckSkill();

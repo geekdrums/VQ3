@@ -22,10 +22,10 @@ public class WeatherEnemy : Enemy
         SubstanceState = States[1].name;
         MaxDensityPoint = DensityPoint;
 
-        Color c = renderer.material.color;
+        Color c = GetComponent<Renderer>().material.color;
         currentAlpha = IsSubstance ? 1 : 0;
         c.a = currentAlpha;
-        renderer.material.color = c;
+        GetComponent<Renderer>().material.color = c;
         HPCircle.SetActive( false );
         weatherParticle.enableEmission = !IsSubstance;
     }
@@ -41,9 +41,9 @@ public class WeatherEnemy : Enemy
             d = targetAlpha - currentAlpha;
             if( Mathf.Abs( d ) <= 0.1f ) currentAlpha = targetAlpha;
 
-            Color c = renderer.material.color;
+            Color c = GetComponent<Renderer>().material.color;
             c.a = currentAlpha;
-            renderer.material.color = c;
+            GetComponent<Renderer>().material.color = c;
         }
     }
 
@@ -85,7 +85,7 @@ public class WeatherEnemy : Enemy
                     ChangeState( SubstanceState );
                     weatherParticle.enableEmission = false;
                     HPCircle.SetActive( true );
-                    renderer.material.color = GameContext.EnemyConductor.baseColor;
+                    GetComponent<Renderer>().material.color = GameContext.EnemyConductor.baseColor;
                 }
             }
             print( "DensityPoint is " + DensityPoint + "! (wm.Point = " + wm.Point + ")" ); 

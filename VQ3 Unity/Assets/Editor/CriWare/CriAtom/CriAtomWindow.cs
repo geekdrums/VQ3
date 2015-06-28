@@ -34,7 +34,7 @@ public sealed class CriAtomWindow : EditorWindow
 	#endregion
 
 	#region Functions
-	[MenuItem("CRI/Open CRI Atom Window ...")]
+	[MenuItem("CRI/Open CRI Atom Window", false, 100)]
 	static void OpenWindow()
 	{
 		EditorWindow.GetWindow<CriAtomWindow>(false, "CRI Atom");
@@ -139,7 +139,7 @@ public sealed class CriAtomWindow : EditorWindow
 				}
 				EditorGUILayout.EndScrollView();
 			} else {
-                EditorGUILayout.HelpBox( "Can not found(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error );
+				EditorGUILayout.HelpBox("Can not found(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error);
 			}
 		}
 	}
@@ -153,7 +153,7 @@ public sealed class CriAtomWindow : EditorWindow
 
 		EditorGUILayout.LabelField("Cue ID", this.selectedCueId.ToString());
 		if (CriAtomAcfInfo.acfInfo.acbInfoList == null || CriAtomAcfInfo.acfInfo.acbInfoList.Count <= (selectedCueSheetId)) {
-            EditorGUILayout.HelpBox( "Can not Get CueSheet Info!!!(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error );
+			EditorGUILayout.HelpBox("Can not Get CueSheet Info!!!(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error);
 			GUIImportAssetsFromAtomCraft();
 		} else {
 			var acbInfo = CriAtomAcfInfo.acfInfo.acbInfoList[selectedCueSheetId];
@@ -163,7 +163,7 @@ public sealed class CriAtomWindow : EditorWindow
 				EditorGUILayout.LabelField("Comment", cueInfo.comment, EditorStyles.wordWrappedLabel, GUILayout.Height(28));
 				EditorGUILayout.Space();
 			} else {
-                EditorGUILayout.HelpBox( "Can not Get Cue Info!!!(CueID:" + this.selectedCueId.ToString() + ")", MessageType.Error );
+				EditorGUILayout.HelpBox("Can not Get Cue Info!!!(CueID:" + this.selectedCueId.ToString() + ")", MessageType.Error);
 			}
 		}
 		#endregion
@@ -270,7 +270,7 @@ public sealed class CriAtomWindow : EditorWindow
 		this.windowRect = GUILayout.Window(0, windowRect, ScalingWindow, "resizeable", GUILayout.MinHeight(80), GUILayout.MaxHeight(200));
 		
 		if (CriAtomAcfInfo.acfInfo == null) {
-            EditorGUILayout.HelpBox( "Can not Get CueSheet Info!!!(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error );
+			EditorGUILayout.HelpBox("Can not Get CueSheet Info!!!(CueSheetID:" + this.selectedCueSheetId.ToString() + ")", MessageType.Error);
 			GUIImportAssetsFromAtomCraft();
 			return;
 		}
@@ -306,8 +306,8 @@ public sealed class CriAtomWindow : EditorWindow
 				}
 			}
 			GUILayout.EndHorizontal();
-
-            atomCraftOutputAssetsRootPath = GUILayout.TextArea( atomCraftOutputAssetsRootPath );
+		
+			atomCraftOutputAssetsRootPath = GUILayout.TextArea(atomCraftOutputAssetsRootPath);
 			//GUILayout.Label(Application.dataPath);
 		
 			if(GUILayout.Button("Update Assets of \"CRI Atom Craft\"")){
@@ -318,10 +318,10 @@ public sealed class CriAtomWindow : EditorWindow
                 try
                 {
                     CopyDirectory(atomCraftOutputAssetsRootPath, Application.dataPath);
-                    Debug.Log("Complete Update Assets of \"CRI Atom Craft\"");
+					Debug.Log("Complete Update Assets of \"CRI Atom Craft\"");
 
-                    //geekdrums MusicEngine
-                    UpdateBlockInfo();
+					//geekdrums MusicEngine
+					UpdateBlockInfo();
                 }
                 catch (Exception ex)
                 {
@@ -367,62 +367,63 @@ public sealed class CriAtomWindow : EditorWindow
 	        destDirName = destDirName + System.IO.Path.DirectorySeparatorChar;
 	
 	    string[] files = System.IO.Directory.GetFiles(sourceDirName);
-        foreach( string file in files )
-            System.IO.File.Copy( file,
-                destDirName + System.IO.Path.GetFileName( file ), true );
+	    foreach (string file in files)
+	        System.IO.File.Copy(file,
+	            destDirName + System.IO.Path.GetFileName(file), true);
+	
 	    string[] dirs = System.IO.Directory.GetDirectories(sourceDirName);
 	    foreach (string dir in dirs)
 	        CopyDirectory(dir, destDirName + System.IO.Path.GetFileName(dir));
 	}
 
-    //(((((((((((((((geekdrums MusicEngine(((((((((((((((
-    private void UpdateBlockInfo()
-    {
-        string sourceDirName = atomCraftOutputAssetsRootPath.Replace( "/Assets", "" );
-        string[] files = System.IO.Directory.GetFiles( sourceDirName );
-        foreach( string file in files )
-        {
-            if( file.EndsWith( "_acb_info.xml" ) )
-            {
-                string fileName = System.IO.Path.GetFileName( file );
-                GameObject musicObj = GameObject.Find( fileName.Replace( "_acb_info.xml", "" ) );
-                Music adxMusic = null;
-                if( musicObj != null )
-                {
-                    adxMusic = musicObj.GetComponent<Music>();
-                }
-                if( adxMusic != null )
-                {
-                    adxMusic.BlockInfos.Clear();
+	//(((((((((((((((geekdrums MusicEngine(((((((((((((((
+	private void UpdateBlockInfo()
+	{
+		string sourceDirName = atomCraftOutputAssetsRootPath.Replace("/Assets", "");
+		string[] files = System.IO.Directory.GetFiles(sourceDirName);
+		foreach( string file in files )
+		{
+			if( file.EndsWith("_acb_info.xml") )
+			{
+				string fileName = System.IO.Path.GetFileName(file);
+				GameObject musicObj = GameObject.Find(fileName.Replace("_acb_info.xml", ""));
+				Music adxMusic = null;
+				if( musicObj != null )
+				{
+					adxMusic = musicObj.GetComponent<Music>();
+				}
+				if( adxMusic != null )
+				{
+					adxMusic.BlockInfos.Clear();
 
-                    XmlReaderSettings settings = new XmlReaderSettings();
-                    settings.IgnoreWhitespace = true;
-                    settings.IgnoreComments = true;
-                    using( XmlReader reader = XmlReader.Create( System.IO.File.OpenText( file ), settings ) )
-                    {
-                        while( reader.Read() )
-                        {
-                            if( reader.GetAttribute( "Bpm" ) != null )
-                            {
-                                adxMusic.Tempo_ = double.Parse( reader.GetAttribute( "Bpm" ) );
-                            }
-                            if( adxMusic.Tempo_ > 0 && reader.GetAttribute( "BlockEndPositionMs" ) != null )
-                            {
-                                string blockName = reader.GetAttribute( "OrcaName" );
-                                int msec = int.Parse( reader.GetAttribute( "BlockEndPositionMs" ) );
-                                Music.BlockInfo blockInfo = new Music.BlockInfo( blockName, Mathf.RoundToInt( (msec / 1000.0f) / (4 * 60.0f / (float)adxMusic.Tempo_) ) );
-                                adxMusic.BlockInfos.Add( blockInfo );
-                            }
-                        }
-                        reader.Close();
-                    }
-                }
-                //else there are no Music component for this AtomSource.
-            }
-            //else this file is not _acb_info.
-        }
-    }
-    //(((((((((((((((geekdrums MusicEngine(((((((((((((((
+					XmlReaderSettings settings = new XmlReaderSettings();
+					settings.IgnoreWhitespace = true;
+					settings.IgnoreComments = true;
+					using( XmlReader reader = XmlReader.Create(System.IO.File.OpenText(file), settings) )
+					{
+						while( reader.Read() )
+						{
+							if( reader.GetAttribute("Bpm") != null )
+							{
+								adxMusic.Tempo = double.Parse(reader.GetAttribute("Bpm"));
+							}
+							if( adxMusic.Tempo > 0 && reader.GetAttribute("BlockEndPositionMs") != null )
+							{
+								string blockName = reader.GetAttribute("OrcaName");
+								int msec = int.Parse(reader.GetAttribute("BlockEndPositionMs"));
+								Music.BlockInfo blockInfo = new Music.BlockInfo(blockName, Mathf.RoundToInt((msec / 1000.0f) / (4 * 60.0f / (float)adxMusic.Tempo)));
+								adxMusic.BlockInfos.Add(blockInfo);
+							}
+						}
+						reader.Close();
+					}
+				}
+				//else there are no Music component for this AtomSource.
+			}
+			//else this file is not _acb_info.
+		}
+	}
+	//(((((((((((((((geekdrums MusicEngine(((((((((((((((
 
     static string ToBase64(string s)
     {

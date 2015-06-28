@@ -2,7 +2,7 @@
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011-2014 CRI Middleware Co.,Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom Native Wrapper
@@ -30,6 +30,8 @@ using System.Text;
  */
 public class CriAtomExPlayer : IDisposable
 {
+	public IntPtr nativeHandle {get {return this.handle;} }
+
 	/**
 	 * <summary>プレーヤステータス</summary>
 	 * \par 説明:
@@ -85,12 +87,6 @@ public class CriAtomExPlayer : IDisposable
 		public int maxPathStrings;
 		public int maxPath;
 		public bool updatesTime;
-	}
-	
-	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-	struct FaderConfig
-	{
-		int reserved;
 	}
 
 	/**
@@ -1252,6 +1248,26 @@ public class CriAtomExPlayer : IDisposable
 	{
 		criAtomExPlayer_SetBusSendLevelOffset(this.handle, busId, levelOffset);
 	}
+
+	/**
+	 * <summary>デバイスセンドレベルの設定</summary>
+	 * <param name="busId">デバイスID</param>
+	 * <param name="level">センドレベル値（0.0f～1.0f）</param>
+	 * \par 説明:
+	 * デバイスセンドレベルを指定します。<br/>
+	 * データ側にデバイスセンドレベルが設定されている場合、
+	 * データ側に設定されている値と本関数による設定値を<b>乗算</b>した値が適用されます。<br/>
+	 * データ側にデバイスセンドレベルが設定されていない場合、
+	 * 本関数による設定値がそのまま適用されます。<br/>
+	 * \par 備考:
+	 * 本関数は音声の出力デバイスが複数存在するプラットフォームでのみサポートされています。<br/>
+	 * 非対応プラットフォームで本関数を呼び出しても機能せず、エラーも発生しません。<br/>
+	 */
+	public void SetDeviceSendLevel(int deviceId, float level)
+	{
+		criAtomExPlayer_SetDeviceSendLevel(this.handle, deviceId, level);
+	}
+
 	/**
 	 * <summary>AISACコントロール値の設定（コントロール名指定）</summary>
 	 * <param name="controlName">コントロール名</param>
@@ -1396,7 +1412,7 @@ public class CriAtomExPlayer : IDisposable
 	 */
 	public void Set3dSource(CriAtomEx3dSource source)
 	{
-		criAtomExPlayer_Set3dSourceHn(this.handle, source.nativeHandle);
+		criAtomExPlayer_Set3dSourceHn(this.handle, (source == null) ? IntPtr.Zero : source.nativeHandle);
 	}
 	
 	/**
@@ -1446,7 +1462,7 @@ public class CriAtomExPlayer : IDisposable
 	 */
 	public void Set3dListener(CriAtomEx3dListener listener)
 	{
-		criAtomExPlayer_Set3dListenerHn(this.handle, listener.nativeHandle);
+		criAtomExPlayer_Set3dListenerHn(this.handle, ((listener == null) ? IntPtr.Zero : listener.nativeHandle));
 	}
 
 	/**
@@ -1520,6 +1536,22 @@ public class CriAtomExPlayer : IDisposable
 	public void SetFirstBlockIndex(int index)
 	{
 		criAtomExPlayer_SetFirstBlockIndex(this.handle, index);
+	}
+	
+	/**
+	 * <summary>セレクタ情報の設定</summary>
+	 * <param name="selector">セレクタ名</param>
+	 * <param name="label">ラベル名</param>
+	 * \par 説明:
+	 * セレクタ名とラベル名を指定して、プレーヤに設定します。<br>
+	 * トラックにセレクタラベルが指定されているキューを再生した場合、本関数で指定したセレクタラベル
+	 * と一致したトラックだけを再生します。<br>
+	 * プレーヤに設定したラベル情報の削除は CriAtomExPlayer::ResetParameters 関数を実行してください。<br>
+	 * \sa CriAtomExPlayer::ResetParameters
+	 */
+	public void SetSelectorLabel(string selector, string label)
+	{
+		criAtomExPlayer_SetSelectorLabel(this.handle, selector, label);
 	}
 
 	/**
@@ -1863,6 +1895,268 @@ public class CriAtomExPlayer : IDisposable
 	}
 
 	/**
+	 * <summary>プレーヤにフェーダを取り付ける</summary>
+	 * \par 説明:
+	 * プレーヤにフェーダをアタッチ（取り付け）し、
+	 * CriAtomExPlayerをクロスフェード専用のプレーヤに変化させます。<br>
+	 * （複数音の同時再生等、従来のCriAtomExPlayerの持つ機能が一部利用できなくなります。）<br>
+	 * <br>
+	 * 本関数でフェーダをアタッチしたプレーヤは、以降音声再生開始毎
+	 * （ ::CriAtomExPlayer::Start 関数や ::CriAtomExPlayer::Prepare 実行を実行する毎）に、
+	 * 以下の制御を行います。<br>
+	 * - 既にフェードアウト中の音があれば強制停止。
+	 * - 現在再生中（またはフェードイン中）の音声をフェードアウト。
+	 * - 新規に再生を開始する音声をフェードイン。
+	 * .
+	 * <br>
+	 * また、再生停止時（ ::CriAtomExPlayer::Stop 関数実行時）には、
+	 * 以下の制御を行います。<br>
+	 * - 既にフェードアウト中の音があれば強制停止。
+	 * - 現在再生中（またはフェードイン中）の音声をフェードアウト。
+	 * 
+	 * \endcode
+	 * \par 備考:
+	 * フェーダをアタッチするプレーヤが音声再生中の場合、本関数を実行したタイミングで
+	 * プレーヤが再生中の音声は全て停止されます。<br>
+	 * <br>
+	 * フェーダは、アタッチ中のプレーヤに対して ::CriAtomExPlayer::Start
+	 * 関数や、 ::CriAtomExPlayer::Stop 関数が実行される度、
+	 * 当該プレーヤで再生中の音声に対して以下の制御を行います。<br>
+	 * <br>
+	 * -# 既にフェードアウト中の音声が存在する場合、その音声を即座に停止する。
+	 * -# フェードイン中の音声（または再生中の音声）が存在する場合、
+	 * その音声をその時点の音量から ::CriAtomExPlayer::SetFadeOutTime 
+	 * 関数で指定された時間をかけてフェードアウトさせる。
+	 * -# ::CriAtomExPlayer::Start 関数が実行された場合、
+	 * プレーヤにセットされている音声データをボリューム0で再生開始し、
+	 * ::CriAtomExPlayer::SetFadeInTime 関数で指定された時間をかけてフェードインさせる。
+	 * .
+	 * <br>
+	 * （ ::CriAtomExPlayer::Start 関数の代わりに ::CriAtomExPlayer::Prepare 
+	 * 関数を使用した場合、ポーズを解除する時点で上記の制御が行われます。）<br>
+	 * \attention
+	 * 本関数を実行すると、CriAtomExPlayerに対する再生／停止操作が大きく変更されます。<br>
+	 * （フェーダアタッチ前後で挙動が大きく変わります。）<br>
+	 * 具体的には、同時に発音可能な音声の数が1音（クロスフェード中のみ2音）に限定され、
+	 * ::CriAtomExPlaybackId を用いた制御も行えなくなります。<br>
+	 * <br>
+	 * 本関数は、クロスフェード処理を行いたい場合にのみ必要となります。<br>
+	 * 1音だけのフェードイン／アウトについては、エンベロープやTweenをご利用ください。<br>
+	 * <br>
+	 * フェーダの動作仕様の都合上、フェードイン／アウトの処理対象となるのは、
+	 * 過去2回の音声再生のみです。<br>
+	 * それ以前に再生された音声は、 ::CriAtomExPlayer::Start 関数や
+	 * ::CriAtomExPlayer::Stop 関数が実行された時点で強制的に停止されます。<br>
+	 * 強制停止処理のタイミングで意図しないノイズが発生する恐れがありますので、
+	 * 同時再生数が3音以上にならないよう注意してください。<br>
+	 * <br>
+	 * フェードイン／アウトが機能するのは『AtomExプレーヤに対する操作』のみです。<br>
+	 * ::CriAtomExPlayer::Start 関数実行時に取得した再生IDに対し、
+	 * ::CriAtomExPlayback::Stop を実行しても、フェードアウトは行われません。<br>
+	 * （フェーダの設定が無視され、即座に停止処理が行われます。）<br>
+	 * \sa CriAtomExPlayer::DetachFader
+	 */
+	public void AttachFader()
+	{
+		criAtomExPlayer_AttachFader(this.handle, IntPtr.Zero, IntPtr.Zero, 0);
+	}
+
+	/**
+	 * <summary>プレーヤからフェーダを取り外す</summary>
+	 * \par 説明:
+	 * プレーヤからフェーダをデタッチ（取り外し）します。<br>
+	 * 本関数でフェーダをデタッチしたプレーヤには、以降フェードイン／アウトの処理が行われなくなります。<br>
+	 * \par 備考:
+	 * フェーダをデタッチするプレーヤが音声再生中の場合、本関数を実行したタイミングで
+	 * プレーヤが再生中の音声は全て停止されます。<br>
+	 * \sa CriAtomExPlayer::AttachFader
+	 */
+	public void DetachFader()
+	{
+		criAtomExPlayer_DetachFader(this.handle);
+	}
+
+	/**
+	 * <summary>フェードアウト時間の設定</summary>
+	 * <param name="ms">フェードアウト時間（ミリ秒指定）</param>
+	 * \par 説明:
+	 * フェーダをアタッチ済みのプレーヤに対し、フェードアウト時間を指定します。<br>
+	 * 次回音声再生時（ ::CriAtomExPlayer::Start 関数実行時）には、本関数で設定された
+	 * 時間で再生中の音声がフェードアウトします。<br>
+	 * <br>
+	 * フェードアウト時間のデフォルト値は 500 ミリ秒です。<br>
+	 * \par 備考:
+	 * フェードアウト時間が設定されている場合、CriAtomExPlayer は以下の順序で再生を停止します。<br>
+	 * <br>
+	 *	-# 指定された時間で音声のボリュームを 0 まで落とす。
+	 *	-# ボリュームが 0 の状態でディレイ時間が経過するまで再生を続ける。
+	 *	-# ディレイ時間経過後に再生を停止する。
+	 *	.
+	 * <br>
+	 * フェードアウト時のボリュームコントロールは、音声再生停止前に行われます。<br>
+	 * そのため、波形データにあらかじめ設定されたエンベロープのリリース時間は無視されます。<br>
+	 * （厳密には、ボリュームが 0 になってからエンベロープのリリース処理が適用されます。）<br>
+	 * <br>
+	 * 第2引数（ ms ）に 0 を指定する場合と、 -1
+	 * を指定する場合とでは、以下のように挙動が異なります。<br>
+	 * <br>
+	 *	- 0 指定時：即座にボリュームが 0 に落とされ、停止処理が行われる。
+	 *	- -1 指定時：ボリューム変更は行われず、停止処理が行われる。
+	 *	.
+	 * <br>
+	 * 再生停止時にフェードアウト処理を行わず、波形にあらかじめ設定されている
+	 * エンベロープのリリース処理を有効にしたい場合、第2引数（ ms ）に、
+	 * -1 を指定してください。<br>
+	 * -1 を指定することで、フェードアウト処理によるボリューム制御が行われなくなるため、
+	 * ::CriAtomExPlayer::Stop 関数実行後、ディレイ時間経過後に通常の停止処理が行われます。<br>
+	 * （波形データにエンベロープのリリースが設定されている場合、リリース処理が行われます。）<br>
+	 * \attention
+	 * 本関数を実行する前に、 ::CriAtomExPlayer::AttachFader 関数を使用して
+	 * あらかじめプレーヤにフェーダをアタッチしておく必要があります。<br>
+	 * <br>
+	 * 本関数で設定した値は、既に再生中の音声には一切影響しません。<br>
+	 * 本関数で設定したフェード時間は、本関数実行後に ::CriAtomExPlayer::Start 関数や
+	 * ::CriAtomExPlayer::Stop 関数を実行するタイミングで適用されます。<br>
+	 * （既にフェードアウトを開始している音声に対しては、
+	 * 本関数で後からフェードアウト時間を変更することはできません。）<br>
+	 * \sa CriAtomExPlayer::AttachFader, CriAtomExPlayer::SetFadeInTime
+	 */
+	public void SetFadeOutTime(int ms)
+	{
+		criAtomExPlayer_SetFadeOutTime(this.handle, ms);
+	}
+
+	/**
+	 * <summary>フェードイン時間の設定</summary>
+	 * <param name="ms">フェードイン時間（ミリ秒指定）</param>
+	 * \par 説明:
+	 * フェーダをアタッチ済みのプレーヤに対し、フェードイン時間を指定します。<br>
+	 * 次回音声再生時（ ::CriAtomExPlayer::Start 関数実行時）には、本関数で設定された
+	 * 時間で新規に音声がフェードイン再生されます。<br>
+	 * <br>
+	 * フェードイン時間のデフォルト値は 0 秒です。<br>
+	 * そのため、本関数を使用しない場合フェードインは行われず、即座にフルボリューム
+	 * で音声の再生が開始されます。<br>
+	 * \attention
+	 * 本関数を実行する前に、 ::CriAtomExPlayer::AttachFader 関数を使用して
+	 * あらかじめプレーヤにフェーダをアタッチしておく必要があります。<br>
+	 * <br>
+	 * 本関数で設定した値は、既に再生中の音声には一切影響しません。<br>
+	 * 本関数で設定したフェード時間は、本関数実行後に ::CriAtomExPlayer::Start 関数を
+	 * 実行するタイミングで適用されます。<br>
+	 * （既にフェードインを開始している音声に対しては、
+	 * 本関数で後からフェードイン時間を変更することはできません。）<br>
+	 * \sa CriAtomExPlayer::AttachFader, CriAtomExPlayer::SetFadeInTime
+	 */
+	public void SetFadeInTime(int ms)
+	{
+		criAtomExPlayer_SetFadeInTime(this.handle, ms);
+	}
+
+	/**
+	 * <summary>フェードイン開始オフセットの設定</summary>
+	 * <param name="ms">フェードイン開始オフセット（ミリ秒指定）</param>
+	 * \par 説明:
+	 * フェーダをアタッチ済みのプレーヤに対し、フェードイン開始オフセットを指定します。<br>
+	 * 本関数を使用することで、フェードインを開始するタイミングをフェードアウトに対して
+	 * 任意の時間早めたり、遅らせることが可能です。<br>
+	 * 例えば、フェードアウト時間を5秒、フェードイン開始オフセットを5秒に設定した場合、
+	 * フェードアウトが5秒で完了した直後に次の音声をフェードインさせることが可能です。<br>
+	 * 逆に、フェードイン時間を5秒、フェードイン開始オフセットを-5秒に設定した場合、
+	 * フェードインが5秒で完了した直後に再生中の音のフェードアウトを開始させることが可能です。<br>
+	 * <br>
+	 * フェードイン開始オフセットのデフォルト値は 0 秒です。<br>
+	 * （フェードインとフェードアウトが同時に開始されます。）<br>
+	 * \par 備考:
+	 * フェードイン開始のタイミングは、フェードインする音声の再生準備が整ったタイミングです。<br>
+	 * そのため、フェードイン開始オフセットが 0 秒に設定されている場合でも、フェードイン音声
+	 * のバッファリングに時間がかかる場合（ストリーム再生時等）には、フェードアウトの開始までに
+	 * しばらく時間がかかります。<br>
+	 * （本パラメータは、フェードインとフェードアウトのタイミングを調整するための相対値です。）<br>
+	 * \attention
+	 * 本関数を実行する前に、 ::CriAtomExPlayer::AttachFader 関数を使用して
+	 * あらかじめプレーヤにフェーダをアタッチしておく必要があります。<br>
+	 * <br>
+	 * 本関数で設定した値は、既に再生中の音声には一切影響しません。<br>
+	 * 本関数で設定したフェード時間は、本関数実行後に ::CriAtomExPlayer::Start 関数や
+	 * ::CriAtomExPlayer::Stop 関数を実行するタイミングで適用されます。<br>
+	 * （既にフェード処理を開始している音声に対しては、
+	 * 本関数で後からフェード処理のタイミングを変更することはできません。）<br>
+	 * \sa CriAtomExPlayer::AttachFader, CriAtomExPlayer::SetFadeInTime
+	 */
+	public void SetFadeInStartOffset(int ms)
+	{
+		criAtomExPlayer_SetFadeInStartOffset(this.handle, ms);
+	}
+
+	/**
+	 * <summary>フェードアウト後のディレイ時間の設定</summary>
+	 * <param name="ms">フェードアウト後のディレイ時間（ミリ秒指定）</param>
+	 * \par 説明:
+	 * フェードアウト完了後、ボイスを破棄するまでのディレイ時間を設定します。<br>
+	 * 本関数を使用することで、フェードアウトを終えたボイスが破棄されるまでのタイミングを任意に設定可能です。<br>
+	 * <br>
+	 * ディレイ時間のデフォルト値は 500 ミリ秒です。<br>
+	 * （フェードアウト音を再生するボイスは、ボリュームが 0 に設定された後、 500 ミリ秒後に破棄されます。）<br>
+	 * \par 備考:
+	 * 音声のフェードアウトが完了する前にボイスが停止されるプラットフォーム以外は、
+	 * 本関数を使用する必要はありません。<br>
+	 * \attention
+	 * 本関数を実行する前に、 ::CriAtomExPlayer::AttachFader 関数を使用して
+	 * あらかじめプレーヤにフェーダをアタッチしておく必要があります。<br>
+	 * <br>
+	 * 本関数で設定した値は、既に再生中の音声には一切影響しません。<br>
+	 * 本関数で設定したフェード時間は、本関数実行後に ::CriAtomExPlayer::Start 関数や
+	 * ::CriAtomExPlayer::Stop 関数を実行するタイミングで適用されます。<br>
+	 * （既にフェードアウトを開始している音声に対しては、
+	 * 本関数で後からフェードアウト後のディレイ時間を変更することはできません。）<br>
+	 * <br>
+	 * ボリュームの制御とボイスの停止が反映されるタイミングは、プラットフォームによって異なります。<br>
+	 * そのため、本関数に 0 を指定した場合、プラットフォームによってはボリュームの変更が反映される
+	 * 前にボイスが停止される恐れがあります。<br>
+	 * \sa CriAtomExPlayer::AttachFader
+	 */
+	public void SetFadeOutEndDelay(int ms)
+	{
+		criAtomExPlayer_SetFadeOutEndDelay(this.handle, ms);
+	}
+
+	/**
+	 * <summary>フェード処理中かどうかを取得</summary>
+	 * <returns>フェード処理中かどうか</returns>
+	 * \par 説明:
+	 * フェード処理が行われている最中かどうかを取得します。<br>
+	 * \par 備考:
+	 * 本関数は、以下の処理期間中 true を返します。<br>
+	 * - クロスフェード開始のための同期待ち中。
+	 * - フェードイン／フェードアウト処理中（ボリューム変更中）。
+	 * - フェードアウト完了後のディレイ期間中。
+	 */
+	public bool IsFading()
+	{
+		return criAtomExPlayer_IsFading(this.handle);
+	}
+
+	/**
+	 * <summary>フェーダパラメータの初期化</summary>
+	 * \par 説明:
+	 * フェーダに設定されている各種パラメータをクリアし、初期値に戻します。<br>
+	 * \attention
+	 * 本関数を実行する前に、 CriAtomExPlayer::AttachFader 関数を使用して
+	 * あらかじめプレーヤにフェーダをアタッチしておく必要があります。<br>
+	 * <br>
+	 * 本関数でフェーダパラメータをクリアしても、既に再生中の音声には一切影響しません。<br>
+	 * 本関数でクリアしたフェーダパラメータは、本関数実行後に CriAtomExPlayer::Start 関数や
+	 * CriAtomExPlayer::Stop 関数を実行するタイミングで適用されます。<br>
+	 * （既にフェード処理を開始している音声に対しては、
+	 * 本関数でクリアしたフェーダパラメータを適用することはできません。）<br>
+	 */
+	public void ResetFaderParameters()
+	{
+		criAtomExPlayer_ResetFaderParameters(this.handle);
+	}
+
+	/**
 	 * <summary>再生パラメータの更新（CriAtomExPlaybackオブジェクト単位）</summary>
 	 * <param name="playback"> CriAtomExPlaybackオブジェクト</param>
 	 * \par 説明:
@@ -2120,47 +2414,63 @@ public class CriAtomExPlayer : IDisposable
 		return criAtomExPlayer_GetParameterSint32(this.handle, id);
 	}
 
-	public void AttachFader()
+	/**
+	 * <summary>出力サウンドレンダラタイプの設定</summary>
+	 * <param name="type">出力先のサウンドレンダラタイプ</param>
+	 * \par 説明:
+	 * AtomExプレーヤの再生に使用するサウンドレンダラの種別を設定します。<br/>
+	 * 本設定を行ってから再生を開始すると、設定されたサウンドレンダラタイプで作成されたボイス
+	 * プールから再生可能なボイスを取得します。<br/>
+	 * サウンドレンダラタイプの設定はキューの再生単位で設定可能です。<br/>
+	 * \sa CriAtomEx.SoundRendererType
+	 */
+	public void SetSoundRendererType(CriAtomEx.SoundRendererType type)
 	{
-		FaderConfig config = new FaderConfig();
-		criAtomExPlayer_AttachFader(this.handle, ref config, IntPtr.Zero, 0);
+		criAtomExPlayer_SetSoundRendererType(this.handle, type);
 	}
 
-	public void DetachFader()
+	/**
+	 * <summary>乱数種の設定</summary>
+	 * <param name="seed">乱数種</param>
+	 * \par 説明:
+	 * AtomExプレーヤが保持する疑似乱数生成器に乱数種を設定します。<br>
+	 * 乱数種を設定することにより、各種ランダム再生処理に再現性を持たせることができます。<br>
+	 * <br>
+	 * \sa CriAtomEx.SetRandomSeed
+	 */
+	public void SetRandomSeed(uint seed)
 	{
-		criAtomExPlayer_DetachFader(this.handle);
+		criAtomExPlayer_SetRandomSeed(this.handle, seed);
 	}
 
-	public void SetFadeOutTime(int ms)
+	/**
+	 * <summary>ループ再生の切り替え</summary>
+	 * <param name="sw">ループスイッチ（true: ループモード、false: ループモード解除）</param>
+	 * \par 説明:
+	 * ループポイントを持たない波形データに対し、ループ再生のON/OFFを切り替えます。<br/>
+	 * デフォルトはループOFFです。<br/>
+	 * ループ再生をONにした場合は、音声終端まで再生しても再生は終了せず先頭に戻って再生を繰り返します。<br/>
+	 * \attention
+	 * 本関数の設定は波形データに対して適用されます。<br/>
+	 * シーケンスデータに対して本関数を実行した場合、
+	 * シーケンスデータ内の個々の波形データがループ再生される形になります。<br/>
+	 * <br/>
+	 * 本関数による指定は、ループポイントを持たない波形データに対してのみ有効です。<br/>
+	 * ループポイントを持つ波形データを再生する場合、本関数の指定に関係なく、
+	 * 波形データのループ位置に従ってループ再生が行われます。<br/>
+	 * <br/>
+	 * 本関数は内部的にシームレス連結再生機能を使用します。<br/>
+	 * そのため、シームレス連結再生に未対応のフォーマット（HCA-MX等）を使用した場合、
+	 * ループ位置にある程度の無音が入る形になります。<br/>
+	 * <br/>
+	 * ループスイッチの変更は、再生開始前にのみ可能です。<br/>
+	 * 再生中のプレーヤに対してループスイッチを変更することはできません。<br/>
+	 */
+	public void Loop(bool sw)
 	{
-		criAtomExPlayer_SetFadeOutTime(this.handle, ms);
+		criAtomExPlayer_Loop(this.handle, sw);
 	}
 
-	public void SetFadeInTime(int ms)
-	{
-		criAtomExPlayer_SetFadeInTime(this.handle, ms);
-	}
-
-	public void SetFadeInStartOffset(int ms)
-	{
-		criAtomExPlayer_SetFadeInStartOffset(this.handle, ms);
-	}
-
-	public void SetFadeOutEndDelay(int ms)
-	{
-		criAtomExPlayer_SetFadeOutEndDelay(this.handle, ms);
-	}
-
-	public bool IsFading()
-	{
-		return criAtomExPlayer_IsFading(this.handle);
-	}
-
-	public void ResetFaderParameters()
-	{
-		criAtomExPlayer_ResetFaderParameters(this.handle);
-	}
-	
 	/* Old APIs */
 	public void Stop() { criAtomExPlayer_Stop(this.handle); }
 	public void StopWithoutReleaseTime() { criAtomExPlayer_StopWithoutReleaseTime(this.handle); }
@@ -2294,6 +2604,10 @@ public class CriAtomExPlayer : IDisposable
 		IntPtr player, int bus_id, float level_offset);
 
 	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExPlayer_SetDeviceSendLevel(
+		IntPtr player, int device_id, float level);
+	
+	[DllImport(CriWare.pluginName)]
 	private static extern void criAtomExPlayer_SetBandpassFilterParameters(
 		IntPtr player, float cof_low, float cof_high);
 	
@@ -2361,36 +2675,49 @@ public class CriAtomExPlayer : IDisposable
 		IntPtr player, float susutain_level);
 	
 	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExPlayer_AttachFader(
+		IntPtr player, IntPtr config, IntPtr work, int work_size);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExPlayer_DetachFader(IntPtr player);
+
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExPlayer_SetFadeOutTime(IntPtr player, int ms);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExPlayer_SetFadeInTime(IntPtr player, int ms );
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExPlayer_SetFadeInStartOffset(IntPtr player, int ms);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExPlayer_SetFadeOutEndDelay(IntPtr player, int ms);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern bool criAtomExPlayer_IsFading(IntPtr player);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExPlayer_ResetFaderParameters(IntPtr player);
+
+	[DllImport(CriWare.pluginName)]
 	private static extern bool criAtomExPlayer_GetAttachedAisacInfo(
 		IntPtr player, int aisac_attached_index, IntPtr aisac_info);
 	
 	[DllImport(CriWare.pluginName)]
 	private static extern void criAtomExPlayer_SetFirstBlockIndex(IntPtr player, int index);
-
-	[DllImport(CriWare.pluginName)]
-	private static extern void criAtomExPlayer_AttachFader(
-		IntPtr player, ref FaderConfig config, IntPtr work, int work_size);
-
-	[DllImport(CriWare.pluginName)]
-	private static extern void criAtomExPlayer_DetachFader(IntPtr player);
 	
 	[DllImport(CriWare.pluginName)]
-	private static extern void criAtomExPlayer_SetFadeOutTime(IntPtr player, int ms);
+	private static extern void criAtomExPlayer_SetSelectorLabel(IntPtr player, string selector, string label);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExPlayer_SetSoundRendererType(IntPtr player, CriAtomEx.SoundRendererType type);
 
 	[DllImport(CriWare.pluginName)]
-	private static extern void criAtomExPlayer_SetFadeInTime(IntPtr player, int ms);
+	private static extern void criAtomExPlayer_SetRandomSeed(IntPtr player, uint seed);
 
 	[DllImport(CriWare.pluginName)]
-	private static extern void criAtomExPlayer_SetFadeInStartOffset(IntPtr player, int ms);
+	private static extern void criAtomExPlayer_Loop(IntPtr player, bool sw);
 
-	[DllImport(CriWare.pluginName)]
-	private static extern void criAtomExPlayer_SetFadeOutEndDelay(IntPtr player, int ms);
-
-	[DllImport(CriWare.pluginName)]
-	private static extern bool criAtomExPlayer_IsFading(IntPtr player);
-
-	[DllImport(CriWare.pluginName)]
-	private static extern void criAtomExPlayer_ResetFaderParameters(IntPtr player);
 	#endregion
 }
 
@@ -2516,7 +2843,7 @@ public struct CriAtomExPlayback
 	 * 再生中の音声がポーズ中かどうかを返します。<br/>
 	 * \sa CriAtomExPlayback::Pause
 	 */
-	public bool IsPuased()
+	public bool IsPaused()
 	{
 		return criAtomExPlayback_IsPaused(this.id);
 	}
@@ -2685,7 +3012,7 @@ public struct CriAtomExPlayback
 	{
 		criAtomExPlayback_SetNextBlockIndex(this.id, index);
 	}
-	
+
 	public uint id
 	{
 		get;

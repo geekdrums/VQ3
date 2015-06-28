@@ -316,7 +316,7 @@ public class PlayerCommand : MonoBehaviour
         maskMat.hideFlags = HideFlags.DontSave;
         maskMat.color = ColorManager.MakeAlpha( Color.black, alpha );
         maskMat.name = "maskMat";
-        maskPlane.renderer.material = maskMat;
+        maskPlane.GetComponent<Renderer>().material = maskMat;
     }
 
     public virtual void ValidateIcons()
@@ -348,7 +348,7 @@ public class PlayerCommand : MonoBehaviour
             defMat.hideFlags = HideFlags.DontSave;
             defMat.color = ColorManager.GetThemeColor( themeColor ).Shade;
             defMat.name = "defMat";
-            DefPlane.renderer.material = defMat;
+            DefPlane.GetComponent<Renderer>().material = defMat;
         }
         else
         {
@@ -361,7 +361,7 @@ public class PlayerCommand : MonoBehaviour
             healMat.hideFlags = HideFlags.DontSave;
             healMat.color = ColorManager.GetThemeColor( themeColor ).Light;
             healMat.name = "healMat";
-            HealPlane.renderer.material = healMat;
+            HealPlane.GetComponent<Renderer>().material = healMat;
         }
         else
         {
@@ -426,7 +426,7 @@ public class PlayerCommand : MonoBehaviour
 
     protected virtual void UpdateIcon()
     {
-		if( Music.isJustChanged )
+		if( Music.IsJustChanged )
 		{
 			CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
 			float alpha = 0;
@@ -465,7 +465,7 @@ public class PlayerCommand : MonoBehaviour
 				}
 				levelCounter.transform.localScale = Vector3.zero;
 			}
-			maskPlane.renderer.material.color = ColorManager.MakeAlpha(Color.black, alpha);
+			maskPlane.GetComponent<Renderer>().material.color = ColorManager.MakeAlpha(Color.black, alpha);
 		}
         transform.rotation = Quaternion.identity;
     }
@@ -487,8 +487,8 @@ public class PlayerCommand : MonoBehaviour
     }
     public virtual GameObject GetCurrentSkill()
     {
-        if( GameContext.VoxSystem.state == VoxState.Eclipse && Music.Just.bar >= 2 ) return null;
-		return currentData.SkillDictionary.ContainsKey(Music.Just.totalUnit) ? currentData.SkillDictionary[Music.Just.totalUnit].gameObject : null;
+        if( GameContext.VoxSystem.state == VoxState.Eclipse && Music.Just.Bar >= 2 ) return null;
+		return currentData.SkillDictionary.ContainsKey(Music.Just.MusicalTime) ? currentData.SkillDictionary[Music.Just.MusicalTime].gameObject : null;
     }
     public IEnumerable<PlayerCommand> LinkedCommands
     {
@@ -553,7 +553,7 @@ public class PlayerCommand : MonoBehaviour
 		state = CommandState.NotAcquired;
 		ValidateState();
 		transform.localScale = Vector3.one * 0.16f;
-		maskPlane.renderer.material.color = Color.clear;
+		maskPlane.GetComponent<Renderer>().material.color = Color.clear;
 		foreach( CommandEdge line in linkLines )
 		{
 			if( line.GetOtherSide(this).state != CommandState.DontKnow )

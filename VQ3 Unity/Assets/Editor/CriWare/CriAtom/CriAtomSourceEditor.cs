@@ -2,7 +2,7 @@
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011-2014 CRI Middleware Co.,Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom for Unity Editor
@@ -19,7 +19,8 @@ public class CriAtomSourceEditor : Editor
 {
 	#region Variables
 	private CriAtomSource source = null;
-	private bool showAisac;
+	private bool showAndroidConfig;
+	private GUIStyle style;
 	//private bool showPreview = true;
 	#endregion
 
@@ -27,6 +28,7 @@ public class CriAtomSourceEditor : Editor
 	private void OnEnable()
 	{
 		this.source = (CriAtomSource)base.target;
+		this.style = new GUIStyle();
 	}
 	
 	public override void OnInspectorGUI()
@@ -42,21 +44,18 @@ public class CriAtomSourceEditor : Editor
 		EditorGUILayout.Space();
 		this.source.volume = EditorGUILayout.Slider("Volume", this.source.volume, 0.0f, 1.0f);
 		this.source.pitch = EditorGUILayout.Slider("Pitch", this.source.pitch, -1200f, 1200);
+		this.source.loop = EditorGUILayout.Toggle("Loop", this.source.loop);
+		this.source.use3dPositioning = EditorGUILayout.Toggle("3D Positioning", this.source.use3dPositioning);
 
-        #region AISAC
-		this.showAisac = EditorGUILayout.Foldout(this.showAisac, "AISAC Control");
-		EditorGUI.indentLevel++;
-		if (this.showAisac) {
-			for (uint i = 0; i < CriAtomSource.MaxAisac; i++) {
-				float aisac = this.source.GetAisac(i);
-				aisac = EditorGUILayout.Slider("AISAC" + i, aisac, 0.0f, 1.0f);
-				this.source.SetAisac(i, aisac);
-			}
+		this.showAndroidConfig = EditorGUILayout.Foldout(this.showAndroidConfig, "Android Config");
+		if (this.showAndroidConfig) {
+			EditorGUI.indentLevel++;
+			EditorGUILayout.BeginHorizontal();
+			style.stretchWidth = true;
+			this.source.androidUseLowLatencyVoicePool = EditorGUILayout.Toggle("Low Latency Playback", this.source.androidUseLowLatencyVoicePool);
+			EditorGUILayout.EndHorizontal();
+			EditorGUI.indentLevel--;
 		}
-		EditorGUI.indentLevel--;
-		EditorGUI.indentLevel--;
-
-        #endregion
 
         /*#region preview
 		if (this.source.acb != null) {

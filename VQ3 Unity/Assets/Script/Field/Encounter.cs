@@ -6,6 +6,7 @@ public class Encounter : MonoBehaviour {
 
     public int Level;
 	public int AcquireStars;
+	public int InvertVP = 100;
     public GameObject[] Enemies;
     public EnemyConductor.StateSet[] StateSets;
 

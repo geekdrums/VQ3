@@ -32,12 +32,12 @@ public class Rhythm
         }
     }
 
-    public bool IsOnBeat() { return Music.mtBeat % baseTime == 0; }
+    public bool IsOnBeat() { return Music.CurrentUnitPerBeat % baseTime == 0; }
     public int Length() { return notes.Count; }
     public int MTLength()
     {
         if (IsOnBeat())
-            return notes.Count * Music.mtBeat / baseTime;
+			return notes.Count * Music.CurrentUnitPerBeat / baseTime;
         else throw new NotImplementedException("This rhythm is not OnBeat.");
     }
 
@@ -48,8 +48,8 @@ public class Rhythm
     /// <returns></returns>
     public int GetNoteIndex(int mt)
     {
-        if (mt % (Music.mtBeat / baseTime) != 0) return -1;
-        else mt /= (Music.mtBeat / baseTime);
+        if (mt % (Music.CurrentUnitPerBeat / baseTime) != 0) return -1;
+		else mt /= (Music.CurrentUnitPerBeat / baseTime);
         return mt;
     }
     /// <summary>

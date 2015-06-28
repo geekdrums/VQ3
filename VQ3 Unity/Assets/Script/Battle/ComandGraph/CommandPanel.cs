@@ -84,7 +84,7 @@ public class CommandPanel : MonoBehaviour
         switch( state )
         {
         case State.HideAnim:
-            if( animation.isPlaying == false )
+            if( GetComponent<Animation>().isPlaying == false )
             {
                 EnterState( State.Hide );
             }
@@ -93,7 +93,7 @@ public class CommandPanel : MonoBehaviour
             break;
         case State.ShowAnim:
             transform.position = Vector3.Lerp( transform.position, initialPosition_, 0.3f );
-            if( animation.isPlaying == false )
+            if( GetComponent<Animation>().isPlaying == false )
             {
                 EnterState( State.Show );
             }
@@ -102,7 +102,7 @@ public class CommandPanel : MonoBehaviour
 			UpdateShow();
             break;
         case State.DecideAnim:
-            if( animation.isPlaying == false )
+            if( GetComponent<Animation>().isPlaying == false )
             {
                 EnterState( State.Decided );
             }
@@ -114,10 +114,10 @@ public class CommandPanel : MonoBehaviour
 					Ray ray = GameContext.MainCamera.ScreenPointToRay(Input.mousePosition);
 					RaycastHit hit;
 					Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity);
-					if( hit.collider == HitPlane.collider )
+					if( hit.collider == HitPlane.GetComponent<Collider>() )
 					{
 						GameContext.PlayerConductor.commandGraph.Deselect();
-						OKText.renderer.enabled = false;
+						OKText.GetComponent<Renderer>().enabled = false;
 						EnterState(State.CancelAnim);
 						Frame.SetTargetSize(0);
 						Frame.SetTargetColor(Color.clear);
@@ -153,15 +153,15 @@ public class CommandPanel : MonoBehaviour
 
 		if( Input.GetMouseButtonDown(0) )
 		{
-			if( hit.collider == HitPlane.collider && GameContext.CurrentState != GameState.SetMenu )
+			if( hit.collider == HitPlane.GetComponent<Collider>() && GameContext.CurrentState != GameState.SetMenu )
 			{
 				buttonType = ButtonType.OK;
 			}
-			else if( hit.collider == LeftButton.collider && enableLeft_ )
+			else if( hit.collider == LeftButton.GetComponent<Collider>() && enableLeft_ )
 			{
 				buttonType = ButtonType.Left;
 			}
-			else if( hit.collider == RightButton.collider && enableRight_ )
+			else if( hit.collider == RightButton.GetComponent<Collider>() && enableRight_ )
 			{
 				buttonType = ButtonType.Right;
 			}
@@ -174,7 +174,7 @@ public class CommandPanel : MonoBehaviour
 		}
 		else if( Input.GetMouseButton(0) )
 		{
-			if( hit.collider == HitPlane.collider && buttonType == ButtonType.OK )
+			if( hit.collider == HitPlane.GetComponent<Collider>() && buttonType == ButtonType.OK )
 			{
 				Color halfTrans = Color.Lerp(Color.clear, TextColor, 0.5f);
 				OKText.color = halfTrans;
@@ -183,14 +183,14 @@ public class CommandPanel : MonoBehaviour
 				Frame.SetGrowSize(0.5f);
 				Frame.SetTargetSize(4.0f);
 			}
-			else if( hit.collider == LeftButton.collider && buttonType == ButtonType.Left )
+			else if( hit.collider == LeftButton.GetComponent<Collider>() && buttonType == ButtonType.Left )
 			{
 				LeftButton.SetTargetSize(1.0f);
 				LeftButton.SetTargetColor(ButtonColor);
 				Frame.SetGrowSize(0.5f);
 				Frame.SetTargetSize(4.0f);
 			}
-			else if( hit.collider == RightButton.collider && buttonType == ButtonType.Right )
+			else if( hit.collider == RightButton.GetComponent<Collider>() && buttonType == ButtonType.Right )
 			{
 				RightButton.SetTargetSize(1.0f);
 				RightButton.SetTargetColor(ButtonColor);
@@ -214,32 +214,32 @@ public class CommandPanel : MonoBehaviour
 			GraphMask.SetTargetColor(ColorManager.MakeAlpha(Color.black, 0.8f));
 			bool isSelectable = (command_ is RevertCommand == false || GameContext.VoxSystem.GetWillEclipse((int)VPCount.Count));
 			//Push OK
-			if( hit.collider == HitPlane.collider && buttonType == ButtonType.OK && Music.Just < CommandGraph.AllowInputEnd && isSelectable )
+			if( hit.collider == HitPlane.GetComponent<Collider>() && buttonType == ButtonType.OK && Music.Just < CommandGraph.AllowInputEnd && isSelectable )
 			{
 				Frame.SetSize(4.17f);
 				Frame.SetGrowSize(0);
 				EnterState(State.DecideAnim);
-				animation["panelDecideAnim"].time = 0;
-				animation["panelDecideAnim"].speed = 1;
-				animation.Play("panelDecideAnim");
+				GetComponent<Animation>()["panelDecideAnim"].time = 0;
+				GetComponent<Animation>()["panelDecideAnim"].speed = 1;
+				GetComponent<Animation>().Play("panelDecideAnim");
 				foreach( TextMesh textMesh in GetComponentsInChildren<TextMesh>() )
 				{
-					textMesh.renderer.enabled = false;
+					textMesh.GetComponent<Renderer>().enabled = false;
 				}
 				foreach( CounterSprite counter in GetComponentsInChildren<CounterSprite>() )
 				{
 					counter.transform.localScale = Vector3.zero;
 				}
-				ENHIcon.renderer.enabled = false;
+				ENHIcon.GetComponent<Renderer>().enabled = false;
 
-				OKText.renderer.enabled = true;
+				OKText.GetComponent<Renderer>().enabled = true;
 				OKText.color = Color.white;
 				OKText.text = command_.nameText.ToUpper() + System.Environment.NewLine + "X" + System.Environment.NewLine + "CANCEL";
 
 				Music.Resume();
 			}
 			//Push Left
-			else if( hit.collider == LeftButton.collider && buttonType == ButtonType.Left )
+			else if( hit.collider == LeftButton.GetComponent<Collider>() && buttonType == ButtonType.Left )
 			{
 				Frame.SetSize(4.17f);
 				command_.LevelDown();
@@ -249,7 +249,7 @@ public class CommandPanel : MonoBehaviour
 				GameContext.PlayerConductor.commandGraph.CheckLinkedFromIntro();
 			}
 			//Push Right
-			else if( hit.collider == RightButton.collider && buttonType == ButtonType.Right )
+			else if( hit.collider == RightButton.GetComponent<Collider>() && buttonType == ButtonType.Right )
 			{
 				Frame.SetSize(4.17f);
 				command_.LevelUp();
@@ -258,7 +258,7 @@ public class CommandPanel : MonoBehaviour
 				this.Show(transform.position, command_);
 				GameContext.PlayerConductor.commandGraph.CheckLinkedFromIntro();
 			}
-			else if( hit.collider != HitPlane.collider && hit.collider != GameContext.PlayerConductor.commandGraph.CommandSphere.collider )
+			else if( hit.collider != HitPlane.GetComponent<Collider>() && hit.collider != GameContext.PlayerConductor.commandGraph.CommandSphere.GetComponent<Collider>() )
 			{
 				if( hit.collider != null )
 				{
@@ -276,17 +276,17 @@ public class CommandPanel : MonoBehaviour
 		}
 		else
 		{
-			OKText.color = Color.Lerp(Color.clear, TextColor, 0.5f + Music.MusicalSin(4) / 2.0f);
-			LeftButton.SetColor(enableLeft_ ? Color.Lerp(Color.clear, ButtonColor, 0.5f + Music.MusicalSin(4) / 2.0f) : ColorManager.Base.MiddleBack);
-			RightButton.SetColor(enableRight_ ? Color.Lerp(Color.clear, ButtonColor, 0.5f + Music.MusicalSin(4) / 2.0f) : ColorManager.Base.MiddleBack);
-			Frame.SetGrowSize(Music.MusicalSin(4) * 0.3f);
+			OKText.color = Color.Lerp(Color.clear, TextColor, 0.5f + Music.MusicalCos(4) / 2.0f);
+			LeftButton.SetColor(enableLeft_ ? Color.Lerp(Color.clear, ButtonColor, 0.5f + Music.MusicalCos(4) / 2.0f) : ColorManager.Base.MiddleBack);
+			RightButton.SetColor(enableRight_ ? Color.Lerp(Color.clear, ButtonColor, 0.5f + Music.MusicalCos(4) / 2.0f) : ColorManager.Base.MiddleBack);
+			Frame.SetGrowSize(Music.MusicalCos(4) * 0.3f);
 			LeftButton.SetTargetSize(0.5f);
 			RightButton.SetTargetSize(0.5f);
 		}
 
 		if( command_ is RevertCommand && GameContext.CurrentState != GameState.SetMenu )
 		{
-			RevertArc.SetTargetArc((float)GameContext.VoxSystem.currentVP/VoxSystem.InvertVP);
+			RevertArc.SetTargetArc((float)GameContext.VoxSystem.currentVP/GameContext.EnemyConductor.InvertVP);
 
 			if( GameContext.VoxSystem.GetWillEclipse((int)VPCount.Count) )
 			{
@@ -318,9 +318,9 @@ public class CommandPanel : MonoBehaviour
                 GraphMask.SetTargetColor( Color.clear );
                 break;
             case State.ShowAnim:
-                HitPlane.collider.enabled = true;
-                LeftButton.collider.enabled = true;
-                RightButton.collider.enabled = true;
+                HitPlane.GetComponent<Collider>().enabled = true;
+                LeftButton.GetComponent<Collider>().enabled = true;
+                RightButton.GetComponent<Collider>().enabled = true;
                 break;
             case State.Show:
                 transform.position = initialPosition_;
@@ -343,9 +343,9 @@ public class CommandPanel : MonoBehaviour
         if( state == State.Hide || state == State.Decided || GameContext.CurrentState == GameState.SetMenu )
         {
             transform.position = position;
-            animation["panelAnim"].time = 0;
-            animation["panelAnim"].speed = 1;
-            animation.Play( "panelAnim" );
+            GetComponent<Animation>()["panelAnim"].time = 0;
+            GetComponent<Animation>()["panelAnim"].speed = 1;
+            GetComponent<Animation>().Play( "panelAnim" );
 			if( GameContext.CurrentState == GameState.SetMenu )
 			{
 				TextWindow.ChangeMessage(MessageCategory.Help, "SPを使って " + command.name + "をレベルアップ、または" + System.Environment.NewLine
@@ -361,19 +361,18 @@ public class CommandPanel : MonoBehaviour
         transform.localScale = Vector3.one;
         foreach( TextMesh textMesh in GetComponentsInChildren<TextMesh>() )
         {
-            textMesh.renderer.enabled = true;
+            textMesh.GetComponent<Renderer>().enabled = true;
         }
         foreach( CounterSprite counter in GetComponentsInChildren<CounterSprite>() )
         {
             counter.transform.localScale = Vector3.one;
         }
-        ENHIcon.renderer.enabled = true;
+        ENHIcon.GetComponent<Renderer>().enabled = true;
         command_ = command;
         NameText.text = command_.nameText.ToUpper();
 		NameText.color = command.currentLevel == 0 ? ColorManager.Base.Shade : Color.white;
 
         ThemeColor themeColor = ColorManager.GetThemeColor( command.themeColor );
-        BaseColor baseColor = ColorManager.Base;
 		if( command is InvertCommand )
 		{
 			Frame.SetColor(Color.black);
@@ -401,7 +400,7 @@ public class CommandPanel : MonoBehaviour
 		if( GameContext.CurrentState == GameState.SetMenu )
 		{
 			OKText.transform.localScale = Vector3.zero;
-			LVText.renderer.enabled = true;
+			LVText.GetComponent<Renderer>().enabled = true;
 			LVCount.CounterScale = 1.8f;
 			LVCount.Count = command.currentLevel;
 			LVText.color = command.currentLevel == 0 ? ColorManager.Base.Shade : TextColor;
@@ -420,16 +419,16 @@ public class CommandPanel : MonoBehaviour
 		else
 		{
 			OKText.transform.localScale = Vector3.one * 0.2f;
-			LVText.renderer.enabled = false;
+			LVText.GetComponent<Renderer>().enabled = false;
 			LVCount.CounterScale = 0;
 			LVCount.CounterColor = Color.clear;
 			enableLeft_ = false;
 			enableRight_= false;
 		}
-		LeftButton.renderer.enabled = enableLeft_;
-		LeftButton.collider.enabled = enableLeft_;
-		RightButton.renderer.enabled = enableRight_;
-		RightButton.collider.enabled = enableRight_;
+		LeftButton.GetComponent<Renderer>().enabled = enableLeft_;
+		LeftButton.GetComponent<Collider>().enabled = enableLeft_;
+		RightButton.GetComponent<Renderer>().enabled = enableRight_;
+		RightButton.GetComponent<Collider>().enabled = enableRight_;
 		if( command is InvertCommand )
 		{
 			OKText.color = Color.black;
@@ -458,7 +457,7 @@ public class CommandPanel : MonoBehaviour
 					RevertCircleEdge.SetColor(Color.white);
 					RevertArc.SetWidth(0.9f);
 					RevertArc.SetColor(Color.white);
-					RevertArc.SetArc((float)GameContext.VoxSystem.currentVP/VoxSystem.InvertVP);
+					RevertArc.SetArc((float)GameContext.VoxSystem.currentVP/GameContext.EnemyConductor.InvertVP);
 				}
 			}
 			else
@@ -500,18 +499,18 @@ public class CommandPanel : MonoBehaviour
         case State.Show:
             EnterState( State.HideAnim );
             NameText.text = "";
-            animation["panelAnim"].time = animation["panelAnim"].length;
-            animation["panelAnim"].speed = -1;
-            animation.Play( "panelAnim" );
+            GetComponent<Animation>()["panelAnim"].time = GetComponent<Animation>()["panelAnim"].length;
+            GetComponent<Animation>()["panelAnim"].speed = -1;
+            GetComponent<Animation>().Play( "panelAnim" );
             break;
         case State.ShowAnim:
             EnterState( State.HideAnim );
             NameText.text = "";
-            animation["panelAnim"].speed = -1;
+            GetComponent<Animation>()["panelAnim"].speed = -1;
             break;
         case State.DecideAnim:
 		case State.Decided:
-			OKText.renderer.enabled = false;
+			OKText.GetComponent<Renderer>().enabled = false;
 			EnterState(State.ExecuteAnim);
 			Frame.SetTargetSize(RingSize);
 			GraphMask.SetTargetColor(Color.clear);

@@ -2,7 +2,7 @@
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011 CRI Middleware Co., Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom for Unity Editor
@@ -10,7 +10,7 @@
  *
  ****************************************************************************/
 using UnityEngine;
-using System.Collections;
+using System;
 
 
 public class CriAtomServer : MonoBehaviour {
@@ -18,6 +18,9 @@ public class CriAtomServer : MonoBehaviour {
 	#region Internal Fields
 	private static CriAtomServer _instance = null;
 	#endregion
+	
+	public System.Action<bool> onApplicationPausePreProcess;
+	public System.Action<bool> onApplicationPausePostProcess;
 	
 	public static CriAtomServer instance {
 		get {
@@ -57,6 +60,12 @@ public class CriAtomServer : MonoBehaviour {
 	
 	void OnApplicationPause(bool pause)
 	{
+		if (onApplicationPausePreProcess != null) {
+			onApplicationPausePreProcess(pause);
+		}
 		CriAtomPlugin.Pause(pause);
+		if (onApplicationPausePostProcess != null) {
+			onApplicationPausePostProcess(pause);
+		}
 	}
 }

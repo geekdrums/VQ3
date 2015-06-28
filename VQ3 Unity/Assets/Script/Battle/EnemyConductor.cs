@@ -21,18 +21,7 @@ public class EnemyConductor : MonoBehaviour {
     Encounter CurrentEncounter;
 
     public int EnemyCount { get { return Enemies.Count + (WeatherEnemy != null ? 1 : 0); } }
-    public int VPtolerance
-    {
-        get
-        {
-            int res = 0;
-            foreach( Enemy e in Enemies )
-            {
-                res += e.VPtolerance;
-            }
-            return Mathf.Min( 100, res );
-        }
-    }
+	public int InvertVP { get { return CurrentEncounter.InvertVP; } }
     public Enemy targetEnemy { get; private set; }
 
 	Color _baseColor;
@@ -70,7 +59,7 @@ public class EnemyConductor : MonoBehaviour {
 
 				foreach( Enemy e in Enemies )
 				{
-					if( e.collider == hit.collider )
+					if( e.GetComponent<Collider>() == hit.collider )
 					{
 						targetEnemy = e;
 						GameContext.VoxSystem.SetTargetEnemy(targetEnemy);
@@ -79,7 +68,7 @@ public class EnemyConductor : MonoBehaviour {
 				}
 			}
             
-			if( Music.IsJustChangedBar() && Music.Just.bar >= 1 )
+			if( Music.IsJustChangedBar() && Music.Just.Bar >= 1 )
             {
                 /*
                 List<string> messages = new List<string>();

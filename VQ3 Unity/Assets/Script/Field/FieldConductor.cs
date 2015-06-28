@@ -195,8 +195,8 @@ public class FieldConductor : MonoBehaviour {
 			if( GameContext.PlayerConductor.Level >= LevelEncounters.Length
 				|| encounterCount >= CurrentLevel.Encounters.Count )
 			{
-				TitleBase.GetComponent<MidairPrimitive>().SetColor(Color.Lerp(Color.black, ColorManager.Base.Shade, Music.MusicalSin(8, 0) * 0.5f));
-				if( Input.GetMouseButtonUp(0) && (Music.MusicalTime >= 4 || Music.numRepeat > 0 ) )
+				TitleBase.GetComponent<MidairPrimitive>().SetColor(Color.Lerp(Color.black, ColorManager.Base.Shade, Music.MusicalCos(8, 0) * 0.5f));
+				if( Input.GetMouseButtonUp(0) && (Music.MusicalTime >= 4 || Music.NumRepeat > 0 ) )
 				{
 					Application.OpenURL("https://docs.google.com/forms/d/1eQEAI-gyjPcVhSoO7zByygKQGEys51npxhBRlnXditU/viewform");
 				}
@@ -280,7 +280,6 @@ public class FieldConductor : MonoBehaviour {
         {
             string line = reader.ReadLine();
             char[] commaSeparator = new char[] { ',' };
-            char[] spaceSeparator = new char[] { ' ' };
             int level = 1;
             int order = 1;
             while( (line = reader.ReadLine()) != null )

@@ -2,11 +2,11 @@
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011 CRI Middleware Co., Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom Native Wrapper
- * File     : CriAtomEx.cs
+ * File     : CriAtomExAcb.cs
  *
  ****************************************************************************/
 using System;
@@ -141,7 +141,7 @@ public class CriAtomExAcb : IDisposable
 	{
 		using (var mem = new CriStructMemory<CriAtomEx.CueInfo>()) {
 			bool result = criAtomExAcb_GetCueInfoByName(this.handle, cueName, mem.ptr);
-			info = new CriAtomEx.CueInfo(mem.bytes);
+			info = new CriAtomEx.CueInfo(mem.bytes, 0);
 			return result;
 		}
 	}
@@ -160,7 +160,7 @@ public class CriAtomExAcb : IDisposable
 	{
 		using (var mem = new CriStructMemory<CriAtomEx.CueInfo>()) {
 			bool result = criAtomExAcb_GetCueInfoById(this.handle, cueId, mem.ptr);
-			info = new CriAtomEx.CueInfo(mem.bytes);
+			info = new CriAtomEx.CueInfo(mem.bytes, 0);
 			return result;
 		}
 	}
@@ -179,7 +179,7 @@ public class CriAtomExAcb : IDisposable
 	{
 		using (var mem = new CriStructMemory<CriAtomEx.CueInfo>()) {
 			bool result = criAtomExAcb_GetCueInfoByIndex(this.handle, index, mem.ptr);
-			info = new CriAtomEx.CueInfo(mem.bytes);
+			info = new CriAtomEx.CueInfo(mem.bytes, 0);
 			return result;
 		}
 	}
@@ -209,7 +209,7 @@ public class CriAtomExAcb : IDisposable
 	{
 		using (var mem = new CriStructMemory<CriAtomEx.WaveformInfo>()) {
 			bool result = criAtomExAcb_GetWaveformInfoByName(this.handle, cueName, mem.ptr);
-			info = new CriAtomEx.WaveformInfo(mem.bytes);
+			info = new CriAtomEx.WaveformInfo(mem.bytes, 0);
 			return result;
 		}
 	}
@@ -229,7 +229,7 @@ public class CriAtomExAcb : IDisposable
 	{
 		using (var mem = new CriStructMemory<CriAtomEx.WaveformInfo>()) {
 			bool result = criAtomExAcb_GetWaveformInfoById(this.handle, cueId, mem.ptr);
-			info = new CriAtomEx.WaveformInfo(mem.bytes);
+			info = new CriAtomEx.WaveformInfo(mem.bytes, 0);
 			return result;
 		}
 	}
@@ -333,7 +333,7 @@ public class CriAtomExAcb : IDisposable
 	{
 		using (var mem = new CriStructMemory<CriAtomEx.AisacControlInfo>()) {
 			bool result = criAtomExAcb_GetUsableAisacControlByName(this.handle, cueName, (ushort)index, mem.ptr);
-			info = new CriAtomEx.AisacControlInfo(mem.bytes);
+			info = new CriAtomEx.AisacControlInfo(mem.bytes, 0);
 			return result;
 		}
 	}
@@ -353,7 +353,7 @@ public class CriAtomExAcb : IDisposable
 	{
 		using (var mem = new CriStructMemory<CriAtomEx.AisacControlInfo>()) {
 			bool result = criAtomExAcb_GetUsableAisacControlById(this.handle, cueId, (ushort)index, mem.ptr);
-			info = new CriAtomEx.AisacControlInfo(mem.bytes);
+			info = new CriAtomEx.AisacControlInfo(mem.bytes, 0);
 			return result;
 		}
 	}
@@ -376,6 +376,42 @@ public class CriAtomExAcb : IDisposable
 			this.GetUsableAisacControl(cueId, i, out infoList[i]);
 		}
 		return infoList;
+	}
+
+	/**
+	 * <summary>キュータイプステートのリセット（キュー名指定）</summary>
+	 * <param name="cueName">キュー名</param>
+	 * \par 説明:
+	 * キュー名を指定して、キュータイプステートをリセットします。<br>
+	 * \attention
+	 * リセット対象は指定したキューのステートのみです。キューに含まれるサブシンセやキューリンク先の
+	 * ステートはリセットされません。
+	 * \par 備考:
+	 * キュータイプステートは、ポリフォニックタイプキュー以外のキュー再生時の前回再生トラックを
+	 * ステートとして管理する仕組みです。<br>
+	 * 本関数は、ステート管理領域をリセットしACBロード直後の状態に戻します。
+	 */
+	public void ResetCueTypeState(string cueName)
+	{
+		criAtomExAcb_ResetCueTypeStateByName(this.handle, cueName);
+	}
+	
+	/**
+	 * <summary>キュータイプステートのリセット（キューID指定）</summary>
+	 * <param name="cueName">キュー名</param>
+	 * \par 説明:
+	 * キュー名を指定して、キュータイプステートをリセットします。<br>
+	 * \attention
+	 * リセット対象は指定したキューのステートのみです。キューに含まれるサブシンセやキューリンク先の
+	 * ステートはリセットされません。
+	 * \par 備考:
+	 * キュータイプステートは、ポリフォニックタイプキュー以外のキュー再生時の前回再生トラックを
+	 * ステートとして管理する仕組みです。<br>
+	 * 本関数は、ステート管理領域をリセットしACBロード直後の状態に戻します。
+	 */
+	public void ResetCueTypeState(int cueId)
+	{
+		criAtomExAcb_ResetCueTypeStateById(this.handle, cueId);
 	}
 
 	#region Internal Members
@@ -453,6 +489,12 @@ public class CriAtomExAcb : IDisposable
 	
 	[DllImport(CriWare.pluginName)]
 	private static extern int criAtomExAcb_GetBlockIndexByName(IntPtr acb_hn, string name, string block_name);
+
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExAcb_ResetCueTypeStateByName(IntPtr acb_hn, string name);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomExAcb_ResetCueTypeStateById(IntPtr acb_hn, int id);
 
 	#endregion
 }

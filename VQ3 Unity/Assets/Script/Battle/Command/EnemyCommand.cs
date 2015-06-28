@@ -9,7 +9,7 @@ public class EnemyCommand : CommandBase
 
     public Skill GetCurrentSkill( int startBar )
     {
-        int totalUnit = Music.Just.totalUnit - startBar * Music.mtBar;
+		int totalUnit = Music.Just.MusicalTime - startBar * Music.CurrentUnitPerBar;
         return SkillDictionary.ContainsKey( totalUnit ) ? SkillDictionary[totalUnit] : null;
     }
 }

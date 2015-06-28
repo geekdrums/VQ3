@@ -2,7 +2,7 @@
  *
  * CRIWARE Unity Plugin
  *
- * Copyright (c) 2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2012-2014 CRI Middleware Co., Ltd.
  *
  * Library  : CRI Ware
  * Module   : CRI Ware Error Handler
@@ -13,22 +13,28 @@ using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 
+/// \addtogroup CRIWARE_UNITY_COMPONENT
+/// @{
+
 /*JP
  * \brief CRIWAREエラーオブジェクト
- * \ingroup WARE_UNITY_COMPONENT
  * \par 説明:
  * CRIWAREライブラリの初期化を行うためのコンポーネントです。<br>
  */
 [AddComponentMenu("CRIWARE/Error Handler")]
 public class CriWareErrorHandler : MonoBehaviour {
-	/* Unityデバッグウィンドウだけでなく、コンソールデバッグ出力を有効にするかどうか [deprecated] */
-	/* PCの場合はデバッグウィンドウに出力されます。 */
+	/*JP
+	 * \brief コンソールデバッグ出力を有効にするかどうか
+	 * \par 注意:
+	 * Unityデバッグウィンドウだけでなく、コンソールデバッグ出力を有効にするかどうか [deprecated]
+	 * PCの場合はデバッグウィンドウに出力されます。
+	 */
 	public bool enableDebugPrintOnTerminal = false;
 	
-	/*JP< シーンチェンジ時にエラーハンドラを削除するかどうか */
-	public bool dontDestoryOnLoad = true;
+	/*JP シーンチェンジ時にエラーハンドラを削除するかどうか */
+	public bool dontDestroyOnLoad = true;
 	
-	/* エラーメッセージ */
+	/*JP エラーメッセージ */
 	public static string errorMessage { get; set; }
 	
 	/* オブジェクト作成時の処理 */
@@ -48,7 +54,7 @@ public class CriWareErrorHandler : MonoBehaviour {
 		criWareUnity_ControlLogOutput(enableDebugPrintOnTerminal);
 		
 		/* シーンチェンジ後もオブジェクトを維持するかどうかの設定 */
-		if (dontDestoryOnLoad) {
+		if (dontDestroyOnLoad) {
 			DontDestroyOnLoad(transform.gameObject);
 		}
 	}
@@ -64,7 +70,7 @@ public class CriWareErrorHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-#if UNITY_ANDROID || UNITY_IOS
+#if ((UNITY_ANDROID || UNITY_IOS) && (!UNITY_EDITOR))
 		if (enableDebugPrintOnTerminal == false){
 			/* iOS/Androidの場合、エラーメッセージの出力先が重複してしまうため、*/
 			/* ターミナル出力が無効になっている場合のみ、Unity出力を有効にする。*/
@@ -107,7 +113,7 @@ public class CriWareErrorHandler : MonoBehaviour {
 		}
 	}
 
-	/* ログの出力 */
+	/*JP ログの出力 */
 	private static void OutputLog(string errmsg)
 	{
 		if (errmsg == null) {
@@ -123,7 +129,7 @@ public class CriWareErrorHandler : MonoBehaviour {
 		}
 	}
 	
-	/* 初期化カウンタ */
+	/*JP 初期化カウンタ */
 	private static int initializationCount = 0;
 	
 	#region DLLImport
@@ -142,6 +148,8 @@ public class CriWareErrorHandler : MonoBehaviour {
 	[DllImport(CriWare.pluginName)]
 	private static extern void criWareUnity_ControlLogOutput(bool sw);
 	#endregion	
-}
+} // end of class
+
+/// @}
 
 /* --- end of file --- */

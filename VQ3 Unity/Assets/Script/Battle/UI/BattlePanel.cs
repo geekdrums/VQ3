@@ -96,7 +96,7 @@ public class BattlePanel : MonoBehaviour {
             EnhIcon.color = ColorManager.Accent.Buff;
             EnhCount.CounterColor = ColorManager.Accent.Buff;
             EnhBar.GetComponentInChildren<MidairPrimitive>().SetColor( ColorManager.Accent.Buff );
-            NameText.renderer.enabled = false;
+            NameText.GetComponent<Renderer>().enabled = false;
             EnhCount.transform.localScale = Vector3.one;
         }
         else if( enhParam.phase < 0 )
@@ -104,7 +104,7 @@ public class BattlePanel : MonoBehaviour {
             EnhIcon.color = ColorManager.Accent.DeBuff;
             EnhCount.CounterColor = ColorManager.Accent.DeBuff;
             EnhBar.GetComponentInChildren<MidairPrimitive>().SetColor( ColorManager.Accent.DeBuff );
-            NameText.renderer.enabled = false;
+            NameText.GetComponent<Renderer>().enabled = false;
             EnhCount.transform.localScale = Vector3.one;
         }
         else//enhParam.phase == 0
@@ -113,7 +113,7 @@ public class BattlePanel : MonoBehaviour {
             EnhIcon.transform.position = enhIconInitialPosition_;
             EnhBar.transform.localScale = new Vector3( 0, EnhBar.transform.localScale.y, 1 );
             EnhCount.transform.localScale = Vector3.zero;
-            NameText.renderer.enabled = true;
+            NameText.GetComponent<Renderer>().enabled = true;
             return;
         }
 

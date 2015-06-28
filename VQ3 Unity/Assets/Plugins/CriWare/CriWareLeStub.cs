@@ -23,12 +23,17 @@ public static class CriFsPlugin
 	public static bool isInitialized { get { return initializationCount > 0; } }
 	
 	public static void SetConfigParameters(
-		int num_loaders, int num_binders, int num_installers, int install_buffer_size)
-	{
+		int num_loaders, int num_binders, int num_installers, int argInstallBufferSize, int max_path)
+    {
 		CriFsPlugin.criFsUnity_SetConfigParameters(
-			num_loaders, num_binders, num_installers);
+			num_loaders, num_binders, num_installers, max_path);
 	}
-	
+
+    public static void SetConfigAdditionalParameters_ANDROID(
+        int device_read_bps) {
+        CriFsPlugin.criFsUnity_SetConfigAdditionalParameters_ANDROID(device_read_bps);
+    }	
+
 	public static void InitializeLibrary()
 	{
 		/* 初期化カウンタの更新 */
@@ -68,9 +73,13 @@ public static class CriFsPlugin
 	// CRI File System Unity
 	[DllImport(CriWare.pluginName)]
 	private static extern void criFsUnity_SetConfigParameters(
-		int num_loaders, int num_binders, int num_installers);
+		int num_loaders, int num_binders, int num_installers, int max_path);
 
-	[DllImport(CriWare.pluginName)]
+    [DllImport(CriWare.pluginName)]
+    private static extern void criFsUnity_SetConfigAdditionalParameters_ANDROID(
+        int device_read_bps);
+
+    [DllImport(CriWare.pluginName)]
 	private static extern void criFsUnity_Initialize();
 
 	[DllImport(CriWare.pluginName)]
@@ -97,7 +106,7 @@ public static class CriFsUtility
 public static class CriManaPlugin
 {
 	public static uint criManaUnity_GetAllocatedHeapSize() { return 0; }
-	public static void SetConfigParameters(int num_decoders) {}
+    public static void SetConfigParameters(int num_decoders, int max_num_of_entries, bool enable_cue_point) { }
 	public static void InitializeLibrary() {}
 	public static void FinalizeLibrary() {}
 

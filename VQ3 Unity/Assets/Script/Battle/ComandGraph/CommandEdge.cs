@@ -43,7 +43,7 @@ public class CommandEdge : MonoBehaviour {
 
 	public void SetEnabled( bool enable )
 	{
-		line_.renderer.enabled = enable;
+		line_.GetComponent<Renderer>().enabled = enable;
 	}
 
 	public void SetParent( PlayerCommand command )

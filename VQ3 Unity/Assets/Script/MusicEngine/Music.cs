@@ -13,71 +13,74 @@ public CriAtomExPlayer Player
 http://www53.atwiki.jp/soundtasukeai/pages/22.html#id_6c095b2d
 */
 
-/* Note2: You should do this
+/* Note2: If you use many blocks in ADX2, you should do this
 Auto update of block info.
 
 Add this function in Editor/CriWare/CriAtom/CriAtomWindow.cs
+...
+using System.Xml;
+...
 
-    //(((((((((((((((geekdrums MusicEngine(((((((((((((((
-    private void UpdateBlockInfo()
-    {
-        string sourceDirName = atomCraftOutputAssetsRootPath.Replace( "/Assets", "" );
-        string[] files = System.IO.Directory.GetFiles( sourceDirName );
-        foreach( string file in files )
-        {
-            if( file.EndsWith( "_acb_info.xml" ) )
-            {
-                string fileName = System.IO.Path.GetFileName( file );
-                GameObject musicObj = GameObject.Find( fileName.Replace( "_acb_info.xml", "" ) );
-                Music adxMusic = null;
-                if( musicObj != null )
-                {
-                    adxMusic = musicObj.GetComponent<Music>();
-                }
-                if( adxMusic != null )
-                {
-                    adxMusic.BlockInfos.Clear();
+	//(((((((((((((((geekdrums MusicEngine(((((((((((((((
+	private void UpdateBlockInfo()
+	{
+		string sourceDirName = atomCraftOutputAssetsRootPath.Replace( "/Assets", "" );
+		string[] files = System.IO.Directory.GetFiles( sourceDirName );
+		foreach( string file in files )
+		{
+			if( file.EndsWith( "_acb_info.xml" ) )
+			{
+				string fileName = System.IO.Path.GetFileName( file );
+				GameObject musicObj = GameObject.Find( fileName.Replace( "_acb_info.xml", "" ) );
+				Music adxMusic = null;
+				if( musicObj != null )
+				{
+					adxMusic = musicObj.GetComponent<Music>();
+				}
+				if( adxMusic != null )
+				{
+					adxMusic.BlockInfos.Clear();
 
-                    XmlReaderSettings settings = new XmlReaderSettings();
-                    settings.IgnoreWhitespace = true;
-                    settings.IgnoreComments = true;
-                    using( XmlReader reader = XmlReader.Create( System.IO.File.OpenText( file ), settings ) )
-                    {
-                        while( reader.Read() )
-                        {
-                            if( reader.GetAttribute( "Bpm" ) != null )
-                            {
-                                adxMusic.Tempo_ = double.Parse( reader.GetAttribute( "Bpm" ) );
-                            }
-                            if( adxMusic.Tempo_ > 0 && reader.GetAttribute( "BlockEndPositionMs" ) != null )
-                            {
-                                string blockName = reader.GetAttribute( "OrcaName" );
-                                int msec = int.Parse( reader.GetAttribute( "BlockEndPositionMs" ) );
-                                Music.BlockInfo blockInfo = new Music.BlockInfo( blockName, Mathf.RoundToInt( (msec / 1000.0f) / (4 * 60.0f / (float)adxMusic.Tempo_) ) );
-                                adxMusic.BlockInfos.Add( blockInfo );
-                            }
-                        }
-                        reader.Close();
-                    }
-                }
-                //else there are no Music component for this AtomSource.
-            }
-            //else this file is not _acb_info.
-        }
-    }
-    //(((((((((((((((geekdrums MusicEngine(((((((((((((((
+					XmlReaderSettings settings = new XmlReaderSettings();
+					settings.IgnoreWhitespace = true;
+					settings.IgnoreComments = true;
+					using( XmlReader reader = XmlReader.Create( System.IO.File.OpenText( file ), settings ) )
+					{
+						while( reader.Read() )
+						{
+							if( reader.GetAttribute( "Bpm" ) != null )
+							{
+								adxMusic.Tempo = double.Parse( reader.GetAttribute( "Bpm" ) );
+							}
+							if( adxMusic.Tempo > 0 && reader.GetAttribute( "BlockEndPositionMs" ) != null )
+							{
+								string blockName = reader.GetAttribute( "OrcaName" );
+								int msec = int.Parse( reader.GetAttribute( "BlockEndPositionMs" ) );
+								Music.BlockInfo blockInfo = new Music.BlockInfo( blockName, Mathf.RoundToInt( (msec / 1000.0f) / (4 * 60.0f / (float)adxMusic.Tempo) ) );
+								adxMusic.BlockInfos.Add( blockInfo );
+							}
+						}
+						reader.Close();
+					}
+				}
+				//else there are no Music component for this AtomSource.
+			}
+			//else this file is not _acb_info.
+		}
+	}
+	//(((((((((((((((geekdrums MusicEngine(((((((((((((((
 
 and call this function from GUIImportAssetsFromAtomCraft() in same source code,
 just after  CopyDirectory(atomCraftOutputAssetsRootPath, Application.dataPath); executed.
 like this
-                try
-                {
-                    CopyDirectory(atomCraftOutputAssetsRootPath, Application.dataPath);
-                    Debug.Log("Complete Update Assets of \"CRI Atom Craft\"");
+				try
+				{
+					CopyDirectory(atomCraftOutputAssetsRootPath, Application.dataPath);
+					Debug.Log("Complete Update Assets of \"CRI Atom Craft\"");
 
-                    //geekdrums MusicEngine
-                    UpdateBlockInfo();
-                }
+					//geekdrums MusicEngine
+					UpdateBlockInfo();
+				}
 
 Preparation:
 - Create a CriAtomSource object with Music component,
@@ -93,595 +96,574 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(CriAtomSource))]
 public class Music : MonoBehaviour
 {
-    //editor params
-    /// <summary>
-    /// how many MusicTime in a beat. maybe 4 or 3 or 6.
-    /// </summary>
-    public int mtBeat_ = 4;
-    /// <summary>
-    /// how many MusicTime in a bar.
-    /// </summary>
-    public int mtBar_ = 16;
-    /// <summary>
-    /// Musical Tempo. how many beats in a minutes.
-    /// </summary>
-    public double Tempo_ = 120;
-
-    public List<BlockInfo> BlockInfos;
-
-    /// <summary>
-    /// put your debug GUIText to see current musical time & block info.
-    /// </summary>
-    public GUIText debugText;
-
-    [System.Serializable]
-    public class BlockInfo
-    {
-        public BlockInfo( string BlockName, int NumBar = 4 )
-        {
-            this.BlockName = BlockName;
-            this.NumBar = NumBar;
-        }
-        public string BlockName;
-        public int NumBar = 4;
-    }
-
-    public class SoundCue
-    {
-        public SoundCue( CriAtomSource source ) { this.source = source; }
-        public CriAtomSource source { get; private set; }
-        public CriAtomExPlayer Player { get { return source.Player; } }
-
-        public void Play()
-        {
-            source.Play();
-        }
-        public void Stop()
-        {
-            source.Stop();
-        }
-        public void Pause()
-        {
-			source.Pause(true);
-        }
-		public void Resume()
+	#region BlockInfo class
+	[System.Serializable]
+	public class BlockInfo
+	{
+		public BlockInfo(string BlockName, int NumBar = 4)
 		{
-			source.Pause(false);
+			this.BlockName = BlockName;
+			this.NumBar = NumBar;
 		}
-        public bool IsPlaying()
-        {
-			return source.status == CriAtomSource.Status.Playing;
-        }
-        public void SetVolume( float volume )
-        {
-            source.volume = volume;
-        }
-    }
+		public string BlockName;
+		public int NumBar = 4;
+	}
+	#endregion
 
-    static Music Current;
-    static List<Music> MusicList = new List<Music>();
-    static readonly int SamplingRate = 44100;
+	#region editor params
+	/// <summary>
+	/// how many MusicTime in a beat. maybe 4 or 3 or 6.
+	/// </summary>
+	public int UnitPerBeat = 4;
+	/// <summary>
+	/// how many MusicTime in a bar.
+	/// </summary>
+	public int UnitPerBar = 16;
+	/// <summary>
+	/// Musical Tempo. how many beats in a minutes.
+	/// </summary>
+	public double Tempo = 120;
 
-    #region public static properties
+	public List<BlockInfo> BlockInfos;
+
+	/// <summary>
+	/// put your debug TextMesh to see current musical time & block info.
+	/// </summary>
+	public TextMesh DebugText;
+	#endregion
+
+	static Music Current_;
+	static List<Music> MusicList = new List<Music>();
+	static readonly int SamplingRate = 44100;
+
+	#region public static properties
+	public static bool IsPlaying { get { return Current_.IsPlaying_; } }
 	/// <summary>
 	/// means last timing.
 	/// </summary>
-	public static Timing Just { get { return Current.Just_; } }
+	public static Timing Just { get { return Current_.just_; } }
 	/// <summary>
 	/// means nearest timing.
 	/// </summary>
-	public static Timing Now { get { return Current.Now_; } }
+	public static Timing Near { get { return Current_.near_; } }
 	/// <summary>
 	/// is Just changed in this frame or not.
 	/// </summary>
-	public static bool isJustChanged { get { return Current.isJustChanged_; } }
+	public static bool IsJustChanged { get { return Current_.isJustChanged_; } }
 	/// <summary>
-	/// is Now changed in this frame or not.
+	/// is Near changed in this frame or not.
 	/// </summary>
-	public static bool isNowChanged { get { return Current.isNowChanged_; } }
+	public static bool IsNearChanged { get { return Current_.isNearChanged_; } }
 	/// <summary>
-    /// is currently former half in a MusicTimeUnit, or last half.
+	/// is currently former half in a MusicTimeUnit, or last half.
 	/// </summary>
-	public static bool isFormerHalf { get { return Current.isFormerHalf_; } }
+	public static bool IsFormerHalf { get { return Current_.isFormerHalf_; } }
 	/// <summary>
 	/// delta time from JustChanged.
 	/// </summary>
-	public static double dtFromJust { get { return Current.dtFromJust_; } }
+	public static double TimeSecFromJust { get { return Current_.timeSecFromJust_; } }
 	/// <summary>
 	/// how many times you repeat current music/block.
 	/// </summary>
-	public static int numRepeat { get { return Current.numRepeat_; } }
+	public static int NumRepeat { get { return Current_.numRepeat_; } }
 	/// <summary>
 	/// returns how long from nearest Just timing with sign.
 	/// </summary>
-	public static double lag{ get{ return Current.lag_; } }
+	public static double lLg { get { return Current_.Lag_; } }
 	/// <summary>
 	/// returns how long from nearest Just timing absolutely.
 	/// </summary>
-	public static double lagAbs{ get{ return Current.lagAbs_; } }
+	public static double LagAbs { get { return Current_.LagAbs_; } }
 	/// <summary>
 	/// returns normalized lag.
 	/// </summary>
-	public static double lagUnit{ get{ return Current.lagUnit_; } }
-
-    public static double MusicalTime { get { return Current.MusicalTime_; } }       //sec per MusicTimeUnit
-    public static double MusicTimeUnit { get { return Current.MusicTimeUnit_; } }   //sec
-    public static int mtBar { get { return Current.mtBar_; } }
-	public static int mtBeat { get { return Current.mtBeat_; } }
-
-    public static string CurrentMusicName { get { return Current.name; } }
-    public static SoundCue CurrentSource { get { return Current.MusicSource; } }
-
-    public static string CurrentBlockName { get { return Current.CurrentBlock_.BlockName; } }
-    public static string NextBlockName { get { return Current.NextBlock_.BlockName; } }
-    public static BlockInfo CurrentBlock { get { return Current.CurrentBlock_; } }
-    public static BlockInfo NextBlock { get { return Current.NextBlock_; } }
-    #endregion
-
-    #region public static predicates
-    public static bool IsJustChangedWhen( Predicate<Timing> pred )
-    {
-        return Current.IsJustChangedWhen_( pred );
-    }
-    public static bool IsJustChangedBar()
-    {
-        return Current.IsJustChangedBar_();
-    }
-    public static bool IsJustChangedBeat()
-    {
-        return Current.IsJustChangedBeat_();
-    }
-    public static bool IsJustChangedAt( int bar = 0, int beat = 0, int unit = 0 )
-    {
-        return Current.IsJustChangedAt_( bar, beat, unit );
-    }
-    public static bool IsJustChangedAt( Timing t )
-    {
-        return Current.IsJustChangedAt_( t.bar, t.beat, t.unit );
-    }
-
-    public static bool IsNowChangedWhen( Predicate<Timing> pred )
-    {
-        return Current.IsNowChangedWhen_( pred );
-    }
-    public static bool IsNowChangedBar()
-    {
-        return Current.IsNowChangedBar_();
-    }
-    public static bool IsNowChangedBeat()
-    {
-        return Current.IsNowChangedBeat_();
-    }
-    public static bool IsNowChangedAt( int bar, int beat = 0, int unit = 0 )
-    {
-        return Current.IsNowChangedAt_( bar, beat, unit );
-    }
-    public static bool IsNowChangedAt( Timing t )
-    {
-        return Current.IsNowChangedAt_( t.bar, t.beat, t.unit );
-    }
-
-    public static float MusicalTimeFrom( Timing timing )
-    {
-        return (Now - timing) + (float)lagUnit;
-    }
-	public static float MusicalSin( int cycle = 1, int offset = 0 )
+	public static double LagUnit { get { return Current_.LagUnit_; } }
+	/// <summary>
+	/// sec / musicalUnit
+	/// </summary>
+	public static double MusicalTimeUnit { get { return Current_.musicalTimeUnit_; } }
+	/// <summary>
+	/// current musical time based on MusicalTimeUnit
+	/// </summary>
+	public static float MusicalTime { get { return Current_.MusicalTime_; } }
+	/// <summary>
+	/// dif from timing to now on musical time unit.
+	/// </summary>
+	/// <param name="timing"></param>
+	/// <returns></returns>
+	public static float MusicalTimeFrom(Timing timing)
 	{
-		return (Mathf.Sin((float)(Mathf.PI * (Music.MusicalTime - offset) / cycle)) + 1.0f) / 2.0f;
+		return MusicalTime - timing.MusicalTime;
 	}
-    #endregion
+	/// <summary>
+	/// returns musically synced cos wave.
+	/// if default( MusicalCos(16,0,0,1),
+	/// starts from max=1,
+	/// reaches min=0 on MusicalTime = cycle/2 = 8,
+	/// back to max=1 on MusicalTIme = cycle = 16.
+	/// </summary>
+	/// <param name="cycle">wave cycle in musical unit</param>
+	/// <param name="offset">wave offset in musical unit</param>
+	/// <param name="min"></param>
+	/// <param name="max"></param>
+	/// <returns></returns>
+	public static float MusicalCos(float cycle = 16, float offset = 0, float min = 0, float max = 1)
+	{
+		return Mathf.Lerp(min, max, ((float)Math.Cos(Math.PI * 2 * (MusicalTime + offset) / cycle) + 1.0f)/2.0f);
+	}
 
-    #region public static functions
-    /// <summary>
+	public static int CurrentUnitPerBar { get { return Current_.UnitPerBar; } }
+	public static int CurrentUnitPerBeat { get { return Current_.UnitPerBeat; } }
+	public static string CurrentMusicName { get { return Current_.name; } }
+	public static string CurrentBlockName { get { return Current_.CurrentBlock_.BlockName; } }
+	public static string NextBlockName { get { return Current_.NextBlock_.BlockName; } }
+	public static CriAtomSource CurrentSource { get { return Current_.musicSource_; } }
+	public static BlockInfo CurrentBlock { get { return Current_.CurrentBlock_; } }
+	public static BlockInfo NextBlock { get { return Current_.NextBlock_; } }
+	#endregion
+
+	#region public static predicates
+	public static bool IsJustChangedWhen(Predicate<Timing> pred)
+	{
+		return Current_.IsJustChangedWhen_(pred);
+	}
+	public static bool IsJustChangedBar()
+	{
+		return Current_.IsJustChangedBar_();
+	}
+	public static bool IsJustChangedBeat()
+	{
+		return Current_.IsJustChangedBeat_();
+	}
+	public static bool IsJustChangedAt(int bar = 0, int beat = 0, int unit = 0)
+	{
+		return Current_.IsJustChangedAt_(bar, beat, unit);
+	}
+	public static bool IsJustChangedAt(Timing t)
+	{
+		return Current_.IsJustChangedAt_(t.Bar, t.Beat, t.Unit);
+	}
+
+	public static bool IsNearChangedWhen(Predicate<Timing> pred)
+	{
+		return Current_.IsNearChangedWhen_(pred);
+	}
+	public static bool IsNearChangedBar()
+	{
+		return Current_.IsNearChangedBar_();
+	}
+	public static bool IsNearChangedBeat()
+	{
+		return Current_.IsNearChangedBeat_();
+	}
+	public static bool IsNearChangedAt(int bar, int beat = 0, int unit = 0)
+	{
+		return Current_.IsNearChangedAt_(bar, beat, unit);
+	}
+	public static bool IsNearChangedAt(Timing t)
+	{
+		return Current_.IsNearChangedAt_(t.Bar, t.Beat, t.Unit);
+	}
+	#endregion
+
+	#region public static functions
+	/// <summary>
 	/// Change Current Music.
 	/// </summary>
 	/// <param name="MusicName">name of the GameObject that include Music</param>
-	public static void Play( string MusicName, string firstBlockName = "" ) { MusicList.Find( ( Music m ) => m.name == MusicName ).PlayStart( firstBlockName ); }
+	public static void Play(string MusicName, string firstBlockName = "")
+	{
+		Music music = MusicList.Find((Music m) => m != null && m.name == MusicName);
+		if( music != null )
+		{
+			music.PlayStart(firstBlockName);
+		}
+		else
+		{
+			Debug.Log("Can't find music: " + MusicName);
+		}
+	}
 	/// <summary>
 	/// Quantize to musical time( default is 16 beat ).
 	/// </summary>
 	/// <param name="source">your sound source( Unity AudioSource or ADX CriAtomSource )</param>
-    public static void QuantizePlay( CriAtomSource source ) { Current.QuantizedCue.Add( source ); }
-    public static bool IsPlaying() { return Current != null && Current.MusicSource.IsPlaying(); }
-	public static void Pause() { Current.MusicSource.Pause(); }
-	public static void Resume() { Current.MusicSource.Resume(); }
-	public static void Stop() { Current.MusicSource.Stop(); }
+	public static void QuantizePlay(CriAtomSource source, int transpose = 0, float allowRange = 0.3f)
+	{
+		source.pitch = Mathf.Pow(PITCH_UNIT, transpose);
+		if( IsFormerHalf && LagUnit < allowRange )
+		{
+			source.Play();
+		}
+		else
+		{
+			Current_.quantizedCue_.Add(source);
+		}
+	}
+	public static void Pause() { Current_.musicSource_.Pause(true); }
+	public static void Resume() { Current_.musicSource_.Pause(false); }
+	public static void Stop() { Current_.musicSource_.Stop(); }
+	public static void SetVolume(float volume)
+	{
+		Current_.musicSource_.volume = volume;
+	}
 
-    public static void SetNextBlock( string blockName )
-    {
-        if( blockName == CurrentBlockName ) return;
-        Debug.Log( "SetNextBlock : " + blockName );
-        int index = Current.BlockInfos.FindIndex( ( BlockInfo info ) => info.BlockName == blockName );
-        if( index >= 0 )
-        {
-            Current.NextBlockIndex = index;
-            Current.playback.SetNextBlockIndex( index );
-        }
-        else
-        {
-            Debug.LogError( "Error!! Music.SetNextBlock Can't find block name: " + blockName );
-        }
-    }
-    public static void SetNextBlock( int index )
-    {
-        if( index == Current.CurrentBlockIndex ) return;
-        if( index < Current.CueInfo.numBlocks )
-        {
-            Current.NextBlockIndex = index;
-            Current.playback.SetNextBlockIndex( index );
-        }
-        else
-        {
-            Debug.LogError( "Error!! Music.SetNextBlock index is out of range: " + index );
-        }
-    }
-    
-    public static void SetFirstBlock( string blockName )
-    {
-        int index = Current.BlockInfos.FindIndex( ( BlockInfo info ) => info.BlockName == blockName );
-        if( index >= 0 )
-        {
-            Current.NextBlockIndex = index;
-            Current.CurrentBlockIndex = index;
-            Current.MusicSource.Player.SetFirstBlockIndex( index );
-        }
-        else
-        {
-            Debug.LogError( "Error!! Music.SetFirstBlock Can't find block name: " + blockName );
-        }
-    }
-    public static void SetFirstBlock( int index )
-    {
-        if( index < Current.CueInfo.numBlocks )
-        {
-            Current.NextBlockIndex = index;
-            Current.CurrentBlockIndex = index;
-            Current.MusicSource.Player.SetFirstBlockIndex( index );
-        }
-        else
-        {
-            Debug.LogError( "Error!! Music.SetFirstBlock index is out of range: " + index );
-        }
-    }
-
-    public static void SetAisac( uint index, float value )
-    {
-        Current.MusicSource.source.SetAisac( index, value );
-    }
-    public static void SetAisac( string controlName, float value )
-    {
-        Current.MusicSource.source.SetAisac( controlName, value );
-    }
-    #endregion
-
-    #region private properties
-    private Timing Now_;
-    private Timing Just_;
-    private bool isJustChanged_;
-    private bool isNowChanged_;
-    private bool isFormerHalf_;
-    private double dtFromJust_;
-    private int numRepeat_;
-    private double MusicTimeUnit_;
-
-    private double lag_
-    {
-        get
-        {
-            if( isFormerHalf_ )
-                return dtFromJust_;
-            else
-                return dtFromJust_ - MusicTimeUnit_;
-        }
-    }
-    private double lagAbs_
-    {
-        get
-        {
-            if( isFormerHalf_ )
-                return dtFromJust_;
-            else
-                return MusicTimeUnit_ - dtFromJust_;
-        }
-    }
-    private double lagUnit_ { get { return lag / MusicTimeUnit_; } }
-    private double MusicalTime_ { get { return Just.totalUnit + dtFromJust / MusicTimeUnit; } }
-    private bool isPlaying { get { return MusicSource != null && MusicSource.IsPlaying(); } }
-    #endregion
-
-    #region private predicates
-    private bool IsNowChangedWhen_( Predicate<Timing> pred )
-    {
-        return isNowChanged_ && pred( Now_ );
-    }
-    private bool IsNowChangedBar_()
-    {
-        return isNowChanged_ && Now_.barUnit == 0;
-    }
-    private bool IsNowChangedBeat_()
-    {
-        return isNowChanged_ && Now_.unit == 0;
-    }
-    private bool IsNowChangedAt_( int bar, int beat = 0, int unit = 0 )
-    {
-        return isNowChanged_ &&
-            Now_.bar == bar && Now_.beat == beat && Now_.unit == unit;
-    }
-    private bool IsJustChangedWhen_( Predicate<Timing> pred )
-    {
-        return isJustChanged_ && pred( Just_ );
-    }
-    private bool IsJustChangedBar_()
-    {
-        return isJustChanged_ && Just_.barUnit == 0;
-    }
-    private bool IsJustChangedBeat_()
-    {
-        return isJustChanged_ && Just_.unit == 0;
-    }
-    private bool IsJustChangedAt_( int bar = 0, int beat = 0, int unit = 0 )
-    {
-        return isJustChanged_ &&
-            Just_.bar == bar && Just_.beat == beat && Just_.unit == unit;
-    }
-    #endregion
+	//adx2 functions
+	public static void SetNextBlock(string blockName)
+	{
+		if( blockName == CurrentBlockName ) return;
+		Debug.Log("SetNextBlock : " + blockName);
+		int index = Current_.BlockInfos.FindIndex((BlockInfo info) => info.BlockName == blockName);
+		if( index >= 0 )
+		{
+			Current_.nextBlockIndex_ = index;
+			Current_.playback_.SetNextBlockIndex(index);
+		}
+		else
+		{
+			Debug.LogError("Error!! Music.SetNextBlock Can't find block name: " + blockName);
+		}
+	}
+	public static void SetNextBlock(int index)
+	{
+		if( index == Current_.currentBlockIndex_ ) return;
+		if( index < Current_.cueInfo_.numBlocks )
+		{
+			Current_.nextBlockIndex_ = index;
+			Current_.playback_.SetNextBlockIndex(index);
+		}
+		else
+		{
+			Debug.LogError("Error!! Music.SetNextBlock index is out of range: " + index);
+		}
+	}
+	public static void SetFirstBlock(string blockName)
+	{
+		int index = Current_.BlockInfos.FindIndex((BlockInfo info) => info.BlockName == blockName);
+		if( index >= 0 )
+		{
+			Current_.nextBlockIndex_ = index;
+			Current_.currentBlockIndex_ = index;
+			Current_.musicSource_.Player.SetFirstBlockIndex(index);
+		}
+		else
+		{
+			Debug.LogError("Error!! Music.SetFirstBlock Can't find block name: " + blockName);
+		}
+	}
+	public static void SetFirstBlock(int index)
+	{
+		if( index < Current_.cueInfo_.numBlocks )
+		{
+			Current_.nextBlockIndex_ = index;
+			Current_.currentBlockIndex_ = index;
+			Current_.musicSource_.Player.SetFirstBlockIndex(index);
+		}
+		else
+		{
+			Debug.LogError("Error!! Music.SetFirstBlock index is out of range: " + index);
+		}
+	}
+	public static void SetAisac(uint index, float value)
+	{
+		Current_.musicSource_.SetAisac(index, value);
+	}
+	public static void SetAisac(string controlName, float value)
+	{
+		Current_.musicSource_.SetAisac(controlName, value);
+	}
+	#endregion
 
 	#region private params
-	//music current params
-    SoundCue MusicSource;
-    CriAtomExPlayback playback;
-    CriAtomExAcb ACBData;
-    CriAtomEx.CueInfo CueInfo;
-    List<CriAtomSource> QuantizedCue = new List<CriAtomSource>();
-    int CurrentBlockIndex;
-    /// <summary>
-    /// you can't catch NextBlockIndex completely, if ADX automatically change next block.
-    /// </summary>
-    int NextBlockIndex;
-    BlockInfo CurrentBlock_ { get { return BlockInfos[CurrentBlockIndex]; } }
-    BlockInfo NextBlock_ { get { return BlockInfos[NextBlockIndex]; } }
+	private Timing just_;
+	private Timing near_;
+	private bool isJustChanged_;
+	private bool isNearChanged_;
+	private bool isFormerHalf_;
+	private double timeSecFromJust_;
+	private int numRepeat_;
+	private double musicalTimeUnit_;
 
-	//readonly params
-	long SamplesPerUnit;
-	long SamplesPerBeat;
-	long SamplesPerBar;
+	private CriAtomSource musicSource_;
+	private CriAtomExPlayback playback_;
+	private CriAtomExAcb acbData_;
+	private CriAtomEx.CueInfo cueInfo_;
+	private List<CriAtomSource> quantizedCue_ = new List<CriAtomSource>();
+	private int currentBlockIndex_;
+	private int currentSample_;
+	private int nextBlockIndex_;
 
-	//others
-	Timing OldNow, OldJust;
-    int OldBlockIndex;
-    long OldNumSamples;
-	int NumBlockBar;
-    long SamplesInLoop { get { return NumBlockBar * SamplesPerBar; } }
+	private int samplesPerUnit_;
+	private int samplesPerBeat_;
+	private int samplesPerBar_;
+
+	private Timing oldNear_, oldJust_;
+	private int oldBlockIndex_;
+	private int numBlockBar_;
+	private bool playOnStart_ = false;
+	private static readonly float PITCH_UNIT = Mathf.Pow(2.0f, 1.0f / 12.0f);
+	#endregion
+
+	#region private properties
+	private double Lag_
+	{
+		get
+		{
+			if( isFormerHalf_ )
+				return timeSecFromJust_;
+			else
+				return timeSecFromJust_ - musicalTimeUnit_;
+		}
+	}
+	private double LagAbs_
+	{
+		get
+		{
+			if( isFormerHalf_ )
+				return timeSecFromJust_;
+			else
+				return musicalTimeUnit_ - timeSecFromJust_;
+		}
+	}
+	private double LagUnit_ { get { return Lag_ / musicalTimeUnit_; } }
+	private float MusicalTime_ { get { return (float)(just_.MusicalTime + timeSecFromJust_ / musicalTimeUnit_); } }
+	private float MusicalTimeBar_ { get { return MusicalTime_/UnitPerBar; } }
+	private bool IsPlaying_ { get { return musicSource_ != null && musicSource_.status == CriAtomSource.Status.Playing; } }
+
+	private BlockInfo CurrentBlock_ { get { return BlockInfos[currentBlockIndex_]; } }
+	private BlockInfo NextBlock_ { get { return BlockInfos[nextBlockIndex_]; } }
+	private int SamplesInLoop_ { get { return numBlockBar_ * samplesPerBar_; } }
+	#endregion
+
+	#region private predicates
+	private bool IsNearChangedWhen_(Predicate<Timing> pred)
+	{
+		return isNearChanged_ && pred(near_);
+	}
+	private bool IsNearChangedBar_()
+	{
+		return isNearChanged_ && near_.Beat == 0 && near_.Unit == 0;
+	}
+	private bool IsNearChangedBeat_()
+	{
+		return isNearChanged_ && near_.Unit == 0;
+	}
+	private bool IsNearChangedAt_(int bar, int beat = 0, int unit = 0)
+	{
+		return isNearChanged_ &&
+			near_.Bar == bar && near_.Beat == beat && near_.Unit == unit;
+	}
+	private bool IsJustChangedWhen_(Predicate<Timing> pred)
+	{
+		return isJustChanged_ && pred(just_);
+	}
+	private bool IsJustChangedBar_()
+	{
+		return isJustChanged_ && just_.Beat == 0 && just_.Unit == 0;
+	}
+	private bool IsJustChangedBeat_()
+	{
+		return isJustChanged_ && just_.Unit == 0;
+	}
+	private bool IsJustChangedAt_(int bar = 0, int beat = 0, int unit = 0)
+	{
+		return isJustChanged_ &&
+			just_.Bar == bar && just_.Beat == beat && just_.Unit == unit;
+	}
 	#endregion
 
 	#region Initialize & Update
 	void Awake()
-    {
-        MusicList.Add( this );
-        MusicSource = new SoundCue( GetComponent<CriAtomSource>() );
-        if( Current == null || MusicSource.source.playOnStart )
-        {
-            Current = this;
-        }
-		ACBData = CriAtom.GetAcb( MusicSource.source.cueSheet );
-		ACBData.GetCueInfo( MusicSource.source.cueName, out CueInfo );
+	{
+		MusicList.Add(this);
+		musicSource_ = GetComponent<CriAtomSource>();
+		if( Current_ == null || musicSource_.playOnStart )
+		{
+			if( musicSource_.playOnStart )
+			{
+				musicSource_.playOnStart = false;
+				playOnStart_ = true;
+			}
+			Current_ = this;
+		}
+		acbData_ = CriAtom.GetAcb(musicSource_.cueSheet);
+		acbData_.GetCueInfo(musicSource_.cueName, out cueInfo_);
 
-		SamplesPerUnit = (long)( SamplingRate * ( 60.0 / ( Tempo_ * mtBeat_ ) ) );
-		SamplesPerBeat = SamplesPerUnit*mtBeat_;
-		SamplesPerBar = SamplesPerUnit*mtBar_;
-
-		MusicTimeUnit_ = (double)SamplesPerUnit / (double)SamplingRate;
+		double beatSec = (60.0 / Tempo);
+		samplesPerUnit_ = (int)(SamplingRate * (beatSec/UnitPerBeat));
+		samplesPerBeat_ =(int)(SamplingRate * beatSec);
+		samplesPerBar_ = (int)(SamplingRate * UnitPerBar * (beatSec/UnitPerBeat));
+		musicalTimeUnit_ = (double)samplesPerUnit_ / (double)SamplingRate;
 
 		Initialize();
 	}
 
 	void Initialize()
 	{
-		if ( Current != null && isJustChanged && Just.totalUnit == 0 )
-		{
-			Now_ = new Timing( 0, 0, 0 );
-			isJustChanged_ = true;
-		}
-		else
-		{
-			Now_ = new Timing( 0, 0, -1 );
-			isJustChanged_ = false;
-		}
-		Just_ = new Timing( Now_ );
-		OldNow = new Timing( Now_ );
-		OldJust = new Timing( Just_ );
-		dtFromJust_ = 0;
+		isJustChanged_ = false;
+		isNearChanged_ = false;
+		near_ = new Timing(0, 0, -1);
+		just_ = new Timing(near_);
+		oldNear_ = new Timing(near_);
+		oldJust_ = new Timing(just_);
+		timeSecFromJust_ = 0;
 		isFormerHalf_ = true;
 		numRepeat_ = 0;
-        CurrentBlockIndex = 0;
-        OldBlockIndex = 0;
-        NextBlockIndex = 0;
-        OldNumSamples = 0;
+		currentBlockIndex_ = 0;
+		oldBlockIndex_ = 0;
+		nextBlockIndex_ = 0;
+		currentSample_ = 0;
 	}
 
-	void PlayStart( string firstBlockName = "" )
+	void PlayStart(string firstBlockName = "")
 	{
-		if ( Current != null && IsPlaying() )
+		if( Current_ != null && IsPlaying )
 		{
 			Stop();
 		}
 
+		Current_ = this;
 		Initialize();
-		Current = this;
 
-		if ( firstBlockName != "" )
+		if( firstBlockName != "" )
 		{
-			SetFirstBlock( firstBlockName );
+			SetFirstBlock(firstBlockName);
 		}
-		playback = MusicSource.source.Play();
-        NumBlockBar = BlockInfos[CurrentBlockIndex].NumBar;
+		playback_ = musicSource_.Play();
+		numBlockBar_ = BlockInfos[currentBlockIndex_].NumBar;
 	}
 
 	// Use this for initialization
 	void Start()
 	{
+#if UNITY_EDITOR
+		UnityEditor.EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
+#endif
+		if( playOnStart_ )
+		{
+			PlayStart();
+		}
 	}
 
 	// Update is called once per frame
-    void Update()
-    {
-        if( isPlaying )
-        {
-            UpdateTiming();
-        }
-    }
+	void Update()
+	{
+		if( IsPlaying )
+		{
+			UpdateTiming();
+		}
+	}
+
+#if UNITY_EDITOR
+	void OnPlaymodeStateChanged()
+	{
+		if( Current_.musicSource_.Player != null )
+		{
+			if( UnityEditor.EditorApplication.isPaused )
+			{
+				Pause();
+			}
+			else
+			{
+				Resume();
+			}
+		}
+	}
+#endif
 
 	void UpdateTiming()
 	{
+		int oldSample = currentSample_;
 		long numSamples;
-		isNowChanged_ = false;
-		isJustChanged_ = false;
-        if( playback.GetStatus() != CriAtomExPlayback.Status.Playing ) return;
 		int tempOut;
-		if ( !playback.GetNumPlayedSamples( out numSamples, out tempOut ) )
+		if( !playback_.GetNumPlayedSamples(out numSamples, out tempOut) )
 		{
 			numSamples = -1;
 		}
-		if ( numSamples >= 0 )
+		isNearChanged_ = false;
+		isJustChanged_ = false;
+		currentSample_ = (int)numSamples;
+		if( currentSample_ >= 0 )
 		{
-			Just_.bar = (int)( numSamples / SamplesPerBar );
-            UpdateNumBlockBar( numSamples );
-            Just_.beat = (int)((numSamples % SamplesPerBar) / SamplesPerBeat);
-            Just_.unit = (int)(((numSamples % SamplesPerBar) % SamplesPerBeat) / SamplesPerUnit);
-            if( Just_.unit >= mtBeat_ )
-            {
-                Just_.beat += (int)(Just_.unit / mtBeat_);
-                Just_.unit %= mtBeat_;
-            }
-            int barUnit = Just_.beat * mtBeat_ + Just_.unit;
-            if( barUnit >= mtBar_ )
-            {
-                Just_.bar += (int)(barUnit / mtBar_);
-                Just_.beat = 0;
-                Just_.unit = (barUnit % mtBar_);
-                if( Just_.unit >= mtBeat_ )
-                {
-                    Just_.beat += (int)(Just_.unit / mtBeat_);
-                    Just_.unit %= mtBeat_;
-                }
-            }
-			
-			if( NumBlockBar != 0 ) Just_.bar %= NumBlockBar;
-
-			isFormerHalf_ = ( numSamples % SamplesPerUnit ) < SamplesPerUnit / 2;
-			dtFromJust_ = (double)( numSamples % SamplesPerUnit ) / (double)SamplingRate;
-
-			Now_.Copy( Just_ );
-			if ( !isFormerHalf_ ) Now_.Increment();
-			if ( SamplesInLoop != 0 && numSamples + SamplesPerUnit/2 >= SamplesInLoop )
+			//BlockChanged
+			if( currentSample_ < oldSample )
 			{
-				Now_.Init();
+				numBlockBar_ = BlockInfos[playback_.GetCurrentBlockIndex()].NumBar;
 			}
 
-			isNowChanged_ = Now_.totalUnit != OldNow.totalUnit;
-			isJustChanged_ = Just_.totalUnit != OldJust.totalUnit;
+			just_.Bar = (int)(currentSample_ / samplesPerBar_);
+			just_.Beat = (int)((currentSample_ - just_.Bar * samplesPerBar_) / samplesPerBeat_);
+			just_.Unit = (int)((currentSample_ - just_.Bar * samplesPerBar_ - just_.Beat * samplesPerBeat_) / samplesPerUnit_);
+			if( numBlockBar_ > 0 )
+			{
+				while( just_.Bar >= numBlockBar_ )
+				{
+					just_--;
+				}
+			}
+
+			timeSecFromJust_ = (double)(currentSample_ - just_.Bar * samplesPerBar_ - just_.Beat * samplesPerBeat_ - just_.Unit * samplesPerUnit_) / (double)SamplingRate;
+			isFormerHalf_ = (timeSecFromJust_ * SamplingRate) < samplesPerUnit_ / 2;
+
+			near_.Copy(just_);
+			if( !isFormerHalf_ )
+			{
+				near_++;
+				near_.LoopBack(numBlockBar_);
+			}
+
+			isJustChanged_ = (just_.Equals(oldJust_) == false);
+			isNearChanged_ = (near_.Equals(oldNear_) == false);
 
 			CallEvents();
 
-			OldNow.Copy( Now_ );
-			OldJust.Copy( Just_ );
+			oldNear_.Copy(near_);
+			oldJust_.Copy(just_);
 		}
-		else
+
+		if( DebugText != null )
 		{
-			//Debug.LogWarning( "Warning!! Failed to GetNumPlayedSamples" );
-        }
-
-        DebugUpdateText();
-	}
-
-	void UpdateNumBlockBar( long numSamples )
-	{
-		//BlockChanged
-		if ( OldNumSamples > numSamples )
-		{
-			NumBlockBar = BlockInfos[playback.GetCurrentBlockIndex()].NumBar;
-        }
-		//BlockChanged during this block
-		else if ( playback.GetCurrentBlockIndex() != CurrentBlockIndex && Just_.bar < BlockInfos[CurrentBlockIndex].NumBar - 1 )
-		{
-			NumBlockBar = Just_.bar + 1;
-		}
-        OldNumSamples = numSamples;
-	}
-
-    void DebugUpdateText()
-    {
-        if( debugText != null )
-        {
-            debugText.text = "Just = " + Just_.ToString() + ", MusicalTime = " + MusicalTime_;
-            if( BlockInfos.Count > 0 )
-            {
-                debugText.text += System.Environment.NewLine + "block[" + CurrentBlockIndex + "] = " + CurrentBlock_.BlockName + "(" + NumBlockBar + "bar)";
-            }
-        }
-    }
-	#endregion
-
-    #region Events
-    void CallEvents()
-    {
-        if( isNowChanged_ ) OnNowChanged();
-        if( isNowChanged_ && OldNow > Now_ )
-        {
-            if( NextBlockIndex == CurrentBlockIndex )
-            {
-                WillBlockRepeat();
-            }
-            else
-            {
-                WillBlockChange();
-            }
-        }
-        if( isJustChanged_ ) OnJustChanged();
-        if( isJustChanged_ && Just_.unit == 0 ) OnBeat();
-        if( isJustChanged_ && Just_.barUnit == 0 ) OnBar();
-        if( isJustChanged_ && OldJust > Just_ )
-        {
-            CurrentBlockIndex = playback.GetCurrentBlockIndex();
-            if( OldBlockIndex == CurrentBlockIndex )
-            {
-                OnBlockRepeated();
-            }
-            else
-            {
-                OnBlockChanged();
-            }
-            OldBlockIndex = CurrentBlockIndex;
-        }
-
-        /*
-		if ( isJustChanged_ && Just_.totalUnit > 0 )
-		{
-			Timing tempOld = new Timing( OldJust );
-			tempOld.Increment();
-			if ( tempOld.totalUnit != Just_.totalUnit )
+			DebugText.text = "Just = " + Just.ToString() + ", MusicalTime = " + MusicalTime_;
+			if( BlockInfos.Count > 0 )
 			{
-				//This often happens when the frame rate is slow.
-				Debug.LogWarning( "Skipped some timing: OldJust = " + OldJust.ToString() + ", Just = " + Just_.ToString() );
+				DebugText.text += System.Environment.NewLine + "block[" + currentBlockIndex_ + "] = " + CurrentBlock_.BlockName + "(" + numBlockBar_ + "bar)";
 			}
 		}
-        */
-    }
-
-	//On events (when isJustChanged)
-	void OnNowChanged()
-	{
 	}
 
+	#endregion
+
+	#region Events
+	void CallEvents()
+	{
+		if( isJustChanged_ ) OnJustChanged();
+		if( isJustChanged_ && just_.Unit == 0 ) OnBeat();
+		if( isJustChanged_ && just_.Beat == 0 && just_.Unit == 0 ) OnBar();
+		if( isJustChanged_ && just_ < oldJust_ )
+		{
+			currentBlockIndex_ = playback_.GetCurrentBlockIndex();
+			if( oldBlockIndex_ == currentBlockIndex_ )
+			{
+				OnBlockRepeated();
+			}
+			else
+			{
+				OnBlockChanged();
+			}
+			oldBlockIndex_ = currentBlockIndex_;
+		}
+	}
+
+	//On events (when isJustChanged)
 	void OnJustChanged()
 	{
-		foreach ( CriAtomSource cue in QuantizedCue )
+		foreach( CriAtomSource cue in quantizedCue_ )
 		{
 			cue.Play();
 		}
-		QuantizedCue.Clear();
+		quantizedCue_.Clear();
 	}
 
 	void OnBeat()
@@ -692,7 +674,7 @@ public class Music : MonoBehaviour
 	{
 	}
 
-    void OnBlockRepeated()
+	void OnBlockRepeated()
 	{
 		++numRepeat_;
 	}
@@ -701,98 +683,102 @@ public class Music : MonoBehaviour
 	{
 		numRepeat_ = 0;
 	}
-
-	//Will events (when isNowChanged)
-    void WillBlockRepeat()
-	{
-	}
-
-	void WillBlockChange()
-	{
-	}
 	#endregion
 }
 
 [Serializable]
 public class Timing : IComparable<Timing>, IEquatable<Timing>
 {
-	public Timing( int b = 0, int be = 0, int u = 0 )
+	public Timing(int bar = 0, int beat = 0, int unit = 0)
 	{
-		bar = b;
-		beat = be;
-		unit = u;
+		Bar = bar;
+		Beat = beat;
+		Unit = unit;
 	}
 
-	public Timing( Timing copy )
+	public Timing(Timing copy)
 	{
-		Copy( copy );
+		Copy(copy);
 	}
 	public Timing() { this.Init(); }
-	public void Init() { bar = 0; beat = 0; unit = 0; }
-	public void Copy( Timing copy )
+	public void Init() { Bar = 0; Beat = 0; Unit = 0; }
+	public void Copy(Timing copy)
 	{
-		bar = copy.bar;
-		beat = copy.beat;
-		unit = copy.unit;
+		Bar = copy.Bar;
+		Beat = copy.Beat;
+		Unit = copy.Unit;
 	}
 
-	public int bar, beat, unit;
+	public int Bar, Beat, Unit;
 
-	public int totalUnit { get { return Music.mtBar * bar + Music.mtBeat * beat + unit; } }
-	public int totalBeat { get { return totalUnit/Music.mtBeat; } }
-	public int barUnit { get { return ( unit < 0 ? Music.mtBar - unit : Music.mtBeat * beat + unit )%Music.mtBar; } }
-	public void Increment()
+	public int MusicalTime { get { return Bar * Music.CurrentUnitPerBar + Beat * Music.CurrentUnitPerBeat + Unit; } }
+	public void Fix()
 	{
-		unit++;
-		if ( Music.mtBeat * beat + unit >= Music.mtBar )
+		int totalUnit = Bar * Music.CurrentUnitPerBar + Beat * Music.CurrentUnitPerBeat + Unit;
+		Bar = totalUnit / Music.CurrentUnitPerBar;
+		Beat = (totalUnit - Bar*Music.CurrentUnitPerBar) / Music.CurrentUnitPerBeat;
+		Unit = (totalUnit - Bar*Music.CurrentUnitPerBar - Beat * Music.CurrentUnitPerBeat);
+	}
+	public void Add(int bar, int beat = 0, int unit = 0)
+	{
+		Bar += bar;
+		Beat += beat;
+		Unit += unit;
+		Fix();
+	}
+	public void Add(Timing t)
+	{
+		Bar += t.Bar;
+		Beat += t.Beat;
+		Unit += t.Unit;
+		Fix();
+	}
+	public void Subtract(int bar, int beat = 0, int unit = 0)
+	{
+		Bar -= bar;
+		Beat -= beat;
+		Unit -= unit;
+		Fix();
+	}
+	public void Subtract(Timing t)
+	{
+		Bar -= t.Bar;
+		Beat -= t.Beat;
+		Unit -= t.Unit;
+		Fix();
+	}
+	public void LoopBack(int loopBar)
+	{
+		if( loopBar > 0 )
 		{
-			unit = 0;
-			beat = 0;
-			bar += 1;
-		}
-		else if ( unit >= Music.mtBeat )
-		{
-			unit = 0;
-			beat += 1;
+			Bar += loopBar;
+			Fix();
+			Bar %= loopBar;
 		}
 	}
 
-	public void IncrementBeat()
-	{
-		beat++;
-		if ( Music.mtBeat * beat + unit >= Music.mtBar )
-		{
-			beat = 0;
-			bar += 1;
-		}
-	}
+	public static bool operator >(Timing t, Timing t2) { return t.Bar > t2.Bar || (t.Bar == t2.Bar && t.Beat > t2.Beat) || (t.Bar == t2.Bar && t.Beat == t2.Beat && t.Unit > t2.Unit); }
+	public static bool operator <(Timing t, Timing t2) { return !(t > t2) && !(t.Equals(t2)); }
+	public static bool operator <=(Timing t, Timing t2) { return !(t > t2); }
+	public static bool operator >=(Timing t, Timing t2) { return !(t < t2); }
+	public static Timing operator ++(Timing t) { t.Unit++; t.Fix(); return t; }
+	public static Timing operator --(Timing t) { t.Unit--; t.Fix(); return t; }
 
-	public static bool operator >( Timing t, Timing t2 ) { return t.totalUnit > t2.totalUnit; }
-	public static bool operator <( Timing t, Timing t2 ) { return !( t > t2 ) && !( t.Equals( t2 ) ); }
-	public static bool operator <=( Timing t, Timing t2 ) { return !( t > t2 ); }
-	public static bool operator >=( Timing t, Timing t2 ) { return t > t2 || t.Equals( t2 ); }
-	public static int operator -( Timing t, Timing t2 ) { return t.totalUnit - t2.totalUnit; }
-
-	public bool IsEqualTo( int bar, int beat = 0, int unit = 0 )
+	public override bool Equals(object obj)
 	{
-		return this.totalUnit == Music.mtBar * bar + Music.mtBeat * beat + unit;
-	}
-
-	public override bool Equals( object obj )
-	{
-		if ( object.ReferenceEquals( obj, null ) )
+		if( object.ReferenceEquals(obj, null) )
 		{
 			return false;
 		}
-		if ( object.ReferenceEquals( obj, this ) )
+		if( object.ReferenceEquals(obj, this) )
 		{
 			return true;
 		}
-		if ( this.GetType() != obj.GetType() )
+		if( this.GetType() != obj.GetType() )
 		{
 			return false;
 		}
-		return this.Equals( obj as Timing );
+		return this.Equals(obj as Timing);
 	}
 
 	public override int GetHashCode()
@@ -800,20 +786,20 @@ public class Timing : IComparable<Timing>, IEquatable<Timing>
 		return base.GetHashCode();
 	}
 
-	public bool Equals( Timing other )
+	public bool Equals(Timing other)
 	{
-		return this.totalUnit == other.totalUnit;
+		return (this.Bar == other.Bar && this.Beat == other.Beat && this.Unit == other.Unit);
 	}
 
-	public int CompareTo( Timing tother )
+	public int CompareTo(Timing tother)
 	{
-		if ( this.Equals( tother ) ) return 0;
-		else if ( this > tother ) return 1;
+		if( this.Equals(tother) ) return 0;
+		else if( this > tother ) return 1;
 		else return -1;
 	}
 
 	public override string ToString()
 	{
-		return bar + " " + beat + " " + unit;
+		return Bar + " " + Beat + " " + Unit;
 	}
-}
+}

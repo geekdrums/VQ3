@@ -20,7 +20,7 @@ public class SPPanel : MonoBehaviour {
 	Vector3 spZeroPosition_;
 	Vector3 spMaxPosition_;
 	Vector3 spBarTargetScale = new Vector3(1, 0, 1);
-	Vector3 spSlimBarTargetScale = new Vector3(1, 0, 1);
+	//Vector3 spSlimBarTargetScale = new Vector3(1, 0, 1);
 	Vector3 spPanelBaseTargetScale;
 	Vector3 panelTargetScale = Vector3.one;
 
@@ -52,20 +52,20 @@ public class SPPanel : MonoBehaviour {
 			float SPRatio = (float)GameContext.PlayerConductor.RemainSP / GameContext.PlayerConductor.TotalSP;
 			if( GameContext.PlayerConductor.RemainSP > 0 )
 			{
-				SPPanelBase.GetComponentInChildren<MidairPrimitive>().SetColor(Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalSin(4) * Mathf.Clamp(SPRatio + 0.3f, 0.5f, 1.0f)));
+				SPPanelBase.GetComponentInChildren<MidairPrimitive>().SetColor(Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(4) * Mathf.Clamp(SPRatio + 0.3f, 0.5f, 1.0f)));
 			}
 			else
 			{
 				SPPanelBase.GetComponentInChildren<MidairPrimitive>().SetColor(ColorManager.Base.Shade);
 			}
-			if( BattleButton.renderer.enabled )
+			if( BattleButton.GetComponent<Renderer>().enabled )
 			{
 				Ray ray = GameContext.MainCamera.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;
 				Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity);
 				if( Input.GetMouseButtonDown(0) )
 				{
-					if( hit.collider == BattleButton.collider )
+					if( hit.collider == BattleButton.GetComponent<Collider>() )
 					{
 						buttonType_ = ButtonType.Battle;
 					}
@@ -76,7 +76,7 @@ public class SPPanel : MonoBehaviour {
 				}
 				if( Input.GetMouseButton(0) )
 				{
-					if( hit.collider == BattleButton.collider && buttonType_ == ButtonType.Battle )
+					if( hit.collider == BattleButton.GetComponent<Collider>() && buttonType_ == ButtonType.Battle )
 					{
 						BattleButton.SetTargetSize(7.0f);
 						BattleButton.SetColor(ColorManager.Base.Light);
@@ -90,7 +90,7 @@ public class SPPanel : MonoBehaviour {
 				}
 				else if( Input.GetMouseButtonUp(0) )
 				{
-					if( hit.collider == BattleButton.collider && buttonType_ == ButtonType.Battle )
+					if( hit.collider == BattleButton.GetComponent<Collider>() && buttonType_ == ButtonType.Battle )
 					{
 						GameContext.ChangeState(GameState.Field);
 						GameContext.FieldConductor.CommandExp.Reset();
@@ -100,7 +100,7 @@ public class SPPanel : MonoBehaviour {
 				else
 				{
 					BattleButton.SetTargetSize(7.5f);
-					BattleButton.SetColor(Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalSin(4) * Mathf.Clamp(0.3f - SPRatio, 0.0f, 0.3f)));
+					BattleButton.SetColor(Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(4) * Mathf.Clamp(0.3f - SPRatio, 0.0f, 0.3f)));
 					BattleText.color = Color.white;
 				}
 			}
@@ -121,14 +121,14 @@ public class SPPanel : MonoBehaviour {
 	{
 		UpdateSP();
 		playerCommand_ = command;
-		BattleButton.renderer.enabled = false;
-		BattleText.renderer.enabled = false;
-		CommandName.text = command.nameText.ToUpper();
-		CommandName.color = command.currentLevel == 0 ? ColorManager.Base.Shade : Color.white;
+		BattleButton.GetComponent<Renderer>().enabled = false;
+		BattleText.GetComponent<Renderer>().enabled = false;
+		CommandName.text = playerCommand_.nameText.ToUpper();
+		CommandName.color = playerCommand_.currentLevel == 0 ? ColorManager.Base.Shade : Color.white;
 		for( int i=0; i<LevelInfos.Length; ++i )
 		{
 			GameObject levelInfo = LevelInfos[i];
-			if( i < command.commandData.Count && command.commandData[i].RequireSP  > 0 )
+			if( i < playerCommand_.commandData.Count && playerCommand_.commandData[i].RequireSP  > 0 )
 			{
 				levelInfo.transform.localScale = Vector3.one;
 				bool isCurrentData = command.currentLevel-1 == i;
@@ -144,8 +144,8 @@ public class SPPanel : MonoBehaviour {
 				levelInfo.transform.localScale = Vector3.zero;
 			}
 		}
-		spBarTargetScale = new Vector3(1, 0.9f * ((float)command.numSP / MaxBarSP) + ( command.currentLevel > 0 ? 0.1f : 0.0f ), 1);
-		SPSlimBar.transform.localScale = new Vector3(1, 0.9f * ((float)command.commandData[command.commandData.Count-1].RequireSP / MaxBarSP) + 0.1f, 1);
+		spBarTargetScale = new Vector3(1, 0.9f * ((float)playerCommand_.numSP / MaxBarSP) + (command.currentLevel > 0 ? 0.1f : 0.0f), 1);
+		SPSlimBar.transform.localScale = new Vector3(1, 0.9f * ((float)playerCommand_.commandData[command.commandData.Count-1].RequireSP / MaxBarSP) + 0.1f, 1);
 		if( userColorAnim )
 		{
 			SPBar.GetComponentInChildren<MidairPrimitive>().SetAnimationColor(Color.white, ColorManager.Base.Shade);
@@ -155,8 +155,8 @@ public class SPPanel : MonoBehaviour {
 	public void Reset()
 	{
 		UpdateSP();
-		BattleButton.renderer.enabled = true;
-		BattleText.renderer.enabled = true;
+		BattleButton.GetComponent<Renderer>().enabled = true;
+		BattleText.GetComponent<Renderer>().enabled = true;
 		BattleButton.SetAnimationSize(0, 7.5f);
 		CommandName.text = "";
 		spBarTargetScale = new Vector3(1,0,1);

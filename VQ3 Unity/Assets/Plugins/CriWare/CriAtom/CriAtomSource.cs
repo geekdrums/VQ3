@@ -2,7 +2,7 @@
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011 CRI Middleware Co., Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom for Unity
@@ -29,8 +29,6 @@ using System.Collections.Generic;
 [AddComponentMenu("CRIWARE/CRI Atom Source")]
 public class CriAtomSource : MonoBehaviour
 {
-	public const int MaxAisac = 16;
-
 	#region Enumlators
 	/**
 	 * <summary>CriAtomSourceの再生状態を示す値です。<summary>
@@ -62,15 +60,26 @@ public class CriAtomSource : MonoBehaviour
 
 	// Parameters
 	[SerializeField]
+	private bool _use3dPositioning = true;
+	[SerializeField]
+	private bool _loop = false;
+	[SerializeField]
 	private float _volume = 1.0f;
 	[SerializeField]
 	private float _pitch = 0.0f;
 	[SerializeField]
-	public float[] aisac = new float[MaxAisac];
+	private bool _androidUseLowLatencyVoicePool = false;
+	[SerializeField]
+	private bool need_to_player_update_all = true;
 	#endregion
 	
 	#region Properties
-	
+
+	public CriAtomExPlayer Player
+	{
+		get { return this.player; }
+	}
+
 	/**
 	 * <summary>実行開始時に再生するかどうかを設定／取得します。</summary>
 	 * \par 説明:
@@ -82,6 +91,7 @@ public class CriAtomSource : MonoBehaviour
 		get {return this._playOnStart;}
 		set {this._playOnStart = value;}
 	}
+
 	/**
 	 * <summary>再生するキュー名を設定／取得します。</summary>
 	 * \par 説明:
@@ -93,6 +103,7 @@ public class CriAtomSource : MonoBehaviour
 		get {return this._cueName;}
 		set {this._cueName = value;}
 	}
+
 	/**
 	 * <summary>キューシート名を設定／取得します。</summary>
 	 * \par 説明:
@@ -102,6 +113,52 @@ public class CriAtomSource : MonoBehaviour
 	public string cueSheet {
 		get {return this._cueSheet;}
 		set {this._cueSheet = value;}
+	}
+
+	/**
+	 * <summary>3Dポジショニングを使用するかを設定します。</summary>
+	 * \par 説明:
+	 * <br/>
+	 * デフォルトの設定では、3Dポジショニングの使用は有効になっています。<br/>
+	 * 本パラメータは任意のタイミングで切り替えることができます。<br/>
+	 */
+	public bool use3dPositioning {
+		set {
+			this._use3dPositioning = value;
+			if (this.player != null) {
+				this.player.Set3dSource(this.use3dPositioning ? this.source : null);
+				this.SetNeedToPlayerUpdateAll();
+			}
+		}
+		get { return this._use3dPositioning; }
+	}
+
+	/**
+	 * <summary>ループ再生の切り替え</summary>
+	 * <param name="loop">ループスイッチ（true: ループモード、false: ループモード解除）</param>
+	 * \par 説明:
+	 * ループポイントを持たない波形データに対し、ループ再生のON/OFFを切り替えます。<br/>
+	 * デフォルトはループOFFです。<br/>
+	 * ループ再生をONにした場合は、音声終端まで再生しても再生は終了せず先頭に戻って再生を繰り返します。<br/>
+	 * \attention
+	 * 本関数の設定は波形データに対して適用されます。<br/>
+	 * シーケンスデータに対して本関数を実行した場合、
+	 * シーケンスデータ内の個々の波形データがループ再生される形になります。<br/>
+	 * <br/>
+	 * 本関数による指定は、ループポイントを持たない波形データに対してのみ有効です。<br/>
+	 * ループポイントを持つ波形データを再生する場合、本関数の指定に関係なく、
+	 * 波形データのループ位置に従ってループ再生が行われます。<br/>
+	 * <br/>
+	 * 本関数は内部的にシームレス連結再生機能を使用します。<br/>
+	 * そのため、シームレス連結再生に未対応のフォーマット（HCA-MX等）を使用した場合、
+	 * ループ位置にある程度の無音が入る形になります。<br/>
+	 * <br/>
+	 * 本パラメータが評価されるのは、CriAtomSource コンポーネントのステータスが停止状態で、
+	 * CriAtomSource::Play 関数を呼び出した場合です。<br/>
+	 */
+	public bool loop {
+		set { this._loop = value;}
+		get { return this._loop; }
 	}
 
 	/**
@@ -123,7 +180,10 @@ public class CriAtomSource : MonoBehaviour
 	public float volume {
 		set {
 			this._volume = value;
-			if (this.player != null) this.player.SetVolume(this._volume);
+			if (this.player != null) {
+				this.player.SetVolume(this._volume);
+				this.SetNeedToPlayerUpdateAll();
+			}
 		}
 		get { return this._volume; }
 	}
@@ -145,7 +205,10 @@ public class CriAtomSource : MonoBehaviour
 	public float pitch {
 		set {
 			this._pitch = value;
-			if (this.player != null) this.player.SetPitch(this._pitch);
+			if (this.player != null) {
+				this.player.SetPitch(this._pitch);
+				this.SetNeedToPlayerUpdateAll();
+			}
 		}
 		get { return this._pitch; }
 	}
@@ -170,6 +233,7 @@ public class CriAtomSource : MonoBehaviour
 	public float pan3dAngle {
 		set {
 			this.player.SetPan3dAngle(value);
+			this.SetNeedToPlayerUpdateAll();
 		}
 		get {
 			return this.player.GetParameterFloat32(CriAtomEx.Parameter.Pan3dAngle);
@@ -194,6 +258,7 @@ public class CriAtomSource : MonoBehaviour
 	public float pan3dDistance {
 		set {
 			this.player.SetPan3dInteriorDistance(value);
+			this.SetNeedToPlayerUpdateAll();
 		}
 		get {
 			return this.player.GetParameterFloat32(CriAtomEx.Parameter.Pan3dDistance);
@@ -225,6 +290,7 @@ public class CriAtomSource : MonoBehaviour
 	public int startTime {
 		set {
 			this.player.SetStartTime(value);
+			this.SetNeedToPlayerUpdateAll();
 		}
 		get {
 			return this.player.GetParameterSint32(CriAtomEx.Parameter.StartTime);
@@ -310,16 +376,26 @@ public class CriAtomSource : MonoBehaviour
 		}
 	}
 
-	public CriAtomExPlayer Player
-	{
-		get
-		{
-			return this.player;
-		}
+	/**
+	 * <summary>低遅延再生ボイスプールから再生を行うかどうかを設定／取得します。</summary>
+	 * \par 説明:
+	 * trueが設定されていると、低遅延再生ボイスプールを使って再生を開始します。
+	 * \par 備考:
+	 * 本フラグを有効にする場合は、CriWareInitializerの低遅延再生ボイスプール数を設定しておく必要があります。
+	 */
+	public bool androidUseLowLatencyVoicePool {
+		get {return this._androidUseLowLatencyVoicePool;}
+		set {this._androidUseLowLatencyVoicePool = value;}
 	}
+
     #endregion
 
 	#region Functions
+	protected void SetNeedToPlayerUpdateAll()
+	{
+		this.need_to_player_update_all = true;
+	}
+	
 	protected virtual void InternalInitialize()
 	{
 		CriAtomPlugin.InitializeLibrary();
@@ -335,43 +411,42 @@ public class CriAtomSource : MonoBehaviour
 		this.source = null;
 		CriAtomPlugin.FinalizeLibrary();
 	}
+	
+	void Awake()
+	{
+		this.InternalInitialize();
+	}
 
 	void OnEnable()
 	{
-		if (this.player == null) {
-			this.InternalInitialize();
-		}
+		this.SetInitialParameters();
+		this.SetNeedToPlayerUpdateAll();
 	}
 
 	void OnDestroy()
 	{
-		if (this.player != null) {
-			this.InternalFinalize();
-		}
+		this.InternalFinalize();
 	}
 
-	protected virtual void InternalStart()
+	protected virtual void SetInitialParameters()
 	{
-		this.player.Set3dSource(this.source);
+		this.use3dPositioning = this.use3dPositioning; /* ここで必要に応じて3Dソースが設定される */
 		CriAtomListener listener = CriAtomListener.instance;
 		if (listener != null) {
 			this.player.Set3dListener(listener.internalListener);
 		}
 		this.lastPosition = this.transform.position;
+		this.source.SetPosition(this.lastPosition.x, this.lastPosition.y, this.lastPosition.z);
+		this.source.Update();
 
 		this.player.SetVolume(this._volume);
 		this.player.SetPitch(this._pitch);
-		for (uint i = 0; i < MaxAisac; i++) {
-			this.player.SetAisac(i, this.aisac[i]);
-		}
+	}
+
+	void Start() {
 		if (this.playOnStart) {
 			this.Play();
 		}
-	}
-
-	void Start()
-	{
-		this.InternalStart();
 	}
 
 	void LateUpdate()
@@ -383,8 +458,9 @@ public class CriAtomSource : MonoBehaviour
 		this.source.SetPosition(position.x, position.y, position.z);
 		this.source.SetVelocity(velocity.x, velocity.y, velocity.z);
 		this.source.Update();
-		if (this.player.GetStatus() == CriAtomExPlayer.Status.Playing) {
+		if (this.need_to_player_update_all) {
 			this.player.UpdateAll();
+			this.need_to_player_update_all = false;
 		}
 	}
 
@@ -424,6 +500,16 @@ public class CriAtomSource : MonoBehaviour
 			acb = CriAtom.GetAcb(this.cueSheet);
 		}
 		this.player.SetCue(acb, cueName);
+#if !UNITY_EDITOR && UNITY_ANDROID
+		if (androidUseLowLatencyVoicePool) {
+			this.player.SetSoundRendererType(CriAtomEx.SoundRendererType.Native);
+		} else {
+			this.player.SetSoundRendererType(CriAtomEx.SoundRendererType.Asr);
+		}
+#endif
+		if (this.status == Status.Stop) {
+			this.player.Loop(this._loop);
+		}
 		return this.player.Start();
 	}
 
@@ -441,6 +527,16 @@ public class CriAtomSource : MonoBehaviour
 			acb = CriAtom.GetAcb(this.cueSheet);
 		}
 		this.player.SetCue(acb, cueId);
+#if !UNITY_EDITOR && UNITY_ANDROID
+		if (androidUseLowLatencyVoicePool) {
+			this.player.SetSoundRendererType(CriAtomEx.SoundRendererType.Native);
+		} else {
+			this.player.SetSoundRendererType(CriAtomEx.SoundRendererType.Asr);
+		}
+#endif
+		if (this.status == Status.Stop) {
+			this.player.Loop(this._loop);
+		}
 		return this.player.Start();
 	}
 
@@ -481,6 +577,18 @@ public class CriAtomSource : MonoBehaviour
 			this.player.Pause();
 		}
 	}
+	
+	/**
+	 * <summary>ポーズ状態の取得を行います。</summary>
+	 * <returns>ポーズ状態</returns>
+	 * \par 説明:
+	 * ポーズのON/OFFを取得します。<br/>
+	 * \sa CriAtomSource::Pause
+	 */
+	public bool IsPaused()
+	{
+		return this.player.IsPaused();
+	}
 
 	/**
 	 * <summary>バスセンドレベルを設定します。</summary>
@@ -494,6 +602,7 @@ public class CriAtomSource : MonoBehaviour
 	{
 		if (this.player != null) {
 			this.player.SetBusSendLevel(busId, level);
+			this.SetNeedToPlayerUpdateAll();
 		}
 	}
 
@@ -508,7 +617,26 @@ public class CriAtomSource : MonoBehaviour
 	{
 		if (this.player != null) {
 			this.player.SetBusSendLevelOffset(busId, levelOffset);
+			this.SetNeedToPlayerUpdateAll();
 		}
+	}
+	
+	/**
+	 * <summary>[Wii U] デバイスセンドレベルを設定します。</summary>
+	 * \par 備考:
+	 * データ側にデバイスセンドレベルが設定されている場合、
+	 * データ側に設定されている値と本関数による設定値を<b>乗算</b>した値が適用されます。<br/>
+	 * データ側にデバイスセンドレベルが設定されていない場合、
+	 * 本関数による設定値がそのまま適用されます。<br/>
+	 */
+	public void SetDeviceSendLevel(int deviceId, float level)
+	{
+#if !UNITY_EDITOR && UNITY_WIIU
+		if (this.player != null) {
+			this.player.SetDeviceSendLevel(deviceId, level);
+			this.SetNeedToPlayerUpdateAll();
+		}
+#endif
 	}
 
 	/**
@@ -518,24 +646,37 @@ public class CriAtomSource : MonoBehaviour
 	{
 		if (this.player != null) {
 			this.player.SetAisac(controlName, value);
+			this.SetNeedToPlayerUpdateAll();
 		}
 	}
 
 	/**
-	 * <summary>AISACコントロール名を指定してAISACコントロール値を設定
-	 * します。
+	 * <summary>AISACコントロール名を指定してAISACコントロール値を設定します。</summary>
 	 */
 	public void SetAisac(uint controlId, float value)
 	{
-		this.aisac[controlId] = value;
 		if (this.player != null) {
 			this.player.SetAisac(controlId, value);
+			this.SetNeedToPlayerUpdateAll();
 		}
 	}
 
-	public float GetAisac(uint controlId)
+	/**
+	 * <summary>出力データの解析モジュールにアタッチします。</summry>
+	 */
+	public void AttachToAnalyzer(CriAtomExPlayerOutputAnalyzer analyzer)
 	{
-		return this.aisac[controlId];
+		if (this.player != null) {
+			analyzer.AttachExPlayer(this.player);
+		}
+	}
+
+	/**
+	 * <summary>出力データの解析モジュールからデタッチします。</summry>
+	 */
+	public void DetachFromAnalyzer(CriAtomExPlayerOutputAnalyzer analyzer)
+	{
+		analyzer.DetachExPlayer();
 	}
 
     #endregion

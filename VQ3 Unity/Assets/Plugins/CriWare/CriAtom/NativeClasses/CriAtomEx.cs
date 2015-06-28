@@ -2,7 +2,7 @@
  *
  * CRI Middleware SDK
  *
- * Copyright (c) 2011-2012 CRI Middleware Co.,Ltd.
+ * Copyright (c) 2011 CRI Middleware Co., Ltd.
  *
  * Library  : CRI Atom
  * Module   : CRI Atom Native Wrapper
@@ -105,6 +105,8 @@ public static class CriAtomEx
 	public enum PanType {
 		Pan3d = 0,					/**< パン3Dで定位を計算				*/
 		Pos3d,						/**< 3Dポジショニングで定位を計算	*/
+		Auto,						/**< AtomExプレーヤに3D音源／3Dリスナーが設定されている場合は3Dポジショニングで、
+										 設定されていない場合はパン3Dで、それぞれ定位を計算します。*/
 	}
 
 	/**
@@ -193,10 +195,15 @@ public static class CriAtomEx
 		public readonly string	name;		/**< AISACコントロール名	*/
 		public uint				id;			/**< AISACコントロールID	*/
 		
-		public AisacControlInfo(byte[] data)
+		public AisacControlInfo(byte[] data, int startIndex)
 		{
-			this.name = Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt32(data, 0)));
-			this.id = BitConverter.ToUInt32(data, 4);
+			if (IntPtr.Size == 4) {
+				this.name	= Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt32(data, startIndex + 0)));
+				this.id	= BitConverter.ToUInt32(data, startIndex + 4);
+			} else {
+				this.name	= Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt64(data, startIndex + 0)));
+				this.id	= BitConverter.ToUInt32(data, startIndex + 8);
+			}
 		}
 	}
 
@@ -209,7 +216,26 @@ public static class CriAtomEx
 		public float maxDistance;			/**< 最大減衰距離				*/
 		public float dopplerFactor;			/**< ドップラー係数				*/
 		public ushort distanceAisacControl;	/**< 距離減衰AISACコントロール	*/
-		public ushort angleAisacControl;	/**< 角度AISACコントロール		*/
+		public ushort listenerBaseAngleAisacControl;	/**< リスナー基準角度AISACコントロール	*/
+		public ushort sourceBaseAngleAisacControl;		/**< 音源基準角度AISACコントロール		*/
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
+		public ushort[]	reserved;						/**< 予約領域		*/
+		
+		public CuePos3dInfo(byte[] data, int startIndex)
+		{
+			this.coneInsideAngle	= BitConverter.ToSingle(data, startIndex + 0);
+			this.coneOutsideAngle	= BitConverter.ToSingle(data, startIndex + 4);
+			this.minDistance	= BitConverter.ToSingle(data, startIndex + 8);
+			this.maxDistance	= BitConverter.ToSingle(data, startIndex + 12);
+			this.dopplerFactor	= BitConverter.ToSingle(data, startIndex + 16);
+			this.distanceAisacControl	= BitConverter.ToUInt16(data, startIndex + 20);
+			this.listenerBaseAngleAisacControl	= BitConverter.ToUInt16(data, startIndex + 22);
+			this.sourceBaseAngleAisacControl	= BitConverter.ToUInt16(data, startIndex + 24);
+			this.reserved	= new ushort[1];
+			for (int i = 0; i < 1; ++i) {
+				reserved[i] = BitConverter.ToUInt16(data, startIndex + 26 + (2 * i));
+			}
+		}
 	}
 	
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -219,13 +245,25 @@ public static class CriAtomEx
 		public readonly string	name;		/**< ゲーム変数名	*/
 		public uint 			id;			/**< ゲーム変数ID	*/
 		public float			gameValue;	/**< ゲーム変数値	*/
-		public uint 			reserved;	/**< 予約領域		*/
+		
+		public GameVariableInfo(byte[] data, int startIndex)
+		{
+			if (IntPtr.Size == 4) {
+				this.name	= Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt32(data, startIndex + 0)));
+				this.id	= BitConverter.ToUInt32(data, startIndex + 4);
+				this.gameValue	= BitConverter.ToSingle(data, startIndex + 8);
+			} else {
+				this.name	= Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt64(data, startIndex + 0)));
+				this.id	= BitConverter.ToUInt32(data, startIndex + 8);
+				this.gameValue	= BitConverter.ToSingle(data, startIndex + 12);
+			}
+		}
+
 		public GameVariableInfo(string name, uint id, float gameValue)
 		{
 			this.name		= name;
 			this.id			= id;
 			this.gameValue	= gameValue;
-			reserved = 0;
 		}
 	}
 	
@@ -260,48 +298,60 @@ public static class CriAtomEx
 		[MarshalAs(UnmanagedType.LPStr)]
 		public readonly string	userData;			/**< ユーザーデータ			*/
 		public long				length;				/**< 長さ(msec)				*/
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
 		public ushort[]			categories;			/**< カテゴリインデックス	*/
-		public ushort			numLimits;			/**< キューリミット			*/
+		public short			numLimits;			/**< キューリミット			*/
 		public ushort			numBlocks;			/**< ブロック数				*/
-		public byte				priority;			/**< プライオリティ			*/
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+		public byte				priority;			/**< カテゴリキュープライオリティ	*/
+		public byte				headerVisibility;	/**< ヘッダー公開フラグ		*/
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
 		public byte[]			reserved;			/**< 予約領域				*/
 		public CuePos3dInfo		pos3dInfo;			/**< 3D情報					*/
 		public GameVariableInfo gameVariableInfo;	/**< ゲーム変数				*/
-		
-		public CueInfo(byte[] data)
+
+		public CueInfo(byte[] data, int startIndex)
 		{
-			this.id = BitConverter.ToInt32(data, 0);
-			this.type = (CueType)BitConverter.ToInt32(data, 4);
-			this.name = Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt32(data, 8)));
-			this.userData = Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt32(data, 12)));
-			this.length = BitConverter.ToInt64(data, 16);
-			this.categories = new ushort[4];
-			this.categories[0] = BitConverter.ToUInt16(data, 24);
-			this.categories[1] = BitConverter.ToUInt16(data, 26);
-			this.categories[2] = BitConverter.ToUInt16(data, 28);
-			this.categories[3] = BitConverter.ToUInt16(data, 30);
-			this.numLimits = BitConverter.ToUInt16(data, 32);
-			this.numBlocks = BitConverter.ToUInt16(data, 34);
-			this.priority = data[36];
-			this.reserved = new byte[3];
-			this.reserved[0] = 0;
-			this.reserved[1] = 0;
-			this.reserved[2] = 0;
-			this.pos3dInfo = new CuePos3dInfo();
-			this.pos3dInfo.coneInsideAngle = BitConverter.ToSingle(data, 40);
-			this.pos3dInfo.coneOutsideAngle = BitConverter.ToSingle(data, 44);
-			this.pos3dInfo.minDistance = BitConverter.ToSingle(data, 48);
-			this.pos3dInfo.maxDistance = BitConverter.ToSingle(data, 52);
-			this.pos3dInfo.dopplerFactor = BitConverter.ToSingle(data, 56);
-			this.pos3dInfo.distanceAisacControl = BitConverter.ToUInt16(data, 60);
-			this.pos3dInfo.angleAisacControl = BitConverter.ToUInt16(data, 62);
-			this.gameVariableInfo = new GameVariableInfo(
-				Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt32(data, 64))),
-				BitConverter.ToUInt32(data, 68),
-				BitConverter.ToSingle(data, 72)
-				);
+			if (IntPtr.Size == 4) {
+				this.id	= BitConverter.ToInt32(data, startIndex + 0);
+				this.type	= (CueType)BitConverter.ToInt32(data, startIndex + 4);
+				this.name	= Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt32(data, startIndex + 8)));
+				this.userData	= Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt32(data, startIndex + 12)));
+				this.length	= BitConverter.ToInt64(data, startIndex + 16);
+				this.categories	= new ushort[16];
+				for (int i = 0; i < 16; ++i) {
+					categories[i] = BitConverter.ToUInt16(data, startIndex + 24 + (2 * i));
+				}
+				this.numLimits	= BitConverter.ToInt16(data, startIndex + 56);
+				this.numBlocks	= BitConverter.ToUInt16(data, startIndex + 58);
+				this.priority	= data[startIndex + 60];
+				this.headerVisibility	= data[startIndex + 61];
+				this.reserved	= new byte[2];
+				for (int i = 0; i < 2; ++i) {
+					reserved[i] = data[startIndex + 62 + (1 * i)];
+				}
+				this.pos3dInfo	= new CuePos3dInfo(data, startIndex + 64);
+				this.gameVariableInfo	= new GameVariableInfo(data, startIndex + 92);
+			} else {
+				this.id	= BitConverter.ToInt32(data, startIndex + 0);
+				this.type	= (CueType)BitConverter.ToInt32(data, startIndex + 4);
+				this.name	= Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt64(data, startIndex + 8)));
+				this.userData	= Marshal.PtrToStringAnsi(new IntPtr(BitConverter.ToInt64(data, startIndex + 16)));
+				this.length	= BitConverter.ToInt64(data, startIndex + 24);
+				this.categories	= new ushort[16];
+				for (int i = 0; i < 16; ++i) {
+					categories[i] = BitConverter.ToUInt16(data, startIndex + 32 + (2 * i));
+				}
+				this.numLimits	= BitConverter.ToInt16(data, startIndex + 64);
+				this.numBlocks	= BitConverter.ToUInt16(data, startIndex + 66);
+				this.priority	= data[startIndex + 68];
+				this.headerVisibility	= data[startIndex + 69];
+				this.reserved	= new byte[2];
+				for (int i = 0; i < 2; ++i) {
+					reserved[i] = data[startIndex + 70 + (1 * i)];
+				}
+				this.pos3dInfo	= new CuePos3dInfo(data, startIndex + 72);
+				this.gameVariableInfo	= new GameVariableInfo(data, startIndex + 104);
+			}
 		}
 	}
 	
@@ -320,17 +370,21 @@ public static class CriAtomEx
 		public int		numChannels;		/**< チャンネル数			*/
 		public long		numSamples;			/**< トータルサンプル数		*/
 		public bool		streamingFlag;		/**< ストリーミングフラグ	*/
-		public uint		reserved;			/**< 予約領域				*/
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
+		public uint[]	reserved;			/**< 予約領域				*/
 		
-		public WaveformInfo(byte[] data)
+		public WaveformInfo(byte[] data, int startIndex)
 		{
-			this.waveId = BitConverter.ToInt32(data, 0);
-			this.format = BitConverter.ToUInt32(data, 4);
-			this.samplingRate = BitConverter.ToInt32(data, 8);
-			this.numChannels = BitConverter.ToInt32(data, 12);
-			this.numSamples = BitConverter.ToInt64(data, 16);
-			this.streamingFlag = BitConverter.ToInt32(data, 24) != 0;
-			this.reserved = 0;
+			this.waveId	= BitConverter.ToInt32(data, startIndex + 0);
+			this.format	= BitConverter.ToUInt32(data, startIndex + 4);
+			this.samplingRate	= BitConverter.ToInt32(data, startIndex + 8);
+			this.numChannels	= BitConverter.ToInt32(data, startIndex + 12);
+			this.numSamples	= BitConverter.ToInt64(data, startIndex + 16);
+			this.streamingFlag	= BitConverter.ToInt32(data, startIndex + 24) != 0;
+			this.reserved	= new uint[1];
+			for (int i = 0; i < 1; ++i) {
+				reserved[i] = BitConverter.ToUInt32(data, startIndex + 28 + (4 * i));
+			}
 		}
 	}
 	
@@ -352,15 +406,15 @@ public static class CriAtomEx
 		public uint maxServerInterval;		/**<サーバ処理実行間隔の最大値（マイクロ秒単位）		*/
 		public uint averageServerInterval;	/**<サーバ処理実行間隔の平均値（マイクロ秒単位）		*/
 		
-		public PerformanceInfo(byte[] data)
+		public PerformanceInfo(byte[] data, int startIndex)
 		{
-			this.serverProcessCount = BitConverter.ToUInt32(data, 0);
-			this.lastServerTime = BitConverter.ToUInt32(data, 4);
-			this.maxServerTime = BitConverter.ToUInt32(data, 8);
-			this.averageServerTime = BitConverter.ToUInt32(data, 12);
-			this.lastServerInterval = BitConverter.ToUInt32(data, 16);
-			this.maxServerInterval = BitConverter.ToUInt32(data, 20);
-			this.averageServerInterval = BitConverter.ToUInt32(data, 24);
+			this.serverProcessCount	= BitConverter.ToUInt32(data, startIndex + 0);
+			this.lastServerTime	= BitConverter.ToUInt32(data, startIndex + 4);
+			this.maxServerTime	= BitConverter.ToUInt32(data, startIndex + 8);
+			this.averageServerTime	= BitConverter.ToUInt32(data, startIndex + 12);
+			this.lastServerInterval	= BitConverter.ToUInt32(data, startIndex + 16);
+			this.maxServerInterval	= BitConverter.ToUInt32(data, startIndex + 20);
+			this.averageServerInterval	= BitConverter.ToUInt32(data, startIndex + 24);
 		}
 	}
 
@@ -434,6 +488,133 @@ public static class CriAtomEx
 	}
 
 	/**
+	 * <summary>DSPバススナップショットの適用 </summary>
+	 * <param name="snapshot_name">DSPバススナップショット名</param>
+	 * <param name="time_ms">スナップショットが完全に反映されるまでの時間（ミリ秒）</param>
+	 * \par 説明:
+	 * DSPバススナップショットを適用します。<br/>
+	 * 本関数を呼び出すとスナップショットのパラメータに変化します。
+	 * 完全に変化を終えるまでに、time_ms ミリ秒かかります。
+	 */
+	public static void ApplyDspBusSnapshot(string snapshot_name, int time_ms)
+	{
+		criAtomEx_ApplyDspBusSnapshot(snapshot_name, time_ms);
+	}
+
+	/**
+	 * <summary>ゲーム変数の総数の取得</summary>
+	 * <returns>ゲーム変数の総数</returns>
+	 * \par 説明:
+	 * ACFファイル内に登録されているゲーム変数の総数を取得します。<br>
+	 * \attention
+	 * 本関数を実行する前に、ACFファイルを登録しておく必要があります。<br>
+	 * ACFファイルが登録されていない場合、-1が返ります。
+	 */
+	public static int GetNumGameVariables()
+	{
+		return criAtomEx_GetNumGameVariables();
+	}
+
+	/**
+	 * <summary>ゲーム変数情報の取得（インデックス指定）</summary>
+	 * <param name="index">ゲーム変数インデックス</param>
+	 * <param name="info">ゲーム変数情報</param>
+	 * <returns>情報が取得できたかどうか？</returns>
+	 * \par 説明:
+	 * ゲーム変数インデックスからゲーム変数情報を取得します。<br>
+	 * 指定したインデックスのゲーム変数が存在しない場合、falseが返ります。
+	 * \attention
+	 * 本関数を実行する前に、ACFファイルを登録しておく必要があります。<br/>
+	 */
+	public static bool GetGameVariableInfo(ushort index, out GameVariableInfo info)
+	{
+		using (var mem = new CriStructMemory<GameVariableInfo>()) {
+			bool result = criAtomEx_GetGameVariableInfo(index, mem.ptr);
+			info = new GameVariableInfo(mem.bytes, 0);
+			return result;
+		}
+	}
+
+	/**
+	 * <summary>ゲーム変数の取得</summary>
+	 * <param name="game_variable_id">ゲーム変数ID</param>
+	 * <returns>ゲーム変数値</returns>
+	 * \par 説明:
+	 * ACFファイル内に登録されているゲーム変数値を取得します。<br/>
+	 * \attention
+	 * 本関数を実行する前に、ACFファイルを登録しておく必要があります。<br/>
+	 */
+	public static float GetGameVariable(uint game_variable_id)
+	{
+		return criAtomEx_GetGameVariableById(game_variable_id);
+	}
+
+	/**
+	 * <summary>ゲーム変数の取得</summary>
+	 * <param name="game_variable_name">ゲーム変数名</param>
+	 * <returns>ゲーム変数値</returns>
+	 * \par 説明:
+	 * ACFファイル内に登録されているゲーム変数値を取得します。<br/>
+	 * \attention
+	 * 本関数を実行する前に、ACFファイルを登録しておく必要があります。<br/>
+	 */
+	public static float GetGameVariable(string game_variable_name)
+	{
+		return criAtomEx_GetGameVariableByName(game_variable_name);
+	}
+
+	/**
+	 * <summary>ゲーム変数の設定</summary>
+	 * <param name="game_variable_id">ゲーム変数ID</param>
+	 * <param name="game_variable_value">ゲーム変数値</param>
+	 * \par 説明:
+	 * ACFファイル内に登録されているゲーム変数に値を設定します。<br>
+	 * 設定可能な範囲は0.0f～1.0fの間です。
+	 * \attention
+	 * 本関数を実行する前に、ACFファイルを登録しておく必要があります。<br>
+	 */
+	public static void SetGameVariable(uint game_variable_id, float game_variable_value)
+	{
+		criAtomEx_SetGameVariableById(game_variable_id, game_variable_value);
+	}
+	
+	/**
+	 * <summary>ゲーム変数の設定</summary>
+	 * <param name="game_variable_name">ゲーム変数名</param>
+	 * <param name="game_variable_value">ゲーム変数値</param>
+	 * \par 説明:
+	 * ACFファイル内に登録されているゲーム変数に値を設定します。<br>
+	 * 設定可能な範囲は0.0f～1.0fの間です。
+	 * \attention
+	 * 本関数を実行する前に、ACFファイルを登録しておく必要があります。<br>
+	 */
+	public static void SetGameVariable(string game_variable_name, float game_variable_value)
+	{
+		criAtomEx_SetGameVariableByName(game_variable_name, game_variable_value);
+	}
+
+	/**
+	 * <summary>乱数種の設定</summary>
+	 * <param name="seed">乱数種</param>
+	 * \par 説明:
+	 * CRI Atomライブラリ全体で共有する疑似乱数生成器に乱数種を設定します。<br>
+	 * 乱数種を設定することにより、各種ランダム再生処理に再現性を持たせることができます。<br>
+	 * AtomExプレーヤごとに再現性を持たせたい場合は、 ::CriAtomExPlayer::SetRandomSeed 関数を使用してください。
+	 * <br>
+	 * 再現性の必要がなく、実行ごとに乱数種を切り替えたい場合は、本関数
+	 * ではなく、 ::CriAtomConfig::useRandomSeedWithTime プロパティを使用してください。
+	 * <br>
+	 * \attention
+	 * 本関数は ::CriAtomSource または ::CriAtomExPlayer の生成前に呼び出す必要が
+	 * あります。乱数種を設定する前に作成されたものについては影響を受けません。
+	 * \sa ::CriAtomExPlayer::SetRandomSeed
+	 */
+	public static void SetRandomSeed(uint seed)
+	{
+		criAtomEx_SetRandomSeed(seed);
+	}
+
+	/**
 	 * <summary>パフォーマンスモニタのリセット</summary>
 	 * \par 説明:
 	 * 現在までの計測結果を破棄します。<br/>
@@ -458,7 +639,7 @@ public static class CriAtomEx
 	{
 		using (var mem = new CriStructMemory<PerformanceInfo>()) {
 			criAtom_GetPerformanceInfo(mem.ptr);
-			info = new PerformanceInfo(mem.bytes);
+			info = new PerformanceInfo(mem.bytes, 0);
 		}
 	}
 	
@@ -477,6 +658,30 @@ public static class CriAtomEx
 
 	[DllImport(CriWare.pluginName)]
 	private static extern void criAtomEx_DetachDspBusSetting();
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomEx_ApplyDspBusSnapshot(string snapshot_name, int time_ms);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern int criAtomEx_GetNumGameVariables();
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern bool criAtomEx_GetGameVariableInfo(ushort index, IntPtr game_variable_info);
+
+	[DllImport(CriWare.pluginName)]
+	private static extern float criAtomEx_GetGameVariableById(uint game_variable_id);
+
+	[DllImport(CriWare.pluginName)]
+	private static extern float criAtomEx_GetGameVariableByName(string game_variable_name);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomEx_SetGameVariableById(uint game_variable_id, float game_variable_value);
+	
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomEx_SetGameVariableByName(string game_variable_name, float game_variable_value);
+
+	[DllImport(CriWare.pluginName)]
+	private static extern void criAtomEx_SetRandomSeed(uint seed);
 
 	[DllImport(CriWare.pluginName)]
 	private static extern void criAtom_ResetPerformanceMonitor();
@@ -801,6 +1006,55 @@ public static class CriAtomExCategory
 	#endregion
 }
 
+/**
+ * <summary>シーケンスデータを制御するためのクラスです。</summary>
+ * \par 説明:
+ * CRI Atom Craft上で作成したシーケンスデータを使用するためのクラスです。<br/>
+ */
+public static class CriAtomExSequencer
+{
+	/**
+	 * <summary>シーケンスコールバック</summary>
+	 * <param name="eventParamsString">イベントパラメタ文字列</param>	 
+	 * \par 説明:
+	 * シーケンスコールバック関数型です。<br/>
+	 * 引数の文字列には以下の情報が含まれます。<br/>
+	 *  -# イベント位置
+	 *  -# イベントID
+	 *  -# 再生ID
+	 *  -# イベントタイプ
+	 *  -# イベントタグ文字列
+     *  .
+	 * 各情報は指定した区切り文字列を挟みながら一つの文字列として連結されて渡ってきます。<br/>
+	 * 必要なパラメタを文字列からパースしてご利用ください。<br/>
+	 * \sa CriAtomExSequencer::SetEventCallback
+	 */
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate void EventCbFunc(string eventParamsString);
+
+	/**
+	 * <summary>シーケンスイベントコールバックの登録</summary>
+	 * <param name="func">シーケンスコールバック関数</param>
+	 * <param name="separator">イベントパラメタ区切り文字列(最大15文字)</param>
+	 * \par 説明:
+	 * シーケンスデータに埋め込まれたコールバック情報を受け取るコールバック関数を登録します。<br/>
+	 * 登録されたコールバック関数は、コールバックイベントを処理したタイミングで実行されます。<br/>
+	 * \par 注意:
+	 * コールバック関数は1つしか登録できません。<br/>
+	 * 登録操作を複数回行った場合、既に登録済みのコールバック関数が、 後から登録したコールバック関数により上書きされてしまいます。<br/>
+	 */
+	public static void SetEventCallback(CriAtomExSequencer.EventCbFunc func, string separator = "\t")
+	{
+		/* MonoBehaviour側に登録 */
+		CriAtom.SetEventCallback(func, separator);
+	}
+}
+
+/**
+ * <summary>Atomサウンドレンダラのバス出力を制御するクラスです。</summary>
+ * \par 説明:
+ * 本クラスでは、Atomサウンドレンダラのバス出力を操作してボリュームを変更したり、レベルを測定することができます。<br/>
+ */
 public class CriAtomExAsr
 {
 	[StructLayout(LayoutKind.Sequential)]
@@ -830,21 +1084,28 @@ public class CriAtomExAsr
 		public float[] peakLevels;				/**< ピークレベル			*/
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
 		public float[] peakHoldLevels;			/**< ピークホールドレベル	*/
-
+		
 		public BusAnalyzerInfo(byte[] data)
 		{
-			this.numChannels = BitConverter.ToInt32(data, 0);
-			this.rmsLevels = new float[8];
-			for (int i = 0; i < 8; i++) {
-				this.rmsLevels[i] = BitConverter.ToSingle(data, 4 + i * 4);
-			}
-			this.peakLevels = new float[8];
-			for (int i = 0; i < 8; i++) {
-				this.peakLevels[i] = BitConverter.ToSingle(data, 36 + i * 4);
-			}
-			this.peakHoldLevels = new float[8];
-			for (int i = 0; i < 8; i++) {
-				this.peakHoldLevels[i] = BitConverter.ToSingle(data, 68 + i * 4);
+			if (data != null) {
+				this.numChannels = BitConverter.ToInt32(data, 0);
+				this.rmsLevels = new float[8];
+				for (int i = 0; i < 8; i++) {
+					this.rmsLevels[i] = BitConverter.ToSingle(data, 4 + i * 4);
+				}
+				this.peakLevels = new float[8];
+				for (int i = 0; i < 8; i++) {
+					this.peakLevels[i] = BitConverter.ToSingle(data, 36 + i * 4);
+				}
+				this.peakHoldLevels = new float[8];
+				for (int i = 0; i < 8; i++) {
+					this.peakHoldLevels[i] = BitConverter.ToSingle(data, 68 + i * 4);
+				}
+			} else {
+				this.numChannels = 0;
+				this.rmsLevels = new float[8];
+				this.peakLevels = new float[8];
+				this.peakHoldLevels = new float[8];
 			}
 		}
 	}

@@ -14,7 +14,7 @@ using UnityEngine;
 
 public class CriWareEditor : Editor
 {
-	[MenuItem("CRI/Create CRIWARE Library Initializer")]
+	[MenuItem("CRI/Create CRIWARE Library Initializer", false, 150)]
 	public static void CreateCriwareLibraryInitalizer()
 	{
 		CriWareInitializer[] criWareInitializerList = FindObjectsOfType(typeof(CriWareInitializer)) as CriWareInitializer[];
@@ -33,7 +33,7 @@ public class CriWareEditor : Editor
 		}
 	}	
 
-	[MenuItem("CRI/Create CRIWARE Error Handler")]
+	[MenuItem("CRI/Create CRIWARE Error Handler", false, 150)]
 	public static void CreateCriwareErrorHandler()
 	{
 		CriWareErrorHandler[] criWareErrorHandlerList = FindObjectsOfType(typeof(CriWareErrorHandler)) as CriWareErrorHandler[];

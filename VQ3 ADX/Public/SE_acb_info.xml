@@ -3,154 +3,148 @@
 <OrcaTrees OriginalFilePath="C:\Users\geekdrums\Documents\GitHub\VQ3\VQ3 ADX\Public\SE_acb_info.xml" ObjectTypeExpression="Full" BinaryEncodingType="Base64" FileVersion="3" FileRevision="0">
   <OrcaTree OrcaName="acb_Info">
     <Orca OrcaName="acb_Info_Root" OrcaType="CriMw.CriGears.Core.OrcaObject">
-      <Orca OrcaName="SE" OoUniqId="61f6c484-c862-4d1d-b6ad-5f194ae823c8" AcbOutputDirectory="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/" AwbOutputDirectory="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/Public/SE/SE.awbTmp" AcfMd5hash="7U7sIVgCWCU/rpAsrsSS+A==" LastOutputCueSheetSize="1817696" CueSheetPaddingSize="2048" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSheet">
-        <Orca OrcaName="PhysicGoodDamage" CueID="2" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_damage" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="damage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/damage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="damage.wav" SrcFilePath="" SourceFileSize="17684" Channels="1" SamplingRate="44100" SampleFrames="8820" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_damage_Enc_44100_Public_6658aa87fa1855bd7a8b62c458f31d1c.adx" EncodeFileSize="5026" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="8820" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+      <Orca OrcaName="SE" OoUniqId="61f6c484-c862-4d1d-b6ad-5f194ae823c8" AcfMd5hash="txtosOlYorT3vxSzbHuH+g==" LastOutputCueSheetSize="1818912" CueSheetPaddingSize="2048" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSheet">
+        <Orca OrcaName="PhysicGoodDamage" CueID="2" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_damage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="damage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/damage.wav" SynthType="Waveform" LinkWaveformPathName="SE/damage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="damage.wav" SourceFileSize="17684" Channels="1" SamplingRate="44100" SampleFrames="8820" EncodeFileSize="5026" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" LastLoadSrcFileMD5="6658aa87fa1855bd7a8b62c458f31d1c" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="8820" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="PhysicDamage" CueID="5" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_PhysicDamage" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="PhysicDamage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/PhysicDamage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="PhysicDamage.wav" SrcFilePath="" SourceFileSize="17590" Channels="1" SamplingRate="44100" SampleFrames="8773" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_PhysicDamage_Enc_44100_Public_f98554ecbc8c82a2ca23853ca570cdb2.adx" EncodeFileSize="5008" AwbId="1" LastLoadSrcFileTimeStamp="2014/02/20 1:34:35" WaveImageCacheWriteTime="2014/02/20 1:34:35" ResamplingRate="44100" ReloopEnd="8773" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="PhysicDamage" CueID="5" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_PhysicDamage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="PhysicDamage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/PhysicDamage.wav" SynthType="Waveform" LinkWaveformPathName="SE/PhysicDamage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="PhysicDamage.wav" SourceFileSize="17590" Channels="1" SamplingRate="44100" SampleFrames="8773" EncodeFileSize="5008" LastLoadSrcFileTimeStamp="2014/02/20 1:34:35" LastLoadSrcFileMD5="f98554ecbc8c82a2ca23853ca570cdb2" WaveImageCacheWriteTime="2014/02/20 1:34:35" ResamplingRate="44100" ReloopEnd="8773" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="PhysicBadDamage" CueID="6" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_PhysicBadDamage" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" BandPassHi="0.75" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="PhysicBadDamage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/PhysicBadDamage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="PhysicBadDamage.wav" SrcFilePath="" SourceFileSize="32014" Channels="1" SamplingRate="44100" SampleFrames="15985" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_PhysicBadDamage_Enc_44100_Public_8b66a7e2860fc3ae7611a2e4aef2feb0.adx" EncodeFileSize="9058" AwbId="2" LastLoadSrcFileTimeStamp="2014/02/20 12:36:49" WaveImageCacheWriteTime="2014/02/20 12:36:49" ResamplingRate="44100" ReloopEnd="15985" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="PhysicBadDamage" CueID="6" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_PhysicBadDamage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" BandPassHi="0.75" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="PhysicBadDamage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/PhysicBadDamage.wav" SynthType="Waveform" LinkWaveformPathName="SE/PhysicBadDamage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="PhysicBadDamage.wav" SourceFileSize="32014" Channels="1" SamplingRate="44100" SampleFrames="15985" EncodeFileSize="9058" LastLoadSrcFileTimeStamp="2014/02/20 12:36:49" LastLoadSrcFileMD5="8b66a7e2860fc3ae7611a2e4aef2feb0" WaveImageCacheWriteTime="2014/02/20 12:36:49" ResamplingRate="44100" ReloopEnd="15985" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="PhysicNoDamage" CueID="7" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_PhysicNoDamage" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" Pitch="-105" BiquadCof="0.61" BiquadQ="1.29" BiquadGain="1.08" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="PhysicNoDamage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/PhysicNoDamage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="PhysicNoDamage.wav" SrcFilePath="" SourceFileSize="27498" Channels="1" SamplingRate="44100" SampleFrames="13727" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_PhysicNoDamage_Enc_44100_Public_b7c4feaacc50a2768cf0e411bd47eb9a.adx" EncodeFileSize="7780" AwbId="3" LastLoadSrcFileTimeStamp="2014/02/20 13:20:31" WaveImageCacheWriteTime="2014/02/20 13:20:31" ResamplingRate="44100" ReloopEnd="13727" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
-            </Orca>
+        <Orca OrcaName="PhysicNoDamage" CueID="7" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_PhysicNoDamage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" Pitch="-105" BiquadCof="0.61" BiquadQ="1.29" BiquadGain="1.08" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
             <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
               <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
                 <Orca OrcaName="AisacPoint" ControlValue="83" DestinationValue="0.98" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
                 <Orca OrcaName="AisacPoint" ControlValue="278" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
               </Orca>
             </Orca>
-          </Orca>
-          <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
-        </Orca>
-        <Orca OrcaName="MagicGoodDamage" CueID="26" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_MagicGoodDamage" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="MagicGoodDamage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/MagicGoodDamage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="MagicGoodDamage.wav" SrcFilePath="" SourceFileSize="38708" Channels="1" SamplingRate="44100" SampleFrames="19332" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_MagicGoodDamage_Enc_44100_Public_9dca3c94417f30de0ce0cfabadffc583.adx" EncodeFileSize="10948" AwbId="4" LastLoadSrcFileTimeStamp="2014/02/20 15:45:00" WaveImageCacheWriteTime="2014/02/20 15:45:00" ResamplingRate="44100" ReloopEnd="19332" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="PhysicNoDamage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/PhysicNoDamage.wav" SynthType="Waveform" LinkWaveformPathName="SE/PhysicNoDamage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="PhysicNoDamage.wav" SourceFileSize="27498" Channels="1" SamplingRate="44100" SampleFrames="13727" EncodeFileSize="7780" LastLoadSrcFileTimeStamp="2014/02/20 13:20:31" LastLoadSrcFileMD5="b7c4feaacc50a2768cf0e411bd47eb9a" WaveImageCacheWriteTime="2014/02/20 13:20:31" ResamplingRate="44100" ReloopEnd="13727" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="MagicDamage" CueID="9" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_MagicGoodDamage" SynthType="Track" ObjectColor="200, 30, 100, 180" Volume="0.75" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="MagicGoodDamage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/MagicGoodDamage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="MagicGoodDamage.wav" SrcFilePath="" SourceFileSize="38708" Channels="1" SamplingRate="44100" SampleFrames="19332" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_MagicGoodDamage_Enc_44100_Public_9dca3c94417f30de0ce0cfabadffc583.adx" EncodeFileSize="10948" AwbId="4" LastLoadSrcFileTimeStamp="2014/02/20 15:45:00" WaveImageCacheWriteTime="2014/02/20 15:45:00" ResamplingRate="44100" ReloopEnd="19332" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="MagicGoodDamage" CueID="26" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_MagicGoodDamage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="MagicGoodDamage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/MagicGoodDamage.wav" SynthType="Waveform" LinkWaveformPathName="SE/MagicGoodDamage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="MagicGoodDamage.wav" SourceFileSize="38708" Channels="1" SamplingRate="44100" SampleFrames="19332" EncodeFileSize="10948" LastLoadSrcFileTimeStamp="2014/02/20 15:45:00" LastLoadSrcFileMD5="9dca3c94417f30de0ce0cfabadffc583" WaveImageCacheWriteTime="2014/02/20 15:45:00" ResamplingRate="44100" ReloopEnd="19332" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="MagicBadDamage" CueID="8" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_MagicDamage" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="MagicDamage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/MagicDamage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="MagicDamage.wav" SrcFilePath="" SourceFileSize="24538" Channels="1" SamplingRate="44100" SampleFrames="13583" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_MagicDamage_Enc_44100_Public_60d338b6ab90960f846f21b749a1ce0d.adx" EncodeFileSize="7708" AwbId="5" LastLoadSrcFileTimeStamp="2014/02/20 21:07:21" WaveImageCacheWriteTime="2014/02/20 21:07:21" ResamplingRate="44100" ReloopEnd="12247" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="MagicDamage" CueID="9" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_MagicGoodDamage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" Volume="0.75" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="MagicGoodDamage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/MagicGoodDamage.wav" SynthType="Waveform" LinkWaveformPathName="SE/MagicGoodDamage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="MagicGoodDamage.wav" SourceFileSize="38708" Channels="1" SamplingRate="44100" SampleFrames="19332" EncodeFileSize="10948" LastLoadSrcFileTimeStamp="2014/02/20 15:45:00" LastLoadSrcFileMD5="9dca3c94417f30de0ce0cfabadffc583" WaveImageCacheWriteTime="2014/02/20 15:45:00" ResamplingRate="44100" ReloopEnd="19332" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="MagicNoDamage" CueID="11" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_MagicNoDamage" SynthType="Track" ObjectColor="200, 30, 100, 180" Volume="0.82" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="MagicNoDamage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/MagicNoDamage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="MagicNoDamage.wav" SrcFilePath="" SourceFileSize="35294" Channels="1" SamplingRate="44100" SampleFrames="17625" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_MagicNoDamage_Enc_44100_Public_8a162cc51213be0be29706fa22dbcdb7.adx" EncodeFileSize="9976" AwbId="6" LastLoadSrcFileTimeStamp="2014/02/20 16:01:05" WaveImageCacheWriteTime="2014/02/20 16:01:05" ResamplingRate="44100" ReloopEnd="17625" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="MagicBadDamage" CueID="8" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_MagicDamage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="MagicDamage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/MagicDamage.wav" SynthType="Waveform" LinkWaveformPathName="SE/MagicDamage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="MagicDamage.wav" SourceFileSize="24538" Channels="1" SamplingRate="44100" SampleFrames="13583" EncodeFileSize="7708" LastLoadSrcFileTimeStamp="2014/02/20 21:07:21" LastLoadSrcFileMD5="60d338b6ab90960f846f21b749a1ce0d" WaveImageCacheWriteTime="2014/02/20 21:07:21" ResamplingRate="44100" ReloopEnd="12247" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="EnemyHeal" CueID="4" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" Pitch="-800" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_heal" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" BandPassHi="0.78" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="heal.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/heal.wav" SynthType="Waveform" Volume="0.7" EgReleaseTimeMs="227" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="heal.wav" SrcFilePath="" SourceFileSize="127070" Channels="2" SamplingRate="44100" SampleFrames="31744" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_heal_Enc_44100_2ch_Public_8706c31c9eb0e3f411a94155d63b5c5c.adx" EncodeFileSize="35770" AwbId="7" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="31744" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="MagicNoDamage" CueID="11" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_MagicNoDamage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" Volume="0.82" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="MagicNoDamage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/MagicNoDamage.wav" SynthType="Waveform" LinkWaveformPathName="SE/MagicNoDamage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="MagicNoDamage.wav" SourceFileSize="35294" Channels="1" SamplingRate="44100" SampleFrames="17625" EncodeFileSize="9976" LastLoadSrcFileTimeStamp="2014/02/20 16:01:05" LastLoadSrcFileMD5="8a162cc51213be0be29706fa22dbcdb7" WaveImageCacheWriteTime="2014/02/20 16:01:05" ResamplingRate="44100" ReloopEnd="17625" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="PlayerHeal" CueID="0" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_heal" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="heal.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/heal.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="heal.wav" SrcFilePath="" SourceFileSize="127070" Channels="2" SamplingRate="44100" SampleFrames="31744" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_heal_Enc_44100_2ch_Public_8706c31c9eb0e3f411a94155d63b5c5c.adx" EncodeFileSize="35770" AwbId="7" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="31744" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="EnemyHeal" CueID="4" SynthType="SynthPolyphonic" Pitch="-800" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_heal" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" BandPassHi="0.78" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="heal.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/heal.wav" SynthType="Waveform" EgReleaseTimeMs="227" LinkWaveformPathName="SE/heal.wav" Volume="0.7" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="heal.wav" SourceFileSize="127070" Channels="2" SamplingRate="44100" SampleFrames="31744" EncodeFileSize="35770" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" LastLoadSrcFileMD5="8706c31c9eb0e3f411a94155d63b5c5c" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="31744" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="PlayerDefend" CueID="3" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_defend" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="defend.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/defend.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="defend.wav" SrcFilePath="" SourceFileSize="15920" Channels="1" SamplingRate="44100" SampleFrames="7938" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_defend_Enc_44100_Public_c81cf62a7539b366841ae0a40bfc6ee8.adx" EncodeFileSize="4540" AwbId="8" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="7938" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="PlayerHeal" CueID="0" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_heal" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="heal.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/heal.wav" SynthType="Waveform" LinkWaveformPathName="SE/heal.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="heal.wav" SourceFileSize="127070" Channels="2" SamplingRate="44100" SampleFrames="31744" EncodeFileSize="35770" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" LastLoadSrcFileMD5="8706c31c9eb0e3f411a94155d63b5c5c" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="31744" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="PlayerPhysicDamage" CueID="1" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_damage" SynthType="Track" ObjectColor="200, 20, 80, 160" Pan3dSendCenter="0" Pan3dSendLFE="0" Pitch="-660" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="damage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/damage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="damage.wav" SrcFilePath="" SourceFileSize="17684" Channels="1" SamplingRate="44100" SampleFrames="8820" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_damage_Enc_44100_Public_6658aa87fa1855bd7a8b62c458f31d1c.adx" EncodeFileSize="5026" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="8820" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="PlayerDefend" CueID="3" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_defend" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="defend.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/defend.wav" SynthType="Waveform" LinkWaveformPathName="SE/defend.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="defend.wav" SourceFileSize="15920" Channels="1" SamplingRate="44100" SampleFrames="7938" EncodeFileSize="4540" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" LastLoadSrcFileMD5="c81cf62a7539b366841ae0a40bfc6ee8" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="7938" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="PlayerMagicDamage" CueID="12" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" Volume="0.8" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_PlayerMagicDamage" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" Pitch="495" BiquadQ="4.6" BiquadGain="5" BandPassHi="0.83" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="PlayerMagicDamage.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/PlayerMagicDamage.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="PlayerMagicDamage.wav" SrcFilePath="" SourceFileSize="35336" Channels="1" SamplingRate="22050" SampleFrames="17646" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_PlayerMagicDamage_Enc_22050_Public_3c6f38642808a8ce32341d3891f7d236.adx" EncodeFileSize="9994" AwbId="9" LastLoadSrcFileTimeStamp="2014/02/20 16:46:08" WaveImageCacheWriteTime="2014/02/20 16:46:08" ResamplingRate="22050" ReloopEnd="17646" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
-            </Orca>
-          </Orca>
-          <Orca OrcaName="Track_attack" SynthType="Track" ObjectColor="200, 20, 80, 160" Volume="0.45" Pan3dSendCenter="0" Pan3dSendLFE="0" Pitch="-705" BandPassHi="0.74" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="attack.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/attack.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="attack.wav" SrcFilePath="" SourceFileSize="17094" Channels="1" SamplingRate="44100" SampleFrames="8525" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_attack_Enc_44100_Public_3fbee486b270079625338e383f559396.adx" EncodeFileSize="4864" AwbId="10" LastLoadSrcFileTimeStamp="2014/02/20 18:58:12" WaveImageCacheWriteTime="2014/02/20 18:58:12" ResamplingRate="44100" ReloopEnd="8525" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="PlayerPhysicDamage" CueID="1" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_damage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 20, 80, 160" Pitch="-660" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="damage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/damage.wav" SynthType="Waveform" LinkWaveformPathName="SE/damage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="damage.wav" SourceFileSize="17684" Channels="1" SamplingRate="44100" SampleFrames="8820" EncodeFileSize="5026" LastLoadSrcFileTimeStamp="2014/01/23 21:51:02" LastLoadSrcFileMD5="6658aa87fa1855bd7a8b62c458f31d1c" WaveImageCacheWriteTime="2014/01/23 21:51:02" ResamplingRate="44100" ReloopEnd="8820" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="select" CueID="13" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" Pitch="-300" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_select" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="select.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/select.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="select.wav" SrcFilePath="" SourceFileSize="34860" Channels="2" SamplingRate="44100" SampleFrames="8704" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_select_Enc_44100_2ch_Public_d4a924478affc562ea5753eef85d6d51.adx" EncodeFileSize="9850" AwbId="11" LastLoadSrcFileTimeStamp="2012/02/25 7:03:39" WaveImageCacheWriteTime="2012/02/25 7:03:39" ResamplingRate="44100" ReloopEnd="8704" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="PlayerMagicDamage" CueID="12" SynthType="SynthPolyphonic" Volume="0.8" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_PlayerMagicDamage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" Pitch="495" BiquadQ="4.6" BiquadGain="5" BandPassHi="0.83" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="PlayerMagicDamage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/PlayerMagicDamage.wav" SynthType="Waveform" LinkWaveformPathName="SE/PlayerMagicDamage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="PlayerMagicDamage.wav" SourceFileSize="35336" Channels="1" SamplingRate="22050" SampleFrames="17646" EncodeFileSize="9994" LastLoadSrcFileTimeStamp="2014/02/20 16:46:08" LastLoadSrcFileMD5="3c6f38642808a8ce32341d3891f7d236" WaveImageCacheWriteTime="2014/02/20 16:46:08" ResamplingRate="22050" ReloopEnd="17646" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            </Orca>
+          </Orca>
+          <Orca OrcaName="Track_attack" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 20, 80, 160" Volume="0.45" Pitch="-705" BandPassHi="0.74" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="attack.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/attack.wav" SynthType="Waveform" LinkWaveformPathName="SE/attack.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="attack.wav" SourceFileSize="17094" Channels="1" SamplingRate="44100" SampleFrames="8525" EncodeFileSize="4864" LastLoadSrcFileTimeStamp="2014/02/20 18:58:12" LastLoadSrcFileMD5="3fbee486b270079625338e383f559396" WaveImageCacheWriteTime="2014/02/20 18:58:12" ResamplingRate="44100" ReloopEnd="8525" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="tick" CueID="14" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" Volume="0.73" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_tick" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="tick.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/tick.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="tick.wav" SrcFilePath="" SourceFileSize="35290" Channels="2" SamplingRate="44100" SampleFrames="8639" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_tick_Enc_44100_2ch_Public_275010101c1cd4c9c7d91ac7dfac6f3c.adx" EncodeFileSize="9778" AwbId="12" LastLoadSrcFileTimeStamp="2014/03/05 12:08:27" WaveImageCacheWriteTime="2014/03/05 12:08:27" ResamplingRate="44100" ReloopEnd="8639" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="select" CueID="13" SynthType="SynthPolyphonic" Pitch="-300" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_select" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="select.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/select.wav" SynthType="Waveform" LinkWaveformPathName="SE/select.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="select.wav" SourceFileSize="34860" Channels="2" SamplingRate="44100" SampleFrames="8704" EncodeFileSize="9850" LastLoadSrcFileTimeStamp="2012/02/25 7:03:39" LastLoadSrcFileMD5="d4a924478affc562ea5753eef85d6d51" WaveImageCacheWriteTime="2012/02/25 7:03:39" ResamplingRate="44100" ReloopEnd="8704" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="tickback" CueID="15" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" Volume="0.68" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_tick" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" Pitch="-400" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="tick.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/tick.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="tick.wav" SrcFilePath="" SourceFileSize="35290" Channels="2" SamplingRate="44100" SampleFrames="8639" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_tick_Enc_44100_2ch_Public_275010101c1cd4c9c7d91ac7dfac6f3c.adx" EncodeFileSize="9778" AwbId="12" LastLoadSrcFileTimeStamp="2014/03/05 12:08:27" WaveImageCacheWriteTime="2014/03/05 12:08:27" ResamplingRate="44100" ReloopEnd="8639" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="tick" CueID="14" SynthType="SynthPolyphonic" Volume="0.73" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_tick" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="tick.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/tick.wav" SynthType="Waveform" LinkWaveformPathName="SE/tick.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="tick.wav" SourceFileSize="35290" Channels="2" SamplingRate="44100" SampleFrames="8639" EncodeFileSize="9778" LastLoadSrcFileTimeStamp="2014/03/05 12:08:27" LastLoadSrcFileMD5="275010101c1cd4c9c7d91ac7dfac6f3c" WaveImageCacheWriteTime="2014/03/05 12:08:27" ResamplingRate="44100" ReloopEnd="8639" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="runaway" CueID="16" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_runaway" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="runaway.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/runaway.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="runaway.wav" SrcFilePath="" SourceFileSize="53342" Channels="2" SamplingRate="44100" SampleFrames="13312" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_runaway_Enc_44100_2ch_Public_2c1da35246e5d4e48306a4de6ac88268.adx" EncodeFileSize="15034" AwbId="13" LastLoadSrcFileTimeStamp="2012/03/26 23:00:24" WaveImageCacheWriteTime="2012/03/26 23:00:24" ResamplingRate="44100" ReloopEnd="13312" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="tickback" CueID="15" SynthType="SynthPolyphonic" Volume="0.68" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_tick" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" Pitch="-400" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="tick.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/tick.wav" SynthType="Waveform" LinkWaveformPathName="SE/tick.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="tick.wav" SourceFileSize="35290" Channels="2" SamplingRate="44100" SampleFrames="8639" EncodeFileSize="9778" LastLoadSrcFileTimeStamp="2014/03/05 12:08:27" LastLoadSrcFileMD5="275010101c1cd4c9c7d91ac7dfac6f3c" WaveImageCacheWriteTime="2014/03/05 12:08:27" ResamplingRate="44100" ReloopEnd="8639" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
-            <Orca OrcaName="runaway.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/runaway.wav" SynthType="Waveform" DelayTimeMS="286" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="runaway.wav" SrcFilePath="" SourceFileSize="53342" Channels="2" SamplingRate="44100" SampleFrames="13312" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_runaway_Enc_44100_2ch_Public_2c1da35246e5d4e48306a4de6ac88268.adx" EncodeFileSize="15034" AwbId="13" LastLoadSrcFileTimeStamp="2012/03/26 23:00:24" WaveImageCacheWriteTime="2012/03/26 23:00:24" ResamplingRate="44100" ReloopEnd="13312" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
-            </Orca>
+          </Orca>
+          <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
+        </Orca>
+        <Orca OrcaName="runaway" CueID="16" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_runaway" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
             <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
               <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
                 <Orca OrcaName="AisacPoint" ControlValue="115" DestinationValue="0.99" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
@@ -158,96 +152,96 @@
                 <Orca OrcaName="AisacPoint" ControlValue="574" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
               </Orca>
             </Orca>
-          </Orca>
-          <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
-        </Orca>
-        <Orca OrcaName="newCommand" CueID="17" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_newCommand" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth" />
-          <Orca OrcaName="Track_starget" SynthType="Track" ObjectColor="200, 20, 80, 160" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="starget.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/starget.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="starget.wav" SrcFilePath="" SourceFileSize="368234" Channels="2" SamplingRate="44100" SampleFrames="91875" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_starget_Enc_44100_2ch_Public_8149b0520187d91b5983d384633dd873.adx" EncodeFileSize="103450" AwbId="14" LastLoadSrcFileTimeStamp="2014/12/30 5:06:14" WaveImageCacheWriteTime="2014/12/30 5:06:14" ResamplingRate="44100" ReloopEnd="91875" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="runaway.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/runaway.wav" SynthType="Waveform" LinkWaveformPathName="SE/runaway.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="runaway.wav" SourceFileSize="53342" Channels="2" SamplingRate="44100" SampleFrames="13312" EncodeFileSize="15034" LastLoadSrcFileTimeStamp="2012/03/26 23:00:24" LastLoadSrcFileMD5="2c1da35246e5d4e48306a4de6ac88268" WaveImageCacheWriteTime="2012/03/26 23:00:24" ResamplingRate="44100" ReloopEnd="13312" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            </Orca>
+            <Orca OrcaName="runaway.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/runaway.wav" SynthType="Waveform" LinkWaveformPathName="SE/runaway.wav" DelayTimeMS="286" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="runaway.wav" SourceFileSize="53342" Channels="2" SamplingRate="44100" SampleFrames="13312" EncodeFileSize="15034" LastLoadSrcFileTimeStamp="2012/03/26 23:00:24" LastLoadSrcFileMD5="2c1da35246e5d4e48306a4de6ac88268" WaveImageCacheWriteTime="2012/03/26 23:00:24" ResamplingRate="44100" ReloopEnd="13312" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="quarter2" CueID="18" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_quarter2" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="quarter2.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/quarter2.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="quarter2.wav" SrcFilePath="" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_quarter2_Enc_44100_2ch_Public_a85cd564862d7264aa8abcceb8b12421.adx" EncodeFileSize="330826" AwbId="15" LastLoadSrcFileTimeStamp="2014/03/07 0:59:09" WaveImageCacheWriteTime="2014/03/07 0:59:09" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="newCommand" CueID="17" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_newCommand" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack" />
+          <Orca OrcaName="Track_starget" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="starget.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/starget.wav" SynthType="Waveform" LinkWaveformPathName="SE/starget.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="starget.wav" SourceFileSize="368234" Channels="2" SamplingRate="44100" SampleFrames="91875" EncodeFileSize="103450" LastLoadSrcFileTimeStamp="2014/12/30 5:06:14" LastLoadSrcFileMD5="8149b0520187d91b5983d384633dd873" WaveImageCacheWriteTime="2014/12/30 5:06:14" ResamplingRate="44100" ReloopEnd="91875" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="quarter3" CueID="19" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_quarter3" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="quarter3.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/quarter3.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="quarter3.wav" SrcFilePath="" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_quarter3_Enc_44100_2ch_Public_b867a2b62d546426c9555463d9cd559e.adx" EncodeFileSize="330826" AwbId="16" LastLoadSrcFileTimeStamp="2014/03/07 0:59:18" WaveImageCacheWriteTime="2014/03/07 0:59:18" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="quarter2" CueID="18" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_quarter2" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="quarter2.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/quarter2.wav" SynthType="Waveform" LinkWaveformPathName="SE/quarter2.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="quarter2.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFileSize="330826" LastLoadSrcFileTimeStamp="2014/03/07 0:59:09" LastLoadSrcFileMD5="a85cd564862d7264aa8abcceb8b12421" WaveImageCacheWriteTime="2014/03/07 0:59:09" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="quarter4" CueID="20" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_quarter4" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="quarter4.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/quarter4.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="quarter4.wav" SrcFilePath="" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_quarter4_Enc_44100_2ch_Public_09bafd99c9394c7864d40e35168f1c69.adx" EncodeFileSize="330826" AwbId="17" LastLoadSrcFileTimeStamp="2014/03/07 0:59:25" WaveImageCacheWriteTime="2014/03/07 0:59:25" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="quarter3" CueID="19" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_quarter3" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="quarter3.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/quarter3.wav" SynthType="Waveform" LinkWaveformPathName="SE/quarter3.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="quarter3.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFileSize="330826" LastLoadSrcFileTimeStamp="2014/03/07 0:59:18" LastLoadSrcFileMD5="b867a2b62d546426c9555463d9cd559e" WaveImageCacheWriteTime="2014/03/07 0:59:18" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="moon" CueID="21" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_moon" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="moon.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/moon.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="moon.wav" SrcFilePath="" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_moon_Enc_44100_2ch_Public_d635301309aa2083361086bd8fe64a17.adx" EncodeFileSize="330826" AwbId="18" LastLoadSrcFileTimeStamp="2014/03/07 0:59:32" WaveImageCacheWriteTime="2014/03/07 0:59:32" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="quarter4" CueID="20" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_quarter4" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="quarter4.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/quarter4.wav" SynthType="Waveform" LinkWaveformPathName="SE/quarter4.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="quarter4.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFileSize="330826" LastLoadSrcFileTimeStamp="2014/03/07 0:59:25" LastLoadSrcFileMD5="09bafd99c9394c7864d40e35168f1c69" WaveImageCacheWriteTime="2014/03/07 0:59:25" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="levelUp" CueID="22" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_levelUp" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="levelUp.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/levelUp.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="levelUp.wav" SrcFilePath="" SourceFileSize="147734" Channels="2" SamplingRate="44100" SampleFrames="73500" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_levelUp_Enc_44100_2ch_Public_ea847968bf629fa6ed3550473d172fc6.adx" EncodeFileSize="82750" AwbId="19" LastLoadSrcFileTimeStamp="2014/03/07 1:02:09" WaveImageCacheWriteTime="2014/03/07 1:02:09" ResamplingRate="44100" ReloopEnd="36750" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="moon" CueID="21" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_moon" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="moon.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/moon.wav" SynthType="Waveform" LinkWaveformPathName="SE/moon.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="moon.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFileSize="330826" LastLoadSrcFileTimeStamp="2014/03/07 0:59:32" LastLoadSrcFileMD5="d635301309aa2083361086bd8fe64a17" WaveImageCacheWriteTime="2014/03/07 0:59:32" ResamplingRate="44100" ReloopEnd="294000" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="enhance" CueID="23" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_enhance" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="enhance.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/enhance.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="enhance.wav" SrcFilePath="" SourceFileSize="42544" Channels="1" SamplingRate="44100" SampleFrames="21250" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_enhance_Enc_44100_Public_9a0d457a34686318434f3fb476a6cb25.adx" EncodeFileSize="12028" AwbId="20" LastLoadSrcFileTimeStamp="2014/04/24 16:01:49" WaveImageCacheWriteTime="2014/04/24 16:01:49" ResamplingRate="44100" ReloopEnd="21250" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="levelUp" CueID="22" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_levelUp" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="levelUp.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/levelUp.wav" SynthType="Waveform" LinkWaveformPathName="SE/levelUp.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="levelUp.wav" SourceFileSize="147734" Channels="2" SamplingRate="44100" SampleFrames="73500" EncodeFileSize="82750" LastLoadSrcFileTimeStamp="2014/03/07 1:02:09" LastLoadSrcFileMD5="ea847968bf629fa6ed3550473d172fc6" WaveImageCacheWriteTime="2014/03/07 1:02:09" ResamplingRate="44100" ReloopEnd="36750" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="invert" CueID="24" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_invert" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" BiquadType="PeaqingEQ" BiquadQ="0.01" BandPassHi="0.81" BandPassLow="0.42" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="invert.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/invert.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="invert.wav" SrcFilePath="" SourceFileSize="64590" Channels="1" SamplingRate="44100" SampleFrames="32273" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_invert_Enc_44100_Public_da111d924a247893731a809bead3e0a3.adx" EncodeFileSize="18220" AwbId="21" LastLoadSrcFileTimeStamp="2014/04/24 16:07:58" WaveImageCacheWriteTime="2014/04/24 16:07:58" ResamplingRate="44100" ReloopEnd="32273" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="enhance" CueID="23" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_enhance" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="enhance.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/enhance.wav" SynthType="Waveform" LinkWaveformPathName="SE/enhance.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="enhance.wav" SourceFileSize="42544" Channels="1" SamplingRate="44100" SampleFrames="21250" EncodeFileSize="12028" LastLoadSrcFileTimeStamp="2014/04/24 16:01:49" LastLoadSrcFileMD5="9a0d457a34686318434f3fb476a6cb25" WaveImageCacheWriteTime="2014/04/24 16:01:49" ResamplingRate="44100" ReloopEnd="21250" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
+          </Orca>
+          <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
+        </Orca>
+        <Orca OrcaName="invert" CueID="24" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_invert" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" BiquadType="PeaqingEQ" BiquadQ="0.01" BandPassHi="0.81" BandPassLow="0.42" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
             <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
               <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
                 <Orca OrcaName="AisacPoint" ControlValue="0" DestinationValue="1.21" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
                 <Orca OrcaName="AisacPoint" ControlValue="731" DestinationValue="0.35" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
               </Orca>
             </Orca>
-          </Orca>
-          <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
-        </Orca>
-        <Orca OrcaName="jam" CueID="25" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_jam" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="jam.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/jam.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="jam.wav" SrcFilePath="" SourceFileSize="42544" Channels="1" SamplingRate="44100" SampleFrames="21250" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_jam_Enc_44100_Public_e2d0ed7d9344d1f232ac667f8059a17e.adx" EncodeFileSize="12028" AwbId="22" LastLoadSrcFileTimeStamp="2014/04/25 0:53:23" WaveImageCacheWriteTime="2014/04/25 0:53:23" ResamplingRate="44100" ReloopEnd="21250" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="invert.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/invert.wav" SynthType="Waveform" LinkWaveformPathName="SE/invert.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="invert.wav" SourceFileSize="64590" Channels="1" SamplingRate="44100" SampleFrames="32273" EncodeFileSize="18220" LastLoadSrcFileTimeStamp="2014/04/24 16:07:58" LastLoadSrcFileMD5="da111d924a247893731a809bead3e0a3" WaveImageCacheWriteTime="2014/04/24 16:07:58" ResamplingRate="44100" ReloopEnd="32273" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="footstep" CueID="27" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_footstep" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="footstep.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/footstep.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="footstep.wav" SrcFilePath="" SourceFileSize="17952" Channels="1" SamplingRate="44100" SampleFrames="8954" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_footstep_Enc_44100_Public_d51d418cfc2024b16782efbe14eab211.adx" EncodeFileSize="5098" AwbId="23" LastLoadSrcFileTimeStamp="2014/11/16 7:30:00" WaveImageCacheWriteTime="2014/11/16 7:30:00" ResamplingRate="44100" ReloopEnd="8954" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="jam" CueID="25" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_jam" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="jam.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/jam.wav" SynthType="Waveform" LinkWaveformPathName="SE/jam.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="jam.wav" SourceFileSize="42544" Channels="1" SamplingRate="44100" SampleFrames="21250" EncodeFileSize="12028" LastLoadSrcFileTimeStamp="2014/04/25 0:53:23" LastLoadSrcFileMD5="e2d0ed7d9344d1f232ac667f8059a17e" WaveImageCacheWriteTime="2014/04/25 0:53:23" ResamplingRate="44100" ReloopEnd="21250" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
-            <Orca OrcaName="footstep.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/footstep.wav" SynthType="Waveform" DelayTimeMS="115" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="footstep.wav" SrcFilePath="" SourceFileSize="17952" Channels="1" SamplingRate="44100" SampleFrames="8954" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_footstep_Enc_44100_Public_d51d418cfc2024b16782efbe14eab211.adx" EncodeFileSize="5098" AwbId="23" LastLoadSrcFileTimeStamp="2014/11/16 7:30:00" WaveImageCacheWriteTime="2014/11/16 7:30:00" ResamplingRate="44100" ReloopEnd="8954" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
-            </Orca>
+          </Orca>
+          <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
+        </Orca>
+        <Orca OrcaName="footstep" CueID="27" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_footstep" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
             <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
               <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
                 <Orca OrcaName="AisacPoint" ControlValue="67" DestinationValue="1.03" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
@@ -255,14 +249,17 @@
                 <Orca OrcaName="AisacPoint" ControlValue="117" DestinationValue="0.41" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
               </Orca>
             </Orca>
+            <Orca OrcaName="footstep.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/footstep.wav" SynthType="Waveform" LinkWaveformPathName="SE/footstep.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="footstep.wav" SourceFileSize="17952" Channels="1" SamplingRate="44100" SampleFrames="8954" EncodeFileSize="5098" LastLoadSrcFileTimeStamp="2014/11/16 7:30:00" LastLoadSrcFileMD5="d51d418cfc2024b16782efbe14eab211" WaveImageCacheWriteTime="2014/11/16 7:30:00" ResamplingRate="44100" ReloopEnd="8954" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            </Orca>
+            <Orca OrcaName="footstep.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/footstep.wav" SynthType="Waveform" LinkWaveformPathName="SE/footstep.wav" DelayTimeMS="115" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="footstep.wav" SourceFileSize="17952" Channels="1" SamplingRate="44100" SampleFrames="8954" EncodeFileSize="5098" LastLoadSrcFileTimeStamp="2014/11/16 7:30:00" LastLoadSrcFileMD5="d51d418cfc2024b16782efbe14eab211" WaveImageCacheWriteTime="2014/11/16 7:30:00" ResamplingRate="44100" ReloopEnd="8954" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="flare" CueID="28" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_breath" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="breath.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/breath.wav" SynthType="Waveform" Pitch="420" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="breath.wav" SrcFilePath="" SourceFileSize="87898" Channels="1" SamplingRate="44100" SampleFrames="43927" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_breath_Enc_44100_Public_c95892aa8533d39b97e3998dc8849589.adx" EncodeFileSize="24772" AwbId="24" LastLoadSrcFileTimeStamp="2014/11/16 7:33:37" WaveImageCacheWriteTime="2014/11/16 7:33:37" ResamplingRate="44100" ReloopEnd="43927" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
-            </Orca>
+        <Orca OrcaName="flare" CueID="28" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_breath" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
             <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
               <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
                 <Orca OrcaName="AisacPoint" ControlValue="0" DestinationValue="0.17" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
@@ -280,14 +277,14 @@
                 <Orca OrcaName="AisacPoint" ControlValue="790" DestinationValue="1656" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
               </Orca>
             </Orca>
+            <Orca OrcaName="breath.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/breath.wav" SynthType="Waveform" LinkWaveformPathName="SE/breath.wav" Pitch="420" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="breath.wav" SourceFileSize="87898" Channels="1" SamplingRate="44100" SampleFrames="43927" EncodeFileSize="24772" LastLoadSrcFileTimeStamp="2014/11/16 7:33:37" LastLoadSrcFileMD5="c95892aa8533d39b97e3998dc8849589" WaveImageCacheWriteTime="2014/11/16 7:33:37" ResamplingRate="44100" ReloopEnd="43927" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="poisonBreath" CueID="29" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_breath" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="breath.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/breath.wav" SynthType="Waveform" Pitch="-465" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="breath.wav" SrcFilePath="" SourceFileSize="87898" Channels="1" SamplingRate="44100" SampleFrames="43927" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_breath_Enc_44100_Public_c95892aa8533d39b97e3998dc8849589.adx" EncodeFileSize="24772" AwbId="24" LastLoadSrcFileTimeStamp="2014/11/16 7:33:37" WaveImageCacheWriteTime="2014/11/16 7:33:37" ResamplingRate="44100" ReloopEnd="43927" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
-            </Orca>
+        <Orca OrcaName="poisonBreath" CueID="29" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_breath" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
             <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
               <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
                 <Orca OrcaName="AisacPoint" ControlValue="0" DestinationValue="0.17" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
@@ -297,14 +294,14 @@
                 <Orca OrcaName="AisacPoint" ControlValue="750" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
               </Orca>
             </Orca>
+            <Orca OrcaName="breath.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/breath.wav" SynthType="Waveform" LinkWaveformPathName="SE/breath.wav" Pitch="-465" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="breath.wav" SourceFileSize="87898" Channels="1" SamplingRate="44100" SampleFrames="43927" EncodeFileSize="24772" LastLoadSrcFileTimeStamp="2014/11/16 7:33:37" LastLoadSrcFileMD5="c95892aa8533d39b97e3998dc8849589" WaveImageCacheWriteTime="2014/11/16 7:33:37" ResamplingRate="44100" ReloopEnd="43927" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="breath" CueID="30" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_breath" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="breath.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/breath.wav" SynthType="Waveform" Pitch="420" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="breath.wav" SrcFilePath="" SourceFileSize="87898" Channels="1" SamplingRate="44100" SampleFrames="43927" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_breath_Enc_44100_Public_c95892aa8533d39b97e3998dc8849589.adx" EncodeFileSize="24772" AwbId="24" LastLoadSrcFileTimeStamp="2014/11/16 7:33:37" WaveImageCacheWriteTime="2014/11/16 7:33:37" ResamplingRate="44100" ReloopEnd="43927" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
-            </Orca>
+        <Orca OrcaName="breath" CueID="30" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_breath" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
             <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
               <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
                 <Orca OrcaName="AisacPoint" ControlValue="0" DestinationValue="0.17" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
@@ -314,36 +311,39 @@
                 <Orca OrcaName="AisacPoint" ControlValue="750" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
               </Orca>
             </Orca>
-          </Orca>
-          <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
-        </Orca>
-        <Orca OrcaName="commandLevelDown" CueID="31" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_levelDown" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="levelDown.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/levelDown.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="levelDown.wav" SrcFilePath="" SourceFileSize="147734" Channels="2" SamplingRate="44100" SampleFrames="36750" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_levelDown_Enc_44100_2ch_Public_009fcacb4dfd2edd1a9e15bffbefe6d9.adx" EncodeFileSize="41422" AwbId="25" LastLoadSrcFileTimeStamp="2014/12/30 5:09:15" WaveImageCacheWriteTime="2014/12/30 5:09:15" ResamplingRate="44100" ReloopEnd="36750" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+            <Orca OrcaName="breath.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/breath.wav" SynthType="Waveform" LinkWaveformPathName="SE/breath.wav" Pitch="420" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="breath.wav" SourceFileSize="87898" Channels="1" SamplingRate="44100" SampleFrames="43927" EncodeFileSize="24772" LastLoadSrcFileTimeStamp="2014/11/16 7:33:37" LastLoadSrcFileMD5="c95892aa8533d39b97e3998dc8849589" WaveImageCacheWriteTime="2014/11/16 7:33:37" ResamplingRate="44100" ReloopEnd="43927" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="commandLevelUp" CueID="32" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_commandLevelUp" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="commandLevelUp.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/commandLevelUp.wav" SynthType="Waveform" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="commandLevelUp.wav" SrcFilePath="" SourceFileSize="147734" Channels="2" SamplingRate="44100" SampleFrames="36750" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_commandLevelUp_Enc_44100_2ch_Public_00a37a5393d81f5a430c3529897d97a2.adx" EncodeFileSize="41422" AwbId="26" LastLoadSrcFileTimeStamp="2014/12/30 5:09:06" WaveImageCacheWriteTime="2014/12/30 5:09:06" ResamplingRate="44100" ReloopEnd="36750" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="commandLevelDown" CueID="31" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_levelDown" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="levelDown.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/levelDown.wav" SynthType="Waveform" LinkWaveformPathName="SE/levelDown.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="levelDown.wav" SourceFileSize="147734" Channels="2" SamplingRate="44100" SampleFrames="36750" EncodeFileSize="41422" LastLoadSrcFileTimeStamp="2014/12/30 5:09:15" LastLoadSrcFileMD5="009fcacb4dfd2edd1a9e15bffbefe6d9" WaveImageCacheWriteTime="2014/12/30 5:09:15" ResamplingRate="44100" ReloopEnd="36750" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
         </Orca>
-        <Orca OrcaName="spawn" CueID="33" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" BusSend1="0" BusSend2="0" BusSend3="0" BusSend4="0" BusSend5="0" BusSend6="0" BusSend7="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-          <Orca OrcaName="Track_enhance" SynthType="Track" ObjectColor="200, 30, 100, 180" Pan3dSendCenter="0" Pan3dSendLFE="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-            <Orca OrcaName="enhance.wav" LinkWaveform="/CRI Atom Craft/VQ3ADX/ユーザ/マテリアルルートフォルダ/SE/enhance.wav" SynthType="Waveform" Pitch="-1200" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynth">
-              <Orca OrcaName="enhance.wav" SrcFilePath="" SourceFileSize="42544" Channels="1" SamplingRate="44100" SampleFrames="21250" EncodeFilePath="C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/VQ3ADX_Cache/SE_enhance_Enc_44100_Public_9a0d457a34686318434f3fb476a6cb25.adx" EncodeFileSize="12028" AwbId="20" LastLoadSrcFileTimeStamp="2014/04/24 16:01:49" WaveImageCacheWriteTime="2014/04/24 16:01:49" ResamplingRate="44100" ReloopEnd="21250" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+        <Orca OrcaName="commandLevelUp" CueID="32" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_commandLevelUp" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="commandLevelUp.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/commandLevelUp.wav" SynthType="Waveform" LinkWaveformPathName="SE/commandLevelUp.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="commandLevelUp.wav" SourceFileSize="147734" Channels="2" SamplingRate="44100" SampleFrames="36750" EncodeFileSize="41422" LastLoadSrcFileTimeStamp="2014/12/30 5:09:06" LastLoadSrcFileMD5="00a37a5393d81f5a430c3529897d97a2" WaveImageCacheWriteTime="2014/12/30 5:09:06" ResamplingRate="44100" ReloopEnd="36750" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
+          </Orca>
+          <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />
+        </Orca>
+        <Orca OrcaName="spawn" CueID="33" SynthType="SynthPolyphonic" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+          <Orca OrcaName="Track_enhance" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
             <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
               <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
                 <Orca OrcaName="AisacPoint" ControlValue="134" DestinationValue="1.07" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
                 <Orca OrcaName="AisacPoint" ControlValue="334" DestinationValue="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
                 <Orca OrcaName="AisacPoint" ControlValue="459" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
               </Orca>
+            </Orca>
+            <Orca OrcaName="enhance.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/enhance.wav" SynthType="Waveform" LinkWaveformPathName="SE/enhance.wav" Pitch="-1200" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
+              <Orca OrcaName="enhance.wav" SourceFileSize="42544" Channels="1" SamplingRate="44100" SampleFrames="21250" EncodeFileSize="12028" LastLoadSrcFileTimeStamp="2014/04/24 16:01:49" LastLoadSrcFileMD5="9a0d457a34686318434f3fb476a6cb25" WaveImageCacheWriteTime="2014/04/24 16:01:49" ResamplingRate="44100" ReloopEnd="21250" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="BuildCueInfo" BuildCueStreamType="Memory" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBuildCueInfo" />

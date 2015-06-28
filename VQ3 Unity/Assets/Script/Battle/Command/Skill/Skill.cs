@@ -80,7 +80,7 @@ public class Skill : MonoBehaviour
 			SkillAnim = GetComponentInChildren<Animation>();
             if( SkillAnim.GetClip( AnimName ) != null )
 			{
-                SkillAnim[AnimName].speed = 1 / (float)(Music.mtBeat * Music.MusicTimeUnit);
+                SkillAnim[AnimName].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
                 SkillAnim.Play( AnimName );
 				Vector2 randomUnit = UnityEngine.Random.insideUnitCircle;
 				SkillAnim.transform.localPosition += 
@@ -105,7 +105,7 @@ public class Skill : MonoBehaviour
 
 	public ActionSet GetCurrentAction( Timing startedTiming )
 	{
-        int mt = Music.Just - startedTiming;
+        int mt = Music.Just.MusicalTime - startedTiming.MusicalTime;
 		Note n = ActionRhythm.GetNote(mt);
         if( n != null && n.hasNote )
         {
@@ -121,7 +121,7 @@ public class Skill : MonoBehaviour
 	}
     public bool CheckIsEnd(Timing startedTiming)
     {
-		isEnd = Music.Just - startedTiming >= ActionRhythm.MTLength(); 
+		isEnd = Music.Just.MusicalTime - startedTiming.MusicalTime >= ActionRhythm.MTLength(); 
         return isEnd;
     }
 }

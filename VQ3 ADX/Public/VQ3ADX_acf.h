@@ -1,11 +1,11 @@
 /*===========================================================================*
  *  Header file for Atom Config File
  *  Project            : VQ3ADX
- *  Tool Ver.          : CRI Atom Craft LE Ver.1.32.00
+ *  Tool Ver.          : CRI Atom Craft LE Ver.2.13.00
  *  File Path          : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/VQ3ADX.acf
  *  File Name          : VQ3ADX.acf
- *  File Size          : 3,072 bytes
- *  Date Time          : 2014/04/22 13:39
+ *  File Size          : 4,192 bytes
+ *  Date Time          : 2015/01/18 16:30
  *  Target             : Public
  *  Categories         : 1
  *  AISAC Controls     : 16
@@ -14,6 +14,7 @@
  *  DSP BUS Settings   : 1
  *  DSP BUS Settings Snapshot  : 0
  *  Game Variables     : 2
+ *  Selectors          : 0
  *  Project Comment    : 
  *===========================================================================*/
 
@@ -25,6 +26,7 @@
 #define CRI_VQ3ADX_ACF_DSPSETTINGNUM (1)
 #define CRI_VQ3ADX_ACF_DSPSETTINGSNAPSHOTNUM (0)
 #define CRI_VQ3ADX_ACF_GAMEVARIABLENUM (2)
+#define CRI_VQ3ADX_ACF_SELECTORNUM (0)
 
 /* Category List (Category ID) */
 #define CRI_VQ3ADX_ACF_CATEGORY_CATEGORY_0  ( 0) /* CategoryGroup_0/Category_0  */
@@ -46,6 +48,10 @@
 #define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL13         (13) /* AisacControl13  */
 #define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL14         (14) /* AisacControl14  */
 #define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL15         (15) /* AisacControl15  */
+
+/* Global AISAC List (Global AISAC Name) */
+// No Global AISAC 
+
 
 /* Voice Limit Group (Voice Limit Group Index) */
 #define CRI_VQ3ADX_ACF_VOICELIMITGROUP_VOICELIMITGROUP_0  ( 0) /* VoiceLimitGroup_0  */

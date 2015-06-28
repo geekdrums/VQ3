@@ -94,7 +94,7 @@ public class TextWindow : MonoBehaviour {
 	void Update () {
         ++message.CurrentIndex;
         displayText.text = message.DisplayText;
-        if( Music.isJustChanged )
+        if( Music.IsJustChanged )
         {
             ++displayMusicTime;
         }
