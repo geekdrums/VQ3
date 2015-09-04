@@ -7,22 +7,26 @@ using System.Text;
 [ExecuteInEditMode]
 public class IntroCommand : PlayerCommand
 {
+	void Awake()
+	{
+		ValidateState();
+	}
+
     void Start()
     {
-		ValidateState();
         ValidatePosition();
-        ValidateIcons();
         ValidateColor();
     }
+
     void Update()
 	{
 #if UNITY_EDITOR
 		if( !UnityEditor.EditorApplication.isPlaying ) return;
 #endif
-		UpdateIcon();
+		UpdateTransform();
     }
 	public override bool IsUsable()
 	{
-		return GameContext.CurrentState == GameState.SetMenu ? true : false;
+		return GameContext.State == GameState.Setting ? true : false;
 	}
 }

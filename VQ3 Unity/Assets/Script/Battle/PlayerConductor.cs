@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public class PlayerConductor : MonoBehaviour {
 
-	public CommandGraph commandGraph;
-	public SPPanel SPPanel;
+	public CommandGraph CommandGraph;
+	public MemoryPanel MemoryPanel;
+
     public int Level = 1;
 	public int TotalSP;
 	public int RemainSP;
@@ -13,17 +14,23 @@ public class PlayerConductor : MonoBehaviour {
 	public int PlayerMaxHP { get { return Player.MaxHP; } }
 	public bool PlayerIsDanger { get { return Player.IsDangerMode; } }
     public bool CanUseInvert { get { return Level >= 6; } }
+	public bool IsEclipse { get { return CommandGraph.CurrentCommand is RevertCommand; } }
     public int WaitCount { get; private set; }
 
 	PlayerCommand CurrentCommand;
+	PlayerCommand SelectedCommand;
 	Player Player;
     float resultRemainTime;
-	int resultGainSP;
+	int resultGainMemory;
     readonly float DefaultResultTime = 0.4f;
+
+	void Awake()
+	{
+		GameContext.PlayerConductor = this;
+	}
 
 	// Use this for initialization
 	void Start () {
-		GameContext.PlayerConductor = this;
 		Player = GameObject.Find( "Main Camera" ).GetComponent<Player>();
         SetLevelParams();
 	}
@@ -35,8 +42,7 @@ public class PlayerConductor : MonoBehaviour {
 
 	public void CheckResult( int sp )
 	{
-		resultGainSP = sp;
-		SPPanel.ShowSPPanel();
+		resultGainMemory = sp;
 	}
 
     public void UpdateResult()
@@ -54,34 +60,30 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			TextWindow.SetNextCursor(false);
 			resultRemainTime = DefaultResultTime;
-			print(GameContext.FieldConductor.RState);
-			if( GameContext.FieldConductor.RState == ResultState.StarPoint )
+			if( GameContext.ResultState == ResultState.Memory )
 			{
-				RemainSP += resultGainSP;
-				TotalSP += resultGainSP;
-				SPPanel.UpdateSP();
-				TextWindow.ChangeMessage(MessageCategory.Result, resultGainSP + "SPを　てにいれた！");
+				RemainSP += resultGainMemory;
+				TotalSP += resultGainMemory;
 				SEPlayer.Play("newCommand");
-				GameContext.FieldConductor.MoveNextResult();
+				GameContext.ResultConductor.MoveNextResult();
 			}
-			else if( GameContext.FieldConductor.RState == ResultState.Command )
+			else if( GameContext.ResultState == ResultState.Command )
 			{
-				PlayerCommand acquiredCommand = commandGraph.CheckAcquireCommand(Level);
+				PlayerCommand acquiredCommand = CommandGraph.CheckAcquireCommand(Level);
 				if( acquiredCommand != null )
 				{
-					TextWindow.ChangeMessage(MessageCategory.AcquireCommand, acquiredCommand.name + "が　習得可能になった！");
 					acquiredCommand.Acquire();
-					commandGraph.ShowAcquireCommand(acquiredCommand);
+					CommandGraph.ShowAcquireCommand(acquiredCommand);
 					SEPlayer.Play("newCommand");
 				}
 				else
 				{
-					GameContext.FieldConductor.MoveNextResult();
+					GameContext.ResultConductor.MoveNextResult();
 				}
 			}
 			else
 			{
-				GameContext.FieldConductor.MoveNextResult();
+				GameContext.ResultConductor.MoveNextResult();
 			}
 		}
 	}
@@ -99,7 +101,7 @@ public class PlayerConductor : MonoBehaviour {
         SetLevelParams();
         if( Level > 1 )
         {
-            TextWindow.ChangeMessage( MessageCategory.Result, "オクスは　レベル" + Level + "に　あがった！" );
+            TextWindow.SetMessage( MessageCategory.Result, "オクスは　レベル" + Level + "に　あがった！" );
             resultRemainTime = DefaultResultTime;
             SEPlayer.Play( "levelUp" );
         }
@@ -107,36 +109,106 @@ public class PlayerConductor : MonoBehaviour {
 
     public void CheckAcquireCommands()
     {
-        PlayerCommand acquiredCommand = commandGraph.CheckAcquireCommand( Level );
+        PlayerCommand acquiredCommand = CommandGraph.CheckAcquireCommand( Level );
         while( acquiredCommand != null )
         {
             acquiredCommand.Acquire();
-            acquiredCommand = commandGraph.CheckAcquireCommand( Level );
+            acquiredCommand = CommandGraph.CheckAcquireCommand( Level );
         }
-        PlayerCommand forgetCommand = commandGraph.CheckForgetCommand( Level );
+        PlayerCommand forgetCommand = CommandGraph.CheckForgetCommand( Level );
         while( forgetCommand != null )
         {
             forgetCommand.Forget();
-            forgetCommand = commandGraph.CheckAcquireCommand( Level );
+            forgetCommand = CommandGraph.CheckAcquireCommand( Level );
         }
     }
 
-	public void CheckCommand()
+	public void OnSelectedCommand(PlayerCommand command)
+	{
+		if( SelectedCommand != null ) SelectedCommand.Deselect();
+		SelectedCommand = command;
+		SelectedCommand.Select();
+		switch( GameContext.State )
+		{
+		case GameState.Battle:
+			//イントロから別のコマンドを選んだ時
+			if( command != CommandGraph.IntroCommand && (CurrentCommand == CommandGraph.IntroCommand || (CurrentCommand is InvertCommand)) )
+			{
+				foreach( CommandEdge line in CommandGraph.IntroCommand.linkLines )
+				{
+					line.SetEnabled(false);
+				}
+				TextWindow.SetCommand(command);
+			}
+			//ブレイクからイントロに戻ってきた時
+			else if( command == CommandGraph.IntroCommand )
+			{
+				foreach( CommandEdge line in CommandGraph.IntroCommand.linkLines )
+				{
+					line.SetEnabled(true);
+				}
+			}
+			else
+			{
+				TextWindow.SetCommand(command);
+			}
+			break;
+		case GameState.Setting:
+			if( command == CommandGraph.IntroCommand )
+			{
+				MemoryPanel.Reset();
+				TextWindow.SetMessage(MessageCategory.Help, "コマンドを選択して\nメモリーを分配できます");
+			}
+			else
+			{
+				MemoryPanel.Set(command);
+				TextWindow.SetCommand(command);
+			}
+			break;
+		}
+	}
+
+	public void OnDeselectedCommand()
+	{
+		if( SelectedCommand != null )
+		{
+			SelectedCommand.Deselect();
+			SelectedCommand = null;
+			CommandGraph.Deselect();
+		}
+		switch( GameContext.State )
+		{
+		case GameState.Battle:
+			TextWindow.SetMessage(MessageCategory.Help, "次のコマンドは　なに？");
+			break;
+		case GameState.Setting:
+			MemoryPanel.Reset();
+			TextWindow.SetMessage(MessageCategory.Help, "コマンドを選択して\nメモリーを分配できます");
+			break;
+		}
+	}
+
+	public void ExecCommand()
     {
-        commandGraph.CheckCommand();
-        CurrentCommand = commandGraph.CurrentCommand;
-        Player.TurnInit( CurrentCommand.currentData );
-		TextWindow.ChangeMessage(MessageCategory.PlayerCommand, CurrentCommand.currentData.DescribeText);
+        CommandGraph.OnExecCommand();
+		CurrentCommand = CommandGraph.CurrentCommand;
+		if( CurrentCommand != null )
+		{
+			CurrentCommand.SetCurrent();
+			ColorManager.SetThemeColor(CurrentCommand.themeColor);
+		}
+		Player.TurnInit(CurrentCommand.currentData);
+		TextWindow.SetMessage(MessageCategory.PlayerCommand, CurrentCommand.currentData.DescribeText);
         WaitCount = 0;
 	}
-    public void CheckWaitCommand()
+
+    public void ExecWaitCommand()
     {
-        //commandGraph.CheckCommand();
         CurrentCommand = null;
         Player.DefaultInit();
 		if( WaitCount == 0 )
 		{
-			TextWindow.ChangeMessage(MessageCategory.PlayerWait, "オクスは　つぎの　いってを　かんがえている");
+			TextWindow.SetMessage(MessageCategory.PlayerWait, "オクスは　つぎの　いってを　かんがえている");
 		}
         ++WaitCount;
 	}
@@ -155,8 +227,11 @@ public class PlayerConductor : MonoBehaviour {
 
 	public void OnBattleStarted()
     {
+		MemoryPanel.Hide();
         Player.OnBattleStart();
-        commandGraph.OnBattleStart();
+        CommandGraph.OnBattleStart();
+		CurrentCommand = CommandGraph.IntroCommand;
+		CurrentCommand.SetCurrent();
         WaitCount = 0;
 		ColorManager.SetBaseColor(EBaseColor.Black);
 		ColorManager.SetThemeColor(EThemeColor.White);

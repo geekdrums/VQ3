@@ -77,7 +77,7 @@ public class Enemy : Character
     {
         UpdateAnimation();
 
-        if( GameContext.CurrentState == GameState.Battle )
+        if( GameContext.State == GameState.Battle )
         {
             if( Music.IsJustChangedAt( commandExecBar ) && currentCommand != null && currentCommand.ShortText != "" )
             {
@@ -86,7 +86,7 @@ public class Enemy : Character
                     Destroy( shortText.gameObject );
                     shortText = null;
                 }
-                if( !GameContext.VoxSystem.IsInverting )
+                if( !GameContext.VoxSystem.IsOverloading )
                 {
                     shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
                     shortText.Initialize( currentCommand.ShortText );
@@ -94,7 +94,7 @@ public class Enemy : Character
                 }
             }
             if( Music.IsJustChangedAt( StateChangeTiming )
-                && (currentState.name != "Invert" || GameContext.VoxSystem.InvertTime == 1) )
+                && (currentState.name != "Invert" || GameContext.VoxSystem.OverloadTime == 1) )
             {
                 if( currentState.name != "Invert" ) oldState = currentState;
                 CheckState();
@@ -200,7 +200,7 @@ public class Enemy : Character
     {
         base.TurnInit( command );
         HPCircle.OnTurnStart();
-		if( GameContext.VoxSystem.state != VoxState.Invert )
+		if( GameContext.VoxSystem.State != VoxState.Overload )
 		{
 			lastDamageText = null;
 		}
@@ -338,9 +338,15 @@ public class Enemy : Character
 		float typeCoeff = 1.0f;
 		if( lastDamageResult.ToString().EndsWith("GoodDamage") ) typeCoeff = 2.0f;
 		else if( lastDamageResult.ToString().EndsWith("BadDamage") ) typeCoeff = 0.1f;
-		else if( lastDamageResult.ToString().EndsWith("NoDamage") ) typeCoeff = 0.0f;//will not reach here
+		else if( lastDamageResult.ToString().EndsWith("NoDamage") ) typeCoeff = 0.0f;
 
-		float damage = skill.OwnerCharacter.PhysicAttack * (attack.Power / 100.0f) * typeCoeff * DefendCoeff;
+		float overFlowPower = 0.0f;
+		if( GameContext.VoxSystem.IsOverFlow && GameContext.VoxSystem.State != VoxState.Overload )
+		{
+			overFlowPower = attack.VP * 2.0f;
+		}
+
+		float damage = skill.OwnerCharacter.PhysicAttack * ((attack.Power + overFlowPower) / 100.0f) * typeCoeff * DefendCoeff;
         BeDamaged( Mathf.Max( 0, (int)damage ), skill.OwnerCharacter );
         Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
 		

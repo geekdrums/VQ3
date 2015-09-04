@@ -84,7 +84,7 @@ like this
 
 Preparation:
 - Create a CriAtomSource object with Music component,
-- specify mtBeat, mtBar and Tempo,
+- specify UnitPerBeat, UnitPerBar and Tempo,
 - name it with same name of CueName,
 - then open CRI Atom window and push "Update Assets of CRI Atom Craft" button,
 - your BlockInfo will be automatically updated.
@@ -138,6 +138,7 @@ public class Music : MonoBehaviour
 	static Music Current_;
 	static List<Music> MusicList = new List<Music>();
 	static readonly int SamplingRate = 44100;
+	static event EventHandler OnNextBlockStarted;
 
 	#region public static properties
 	public static bool IsPlaying { get { return Current_.IsPlaying_; } }
@@ -311,7 +312,7 @@ public class Music : MonoBehaviour
 	}
 
 	//adx2 functions
-	public static void SetNextBlock(string blockName)
+	public static void SetNextBlock(string blockName, EventHandler onNextBlockStarted = null)
 	{
 		if( blockName == CurrentBlockName ) return;
 		Debug.Log("SetNextBlock : " + blockName);
@@ -320,19 +321,24 @@ public class Music : MonoBehaviour
 		{
 			Current_.nextBlockIndex_ = index;
 			Current_.playback_.SetNextBlockIndex(index);
+			OnNextBlockStarted = null;
+			if( onNextBlockStarted != null )
+				OnNextBlockStarted += onNextBlockStarted;
 		}
 		else
 		{
 			Debug.LogError("Error!! Music.SetNextBlock Can't find block name: " + blockName);
 		}
 	}
-	public static void SetNextBlock(int index)
+	public static void SetNextBlock(int index, EventHandler onNextBlockStarted = null)
 	{
 		if( index == Current_.currentBlockIndex_ ) return;
 		if( index < Current_.cueInfo_.numBlocks )
 		{
 			Current_.nextBlockIndex_ = index;
 			Current_.playback_.SetNextBlockIndex(index);
+			if( onNextBlockStarted != null )
+				OnNextBlockStarted += onNextBlockStarted;
 		}
 		else
 		{
@@ -587,12 +593,6 @@ public class Music : MonoBehaviour
 		currentSample_ = (int)numSamples;
 		if( currentSample_ >= 0 )
 		{
-			//BlockChanged
-			if( currentSample_ < oldSample )
-			{
-				numBlockBar_ = BlockInfos[playback_.GetCurrentBlockIndex()].NumBar;
-			}
-
 			just_.Bar = (int)(currentSample_ / samplesPerBar_);
 			just_.Beat = (int)((currentSample_ - just_.Bar * samplesPerBar_) / samplesPerBeat_);
 			just_.Unit = (int)((currentSample_ - just_.Bar * samplesPerBar_ - just_.Beat * samplesPerBeat_) / samplesPerUnit_);
@@ -644,6 +644,7 @@ public class Music : MonoBehaviour
 		if( isJustChanged_ && just_ < oldJust_ )
 		{
 			currentBlockIndex_ = playback_.GetCurrentBlockIndex();
+			numBlockBar_ = BlockInfos[currentBlockIndex_].NumBar;
 			if( oldBlockIndex_ == currentBlockIndex_ )
 			{
 				OnBlockRepeated();
@@ -682,6 +683,12 @@ public class Music : MonoBehaviour
 	void OnBlockChanged()
 	{
 		numRepeat_ = 0;
+		Debug.Log("Music::OnBlockChanged " + CurrentBlockName);
+		if( OnNextBlockStarted != null )
+		{
+			OnNextBlockStarted(null, null);
+			OnNextBlockStarted = null;
+		}
 	}
 	#endregion
 }

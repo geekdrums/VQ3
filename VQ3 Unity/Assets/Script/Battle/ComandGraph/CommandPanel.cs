@@ -38,12 +38,11 @@ public class CommandPanel : MonoBehaviour
     public GameObject HitPlane;
 
 	public CommandExplanation CommandExp;
-	public SPPanel SPPanel;
 
 	#endregion
 
 
-	float RingSize { get { return GameContext.PlayerConductor.commandGraph.AxisRing.Radius; } }
+	float RingSize { get { return GameContext.PlayerConductor.CommandGraph.AxisRing.Radius; } }
 	Color TextColor { get { return (command_ is RevertCommand ? Color.black : Color.white); } }
 	Color ButtonColor { get { return (command_ is InvertCommand || command_ is RevertCommand ? Color.black : Color.white); } }
 
@@ -116,7 +115,7 @@ public class CommandPanel : MonoBehaviour
 					Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity);
 					if( hit.collider == HitPlane.GetComponent<Collider>() )
 					{
-						GameContext.PlayerConductor.commandGraph.Deselect();
+						GameContext.PlayerConductor.CommandGraph.Deselect();
 						OKText.GetComponent<Renderer>().enabled = false;
 						EnterState(State.CancelAnim);
 						Frame.SetTargetSize(0);
@@ -153,7 +152,7 @@ public class CommandPanel : MonoBehaviour
 
 		if( Input.GetMouseButtonDown(0) )
 		{
-			if( hit.collider == HitPlane.GetComponent<Collider>() && GameContext.CurrentState != GameState.SetMenu )
+			if( hit.collider == HitPlane.GetComponent<Collider>() && GameContext.State != GameState.Setting )
 			{
 				buttonType = ButtonType.OK;
 			}
@@ -238,27 +237,7 @@ public class CommandPanel : MonoBehaviour
 
 				Music.Resume();
 			}
-			//Push Left
-			else if( hit.collider == LeftButton.GetComponent<Collider>() && buttonType == ButtonType.Left )
-			{
-				Frame.SetSize(4.17f);
-				command_.LevelDown();
-				SEPlayer.Play("commandLevelDown");
-				SPPanel.Set(command_, true);
-				this.Show(transform.position, command_);
-				GameContext.PlayerConductor.commandGraph.CheckLinkedFromIntro();
-			}
-			//Push Right
-			else if( hit.collider == RightButton.GetComponent<Collider>() && buttonType == ButtonType.Right )
-			{
-				Frame.SetSize(4.17f);
-				command_.LevelUp();
-				SEPlayer.Play("commandLevelUp");
-				SPPanel.Set(command_, true);
-				this.Show(transform.position, command_);
-				GameContext.PlayerConductor.commandGraph.CheckLinkedFromIntro();
-			}
-			else if( hit.collider != HitPlane.GetComponent<Collider>() && hit.collider != GameContext.PlayerConductor.commandGraph.CommandSphere.GetComponent<Collider>() )
+			else if( hit.collider != HitPlane.GetComponent<Collider>() && hit.collider != GameContext.PlayerConductor.CommandGraph.CommandSphere.GetComponent<Collider>() )
 			{
 				if( hit.collider != null )
 				{
@@ -284,7 +263,7 @@ public class CommandPanel : MonoBehaviour
 			RightButton.SetTargetSize(0.5f);
 		}
 
-		if( command_ is RevertCommand && GameContext.CurrentState != GameState.SetMenu )
+		if( command_ is RevertCommand && GameContext.State != GameState.Setting )
 		{
 			RevertArc.SetTargetArc((float)GameContext.VoxSystem.currentVP/GameContext.EnemyConductor.InvertVP);
 
@@ -326,7 +305,7 @@ public class CommandPanel : MonoBehaviour
                 transform.position = initialPosition_;
                 break;
 			case State.DecideAnim:
-                GameContext.PlayerConductor.commandGraph.Select( command_ );
+                GameContext.PlayerConductor.CommandGraph.Select( command_ );
                 break;
             case State.Decided:
                 break;
@@ -340,15 +319,15 @@ public class CommandPanel : MonoBehaviour
 
     public void Show( Vector3 position, PlayerCommand command )
     {
-        if( state == State.Hide || state == State.Decided || GameContext.CurrentState == GameState.SetMenu )
+        if( state == State.Hide || state == State.Decided || GameContext.State == GameState.Setting )
         {
             transform.position = position;
             GetComponent<Animation>()["panelAnim"].time = 0;
             GetComponent<Animation>()["panelAnim"].speed = 1;
             GetComponent<Animation>().Play( "panelAnim" );
-			if( GameContext.CurrentState == GameState.SetMenu )
+			if( GameContext.State == GameState.Setting )
 			{
-				TextWindow.ChangeMessage(MessageCategory.Help, "SPを使って " + command.name + "をレベルアップ、または" + System.Environment.NewLine
+				TextWindow.SetMessage(MessageCategory.Help, "SPを使って " + command.name + "をレベルアップ、または" + System.Environment.NewLine
 					+ "レベルダウンさせて　SPを他に割り振ることが　できます。");
 			}
         }
@@ -383,7 +362,7 @@ public class CommandPanel : MonoBehaviour
 		}
         Frame.Num = 4;
         Frame.SetSize( 4.17f );
-        Frame.RecalculatePolygon();
+        //Frame.RecalculatePolygon();
 
 		HLCount.Count = command.GetHeal();
         HLRect.SetColor( command.GetHealColor() );
@@ -397,34 +376,12 @@ public class CommandPanel : MonoBehaviour
 		RevertRect.SetColor(Color.clear);
 		RevertArc.SetColor(Color.clear);
 		RevertCircleEdge.SetColor(Color.clear);
-		if( GameContext.CurrentState == GameState.SetMenu )
-		{
-			OKText.transform.localScale = Vector3.zero;
-			LVText.GetComponent<Renderer>().enabled = true;
-			LVCount.CounterScale = 1.8f;
-			LVCount.Count = command.currentLevel;
-			LVText.color = command.currentLevel == 0 ? ColorManager.Base.Shade : TextColor;
-			LVCount.CounterColor = command.currentLevel == 0 ? ColorManager.Base.Shade : TextColor;
-			enableLeft_ = command.currentLevel > 0 && command.currentData.RequireSP > 0;
-			enableRight_= command.currentLevel < command.commandData.Count;
-			if( enableRight_ )
-			{
-				int needSP = command.commandData[command.currentLevel].RequireSP - (command.currentLevel == 0 ? 0 : command.commandData[command.currentLevel-1].RequireSP);
-				enableRight_ &= needSP <= GameContext.PlayerConductor.RemainSP;
-			}
-
-			SPPanel.Set(command);
-			CommandExp.Set(command.commandData[Mathf.Max(0, command.currentLevel-1)]);
-		}
-		else
-		{
-			OKText.transform.localScale = Vector3.one * 0.2f;
-			LVText.GetComponent<Renderer>().enabled = false;
-			LVCount.CounterScale = 0;
-			LVCount.CounterColor = Color.clear;
-			enableLeft_ = false;
-			enableRight_= false;
-		}
+		OKText.transform.localScale = Vector3.one * 0.2f;
+		LVText.GetComponent<Renderer>().enabled = false;
+		LVCount.CounterScale = 0;
+		LVCount.CounterColor = Color.clear;
+		enableLeft_ = false;
+		enableRight_= false;
 		LeftButton.GetComponent<Renderer>().enabled = enableLeft_;
 		LeftButton.GetComponent<Collider>().enabled = enableLeft_;
 		RightButton.GetComponent<Renderer>().enabled = enableRight_;
@@ -451,7 +408,7 @@ public class CommandPanel : MonoBehaviour
 			{
 				OKText.color = Color.black;
 				BaseRect.SetColor(Color.white);
-				if( GameContext.CurrentState != GameState.SetMenu )
+				if( GameContext.State != GameState.Setting )
 				{
 					RevertRect.SetColor(Color.black);
 					RevertCircleEdge.SetColor(Color.white);
@@ -487,13 +444,7 @@ public class CommandPanel : MonoBehaviour
 
     public void Hide()
 	{
-		if( GameContext.CurrentState == GameState.SetMenu )
-		{
-			SPPanel.Reset();
-			CommandExp.ResetToEnemyData();
-			TextWindow.ChangeMessage(MessageCategory.Help, "SPを割り振って　戦闘で使用するコマンドを　選ぶことができます。");
-		}
-		if( GameContext.VoxSystem.IsInverting && command_ is InvertCommand ) return;
+		if( GameContext.VoxSystem.IsOverloading && command_ is InvertCommand ) return;
         switch( state )
         {
         case State.Show:

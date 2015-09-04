@@ -32,13 +32,32 @@ public class CommandEdge : MonoBehaviour {
 	public PlayerCommand Command2;
 
 	// Use this for initialization
-	void Start () {
+	void Awake()
+	{
 		line_ = GetComponent<LineRenderer>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		float width = 0;
+		switch( state_ )
+		{
+		case EdgeState.Linked:
+			width = LinkedLineWidth;
+			break;
+		case EdgeState.PreLinked:
+			width = PrelinkedLineWidth;
+			break;
+		case EdgeState.Unlinked:
+			width = UnlinkedLineWidth;
+			break;
+		case EdgeState.Unacquired:
+			width = UnlinkedLineWidth;
+			break;
+		case EdgeState.DontKnow:
+			break;
+		}
+		line_.SetWidth(width * Command1.transform.localScale.x * 4, width * Command2.transform.localScale.x * 4);
 	}
 
 	public void SetEnabled( bool enable )
@@ -70,7 +89,6 @@ public class CommandEdge : MonoBehaviour {
 					{
 						line_.SetColors(LinkedLineColor, LinkedLineColor);
 					}
-					line_.SetWidth(LinkedLineWidth, LinkedLineWidth);
 					break;
 				case EdgeState.PreLinked:
 					if( IsInvert )
@@ -81,7 +99,6 @@ public class CommandEdge : MonoBehaviour {
 					{
 						line_.SetColors(PrelinkedLineColor, PrelinkedLineColor);
 					}
-					line_.SetWidth(PrelinkedLineWidth, PrelinkedLineWidth);
 					break;
 				case EdgeState.Unlinked:
 					if( IsInvert )
@@ -92,14 +109,11 @@ public class CommandEdge : MonoBehaviour {
 					{
 						line_.SetColors(UnlinkedLineColor, UnlinkedLineColor);
 					}
-					line_.SetWidth(UnlinkedLineWidth, UnlinkedLineWidth);
 					break;
 				case EdgeState.Unacquired:
 					line_.SetColors(UnlinkedLineColor, UnlinkedLineColor);
-					line_.SetWidth(UnlinkedLineWidth, UnlinkedLineWidth);
 					break;
 				case EdgeState.DontKnow:
-					line_.SetWidth(0, 0);
 					break;
 				}
 			}

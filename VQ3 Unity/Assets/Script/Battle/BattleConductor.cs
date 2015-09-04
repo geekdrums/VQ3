@@ -2,9 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum BattleState
+{
+	None,
+	Intro,
+	Battle,
+	Wait,
+	ShieldBreak,
+	Eclipse,
+	Continue,
+	Win,
+	Endro
+}
+
 public class BattleConductor : MonoBehaviour {
 
-    //public TitleLogo titleLogo;
+	public BattleState State { get; private set; }
 
     public GameObject skillParent;
     List<Pair<Timing, Skill>> Skills;
@@ -18,161 +31,178 @@ public class BattleConductor : MonoBehaviour {
             //Screen.SetResolution( 480, 720, false );
             Screen.SetResolution( 400, 600, false );
 			//Screen.SetResolution(640, 960, false);
-        }
+		}
+		GameContext.BattleConductor = this;
     }
 
 	// Use this for initialization
 	void Start ()
 	{
-		GameContext.BattleConductor = this;
         Skills = new List<Pair<Timing, Skill>>();
     }
 	
 	// Update is called once per frame
-    void Update()
-    {
-		switch ( GameContext.CurrentState )
+	void Update()
+	{
+		switch( State )
 		{
-		case GameState.Intro:
-            if( Music.IsJustChangedAt( 0 ) || Music.IsJustChangedAt( 4 ) )
-            {
-                if( Music.CurrentBlockName != "intro" )
-                {
-                    GameContext.ChangeState( GameState.Battle );
-                    UpdateBattle();
-                }
+		case BattleState.None:
+			return;
+		case BattleState.Intro:
+			if( Music.IsJustChangedAt(0) || Music.IsJustChangedAt(4) )
+			{
+				if( Music.CurrentBlockName != "intro" )
+				{
+					SetState(BattleState.Battle);
+					UpdateBattle();
+				}
 			}
 			break;
-		case GameState.Battle:
-            UpdateBattle();
-            if( Music.IsJustChangedAt( 0 ) && Music.CurrentBlockName == "endro" )
+		case BattleState.ShieldBreak:
+			break;
+		case BattleState.Wait:
+			if( Music.IsJustChangedAt(0) )
 			{
-                GameContext.VoxSystem.SetState( VoxState.SunSet );
-				GameContext.ChangeState( GameState.Endro );
-                TextWindow.ChangeMessage( MessageCategory.Result, "まもののむれを　たおした" );
+				GameContext.PlayerConductor.ExecWaitCommand();
+				GameContext.EnemyConductor.CheckWaitCommand();
 			}
-            break;
-		case GameState.Endro:
-            if( Music.IsJustChangedAt( 0, 2 ) )
-            {
-                TextWindow.SetNextCursor( true );
-            }
-            break;
-        case GameState.Continue:
-            break;
+			break;
+		case BattleState.Battle:
+		case BattleState.Eclipse:
+			if( Music.IsJustChangedAt(0) )
+			{
+				GameContext.PlayerConductor.ExecCommand();
+				GameContext.EnemyConductor.CheckCommand();
+			}
+			UpdateBattle();
+			break;
+		case BattleState.Continue:
+			break;
+		case BattleState.Win:
+			break;
+		case BattleState.Endro:
+			if( Music.IsJustChangedAt(0, 2) )
+			{
+				TextWindow.SetNextCursor(true);
+			}
+			break;
 		}
-    }
+	}
 
     void UpdateBattle()
     {
-        if( Music.CurrentBlockName == "endro" || Music.NextBlockName == "endro" )
-        {
-            Skills.RemoveAll( ( Pair<Timing, Skill> cmd ) => cmd.Get<Skill>().CheckIsEnd( cmd.Get<Timing>() ) );
-            return;
-        }
-        else if( Music.CurrentBlockName == "intro" )
-        {
-            OnPlayerRunaway();
-            return;
-        }
+		if( Music.IsJustChanged )
+		{
+			GameContext.PlayerConductor.CheckSkill();
+			GameContext.EnemyConductor.CheckSkill();
+			GameContext.PlayerConductor.UpdateHealHP();
+			GameContext.EnemyConductor.UpdateHealHP();
 
-        if( Music.IsJustChangedAt( 0 ) )
-        {
-            if( Music.CurrentBlockName == "wait" )
-            {
-                GameContext.PlayerConductor.CheckWaitCommand();
-                GameContext.EnemyConductor.CheckWaitCommand();
-            }
-            else
-            {
-                GameContext.PlayerConductor.CheckCommand();
-                GameContext.EnemyConductor.CheckCommand();
-            }
-        }
-        if( Music.CurrentBlockName == "wait" )
-        {
-        }
-        else if( Music.IsJustChanged )
-        {
-            GameContext.PlayerConductor.CheckSkill();
-            GameContext.EnemyConductor.CheckSkill();
-            GameContext.PlayerConductor.UpdateHealHP();
-            GameContext.EnemyConductor.UpdateHealHP();
+			List<Pair<ActionSet, Skill>> CurrentActions = new List<Pair<ActionSet, Skill>>();
+			foreach( Pair<Timing, Skill> stPair in Skills )
+			{
+				if( !stPair.Get<Skill>().OwnerCharacter.isAlive ) continue;
+				ActionSet act = stPair.Get<Skill>().GetCurrentAction(stPair.Get<Timing>());
+				if( act != null )
+				{
+					CurrentActions.Add(new Pair<ActionSet, Skill>(act, stPair.Get<Skill>()));
+				}
+			}
+			foreach( Pair<ActionSet, Skill> act in CurrentActions )
+			{
+				bool isSucceeded = false;
+				isSucceeded |= GameContext.PlayerConductor.ReceiveAction(act.Get<ActionSet>(), act.Get<Skill>());
+				if( State == BattleState.Continue ) break;
+				isSucceeded |=  GameContext.EnemyConductor.ReceiveAction(act.Get<ActionSet>(), act.Get<Skill>());
+				if( isSucceeded )
+				{
+					act.Get<Skill>().OnExecuted(act.Get<ActionSet>());
+				}
+				if( State == BattleState.Win ) break;
+			}
 
-            List<Pair<ActionSet, Skill>> CurrentActions = new List<Pair<ActionSet, Skill>>();
-            foreach( Pair<Timing, Skill> stPair in Skills )
-            {
-                if( !stPair.Get<Skill>().OwnerCharacter.isAlive ) continue;
-                ActionSet act = stPair.Get<Skill>().GetCurrentAction( stPair.Get<Timing>() );
-                if( act != null )
-                {
-                    CurrentActions.Add( new Pair<ActionSet, Skill>( act, stPair.Get<Skill>() ) );
-                }
-            }
-            //Add setoff logic if needed.
-            foreach( Pair<ActionSet, Skill> act in CurrentActions )
-            {
-                bool isSucceeded = false;
-                isSucceeded |= GameContext.PlayerConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Skill>() );
-                if( GameContext.CurrentState == GameState.Continue ) break;
-                isSucceeded |=  GameContext.EnemyConductor.ReceiveAction( act.Get<ActionSet>(), act.Get<Skill>() );
-                if( GameContext.CurrentState == GameState.Endro ) break;
-                if( isSucceeded )
-                {
-                    act.Get<Skill>().OnExecuted( act.Get<ActionSet>() );
-                }
-                if( Music.NextBlockName == "endro" )
-                {
-                    break;
-                }
-            }
-
-			Skills.RemoveAll( ( Pair<Timing, Skill> cmd ) => cmd.Get<Skill>().CheckIsEnd( cmd.Get<Timing>() ) );
-        }
+			Skills.RemoveAll((Pair<Timing, Skill> cmd) => cmd.Get<Skill>().CheckIsEnd(cmd.Get<Timing>()));
+		}
     }
 
     public void ClearSkills()
     {
-        for( int i = 0; i < skillParent.transform.childCount; i++ )
+		for( int i = 0; i < skillParent.transform.childCount; i++ )
 		{
 			Skill skill = skillParent.transform.GetChild(i).GetComponent<Skill>();
 			skill.OwnerCharacter.OnSkillEnd(skill);
-            Destroy( skillParent.transform.GetChild( i ).gameObject );
-        }
-        Skills.Clear();
+			Destroy(skillParent.transform.GetChild(i).gameObject);
+		}
+		Skills.Clear();
     }
 
-	public void ExecSkill( Skill NewSkill )
+	public void ExecSkill(Skill NewSkill)
 	{
-        NewSkill.gameObject.transform.parent = skillParent.transform;
-        Skills.Add( new Pair<Timing, Skill>( new Timing( Music.Just ), NewSkill ) );
+		NewSkill.gameObject.transform.parent = skillParent.transform;
+		Skills.Add(new Pair<Timing, Skill>(new Timing(Music.Just), NewSkill));
 	}
 
-	public void OnPlayerWin()
+
+	public void SetState(BattleState NewState)
 	{
-        Music.SetNextBlock("endro");
-        GameContext.PlayerConductor.OnPlayerWin();
-        GameContext.EnemyConductor.OnPlayerWin();
+		if( State == NewState ) return;
+
+		//Leave State
+		switch( State )
+		{
+		case BattleState.Continue:
+			GameContext.EnemyConductor.OnContinue();
+			GameContext.PlayerConductor.OnContinue();
+			GameContext.FieldConductor.OnContinue();
+			break;
+		}
+
+		State = NewState;
+		
+		//Enter  State
+		switch( State )
+		{
+		case BattleState.Intro:
+			break;
+		case BattleState.Battle:
+			break;
+		case BattleState.Wait:
+			break;
+		case BattleState.Eclipse:
+			break;
+		case BattleState.ShieldBreak:
+			break;
+		case BattleState.Continue:
+			TextWindow.SetMessage(MessageCategory.Result, "オクスは　ちからつきた");
+			GameContext.PlayerConductor.OnPlayerLose();
+			GameContext.EnemyConductor.OnPlayerLose();
+			GameContext.VoxSystem.SetState(VoxState.SunSet);
+			Music.Play("Continue");
+			ClearSkills();
+			break;
+		case BattleState.Win:
+			Music.SetNextBlock("endro", new System.EventHandler((object sender, System.EventArgs e) => { SetState(BattleState.Endro); }));
+			GameContext.PlayerConductor.OnPlayerWin();
+			GameContext.EnemyConductor.OnPlayerWin();
+			ClearSkills();
+			break;
+		case BattleState.Endro:
+			GameContext.VoxSystem.SetState(VoxState.SunSet);
+			TextWindow.SetMessage(MessageCategory.Result, "まもののむれを　たおした");
+			break;
+		}
+		Debug.Log("Enter BattleState: " + State.ToString());
 	}
-	public void OnPlayerLose()
-    {
-        TextWindow.ChangeMessage( MessageCategory.Result, "オクスは　ちからつきた" );
-        GameContext.PlayerConductor.OnPlayerLose();
-        GameContext.EnemyConductor.OnPlayerLose();
-        GameContext.VoxSystem.SetState( VoxState.SunSet );
-        GameContext.ChangeState( GameState.Continue );
-        Music.Play( "Continue" );
-        ClearSkills();
-	}
-    public void OnPlayerRunaway()
-    {
-        TextWindow.ChangeMessage( MessageCategory.Result, "オクスは　にげだした" );
-        GameContext.PlayerConductor.OnPlayerLose();
-        GameContext.EnemyConductor.OnPlayerLose();
-        GameContext.VoxSystem.SetState( VoxState.SunSet );
-        GameContext.ChangeState( GameState.Continue );
-        Music.Stop();
-        SEPlayer.Play( "runaway" );
-        ClearSkills();
-    }
+
+	//public void OnPlayerRunaway()
+	//{
+	//	TextWindow.ChangeMessage( MessageCategory.Result, "オクスは　にげだした" );
+	//	GameContext.PlayerConductor.OnPlayerLose();
+	//	GameContext.EnemyConductor.OnPlayerLose();
+	//	GameContext.VoxSystem.SetState( VoxState.SunSet );
+	//	SetState(BattleState.Continue);
+	//	Music.Stop();
+	//	SEPlayer.Play( "runaway" );
+	//	ClearSkills();
+	//}
 }

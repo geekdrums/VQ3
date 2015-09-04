@@ -41,7 +41,7 @@ public class Player : Character {
 				commandPanel.transform.position = initialCommandPanelPosition;
 			}
 		}
-		if( GameContext.VoxSystem.state != VoxState.Invert )
+		if( GameContext.VoxSystem.State != VoxState.Overload )
 		{
 			if( IsDangerMode )
 			{
@@ -129,7 +129,7 @@ public class Player : Character {
 
         if( HitPoint <= 0 )
         {
-            GameContext.BattleConductor.OnPlayerLose();
+            GameContext.BattleConductor.SetState(BattleState.Continue);
         }
     }
     public override void Heal( HealModule heal )
@@ -186,13 +186,13 @@ public class Player : Character {
 		CheckDangerMode();
         if( HitPoint <= 0 )
         {
-            GameContext.BattleConductor.OnPlayerLose();
+			GameContext.BattleConductor.SetState(BattleState.Continue);
 		}
 	}
 
 	public void CheckDangerMode()
 	{
-		if( GameContext.VoxSystem.state != VoxState.Invert )
+		if( GameContext.VoxSystem.State != VoxState.Overload )
 		{
 			if( IsDangerMode )
 			{

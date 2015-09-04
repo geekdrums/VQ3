@@ -5,88 +5,87 @@ using System.Collections.Generic;
 //Game State
 public enum GameState
 {
-	Init,
-	Field,
-	SetMenu,
-	//AskMenu,
-	Intro,
+	Title,
+	Stage,
+	Event,
+	Setting,
 	Battle,
-	Continue,
-    Endro,
     Result
 }
+
 public static class GameContext
 {
-	public static GameState CurrentState = GameState.Init;
-	public static bool IsBattleState { get { return GameState.Intro <= CurrentState && CurrentState <= GameState.Endro; } }
-    public static void ChangeState( GameState NewState )
-    {
-        GameState OldState = CurrentState;
-        CurrentState = NewState;
-        OnLeaveState( OldState );
-        OnEnterState( CurrentState );
+	public static GameState State = GameState.Setting;
 
-		Debug.Log( "EnterState:"+CurrentState.ToString() );
-    }
-    static void OnLeaveState( GameState OldState )
-    {
-        switch( OldState )
+	public static void SetState(GameState nextState)
+	{
+		GameState OldState = State;
+		if( OldState != GameState.Event )
 		{
-		case GameState.Intro:
-			break;
-		case GameState.Endro:
-			break;
-        case GameState.Battle:
-            break;
-        case GameState.Continue:
-            EnemyConductor.OnContinue();
-            PlayerConductor.OnContinue();
-			FieldConductor.OnContinue();
-            break;
-		case GameState.Field:
-            break;
-        case GameState.Result:
-            break;
-        }
-    }
-    static void OnEnterState( GameState NewState )
-    {
-        switch( NewState )
+			State = FieldConductor.CheckEvent(nextState);
+		}
+		else
 		{
-        case GameState.Intro:
-			Music.Play( "BattleMusic", "intro" );
-			VoxSystem.SetState(VoxState.Sun);
-			ColorManager.SetBaseColor(EBaseColor.Black);
-            PlayerConductor.OnBattleStarted();
-			VoxSystem.OnBattleStarted();
-			break;
-		case GameState.Endro:
-			break;
+			State = nextState;
+		}
+		OnLeaveState(OldState);
+		OnEnterState(State);
+
+		Debug.Log("Enter GameState: " + State.ToString());
+	}
+	static void OnLeaveState(GameState OldState)
+	{
+		switch( OldState )
+		{
 		case GameState.Battle:
-            break;
-        case GameState.Continue:
-            break;
-        case GameState.Field:
-            break;
-        case GameState.Result:
-			FieldConductor.CheckResult();
-            break;
-		case GameState.SetMenu:
-			Music.Play("ambient");
-			PlayerConductor.SPPanel.ShowSPPanel();
-			PlayerConductor.SPPanel.ShowBattleButton();
-			PlayerConductor.commandGraph.CheckLinkedFromIntro();
-			TextWindow.ChangeMessage(MessageCategory.Help, "SPを割り振って　戦闘で使用するコマンドを　選ぶことができます。");
+			break;
+		case GameState.Event:
+			break;
+		case GameState.Result:
+			break;
+		}
+	}
+	static void OnEnterState(GameState NewState)
+	{
+		switch( NewState )
+		{
+		case GameState.Battle:
+			VoxSystem.OnBattleStarted();
+			Music.Play("BattleMusic", "intro");
+			ColorManager.SetBaseColor(EBaseColor.Black);
+			FieldConductor.OnEnterBattle();
+			BattleConductor.SetState(BattleState.Intro);
+			VoxSystem.SetState(VoxState.Sun);
+			EnemyConductor.SetEncounter(FieldConductor.CurrentEncounter);
+			PlayerConductor.OnBattleStarted();
+			break;
+		case GameState.Event:
+			EventConductor.OnEnterEvent(FieldConductor.CurrentEvent);
+			break;
+		case GameState.Result:
+			ResultConductor.CheckResult();
+			break;
+		case GameState.Setting:
+			FieldConductor.OnEnterSetting();
+			PlayerConductor.MemoryPanel.Show();
+			PlayerConductor.CommandGraph.CheckLinkedFromIntro();
 			ColorManager.SetBaseColor(EBaseColor.Black);
 			break;
-        }
-    }
+		}
+	}
 
-    //Conductors
-    public static FieldConductor FieldConductor;
+	//Conductors
 	public static BattleConductor BattleConductor;
     public static EnemyConductor EnemyConductor;
-    public static PlayerConductor PlayerConductor;
-    public static VoxSystem VoxSystem;
-    public static Camera MainCamera = GameObject.Find( "Main Camera" ).GetComponent<Camera>();
+	public static PlayerConductor PlayerConductor;
+	public static VoxSystem VoxSystem;
+	public static FieldConductor FieldConductor;
+	public static ResultConductor ResultConductor;
+	public static EventConductor EventConductor;
+	public static Camera MainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+	//States
+	public static BattleState BattleState { get { return BattleConductor.State; } }
+	public static VoxState VoxState { get { return VoxSystem.State; } }
+	public static ResultState ResultState { get { return ResultConductor.State; } }
 }

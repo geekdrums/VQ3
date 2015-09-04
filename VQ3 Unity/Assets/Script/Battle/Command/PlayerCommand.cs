@@ -29,7 +29,7 @@ public class PlayerCommand : MonoBehaviour
     // static properties
     //
     protected static Vector3 MaxScale = new Vector3( 0.24f, 0.24f, 0.24f );
-    protected static float ScaleCoeff = 0.05f;
+    protected static float ScaleCoeff = 0.0f;
     protected static float MaskColorCoeff = 0.06f;
     protected static float MaskStartPos = 3.0f;
     protected static Vector3 SelectSpot
@@ -66,7 +66,6 @@ public class PlayerCommand : MonoBehaviour
     public GameObject centerIcon;
     public GameObject maskPlane;
     public List<Sprite> EnhIcons;
-	public CounterSprite levelCounter;
 
 
     //
@@ -261,12 +260,17 @@ public class PlayerCommand : MonoBehaviour
     #endregion
 
     #region Unity functions
-    //
+
+	//
     // initialize
     //
-    void Start()
+	void Awake()
 	{
 		ValidateState();
+	}
+
+    void Start()
+	{
         ValidatePosition();
         ValidateIcons();
 		ValidateColor();
@@ -297,8 +301,6 @@ public class PlayerCommand : MonoBehaviour
 				}
 			}
 		}
-		levelCounter.Count = currentLevel;
-		levelCounter.CounterColor = currentLevel == 0 ? ColorManager.Base.Shade : Color.black;
 	}
 
     public virtual void ValidatePosition()
@@ -316,7 +318,10 @@ public class PlayerCommand : MonoBehaviour
         maskMat.hideFlags = HideFlags.DontSave;
         maskMat.color = ColorManager.MakeAlpha( Color.black, alpha );
         maskMat.name = "maskMat";
-        maskPlane.GetComponent<Renderer>().material = maskMat;
+		if( maskMat != null )
+		{
+			maskPlane.GetComponent<Renderer>().material = maskMat;
+		}
     }
 
     public virtual void ValidateIcons()
@@ -421,53 +426,48 @@ public class PlayerCommand : MonoBehaviour
 #if UNITY_EDITOR
         if( !UnityEditor.EditorApplication.isPlaying ) return;
 #endif
-        UpdateIcon();
+        UpdateTransform();
     }
 
-    protected virtual void UpdateIcon()
+    protected virtual void UpdateTransform()
     {
-		if( Music.IsJustChanged )
+		CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
+		float alpha = 0;
+		float distance = (this.transform.position - SelectSpot).magnitude;
+		if( GameContext.State == GameState.Setting )
 		{
-			CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
-			float alpha = 0;
-			float distance = (this.transform.position - SelectSpot).magnitude;
-			if( GameContext.CurrentState == GameState.SetMenu )
+			if( state <= CommandState.Acquired )
 			{
-				if( state <= CommandState.Acquired )
-				{
-					transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 1.0f;
-				}
-				else if( state <= CommandState.NotAcquired )
-				{
-					transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
-					alpha = 0.85f;
-				}
-				else//DontKnow
-				{
-					transform.localScale = Vector3.zero;
-				}
-				levelCounter.transform.localScale = Vector3.one;
+				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 1.0f;
 			}
-			else if( GameContext.CurrentState != GameState.Result )
+			else if( state <= CommandState.NotAcquired )
 			{
-				if( state <= CommandState.Linked )
-				{
-					transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 1.2f;
-				}
-				else if( state <= CommandState.Acquired )
-				{
-					transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
-					alpha = Mathf.Clamp((distance + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff, 0.7f, 1.0f);
-				}
-				else//NotAcquired,DontKnow
-				{
-					transform.localScale = Vector3.zero;
-				}
-				levelCounter.transform.localScale = Vector3.zero;
+				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+				alpha = 0.85f;
 			}
-			maskPlane.GetComponent<Renderer>().material.color = ColorManager.MakeAlpha(Color.black, alpha);
+			else//DontKnow
+			{
+				transform.localScale = Vector3.zero;
+			}
 		}
-        transform.rotation = Quaternion.identity;
+		else if( GameContext.State != GameState.Result )
+		{
+			if( state <= CommandState.Linked )
+			{
+				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * ( this is InvertCommand ? 1.0f : 1.2f );
+			}
+			else if( state <= CommandState.Acquired )
+			{
+				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+				alpha = Mathf.Clamp((distance + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff, 0.7f, 1.0f);
+			}
+			else//NotAcquired,DontKnow
+			{
+				transform.localScale = Vector3.zero;
+			}
+		}
+		maskPlane.GetComponent<Renderer>().material.color = ColorManager.MakeAlpha(Color.black, alpha);
+		transform.rotation = Quaternion.identity;
     }
 
     #endregion
@@ -487,7 +487,7 @@ public class PlayerCommand : MonoBehaviour
     }
     public virtual GameObject GetCurrentSkill()
     {
-        if( GameContext.VoxSystem.state == VoxState.Eclipse && Music.Just.Bar >= 2 ) return null;
+		if( GameContext.PlayerConductor.IsEclipse && Music.Just.Bar >= 2 ) return null;
 		return currentData.SkillDictionary.ContainsKey(Music.Just.MusicalTime) ? currentData.SkillDictionary[Music.Just.MusicalTime].gameObject : null;
     }
     public IEnumerable<PlayerCommand> LinkedCommands
@@ -500,6 +500,21 @@ public class PlayerCommand : MonoBehaviour
             }
         }
     }
+	public virtual GameObject GetIconObj(GameObject iconParent)
+	{
+		GameObject iconObj = Instantiate(gameObject) as GameObject;
+		Destroy(iconObj.transform.FindChild("nextRect").gameObject);
+		if( iconObj.transform.FindChild("currentRect") != null )
+		{
+			Destroy(iconObj.transform.FindChild("currentRect").gameObject);
+		}
+		iconObj.transform.parent = iconParent.transform;
+		iconObj.transform.localPosition = Vector3.zero;
+		iconObj.transform.localScale = Vector3.one;
+		iconObj.transform.localRotation = Quaternion.identity;
+		iconObj.GetComponent<PlayerCommand>().enabled = false;
+		return iconObj;
+	}
 
     //
     // battle actions
@@ -579,8 +594,6 @@ public class PlayerCommand : MonoBehaviour
 	public void LevelUp()
 	{
 		++currentLevel;
-		levelCounter.Count = currentLevel;
-		levelCounter.CounterColor = Color.black;
 		int oldSP = numSP;
 		numSP = currentData.RequireSP;
 		GameContext.PlayerConductor.RemainSP -= (numSP - oldSP);
@@ -590,8 +603,6 @@ public class PlayerCommand : MonoBehaviour
 	public void LevelDown()
 	{
 		--currentLevel;
-		levelCounter.Count = currentLevel;
-		levelCounter.CounterColor = currentLevel == 0 ? ColorManager.Base.Shade : Color.black;
 		int oldSP = numSP;
 		numSP = currentData == null ? 0 : currentData.RequireSP;
 		state = currentData == null ? CommandState.NotAcquired : CommandState.Acquired;

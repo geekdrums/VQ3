@@ -14,9 +14,12 @@ public class RevertCommand : PlayerCommand
 
 	Vector3 centerEyePosition;
 
-    void Start()
+	void Awake()
 	{
 		ValidateState();
+	}
+    void Start()
+	{
         ValidatePosition();
         ValidateIcons();
         ValidateColor();
@@ -51,17 +54,19 @@ public class RevertCommand : PlayerCommand
 #if UNITY_EDITOR
         if( !UnityEditor.EditorApplication.isPlaying ) return;
 #endif
-		if( GameContext.CurrentState < GameState.Intro ) return;
 
-        UpdateIcon();
+		UpdateTransform();
+
+		if( GameContext.BattleState < BattleState.Intro ) return;
+
 		EyeArc.SetTargetArc((float)GameContext.VoxSystem.currentVP/GameContext.EnemyConductor.InvertVP);
 
-		if( GameContext.VoxSystem.state != VoxState.Invert && GameContext.VoxSystem.IsOverFlow )
+		if( GameContext.VoxSystem.State != VoxState.Overload && GameContext.VoxSystem.IsOverFlow )
 		{
 			CenterRect.SetColor(Color.white);
 			EyeEdge.SetColor(Color.clear);
 			EyeArc.SetColor(Color.black);
-			GrowEdge.SetGrowSize(Music.MusicalCos(4)*2);
+			GrowEdge.SetGrowSize(Music.MusicalCos(4));
 			Vector3 lookDirection = (SelectSpot - EyeArc.transform.position);
 			lookDirection.z = 0;
 			float distance = lookDirection.magnitude;
@@ -80,4 +85,11 @@ public class RevertCommand : PlayerCommand
 			EyeArc.SetTargetWidth(EyeEdge.Radius - EyeEdge.Width);
 		}
     }
+
+	public override GameObject GetIconObj(GameObject iconParent)
+	{
+		GameObject iconObj = base.GetIconObj(iconParent);
+		iconObj.transform.FindChild("EyeCircle").transform.localPosition = centerEyePosition;
+		return iconObj;
+	}
 }

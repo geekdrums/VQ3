@@ -228,7 +228,7 @@ public class ColorManager : MonoBehaviour
         instance.ThemeLightMaterial.color = Theme.Light;
         instance.ThemeShadeMaterial.color = Theme.Shade;
 
-        if( GameContext.VoxSystem.state != VoxState.Invert )
+        if( GameContext.VoxSystem.State != VoxState.Overload )
         {
             instance.BGMaterial.color = Theme.Light;
         }

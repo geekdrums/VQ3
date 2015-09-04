@@ -21,7 +21,7 @@ public class EnemyConductor : MonoBehaviour {
     Encounter CurrentEncounter;
 
     public int EnemyCount { get { return Enemies.Count + (WeatherEnemy != null ? 1 : 0); } }
-	public int InvertVP { get { return CurrentEncounter.InvertVP; } }
+	public int InvertVP { get { return ( CurrentEncounter != null ? CurrentEncounter.InvertVP : 0 ); } }
     public Enemy targetEnemy { get; private set; }
 
 	Color _baseColor;
@@ -38,10 +38,13 @@ public class EnemyConductor : MonoBehaviour {
 		}
 	}
     public int baseHP { get { return GameContext.PlayerConductor.PlayerMaxHP; } }
+	void Awake()
+	{
+		GameContext.EnemyConductor = this;
+	}
 
 	// Use this for initialization
 	void Start () {
-		GameContext.EnemyConductor = this;
 		baseColor = Color.black;
         PhysicDefaultCommand.Parse();
         MagicDefaultCommand.Parse();
@@ -49,7 +52,7 @@ public class EnemyConductor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if( GameContext.CurrentState == GameState.Battle )
+        if( GameContext.State == GameState.Battle )
         {
 			if( Input.GetMouseButtonUp(0) )
 			{
@@ -67,50 +70,17 @@ public class EnemyConductor : MonoBehaviour {
 					}
 				}
 			}
-            
-			if( Music.IsJustChangedBar() && Music.Just.Bar >= 1 )
-            {
-                /*
-                List<string> messages = new List<string>();
-                //if( Music.Just.bar == 1 )
-                //{
-                //    foreach( Enemy passiveEnemy in from e in Enemies where e.currentCommand != null && e.currentCommand.isPassive select e )
-                //    {
-                //        messages.Add( passiveEnemy.DisplayName + passiveEnemy.currentCommand.DescribeText );
-                //    }
-                //    if( WeatherEnemy != null && WeatherEnemy.currentCommand != null && WeatherEnemy.currentCommand.isPassive )
-                //    {
-                //        messages.Add( WeatherEnemy.currentCommand.DescribeText );
-                //    }
-                //}
-                if( messages.Count == 0 && ( Music.Just.bar < 2 || GameContext.VoxSystem.state == VoxState.Sun ) )
-                {
-                    Enemy enemy = Enemies.Find( ( Enemy e ) => e.commandExecBar == Music.Just.bar );
-                    if( WeatherEnemy != null && WeatherEnemy.commandExecBar == Music.Just.bar )
-                    {
-                        messages.Add( WeatherEnemy.currentCommand.DescribeText );
-                    }
-                    else if( enemy != null && enemy.currentCommand != null )
-                    {
-                        messages.Add( enemy.DisplayName + enemy.currentCommand.DescribeText );
-                    }
-                }
-                if( messages.Count > 0 )
-                {
-                    TextWindow.ChangeMessage( messages.ToArray() );
-                }
-                */
-            }
         }
 	}
 
     public void SetEncounter( Encounter encounter )
     {
         CurrentEncounter = encounter;
-        int l = encounter.Enemies.Length;
+		Encounter.BattleSet battleSet = encounter.BattleSets[0];
+		int l = battleSet.Enemies.Length;
         for( int i = 0; i < l; ++i )
         {
-			SpawnEnemy(encounter.Enemies[i], encounter.StateSets[0][i], GetInitSpawnPosition(i, l));
+			SpawnEnemy(battleSet.Enemies[i], battleSet.StateSets[0][i], GetInitSpawnPosition(i, l));
         }
         targetEnemy = Enemies[0];
         GameContext.VoxSystem.SetTargetEnemy( targetEnemy );
@@ -135,7 +105,7 @@ public class EnemyConductor : MonoBehaviour {
         else
         {
             Enemies.Add( enemy );
-            TextWindow.ChangeMessage( MessageCategory.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
+            TextWindow.SetMessage( MessageCategory.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
             enemy.InitState( initialState );
         }
 		enemy.transform.localPosition = spawnPosition;
@@ -172,12 +142,12 @@ public class EnemyConductor : MonoBehaviour {
 		AttackModule attack = Action.GetModule<AttackModule>();
         if( attack != null && skill.isPlayerSkill )
 		{
+			GameContext.VoxSystem.AddVPVT((int)(attack.VP*(skill.OwnerCharacter as Player).VPCoeff), (int)(attack.VT*(skill.OwnerCharacter as Player).VTCoeff));
             foreach( Enemy e in GetTargetEnemies( attack, skill ) )
             {
 				e.BeAttacked( attack, skill );
 				isSucceeded = true;
             }
-			GameContext.VoxSystem.AddVPVT((int)(attack.VP*(skill.OwnerCharacter as Player).VPCoeff), (int)(attack.VT*(skill.OwnerCharacter as Player).VTCoeff));
 		}
         HealModule heal = Action.GetModule<HealModule>();
         if( heal != null && !skill.isPlayerSkill )
@@ -223,7 +193,7 @@ public class EnemyConductor : MonoBehaviour {
 		Enemies.RemoveAll( ( Enemy e ) => e.HitPoint<=0 );
         if( Enemies.Count == 0 )
         {
-            GameContext.BattleConductor.OnPlayerWin();
+            GameContext.BattleConductor.SetState(BattleState.Win);
             if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
             {
                 Destroy( WeatherEnemy.gameObject );
@@ -381,7 +351,7 @@ public class EnemyConductor : MonoBehaviour {
     {
         //int CurrentIndex = Music.Just.bar;
         //if( GameContext.VoxSystem.state == VoxState.Invert ) return;
-        if( GameContext.VoxSystem.IsInverting ) return;//state == VoxState.Eclipse && GameContext.VoxSystem.IsReadyEclipse && CurrentIndex >= 2 ) return;
+        if( GameContext.VoxSystem.IsOverloading ) return;//state == VoxState.Eclipse && GameContext.VoxSystem.IsReadyEclipse && CurrentIndex >= 2 ) return;
 
         foreach( Enemy e in Enemies )
         {
@@ -439,7 +409,6 @@ public class EnemyConductor : MonoBehaviour {
     public void OnContinue()
 	{
 		Cleanup();
-        //SetEncounter( CurrentEncounter );
     }
 
     void Cleanup()
@@ -447,8 +416,6 @@ public class EnemyConductor : MonoBehaviour {
         foreach( Enemy e in Enemies )
         {
             Destroy( e.gameObject );
-            //e.OnContinue();
-            //TextWindow.AddMessage( new GUIMessage( e.DisplayName + " があらわれた！" ) );
         }
         if( WeatherEnemy != null )
         {

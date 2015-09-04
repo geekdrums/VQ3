@@ -19,11 +19,10 @@ public enum MessageCategory
     AcquireCommand
 }
 
-public class GUIMessage
+public class MessageIndexed
 {
 	public string Text;
 	public int CurrentIndex;
-    public MessageCategory Type;
 
 	public bool IsEnd { get { return CurrentIndex >= Text.Length - 1; } }
     public string DisplayText
@@ -62,71 +61,137 @@ public class GUIMessage
         }
     }
 
-	public GUIMessage( string Text, MessageCategory type, int startIndex = 0 )
+	public MessageIndexed(string text, int startIndex = 0)
 	{
-		this.Text = Text;
-        this.CurrentIndex = startIndex;
-        this.Type = type;
+		this.Text = text;
+		this.CurrentIndex = startIndex;
+	}
+
+	public void Init(string text)
+	{
+		this.Text = text;
+		this.CurrentIndex = 0;
+	}
+	public void End()
+	{
+		this.CurrentIndex = Text.Length - 1;
 	}
 }
 
-public class TextWindow : MonoBehaviour {
+public class TextWindow : MonoBehaviour
+{
+	public GameObject TextBase;
+	public GameObject CommandBase, IconParent;
+	public float BlinkInterval;
 
-	static TextWindow instance;
-    TextMesh displayText;
+	static TextWindow instance_;
 
-	GUIMessage message = new GUIMessage( "", MessageCategory.Damage );
-    bool useNextCursor = false;
-    float blinkTime;
-    float displayMusicTime;
-
-    public GameObject textBase;
-    public float BlinkInterval;
+	TextMesh displayText_, commandText_;
+	GaugeRenderer line_;
+	ButtonUI cancelButton_;
+	MessageIndexed message_ = new MessageIndexed("");
+	bool useNextCursor_ = false;
+	float blinkTime_;
+	float displayMusicTime_;
+	PlayerCommand displayCommnd_;
 
 	// Use this for initialization
-	void Start () {
-		instance = this;
-        displayText = GetComponentInChildren<TextMesh>();
-        displayText.text = "";
+	void Start()
+	{
+		instance_ = this;
+
+		TextBase.SetActive(true);
+		CommandBase.SetActive(true);
+		line_ = GetComponentInChildren<GaugeRenderer>();
+		displayText_ = TextBase.GetComponentInChildren<TextMesh>();
+		displayText_.text = "";
+		commandText_ = CommandBase.GetComponentInChildren<TextMesh>();
+		cancelButton_ = CommandBase.GetComponentInChildren<ButtonUI>();
+		cancelButton_.OnPushed += this.OnPushedCancel;
+		TextBase.SetActive(false);
+		CommandBase.SetActive(false);
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
-        ++message.CurrentIndex;
-        displayText.text = message.DisplayText;
-        if( Music.IsJustChanged )
-        {
-            ++displayMusicTime;
-        }
-        if( useNextCursor )
-        {
-            blinkTime += Time.deltaTime;
-            if( message.IsEnd && (blinkTime % (BlinkInterval * 2)) >= BlinkInterval )
-            {
-                displayText.text += " >";
-            }
-        }
+	void Update()
+	{
+		++message_.CurrentIndex;
+		displayText_.text = message_.DisplayText;
+		if( Music.IsJustChanged )
+		{
+			++displayMusicTime_;
+		}
+		if( useNextCursor_ )
+		{
+			blinkTime_ += Time.deltaTime;
+			if( message_.IsEnd && (blinkTime_ % (BlinkInterval * 2)) >= BlinkInterval )
+			{
+				displayText_.text += " >";
+			}
+		}
 	}
 
-    void ChangeMessage_( string text, MessageCategory type )
-    {
-        this.message.Text = text;
-        this.message.Type = type;
-        this.message.CurrentIndex = 0;
-        displayMusicTime = 0;
-    }
-    void SetNextCursor_( bool use )
-    {
-        useNextCursor = use;
-        blinkTime = 0;
-    }
+	void SetMessage_(string text)
+	{
+		TextBase.SetActive(true);
+		CommandBase.SetActive(false);
 
-    public static void ChangeMessage( MessageCategory type, string NewMessage )
-    {
-        instance.ChangeMessage_( NewMessage, type );
-    }
-    public static void SetNextCursor( bool use )
-    {
-        instance.SetNextCursor_( use );
-    }
+		this.message_.Text = text;
+		this.message_.CurrentIndex = 0;
+		displayMusicTime_ = 0;
+		
+		line_.SetColor(Color.white);
+	}
+
+	void SetNextCursor_(bool use)
+	{
+		useNextCursor_ = use;
+		blinkTime_ = 0;
+	}
+
+	void SetCommand_(PlayerCommand command)
+	{
+		TextBase.SetActive(false);
+		CommandBase.SetActive(true);
+
+		if( IconParent.transform.childCount > 0 )
+		{
+			Destroy(IconParent.transform.GetChild(0).gameObject);
+		}
+		GameObject iconObj = Instantiate(command.gameObject) as GameObject;
+		Destroy(iconObj.transform.FindChild("nextRect").gameObject);
+		if( iconObj.transform.FindChild("currentRect") != null )
+		{
+			Destroy(iconObj.transform.FindChild("currentRect").gameObject);
+		}
+		iconObj.transform.parent = IconParent.transform;
+		iconObj.transform.localPosition = Vector3.zero;
+		iconObj.transform.localScale = Vector3.one;
+		iconObj.transform.localRotation = Quaternion.identity;
+		iconObj.GetComponent<PlayerCommand>().enabled = false;
+
+		Color commandColor = ColorManager.GetThemeColor(command.themeColor).Bright;
+		if( command.currentLevel == 0 ) commandColor = ColorManager.GetThemeColor(command.themeColor).Shade;
+		commandText_.text = command.nameText.ToUpper();
+		commandText_.color = commandColor;
+		line_.SetColor(commandColor);
+	}
+
+	void OnPushedCancel(object sender, EventArgs e)
+	{
+		GameContext.PlayerConductor.OnDeselectedCommand();
+	}
+
+	public static void SetMessage(MessageCategory type, string NewMessage)
+	{
+		instance_.SetMessage_(NewMessage);
+	}
+	public static void SetNextCursor(bool use)
+	{
+		instance_.SetNextCursor_(use);
+	}
+	public static void SetCommand(PlayerCommand command)
+	{
+		instance_.SetCommand_(command);
+	}
 }

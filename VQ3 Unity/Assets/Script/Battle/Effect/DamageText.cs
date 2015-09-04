@@ -66,7 +66,7 @@ public class DamageText : CounterSprite {
         case ActionResult.MagicGoodDamage:
         case ActionResult.PhysicGoodDamage:
 			initialColor = ColorManager.Accent.Critical;
-			if( GameContext.VoxSystem.state == VoxState.Invert )
+			if( GameContext.VoxSystem.State == VoxState.Overload )
 			{
 				transform.localScale = Vector3.one * 1.3f;
 			}

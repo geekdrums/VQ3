@@ -116,15 +116,21 @@ public class CriWareErrorHandler : MonoBehaviour {
 	/*JP ログの出力 */
 	private static void OutputLog(string errmsg)
 	{
-		if (errmsg == null) {
+		if( errmsg == null || errmsg.StartsWith("E2009072402") || errmsg.StartsWith("E2011061646") )
+		{
 			return;
 		}
-		
-		if (errmsg.StartsWith("E")) {
+
+		if( errmsg.StartsWith("E") )
+		{
 			Debug.LogError("[CRIWARE] Error:" + errmsg);
-		} else if (errmsg.StartsWith("W")) {
+		}
+		else if( errmsg.StartsWith("W") )
+		{
 			Debug.LogWarning("[CRIWARE] Warning:" + errmsg);
-		} else {
+		}
+		else
+		{
 			Debug.Log("[CRIWARE]" + errmsg);
 		}
 	}

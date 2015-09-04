@@ -16,6 +16,7 @@ public class MidairPrimitive : MonoBehaviour
 	public float ArcRate = 1.0f;
 	public float Width = 1;
 	public float Radius = 1;
+	public float ScaleX = 1;
 	public Color Color = Color.white;
 	public float Angle;
 	public float GrowSize;
@@ -241,10 +242,20 @@ public class MidairPrimitive : MonoBehaviour
 				meshVertices[2 * i + 1] = normalizedVertices[i] * OutR;
 			}
 		}
+		if( ScaleX != 1.0f )
+		{
+			for( int i = 0; i <= ArcN; ++i )
+			{
+				meshVertices[2 * i + 1].x *= ScaleX;
+				meshVertices[2 * i].x = meshVertices[2 * i + 1].x - Mathf.Sign(meshVertices[2 * i].x) * Mathf.Abs(meshVertices[2 * i + 1].y - meshVertices[2 * i].y);
+			}
+		}
+
 		Mesh mesh = UsableMesh;
 		mesh.vertices = meshVertices;
 		GetComponent<MeshFilter>().mesh = mesh;
 	}
+
 	void RecalculateWidth()
 	{
 		CheckVertex();
@@ -260,11 +271,20 @@ public class MidairPrimitive : MonoBehaviour
 				meshVertices[2 * i] = normalizedVertices[i] * InR;
 			}
 		}
+		if( ScaleX != 1.0f )
+		{
+			for( int i = 0; i <= ArcN; ++i )
+			{
+				meshVertices[2 * i].x = meshVertices[2 * i + 1].x - Mathf.Sign(meshVertices[2 * i].x) * Mathf.Abs(meshVertices[2 * i + 1].y - meshVertices[2 * i].y);
+			}
+		}
+
 		Mesh mesh = UsableMesh;
 		mesh.vertices = meshVertices;
 		GetComponent<MeshFilter>().mesh = mesh;
 	}
-	public Mesh RecalculatePolygon()
+
+	Mesh RecalculatePolygon()
 	{
 		if( Num < 3 )
 		{
@@ -326,6 +346,15 @@ public class MidairPrimitive : MonoBehaviour
 			}
 			meshVertices[2 * ArcN] = InVertex;
 			meshVertices[2 * ArcN + 1] = OutVertex;
+			if( ScaleX != 1.0f )
+			{
+				for( int i = 0; i <= ArcN; ++i )
+				{
+					meshVertices[2 * i + 1].x *= ScaleX;
+					meshVertices[2 * i].x = meshVertices[2 * i + 1].x - Mathf.Sign(meshVertices[2 * i].x) * Mathf.Abs(meshVertices[2 * i + 1].y - meshVertices[2 * i].y);
+				}
+			}
+
 			normalizedVertices[ArcN] = normalVertex;
 			mesh.vertices = meshVertices;
 
@@ -479,6 +508,10 @@ public class MidairPrimitive : MonoBehaviour
 		mat.name = "mat";
 		mat.hideFlags = HideFlags.DontSave;
 		mat.SetColor(colorName, Color);
+		if( materialName == "Standard" )
+		{
+			mat.SetInt("_Mode", 3);
+		}
 		if( this.name == "_grow" )
 		{
 			if( GetComponentInParent<MidairPrimitive>() != null )

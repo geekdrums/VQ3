@@ -14,7 +14,6 @@ public class HPPanel : MonoBehaviour {
     public MidairPrimitive DamageCircle;
     public CounterSprite CurrentHPCount;
     public CounterSprite MaxHPCount;
-    public CounterSprite DamageCount;
 
     int turnStartHP_;
     PlayerCommand currentCommand_;
@@ -32,7 +31,6 @@ public class HPPanel : MonoBehaviour {
         //initialScale = CurrentBar.transform.localScale;
         turnStartHP_ = Player.HitPoint;
         MaxHPCount.Count = Player.MaxHP;
-        DamageCount.transform.localScale = Vector3.zero;
 	}
 	
 	// Update is called once per frame
@@ -46,7 +44,6 @@ public class HPPanel : MonoBehaviour {
     {
         turnStartHP_ = Player.HitPoint;
         MaxHPCount.Count = Player.MaxHP;
-        DamageCount.transform.localScale = Vector3.zero;
 		DamageCircle.SetWidth(0);
 		DefendCircle.SetSize(0);
 		CurrentArc.SetColor(ColorManager.Base.Front);
@@ -87,14 +84,12 @@ public class HPPanel : MonoBehaviour {
             CurrentArc.SetColor( ColorManager.Base.Front );
         }
         DamageCircle.SetWidth( 0 );
-        DamageCount.transform.localScale = Vector3.zero;
     }
     public void OnDamage( int damage )
     {
         UpdateHPText();
         //CurrentBar.transform.localScale = targetScale;
         CurrentArc.SetTargetArc( targetArcRate );
-        //DamageCount.Count = turnStartHP_ - Player.HitPoint;
 		DamageCircle.SetAnimationSize(DefendCircle.Radius / 2, CurrentArc.Radius);
 		DamageCircle.SetAnimationWidth(CurrentArc.Radius, 0);
 
@@ -111,13 +106,6 @@ public class HPPanel : MonoBehaviour {
         {
             turnStartHP_ = Player.HitPoint;
 			RedArc.SetTargetArc( targetArcRate );
-            //DamageCount.transform.localScale = Vector3.zero;
-            //RedBar.transform.localScale = targetScale;
-        }
-        else
-        {
-            //DamageCount.Count = turnStartHP_ - Player.HitPoint;
-            //DamageCount.transform.localScale = Vector3.one;
         }
 
         //Vector3 nextDamageTextPosition = (latestDamageText == null ? damageTextPrefab.transform.position : latestDamageText.transform.position + Vector3.right);
@@ -132,12 +120,6 @@ public class HPPanel : MonoBehaviour {
         {
             turnStartHP_ = Player.HitPoint;
 			RedArc.SetTargetArc(targetArcRate);
-            //DamageCount.transform.localScale = Vector3.zero;
-        }
-        else
-        {
-            //DamageCount.Count = turnStartHP_ - Player.HitPoint;
-            //DamageCount.transform.localScale = Vector3.one;
         }
     }
 
