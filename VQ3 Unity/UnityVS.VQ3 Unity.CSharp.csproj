@@ -7,14 +7,16 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E2B0199C-F72E-B8F2-D486-1F22FDBEAA06}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.1.1f1</UnityVersion>
@@ -75,12 +77,9 @@
     <Compile Include="Assets\Script\Battle\Character\Enemy\Enemy.cs" />
     <Compile Include="Assets\Script\Battle\Character\Enemy\HitokageEnemy.cs" />
     <Compile Include="Assets\Script\Battle\Character\Enemy\WispEnemy.cs" />
-    <Compile Include="Assets\Script\Battle\Character\JewelEnemy.cs" />
     <Compile Include="Assets\Script\Battle\Character\Player.cs" />
-    <Compile Include="Assets\Script\Battle\Character\WeatherEnemy.cs" />
     <Compile Include="Assets\Script\Battle\ComandGraph\CommandEdge.cs" />
     <Compile Include="Assets\Script\Battle\ComandGraph\CommandGraph.cs" />
-    <Compile Include="Assets\Script\Battle\ComandGraph\CommandPanel.cs" />
     <Compile Include="Assets\Script\Battle\Command\CommandBase.cs" />
     <Compile Include="Assets\Script\Battle\Command\EnemyCommand.cs" />
     <Compile Include="Assets\Script\Battle\Command\EnemyCommandIcon.cs" />
@@ -94,11 +93,11 @@
     <Compile Include="Assets\Script\Battle\Command\Skill\Skill.cs" />
     <Compile Include="Assets\Script\Battle\Effect\AttackEffect.cs" />
     <Compile Include="Assets\Script\Battle\Effect\CommandEffect.cs" />
-    <Compile Include="Assets\Script\Battle\Effect\DamageText.cs" />
+    <Compile Include="Assets\Script\Battle\Effect\DamageGauge.cs" />
     <Compile Include="Assets\Script\Battle\Effect\DefendEffect.cs" />
+    <Compile Include="Assets\Script\Battle\Effect\DamageText.cs" />
     <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
     <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
-    <Compile Include="Assets\Script\Battle\UI\BattlePanel.cs" />
     <Compile Include="Assets\Script\Battle\UI\ButtonUI.cs" />
     <Compile Include="Assets\Script\Battle\UI\CommandExplanation.cs" />
     <Compile Include="Assets\Script\Battle\UI\EnhanceCutIn.cs" />

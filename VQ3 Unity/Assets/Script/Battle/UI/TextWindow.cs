@@ -24,7 +24,7 @@ public class MessageIndexed
 	public string Text;
 	public int CurrentIndex;
 
-	public bool IsEnd { get { return CurrentIndex >= Text.Length - 1; } }
+	public bool IsEnd { get { return CurrentIndex >= Text.Length; } }
     public string DisplayText
     {
         get
@@ -90,10 +90,11 @@ public class TextWindow : MonoBehaviour
 	GaugeRenderer line_;
 	ButtonUI cancelButton_;
 	MessageIndexed message_ = new MessageIndexed("");
+	MessageIndexed commandName_= new MessageIndexed("");
 	bool useNextCursor_ = false;
 	float blinkTime_;
-	float displayMusicTime_;
 	PlayerCommand displayCommnd_;
+	GameObject commandIconObj_;
 
 	// Use this for initialization
 	void Start()
@@ -115,18 +116,29 @@ public class TextWindow : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		++message_.CurrentIndex;
-		displayText_.text = message_.DisplayText;
-		if( Music.IsJustChanged )
+		if( message_.IsEnd == false )
 		{
-			++displayMusicTime_;
+			message_.CurrentIndex++;
+			displayText_.text = message_.DisplayText;
 		}
-		if( useNextCursor_ )
+		else if( useNextCursor_ )
 		{
 			blinkTime_ += Time.deltaTime;
-			if( message_.IsEnd && (blinkTime_ % (BlinkInterval * 2)) >= BlinkInterval )
+			bool blink = (blinkTime_ % (BlinkInterval * 2)) >= BlinkInterval;
+			displayText_.text = message_.DisplayText + ( blink ? " >" : "" );
+		}
+
+		if( displayCommnd_ != null )
+		{
+			if( commandIconObj_.transform.localPosition.magnitude > 0.5f )
 			{
-				displayText_.text += " >";
+				commandIconObj_.transform.localPosition *= 0.7f;
+			}
+			else if( commandName_.IsEnd == false )
+			{
+				commandIconObj_.transform.localPosition = Vector3.zero;
+				commandName_.CurrentIndex++;
+				commandText_.text = commandName_.DisplayText;
 			}
 		}
 	}
@@ -136,9 +148,10 @@ public class TextWindow : MonoBehaviour
 		TextBase.SetActive(true);
 		CommandBase.SetActive(false);
 
+		displayCommnd_ = null;
+
 		this.message_.Text = text;
 		this.message_.CurrentIndex = 0;
-		displayMusicTime_ = 0;
 		
 		line_.SetColor(Color.white);
 	}
@@ -154,25 +167,19 @@ public class TextWindow : MonoBehaviour
 		TextBase.SetActive(false);
 		CommandBase.SetActive(true);
 
+		displayCommnd_ = command;
+
 		if( IconParent.transform.childCount > 0 )
 		{
 			Destroy(IconParent.transform.GetChild(0).gameObject);
 		}
-		GameObject iconObj = Instantiate(command.gameObject) as GameObject;
-		Destroy(iconObj.transform.FindChild("nextRect").gameObject);
-		if( iconObj.transform.FindChild("currentRect") != null )
-		{
-			Destroy(iconObj.transform.FindChild("currentRect").gameObject);
-		}
-		iconObj.transform.parent = IconParent.transform;
-		iconObj.transform.localPosition = Vector3.zero;
-		iconObj.transform.localScale = Vector3.one;
-		iconObj.transform.localRotation = Quaternion.identity;
-		iconObj.GetComponent<PlayerCommand>().enabled = false;
+		commandIconObj_ = command.GetIconObj(IconParent);
+		commandIconObj_.transform.position = command.transform.position;
 
 		Color commandColor = ColorManager.GetThemeColor(command.themeColor).Bright;
 		if( command.currentLevel == 0 ) commandColor = ColorManager.GetThemeColor(command.themeColor).Shade;
-		commandText_.text = command.nameText.ToUpper();
+		commandName_.Init(command.nameText.ToUpper());
+		commandText_.text = "";
 		commandText_.color = commandColor;
 		line_.SetColor(commandColor);
 	}

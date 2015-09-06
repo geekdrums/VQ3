@@ -52,12 +52,9 @@
      <Compile Include="Assets\Script\Battle\Character\Enemy\Enemy.cs" />
      <Compile Include="Assets\Script\Battle\Character\Enemy\HitokageEnemy.cs" />
      <Compile Include="Assets\Script\Battle\Character\Enemy\WispEnemy.cs" />
-     <Compile Include="Assets\Script\Battle\Character\JewelEnemy.cs" />
      <Compile Include="Assets\Script\Battle\Character\Player.cs" />
-     <Compile Include="Assets\Script\Battle\Character\WeatherEnemy.cs" />
      <Compile Include="Assets\Script\Battle\ComandGraph\CommandEdge.cs" />
      <Compile Include="Assets\Script\Battle\ComandGraph\CommandGraph.cs" />
-     <Compile Include="Assets\Script\Battle\ComandGraph\CommandPanel.cs" />
      <Compile Include="Assets\Script\Battle\Command\CommandBase.cs" />
      <Compile Include="Assets\Script\Battle\Command\EnemyCommand.cs" />
      <Compile Include="Assets\Script\Battle\Command\EnemyCommandIcon.cs" />
@@ -71,11 +68,11 @@
      <Compile Include="Assets\Script\Battle\Command\Skill\Skill.cs" />
      <Compile Include="Assets\Script\Battle\Effect\AttackEffect.cs" />
      <Compile Include="Assets\Script\Battle\Effect\CommandEffect.cs" />
+     <Compile Include="Assets\Script\Battle\Effect\DamageGauge.cs" />
      <Compile Include="Assets\Script\Battle\Effect\DamageText.cs" />
      <Compile Include="Assets\Script\Battle\Effect\DefendEffect.cs" />
      <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
      <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
-     <Compile Include="Assets\Script\Battle\UI\BattlePanel.cs" />
      <Compile Include="Assets\Script\Battle\UI\ButtonUI.cs" />
      <Compile Include="Assets\Script\Battle\UI\CommandExplanation.cs" />
      <Compile Include="Assets\Script\Battle\UI\EnhanceCutIn.cs" />

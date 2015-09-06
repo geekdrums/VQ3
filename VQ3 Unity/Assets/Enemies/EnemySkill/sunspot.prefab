@@ -154,6 +154,7 @@ MonoBehaviour:
   animRandomRange: {x: 0, y: 0}
   animRandomExcludeRange: {x: 0, y: 0}
   characterAnimName: 
+  damageParent: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,6 +170,7 @@ MonoBehaviour:
   ArcRate: 1
   Width: 0
   Radius: 1
+  ScaleX: 1
   Color: {r: 0, g: 0, b: 0, a: 1}
   Angle: 0
   GrowSize: 0

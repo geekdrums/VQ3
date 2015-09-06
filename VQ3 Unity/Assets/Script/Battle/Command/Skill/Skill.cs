@@ -14,6 +14,7 @@ public class Skill : MonoBehaviour
 	public Vector2 animRandomRange = Vector2.zero;
 	public Vector2 animRandomExcludeRange = Vector2.zero;
 	public string characterAnimName;
+	public GameObject damageParent;
 
 	public List<ActionSet> Actions { get; protected set; }
     public bool IsTargetSelectable { get; protected set; }

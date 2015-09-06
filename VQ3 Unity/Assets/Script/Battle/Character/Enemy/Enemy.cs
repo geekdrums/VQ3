@@ -34,10 +34,9 @@ public class Enemy : Character
     public BattleState oldState { get; protected set; }
     public Vector3 targetLocalPosition { get; protected set; }
 
-    protected HPCircle HPCircle;
     protected int turnCount;
 	protected ActionResult lastDamageResult;
-	protected DamageText lastDamageText;
+	protected DamageGauge lastDamageGauge;
     protected SpriteRenderer spriteRenderer;
     protected List<EnemyCommandIcon> commandIcons;
 	protected ShortTextWindow shortText;
@@ -56,11 +55,6 @@ public class Enemy : Character
         {
             c.Parse();
         }
-		HPCircle = (Instantiate(GameContext.EnemyConductor.HPCirclePrefab, transform.position + Vector3.down * ShadowOffset + Vector3.forward * 2, Quaternion.identity) as GameObject).GetComponent<HPCircle>();
-        HPCircle.transform.parent = transform;
-        HPCircle.transform.localScale *= Mathf.Min( 1.5f, Mathf.Sqrt( (float)HitPoint / (float)GameContext.EnemyConductor.baseHP ) );
-        HPCircle.Initialize( this );
-        HPCircle.OnTurnStart();
         initialPosition = transform.localPosition;
         targetLocalPosition = initialPosition;
 
@@ -133,23 +127,24 @@ public class Enemy : Character
         //transform.localPosition = Vector3.Lerp( transform.localPosition, targetLocalPosition, 0.1f );
     }
 
-    protected void CreateDamageText( int damage, ActionResult actResult )
-    {
-        if( damage == 0 ) return;
-		if( lastDamageText != null && damage > 0 )
+	protected void CreateDamageText(int damage, ActionResult actResult, GameObject parent = null)
+	{
+		if( damage == 0 ) return;
+		if( lastDamageGauge != null && damage > 0 )
 		{
-			lastDamageText.AddDamage(damage);
+			lastDamageGauge.AddDamage(damage);
 		}
 		else
-		{ 
-			GameObject damageText = (Instantiate( GameContext.EnemyConductor.damageTextPrefab ) as GameObject);
+		{
+			GameObject damageGauge = (Instantiate(GameContext.EnemyConductor.damageGaugePrefab) as GameObject);
 			if( damage > 0 )
 			{
-				lastDamageText = damageText.GetComponent<DamageText>();
+				lastDamageGauge = damageGauge.GetComponent<DamageGauge>();
 			}
-			damageText.GetComponent<DamageText>().Initialize(damage, actResult, transform.position + Vector3.back * 3 + Random.rotation * Vector3.up * 2);
+			damageGauge.GetComponent<DamageGauge>().Initialize(this, damage, actResult, parent, actResult != ActionResult.EnemyHeal);
 		}
-    }
+	}
+
     protected virtual void CheckState()
     {
         if( currentCommand != null && currentCommand.nextState != "" ) ChangeState( currentCommand.nextState );
@@ -199,10 +194,9 @@ public class Enemy : Character
     public override void TurnInit( CommandBase command )
     {
         base.TurnInit( command );
-        HPCircle.OnTurnStart();
 		if( GameContext.VoxSystem.State != VoxState.Overload )
 		{
-			lastDamageText = null;
+			lastDamageGauge = null;
 		}
     }
     public virtual void InvertInit()
@@ -210,7 +204,6 @@ public class Enemy : Character
 		DefendPercent = 0;
         HealPercent = 0;
         TurnDamage = 0;
-        HPCircle.OnTurnStart();
         currentCommand = null;
 
         oldState = currentState;
@@ -347,7 +340,7 @@ public class Enemy : Character
 		}
 
 		float damage = skill.OwnerCharacter.PhysicAttack * ((attack.Power + overFlowPower) / 100.0f) * typeCoeff * DefendCoeff;
-        BeDamaged( Mathf.Max( 0, (int)damage ), skill.OwnerCharacter );
+        BeDamaged( Mathf.Max( 0, (int)damage ), skill );
         Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
 		
 		if( lastDamageResult != ActionResult.NoDamage )
@@ -355,41 +348,37 @@ public class Enemy : Character
 			SEPlayer.Play(lastDamageResult, skill.OwnerCharacter, (int)damage);
 		}
     }
-    protected override void BeDamaged( int damage, Character ownerCharacter )
-    {
-        base.BeDamaged( damage, ownerCharacter );
-        CreateDamageText( damage, lastDamageResult );
-        HPCircle.OnDamage(damage);
-        if( HitPoint <= 0 )
-        {
+	protected override void BeDamaged(int damage, Skill skill)
+	{
+		base.BeDamaged(damage, skill);
+		CreateDamageText(damage, lastDamageResult, skill.damageParent);
+		if( HitPoint <= 0 )
+		{
 			OnDead();
-            if( shortText != null )
-            {
-                Destroy( shortText.gameObject );
-                shortText = null;
-            }
-        }
-    }
-    public override void Heal( HealModule heal )
-    {
-        int oldHitPoint = HitPoint;
-        base.Heal( heal );
-        CreateDamageText( -(HitPoint - oldHitPoint), ActionResult.EnemyHeal );
-        HPCircle.OnHeal( HitPoint - oldHitPoint );
-        SEPlayer.Play( ActionResult.EnemyHeal, this, HitPoint - oldHitPoint );
-    }
+			if( shortText != null )
+			{
+				Destroy(shortText.gameObject);
+				shortText = null;
+			}
+		}
+	}
+	public override void Heal(HealModule heal)
+	{
+		int oldHitPoint = HitPoint;
+		base.Heal(heal);
+		CreateDamageText(-(HitPoint - oldHitPoint), ActionResult.EnemyHeal);
+		SEPlayer.Play(ActionResult.EnemyHeal, this, HitPoint - oldHitPoint);
+	}
 	public override void Drain(DrainModule drain, int drainDamage)
 	{
 		int oldHitPoint = HitPoint;
  		base.Drain(drain, drainDamage);
 		CreateDamageText(-(HitPoint - oldHitPoint), ActionResult.EnemyHeal);
-		HPCircle.OnHeal(HitPoint - oldHitPoint);
 		SEPlayer.Play(ActionResult.EnemyHeal, this, HitPoint - oldHitPoint);
 	}
     public override void UpdateHealHP()
     {
         base.UpdateHealHP();
-        HPCircle.OnUpdateHP();
     }
 
     public void SetTargetPosition( Vector3 target )
@@ -402,14 +391,9 @@ public class Enemy : Character
     {
         if( spriteRenderer == null ) spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = newColor;
-        if( HPCircle != null )
-        {
-            HPCircle.OnBaseColorChanged();
-        }
     }
     public void OnPlayerLose()
     {
-        HPCircle.SetActive( false );
     }
 
 	public override void OnExecuted( Skill skill, ActionSet act )

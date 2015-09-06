@@ -37,7 +37,7 @@ public class CommandGraph : MonoBehaviour
 	public MidairPrimitive NextRect;
 
 	public GaugeRenderer CurrentGauge;
-	public GaugeRenderer CurrentBar;
+	//public GaugeRenderer CurrentBar;
 	public GaugeRenderer NextGauge;
 	public TextMesh CurrentCommandName;
 
@@ -50,7 +50,6 @@ public class CommandGraph : MonoBehaviour
 	public float ROTATE_COEFF;
 	public float BUTTON_RADIUS;
 	public bool UPDATE_BUTTON;
-	public MidairPrimitive AxisRing;
 	public TextMesh ButtonText;
 
 	public PlayerCommand IntroCommand;
@@ -360,14 +359,12 @@ public class CommandGraph : MonoBehaviour
 		case BattleState.Intro:
 			if( Music.IsJustChangedAt(0) )
 			{
-				AxisRing.SetWidth(0.1f);
 				ButtonText.text = "";
 			}
 			if( Music.IsJustChangedAt(AllowInputEnd) )
 			{
 				SetNextBlock();
 			}
-			AxisRing.SetArc((float)(1.0f - Music.MusicalTime / 64.0));
 			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
 			break;
 		case BattleState.Wait:
@@ -375,7 +372,6 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
-			AxisRing.SetArc(0.0f);
 			CurrentGauge.SetRate(0.0f);
 			break;
 		case BattleState.Battle:
@@ -384,7 +380,6 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
-			AxisRing.SetArc((float)(1.0f - Music.MusicalTime / 64.0));
 			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
 			break;
 		case BattleState.Endro:
@@ -545,9 +540,6 @@ public class CommandGraph : MonoBehaviour
 
 	void ShowOKButton()
 	{
-		AxisRing.SetTargetWidth(7.5f);
-		AxisRing.SetTargetArc(1.0f);
-		AxisRing.SetColor(ColorManager.Base.Shade);
 		CommandSphere.GetComponent<Collider>().enabled = true;
 	}
 
@@ -707,10 +699,11 @@ public class CommandGraph : MonoBehaviour
 
 			Color themeColor = ColorManager.GetThemeColor(CurrentCommand.themeColor).Bright;
 			CurrentCommandName.text = CurrentCommand.nameText.ToUpper();
-			CurrentCommandName.color = ColorManager.Base.Front;
-			CurrentGauge.SetColor(themeColor);
-			CurrentBar.SetColor(themeColor);
-			NextGauge.SetColor(ColorManager.Base.Back);
+			CurrentCommandName.color = themeColor;
+			CurrentGauge.SetColor(themeColor, 0.2f);
+			NextGauge.SetColor(Color.clear);
+			NextGauge.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
+			//CurrentBar.SetColor(themeColor, 0.2f);
 		}
 		else
 		{
@@ -771,8 +764,8 @@ public class CommandGraph : MonoBehaviour
 		Select(IntroCommand);
 		OnExecCommand();
 		CurrentGauge.SetColor(ColorManager.Base.Front);
-		CurrentBar.SetColor(ColorManager.Base.Front);
-		NextGauge.SetColor(ColorManager.Base.Back);
+		//CurrentBar.SetColor(ColorManager.Base.Front);
+		NextGauge.SetColor(Color.clear);
 		transform.rotation = Quaternion.Inverse(Quaternion.LookRotation(-IntroCommand.transform.localPosition)) * offsetRotation;
 		CurrentRect.transform.parent = IntroCommand.transform;
 		CurrentRect.transform.localPosition = Vector3.forward;
@@ -786,7 +779,7 @@ public class CommandGraph : MonoBehaviour
 		NextCommand = null;
 		NextRect.transform.localScale = Vector3.zero;
 
-		NextGauge.SetColor(ColorManager.Base.Back);
+		NextGauge.SetColor(Color.clear);
 	}
 
 	public void Select(PlayerCommand command)
@@ -796,6 +789,15 @@ public class CommandGraph : MonoBehaviour
 		NextRect.transform.localPosition = Vector3.forward;
 		NextRect.transform.localScale = Vector3.one;
 		NextRect.transform.localRotation = Quaternion.identity;
+		Color themeColor = ColorManager.GetThemeColor(NextCommand.themeColor).Bright;
+		foreach( MidairPrimitive primitive in NextRect.GetComponentsInChildren<MidairPrimitive>() )
+		{
+			if( primitive != NextRect )
+			{
+				primitive.SetColor(themeColor);
+			}
+		}
+		NextRect.GetComponent<Animation>().Play("SelectAnim");
 
 		NextGauge.SetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Shade);
 

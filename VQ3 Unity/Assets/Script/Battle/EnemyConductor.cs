@@ -8,19 +8,17 @@ public class EnemyConductor : MonoBehaviour {
     static readonly float EnemyInterval = 7.0f;
     static readonly int[] CommandExecBars = new int[3] { 2, 3, 1 };
 
-    public GameObject damageTextPrefab;
+    public GameObject damageGaugePrefab;
     public GameObject commandIconPrefab;
     public List<Sprite> EnemyCommandIcons;
-    public GameObject HPCirclePrefab;
     public GameObject shortTextWindowPrefab;
     public EnemyCommand PhysicDefaultCommand;
     public EnemyCommand MagicDefaultCommand;
 
     List<Enemy> Enemies = new List<Enemy>();
-    WeatherEnemy WeatherEnemy;
-    Encounter CurrentEncounter;
+	Encounter CurrentEncounter;
 
-    public int EnemyCount { get { return Enemies.Count + (WeatherEnemy != null ? 1 : 0); } }
+    public int EnemyCount { get { return Enemies.Count; } }
 	public int InvertVP { get { return ( CurrentEncounter != null ? CurrentEncounter.InvertVP : 0 ); } }
     public Enemy targetEnemy { get; private set; }
 
@@ -94,25 +92,14 @@ public class EnemyConductor : MonoBehaviour {
     {
         GameObject TempObj;
         TempObj = (GameObject)Instantiate( enemyPrefab );
-        //TempObj.renderer.material.color = baseColor;
         Enemy enemy = TempObj.GetComponent<Enemy>();
-        WeatherEnemy we = TempObj.GetComponent<WeatherEnemy>();
-        if( we != null )
-        {
-            WeatherEnemy = we;
-            WeatherEnemy.InitState( WeatherEnemy.WeatherName );
-        }
-        else
-        {
-            Enemies.Add( enemy );
-            TextWindow.SetMessage( MessageCategory.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
-            enemy.InitState( initialState );
-        }
+        Enemies.Add( enemy );
+        TextWindow.SetMessage( MessageCategory.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
+        enemy.InitState( initialState );
 		enemy.transform.localPosition = spawnPosition;
         enemy.transform.localScale *= transform.lossyScale.x;
         enemy.transform.parent = transform;
         enemy.SetTargetPosition( enemy.transform.localPosition );
-        //enemy.outlineSprite.color = enemy.currentState.color;
         enemy.DisplayName += (char)((int)'A' + Enemies.FindAll( ( Enemy e ) => e.DisplayName.StartsWith( enemy.DisplayName ) && e.DisplayName.Length == enemy.DisplayName.Length + 1 ).Count);
     }
 
@@ -164,21 +151,6 @@ public class EnemyConductor : MonoBehaviour {
 			skill.OwnerCharacter.Drain(drain, skill.Actions[drain.AttackIndex].GetModule<AttackModule>().DamageResult);
 			isSucceeded = true;
 		}
-        WeatherModule weather = Action.GetModule<WeatherModule>();
-        if( weather != null )
-        {
-            if( WeatherEnemy != null )
-            {
-                bool IsOldSubstance = WeatherEnemy.IsSubstance;
-                WeatherEnemy.ReceiveWeatherModule( weather );
-                if( IsOldSubstance != WeatherEnemy.IsSubstance )
-                {
-                    if( IsOldSubstance ) Enemies.Remove( WeatherEnemy );
-                    else Enemies.Add( WeatherEnemy );
-                }
-                isSucceeded = true;
-            }
-        }
         EnemySpawnModule spawner = Action.GetModule<EnemySpawnModule>();
         if( spawner != null && Enemies.Count < 3 )
         {
@@ -191,15 +163,10 @@ public class EnemyConductor : MonoBehaviour {
         
 
 		Enemies.RemoveAll( ( Enemy e ) => e.HitPoint<=0 );
-        if( Enemies.Count == 0 )
-        {
-            GameContext.BattleConductor.SetState(BattleState.Win);
-            if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
-            {
-                Destroy( WeatherEnemy.gameObject );
-                WeatherEnemy = null;
-            }
-        }
+		if( Enemies.Count == 0 )
+		{
+			GameContext.BattleConductor.SetState(BattleState.Win);
+		}
         else
         {
             if( !Enemies.Contains( targetEnemy ) )
@@ -285,8 +252,6 @@ public class EnemyConductor : MonoBehaviour {
 
     public void CheckCommand()
     {
-        //if( GameContext.VoxSystem.state == VoxState.Invert ) return;
-
         int execIndex = 0;
         foreach( Enemy enemy in Enemies )
         {
@@ -294,70 +259,24 @@ public class EnemyConductor : MonoBehaviour {
             enemy.SetExecBar( CommandExecBars[execIndex] );
             ++execIndex;
         }
-
-        if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
-        {
-            WeatherEnemy.CheckCommand();
-            WeatherEnemy.SetExecBar( CommandExecBars[execIndex] );
-        }
-
-        /*
-        int num2BarCommands = 0;
-        int num1BarCommands = 0;
-        foreach( Enemy enemy in from e in Enemies orderby e.currentCommand.numBar select e )
-        {
-            EnemyCommand c = enemy.currentCommand;
-            if( c.numBar == 1 )
-            {
-                enemy.SetExecBar( num1BarCommands % 4 );
-                ++num1BarCommands;
-            }
-            else if( c.numBar == 2 )
-            {
-                enemy.SetExecBar( 2 * (num2BarCommands + (int)((num1BarCommands + 1) / 2)) % 4 );
-                ++num2BarCommands;
-            }
-            else //0 or 4 or 3(not recommended)
-            {
-                enemy.SetExecBar( 0 );
-            }
-        }
-        */
     }
     public void CheckWaitCommand()
     {
-        //int index = GameContext.PlayerConductor.WaitCount % Enemies.Count;
         for( int i=0;i<Enemies.Count; i++ )
         {
-            //if( i == index )
-            //{
-            //    Enemies[i].SetWaitCommand( Enemies[i].PhysicAttack >= Enemies[i].MagicAttack ? PhysicDefaultCommand : MagicDefaultCommand );
-            //}
-            //else
-            //{
-            //    Enemies[i].SetWaitCommand( null );
-            //}
             Enemies[i].SetWaitCommand( null );
             Enemies[i].SetExecBar( 0 );
-        }
-        if( WeatherEnemy != null && !WeatherEnemy.IsSubstance )
-        {
-            WeatherEnemy.SetWaitCommand( null );
-            WeatherEnemy.SetExecBar( 0 );
         }
     }
 
     public void CheckSkill()
     {
-        //int CurrentIndex = Music.Just.bar;
-        //if( GameContext.VoxSystem.state == VoxState.Invert ) return;
-        if( GameContext.VoxSystem.IsOverloading ) return;//state == VoxState.Eclipse && GameContext.VoxSystem.IsReadyEclipse && CurrentIndex >= 2 ) return;
+        if( GameContext.VoxSystem.IsOverloading ) return;
 
         foreach( Enemy e in Enemies )
         {
             e.CheckSkill();
         }
-        if( WeatherEnemy != null && !WeatherEnemy.IsSubstance ) WeatherEnemy.CheckSkill();
     }
 
     public void OnInvert()
@@ -417,11 +336,6 @@ public class EnemyConductor : MonoBehaviour {
         {
             Destroy( e.gameObject );
         }
-        if( WeatherEnemy != null )
-        {
-            Destroy( WeatherEnemy.gameObject );
-            WeatherEnemy = null;
-        }
         Enemies.Clear();
     }
 
@@ -443,56 +357,4 @@ public class EnemyConductor : MonoBehaviour {
             }
         }
     }
-    /*
-    public enum ConditionType
-    {
-        ItsHP,
-        PlayerHP,
-        TotalTurnCout,
-        OnDead,
-        OnChanged,
-        Count
-    }
-    public struct ConditionParts
-    {
-        public ConditionType conditionType;
-        public int MaxValue;
-        public int MinValue;
-    }
-    [System.Serializable]
-    public class StateSetCondition : IEnumerable<ConditionParts>
-    {
-        public List<string> _conditions;
-        public string StateNameList;
-
-        List<ConditionParts> conditionParts = new List<ConditionParts>();
-
-        public void Parse()
-        {
-            foreach( string str in _conditions )
-            {
-                string[] conditionParams = str.Split( ' ' );
-                if( conditionParams.Length != 3 ) Debug.LogError( "condition param must be TYPE MIN MAX format. ->" + str );
-                else
-                {
-                    conditionParts.Add( new ConditionParts()
-                    {
-                        conditionType = (ConditionType)System.Enum.Parse( typeof( ConditionType ), conditionParams[0] ),
-                        MinValue = conditionParams[1] == "-" ? -9999999 : int.Parse( conditionParams[1] ),
-                        MaxValue = conditionParams[2] == "-" ? +9999999 : int.Parse( conditionParams[2] ),
-                    } );
-                }
-            }
-        }
-
-        public IEnumerator<ConditionParts> GetEnumerator()
-        {
-            foreach( ConditionParts parts in conditionParts ) yield return parts;
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-    }
-    */
 }

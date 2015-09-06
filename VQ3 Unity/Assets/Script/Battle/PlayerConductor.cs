@@ -15,7 +15,7 @@ public class PlayerConductor : MonoBehaviour {
 	public bool PlayerIsDanger { get { return Player.IsDangerMode; } }
     public bool CanUseInvert { get { return Level >= 6; } }
 	public bool IsEclipse { get { return CommandGraph.CurrentCommand is RevertCommand; } }
-    public int WaitCount { get; private set; }
+	public int WaitCount { get; private set; }
 
 	PlayerCommand CurrentCommand;
 	PlayerCommand SelectedCommand;
