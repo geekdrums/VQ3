@@ -39,22 +39,22 @@ public class DamageGauge : MonoBehaviour {
 		}
 	}
 
-	public void Initialize(Enemy enemy, int damage, ActionResult actionResult, GameObject parent, bool useVTWave = true)
+	public void Initialize(Enemy enemy, int damage, ActionResult actionResult, GameObject parent)
 	{
-		if( useVTWave )
-		{
-			vtWaves_ = new GameObject[VoxSystem.VPWaveNum];
-			for( int i = 0; i < VoxSystem.VPWaveNum; i++ )
-			{
-				vtWaves_[i] = (Instantiate(WaveOrigin) as GameObject);
-				vtWaves_[i].transform.parent = WaveOrigin.transform.parent;
-				vtWaves_[i].transform.localPosition = WaveOrigin.transform.localPosition + (i % 2 == 0 ? Vector3.right : Vector3.left) * (int)((i + 1)/2);
-				vtWaves_[i].transform.localScale = new Vector3(1, 0, 1);
-			}
-			Destroy(WaveOrigin.gameObject);
-			WaveMaterial.color = (GameContext.VoxState == VoxState.Overload ? Color.clear : ColorManager.Theme.Bright);
-			GameContext.VoxSystem.AddDamageGauge(this);
-		}
+		//if( useVTWave )
+		//{
+		//	vtWaves_ = new GameObject[VoxSystem.VPWaveNum];
+		//	for( int i = 0; i < VoxSystem.VPWaveNum; i++ )
+		//	{
+		//		vtWaves_[i] = (Instantiate(WaveOrigin) as GameObject);
+		//		vtWaves_[i].transform.parent = WaveOrigin.transform.parent;
+		//		vtWaves_[i].transform.localPosition = WaveOrigin.transform.localPosition + (i % 2 == 0 ? Vector3.right : Vector3.left) * (int)((i + 1)/2);
+		//		vtWaves_[i].transform.localScale = new Vector3(1, 0, 1);
+		//	}
+		//	Destroy(WaveOrigin.gameObject);
+		//	WaveMaterial.color = (GameContext.VoxState == VoxState.Overload ? Color.clear : ColorManager.Theme.Bright);
+		//	GameContext.VoxSystem.AddDamageGauge(this);
+		//}
 
 		enemy_ = enemy;
 

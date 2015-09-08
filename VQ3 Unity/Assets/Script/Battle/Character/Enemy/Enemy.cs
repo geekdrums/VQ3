@@ -141,7 +141,7 @@ public class Enemy : Character
 			{
 				lastDamageGauge = damageGauge.GetComponent<DamageGauge>();
 			}
-			damageGauge.GetComponent<DamageGauge>().Initialize(this, damage, actResult, parent, actResult != ActionResult.EnemyHeal);
+			damageGauge.GetComponent<DamageGauge>().Initialize(this, damage, actResult, parent);
 		}
 	}
 

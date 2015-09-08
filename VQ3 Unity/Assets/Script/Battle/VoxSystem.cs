@@ -39,7 +39,12 @@ public class VoxSystem : MonoBehaviour
 	public GameObject[] sunLights;
 	public GameObject mainLight;
 	public GameObject WaveOrigin;
+	public GameObject LightWaveUpOrigin;
+	public GameObject LightWaveBottomOrigin;
 	public Material WaveLineMaterial;
+	public Material LightWaveMaterial;
+	public Color LightWaveTargetColor;
+	public float LightRemainTime = 1.0f;
 	public Material BGMaterial;
 
 	//animation preferences
@@ -56,6 +61,9 @@ public class VoxSystem : MonoBehaviour
 	public float SinCoeff = 0.5f;
 	public float SinSpeed = 2.0f;
 	public float WaveLinearFactor = 0.8f;
+	public float LightHoleCoeff = 0.5f;
+	public float LightHoleOverflowOffset = 0.2f;
+	public float LightHoleDefaultOffset = 0.1f;
 
 	//initial parameters
 	Vector3 initialSunPosition;
@@ -65,6 +73,7 @@ public class VoxSystem : MonoBehaviour
 	float[] initialLightAngles;
 	float initialRingWidth;
 	float initialRingRadius;
+	Color initialLightWaveColor;
 
 	//target parameters
 	Color targetBGColor;
@@ -82,8 +91,10 @@ public class VoxSystem : MonoBehaviour
 	Enemy currentTargetEnemy_;
 	float rotTime_;
 	GameObject[] vtWaves_;
+	GameObject[] lightUpWaves_;
+	GameObject[] lightBottomWaves_;
+	float lightHoleRemainTime_ = 0;
 	List<float> waveDelta_ = new List<float>();
-	List<DamageGauge> damageGauges_ = new List<DamageGauge>();
 	float waveRemainCoeff_;
 	CriAtomExPlayerOutputAnalyzer analyzer_ = new CriAtomExPlayerOutputAnalyzer(new CriAtomExPlayerOutputAnalyzer.Type[1] { CriAtomExPlayerOutputAnalyzer.Type.LevelMeter });
 	#endregion
@@ -133,6 +144,8 @@ public class VoxSystem : MonoBehaviour
 		mainLight.transform.localScale = new Vector3(0, mainLight.transform.localScale.y, mainLight.transform.localScale.z);
 
 		vtWaves_ = new GameObject[VPWaveNum];
+		lightUpWaves_ = new GameObject[VPWaveNum];
+		lightBottomWaves_ = new GameObject[VPWaveNum];
 		for( int i = 0; i < VPWaveNum; i++ )
 		{
 			vtWaves_[i] = (Instantiate(WaveOrigin) as GameObject);
@@ -140,10 +153,23 @@ public class VoxSystem : MonoBehaviour
 			vtWaves_[i].transform.localPosition = WaveOrigin.transform.localPosition + (i % 2 == 0 ? Vector3.right : Vector3.left) * (int)((i + 1)/2);
 			vtWaves_[i].transform.localScale = new Vector3(1, 0, 1);
 			waveDelta_.Add(0);
+
+			lightUpWaves_[i] = (Instantiate(LightWaveUpOrigin) as GameObject);
+			lightUpWaves_[i].transform.parent = LightWaveUpOrigin.transform.parent;
+			lightUpWaves_[i].transform.localPosition = LightWaveUpOrigin.transform.localPosition + (i % 2 == 0 ? Vector3.right : Vector3.left) * (int)((i + 1)/2);
+			lightUpWaves_[i].transform.localScale = new Vector3(1, 1, 1);
+
+			lightBottomWaves_[i] = (Instantiate(LightWaveBottomOrigin) as GameObject);
+			lightBottomWaves_[i].transform.parent = LightWaveBottomOrigin.transform.parent;
+			lightBottomWaves_[i].transform.localPosition = LightWaveBottomOrigin.transform.localPosition + (i % 2 == 0 ? Vector3.right : Vector3.left) * (int)((i + 1)/2);
+			lightBottomWaves_[i].transform.localScale = new Vector3(1, 1, 1);
 		}
 		Destroy(WaveOrigin.gameObject);
+		Destroy(LightWaveUpOrigin.gameObject);
+		Destroy(LightWaveBottomOrigin.gameObject);
 
 		WaveLineMaterial.color = ColorManager.Base.Front;
+		initialLightWaveColor = LightWaveMaterial.color;
 	}
 
 	// Update is called once per frame
@@ -155,6 +181,7 @@ public class VoxSystem : MonoBehaviour
 
 		if( GameContext.BattleState == BattleState.Eclipse )
 		{
+			if( Music.Just.Bar >= 3 ) lightHoleRemainTime_ = -1;
 			EclipseUpdate();
 			useTargetLightAngles = false;
 			useTargetLightScales = false;
@@ -165,11 +192,19 @@ public class VoxSystem : MonoBehaviour
 		switch( State )
 		{
 		case VoxState.Sun:
+			if( lightHoleRemainTime_ > 0 )
+			{
+				lightHoleRemainTime_ -= Time.deltaTime;
+			}
+			UpdateLightAngles();
+			UpdateBGOffset();
+			break;
 		case VoxState.Overflow:
 			UpdateLightAngles();
 			UpdateBGOffset();
 			break;
 		case VoxState.Overload:
+			lightHoleRemainTime_ = -1;
 			if( Music.IsNearChangedAt(0) )
 			{
 				--OverloadTime;
@@ -227,7 +262,6 @@ public class VoxSystem : MonoBehaviour
 		float targetRemainScale = waveRemainCoeff_;
 		float remainLinearFactor = (0.9f - 0.9f * (float)currentVP/OverflowVP);
 		waveRemainCoeff_ *= 0.97f;
-		damageGauges_.RemoveAll((DamageGauge dg) => dg == null);
 		for( int i = 0; i<VPWaveNum; ++i )
 		{
 			float waveScale = 0;
@@ -242,9 +276,22 @@ public class VoxSystem : MonoBehaviour
 				targetRemainScale *= remainLinearFactor;
 			}
 			vtWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(vtWaves_[i].transform.localScale.y, waveScale, 0.2f), 1);
-			foreach( DamageGauge gauge in damageGauges_ )
+		}
+		if( lightHoleRemainTime_ > 0 )
+		{
+			for( int i = 0; i<VPWaveNum; ++i )
 			{
-				gauge.SetVTWave(i, vtWaves_[i].transform.localScale.y * 0.7f + 0.15f);
+				float targetScale = Mathf.Max(0, 1.0f - vtWaves_[i].transform.localScale.y * LightHoleCoeff - (State == VoxState.Overflow ? LightHoleOverflowOffset : LightHoleDefaultOffset));
+				lightUpWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightUpWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
+				lightBottomWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightBottomWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
+			}
+		}
+		else
+		{
+			for( int i = 0; i<VPWaveNum; ++i )
+			{
+				lightUpWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightUpWaves_[i].transform.localScale.y, 1, 0.01f), 1);
+				lightBottomWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightBottomWaves_[i].transform.localScale.y, 1, 0.01f), 1);
 			}
 		}
 		if( Music.IsJustChanged )
@@ -254,6 +301,7 @@ public class VoxSystem : MonoBehaviour
 			float rms = analyzer_.GetRms(0) * RMSCoeff * vtRate + sin * SinCoeff;
 			waveDelta_.Add(rms);
 		}
+		LightWaveMaterial.color = Color.Lerp(LightWaveMaterial.color, initialLightWaveColor, 0.05f);
 	}
 
 	void UpdateLightAngles()
@@ -504,6 +552,11 @@ public class VoxSystem : MonoBehaviour
 		VPCount.Count = 100.0f * ((float)currentVP / OverflowVP);
 		VTCount.Count = currentVT / 64.0f;
 		waveRemainCoeff_ = (float)currentVT / MaxVT;
+		if( currentVP > 0 )
+		{
+			lightHoleRemainTime_ = LightRemainTime;
+			LightWaveMaterial.color = LightWaveTargetColor;
+		}
 
 		if( IsOverFlow && !oldIsOverFlow && GameContext.PlayerConductor.CanUseInvert )
 		{
@@ -533,10 +586,5 @@ public class VoxSystem : MonoBehaviour
 				lightAngles[i] = targetLightAngle;
 			}
 		}
-	}
-
-	public void AddDamageGauge(DamageGauge gauge)
-	{
-		damageGauges_.Add(gauge);
 	}
 }

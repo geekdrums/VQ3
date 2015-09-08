@@ -181,22 +181,6 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: LV
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: {x: -17.1200008, y: 18, z: -39.4794998}
-        inSlope: {x: 0, y: -18.6000023, z: 0}
-        outSlope: {x: 0, y: -18.6000023, z: 0}
-        tangentMode: 0
-      - time: .166666672
-        value: {x: -17.1200008, y: 14.8999996, z: -39.4794998}
-        inSlope: {x: 0, y: -18.6000023, z: 0}
-        outSlope: {x: 0, y: -18.6000023, z: 0}
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    path: text
   m_ScaleCurves: []
   m_FloatCurves:
   - curve:
@@ -992,63 +976,6 @@ AnimationClip:
       m_PostInfinity: 2
     attribute: m_LocalPosition.z
     path: LV
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: -17.1200008
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: .166666672
-        value: -17.1200008
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalPosition.x
-    path: text
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 18
-        inSlope: -18.6000023
-        outSlope: -18.6000023
-        tangentMode: 10
-      - time: .166666672
-        value: 14.8999996
-        inSlope: -18.6000023
-        outSlope: -18.6000023
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalPosition.y
-    path: text
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: -39.4794998
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: .166666672
-        value: -39.4794998
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalPosition.z
-    path: text
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves: []

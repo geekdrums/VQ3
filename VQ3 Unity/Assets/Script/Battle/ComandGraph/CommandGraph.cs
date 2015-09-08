@@ -50,7 +50,6 @@ public class CommandGraph : MonoBehaviour
 	public float ROTATE_COEFF;
 	public float BUTTON_RADIUS;
 	public bool UPDATE_BUTTON;
-	public TextMesh ButtonText;
 
 	public PlayerCommand IntroCommand;
 
@@ -108,7 +107,6 @@ public class CommandGraph : MonoBehaviour
 		CurrentRect.transform.localScale = Vector3.zero;
 		CurrentRect.transform.localRotation = Quaternion.identity;
 		NextRect.transform.localScale = Vector3.zero;
-		ButtonText.text = "";
 	}
 
 
@@ -353,14 +351,10 @@ public class CommandGraph : MonoBehaviour
 			if( Music.IsJustChangedAt(0) )
 			{
 				ShowOKButton();
-				ButtonText.text = "Continue";
+				//ButtonText.text = "Continue";
 			}
 			break;
 		case BattleState.Intro:
-			if( Music.IsJustChangedAt(0) )
-			{
-				ButtonText.text = "";
-			}
 			if( Music.IsJustChangedAt(AllowInputEnd) )
 			{
 				SetNextBlock();
@@ -386,7 +380,7 @@ public class CommandGraph : MonoBehaviour
 			if( Music.IsJustChangedAt(0) )
 			{
 				ShowOKButton();
-				ButtonText.text = "OK";
+				//ButtonText.text = "OK";
 			}
 			break;
 		}
