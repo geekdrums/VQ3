@@ -61,14 +61,17 @@ public static class GameContext
 			break;
 		case GameState.Event:
 			EventConductor.OnEnterEvent(FieldConductor.CurrentEvent);
+			PlayerConductor.OnEnterEvent();
 			break;
 		case GameState.Result:
-			ResultConductor.CheckResult();
+			ResultConductor.OnEnterResult(FieldConductor.CurrentEncounter.AcquireMemory);
+			FieldConductor.OnEnterResult();
+			PlayerConductor.CommandGraph.OnEnterResult();
 			break;
 		case GameState.Setting:
 			FieldConductor.OnEnterSetting();
-			PlayerConductor.MemoryPanel.Show();
-			PlayerConductor.CommandGraph.CheckLinkedFromIntro();
+			PlayerConductor.OnEnterSetting();
+			ResultConductor.OKButton.SetMode(ButtonMode.Hide);
 			ColorManager.SetBaseColor(EBaseColor.Black);
 			break;
 		}

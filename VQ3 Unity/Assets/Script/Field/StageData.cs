@@ -40,7 +40,7 @@ public class Encounter
 
 	public BattleSet[] BattleSets;
 
-	public int AcquireStars = 10;
+	public int AcquireMemory = 10;
 	public int InvertVP = 100;
 }
 
@@ -58,4 +58,5 @@ public class EventData
 	public Message[] Messages;
 	public int EncounterIndex;
 	public GameState NextState = GameState.Setting;
+	public string MusicName;
 }

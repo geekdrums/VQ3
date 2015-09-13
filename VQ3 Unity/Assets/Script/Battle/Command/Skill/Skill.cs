@@ -122,7 +122,7 @@ public class Skill : MonoBehaviour
 	}
     public bool CheckIsEnd(Timing startedTiming)
     {
-		isEnd = Music.Just.MusicalTime - startedTiming.MusicalTime >= ActionRhythm.MTLength(); 
+		isEnd = OwnerCharacter.isAlive == false || Music.Just.MusicalTime - startedTiming.MusicalTime >= ActionRhythm.MTLength();
         return isEnd;
     }
 }

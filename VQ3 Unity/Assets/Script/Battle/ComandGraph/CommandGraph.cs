@@ -36,8 +36,8 @@ public class CommandGraph : MonoBehaviour
 	public MidairPrimitive CurrentRect;
 	public MidairPrimitive NextRect;
 
+	public GameObject GaugeParent;
 	public GaugeRenderer CurrentGauge;
-	//public GaugeRenderer CurrentBar;
 	public GaugeRenderer NextGauge;
 	public TextMesh CurrentCommandName;
 
@@ -60,7 +60,6 @@ public class CommandGraph : MonoBehaviour
 
 	public List<PlayerCommand> CommandNodes { get; private set; }
 	public PlayerCommand NextCommand { get; private set; }
-	public PlayerCommand PushingCommand { get; private set; }
 	public PlayerCommand CurrentCommand { get; private set; }
 	public PlayerCommand OldCommand { get; private set; }
 	public VoxButton CurrentButton { get; private set; }
@@ -93,11 +92,15 @@ public class CommandGraph : MonoBehaviour
 	#endregion
 
 
-	// Use this for initialization
-	void Start()
+	void Awake()
 	{
 		CommandNodes = new List<PlayerCommand>();
 		CommandNodes.AddRange(GetComponentsInChildren<PlayerCommand>());
+	}
+
+	// Use this for initialization
+	void Start()
+	{
 		offsetRotation = Quaternion.LookRotation(transform.position - SelectSpot.transform.position);
 		CurrentButton = VoxButton.None;
 		CurrentCommand = IntroCommand;
@@ -348,11 +351,6 @@ public class CommandGraph : MonoBehaviour
 		switch( GameContext.BattleState )
 		{
 		case BattleState.Continue:
-			if( Music.IsJustChangedAt(0) )
-			{
-				ShowOKButton();
-				//ButtonText.text = "Continue";
-			}
 			break;
 		case BattleState.Intro:
 			if( Music.IsJustChangedAt(AllowInputEnd) )
@@ -377,11 +375,6 @@ public class CommandGraph : MonoBehaviour
 			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
 			break;
 		case BattleState.Endro:
-			if( Music.IsJustChangedAt(0) )
-			{
-				ShowOKButton();
-				//ButtonText.text = "OK";
-			}
 			break;
 		}
 
@@ -414,27 +407,6 @@ public class CommandGraph : MonoBehaviour
 		}
 		else if( Input.GetMouseButtonUp(0) )
 		{
-			if( CurrentButton == VoxButton.Ball && (Music.Just < AllowInputEnd || GameContext.State == GameState.Setting) )
-			{
-				if( PushingCommand != null )
-				{
-					PlayerCommand pushCommand = PushingCommand;
-					if( NextCommand != null )
-					{
-						if( GameContext.BattleState != BattleState.Intro )
-						{
-							NextCommand.Deselect();
-							NextCommand = null;
-							NextRect.transform.localScale = Vector3.zero;
-							Select(pushCommand);
-						}
-					}
-					else
-					{
-						Select(pushCommand);
-					}
-				}
-			}
 		}
 		else if( Input.GetMouseButton(0) )
 		{
@@ -454,15 +426,6 @@ public class CommandGraph : MonoBehaviour
 				if( SphereLatitude > MAX_LATITUDE )
 				{
 					transform.rotation = oldRotation;
-				}
-
-				if( (ballTouchStartPosition - hit.point).magnitude > BUTTON_RADIUS / 2 )
-				{
-					if( PushingCommand != null )
-					{
-						PushingCommand.SetPush(false);
-						PushingCommand = null;
-					}
 				}
 			}
 		}
@@ -485,7 +448,6 @@ public class CommandGraph : MonoBehaviour
 
 	void PushCommandButton(Vector3 pushingPosition)
 	{
-		PushingCommand = null;
 		PlayerCommand selectedCommand = null;
 		float minDistance = 99999;
 		foreach( PlayerCommand command in GetLinkedCommands() )
@@ -500,46 +462,16 @@ public class CommandGraph : MonoBehaviour
 		if( selectedCommand != null && minDistance <= BUTTON_RADIUS )
 		{
 			Select(selectedCommand);
+		} 
+		else if( GameContext.State == GameState.Setting )
+		{
+			GameContext.PlayerConductor.OnDeselectedCommand();
 		}
-	}
-
-	//void PushOKButton()
-	//{
-	//	switch( GameContext.BattleState )
-	//	{
-	//	case BattleState.Endro:
-	//		if( !Music.IsPlaying || Music.Just.MusicalTime > 8 )
-	//		{
-	//			GameContext.BattleConductor.ClearSkills();
-	//			GameContext.SetState(GameState.Result);
-	//			ColorManager.SetBaseColor(EBaseColor.Black);
-	//		}
-	//		break;
-	//	case GameState.Result:
-	//		GameContext.PlayerConductor.ProceedResult();
-	//		if( GameContext.State == GameState.Setting )
-	//		{
-	//			NextCommand = null;
-	//		}
-	//		break;
-	//	case BattleState.Continue:
-	//		if( !Music.IsPlaying || Music.Just.MusicalTime > 4 )
-	//		{
-	//			GameContext.SetState(GameState.Setting);
-	//			GameContext.FieldConductor.OnPlayerLose();
-	//		}
-	//		break;
-	//	}
-	//}
-
-	void ShowOKButton()
-	{
-		CommandSphere.GetComponent<Collider>().enabled = true;
 	}
 
 	void SetNextBlock()
 	{
-		if( Music.NextBlockName == "endro" )
+		if( GameContext.BattleState == BattleState.Win )
 		{
 			return;
 		}
@@ -697,7 +629,6 @@ public class CommandGraph : MonoBehaviour
 			CurrentGauge.SetColor(themeColor, 0.2f);
 			NextGauge.SetColor(Color.clear);
 			NextGauge.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
-			//CurrentBar.SetColor(themeColor, 0.2f);
 		}
 		else
 		{
@@ -708,7 +639,9 @@ public class CommandGraph : MonoBehaviour
 
 	public void ShowAcquireCommand(PlayerCommand command)
 	{
+		SEPlayer.Play("newCommand");
 		targetRotation = Quaternion.Inverse(Quaternion.LookRotation(-command.transform.localPosition)) * offsetRotation;
+		Select(command);
 	}
 
 	public PlayerCommand CheckAcquireCommand(int Level)
@@ -757,8 +690,8 @@ public class CommandGraph : MonoBehaviour
 		CommandLoopCount = 0;
 		Select(IntroCommand);
 		OnExecCommand();
+		GaugeParent.SetActive(true);
 		CurrentGauge.SetColor(ColorManager.Base.Front);
-		//CurrentBar.SetColor(ColorManager.Base.Front);
 		NextGauge.SetColor(Color.clear);
 		transform.rotation = Quaternion.Inverse(Quaternion.LookRotation(-IntroCommand.transform.localPosition)) * offsetRotation;
 		CurrentRect.transform.parent = IntroCommand.transform;
@@ -767,13 +700,28 @@ public class CommandGraph : MonoBehaviour
 		CurrentRect.transform.localRotation = Quaternion.identity;
 	}
 
+	public void OnEnterResult()
+	{
+		GaugeParent.SetActive(false);
+	}
+
+	public void OnEnterSetting()
+	{
+		CurrentRect.transform.localScale = Vector3.zero;
+		CheckLinkedFromIntro();
+		Deselect();
+	}
+
 	public void Deselect()
 	{
-		NextCommand.Deselect();
-		NextCommand = null;
-		NextRect.transform.localScale = Vector3.zero;
+		if( NextCommand != null )
+		{
+			NextCommand.Deselect();
+			NextCommand = null;
+			NextRect.transform.localScale = Vector3.zero;
 
-		NextGauge.SetColor(Color.clear);
+			NextGauge.SetColor(Color.clear);
+		}
 	}
 
 	public void Select(PlayerCommand command)
@@ -799,6 +747,11 @@ public class CommandGraph : MonoBehaviour
 		if( command != IntroCommand ) SEPlayer.Play("select");
 
 		GameContext.PlayerConductor.OnSelectedCommand(command);
+
+		if( GameContext.BattleState == BattleState.Intro && command != IntroCommand )
+		{
+			SetNextBlock();
+		}
 	}
 
 	public void SelectInitialInvertCommand()

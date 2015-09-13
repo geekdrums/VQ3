@@ -372,6 +372,7 @@ MonoBehaviour:
   animRandomRange: {x: 6, y: 1}
   animRandomExcludeRange: {x: 3, y: 0}
   characterAnimName: 
+  damageParent: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -387,6 +388,7 @@ MonoBehaviour:
   ArcRate: 1
   Width: 4
   Radius: 0
+  ScaleX: 1
   Color: {r: 0, g: 0, b: 0, a: 1}
   Angle: 0
   GrowSize: 0
@@ -412,6 +414,7 @@ MonoBehaviour:
   ArcRate: 1
   Width: 4
   Radius: 0
+  ScaleX: 1
   Color: {r: 0, g: 0, b: 0, a: 1}
   Angle: 0
   GrowSize: 0
@@ -437,6 +440,7 @@ MonoBehaviour:
   ArcRate: 1
   Width: 4
   Radius: 0
+  ScaleX: 1
   Color: {r: 0, g: 0, b: 0, a: 1}
   Angle: 0
   GrowSize: 0
@@ -462,6 +466,7 @@ MonoBehaviour:
   ArcRate: 1
   Width: 4
   Radius: 0
+  ScaleX: 1
   Color: {r: 0, g: 0, b: 0, a: 1}
   Angle: 0
   GrowSize: 0

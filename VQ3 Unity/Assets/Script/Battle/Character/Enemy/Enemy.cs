@@ -24,7 +24,6 @@ public class Enemy : Character
     public EnemySpecies Speceis;
     public List<BattleState> States;
     public StateChangeCondition[] conditions;
-	public float ShadowOffset = 4.5f;
 	public string ExplanationText;
     //public SpriteRenderer outlineSprite;
 

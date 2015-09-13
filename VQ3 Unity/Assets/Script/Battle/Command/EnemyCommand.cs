@@ -6,6 +6,7 @@ public class EnemyCommand : CommandBase
 {
     public string nextState;
     public string ShortText;
+	public string ExplanationText;
 
     public Skill GetCurrentSkill( int startBar )
     {

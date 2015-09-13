@@ -102,9 +102,9 @@ public class Player : Character
 		{
 			GameObject damageText = (Instantiate(damageTextPrefab) as GameObject);
 			lastDamageText = damageText.GetComponent<DamageText>();
-			Transform textPos = skill.transform.FindChild("DamageTextPos");
-			if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().transform;
-			lastDamageText.Initialize(damage, (attack.type == AttackType.Attack ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage), textPos.position + Vector3.back);
+			GameObject textPos = skill.damageParent;// transform.FindChild("DamageTextPos");
+			if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().gameObject;
+			lastDamageText.Initialize(damage, (attack.type == AttackType.Attack ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage), textPos.transform.position + Vector3.back);
 		}
 	}
 	public void VPDrained(AttackModule attack, Skill skill, int drainVP)

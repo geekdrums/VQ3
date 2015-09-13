@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: enemyAttackAnim
+  m_Name: EventShowAnim
   serializedVersion: 6
   m_Legacy: 1
   m_Compressed: 0
@@ -18,53 +18,58 @@ AnimationClip:
   - curve:
       serializedVersion: 2
       m_Curve:
-      - time: -0
+      - time: .000833333295
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
-      - time: .416666657
+        tangentMode: 10
+      - time: .25
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: .5
-        value: 5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 2
-        value: 5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 2.08333325
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+        value: 1.08164525
+        inSlope: 1.67341888
+        outSlope: 1.67341888
+        tangentMode: 10
+      - time: .583333313
+        value: 1
+        inSlope: -.979743242
+        outSlope: -.979743242
+        tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
-    attribute: Radius
-    path: MidairCircle
+    attribute: Rate
+    path: VLine
     classID: 114
-    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+    script: {fileID: 11500000, guid: 37b700e71926a1f4a82fa29e04029b1e, type: 3}
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 5
+        value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 10
+        tangentMode: 0
+      - time: .25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: .583333313
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-    attribute: Width
-    path: MidairCircle
+    attribute: Rate
+    path: 
     classID: 114
-    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+    script: {fileID: 11500000, guid: 37b700e71926a1f4a82fa29e04029b1e, type: 3}
   m_PPtrCurves: []
-  m_SampleRate: 60
+  m_SampleRate: 12
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -75,7 +80,7 @@ AnimationClip:
   m_AnimationClipSettings:
     serializedVersion: 2
     m_StartTime: 0
-    m_StopTime: 2.08333325
+    m_StopTime: .583333313
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -93,51 +98,56 @@ AnimationClip:
   - curve:
       serializedVersion: 2
       m_Curve:
-      - time: -0
+      - time: .000833333295
         value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
-      - time: .416666657
+        tangentMode: 10
+      - time: .25
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: .5
-        value: 5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 2
-        value: 5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 2.08333325
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+        value: 1.08164525
+        inSlope: 1.67341888
+        outSlope: 1.67341888
+        tangentMode: 10
+      - time: .583333313
+        value: 1
+        inSlope: -.979743242
+        outSlope: -.979743242
+        tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
-    attribute: Radius
-    path: MidairCircle
+    attribute: Rate
+    path: VLine
     classID: 114
-    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+    script: {fileID: 11500000, guid: 37b700e71926a1f4a82fa29e04029b1e, type: 3}
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 5
+        value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 10
+        tangentMode: 0
+      - time: .25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: .583333313
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-    attribute: Width
-    path: MidairCircle
+    attribute: Rate
+    path: 
     classID: 114
-    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+    script: {fileID: 11500000, guid: 37b700e71926a1f4a82fa29e04029b1e, type: 3}
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0

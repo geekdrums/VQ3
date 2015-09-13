@@ -12,7 +12,7 @@ GameObject:
   - 212: {fileID: 21200000}
   - 65: {fileID: 6500000}
   m_Layer: 0
-  m_Name: zou
+  m_Name: zool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,10 +169,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 1400
+  HitPoint: 1500
   BasePower: 400
   BaseMagic: 0
-  DisplayName: "\u30BE\u30A6"
+  DisplayName: "\u30BA\u30FC\u30EB"
   Speceis: 4
   States:
   - name: Default
@@ -185,7 +185,6 @@ MonoBehaviour:
     - {fileID: 11400006}
     nextState: 
   conditions: []
-  ShadowOffset: 4.5
   ExplanationText: "\u5DE8\u8C61\u306E\u5F62\u3092\u6A21\u3057\u305F\u9B54\u7269\u3002\r\n\u5F90\u3005\u306B\u5F37\u304F\u306A\u308B\u3075\u307F\u3064\u3051\u306F\r\n\u3044\u306E\u3061\u306E\u5371\u967A\u304C\u611F\u3058\u3089\u308C\u308B\u3060\u308D\u3046\u3002"
 --- !u!114 &11400002
 MonoBehaviour:
@@ -300,6 +299,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: ExplanationText
       value: "\u306E\u3057\u304B\u304B\u308B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: DisplayName
+      value: "\u30BA\u30FC\u30EB"
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: HitPoint
+      value: 1500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -25,7 +25,6 @@ public class MemoryPanel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//Reset();
 		BattleButton.OnPushed += this.OnBattleButtonPushed;
 		UpButton.OnPushed += this.OnUpButtonPushed;
 		DownButton.OnPushed += this.OnDownButtonPushed;
@@ -38,10 +37,10 @@ public class MemoryPanel : MonoBehaviour {
 	{
 		if( GameContext.State == GameState.Setting )
 		{
-			float SPRatio = (float)GameContext.PlayerConductor.RemainSP / GameContext.PlayerConductor.TotalSP;
-			if( GameContext.PlayerConductor.RemainSP > 0 )
+			float MemoryRatio = (float)GameContext.PlayerConductor.RemainMemory / GameContext.PlayerConductor.TotalMemory;
+			if( GameContext.PlayerConductor.RemainMemory > 0 )
 			{
-				GaugeMaterial.color = Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(4) * Mathf.Clamp(SPRatio + 0.3f, 0.5f, 1.0f));
+				GaugeMaterial.color = Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(4) * Mathf.Clamp(MemoryRatio + 0.3f, 0.5f, 1.0f));
 			}
 			else
 			{
@@ -74,14 +73,14 @@ public class MemoryPanel : MonoBehaviour {
 
 	public void Set(PlayerCommand command)
 	{
-		UpdateSP();
+		UpdateMemory();
 		playerCommand_ = command;
 		BattleButton.SetMode(ButtonMode.Hide);
 		bool enableUp = command.currentLevel < command.commandData.Count;
 		if( enableUp )
 		{
-			int needSP = command.commandData[command.currentLevel].RequireSP - (command.currentLevel == 0 ? 0 : command.commandData[command.currentLevel-1].RequireSP);
-			enableUp &= needSP <= GameContext.PlayerConductor.RemainSP;
+			int needMemory = command.commandData[command.currentLevel].RequireSP - (command.currentLevel == 0 ? 0 : command.commandData[command.currentLevel-1].RequireSP);
+			enableUp &= needMemory <= GameContext.PlayerConductor.RemainMemory;
 		}
 		bool enableDown = command.currentLevel > 0 && command.currentData.RequireSP > 0;
 		UpButton.SetMode(enableUp ? ButtonMode.Active : ButtonMode.Disable);
@@ -112,7 +111,10 @@ public class MemoryPanel : MonoBehaviour {
 
 	public void Reset()
 	{
-		UpdateSP();
+		this.transform.localScale = Vector3.one;
+		BaseFrame.SetTargetWidth(7.5f);
+		BaseFrame.SetColor(ColorManager.Base.Back);
+		UpdateMemory();
 		BattleButton.SetMode(ButtonMode.Active);
 		UpButton.SetMode(ButtonMode.Hide);
 		DownButton.SetMode(ButtonMode.Hide);
@@ -123,6 +125,7 @@ public class MemoryPanel : MonoBehaviour {
 			levelInfo.transform.localScale = Vector3.zero;
 		}
 		CommandExp.Hide();
+		TextWindow.SetMessage(MessageCategory.Help, "コマンドを選択して\nメモリーを分配できます");
 	}
 
 	public void Hide()
@@ -132,26 +135,14 @@ public class MemoryPanel : MonoBehaviour {
 		UpButton.SetMode(ButtonMode.Hide);
 		DownButton.SetMode(ButtonMode.Hide);
 		BaseFrame.SetTargetWidth(0);
+		CommandExp.Hide();
 	}
 
-	public void Show()
+	public void UpdateMemory()
 	{
-		this.transform.localScale = Vector3.one;
-		BaseFrame.SetTargetWidth(7.5f);
-		BattleButton.SetMode(ButtonMode.Active);
-		UpButton.SetMode(ButtonMode.Hide);
-		DownButton.SetMode(ButtonMode.Hide);
-		UpdateSP();
-		RemainMemoryGauge.EndAnim();
-		MemoryGauge.SetRate(0);
-		MemorySlimGauge.SetRate(0);
-	}
-
-	public void UpdateSP()
-	{
-		RemainMemory.Count = GameContext.PlayerConductor.RemainSP;
-		MemorySize.Count = GameContext.PlayerConductor.TotalSP;
-		if( GameContext.PlayerConductor.RemainSP <= 0 )
+		RemainMemory.Count = GameContext.PlayerConductor.RemainMemory;
+		MemorySize.Count = GameContext.PlayerConductor.TotalMemory;
+		if( GameContext.PlayerConductor.RemainMemory <= 0 )
 		{
 			RemainMemory.CounterColor = ColorManager.Base.Light;
 			MemorySize.CounterColor = ColorManager.Base.Light;
@@ -161,6 +152,6 @@ public class MemoryPanel : MonoBehaviour {
 			RemainMemory.CounterColor = Color.white;
 			MemorySize.CounterColor = Color.white;
 		}
-		RemainMemoryGauge.SetRate((float)GameContext.PlayerConductor.RemainSP/GameContext.PlayerConductor.TotalSP, 0.1f);
+		RemainMemoryGauge.SetRate((float)GameContext.PlayerConductor.RemainMemory/GameContext.PlayerConductor.TotalMemory, 0.1f);
 	}
 }

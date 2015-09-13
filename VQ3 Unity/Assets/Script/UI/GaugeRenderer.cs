@@ -68,6 +68,12 @@ public class GaugeRenderer : MonoBehaviour {
 			Rate = Mathf.Lerp(targetRate_, baseRate_, Mathf.Max(0, remainTime_/animTime_));
 		}
 
+#if UNITY_EDITOR
+		if( !UnityEditor.EditorApplication.isPlaying )
+		{
+			return;
+		}
+#endif
 		if( colorRemainTime_ > 0 )
 		{
 			colorRemainTime_ -= Time.deltaTime;

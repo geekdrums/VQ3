@@ -5,6 +5,8 @@ using System.Collections;
 public enum ButtonMode
 {
 	Hide,
+	Hiding,
+	Showing,
 	Disable,
 	Active,
 	Blink
@@ -31,7 +33,7 @@ public class ButtonUI : MonoBehaviour
 
 	float initialRadius_;
 	
-	void Start()
+	void Awake()
 	{
 		State = PushState.None;
 		Mode = ButtonMode.Active;
@@ -40,9 +42,23 @@ public class ButtonUI : MonoBehaviour
 
 	void Update()
 	{
-		if( Mode == ButtonMode.Disable )
+		switch( Mode )
 		{
+		case ButtonMode.Disable:
 			return;
+		case ButtonMode.Hiding:
+			if( Primitive.animParam == MidairPrimitive.AnimationParams.None )
+			{
+				gameObject.SetActive(false);
+				Mode = ButtonMode.Hide;
+			}
+			break;
+		case ButtonMode.Showing:
+			if( Primitive.animParam == MidairPrimitive.AnimationParams.None )
+			{
+				Mode = ButtonMode.Active;
+			}
+			break;
 		}
 
 
@@ -128,16 +144,41 @@ public class ButtonUI : MonoBehaviour
 		}
 	}
 
-	public void SetMode(ButtonMode mode)
+	public void SetMode(ButtonMode mode, bool withAnim = false)
 	{
-		Mode = mode;
-		Primitive.GetComponent<Renderer>().enabled = (Mode != ButtonMode.Hide);
-		Text.GetComponent<Renderer>().enabled = (Mode != ButtonMode.Hide);
-		HitCollider.enabled = (Mode != ButtonMode.Hide && Mode != ButtonMode.Disable);
-		if( Mode == ButtonMode.Disable )
+		if( mode != Mode )
 		{
-			Primitive.SetColor(ColorManager.Base.Dark);
-			Text.color = ColorManager.Base.Shade;
+			ButtonMode oldMode = Mode;
+			Mode = mode;
+			if( withAnim )
+			{
+				if( Mode == ButtonMode.Hide )
+				{
+					Primitive.SetAnimationSize(initialRadius_, 0);
+					Mode = ButtonMode.Hiding;
+				}
+				else
+				{
+					gameObject.SetActive(true);
+					Primitive.SetAnimationSize(0, initialRadius_);
+					Mode = ButtonMode.Showing;
+				}
+			}
+			else
+			{
+				gameObject.SetActive(Mode != ButtonMode.Hide);
+			}
+			HitCollider.enabled = (Mode != ButtonMode.Hide && Mode != ButtonMode.Disable);
+			if( Mode == ButtonMode.Disable )
+			{
+				Primitive.SetColor(ColorManager.Base.Dark);
+				Text.color = ColorManager.Base.Shade;
+			}
 		}
+	}
+
+	public void SetText(string text)
+	{
+		Text.text = text;
 	}
 }

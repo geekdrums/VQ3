@@ -6,23 +6,33 @@ public class PlayerConductor : MonoBehaviour {
 
 	public CommandGraph CommandGraph;
 	public MemoryPanel MemoryPanel;
+	public EnemyExplanation EnemyExp;
 
     public int Level = 1;
-	public int TotalSP;
-	public int RemainSP;
+	public int TotalMemory;
+	public int RemainMemory;
+	
+	[System.Serializable]
+	public class LevelInfo
+	{
+		public int NeedMemory;
+		public int HP;
+		public int Attack;
+		public int Magic;
+	}
+
+	public List<LevelInfo> LevelInfoList;
+
     public int PlayerHP { get { return Player.HitPoint; } }
 	public int PlayerMaxHP { get { return Player.MaxHP; } }
 	public bool PlayerIsDanger { get { return Player.IsDangerMode; } }
-    public bool CanUseInvert { get { return Level >= 6; } }
 	public bool IsEclipse { get { return CommandGraph.CurrentCommand is RevertCommand; } }
 	public int WaitCount { get; private set; }
+
 
 	PlayerCommand CurrentCommand;
 	PlayerCommand SelectedCommand;
 	Player Player;
-    float resultRemainTime;
-	int resultGainMemory;
-    readonly float DefaultResultTime = 0.4f;
 
 	void Awake()
 	{
@@ -33,6 +43,7 @@ public class PlayerConductor : MonoBehaviour {
 	void Start () {
 		Player = GameObject.Find( "Main Camera" ).GetComponent<Player>();
         SetLevelParams();
+		ValidateCommands();
 	}
 
 	// Update is called once per frame
@@ -40,88 +51,51 @@ public class PlayerConductor : MonoBehaviour {
 	{
 	}
 
-	public void CheckResult( int sp )
+	public void OnGainMemory(int memory)
 	{
-		resultGainMemory = sp;
+		TotalMemory += memory;
+		RemainMemory += memory;
 	}
-
-    public void UpdateResult()
-    {
-        resultRemainTime -= Time.deltaTime;
-        if( resultRemainTime <= 0 )
-        {
-            TextWindow.SetNextCursor( true );
-        }
-    }
-
-	public void ProceedResult()
-	{
-		if( resultRemainTime <= 0 )
-		{
-			TextWindow.SetNextCursor(false);
-			resultRemainTime = DefaultResultTime;
-			if( GameContext.ResultState == ResultState.Memory )
-			{
-				RemainSP += resultGainMemory;
-				TotalSP += resultGainMemory;
-				SEPlayer.Play("newCommand");
-				GameContext.ResultConductor.MoveNextResult();
-			}
-			else if( GameContext.ResultState == ResultState.Command )
-			{
-				PlayerCommand acquiredCommand = CommandGraph.CheckAcquireCommand(Level);
-				if( acquiredCommand != null )
-				{
-					acquiredCommand.Acquire();
-					CommandGraph.ShowAcquireCommand(acquiredCommand);
-					SEPlayer.Play("newCommand");
-				}
-				else
-				{
-					GameContext.ResultConductor.MoveNextResult();
-				}
-			}
-			else
-			{
-				GameContext.ResultConductor.MoveNextResult();
-			}
-		}
-	}
-
-    void SetLevelParams()
-    {
-        Player.HitPoint = 500 + Level * 100;
-        Player.BasePower = 50 + Level * 10;
-        Player.BaseMagic = 50 + Level * 10;
-        Player.Initialize();
-    }
 
     public void OnLevelUp()
     {
+		++Level;
         SetLevelParams();
         if( Level > 1 )
         {
             TextWindow.SetMessage( MessageCategory.Result, "オクスは　レベル" + Level + "に　あがった！" );
-            resultRemainTime = DefaultResultTime;
             SEPlayer.Play( "levelUp" );
         }
     }
 
-    public void CheckAcquireCommands()
-    {
-        PlayerCommand acquiredCommand = CommandGraph.CheckAcquireCommand( Level );
-        while( acquiredCommand != null )
-        {
-            acquiredCommand.Acquire();
-            acquiredCommand = CommandGraph.CheckAcquireCommand( Level );
-        }
-        PlayerCommand forgetCommand = CommandGraph.CheckForgetCommand( Level );
-        while( forgetCommand != null )
-        {
-            forgetCommand.Forget();
-            forgetCommand = CommandGraph.CheckAcquireCommand( Level );
-        }
-    }
+	void SetLevelParams()
+	{
+		Player.HitPoint = LevelInfoList[Level].HP;//500 + Level * 100;
+		Player.BasePower = LevelInfoList[Level].Attack; //50 + Level * 10;
+		Player.BaseMagic = LevelInfoList[Level].Magic; //50 + Level * 10;
+		Player.Initialize();
+	}
+
+	public PlayerCommand CheckAcquireCommand()
+	{
+		return CommandGraph.CheckAcquireCommand(Level);
+	}
+
+	public void ValidateCommands()
+	{
+		PlayerCommand acquiredCommand = CommandGraph.CheckAcquireCommand(Level);
+		while( acquiredCommand != null )
+		{
+			acquiredCommand.Acquire();
+			acquiredCommand = CommandGraph.CheckAcquireCommand(Level);
+		}
+		PlayerCommand forgetCommand = CommandGraph.CheckForgetCommand(Level);
+		while( forgetCommand != null )
+		{
+			forgetCommand.Forget();
+			forgetCommand = CommandGraph.CheckAcquireCommand(Level);
+		}
+	}
 
 	public void OnSelectedCommand(PlayerCommand command)
 	{
@@ -157,11 +131,12 @@ public class PlayerConductor : MonoBehaviour {
 			if( command == CommandGraph.IntroCommand )
 			{
 				MemoryPanel.Reset();
-				TextWindow.SetMessage(MessageCategory.Help, "コマンドを選択して\nメモリーを分配できます");
+				EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
 			}
 			else
 			{
 				MemoryPanel.Set(command);
+				EnemyExp.Hide();
 				TextWindow.SetCommand(command);
 			}
 			break;
@@ -175,15 +150,19 @@ public class PlayerConductor : MonoBehaviour {
 			SelectedCommand.Deselect();
 			SelectedCommand = null;
 			CommandGraph.Deselect();
+			if( GameContext.State == GameState.Setting )
+			{
+				MemoryPanel.Reset();
+				EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
+			}
 		}
 		switch( GameContext.State )
 		{
 		case GameState.Battle:
 			TextWindow.SetMessage(MessageCategory.Help, "次のコマンドは　なに？");
 			break;
-		case GameState.Setting:
-			MemoryPanel.Reset();
-			TextWindow.SetMessage(MessageCategory.Help, "コマンドを選択して\nメモリーを分配できます");
+		case GameState.Result:
+			GameContext.ResultConductor.OnPushedOKButton(this, null);
 			break;
 		}
 	}
@@ -212,21 +191,22 @@ public class PlayerConductor : MonoBehaviour {
 		}
         ++WaitCount;
 	}
-    
-    public void CheckSkill()
-    {
-        if( CurrentCommand  == null ) return;
-        GameObject playerSkill = CurrentCommand.GetCurrentSkill();
-        if( playerSkill != null )
-        {
-            Skill objSkill = (Instantiate( playerSkill ) as GameObject).GetComponent<Skill>();
-            objSkill.SetOwner( Player );
-            GameContext.BattleConductor.ExecSkill( objSkill );
-        }
-    }
+
+	public void CheckSkill()
+	{
+		if( CurrentCommand  == null ) return;
+		GameObject playerSkill = CurrentCommand.GetCurrentSkill();
+		if( playerSkill != null )
+		{
+			Skill objSkill = (Instantiate(playerSkill) as GameObject).GetComponent<Skill>();
+			objSkill.SetOwner(Player);
+			GameContext.BattleConductor.ExecSkill(objSkill);
+		}
+	}
 
 	public void OnBattleStarted()
     {
+		EnemyExp.Hide();
 		MemoryPanel.Hide();
         Player.OnBattleStart();
         CommandGraph.OnBattleStart();
@@ -236,6 +216,19 @@ public class PlayerConductor : MonoBehaviour {
 		ColorManager.SetBaseColor(EBaseColor.Black);
 		ColorManager.SetThemeColor(EThemeColor.White);
     }
+
+	public void OnEnterSetting()
+	{
+		CommandGraph.OnEnterSetting();
+		MemoryPanel.Reset();
+		EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
+	}
+
+
+	public void OnEnterEvent()
+	{
+		EnemyExp.Hide();
+	}
 
 	public bool ReceiveAction( ActionSet Action, Skill skill )
 	{

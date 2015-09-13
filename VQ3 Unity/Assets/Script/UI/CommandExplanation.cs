@@ -1,19 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum UIState
-{
-	Showing,
-	Show,
-	Hiding,
-	Hide
-}
-
 public class CommandExplanation : MonoBehaviour {
 
 	public GaugeRenderer NameBase;
 	public TextMesh CommandName;
 	public TextMesh Explanation;
+	public TextMesh NewCommmandText;
 	public CounterSprite LVCount;
 	public TextMesh CommandText, LVText;
 	public GameObject IconParent;
@@ -43,30 +36,39 @@ public class CommandExplanation : MonoBehaviour {
 	public CommandParam DFParam;
 	public CommandParam VTParam;
 	public CommandParam VPParam;
-	
+
+	public enum Phase
+	{
+		Showing,
+		Wait,
+		Hiding,
+		Hide
+	}
+
+	public Phase CurrentPhase { get; private set; }
+
 	PlayerCommandData commandData_;
-	UIState uiState_;
 
 	// Use this for initialization
 	void Start () {
-		Reset();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if( uiState_ == UIState.Showing && GetComponent<Animation>().isPlaying == false )
+		if( CurrentPhase == Phase.Showing && GetComponent<Animation>().isPlaying == false )
 		{
-			uiState_ = UIState.Show;
+			CurrentPhase = Phase.Wait;
 		}
-		else if( uiState_ == UIState.Hiding && GetComponent<Animation>().isPlaying == false )
+		else if( CurrentPhase == Phase.Hiding && GetComponent<Animation>().isPlaying == false )
 		{
-			uiState_ = UIState.Hide;
+			CurrentPhase = Phase.Hide;
 			Reset();
 		}
 	}
 
 	public void Set(PlayerCommand command)
 	{
+		gameObject.SetActive(true);
 		if( IconParent.transform.childCount > 0 )
 		{
 			Destroy(IconParent.transform.GetChild(0).gameObject);
@@ -75,13 +77,24 @@ public class CommandExplanation : MonoBehaviour {
 		CommandName.text = command.nameText.ToUpper();
 		CommandName.color = command.themeColor == EThemeColor.White ? Color.black : Color.white;
 		ThemeColor themeColor = ColorManager.GetThemeColor(command.themeColor);
-		if( commandData_ != null )
+
+		if( GameContext.State == GameState.Result )
+		{
+			NameBase.SetColor(themeColor.Bright);
+			NewCommmandText.color = ColorManager.Base.Bright;
+			LVText.color = Color.clear;
+			LVCount.CounterColor= Color.clear;
+			CommandText.color = Color.clear;
+			Explanation.text = "";
+		}
+		else if( commandData_ != null )
 		{
 			NameBase.SetColor(themeColor.Bright);
 			CommandText.color = ColorManager.Base.Bright;
 			LVText.color = ColorManager.Base.Bright;
 			LVCount.CounterColor= ColorManager.Base.Bright;
 			Explanation.text = commandData_.ExplanationText;
+			NewCommmandText.color = Color.clear;
 		}
 		else
 		{
@@ -90,14 +103,9 @@ public class CommandExplanation : MonoBehaviour {
 			LVText.color = ColorManager.Base.Shade;
 			LVCount.CounterColor= ColorManager.Base.Shade;
 			Explanation.text = "未習得";
+			NewCommmandText.color = Color.clear;
 		}
-		GameObject iconObj = Instantiate(command.gameObject) as GameObject;
-		Destroy(iconObj.transform.FindChild("nextRect").gameObject);
-		iconObj.transform.parent = IconParent.transform;
-		iconObj.transform.localPosition = Vector3.zero;
-		iconObj.transform.localScale = Vector3.one;
-		iconObj.transform.localRotation = Quaternion.identity;
-		iconObj.GetComponent<PlayerCommand>().enabled = false;
+		command.GetIconObj(IconParent);
 
 		ATParam.SetParam(command.GetAtk());
 		ATParam.SetColor(command.GetAtkColor());
@@ -111,7 +119,7 @@ public class CommandExplanation : MonoBehaviour {
 		VPParam.SetColor(command.GetVPColor());
 		LVCount.Count = command.currentLevel;
 
-		if( uiState_ != UIState.Show )
+		if( CurrentPhase != Phase.Wait || GameContext.State == GameState.Result )
 		{
 			Show();
 		}
@@ -121,33 +129,17 @@ public class CommandExplanation : MonoBehaviour {
 	public void Show()
 	{
 		GetComponent<Animation>().Play("ShowCommandExp");
-		uiState_ = UIState.Showing;
+		CurrentPhase = Phase.Showing;
 		transform.localScale = Vector3.one;
 	}
 
 	public void Hide()
 	{
+		gameObject.SetActive(false);
 		GetComponent<Animation>().Play("HideCommandExp");
-		uiState_ = UIState.Hiding;
+		CurrentPhase = Phase.Hiding;
 	}
 
-	//public void SetEnemy( Enemy enemy )
-	//{
-	//	enemyData_ = enemy;
-	//	if( IconParent.transform.childCount > 0 )
-	//	{
-	//		Destroy(IconParent.transform.GetChild(0).gameObject);
-	//	}
-	//	CommandName.text = enemy.name.ToUpper();
-	//	Explanation.text = enemy.ExplanationText;
-	//	GameObject enemyObj = Instantiate(enemy.gameObject) as GameObject;
-	//	enemyObj.transform.parent = IconParent.transform;
-	//	enemyObj.transform.localPosition = Vector3.zero;
-	//	enemyObj.transform.localScale = enemy.transform.localScale * 2.5f;
-	//	enemyObj.transform.localRotation = Quaternion.identity;
-	//	enemyObj.GetComponent<Enemy>().enabled = false;
-	//	enemyObj.GetComponent<SpriteRenderer>().color = Color.white;
-	//}
 	public void Reset()
 	{
 		if( IconParent.transform.childCount > 0 )
@@ -157,7 +149,7 @@ public class CommandExplanation : MonoBehaviour {
 		CommandName.text = "";
 		transform.localScale = Vector3.zero;
 		commandData_ = null;
-		uiState_ = UIState.Hide;
+		CurrentPhase = Phase.Hide;
 		Explanation.text = "";
 	}
 }

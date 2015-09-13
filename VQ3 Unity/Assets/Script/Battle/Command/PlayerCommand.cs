@@ -434,7 +434,7 @@ public class PlayerCommand : MonoBehaviour
 		CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
 		float alpha = 0;
 		float distance = (this.transform.position - SelectSpot).magnitude;
-		if( GameContext.State == GameState.Setting )
+		if( GameContext.State == GameState.Setting || GameContext.State == GameState.Result )
 		{
 			if( state <= CommandState.Acquired )
 			{
@@ -450,7 +450,7 @@ public class PlayerCommand : MonoBehaviour
 				transform.localScale = Vector3.zero;
 			}
 		}
-		else if( GameContext.State != GameState.Result )
+		else
 		{
 			if( state <= CommandState.Linked )
 			{
@@ -503,7 +503,10 @@ public class PlayerCommand : MonoBehaviour
 	public virtual GameObject GetIconObj(GameObject iconParent)
 	{
 		GameObject iconObj = Instantiate(gameObject) as GameObject;
-		Destroy(iconObj.transform.FindChild("nextRect").gameObject);
+		if( iconObj.transform.FindChild("nextRect") != null )
+		{
+			Destroy(iconObj.transform.FindChild("nextRect").gameObject);
+		}
 		if( iconObj.transform.FindChild("currentRect") != null )
 		{
 			Destroy(iconObj.transform.FindChild("currentRect").gameObject);
@@ -580,9 +583,6 @@ public class PlayerCommand : MonoBehaviour
     public void Forget()
     {
     }
-    public void SetPush( bool isPushing )
-    {
-    }
 
     #endregion
 
@@ -596,7 +596,7 @@ public class PlayerCommand : MonoBehaviour
 		++currentLevel;
 		int oldSP = numSP;
 		numSP = currentData.RequireSP;
-		GameContext.PlayerConductor.RemainSP -= (numSP - oldSP);
+		GameContext.PlayerConductor.RemainMemory -= (numSP - oldSP);
 		state = CommandState.Acquired;
 	}
 
@@ -606,7 +606,7 @@ public class PlayerCommand : MonoBehaviour
 		int oldSP = numSP;
 		numSP = currentData == null ? 0 : currentData.RequireSP;
 		state = currentData == null ? CommandState.NotAcquired : CommandState.Acquired;
-		GameContext.PlayerConductor.RemainSP += (oldSP - numSP);
+		GameContext.PlayerConductor.RemainMemory += (oldSP - numSP);
 	}
 
 	public void SetLinkedFromIntro()

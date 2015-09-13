@@ -17,6 +17,7 @@ public class FieldConductor : MonoBehaviour {
 	public int StageIndex;
 	public int EncountIndex;
 	public MidairPrimitive WindowFrame;
+	public GameObject Setting;
 
 	public Encounter CurrentEncounter { get { return StageData[StageIndex].Encounters[EncountIndex]; } }
 	public EventData CurrentEvent { get; private set; }
@@ -35,15 +36,6 @@ public class FieldConductor : MonoBehaviour {
 		//case GameState.Title:
 		//	if( Input.GetMouseButtonUp(0) )
 		//	{
-		//		for( int i=0; i<=StageIndex; ++i )
-		//		{
-		//			for( int eCnt=0; eCnt<=StageIndex; ++eCnt )
-		//			{
-		//				Encounter encounter = StageData[i].Encounters[eCnt];
-		//				GameContext.PlayerConductor.TotalSP += encounter.AcquireStars;
-		//				GameContext.PlayerConductor.RemainSP += encounter.AcquireStars;
-		//			}
-		//		}
 		//		foreach( PlayerCommand command in GameContext.PlayerConductor.CommandGraph.CommandNodes )
 		//		{
 		//			command.ValidateState();
@@ -66,21 +58,31 @@ public class FieldConductor : MonoBehaviour {
         case GameState.Setting:
             break;
         case GameState.Result:
-            GameContext.PlayerConductor.UpdateResult();
             break;
         default:
             break;
         }
 	}
 
+	public void OnEnterResult()
+	{
+		WindowFrame.SetTargetWidth(12);
+		EncountIndex++;
+	}
+
     public void OnEnterSetting()
 	{
-		Music.Play("ambient");
 		WindowFrame.SetTargetWidth(12);
+		Setting.SetActive(true);
+		if( Music.IsPlaying == false || Music.CurrentMusicName != "ambient" )
+		{
+			Music.Play("ambient");
+		}
     }
 
 	public void OnEnterBattle()
 	{
+		Setting.SetActive(false);
 		WindowFrame.SetTargetWidth(1);
 	}
 
@@ -105,7 +107,7 @@ public class FieldConductor : MonoBehaviour {
 
 	public void OnPlayerLose()
 	{
-		EncountIndex--;
+		//EncountIndex--;
 		//CommandExp.SetEnemy(CurrentLevel.Encounters[encounterCount].BattleSets[0].Enemies[0].GetComponent<Enemy>());
 	}
 }

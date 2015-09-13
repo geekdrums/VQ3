@@ -41,7 +41,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.52371633, y: -.534395099, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -82,9 +82,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 280
+  HitPoint: 500
   BasePower: 0
-  BaseMagic: 160
+  BaseMagic: 200
   DisplayName: "\u30A6\u30A3\u30EB"
   Speceis: 0
   States:
@@ -95,7 +95,6 @@ MonoBehaviour:
     - {fileID: 11400006}
     nextState: 
   conditions: []
-  ShadowOffset: 4.5
   ExplanationText: "\u7CBE\u970A\u65CF\u306E\u6700\u3082\u57FA\u672C\u7684\u306A\u5B58\u5728\u3002\r\n\u98A8\u306E\u9B54\u6CD5\u3067\u653B\u6483\u3057\u3066\u304F\u308B\u3002"
 --- !u!114 &11400006
 MonoBehaviour:

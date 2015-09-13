@@ -7,16 +7,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E2B0199C-F72E-B8F2-D486-1F22FDBEAA06}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.1.1f1</UnityVersion>
@@ -94,21 +92,10 @@
     <Compile Include="Assets\Script\Battle\Effect\AttackEffect.cs" />
     <Compile Include="Assets\Script\Battle\Effect\CommandEffect.cs" />
     <Compile Include="Assets\Script\Battle\Effect\DamageGauge.cs" />
-    <Compile Include="Assets\Script\Battle\Effect\DefendEffect.cs" />
     <Compile Include="Assets\Script\Battle\Effect\DamageText.cs" />
+    <Compile Include="Assets\Script\Battle\Effect\DefendEffect.cs" />
     <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
     <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
-    <Compile Include="Assets\Script\Battle\UI\ButtonUI.cs" />
-    <Compile Include="Assets\Script\Battle\UI\CommandExplanation.cs" />
-    <Compile Include="Assets\Script\Battle\UI\EnhanceCutIn.cs" />
-    <Compile Include="Assets\Script\Battle\UI\EnhanceIcons.cs" />
-    <Compile Include="Assets\Script\Battle\UI\GaugeRenderer.cs" />
-    <Compile Include="Assets\Script\Battle\UI\HPCircle.cs" />
-    <Compile Include="Assets\Script\Battle\UI\HPPanel.cs" />
-    <Compile Include="Assets\Script\Battle\UI\MemoryPanel.cs" />
-    <Compile Include="Assets\Script\Battle\UI\ShortTextWindow.cs" />
-    <Compile Include="Assets\Script\Battle\UI\TextWindow.cs" />
-    <Compile Include="Assets\Script\Battle\UI\TitleLogo.cs" />
     <Compile Include="Assets\Script\Battle\VoxSystem.cs" />
     <Compile Include="Assets\Script\Field\EventConductor.cs" />
     <Compile Include="Assets\Script\Field\FieldConductor.cs" />
@@ -124,6 +111,20 @@
     <Compile Include="Assets\Script\MusicEngine\Motif\Phrase.cs" />
     <Compile Include="Assets\Script\MusicEngine\Motif\Rhythm.cs" />
     <Compile Include="Assets\Script\MusicEngine\Music.cs" />
+    <Compile Include="Assets\Script\UI\ButtonUI.cs" />
+    <Compile Include="Assets\Script\UI\CommandExplanation.cs" />
+    <Compile Include="Assets\Script\UI\EnemyExplanation.cs" />
+    <Compile Include="Assets\Script\UI\EnhanceCutIn.cs" />
+    <Compile Include="Assets\Script\UI\EnhanceIcons.cs" />
+    <Compile Include="Assets\Script\UI\GaugeRenderer.cs" />
+    <Compile Include="Assets\Script\UI\HPCircle.cs" />
+    <Compile Include="Assets\Script\UI\HPPanel.cs" />
+    <Compile Include="Assets\Script\UI\LevelResult.cs" />
+    <Compile Include="Assets\Script\UI\MemoryPanel.cs" />
+    <Compile Include="Assets\Script\UI\MemoryResult.cs" />
+    <Compile Include="Assets\Script\UI\ShortTextWindow.cs" />
+    <Compile Include="Assets\Script\UI\TextWindow.cs" />
+    <Compile Include="Assets\Script\UI\TitleLogo.cs" />
     <Compile Include="Assets\Script\Utils\ColorManager.cs" />
     <Compile Include="Assets\Script\Utils\CounterSprite.cs" />
     <Compile Include="Assets\Script\Utils\MidairPrimitive.cs" />

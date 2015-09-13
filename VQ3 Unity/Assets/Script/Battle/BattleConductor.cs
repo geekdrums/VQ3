@@ -19,7 +19,9 @@ public class BattleConductor : MonoBehaviour {
 
 	public BattleState State { get; private set; }
 
-    public GameObject skillParent;
+    public GameObject SkillParent;
+	public ButtonUI OKButton;
+
     List<Pair<Timing, Skill>> Skills;
 
     void Awake()
@@ -39,6 +41,7 @@ public class BattleConductor : MonoBehaviour {
 	void Start ()
 	{
         Skills = new List<Pair<Timing, Skill>>();
+		OKButton.OnPushed += this.OnPushedOKButton;
     }
 	
 	// Update is called once per frame
@@ -79,11 +82,36 @@ public class BattleConductor : MonoBehaviour {
 		case BattleState.Continue:
 			break;
 		case BattleState.Win:
+			UpdateBattle();
 			break;
 		case BattleState.Endro:
 			if( Music.IsJustChangedAt(0, 2) )
 			{
 				TextWindow.SetNextCursor(true);
+			}
+			break;
+		}
+	}
+
+
+	void OnPushedOKButton(object sender, System.EventArgs e)
+	{
+		switch( GameContext.BattleState )
+		{
+		case BattleState.Endro:
+			if( !Music.IsPlaying || Music.Just.MusicalTime >= 8 )
+			{
+				ClearSkills();
+				GameContext.SetState(GameState.Result);
+				ColorManager.SetBaseColor(EBaseColor.Black);
+				SetState(BattleState.None);
+			}
+			break;
+		case BattleState.Continue:
+			if( !Music.IsPlaying || Music.Just.MusicalTime > 4 )
+			{
+				GameContext.SetState(GameState.Setting);
+				GameContext.FieldConductor.OnPlayerLose();
 			}
 			break;
 		}
@@ -127,18 +155,18 @@ public class BattleConductor : MonoBehaviour {
 
     public void ClearSkills()
     {
-		for( int i = 0; i < skillParent.transform.childCount; i++ )
+		for( int i = 0; i < SkillParent.transform.childCount; i++ )
 		{
-			Skill skill = skillParent.transform.GetChild(i).GetComponent<Skill>();
+			Skill skill = SkillParent.transform.GetChild(i).GetComponent<Skill>();
 			skill.OwnerCharacter.OnSkillEnd(skill);
-			Destroy(skillParent.transform.GetChild(i).gameObject);
+			Destroy(SkillParent.transform.GetChild(i).gameObject);
 		}
 		Skills.Clear();
     }
 
 	public void ExecSkill(Skill NewSkill)
 	{
-		NewSkill.gameObject.transform.parent = skillParent.transform;
+		NewSkill.gameObject.transform.parent = SkillParent.transform;
 		Skills.Add(new Pair<Timing, Skill>(new Timing(Music.Just), NewSkill));
 	}
 
@@ -163,6 +191,7 @@ public class BattleConductor : MonoBehaviour {
 		switch( State )
 		{
 		case BattleState.Intro:
+			OKButton.SetMode(ButtonMode.Hide);
 			break;
 		case BattleState.Battle:
 			break;
@@ -179,16 +208,20 @@ public class BattleConductor : MonoBehaviour {
 			GameContext.VoxSystem.SetState(VoxState.SunSet);
 			Music.Play("Continue");
 			ClearSkills();
+			OKButton.SetText("Continue");
+			OKButton.SetMode(ButtonMode.Active, true);
 			break;
 		case BattleState.Win:
 			Music.SetNextBlock("endro", new System.EventHandler((object sender, System.EventArgs e) => { SetState(BattleState.Endro); }));
 			GameContext.PlayerConductor.OnPlayerWin();
 			GameContext.EnemyConductor.OnPlayerWin();
-			ClearSkills();
 			break;
 		case BattleState.Endro:
+			ClearSkills();
 			GameContext.VoxSystem.SetState(VoxState.SunSet);
-			TextWindow.SetMessage(MessageCategory.Result, "まもののむれを　たおした");
+			TextWindow.SetMessage(MessageCategory.Result, "敵の殲滅を確認。");
+			OKButton.SetText("OK");
+			OKButton.SetMode(ButtonMode.Active, true);
 			break;
 		}
 		Debug.Log("Enter BattleState: " + State.ToString());

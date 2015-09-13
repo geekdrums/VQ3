@@ -12,40 +12,105 @@ public enum ResultState
 	End
 }
 
-[ExecuteInEditMode]
 public class ResultConductor : MonoBehaviour {
+
+	public ButtonUI OKButton;
+	public MemoryResult MemoryResult;
+	public LevelResult LevelResult;
+	public CommandExplanation CommandExp;
 
     public ResultState State { get; private set; }
 
-	// Use this for initialization
     void Awake()
     {
 		GameContext.ResultConductor = this;
 	}
 
+
+	// Use this for initialization
+	void Start()
+	{
+		OKButton.OnPushed += this.OnPushedOKButton;
+	}
+
 	// Update is called once per frame
     void Update()
-    {
-	}
-
-	public void CheckResult()
 	{
-		//GameContext.PlayerConductor.CheckResult(CurrentLevel.Encounters[encounterCount-1].AcquireStars);
-		//if( encounterCount >= CurrentLevel.Encounters.Count )
-		//{
-		//	GameContext.PlayerConductor.Level++;
-		//	GameContext.PlayerConductor.OnLevelUp();
-		//	encounterCount = 0;
-		//}
-		//State = ResultState.Memory;
 	}
 
-    public void MoveNextResult()
-    {
-        ++State;
-        if( State == ResultState.End )
+	public void OnEnterResult(int memory)
+	{
+		GameContext.PlayerConductor.OnGainMemory(memory);
+		MemoryResult.Show(memory);
+		State = ResultState.Memory;
+	}
+	
+
+	public void OnPushedOKButton(object sender, System.EventArgs e)
+	{
+		if( GameContext.State == GameState.Result )
 		{
-			GameContext.SetState(GameState.Setting);
-        }
-    }
+			switch( State )
+			{
+			case ResultState.Memory:
+				if( MemoryResult.CurrentPhase == MemoryResult.Phase.Wait )
+				{
+					MemoryResult.Hide();
+					if( MemoryResult.IsLevelUp )
+					{
+						State = ResultState.Level;
+						GameContext.PlayerConductor.OnLevelUp();
+						LevelResult.Show();
+					}
+					else
+					{
+						EndResult();
+					}
+				}
+				break;
+			case ResultState.Level:
+				if( LevelResult.CurrentPhase == LevelResult.Phase.Wait )
+				{
+					State = ResultState.Command;
+					LevelResult.Hide();
+					CheckAcquireCommands();
+				}
+				break;
+			case ResultState.Command:
+				if( CommandExp.CurrentPhase == CommandExplanation.Phase.Wait )
+				{
+					CheckAcquireCommands();
+				}
+				break;
+			}
+		}
+	}
+
+	void CheckAcquireCommands()
+	{
+		PlayerCommand acquiredCommand = GameContext.PlayerConductor.CheckAcquireCommand();
+		if( acquiredCommand != null )
+		{
+			acquiredCommand.Acquire();
+			GameContext.PlayerConductor.CommandGraph.ShowAcquireCommand(acquiredCommand);
+			TextWindow.SetCommand(acquiredCommand);
+			CommandExp.Set(acquiredCommand);
+			OKButton.Primitive.SetTargetWidth(0);
+			OKButton.SetText("");
+		}
+		else
+		{
+			CommandExp.Hide();
+			EndResult();
+		}
+	}
+
+
+	void EndResult()
+	{
+		GameContext.SetState(GameState.Setting);
+		OKButton.SetMode(ButtonMode.Hide);
+		OKButton.Primitive.SetWidth(7.3f);
+		OKButton.SetText("OK");
+	}
 }

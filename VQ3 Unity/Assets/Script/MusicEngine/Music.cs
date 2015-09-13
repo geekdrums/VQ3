@@ -596,6 +596,7 @@ public class Music : MonoBehaviour
 			just_.Bar = (int)(currentSample_ / samplesPerBar_);
 			just_.Beat = (int)((currentSample_ - just_.Bar * samplesPerBar_) / samplesPerBeat_);
 			just_.Unit = (int)((currentSample_ - just_.Bar * samplesPerBar_ - just_.Beat * samplesPerBeat_) / samplesPerUnit_);
+			just_.Fix();
 			if( numBlockBar_ > 0 )
 			{
 				while( just_.Bar >= numBlockBar_ )

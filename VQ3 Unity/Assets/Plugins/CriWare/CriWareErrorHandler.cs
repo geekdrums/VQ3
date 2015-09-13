@@ -116,8 +116,9 @@ public class CriWareErrorHandler : MonoBehaviour {
 	/*JP ログの出力 */
 	private static void OutputLog(string errmsg)
 	{
-		if( errmsg == null || errmsg.StartsWith("E2009072402") || errmsg.StartsWith("E2011061646") )
+		if( errmsg == null || errmsg.StartsWith("E2009072402") || errmsg.StartsWith("E2011061646") || errmsg.StartsWith("E2011021012") )
 		{
+			//E2011021012:Can not replace callback function while playing.
 			return;
 		}
 

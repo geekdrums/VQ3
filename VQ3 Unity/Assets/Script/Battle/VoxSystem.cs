@@ -198,10 +198,14 @@ public class VoxSystem : MonoBehaviour
 			}
 			UpdateLightAngles();
 			UpdateBGOffset();
+			BGColor = Color.Lerp(BGColor, ColorManager.Theme.Light, 0.1f);
+			BGMaterial.color = BGColor;
 			break;
 		case VoxState.Overflow:
 			UpdateLightAngles();
 			UpdateBGOffset();
+			BGColor = Color.Lerp(BGColor, ColorManager.Theme.Light, 0.1f);
+			BGMaterial.color = BGColor;
 			break;
 		case VoxState.Overload:
 			lightHoleRemainTime_ = -1;
@@ -217,6 +221,8 @@ public class VoxSystem : MonoBehaviour
 				ColorManager.SetBaseColor(EBaseColor.Black);
 				WaveLineMaterial.color = ColorManager.Base.Front;
 			}
+			BGMaterial.color = BGColor;
+			BGColor = ColorManager.Base.Front;
 			break;
 		case VoxState.BackToSun:
 			BGColor = Color.Lerp(BGColor, targetBGColor, 0.1f);
@@ -385,7 +391,7 @@ public class VoxSystem : MonoBehaviour
 			if( Music.IsJustChangedAt(3) )
 			{
 				voxMoon.transform.position = voxSun.transform.position + Vector3.back * 0.1f + Vector3.down * 0.1f;
-				BGColor = Color.black;
+				BGColor = ColorManager.Base.Back;
 				GetComponent<Animation>()["EclipseAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
 				GetComponent<Animation>().Play();
 				GameContext.EnemyConductor.OnInvert();
@@ -557,8 +563,16 @@ public class VoxSystem : MonoBehaviour
 			lightHoleRemainTime_ = LightRemainTime;
 			LightWaveMaterial.color = LightWaveTargetColor;
 		}
+		if( IsOverloading )
+		{
+			BGColor = ColorManager.Base.Back;
+		}
+		else if( IsOverFlow )
+		{
+			//BGColor = Color.Lerp(ColorManager.Theme.Light, ColorManager.Theme.Shade, VPCount.Count/100.0f);
+		}
 
-		if( IsOverFlow && !oldIsOverFlow && GameContext.PlayerConductor.CanUseInvert )
+		if( IsOverFlow && !oldIsOverFlow )
 		{
 			SetState(VoxState.Overflow);
 			WaveLineMaterial.color = ColorManager.Accent.Break;
