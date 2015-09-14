@@ -54,7 +54,7 @@
       <Orca OrcaName="ボイスリミットグループ" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoVoiceLimitGroupFolder">
         <Orca OrcaName="VoiceLimitGroup_0" VoiceLimitNum="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoVoiceLimitGroup" />
       </Orca>
-      <Orca OrcaName="ゲーム変数" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariableFolder">
+      <Orca OrcaName="ゲーム変数" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariableFolder">
         <Orca OrcaName="Default" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariable" />
         <Orca OrcaName="IsTransition" VariableId="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariable" />
       </Orca>

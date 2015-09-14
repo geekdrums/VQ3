@@ -491,7 +491,7 @@ public class VoxSystem : MonoBehaviour
 			{
 			case VoxState.Sun:
 			case VoxState.BackToSun:
-				AddVPVT(-currentVP, -currentVT);
+				ResetVPVT();
 				WaveLineMaterial.color = ColorManager.Base.Front;
 
 				useTargetLightAngles = true;
@@ -530,7 +530,7 @@ public class VoxSystem : MonoBehaviour
 				UpdateAnimation();
 				useTargetLightAngles = true;
 				useTargetLightScales = true;
-				AddVPVT(-currentVP, -currentVT);
+				ResetVPVT();
 				targetBGColor = Color.black;
 				targetSunScale = Vector3.zero;
 				targetSunPosition = sunsetPosition;
@@ -580,12 +580,23 @@ public class VoxSystem : MonoBehaviour
 			GameContext.PlayerConductor.OnOverFlowed();
 			Music.SetAisac("TrackVolumeEnergy", 1);
 		}
-		else if( oldIsOverFlow && !IsOverFlow )
+		else if( oldIsOverFlow && !IsOverFlow && State != VoxState.SunSet )
 		{
 			SetState(VoxState.Sun);
 			WaveLineMaterial.color = ColorManager.Base.Front;
 			Music.SetAisac("TrackVolumeEnergy", 0);
 		}
+	}
+
+	public void ResetVPVT()
+	{
+		currentVP = 0;
+		currentVT = 0;
+		VPCount.Count = 0;
+		VTCount.Count = 0;
+		waveRemainCoeff_ = 0;
+		WaveLineMaterial.color = ColorManager.Base.Front;
+		Music.SetAisac("TrackVolumeEnergy", 0);
 	}
 
 	public void SetTargetEnemy(Enemy targetEnemy)

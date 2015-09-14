@@ -84,7 +84,7 @@ public class Skill : MonoBehaviour
                 SkillAnim[AnimName].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
                 SkillAnim.Play( AnimName );
 				Vector2 randomUnit = UnityEngine.Random.insideUnitCircle;
-				SkillAnim.transform.localPosition += 
+				transform.localPosition += 
 					new Vector3(animRandomExcludeRange.x + randomUnit.x * (animRandomRange.x - animRandomExcludeRange.x),
 					animRandomExcludeRange.y + randomUnit.y * (animRandomRange.y - animRandomExcludeRange.y), 0);
             }

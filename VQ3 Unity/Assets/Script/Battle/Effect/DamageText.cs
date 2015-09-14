@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DamageText : CounterSprite
 {
-	static Vector3 PositionOffeset = new Vector3(-2, 3, 0);
+	//static Vector3 PositionOffeset = new Vector3(-2, 3, 0);
 
 	float time = 0;
 	Vector3 initialPosition;
@@ -97,7 +97,7 @@ public class DamageText : CounterSprite
 			transform.localScale = Vector3.one;
 			break;
 		}
-		transform.position = initialPos + PositionOffeset;
+		transform.position = initialPos;// +PositionOffeset;
 		GetComponentInChildren<TextMesh>().color = color;
 		CounterColor = color;
 	}

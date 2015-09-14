@@ -285,6 +285,7 @@ public class Enemy : Character
 		}
 		else
 		{
+			/*
 			switch( Speceis )
 			{
 			case EnemySpecies.Human:
@@ -324,18 +325,34 @@ public class Enemy : Character
 				else lastDamageResult = ActionResult.MagicBadDamage;
 				break;
 			}
-			if( attack.type == AttackType.Vox ) lastDamageResult = ActionResult.PhysicGoodDamage;
+			*/
+
+			if( GameContext.VoxSystem.State == VoxState.Overload )
+			{
+				lastDamageResult = ActionResult.PhysicGoodDamage;
+			}
+			else if( GameContext.VoxSystem.IsOverFlow )
+			{
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicGoodDamage;
+				else lastDamageResult = ActionResult.MagicGoodDamage;
+			}
+			else
+			{
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicDamage;
+				else lastDamageResult = ActionResult.MagicDamage;
+			}
 		}
         
 		float typeCoeff = 1.0f;
-		if( lastDamageResult.ToString().EndsWith("GoodDamage") ) typeCoeff = 2.0f;
-		else if( lastDamageResult.ToString().EndsWith("BadDamage") ) typeCoeff = 0.1f;
-		else if( lastDamageResult.ToString().EndsWith("NoDamage") ) typeCoeff = 0.0f;
+		if( GameContext.VoxSystem.State == VoxState.Overload ) typeCoeff = 2.0f;
+		//if( lastDamageResult.ToString().EndsWith("GoodDamage") ) typeCoeff = 2.0f;
+		//else if( lastDamageResult.ToString().EndsWith("BadDamage") ) typeCoeff = 0.1f;
+		//else if( lastDamageResult.ToString().EndsWith("NoDamage") ) typeCoeff = 0.0f;
 
 		float overFlowPower = 0.0f;
 		if( GameContext.VoxSystem.IsOverFlow && GameContext.VoxSystem.State != VoxState.Overload )
 		{
-			overFlowPower = attack.VP * 2.0f;
+			overFlowPower = attack.VP * 4.0f;
 		}
 
 		float damage = skill.OwnerCharacter.PhysicAttack * ((attack.Power + overFlowPower) / 100.0f) * typeCoeff * DefendCoeff;

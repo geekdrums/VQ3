@@ -2908,7 +2908,7 @@ MonoBehaviour:
   - {fileID: 2017496669}
   - {fileID: 1717701504}
   - {fileID: 1318932467}
-  numSP: 20
+  numSP: 0
   currentLevel: 0
 --- !u!114 &204439536
 MonoBehaviour:
@@ -4340,7 +4340,7 @@ MonoBehaviour:
   - {fileID: 1717701504}
   - {fileID: 1308508740}
   - {fileID: 1239555268}
-  numSP: 20
+  numSP: 0
   currentLevel: 0
 --- !u!114 &286711176
 MonoBehaviour:
@@ -7884,7 +7884,7 @@ MonoBehaviour:
   - {fileID: 96833732}
   - {fileID: 1014951217}
   - {fileID: 1239555268}
-  numSP: 20
+  numSP: 0
   currentLevel: 0
 --- !u!114 &548279413
 MonoBehaviour:
@@ -20708,7 +20708,7 @@ MonoBehaviour:
   StageData:
   - {fileID: 11400000, guid: adff4f95bf2ffa34998467356a3b6211, type: 2}
   StageIndex: 0
-  EncountIndex: 2
+  EncountIndex: 0
   WindowFrame: {fileID: 2082072972}
   Setting: {fileID: 1703825378}
 --- !u!1 &1480761849
@@ -28946,7 +28946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 4
   ArcRate: 1
-  Width: 1
+  Width: 12
   Radius: 11.75
   ScaleX: 1
   Color: {r: 0, g: 0, b: 0, a: 1}
@@ -29846,7 +29846,7 @@ MonoBehaviour:
   CommandGraph: {fileID: 38929925}
   MemoryPanel: {fileID: 1483572278}
   EnemyExp: {fileID: 476152220}
-  Level: 6
+  Level: 5
   TotalMemory: 120
   RemainMemory: 60
   LevelInfoList:
