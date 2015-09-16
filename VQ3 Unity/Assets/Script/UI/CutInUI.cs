@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnhanceCutIn : MonoBehaviour {
+public class CutInUI : MonoBehaviour {
 
 	public TextMesh Text;
 	public CounterSprite Counter;
@@ -24,7 +24,7 @@ public class EnhanceCutIn : MonoBehaviour {
 		Counter.CounterColor = (phase >= 0 ? ColorManager.Accent.Buff : ColorManager.Accent.DeBuff);
 		Text.color = (phase >= 0 ? ColorManager.Accent.Buff : ColorManager.Accent.DeBuff);
 		Text.anchor = TextAnchor.MiddleRight;
-		GetComponent<Animation>()["EnhCutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+		GetComponent<Animation>()["CutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
 		GetComponent<Animation>().Play();
 	}
 
@@ -35,18 +35,18 @@ public class EnhanceCutIn : MonoBehaviour {
 		Text.text = "DANGER";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.red;
-		GetComponent<Animation>()["EnhCutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+		GetComponent<Animation>()["CutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
 		GetComponent<Animation>().Play();
 	}
 
-	public void SetReadyEclipse()
+	public void SetOverflow()
 	{
 		transform.localScale = Vector3.one;
 		Counter.CounterColor = Color.clear;
-		Text.text = "BREAK READY";
+		Text.text = "OVER FROW";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.white;
-		GetComponent<Animation>()["EnhCutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+		GetComponent<Animation>()["CutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
 		GetComponent<Animation>().Play();
 	}
 }

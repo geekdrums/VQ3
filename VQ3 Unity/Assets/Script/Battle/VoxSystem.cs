@@ -169,7 +169,8 @@ public class VoxSystem : MonoBehaviour
 		Destroy(LightWaveBottomOrigin.gameObject);
 
 		WaveLineMaterial.color = ColorManager.Base.Front;
-		initialLightWaveColor = LightWaveMaterial.color;
+		initialLightWaveColor = ColorManager.MakeAlpha(Color.white, 0.333f);
+		LightWaveMaterial.color = initialLightWaveColor;
 	}
 
 	// Update is called once per frame
@@ -252,7 +253,7 @@ public class VoxSystem : MonoBehaviour
 					VPCount.Count = currentVP;
 					Music.SetAisac("TrackVolumeEnergy", 0);
 					WaveLineMaterial.color = ColorManager.Base.Front;
-					State = VoxState.Sun;
+					SetState(VoxState.Sun);
 				}
 			}
 			else if( State == VoxState.Overload )
@@ -287,7 +288,8 @@ public class VoxSystem : MonoBehaviour
 		{
 			for( int i = 0; i<VPWaveNum; ++i )
 			{
-				float targetScale = Mathf.Max(0, 1.0f - vtWaves_[i].transform.localScale.y * LightHoleCoeff - (State == VoxState.Overflow ? LightHoleOverflowOffset : LightHoleDefaultOffset));
+				float offset = (State == VoxState.Overflow ? LightHoleOverflowOffset * (GameContext.BattleState == BattleState.Eclipse ? 1.0f - Music.MusicalTimeBar/3.0f : 1.0f) : LightHoleDefaultOffset);
+				float targetScale = Mathf.Max(0, 1.0f - vtWaves_[i].transform.localScale.y * LightHoleCoeff - offset);
 				lightUpWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightUpWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
 				lightBottomWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightBottomWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
 			}
@@ -396,6 +398,7 @@ public class VoxSystem : MonoBehaviour
 				GetComponent<Animation>().Play();
 				GameContext.EnemyConductor.OnInvert();
 				GameContext.PlayerConductor.CommandGraph.SelectInitialInvertCommand();
+				BGAnimBase.DeactivateCurrentAnim();
 			}
 			else if( Music.IsJustChangedAt(3, 2) )
 			{
@@ -520,7 +523,10 @@ public class VoxSystem : MonoBehaviour
 
 				voxRing.SetWidth(initialRingWidth);
 				voxRing.SetTargetSize(initialRingRadius);
-
+				
+				WaveLineMaterial.color = ColorManager.Base.Front;
+				Music.SetAisac("TrackVolumeEnergy", 0);
+				BGAnimBase.DeactivateCurrentAnim();
 				break;
 			case VoxState.Overload:
 				BGColor = Color.black;
@@ -541,6 +547,14 @@ public class VoxSystem : MonoBehaviour
 				}
 				targetMainLightScale = 0;
 				voxMoon.transform.position = initialMoonPosition;
+				WaveLineMaterial.color = ColorManager.Base.Front;
+				Music.SetAisac("TrackVolumeEnergy", 0);
+				break;
+			case VoxState.Overflow:
+				WaveLineMaterial.color = ColorManager.Accent.Break;
+				SEPlayer.Play("invert");
+				GameContext.PlayerConductor.OnOverFlowed();
+				Music.SetAisac("TrackVolumeEnergy", 1);
 				break;
 			}
 		}
@@ -575,16 +589,10 @@ public class VoxSystem : MonoBehaviour
 		if( IsOverFlow && !oldIsOverFlow )
 		{
 			SetState(VoxState.Overflow);
-			WaveLineMaterial.color = ColorManager.Accent.Break;
-			SEPlayer.Play("invert");
-			GameContext.PlayerConductor.OnOverFlowed();
-			Music.SetAisac("TrackVolumeEnergy", 1);
 		}
 		else if( oldIsOverFlow && !IsOverFlow && State != VoxState.SunSet )
 		{
 			SetState(VoxState.Sun);
-			WaveLineMaterial.color = ColorManager.Base.Front;
-			Music.SetAisac("TrackVolumeEnergy", 0);
 		}
 	}
 

@@ -66,7 +66,7 @@ public static class GameContext
 		case GameState.Result:
 			ResultConductor.OnEnterResult(FieldConductor.CurrentEncounter.AcquireMemory);
 			FieldConductor.OnEnterResult();
-			PlayerConductor.CommandGraph.OnEnterResult();
+			PlayerConductor.OnEnterResult();
 			break;
 		case GameState.Setting:
 			FieldConductor.OnEnterSetting();

@@ -14,6 +14,9 @@ public class EnemyConductor : MonoBehaviour {
     public GameObject shortTextWindowPrefab;
     public EnemyCommand PhysicDefaultCommand;
     public EnemyCommand MagicDefaultCommand;
+	public float EnemyDamageShake = 2.0f;
+	public float EnemyDamageTimeCoeff = 1.0f;
+	public float EnemyDamageTimeMin = 0.15f;
 
     List<Enemy> Enemies = new List<Enemy>();
 	Encounter CurrentEncounter;

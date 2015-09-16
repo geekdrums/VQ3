@@ -66,11 +66,14 @@
      <Compile Include="Assets\Script\Battle\Command\Skill\Action\ActionModule.cs" />
      <Compile Include="Assets\Script\Battle\Command\Skill\Action\ActionSet.cs" />
      <Compile Include="Assets\Script\Battle\Command\Skill\Skill.cs" />
-     <Compile Include="Assets\Script\Battle\Effect\AttackEffect.cs" />
-     <Compile Include="Assets\Script\Battle\Effect\CommandEffect.cs" />
+     <Compile Include="Assets\Script\Battle\Effect\BGAnimAura.cs" />
+     <Compile Include="Assets\Script\Battle\Effect\BGAnimBase.cs" />
+     <Compile Include="Assets\Script\Battle\Effect\BGAnimDain.cs" />
+     <Compile Include="Assets\Script\Battle\Effect\BGAnimIgna.cs" />
+     <Compile Include="Assets\Script\Battle\Effect\BGAnimLacle.cs" />
+     <Compile Include="Assets\Script\Battle\Effect\BGAnimVox.cs" />
      <Compile Include="Assets\Script\Battle\Effect\DamageGauge.cs" />
      <Compile Include="Assets\Script\Battle\Effect\DamageText.cs" />
-     <Compile Include="Assets\Script\Battle\Effect\DefendEffect.cs" />
      <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
      <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
      <Compile Include="Assets\Script\Battle\VoxSystem.cs" />
@@ -90,8 +93,8 @@
      <Compile Include="Assets\Script\MusicEngine\Music.cs" />
      <Compile Include="Assets\Script\UI\ButtonUI.cs" />
      <Compile Include="Assets\Script\UI\CommandExplanation.cs" />
+     <Compile Include="Assets\Script\UI\CutInUI.cs" />
      <Compile Include="Assets\Script\UI\EnemyExplanation.cs" />
-     <Compile Include="Assets\Script\UI\EnhanceCutIn.cs" />
      <Compile Include="Assets\Script\UI\EnhanceIcons.cs" />
      <Compile Include="Assets\Script\UI\GaugeRenderer.cs" />
      <Compile Include="Assets\Script\UI\HPCircle.cs" />

@@ -3,10 +3,7 @@ using System.Collections;
 
 public class DamageText : CounterSprite
 {
-	//static Vector3 PositionOffeset = new Vector3(-2, 3, 0);
-
 	float time = 0;
-	Vector3 initialPosition;
 
 	// Use this for initialization
 	void Start()
@@ -25,12 +22,6 @@ public class DamageText : CounterSprite
 		}
 #endif
 		time += Time.deltaTime;
-		//float theta = time * (Mathf.PI * 2) * 8.0f;
-		//if( theta <= Mathf.PI * 2 )
-		//{
-		//	float AnimY = Mathf.Sin(theta) * 0.4f;
-		//	transform.position = initialPosition + Vector3.up * AnimY;
-		//}
 		if( time >= 2.0f )
 		{
 			Destroy(gameObject);
@@ -64,7 +55,11 @@ public class DamageText : CounterSprite
 			color = ColorManager.Accent.Critical;
 			if( GameContext.VoxSystem.State == VoxState.Overload )
 			{
-				transform.localScale = Vector3.one * 1.3f;
+				transform.localScale = Vector3.one * 1.4f;
+			}
+			else if( GameContext.VoxSystem.State == VoxState.Overflow )
+			{
+				transform.localScale = Vector3.one * 1.2f;
 			}
 			else
 			{
@@ -97,7 +92,7 @@ public class DamageText : CounterSprite
 			transform.localScale = Vector3.one;
 			break;
 		}
-		transform.position = initialPos;// +PositionOffeset;
+		transform.position = initialPos;
 		GetComponentInChildren<TextMesh>().color = color;
 		CounterColor = color;
 	}

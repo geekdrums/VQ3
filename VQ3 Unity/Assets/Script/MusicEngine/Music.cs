@@ -191,6 +191,10 @@ public class Music : MonoBehaviour
 	/// </summary>
 	public static float MusicalTime { get { return Current_.MusicalTime_; } }
 	/// <summary>
+	/// current musical time based on MusicalTimeUnit
+	/// </summary>
+	public static float MusicalTimeBar { get { return Current_.MusicalTimeBar_; } }
+	/// <summary>
 	/// dif from timing to now on musical time unit.
 	/// </summary>
 	/// <param name="timing"></param>

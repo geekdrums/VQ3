@@ -11,6 +11,8 @@ public class PlayerConductor : MonoBehaviour {
     public int Level = 1;
 	public int TotalMemory;
 	public int RemainMemory;
+	public float PlayerDamageTimeCoeff = 1.0f;
+	public float PlayerDamageTimeMin = 0.15f;
 	
 	[System.Serializable]
 	public class LevelInfo
@@ -175,6 +177,15 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			CurrentCommand.SetCurrent();
 			ColorManager.SetThemeColor(CurrentCommand.themeColor);
+
+			if( CurrentCommand.BGAnim != null && GameContext.VoxSystem.IsOverFlow )
+			{
+				CurrentCommand.BGAnim.Activate();
+			}
+			else
+			{
+				BGAnimBase.DeactivateCurrentAnim();
+			}
 		}
 		Player.TurnInit(CurrentCommand.currentData);
 		TextWindow.SetMessage(MessageCategory.PlayerCommand, CurrentCommand.currentData.DescribeText);
@@ -189,6 +200,7 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			TextWindow.SetMessage(MessageCategory.PlayerWait, "オクスは　つぎの　いってを　かんがえている");
 		}
+		BGAnimBase.DeactivateCurrentAnim();
         ++WaitCount;
 	}
 
@@ -202,6 +214,54 @@ public class PlayerConductor : MonoBehaviour {
 			objSkill.SetOwner(Player);
 			GameContext.BattleConductor.ExecSkill(objSkill);
 		}
+	}
+
+	public bool ReceiveAction(ActionSet Action, Skill skill)
+	{
+		bool isSucceeded = false;
+		AnimModule anim = Action.GetModule<AnimModule>();
+		if( anim != null && !skill.isPlayerSkill )
+		{
+			isSucceeded = true;
+		}
+		AttackModule attack = Action.GetModule<AttackModule>();
+		if( attack != null )
+		{
+			if( skill.isPlayerSkill == false )
+			{
+				Player.BeAttacked(attack, skill);
+				int vpDamage = (int)(attack.VP * Player.VPCoeff);
+				if( vpDamage < 0 )
+				{
+					GameContext.VoxSystem.AddVPVT(vpDamage, 0);
+					Player.VPDrained(attack, skill, -vpDamage);
+				}
+				isSucceeded = true;
+			}
+		}
+		HealModule heal = Action.GetModule<HealModule>();
+		if( heal != null && skill.isPlayerSkill )
+		{
+			Player.Heal(heal);
+			isSucceeded = true;
+		}
+		EnhanceModule enhance = Action.GetModule<EnhanceModule>();
+		if( enhance != null && enhance.TargetType == TargetType.Player )
+		{
+			Player.Enhance(enhance);
+			isSucceeded = true;
+		}
+		WaitModule wait = Action.GetModule<WaitModule>();
+		if( wait != null && !skill.isPlayerSkill )
+		{
+			isSucceeded = true;
+		}
+		return isSucceeded;
+	}
+
+	public void UpdateHealHP()
+	{
+		Player.UpdateHealHP();
 	}
 
 	public void OnBattleStarted()
@@ -224,63 +284,24 @@ public class PlayerConductor : MonoBehaviour {
 		EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
 	}
 
+	public void OnEnterResult()
+	{
+		CommandGraph.OnEnterResult();
+		BGAnimBase.DeactivateCurrentAnim();
+	}
 
 	public void OnEnterEvent()
 	{
 		EnemyExp.Hide();
 	}
 
-	public bool ReceiveAction( ActionSet Action, Skill skill )
-	{
-		bool isSucceeded = false;
-		AnimModule anim = Action.GetModule<AnimModule>();
-		if( anim != null && !skill.isPlayerSkill )
-		{
-			isSucceeded = true;
-		}
-		AttackModule attack = Action.GetModule<AttackModule>();
-        if( attack != null )
-		{
-            if( skill.isPlayerSkill == false )
-            {
-                Player.BeAttacked( attack, skill );
-				int vpDamage = (int)(attack.VP * Player.VPCoeff);
-				if( vpDamage < 0 )
-				{
-					GameContext.VoxSystem.AddVPVT(vpDamage, 0);
-					Player.VPDrained(attack, skill, -vpDamage);
-				}
-                isSucceeded = true;
-            }
-        }
-		HealModule heal = Action.GetModule<HealModule>();
-        if( heal != null && skill.isPlayerSkill )
-		{
-			Player.Heal( heal );
-			isSucceeded = true;
-        }
-		EnhanceModule enhance = Action.GetModule<EnhanceModule>();
-        if( enhance != null && enhance.TargetType == TargetType.Player )
-		{
-            Player.Enhance( enhance );
-			isSucceeded = true;
-        }
-		WaitModule wait = Action.GetModule<WaitModule>();
-		if( wait != null && !skill.isPlayerSkill )
-		{
-			isSucceeded = true;
-		}
-		return isSucceeded;
-	}
-
-    public void UpdateHealHP()
-    {
-        Player.UpdateHealHP();
-    }
-
 	public void OnOverFlowed()
 	{
-		Player.EnhanceCutIn.SetReadyEclipse();
+		Player.EnhanceCutIn.SetOverflow();
+		if( CurrentCommand.BGAnim != null )
+		{
+			CurrentCommand.BGAnim.Activate();
+		}
 	}
 	public void OnRevert()
 	{
@@ -293,10 +314,12 @@ public class PlayerConductor : MonoBehaviour {
     public void OnPlayerLose()
     {
 		Player.DefaultInit();
+		BGAnimBase.DeactivateCurrentAnim();
     }
     public void OnContinue()
     {
         Player.HitPoint = Player.MaxHP;
-        Player.DefaultInit();
+		Player.DefaultInit();
+		BGAnimBase.DeactivateCurrentAnim();
     }
 }

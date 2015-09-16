@@ -10,7 +10,7 @@ public class Player : Character
 	public GameObject UIParent;
 	public CommandGraph commandGraph;
 	public HPPanel HPPanel;
-	public EnhanceCutIn EnhanceCutIn;
+	public CutInUI EnhanceCutIn;
 	public float DangerPercentage;
 	public int DangerHysteresis = 15;
 
@@ -31,7 +31,7 @@ public class Player : Character
 		{
 			if( (int)(damageTime/0.05f) != (int)((damageTime+Time.deltaTime)/0.05f) )
 			{
-				UIParent.transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp(damageTime, 0.2f, 2.0f) * DamageShake;
+				UIParent.transform.position = initialPosition + Random.insideUnitSphere * Mathf.Clamp(damageTime - GameContext.PlayerConductor.PlayerDamageTimeMin, 0.2f, 2.0f) * DamageShake;
 			}
 			damageTime -= Time.deltaTime;
 			if( damageTime <= 0 )

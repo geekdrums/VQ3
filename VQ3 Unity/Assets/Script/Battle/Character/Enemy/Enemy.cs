@@ -98,15 +98,11 @@ public class Enemy : Character
     {
         if( damageTime > 0 )
         {
-			//if( lastDamageResult == ActionResult.PhysicGoodDamage || lastDamageResult == ActionResult.MagicGoodDamage )
-			//{
-                if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
-                {
-                    transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp( damageTime, 0.2f, 2.0f ) * 2.0f;
-                }
-            //}
-            spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : GameContext.EnemyConductor.baseColor);
-            //outlineSprite.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? Color.clear : currentState.color);
+            if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
+            {
+				transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp(damageTime -  GameContext.EnemyConductor.EnemyDamageTimeMin, 0.2f, 2.0f) * GameContext.EnemyConductor.EnemyDamageShake;
+            }
+            spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? ( GameContext.VoxSystem.IsOverFlow ? ColorManager.Theme.Bright : Color.clear ) : GameContext.EnemyConductor.baseColor);
 
             damageTime -= Time.deltaTime;
             if( damageTime <= 0 )
@@ -123,7 +119,6 @@ public class Enemy : Character
                 }
             }
         }
-        //transform.localPosition = Vector3.Lerp( transform.localPosition, targetLocalPosition, 0.1f );
     }
 
 	protected void CreateDamageText(int damage, ActionResult actResult, GameObject parent = null)

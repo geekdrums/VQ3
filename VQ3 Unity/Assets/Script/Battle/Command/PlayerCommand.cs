@@ -56,6 +56,7 @@ public class PlayerCommand : MonoBehaviour
 	public float longitude;
 	public float radius = 1.0f;
 	public List<PlayerCommand> links;
+	public BGAnimBase BGAnim;
 
 	//
     // graphics editor params

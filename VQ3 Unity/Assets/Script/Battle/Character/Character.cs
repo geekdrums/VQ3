@@ -127,7 +127,14 @@ public class Character : MonoBehaviour
 		HitPoint = Mathf.Clamp(HitPoint - d, 0, HitPoint);
 		TurnDamage += d;
 		int RelativeMaxHP = (MaxHP < GameContext.PlayerConductor.PlayerMaxHP ? MaxHP : GameContext.PlayerConductor.PlayerMaxHP);
-		damageTime += 0.15f + ((float)d / (float)RelativeMaxHP);
+		if( this is Player )
+		{
+			damageTime += GameContext.PlayerConductor.PlayerDamageTimeMin + ((float)d / (float)RelativeMaxHP) * GameContext.PlayerConductor.PlayerDamageTimeCoeff;
+		}
+		else
+		{
+			damageTime += GameContext.EnemyConductor.EnemyDamageTimeMin + ((float)d / (float)RelativeMaxHP) * GameContext.EnemyConductor.EnemyDamageTimeCoeff;
+		}
 		damageTime = Mathf.Min(damageTime, (float)Music.MusicalTimeUnit * 8);
 	}
 	public virtual void Heal(HealModule heal)
