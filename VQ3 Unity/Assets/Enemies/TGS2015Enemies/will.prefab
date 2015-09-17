@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 750
+  HitPoint: 700
   BasePower: 0
   BaseMagic: 200
   DisplayName: "\u30A6\u30A3\u30EB"
@@ -154,7 +154,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: HitPoint
-      value: 750
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BaseMagic
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

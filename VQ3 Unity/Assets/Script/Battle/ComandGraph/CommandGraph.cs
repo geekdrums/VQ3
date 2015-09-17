@@ -398,7 +398,7 @@ public class CommandGraph : MonoBehaviour
 		if( Input.GetMouseButtonDown(0) )
 		{
 			oldMousePosition = Input.mousePosition;
-			if( hit.collider == CommandSphere.GetComponent<Collider>() && GameContext.VoxSystem.IsOverloading == false )
+			if( hit.collider == CommandSphere.GetComponent<Collider>() ) //&& GameContext.VoxSystem.IsOverloading == false )
 			{
 				CurrentButton = VoxButton.Ball;
 				PushCommandButton(hit.point);

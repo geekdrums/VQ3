@@ -57,6 +57,14 @@ public class EventConductor : MonoBehaviour
 					if( readTime_ <= 0 )
 					{
 						message_.CurrentIndex++;
+						if( message_.IsEnd )
+						{
+							SEPlayer.Play("cursorSound");
+						}
+						else
+						{
+							SEPlayer.Play("charRead");
+						}
 						readTime_ = CharacterReadTime;
 						string str = message_.DisplayText;
 						char ch = str[str.Length-1];
@@ -129,6 +137,7 @@ public class EventConductor : MonoBehaviour
 			SenderText.text = "";
 			Cursor.GetComponent<Renderer>().enabled = false;
 			State = EventState.Hiding;
+			currentEvent_.Watched = true;
 			animation_.Play("EventHideAnim");
 		}
 		else

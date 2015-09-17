@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.2.13.00
-* Date Time          : 2015/09/15 0:17
+* Date Time          : 2015/09/18 2:43
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -73,6 +73,7 @@ public partial class CriAtomAcfInfo
         newAcbInfo.cueInfoList.Add(22, new CueInfo("levelUp", 22, ""));
         newAcbInfo.cueInfoList.Add(23, new CueInfo("enhance", 23, ""));
         newAcbInfo.cueInfoList.Add(24, new CueInfo("invert", 24, ""));
+        newAcbInfo.cueInfoList.Add(36, new CueInfo("vtEmpty", 36, ""));
         newAcbInfo.cueInfoList.Add(25, new CueInfo("jam", 25, ""));
         newAcbInfo.cueInfoList.Add(27, new CueInfo("footstep", 27, ""));
         newAcbInfo.cueInfoList.Add(28, new CueInfo("flare", 28, ""));
@@ -81,5 +82,8 @@ public partial class CriAtomAcfInfo
         newAcbInfo.cueInfoList.Add(31, new CueInfo("commandLevelDown", 31, ""));
         newAcbInfo.cueInfoList.Add(32, new CueInfo("commandLevelUp", 32, ""));
         newAcbInfo.cueInfoList.Add(33, new CueInfo("spawn", 33, ""));
+        newAcbInfo.cueInfoList.Add(34, new CueInfo("charRead", 34, ""));
+        newAcbInfo.cueInfoList.Add(35, new CueInfo("cursorSound", 35, ""));
+        newAcbInfo.cueInfoList.Add(37, new CueInfo("result", 37, ""));
     }
 }

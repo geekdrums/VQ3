@@ -249,6 +249,10 @@ public class VoxSystem : MonoBehaviour
 				VTCount.Count = currentVT / 64.0f;
 				if( currentVT <= 0 )
 				{
+					if( currentVP > 10 )
+					{
+						SEPlayer.Play("vtEmpty");
+					}
 					currentVP = 0;
 					VPCount.Count = currentVP;
 					Music.SetAisac("TrackVolumeEnergy", 0);
@@ -423,13 +427,13 @@ public class VoxSystem : MonoBehaviour
 				}
 				mainLight.transform.rotation = Quaternion.AngleAxis(targetLightAngle, Vector3.forward);
 			}
-			else if( Music.IsNearChangedAt(3, 3) )
-			{
-				if( GameContext.PlayerConductor.CommandGraph.NextCommand == null )
-				{
-					Music.Pause();
-				}
-			}
+			//else if( Music.IsNearChangedAt(3, 3) )
+			//{
+			//	if( GameContext.PlayerConductor.CommandGraph.NextCommand == null )
+			//	{
+			//		Music.Pause();
+			//	}
+			//}
 		}
 
 		BGColor = Color.Lerp(BGColor, targetBGColor, 0.1f);

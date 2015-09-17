@@ -32,4 +32,8 @@ public class SE {
 	 public const int COMMANDLEVELDOWN = (31);
 	 public const int COMMANDLEVELUP = (32);
 	 public const int SPAWN = (33);
+	 public const int CHARREAD = (34);
+	 public const int CURSORSOUND = (35);
+	 public const int VTEMPTY = (36);
+	 public const int RESULT = (37);
 }

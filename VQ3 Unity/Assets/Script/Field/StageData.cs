@@ -60,4 +60,5 @@ public class EventData
 	public int EncounterIndex;
 	public GameState NextState = GameState.Setting;
 	public string MusicName;
+	public bool Watched = false;
 }

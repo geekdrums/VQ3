@@ -16,7 +16,6 @@ public class FieldConductor : MonoBehaviour {
 	public List<StageData> StageData;
 	public int StageIndex;
 	public int EncountIndex;
-	public MidairPrimitive WindowFrame;
 	public GameObject Setting;
 
 	public Encounter CurrentEncounter { get { return StageData[StageIndex].Encounters[EncountIndex]; } }
@@ -66,13 +65,11 @@ public class FieldConductor : MonoBehaviour {
 
 	public void OnEnterResult()
 	{
-		WindowFrame.SetTargetWidth(12);
 		EncountIndex++;
 	}
 
     public void OnEnterSetting()
 	{
-		WindowFrame.SetTargetWidth(12);
 		Setting.SetActive(true);
 		if( Music.IsPlaying == false || Music.CurrentMusicName != "ambient" )
 		{
@@ -83,16 +80,16 @@ public class FieldConductor : MonoBehaviour {
 	public void OnEnterBattle()
 	{
 		Setting.SetActive(false);
-		WindowFrame.SetTargetWidth(1);
 	}
 
 	public GameState CheckEvent(GameState nextState)
 	{
 		if( StageIndex >= StageData.Count ) return nextState;
 		int currentEncountIndex = StageData[StageIndex].Encounters.IndexOf(CurrentEncounter);
-		CurrentEvent = StageData[StageIndex].EventData.Find((EventData e) => e.EncounterIndex ==  currentEncountIndex && e.NextState == nextState);
-		if( CurrentEvent != null )
+		EventData eventData = StageData[StageIndex].EventData.Find((EventData e) => e.EncounterIndex ==  currentEncountIndex && e.NextState == nextState);
+		if( eventData != null && eventData.Watched == false )
 		{
+			CurrentEvent = eventData;
 			return GameState.Event;
 		}
 		else

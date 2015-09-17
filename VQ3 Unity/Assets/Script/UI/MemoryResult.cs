@@ -58,6 +58,7 @@ public class MemoryResult : MonoBehaviour {
 
 	public void Show(int memory)
 	{
+		SEPlayer.Play("result");
 		gameObject.SetActive(true);
 		AcquiredMemory.Count = memory;
 		StartMemory.Count = GameContext.PlayerConductor.LevelInfoList[GameContext.PlayerConductor.Level].NeedMemory;

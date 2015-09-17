@@ -7,6 +7,7 @@ public class PlayerConductor : MonoBehaviour {
 	public CommandGraph CommandGraph;
 	public MemoryPanel MemoryPanel;
 	public EnemyExplanation EnemyExp;
+	public MidairPrimitive WindowFrame;
 
     public int Level = 1;
 	public int TotalMemory;
@@ -265,7 +266,8 @@ public class PlayerConductor : MonoBehaviour {
 	}
 
 	public void OnBattleStarted()
-    {
+	{
+		WindowFrame.SetTargetWidth(1);
 		EnemyExp.Hide();
 		MemoryPanel.Hide();
         Player.OnBattleStart();
@@ -279,6 +281,7 @@ public class PlayerConductor : MonoBehaviour {
 
 	public void OnEnterSetting()
 	{
+		WindowFrame.SetTargetWidth(12);
 		CommandGraph.OnEnterSetting();
 		MemoryPanel.Reset();
 		EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
@@ -286,6 +289,8 @@ public class PlayerConductor : MonoBehaviour {
 
 	public void OnEnterResult()
 	{
+		Player.HitPoint = Player.MaxHP;
+		WindowFrame.SetTargetWidth(12);
 		CommandGraph.OnEnterResult();
 		BGAnimBase.DeactivateCurrentAnim();
 	}
@@ -308,7 +313,7 @@ public class PlayerConductor : MonoBehaviour {
 		Player.CheckDangerMode();
 	}
     public void OnPlayerWin()
-    {
+	{
 		Player.DefaultInit();
     }
     public void OnPlayerLose()
@@ -322,5 +327,6 @@ public class PlayerConductor : MonoBehaviour {
         Player.HitPoint = Player.MaxHP;
 		Player.DefaultInit();
 		BGAnimBase.DeactivateCurrentAnim();
+		WindowFrame.SetTargetWidth(12);
     }
 }

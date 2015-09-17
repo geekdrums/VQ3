@@ -126,7 +126,7 @@
             </Orca>
           </Orca>
         </Orca>
-        <Orca OrcaName="SE" OoUniqId="61f6c484-c862-4d1d-b6ad-5f194ae823c8" AcfMd5hash="txtosOlYorT3vxSzbHuH+g==" LastOutputCueSheetSize="1846560" CueSheetPaddingSize="2048" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSheet">
+        <Orca OrcaName="SE" OoUniqId="61f6c484-c862-4d1d-b6ad-5f194ae823c8" AcfMd5hash="txtosOlYorT3vxSzbHuH+g==" LastOutputCueSheetSize="2085920" CueSheetPaddingSize="2048" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSheet">
           <Orca OrcaName="PhysicGoodDamage" SynthType="SynthPolyphonic" PlaybackLimitEnableFlag="True" CueID="2" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
             <Orca OrcaName="Track_damage" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
               <Orca OrcaName="damage.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/damage.wav" SynthType="Waveform" LinkWaveformPathName="SE/damage.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
@@ -205,7 +205,7 @@
             </Orca>
           </Orca>
           <Orca OrcaName="select" SynthType="SynthPolyphonic" CueID="13" DisplayUnit="Frame5994" Pitch="-300" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
-            <Orca OrcaName="Track_select" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" Volume="0.71" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="Track_select" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" BiquadType="PeaqingEQ" BiquadCof="0.46" BiquadQ="2.99" BiquadGain="2.67" BandPassHi="0.58" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
               <Orca OrcaName="select.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/select.wav" SynthType="Waveform" LinkWaveformPathName="SE/select.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
             </Orca>
           </Orca>
@@ -269,14 +269,22 @@
             </Orca>
           </Orca>
           <Orca OrcaName="invert" SynthType="SynthPolyphonic" CueID="24" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
-            <Orca OrcaName="Track_invert" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 30, 100, 180" BiquadType="PeaqingEQ" BiquadQ="0.01" BandPassHi="0.81" BandPassLow="0.42" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+            <Orca OrcaName="Track_find" SynthType="Track" SwitchRange="0.5" DisplayUnit="Frame5994" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+              <Orca OrcaName="find.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/find.wav" SynthType="Waveform" LinkWaveformPathName="SE/find.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
+            </Orca>
+            <Orca OrcaName="Track_magic" SynthType="Track" SwitchRange="0.5" DisplayUnit="Frame5994" ObjectColor="200, 10, 60, 140" Volume="0.77" Pitch="705" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+              <Orca OrcaName="magic.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/magic.wav" SynthType="Waveform" LinkWaveformPathName="SE/magic.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
+            </Orca>
+          </Orca>
+          <Orca OrcaName="vtEmpty" SynthType="SynthPolyphonic" CueID="36" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+            <Orca OrcaName="Track_find" SynthType="Track" SwitchRange="0.5" DisplayUnit="Frame5994" ObjectColor="200, 30, 100, 180" Pitch="-1200" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+              <Orca OrcaName="find.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/find.wav" SynthType="Waveform" LinkWaveformPathName="SE/find.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
               <Orca OrcaName="Automation" AisacType="Automation" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
                 <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
-                  <Orca OrcaName="AisacPoint" ControlValue="0" DestinationValue="1.21" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
-                  <Orca OrcaName="AisacPoint" ControlValue="731" DestinationValue="0.35" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                  <Orca OrcaName="AutomationPoint" ControlValue="250" DestinationValue="0.77" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                  <Orca OrcaName="AutomationPoint" ControlValue="931" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
                 </Orca>
               </Orca>
-              <Orca OrcaName="invert.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/invert.wav" SynthType="Waveform" LinkWaveformPathName="SE/invert.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="jam" SynthType="SynthPolyphonic" CueID="25" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
@@ -367,6 +375,21 @@
                 </Orca>
               </Orca>
               <Orca OrcaName="enhance.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/enhance.wav" SynthType="Waveform" LinkWaveformPathName="SE/enhance.wav" Pitch="-1200" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
+            </Orca>
+          </Orca>
+          <Orca OrcaName="charRead" SynthType="SynthPolyphonic" CueID="34" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+            <Orca OrcaName="Track_charRead" SynthType="Track" SwitchRange="0.5" DisplayUnit="Frame5994" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+              <Orca OrcaName="charRead.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/charRead.wav" SynthType="Waveform" LinkWaveformPathName="SE/charRead.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
+            </Orca>
+          </Orca>
+          <Orca OrcaName="cursorSound" SynthType="SynthPolyphonic" CueID="35" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+            <Orca OrcaName="Track_cursorSound" SynthType="Track" SwitchRange="0.5" DisplayUnit="Frame5994" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+              <Orca OrcaName="cursorSound.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/cursorSound.wav" SynthType="Waveform" LinkWaveformPathName="SE/cursorSound.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
+            </Orca>
+          </Orca>
+          <Orca OrcaName="result" SynthType="SynthPolyphonic" CueID="37" DisplayUnit="Frame5994" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthCue">
+            <Orca OrcaName="Track_result_3" SynthType="Track" SwitchRange="0.5" DisplayUnit="Frame5994" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
+              <Orca OrcaName="result_3.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/SE/result_3.wav" SynthType="Waveform" LinkWaveformPathName="SE/result_3.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
             </Orca>
           </Orca>
         </Orca>

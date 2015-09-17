@@ -183,14 +183,14 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 17277501}
-  m_Text: VT
+  m_Text: TIME
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 0
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 60
+  m_FontSize: 64
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
@@ -605,7 +605,7 @@ Transform:
   m_Children:
   - {fileID: 1662029309}
   m_Father: {fileID: 54554773}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &38929923
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,6 +936,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1060113482}
+  - {fileID: 1003625049}
   - {fileID: 37798592}
   - {fileID: 1647229264}
   m_Father: {fileID: 1542959415}
@@ -2203,7 +2204,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.51334572
+      value: 3.53999996
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2231,7 +2232,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: CounterScale
@@ -4354,7 +4355,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: .5
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5619,7 +5620,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5891,7 +5892,7 @@ TextMesh:
   m_Anchor: 0
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 60
+  m_FontSize: 64
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
@@ -8358,7 +8359,7 @@ TextMesh:
   m_Anchor: 0
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 60
+  m_FontSize: 64
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
@@ -11077,7 +11078,7 @@ TextMesh:
   m_Anchor: 0
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 60
+  m_FontSize: 64
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
@@ -15515,6 +15516,82 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ec06a7d8092bedd4ea74728f7b992cda, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &1003625048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1003625049}
+  - 23: {fileID: 1003625051}
+  - 102: {fileID: 1003625050}
+  m_Layer: 0
+  m_Name: BreakText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1003625049
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1003625048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .360000014, y: -1.53999996, z: 0}
+  m_LocalScale: {x: .200000003, y: .200000003, z: .200000003}
+  m_Children: []
+  m_Father: {fileID: 54554773}
+  m_RootOrder: 1
+--- !u!102 &1003625050
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1003625048}
+  m_Text: 'BRK
+
+    TIME'
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1.20000005
+  m_Anchor: 6
+  m_Alignment: 2
+  m_TabSize: 4
+  m_FontSize: 64
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 12800000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &1003625051
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1003625048}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!1 &1009575344
 GameObject:
   m_ObjectHideFlags: 0
@@ -17447,7 +17524,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.z
@@ -18557,14 +18634,14 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1232439806}
-  m_Text: VP
+  m_Text: BRK
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 0
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 60
+  m_FontSize: 64
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
@@ -20849,7 +20926,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: .5
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.z
@@ -21369,11 +21446,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.53999996
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.38
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalPosition.z
@@ -22611,7 +22688,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: adff4f95bf2ffa34998467356a3b6211, type: 2}
   StageIndex: 0
   EncountIndex: 0
-  WindowFrame: {fileID: 2082072972}
   Setting: {fileID: 1703825378}
 --- !u!1 &1480761849
 GameObject:
@@ -26303,7 +26379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ba6b91be5faa1459e8239b1c959822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterReadTime: .0299999993
+  CharacterReadTime: .0599999987
   BlinkInterval: .200000003
   DisplayText: {fileID: 544841470}
   SenderText: {fileID: 1810492761}
@@ -32088,6 +32164,7 @@ MonoBehaviour:
   BaseBackCounters: []
   BaseBackPrimitives:
   - {fileID: 2082072972}
+  - {fileID: 587227465}
   BaseFrontPrimitives:
   - {fileID: 2097181735}
   - {fileID: 618030244}
@@ -32097,6 +32174,7 @@ MonoBehaviour:
   BaseFrontMaterials: []
   BaseFrontTextMeshes:
   - {fileID: 1555709510}
+  - {fileID: 1003625050}
 --- !u!1 &2085554842
 GameObject:
   m_ObjectHideFlags: 0
@@ -32816,9 +32894,10 @@ MonoBehaviour:
   CommandGraph: {fileID: 38929925}
   MemoryPanel: {fileID: 1483572278}
   EnemyExp: {fileID: 476152220}
-  Level: 4
-  TotalMemory: 110
-  RemainMemory: 10
+  WindowFrame: {fileID: 2082072972}
+  Level: 5
+  TotalMemory: 120
+  RemainMemory: 40
   PlayerDamageTimeCoeff: 1
   PlayerDamageTimeMin: .150000006
   LevelInfoList:
