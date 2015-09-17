@@ -1,25 +1,26 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
 public class CreateStageData : MonoBehaviour
 {
-	[MenuItem("Assets/Create/CreateStageData")]
+	[UnityEditor.MenuItem("Assets/Create/CreateStageData")]
 	public static void CreateAsset()
 	{
 		StageData item = ScriptableObject.CreateInstance<StageData>();
 
-		string path = AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/StageData/" + typeof(StageData) + ".asset");
+		string path = UnityEditor.AssetDatabase.GenerateUniqueAssetPath("Assets/Resources/StageData/" + typeof(StageData) + ".asset");
 
-		AssetDatabase.CreateAsset(item, path);
-		AssetDatabase.SaveAssets();
+		UnityEditor.AssetDatabase.CreateAsset(item, path);
+		UnityEditor.AssetDatabase.SaveAssets();
 
-		EditorUtility.FocusProjectWindow();
-		Selection.activeObject = item;
+		UnityEditor.EditorUtility.FocusProjectWindow();
+		UnityEditor.Selection.activeObject = item;
 	}
 }
+#endif
 
 [System.Serializable]
 public class StageData : ScriptableObject

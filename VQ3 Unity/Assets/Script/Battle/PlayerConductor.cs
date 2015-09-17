@@ -315,6 +315,7 @@ public class PlayerConductor : MonoBehaviour {
     {
 		Player.DefaultInit();
 		BGAnimBase.DeactivateCurrentAnim();
+		CommandGraph.OnEnterContinue();
     }
     public void OnContinue()
     {

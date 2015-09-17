@@ -705,6 +705,11 @@ public class CommandGraph : MonoBehaviour
 		GaugeParent.SetActive(false);
 	}
 
+	public void OnEnterContinue()
+	{
+		GaugeParent.SetActive(false);
+	}
+
 	public void OnEnterSetting()
 	{
 		CurrentRect.transform.localScale = Vector3.zero;

@@ -24,18 +24,10 @@ public class BattleConductor : MonoBehaviour {
 
     List<Pair<Timing, Skill>> Skills;
 
-    void Awake()
-    {
-        if( Application.platform == RuntimePlatform.WindowsPlayer ||
-        Application.platform == RuntimePlatform.OSXPlayer ||
-        Application.platform == RuntimePlatform.LinuxPlayer )
-        {
-            //Screen.SetResolution( 480, 720, false );
-            Screen.SetResolution( 400, 600, false );
-			//Screen.SetResolution(640, 960, false);
-		}
+	void Awake()
+	{
 		GameContext.BattleConductor = this;
-    }
+	}
 
 	// Use this for initialization
 	void Start ()

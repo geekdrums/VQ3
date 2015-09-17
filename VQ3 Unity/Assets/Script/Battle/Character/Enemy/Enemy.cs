@@ -273,10 +273,13 @@ public class Enemy : Character
     }
 
     public override void BeAttacked(AttackModule attack, Skill skill)
-    {
+	{
+		float typeCoeff = 1.0f;
+
 		if( attack.type == AttackType.Vox )
 		{
 			lastDamageResult = ActionResult.PhysicGoodDamage;
+			typeCoeff = 2.0f;
 		}
 		else
 		{
@@ -322,27 +325,32 @@ public class Enemy : Character
 			}
 			*/
 
-			if( GameContext.VoxSystem.State == VoxState.Overload )
-			{
-				lastDamageResult = ActionResult.PhysicGoodDamage;
-			}
-			else if( GameContext.VoxSystem.IsOverFlow )
+			if( GameContext.VoxSystem.IsOverFlow )
 			{
 				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicGoodDamage;
 				else lastDamageResult = ActionResult.MagicGoodDamage;
 			}
 			else
 			{
-				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicDamage;
-				else lastDamageResult = ActionResult.MagicDamage;
+				switch( Speceis )
+				{
+				case EnemySpecies.Fairy:
+					if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicDamage;
+					else lastDamageResult = ActionResult.MagicGoodDamage;
+					break;
+				case EnemySpecies.Spirit:
+					if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicGoodDamage;
+					else lastDamageResult = ActionResult.MagicDamage;
+					break;
+				default:
+					if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicDamage;
+					else lastDamageResult = ActionResult.MagicDamage;
+					break;
+				}
+				if( lastDamageResult.ToString().EndsWith("GoodDamage") ) typeCoeff = 2.0f;
 			}
 		}
         
-		float typeCoeff = 1.0f;
-		if( GameContext.VoxSystem.State == VoxState.Overload ) typeCoeff = 2.0f;
-		//if( lastDamageResult.ToString().EndsWith("GoodDamage") ) typeCoeff = 2.0f;
-		//else if( lastDamageResult.ToString().EndsWith("BadDamage") ) typeCoeff = 0.1f;
-		//else if( lastDamageResult.ToString().EndsWith("NoDamage") ) typeCoeff = 0.0f;
 
 		float overFlowPower = 0.0f;
 		if( GameContext.VoxSystem.IsOverFlow && GameContext.VoxSystem.State != VoxState.Overload )

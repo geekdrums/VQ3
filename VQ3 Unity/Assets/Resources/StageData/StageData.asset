@@ -21,11 +21,19 @@ MonoBehaviour:
     InvertVP: 300
   - BattleSets:
     - Enemies:
+      - {fileID: 100000, guid: a4eb77d13baed2f46960e2ddc6c4b438, type: 2}
+      - {fileID: 100000, guid: a4eb77d13baed2f46960e2ddc6c4b438, type: 2}
+      StateSets:
+      - nameList: Default Default
+    AcquireMemory: 10
+    InvertVP: 300
+  - BattleSets:
+    - Enemies:
       - {fileID: 100000, guid: e8c6faf17a1dde64689e7731a5e71468, type: 2}
       StateSets:
       - nameList: Default
     AcquireMemory: 10
-    InvertVP: 100
+    InvertVP: 50
   - BattleSets:
     - Enemies:
       - {fileID: 100000, guid: 74b623502b46f0744ab9a19eaa4891d9, type: 2}
