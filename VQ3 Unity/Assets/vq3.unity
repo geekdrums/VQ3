@@ -145,8 +145,8 @@ MonoBehaviour:
   CommandLevel: 1
   RequireSP: 10
   MusicBlockName: DefendAttack3
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30A2\u30EB\u30AC\u30F3\u30C9\u3000\u3092\u3000\u306F\u306A\u3063\u305F\n\u304B\u305F\u3044\u3000\u307E\u3082\u308A\u3067\u3000\u3058\u3063\u3068\u3000\u305F\u3048\u308B"
-  ExplanationText: "\u6700\u3082\u56FA\u3044\u3000\u5B88\u308A\u306E\u661F\u3000\u30A2\u30EB\u30AC\u30F3\u30C9\u3002\n\u98A8\u306E\u9B54\u6CD5\u3067\u3000\u53CD\u6483\u306E\u30C1\u30E3\u30F3\u30B9\u3092\u3092\u3046\u304B\u304C\u3046"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30A2\u30EB\u30AC\u30F3\u30C9\u3092\u653E\u3063\u305F\u3002"
+  ExplanationText: "\u56FA\u3044\u9632\u5FA1\u3067\u3057\u306E\u3050\u3001\u30A2\u30EB\u30AC\u30F3\u30C9\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u306E\u6301\u7D9A\u3092<br/>\u308F\u305A\u304B\u306B\u9AD8\u3081\u307E\u3059\u3002"
 --- !u!1 &17277501
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,34 +578,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &37798591
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 37798592}
-  m_Layer: 0
-  m_Name: VTEndLine
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &37798592
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 37798591}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1662029309}
-  m_Father: {fileID: 54554773}
-  m_RootOrder: 2
 --- !u!1 &38929923
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,7 +891,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 54554773}
   m_Layer: 0
-  m_Name: VTCeil
+  m_Name: Numbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -932,15 +904,15 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 54554772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: 0}
+  m_LocalPosition: {x: -3.32525015, y: -4.09000111, z: 3.86855888}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1060113482}
   - {fileID: 1003625049}
-  - {fileID: 37798592}
   - {fileID: 1647229264}
-  m_Father: {fileID: 1542959415}
-  m_RootOrder: 1
+  - {fileID: 2101187580}
+  - {fileID: 1060113482}
+  m_Father: {fileID: 1083102472}
+  m_RootOrder: 2
 --- !u!1 &59073463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2204,7 +2176,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.53999996
+      value: 7.01000023
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2232,7 +2204,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: CounterScale
@@ -2260,7 +2232,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: align
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: Interval
@@ -2450,8 +2422,8 @@ MonoBehaviour:
   CommandLevel: 1
   RequireSP: 0
   MusicBlockName: Vox
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30DE\u30B0\u30B9\u3000\u3092\u3000\u306F\u306A\u3063\u305F\n\u307E\u3070\u3086\u3044\u3000\u3072\u304B\u308A\u306E\u3000\u3051\u3093\u3092\u3000\u3066\u3093\u304B\u3089\u3000\u3075\u308A\u304A\u308D\u3057\u305F"
-  ExplanationText: "\u307E\u3070\u3086\u3044\u3000\u5149\u306E\u661F\u3000\u30DE\u30B0\u30B9\u3002\n\u5929\u304B\u3089\u3000\u5149\u306E\u5263\u3092\u632F\u308A\u4E0B\u308D\u3057\n\u8AB0\u306B\u3082\u6B62\u3081\u3089\u308C\u306A\u3044\u3000\u653B\u6483\u3092\u653E\u3064"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30DE\u30B0\u30B9\u3092\u653E\u3063\u305F\u3002"
+  ExplanationText: "\u307E\u3070\u3086\u3044\u5149\u306E\u5263\u3092\u632F\u308A\u4E0B\u308D\u3059\u3001\u30DE\u30B0\u30B9\u3002<br/>\u53CD\u8EE2\u5F8C\u306B\u767A\u52D5\u53EF\u80FD\u3067\u3059\u3002"
 --- !u!1 &157254260
 GameObject:
   m_ObjectHideFlags: 0
@@ -2690,6 +2662,83 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2026910084}
   m_RootOrder: 0
+--- !u!1 &171037400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 171037401}
+  - 23: {fileID: 171037403}
+  - 102: {fileID: 171037402}
+  m_Layer: 0
+  m_Name: HPText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &171037401
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 171037400}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.29999995, y: 2.79999995, z: 3.32594299}
+  m_LocalScale: {x: .200000003, y: .200000003, z: .200000003}
+  m_Children:
+  - {fileID: 2046912194}
+  m_Father: {fileID: 1964785412}
+  m_RootOrder: 0
+--- !u!102 &171037402
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 171037400}
+  m_Text: 'HP
+
+'
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1.79999995
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 48
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 12800000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &171037403
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 171037400}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!1 &174839420
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,8 +2874,8 @@ MonoBehaviour:
   CommandLevel: 1
   RequireSP: 10
   MusicBlockName: Attack1
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30C0\u30A4\u30CA\u30C9\u3000\u3092\u3000\u306F\u306A\u3063\u305F\n\u307F\u3092\u3000\u307E\u3082\u308A\u306A\u304C\u3089\u3000\u3066\u304D\u3092\u3000\u3053\u3046\u3052\u304D"
-  ExplanationText: "\u9632\u5FA1\u3068\u3000\u653B\u6483\u306E\u661F\u3000\u30C0\u30A4\u30CA\u30C9\u3002\n\u9B54\u529B\u3092\u6301\u7D9A\u3055\u305B\u3064\u3064\u3001\u5B88\u308A\u3092\u56FA\u3081\u308B\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30C0\u30A4\u30CA\u30C9\u3092\u653E\u3063\u305F\u3002"
+  ExplanationText: "\u5263\u621F\u3068\u9632\u5FA1\u3092\u517C\u306D\u5099\u3048\u308B\u3001\u30C0\u30A4\u30CA\u30C9\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u306E\u6301\u7D9A\u6642\u9593\u3092\u9AD8\u3081\u307E\u3059\u3002"
 --- !u!1 &181275182
 GameObject:
   m_ObjectHideFlags: 0
@@ -3171,7 +3220,7 @@ MonoBehaviour:
   - {fileID: 2017496669}
   - {fileID: 1717701504}
   - {fileID: 1318932467}
-  numSP: 20
+  numSP: 0
   currentLevel: 0
 --- !u!114 &204439536
 MonoBehaviour:
@@ -3448,7 +3497,7 @@ MonoBehaviour:
   - BlockName: VoxMagic
     NumBar: 4
   - BlockName: wait
-    NumBar: 1
+    NumBar: 16
   - BlockName: Block_continue
     NumBar: 4
   - BlockName: Block_ambient
@@ -3935,8 +3984,8 @@ MonoBehaviour:
   CommandLevel: 2
   RequireSP: 20
   MusicBlockName: Magic4
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30E9\u30AF\u30E9\u30A4\u30C8\u3000\u3092\u3000\u3068\u306A\u3048\u305F\n\u3066\u3093\u3058\u3087\u3046\u306E\u3000\u3044\u304B\u3065\u3061\u304C\u3000\u3068\u3081\u3069\u306A\u304F\u3000\u304A\u3057\u3088\u305B\u308B"
-  ExplanationText: "\u9583\u5149\u306E\u3000\u96F7\u306E\u661F\u3000\u30E9\u30AF\u30E9\u30A4\u30C8\u3002\n\u5929\u4E0A\u306E\u96F7\u3092\u547C\u3073\u5BC4\u305B\u3066\u3000\u9B54\u529B\u3092\u6E9C\u3081\u308B\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30E9\u30AF\u30E9\u30A4\u30C8\u3092\u5531\u3048\u305F\u3002"
+  ExplanationText: "\u5730\u7344\u306E\u96F7\u3092\u547C\u3073\u5BC4\u305B\u308B\u3001\u30E9\u30AF\u30E9\u30A4\u30C8\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u3092\u5145\u586B\u3057\u307E\u3059\u3002 "
 --- !u!1 &271546908
 GameObject:
   m_ObjectHideFlags: 0
@@ -4657,7 +4706,7 @@ MonoBehaviour:
   - {fileID: 1717701504}
   - {fileID: 1308508740}
   - {fileID: 1239555268}
-  numSP: 20
+  numSP: 0
   currentLevel: 0
 --- !u!114 &286711176
 MonoBehaviour:
@@ -5236,7 +5285,7 @@ MonoBehaviour:
   - {fileID: 96833732}
   - {fileID: 965743243}
   - {fileID: 853177957}
-  numSP: 20
+  numSP: 0
   currentLevel: 0
 --- !u!114 &345475205
 MonoBehaviour:
@@ -6981,8 +7030,8 @@ MonoBehaviour:
   CommandLevel: 2
   RequireSP: 20
   MusicBlockName: Attack4
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30C0\u30A4\u30CA\u30E2\u3000\u3092\u3000\u306F\u306A\u3063\u305F\n\u3057\u3093\u304F\u3046\u306E\u3000\u3084\u3044\u3070\u304C\u3000\u3066\u304D\u3092\u3000\u304A\u305D\u3046"
-  ExplanationText: "\u304B\u304C\u3084\u304F\u3000\u653B\u6483\u306E\u661F\u3000\u30C0\u30A4\u30CA\u30E2\u3002\n\u9B54\u529B\u3092\u6301\u7D9A\u3055\u305B\u308B\u52B9\u679C\u304C\u3000\u6700\u3082\u305F\u304B\u3044\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30C0\u30A4\u30CA\u30E2\u3092\u653E\u3063\u305F\u3002"
+  ExplanationText: "\u9BAE\u660E\u306A\u5263\u621F\u3092\u653E\u3064\u3001\u30C0\u30A4\u30CA\u30E2\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u306E\u6301\u7D9A\u6642\u9593\u3092<br/>\u5927\u304D\u304F\u9AD8\u3081\u307E\u3059\u3002"
 --- !u!1001 &467757814
 Prefab:
   m_ObjectHideFlags: 0
@@ -8813,6 +8862,80 @@ LineRenderer:
       serializedVersion: 2
       rgba: 4294967295
   m_UseWorldSpace: 0
+--- !u!1 &554896034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 554896035}
+  - 23: {fileID: 554896037}
+  - 102: {fileID: 554896036}
+  m_Layer: 0
+  m_Name: Text (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &554896035
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554896034}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10, y: 15.5, z: -1}
+  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_Children: []
+  m_Father: {fileID: 609662569}
+  m_RootOrder: 2
+--- !u!102 &554896036
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554896034}
+  m_Text: GEEKDRUMS
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 36
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 12800000, guid: 48deea45dde8f1f4e803dd6f29c8682d, type: 3}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &554896037
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554896034}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 48deea45dde8f1f4e803dd6f29c8682d, type: 3}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!1 &555597359
 GameObject:
   m_ObjectHideFlags: 0
@@ -8977,8 +9100,8 @@ MonoBehaviour:
   CommandLevel: 1
   RequireSP: 10
   MusicBlockName: MagicHeal3
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30EA\u30E9\u30AF\u30EB\u3000\u3092\u3000\u3068\u306A\u3048\u305F\n\u304B\u307F\u306A\u308A\u3068\u3000\u3068\u3082\u306B\u3000\u3081\u3050\u307F\u306E\u3000\u3042\u3081\u3092\u3000\u3082\u305F\u3089\u3059"
-  ExplanationText: "\u56DE\u5FA9\u3068\u96F7\u306E\u661F\u3000\u30EA\u30E9\u30AF\u30EB\u3002\n\u3081\u3050\u307F\u306E\u96E8\u304C\u3000\u50B7\u3092\u7652\u3084\u3057\n\u96F7\u306F\u3000\u9B54\u7269\u3092\u304A\u305D\u3046"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30EA\u30E9\u30AF\u30EB\u3092\u5531\u3048\u305F\u3002"
+  ExplanationText: "\u6075\u307F\u306E\u96E8\u3068\u96F7\u3092\u547C\u3073\u5BC4\u305B\u308B\u3001\u30EA\u30E9\u30AF\u30EB\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u3092\u5C11\u3057\u5145\u586B\u3057\u307E\u3059\u3002 "
 --- !u!1 &565591016
 GameObject:
   m_ObjectHideFlags: 0
@@ -9202,7 +9325,7 @@ MonoBehaviour:
   GrowTexture: {fileID: 0}
   GrowChild: {fileID: 0}
   ownerAnimation: {fileID: 0}
-  materialName: Diffuse
+  materialName: Transparent/Diffuse
   colorName: _Color
   animParam: 0
 --- !u!23 &587227466
@@ -9547,6 +9670,80 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!1 &605911222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 605911223}
+  - 23: {fileID: 605911225}
+  - 102: {fileID: 605911224}
+  m_Layer: 0
+  m_Name: Text (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &605911223
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 605911222}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10, y: 18.0799999, z: -1}
+  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_Children: []
+  m_Father: {fileID: 609662569}
+  m_RootOrder: 1
+--- !u!102 &605911224
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 605911222}
+  m_Text: NO MARK GAMES
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 50
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 12800000, guid: 48deea45dde8f1f4e803dd6f29c8682d, type: 3}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &605911225
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 605911222}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 48deea45dde8f1f4e803dd6f29c8682d, type: 3}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!1 &606756464
 GameObject:
   m_ObjectHideFlags: 0
@@ -9774,6 +9971,38 @@ MonoBehaviour:
   MusicBlockName: intro
   DescribeText: 
   ExplanationText: "\u3059\u3079\u3066\u306E\u306F\u3058\u307E\u308A\u3000\u30A4\u30F3\u30C8\u30ED\u30C0\u30AF\u30B7\u30E7\u30F3\u3002"
+--- !u!1 &609662568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 609662569}
+  m_Layer: 0
+  m_Name: Teams
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &609662569
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 609662568}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1797774576}
+  - {fileID: 605911223}
+  - {fileID: 554896035}
+  - {fileID: 1040152898}
+  - {fileID: 768902588}
+  m_Father: {fileID: 1813188058}
+  m_RootOrder: 1
 --- !u!1 &618030241
 GameObject:
   m_ObjectHideFlags: 0
@@ -10014,11 +10243,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -10
+      value: -10.5
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 13
+      value: 13.5
       objectReference: {fileID: 0}
     - target: {fileID: 470714, guid: 6be9e781919ff5d43a87799ba49dcf57, type: 2}
       propertyPath: m_LocalPosition.z
@@ -10617,10 +10846,10 @@ MonoBehaviour:
   HealPercent: 0
   OwnerCommand: {fileID: 548279412}
   CommandLevel: 1
-  RequireSP: 20
+  RequireSP: 30
   MusicBlockName: Ignis4
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30A4\u30B0\u30CB\u30B9\u3000\u3092\u3000\u3068\u306A\u3048\u305F\n\u305D\u3089\u3092\u3000\u3084\u304D\u3064\u304F\u3059\u3000\u3054\u3046\u304B\u304C\u3000\u3066\u304D\u305C\u3093\u305F\u3044\u3092\u3000\u304A\u305D\u3046"
-  ExplanationText: "\u3057\u3083\u304F\u306D\u3064\u306E\u3000\u708E\u306E\u661F\u3000\u30A4\u30B0\u30CB\u30B9\u3002\n\u5730\u7344\u306E\u696D\u706B\u304C\u6575\u5168\u4F53\u3092\u713C\u304D\u3064\u304F\u3059\u3002\n\u9B54\u529B\u3092\u6E9C\u3081\u308B\u52B9\u679C\u304C\u3000\u6700\u3082\u305F\u304B\u3044\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30A4\u30B0\u30CB\u30B9\u3092\u5531\u3048\u305F\u3002"
+  ExplanationText: "\u707C\u71B1\u306E\u708E\u3092\u89E3\u304D\u653E\u3064\u3001\u30A4\u30B0\u30CB\u30B9\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u3092\u5927\u304D\u304F\u5145\u586B\u3057\u307E\u3059\u3002 "
 --- !u!4 &666789774 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
@@ -12309,7 +12538,7 @@ MonoBehaviour:
   - {fileID: 1182727109}
   - {fileID: 1108134725}
   - {fileID: 776820476}
-  numSP: 20
+  numSP: 0
   currentLevel: 0
 --- !u!114 &766860335
 MonoBehaviour:
@@ -12368,6 +12597,80 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 766860332}
   m_Mesh: {fileID: 0}
+--- !u!1 &768902587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 768902588}
+  - 23: {fileID: 768902590}
+  - 102: {fileID: 768902589}
+  m_Layer: 0
+  m_Name: Text (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &768902588
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 768902587}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10, y: 11.5, z: -1}
+  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_Children: []
+  m_Father: {fileID: 609662569}
+  m_RootOrder: 4
+--- !u!102 &768902589
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 768902587}
+  m_Text: Hiromu sugawara
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 36
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 12800000, guid: 48deea45dde8f1f4e803dd6f29c8682d, type: 3}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &768902590
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 768902587}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 48deea45dde8f1f4e803dd6f29c8682d, type: 3}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!1 &770771713
 GameObject:
   m_ObjectHideFlags: 0
@@ -14408,8 +14711,8 @@ MonoBehaviour:
   CommandLevel: 1
   RequireSP: 10
   MusicBlockName: Magic3
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30E9\u30AF\u30E9\u30A4\u30C8\u3000\u3092\u3000\u3068\u306A\u3048\u305F\n\u3066\u3093\u3058\u3087\u3046\u306E\u3000\u3044\u304B\u3065\u3061\u304C\u3000\u3068\u3081\u3069\u306A\u304F\u3000\u304A\u3057\u3088\u305B\u308B"
-  ExplanationText: "\u9583\u5149\u306E\u3000\u96F7\u306E\u661F\u3000\u30E9\u30AF\u30E9\u30A4\u30C8\u3002\n\u5929\u4E0A\u306E\u96F7\u3092\u547C\u3073\u5BC4\u305B\u3066\u3000\u9B54\u529B\u3092\u6E9C\u3081\u308B\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30E9\u30AF\u30E9\u30A4\u30C8\u3092\u5531\u3048\u305F\u3002"
+  ExplanationText: "\u5730\u7344\u306E\u96F7\u3092\u547C\u3073\u5BC4\u305B\u308B\u3001\u30E9\u30AF\u30E9\u30A4\u30C8\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u3092\u5145\u586B\u3057\u307E\u3059\u3002 "
 --- !u!4 &932481620 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
@@ -14519,8 +14822,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0d470382d811726408480847bd71e743, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0d470382d811726408480847bd71e743, type: 2}
+      propertyPath: ownerAnimation
+      value: 
+      objectReference: {fileID: 1553029876}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0d470382d811726408480847bd71e743, type: 2}
   m_IsPrefabParent: 0
@@ -14580,8 +14887,8 @@ MonoBehaviour:
   CommandLevel: 2
   RequireSP: 20
   MusicBlockName: MagicHeal4
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30EA\u30E9\u30AF\u30EB\u3000\u3092\u3000\u3068\u306A\u3048\u305F\n\u304B\u307F\u306A\u308A\u3068\u3000\u3068\u3082\u306B\u3000\u3081\u3050\u307F\u306E\u3000\u3042\u3081\u3092\u3000\u3082\u305F\u3089\u3059"
-  ExplanationText: "\u56DE\u5FA9\u3068\u96F7\u306E\u661F\u3000\u30EA\u30E9\u30AF\u30EB\u3002\n\u3081\u3050\u307F\u306E\u96E8\u304C\u3000\u50B7\u3092\u7652\u3084\u3057\n\u96F7\u306F\u3000\u9B54\u7269\u3092\u304A\u305D\u3046"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30EA\u30E9\u30AF\u30EB\u3092\u5531\u3048\u305F\u3002"
+  ExplanationText: "\u6075\u307F\u306E\u96E8\u3068\u96F7\u3092\u547C\u3073\u5BC4\u305B\u308B\u3001\u30EA\u30E9\u30AF\u30EB\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u3092\u5C11\u3057\u5145\u586B\u3057\u307E\u3059\u3002 "
 --- !u!1 &961033922
 GameObject:
   m_ObjectHideFlags: 0
@@ -15540,11 +15847,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1003625048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .360000014, y: -1.53999996, z: 0}
+  m_LocalPosition: {x: .0500000007, y: .75, z: 0}
   m_LocalScale: {x: .200000003, y: .200000003, z: .200000003}
   m_Children: []
   m_Father: {fileID: 54554773}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!102 &1003625050
 TextMesh:
   serializedVersion: 3
@@ -15552,16 +15859,14 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1003625048}
-  m_Text: 'BRK
-
-    TIME'
+  m_Text: BREAK
   m_OffsetZ: 0
   m_CharacterSize: 1
-  m_LineSpacing: 1.20000005
-  m_Anchor: 6
-  m_Alignment: 2
+  m_LineSpacing: 1.79999995
+  m_Anchor: 0
+  m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 64
+  m_FontSize: 48
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
@@ -16180,6 +16485,80 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1034267065}
   m_Script: {fileID: 11500000, guid: c5243a50e5c327943acdd4dbac087d6f, type: 3}
+--- !u!1 &1040152897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1040152898}
+  - 23: {fileID: 1040152900}
+  - 102: {fileID: 1040152899}
+  m_Layer: 0
+  m_Name: Text (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1040152898
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1040152897}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10, y: 13.3999996, z: -1}
+  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_Children: []
+  m_Father: {fileID: 609662569}
+  m_RootOrder: 3
+--- !u!102 &1040152899
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1040152897}
+  m_Text: mab
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 36
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 12800000, guid: 48deea45dde8f1f4e803dd6f29c8682d, type: 3}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &1040152900
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1040152897}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 48deea45dde8f1f4e803dd6f29c8682d, type: 3}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!1 &1050596867
 GameObject:
   m_ObjectHideFlags: 0
@@ -16550,7 +16929,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1083102472
 Transform:
   m_ObjectHideFlags: 0
@@ -16558,11 +16937,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1083102471}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.51891279, y: -9.10999966, z: -35.6467819}
+  m_LocalPosition: {x: -7.51891279, y: -9.39000034, z: -35.6467819}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 969519005}
   - {fileID: 1542959415}
+  - {fileID: 54554773}
   m_Father: {fileID: 1302573136}
   m_RootOrder: 2
 --- !u!1 &1084555934
@@ -16693,7 +17073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0229a9dbbd39f084aafb16e1eaa8c65e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameState: 3
+  GameState: 0
 --- !u!4 &1103910207
 Transform:
   m_ObjectHideFlags: 0
@@ -18211,8 +18591,8 @@ MonoBehaviour:
   CommandLevel: 1
   RequireSP: 0
   MusicBlockName: Magic4Trans
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30A8\u30AF\u30B9\u30E9\u30A4\u30C8\u3000\u3092\u3000\u3068\u306A\u3048\u305F\n\u304B\u305C\u3068\u3000\u3068\u3082\u306B\u3000\u3066\u3093\u306E\u3000\u3061\u304B\u3089\u3092\u3000\u3088\u3073\u304A\u3053\u3059"
-  ExplanationText: "\u96F7\u3068\u53CD\u8EE2\u306E\u661F\u3000\u30A8\u30AF\u30B9\u30E9\u30A4\u30C8\u3002\n\u9B54\u529B\u304C\u6E80\u3061\u305F\u6642\u3000\u9ED2\u3044\u6708\u3092\u304B\u304B\u3052\n\u4E16\u754C\u3092\u53CD\u8EE2\u3055\u305B\u308B\u529B\u3092\u4E0E\u3048\u308B\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30A8\u30AF\u30B9\u30E9\u30A4\u30C8\u3092\u5531\u3048\u305F\u3002"
+  ExplanationText: "\u4E16\u754C\u306E\u53CD\u8EE2\u3092\u5F15\u304D\u8D77\u3053\u3059\u7279\u6B8A\u9B54\u6CD5\u3001\u30A8\u30AF\u30B9\u30E9\u30A4\u30C8\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u6700\u5927\u6642\u306B\u767A\u52D5\u3059\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002"
 --- !u!1 &1199834410
 GameObject:
   m_ObjectHideFlags: 0
@@ -19017,8 +19397,8 @@ MonoBehaviour:
   CommandLevel: 1
   RequireSP: 10
   MusicBlockName: HealDefend
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30EA\u30F3\u30D5\u30A1\u3000\u3092\u3000\u3068\u306A\u3048\u305F\n\u3057\u305A\u304B\u306A\u3000\u3042\u3081\u304C\u3000\u304D\u3057\u304B\u3044\u305B\u3044\u306E\u3000\u3061\u304B\u3089\u3092\u3000\u3042\u305F\u3048\u308B"
-  ExplanationText: "\u56DE\u5FA9\u3068\u9632\u5FA1\u306E\u661F\u3000\u30EA\u30F3\u30D5\u30A1\u3002\n\u9759\u304B\u306A\u96E8\u304C\u3000\u50B7\u3092\u7652\u3084\u3057\u3001\u8EAB\u3092\u5B88\u308B\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30EA\u30F3\u30D5\u30A1\u3092\u5531\u3048\u305F\u3002"
+  ExplanationText: "\u56DE\u5FA9\u3068\u9632\u5FA1\u306B\u5C02\u5FF5\u3059\u308B\u3001\u30EA\u30F3\u30D5\u30A1\u3002"
 --- !u!1 &1257778875
 GameObject:
   m_ObjectHideFlags: 0
@@ -19460,8 +19840,8 @@ MonoBehaviour:
   CommandLevel: 1
   RequireSP: 10
   MusicBlockName: Attack3
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30C0\u30A4\u30CA\u30E2\u3000\u3092\u3000\u306F\u306A\u3063\u305F\n\u3057\u3093\u304F\u3046\u306E\u3000\u3084\u3044\u3070\u304C\u3000\u3066\u304D\u3092\u3000\u304A\u305D\u3046"
-  ExplanationText: "\u304B\u304C\u3084\u304F\u3000\u653B\u6483\u306E\u661F\u3000\u30C0\u30A4\u30CA\u30E2\u3002\n\u9B54\u529B\u3092\u6301\u7D9A\u3055\u305B\u308B\u52B9\u679C\u304C\u3000\u6700\u3082\u305F\u304B\u3044\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30C0\u30A4\u30CA\u30E2\u3092\u653E\u3063\u305F\u3002"
+  ExplanationText: "\u9BAE\u660E\u306A\u5263\u621F\u3092\u653E\u3064\u3001\u30C0\u30A4\u30CA\u30E2\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u306E\u6301\u7D9A\u6642\u9593\u3092<br/>\u5927\u304D\u304F\u9AD8\u3081\u307E\u3059\u3002"
 --- !u!1 &1296941551
 GameObject:
   m_ObjectHideFlags: 0
@@ -19642,7 +20022,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1303797122}
-  m_Text: "\u25B2\nLv Up"
+  m_Text: "\u25B2\nALLOC"
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -21446,7 +21826,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.53999996
+      value: 7.01000023
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalPosition.y
@@ -21474,7 +21854,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: m_LocalScale.x
@@ -21502,7 +21882,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: align
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: d43df3694c0051e48b90fae6bded3a93, type: 2}
       propertyPath: Interval
@@ -22684,6 +23064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23bc7fb427156004b80e9b6a6613c2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RefreshWatchFlags: 1
   StageData:
   - {fileID: 11400000, guid: adff4f95bf2ffa34998467356a3b6211, type: 2}
   StageIndex: 0
@@ -22838,8 +23219,6 @@ MonoBehaviour:
   UpButton: {fileID: 712602700}
   DownButton: {fileID: 181275184}
   BaseFrame: {fileID: 587227465}
-  BGMaterial: {fileID: 2100000, guid: a5994ec2011e6154f8b74ff83e8dbf75, type: 2}
-  GaugeMaterial: {fileID: 2100000, guid: 0e32f76e83857084599bd502435b0d7b, type: 2}
   CommandExp: {fileID: 188397882}
 --- !u!1 &1485760795
 GameObject:
@@ -22888,8 +23267,8 @@ MonoBehaviour:
   CommandLevel: 2
   RequireSP: 20
   MusicBlockName: DefendHeal
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30EA\u30F3\u30D5\u30A1\u3000\u3092\u3000\u3068\u306A\u3048\u305F\n\u3057\u305A\u304B\u306A\u3000\u3042\u3081\u304C\u3000\u304D\u3057\u304B\u3044\u305B\u3044\u306E\u3000\u3061\u304B\u3089\u3092\u3000\u3042\u305F\u3048\u308B"
-  ExplanationText: "\u56DE\u5FA9\u3068\u9632\u5FA1\u306E\u661F\u3000\u30EA\u30F3\u30D5\u30A1\u3002\n\u9759\u304B\u306A\u96E8\u304C\u3000\u50B7\u3092\u7652\u3084\u3057\u3001\u8EAB\u3092\u5B88\u308B\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30EA\u30F3\u30D5\u30A1\u3092\u5531\u3048\u305F\u3002"
+  ExplanationText: "\u56DE\u5FA9\u3068\u9632\u5FA1\u306B\u5C02\u5FF5\u3059\u308B\u3001\u30EA\u30F3\u30D5\u30A1\u3002"
 --- !u!1 &1490847355
 GameObject:
   m_ObjectHideFlags: 0
@@ -23981,7 +24360,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1296941552}
-  - {fileID: 54554773}
   m_Father: {fileID: 1083102472}
   m_RootOrder: 1
 --- !u!1 &1543365970
@@ -24158,6 +24536,38 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!1 &1553029875 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100000, guid: 0d470382d811726408480847bd71e743, type: 2}
+  m_PrefabInternal: {fileID: 945004686}
+--- !u!111 &1553029876
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1553029875}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: d45b39da7c846c54784e12e8989ed771, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: d45b39da7c846c54784e12e8989ed771, type: 2}
+  - {fileID: 7400000, guid: bf7fb4d44f2317841a7d8a8ba0ffe5ca, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &1553029880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1553029875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076bcd58f93c9d44182cda31c5bc69cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Teams: {fileID: 609662568}
 --- !u!1 &1553809603
 GameObject:
   m_ObjectHideFlags: 0
@@ -24261,8 +24671,8 @@ MonoBehaviour:
   CommandLevel: 2
   RequireSP: 20
   MusicBlockName: DefendAttack4
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30A2\u30EB\u30AC\u30F3\u30C9\u3000\u3092\u3000\u306F\u306A\u3063\u305F\n\u304B\u305F\u3044\u3000\u307E\u3082\u308A\u3067\u3000\u3058\u3063\u3068\u3000\u305F\u3048\u308B"
-  ExplanationText: "\u6700\u3082\u56FA\u3044\u3000\u5B88\u308A\u306E\u661F\u3000\u30A2\u30EB\u30AC\u30F3\u30C9\u3002\n\u98A8\u306E\u9B54\u6CD5\u3067\u3000\u53CD\u6483\u306E\u30C1\u30E3\u30F3\u30B9\u3092\u3092\u3046\u304B\u304C\u3046"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30A2\u30EB\u30AC\u30F3\u30C9\u3092\u653E\u3063\u305F\u3002"
+  ExplanationText: "\u56FA\u3044\u9632\u5FA1\u3067\u3057\u306E\u3050\u3001\u30A2\u30EB\u30AC\u30F3\u30C9\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u306E\u6301\u7D9A\u3092<br/>\u308F\u305A\u304B\u306B\u9AD8\u3081\u307E\u3059\u3002"
 --- !u!1 &1555709508
 GameObject:
   m_ObjectHideFlags: 0
@@ -24299,7 +24709,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1555709508}
-  m_Text: "\u30B3\u30DE\u30F3\u30C9\u3092\u9078\u629E\u3057\u3066\n\u30E1\u30E2\u30EA\u30FC\u3092\u5206\u914D\u3067\u304D\u307E\u3059"
+  m_Text: "\u30B3\u30DE\u30F3\u30C9\u306B\u30E1\u30E2\u30EA\u30FC\u3092\u5206\u914D\u3067\u304D\u307E\u3059"
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1.20000005
@@ -24951,7 +25361,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1607477737}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.42379975, y: .540600002, z: 0}
+  m_LocalPosition: {x: 0, y: .540600002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 973178582}
@@ -25681,66 +26091,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!1 &1662029308
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1662029309}
-  - 23: {fileID: 1662029311}
-  - 33: {fileID: 1662029310}
-  m_Layer: 0
-  m_Name: FireLine
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1662029309
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1662029308}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.60000002, y: 0, z: 0}
-  m_LocalScale: {x: 3.20000005, y: .100000001, z: 1}
-  m_Children: []
-  m_Father: {fileID: 37798592}
-  m_RootOrder: 0
---- !u!33 &1662029310
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1662029308}
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1662029311
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1662029308}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: 6e623745a783ac048ac9572e03966b40, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!1 &1671300155
 GameObject:
   m_ObjectHideFlags: 0
@@ -25992,8 +26342,8 @@ MonoBehaviour:
   CommandLevel: 2
   RequireSP: 20
   MusicBlockName: Attack2
-  DescribeText: "\u30AA\u30AF\u30B9\u306F\u3000\u30C0\u30A4\u30CA\u30C9\u3000\u3092\u3000\u306F\u306A\u3063\u305F\n\u307F\u3092\u3000\u307E\u3082\u308A\u306A\u304C\u3089\u3000\u3066\u304D\u3092\u3000\u3053\u3046\u3052\u304D"
-  ExplanationText: "\u9632\u5FA1\u3068\u3000\u653B\u6483\u306E\u661F\u3000\u30C0\u30A4\u30CA\u30C9\u3002\n\u9B54\u529B\u3092\u6301\u7D9A\u3055\u305B\u3064\u3064\u3001\u5B88\u308A\u3092\u56FA\u3081\u308B\u3002"
+  DescribeText: "\u30AA\u30AF\u30B9\u306F\u30C0\u30A4\u30CA\u30C9\u3092\u653E\u3063\u305F\u3002"
+  ExplanationText: "\u5263\u621F\u3068\u9632\u5FA1\u3092\u517C\u306D\u5099\u3048\u308B\u3001\u30C0\u30A4\u30CA\u30C9\u3002<br/>\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u306E\u6301\u7D9A\u6642\u9593\u3092\u9AD8\u3081\u307E\u3059\u3002"
 --- !u!1 &1695382564
 GameObject:
   m_ObjectHideFlags: 0
@@ -26387,6 +26737,8 @@ MonoBehaviour:
   VLine: {fileID: 809462921}
   MessageParent: {fileID: 632091242}
   OKButton: {fileID: 606906932}
+  CommandExp: {fileID: 188397882}
+  Title: {fileID: 1553029875}
 --- !u!1 &1733352910
 GameObject:
   m_ObjectHideFlags: 0
@@ -27374,7 +27726,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1786865732}
-  m_Text: "DOWN\n\u25BC"
+  m_Text: "FREE\n\u25BC"
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -27601,6 +27953,80 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1797714522}
   m_Mesh: {fileID: 0}
+--- !u!1 &1797774575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1797774576}
+  - 23: {fileID: 1797774578}
+  - 102: {fileID: 1797774577}
+  m_Layer: 0
+  m_Name: Text (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1797774576
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797774575}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10, y: 9.29999924, z: -1}
+  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_Children: []
+  m_Father: {fileID: 609662569}
+  m_RootOrder: 0
+--- !u!102 &1797774577
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797774575}
+  m_Text: http://voxquest.tumblr.com/
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 1
+  m_TabSize: 4
+  m_FontSize: 30
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &1797774578
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1797774575}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!114 &1802280016 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11462584, guid: 6be9e781919ff5d43a87799ba49dcf57,
@@ -30120,7 +30546,7 @@ Transform:
   m_LocalPosition: {x: -7.56463242, y: -7.53000069, z: -42.8162537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2046912194}
+  - {fileID: 171037401}
   - {fileID: 1470043279}
   m_Father: {fileID: 1302573136}
   m_RootOrder: 1
@@ -31205,7 +31631,6 @@ GameObject:
   - 4: {fileID: 2039841172}
   - 23: {fileID: 2039841174}
   - 102: {fileID: 2039841173}
-  - 111: {fileID: 2039841175}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -31220,7 +31645,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2039841171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 3.80999994, y: -17.1200008, z: -1}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 1813188058}
@@ -31232,12 +31657,14 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2039841171}
-  m_Text: VOX<color=#FF007E>Q</color>UARTER
+  m_Text: 'VOX
+
+    <color=#FF007E>Q</color>UARTER'
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
-  m_Alignment: 1
+  m_Alignment: 2
   m_TabSize: 4
   m_FontSize: 64
   m_FontStyle: 0
@@ -31270,21 +31697,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!111 &2039841175
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2039841171}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: bf7fb4d44f2317841a7d8a8ba0ffe5ca, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: bf7fb4d44f2317841a7d8a8ba0ffe5ca, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &2046912193
 GameObject:
   m_ObjectHideFlags: 0
@@ -31309,12 +31721,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2046912193}
   m_LocalRotation: {x: -3.09086232e-08, y: .707106829, z: -.707106829, w: -3.09086232e-08}
-  m_LocalPosition: {x: -1.66505051, y: 1.29382801, z: 3.3259449}
-  m_LocalScale: {x: .330000013, y: 1, z: .00700000022}
+  m_LocalPosition: {x: 8.17474747, y: -9.9499979, z: 0}
+  m_LocalScale: {x: 1.65000021, y: 5, z: .0350000001}
   m_Children:
   - {fileID: 1756724665}
   - {fileID: 494095565}
-  m_Father: {fileID: 1964785412}
+  m_Father: {fileID: 171037401}
   m_RootOrder: 0
 --- !u!23 &2046912195
 MeshRenderer:
@@ -32571,6 +32983,80 @@ Transform:
   - {fileID: 1406507359}
   m_Father: {fileID: 971151782}
   m_RootOrder: 0
+--- !u!1 &2101187579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2101187580}
+  - 23: {fileID: 2101187582}
+  - 102: {fileID: 2101187581}
+  m_Layer: 0
+  m_Name: TimeText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2101187580
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2101187579}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .0500000007, y: -.569999993, z: 0}
+  m_LocalScale: {x: .200000003, y: .200000003, z: .200000003}
+  m_Children: []
+  m_Father: {fileID: 54554773}
+  m_RootOrder: 2
+--- !u!102 &2101187581
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2101187579}
+  m_Text: TIME
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1.79999995
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 48
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 12800000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &2101187582
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2101187579}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: e42ac3e610d6bb84f94625d543f1749f, type: 3}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!1 &2103731245
 GameObject:
   m_ObjectHideFlags: 0
@@ -32842,7 +33328,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2132732347}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.01834989, y: .540600002, z: 0}
+  m_LocalPosition: {x: 0, y: .540600002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: .999999762}
   m_Children:
   - {fileID: 518702186}
@@ -32895,9 +33381,10 @@ MonoBehaviour:
   MemoryPanel: {fileID: 1483572278}
   EnemyExp: {fileID: 476152220}
   WindowFrame: {fileID: 2082072972}
+  VPMeter: {fileID: 1083102471}
   Level: 5
   TotalMemory: 120
-  RemainMemory: 40
+  RemainMemory: 120
   PlayerDamageTimeCoeff: 1
   PlayerDamageTimeMin: .150000006
   LevelInfoList:
@@ -33020,7 +33507,7 @@ MonoBehaviour:
   - {fileID: 1108134725}
   - {fileID: 2089078023}
   - {fileID: 553523773}
-  numSP: 20
+  numSP: 0
   currentLevel: 0
 --- !u!114 &2138068266
 MonoBehaviour:

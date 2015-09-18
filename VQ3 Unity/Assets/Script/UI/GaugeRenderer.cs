@@ -106,6 +106,7 @@ public class GaugeRenderer : MonoBehaviour {
 			targetRate_ = rate;
 			baseRate_ = rate;
 			Rate = rate;
+			UpdateLine();
 		}
 	}
 

@@ -30,7 +30,7 @@ public class EnemyExplanation : MonoBehaviour {
 		{
 			Destroy(IconParent.transform.GetChild(0).gameObject);
 		}
-		Explanation.text = enemy.ExplanationText;
+		Explanation.text = enemy.ExplanationText.Replace("<br/>", System.Environment.NewLine); ;
 		GameObject enemyObj = Instantiate(enemy.gameObject) as GameObject;
 		enemyObj.transform.parent = IconParent.transform;
 		enemyObj.transform.localPosition = Vector3.zero;

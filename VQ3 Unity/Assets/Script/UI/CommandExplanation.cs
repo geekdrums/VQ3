@@ -78,7 +78,7 @@ public class CommandExplanation : MonoBehaviour {
 		CommandName.color = command.themeColor == EThemeColor.White ? Color.black : Color.white;
 		ThemeColor themeColor = ColorManager.GetThemeColor(command.themeColor);
 
-		if( GameContext.State == GameState.Result )
+		if( GameContext.State == GameState.Result || GameContext.State == GameState.Event )
 		{
 			NameBase.SetColor(themeColor.Bright);
 			NewCommmandText.color = ColorManager.Base.Bright;
@@ -86,6 +86,7 @@ public class CommandExplanation : MonoBehaviour {
 			LVCount.CounterColor= Color.clear;
 			CommandText.color = Color.clear;
 			Explanation.text = "";
+			commandData_ = command.commandData[command.commandData.Count-1];
 		}
 		else if( commandData_ != null )
 		{
@@ -93,7 +94,11 @@ public class CommandExplanation : MonoBehaviour {
 			CommandText.color = ColorManager.Base.Bright;
 			LVText.color = ColorManager.Base.Bright;
 			LVCount.CounterColor= ColorManager.Base.Bright;
-			Explanation.text = commandData_.ExplanationText;
+			Explanation.text = commandData_.ExplanationText.Replace("<br/>", System.Environment.NewLine);
+			if( GameContext.FieldConductor.EncountIndex == 0 )
+			{
+				Explanation.text = commandData_.ExplanationText.Split(new string[]{"<br/>"}, System.StringSplitOptions.RemoveEmptyEntries)[0];
+			}
 			NewCommmandText.color = Color.clear;
 		}
 		else

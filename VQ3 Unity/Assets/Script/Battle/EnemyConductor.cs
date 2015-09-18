@@ -22,7 +22,7 @@ public class EnemyConductor : MonoBehaviour {
 	Encounter CurrentEncounter;
 
     public int EnemyCount { get { return Enemies.Count; } }
-	public int InvertVP { get { return ( CurrentEncounter != null ? CurrentEncounter.InvertVP : 0 ); } }
+	public int InvertVP { get { return ( CurrentEncounter != null ? CurrentEncounter.InvertVP : 100 ); } }
     public Enemy targetEnemy { get; private set; }
 
 	Color _baseColor;
@@ -97,7 +97,7 @@ public class EnemyConductor : MonoBehaviour {
         TempObj = (GameObject)Instantiate( enemyPrefab );
         Enemy enemy = TempObj.GetComponent<Enemy>();
         Enemies.Add( enemy );
-        TextWindow.SetMessage( MessageCategory.EnemyEmerge, enemy.DisplayName + " があらわれた！" );
+        TextWindow.SetMessage( MessageCategory.EnemyEmerge, enemy.DisplayName + " を発見。" );
         enemy.InitState( initialState );
 		enemy.transform.localPosition = spawnPosition;
         enemy.transform.localScale *= transform.lossyScale.x;

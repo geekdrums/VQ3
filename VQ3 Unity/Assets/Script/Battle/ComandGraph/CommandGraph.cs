@@ -360,7 +360,7 @@ public class CommandGraph : MonoBehaviour
 			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
 			break;
 		case BattleState.Wait:
-			if( Music.IsJustChangedAt(WaitInputEnd) )
+			if( Music.IsJustChangedWhen((Timing t) => t.Unit == 3 && t.Beat == 3) )
 			{
 				SetNextBlock();
 			}

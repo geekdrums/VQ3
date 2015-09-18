@@ -13,8 +13,6 @@ public class MemoryPanel : MonoBehaviour {
 	public ButtonUI UpButton;
 	public ButtonUI DownButton;
 	public MidairPrimitive BaseFrame;
-	public Material BGMaterial;
-	public Material GaugeMaterial;
 
 	public CommandExplanation CommandExp;
 
@@ -40,11 +38,11 @@ public class MemoryPanel : MonoBehaviour {
 			float MemoryRatio = (float)GameContext.PlayerConductor.RemainMemory / GameContext.PlayerConductor.TotalMemory;
 			if( GameContext.PlayerConductor.RemainMemory > 0 )
 			{
-				GaugeMaterial.color = Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(4) * Mathf.Clamp(MemoryRatio + 0.3f, 0.5f, 1.0f));
+				RemainMemoryGauge.SetColor(Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(8) * Mathf.Clamp(MemoryRatio + 0.3f, 0.5f, 1.0f)));
 			}
 			else
 			{
-				GaugeMaterial.color = ColorManager.Base.Shade;
+				RemainMemoryGauge.SetColor(ColorManager.Base.Shade);
 			}
 		}
 	}
@@ -115,7 +113,7 @@ public class MemoryPanel : MonoBehaviour {
 		BaseFrame.SetTargetWidth(7.5f);
 		BaseFrame.SetColor(ColorManager.Base.Back);
 		UpdateMemory();
-		BattleButton.SetMode(ButtonMode.Active);
+		BattleButton.SetMode((GameContext.PlayerConductor.RemainMemory <= 30 ? ButtonMode.Active : ButtonMode.Disable));
 		UpButton.SetMode(ButtonMode.Hide);
 		DownButton.SetMode(ButtonMode.Hide);
 		MemoryGauge.SetRate(0);
@@ -125,7 +123,7 @@ public class MemoryPanel : MonoBehaviour {
 			levelInfo.transform.localScale = Vector3.zero;
 		}
 		CommandExp.Hide();
-		TextWindow.SetMessage(MessageCategory.Help, "コマンドを選択して\nメモリーを分配できます");
+		TextWindow.SetMessage(MessageCategory.Help, "コマンドにメモリーを分配できます");
 	}
 
 	public void Hide()

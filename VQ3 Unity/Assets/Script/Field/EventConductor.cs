@@ -24,11 +24,21 @@ public class EventConductor : MonoBehaviour
 	public GameObject MessageParent;
 	public ButtonUI OKButton;
 
+	public CommandExplanation CommandExp;
+	public GameObject Title;
+
+
 	private EventData currentEvent_;
 	private int messageIndex_;
 	private float readTime_;
 	private MessageIndexed message_ = new MessageIndexed("");
 	private Animation animation_;
+
+	private float coroutineTime_ = 0;
+	private int coroutinePhase_ = 0;
+	private string[] eventArgs_;
+	private event System.Action OnPushedOK_Coroutine;
+
 
 	private EventData.Message CurrentMessage { get { return currentEvent_.Messages[messageIndex_]; } }
 
@@ -98,7 +108,10 @@ public class EventConductor : MonoBehaviour
 				if( CurrentMessage.Macro != "" )
 				{
 					State = EventState.Macro;
-					StartCoroutine(CurrentMessage.Macro);
+					coroutineTime_ = 0;
+					OnPushedOK_Coroutine = null;
+					eventArgs_ = CurrentMessage.Macro.Split(' ');
+					StartCoroutine(eventArgs_[0]);
 				}
 				else
 				{
@@ -108,7 +121,13 @@ public class EventConductor : MonoBehaviour
 			else
 			{
 				message_.End();
+				DisplayText.text = message_.DisplayText;
 			}
+		}
+		else if( State == EventState.Macro )
+		{
+			if( OnPushedOK_Coroutine != null )
+				OnPushedOK_Coroutine();
 		}
 	}
 
@@ -121,6 +140,7 @@ public class EventConductor : MonoBehaviour
 		NextMessage();
 		OKButton.SetMode(ButtonMode.Active, true);
 		animation_.Play("EventShowAnim");
+		TextWindow.Reset();
 		if( Music.IsPlaying == false || Music.CurrentMusicName != data.MusicName )
 		{
 			Music.Play(data.MusicName);
@@ -163,16 +183,80 @@ public class EventConductor : MonoBehaviour
 
 	#region event macro
 
-	IEnumerator Event_ShowCommandSet()
+	IEnumerator Event_Example()
 	{
 		EndMacro();
-		yield return null;
+		while( true )
+		{
+			yield return null;
+		}
 	}
 
-	IEnumerator Event_ShowEnemyInfo()
+	IEnumerator Event_ShowVPMeter()
 	{
-		EndMacro();
-		yield return null;
+		GameContext.PlayerConductor.VPMeter.SetActive(true);
+		while( true )
+		{
+			GameContext.VoxSystem.Event_ShowVPMeter();
+			if( coroutinePhase_ == 1 )
+			{
+				coroutineTime_ += Time.deltaTime;
+				if( coroutineTime_ > 0.75f )
+				{
+					EndMacro();
+				}
+			}
+			else if( GameContext.VoxState == VoxState.Overflow )
+			{
+				if( OnPushedOK_Coroutine == null )
+				{
+					OnPushedOK_Coroutine += OnPushedOK_Event_ShowVPMeter;
+				}
+			}
+			else
+			{
+				if( Music.IsJustChangedBeat() )
+				{
+					GameContext.VoxSystem.AddVPVT(20, 30);
+				}
+			}
+			yield return null;
+		}
 	}
+
+	void OnPushedOK_Event_ShowVPMeter()
+	{
+		coroutinePhase_ = 1;
+		GameContext.VoxSystem.ResetVPVT();
+	}
+
+
+	IEnumerator Event_ShowCommand()
+	{
+		CommandExp.Set(GameContext.PlayerConductor.CommandGraph.CommandNodes.Find((PlayerCommand command) => command.name == eventArgs_[1]));
+		OnPushedOK_Coroutine += this.OnPushedOK_Event_ShowCommand;
+		while( true )
+		{
+			yield return null;
+		}
+	}
+
+	void OnPushedOK_Event_ShowCommand()
+	{
+		CommandExp.Reset();
+		EndMacro();
+	}
+
+	IEnumerator Event_ShowTitle()
+	{
+		Title.SetActive(true);
+		Title.GetComponent<Animation>().Play("titleEndAnim");
+		while( true )
+		{
+			yield return null;
+		}
+	}
+
+
 	#endregion
 }

@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 2700
-  BasePower: 400
+  HitPoint: 3600
+  BasePower: 360
   BaseMagic: 0
   DisplayName: "\u30BA\u30FC\u30EB"
   Speceis: 4
@@ -185,7 +185,7 @@ MonoBehaviour:
     - {fileID: 11400006}
     nextState: 
   conditions: []
-  ExplanationText: "\u5DE8\u8C61\u306E\u5F62\u3092\u6A21\u3057\u305F\u9B54\u7269\u3002\r\n\u5F90\u3005\u306B\u5F37\u304F\u306A\u308B\u3075\u307F\u3064\u3051\u306F\r\n\u3044\u306E\u3061\u306E\u5371\u967A\u304C\u611F\u3058\u3089\u308C\u308B\u3060\u308D\u3046\u3002"
+  ExplanationText: "\u5DE8\u8C61\u306E\u5F62\u3092\u6A21\u3057\u305F\u9B54\u7269\u3002<br/>\u8E0F\u307F\u3064\u3051\u306F\u5F90\u3005\u306B\u5F37\u304F\u306A\u308B\u306E\u3067\u6CE8\u610F\u3002"
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -298,7 +298,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: ExplanationText
-      value: "\u306E\u3057\u304B\u304B\u308B"
+      value: "\u5DE8\u8C61\u306E\u5F62\u3092\u6A21\u3057\u305F\u9B54\u7269\u3002<br/>\u8E0F\u307F\u3064\u3051\u306F\u5F90\u3005\u306B\u5F37\u304F\u306A\u308B\u306E\u3067\u6CE8\u610F\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: DisplayName
@@ -306,7 +306,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: HitPoint
-      value: 2700
+      value: 3600
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BasePower
+      value: 360
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

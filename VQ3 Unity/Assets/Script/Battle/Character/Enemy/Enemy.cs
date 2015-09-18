@@ -355,7 +355,7 @@ public class Enemy : Character
 		float overFlowPower = 0.0f;
 		if( GameContext.VoxSystem.IsOverFlow && GameContext.VoxSystem.State != VoxState.Overload )
 		{
-			overFlowPower = attack.VP * 4.0f;
+			overFlowPower = attack.VP * 8.0f;
 		}
 
 		float damage = skill.OwnerCharacter.PhysicAttack * ((attack.Power + overFlowPower) / 100.0f) * typeCoeff * DefendCoeff;

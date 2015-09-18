@@ -109,7 +109,6 @@ public class ResultConductor : MonoBehaviour {
 	void EndResult()
 	{
 		GameContext.SetState(GameState.Setting);
-		OKButton.SetMode(ButtonMode.Hide);
 		OKButton.Primitive.SetWidth(7.3f);
 		OKButton.SetText("OK");
 	}

@@ -140,8 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 1500
-  BasePower: 300
+  HitPoint: 1800
+  BasePower: 280
   BaseMagic: 0
   DisplayName: "\u30AD\u30A2\u30EB"
   Speceis: 4
@@ -155,7 +155,7 @@ MonoBehaviour:
     - {fileID: 11400006}
     nextState: 
   conditions: []
-  ExplanationText: "\u6247\u306E\u7FFC\u3092\u6301\u3063\u305F\u602A\u9CE5\u3002"
+  ExplanationText: "\u6247\u306E\u7FFC\u3092\u6301\u3063\u305F\u602A\u9CE5\u3002<br/>\u300C\u30DF\u30C4\u30EB\u30AE\u300D\u306E\u30C0\u30E1\u30FC\u30B8\u306F<br/>\u300C\u30C4\u30EB\u30AE\u300D\u306E\u4E09\u500D\u3002"
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -190,7 +190,7 @@ MonoBehaviour:
   - {fileID: 11430402, guid: f7a9acaea48a2304aab05dd5f91eaf49, type: 2}
   - {fileID: 11430402, guid: f7a9acaea48a2304aab05dd5f91eaf49, type: 2}
   - {fileID: 11430402, guid: f7a9acaea48a2304aab05dd5f91eaf49, type: 2}
-  _timingStr: 0 1 1,0 1 2,,0 1 3
+  _timingStr: 0 1 0,0 1 1,,0 1 3
   DefendPercent: 0
   HealPercent: 0
   nextState: 
@@ -249,7 +249,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: ExplanationText
-      value: "\u306E\u3057\u304B\u304B\u308B"
+      value: "\u6247\u306E\u7FFC\u3092\u6301\u3063\u305F\u602A\u9CE5\u3002<br/>\u300C\u30DF\u30C4\u30EB\u30AE\u300D\u306E\u30C0\u30E1\u30FC\u30B8\u306F<br/>\u300C\u30C4\u30EB\u30AE\u300D\u306E\u4E09\u500D\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Sprite
@@ -262,7 +262,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: HitPoint
-      value: 1500
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BasePower
+      value: 280
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _timingStr
+      value: 0 1 0,0 1 1,,0 1 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

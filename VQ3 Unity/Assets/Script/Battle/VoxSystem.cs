@@ -179,6 +179,7 @@ public class VoxSystem : MonoBehaviour
 		if( GameContext.State != GameState.Battle ) return;
 
 		UpdateVT();
+		UpdateWaves();
 
 		if( GameContext.BattleState == BattleState.Eclipse )
 		{
@@ -214,7 +215,7 @@ public class VoxSystem : MonoBehaviour
 			{
 				--OverloadTime;
 			}
-			if( Music.IsJustChangedAt(3, 2) && OverloadTime == 1 )
+			if( Music.IsJustChangedAt(3, 2) && OverloadTime == 1 && GameContext.BattleState != BattleState.Win )
 			{
 				SetState(VoxState.BackToSun);
 				GameContext.EnemyConductor.OnRevert();
@@ -249,7 +250,7 @@ public class VoxSystem : MonoBehaviour
 				VTCount.Count = currentVT / 64.0f;
 				if( currentVT <= 0 )
 				{
-					if( currentVP > 10 )
+					if( currentVP >= 20 )
 					{
 						SEPlayer.Play("vtEmpty");
 					}
@@ -265,7 +266,10 @@ public class VoxSystem : MonoBehaviour
 				VTCount.Count = (float)(OverloadTime - Music.MusicalTime/64.0f);
 			}
 		}
+	}
 
+	void UpdateWaves()
+	{
 		float vtRate = (float)currentVT / MaxVT;
 		float maxWaveScale = Mathf.Min(1.0f, (vtRate <= 0.5f ? 0.75f * (float)vtRate / 0.5f :  0.75f + 0.25f * (vtRate - 0.5f) / 0.5f) + waveRemainCoeff_ * 0.5f);
 		float targetWaveScale = maxWaveScale;
@@ -376,12 +380,12 @@ public class VoxSystem : MonoBehaviour
 			Music.SetAisac("TrackVolumeLoop", IsOverFlow ? 0 : 1);
 			if( IsOverFlow )
 			{
-				TextWindow.SetMessage(MessageCategory.Invert, "くろいつきが　せかいを　はんてんさせる");
+				TextWindow.SetMessage(MessageCategory.Invert, "オーバーロード完了。");
 				OverloadTime = Mathf.Clamp((int)(currentVT / 64.0f), 2, MaxInvertTime);
 			}
 			else
 			{
-				TextWindow.SetMessage(MessageCategory.Invert, "しかし　VPが　たりなかったようだ");
+				TextWindow.SetMessage(MessageCategory.Invert, "オーバーロード失敗。");
 			}
 			Music.SetAisac(8, GameContext.PlayerConductor.PlayerIsDanger ? 0 : 1);
 		}
@@ -624,4 +628,18 @@ public class VoxSystem : MonoBehaviour
 			}
 		}
 	}
+
+	public void Event_ShowVPMeter()
+	{
+		UpdateVT();
+		UpdateWaves();
+	}
+	//public void Event_ShowVPMeterEnd()
+	//{
+	//	ResetVPVT();
+	//	for( int i = 0; i<VPWaveNum; ++i )
+	//	{
+	//		vtWaves_[i].transform.localScale = new Vector3(1, 0, 1);
+	//	}
+	//}
 }

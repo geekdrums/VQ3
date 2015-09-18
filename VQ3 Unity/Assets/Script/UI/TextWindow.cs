@@ -24,7 +24,9 @@ public class MessageIndexed
 	public string Text;
 	public int CurrentIndex;
 
-	public bool IsEnd { get { return CurrentIndex >= Text.Length; } }
+	int endIndex_;
+
+	public bool IsEnd { get { return CurrentIndex >= endIndex_; } }
     public string DisplayText
     {
         get
@@ -33,7 +35,7 @@ public class MessageIndexed
             int tagStartIndex = -1;
             bool isTagClosed = true;
             string tagText = "";
-            for( int i = 0; i < CurrentIndex; i++ )
+            for( int i = 0; i <= CurrentIndex; i++ )
             {
                 if( textIndex + 1 >= Text.Length ) break;
                 ++textIndex;
@@ -48,7 +50,8 @@ public class MessageIndexed
                             tagText = Text.Substring( tagStartIndex, textIndex - tagStartIndex );
                         }
                         ++textIndex;
-                    }
+					}
+					++textIndex;
                 }
             }
             string res = Text.Substring( 0, Mathf.Min( textIndex + 1, Text.Length ) );
@@ -56,25 +59,38 @@ public class MessageIndexed
             {
                 res += "</" + tagText + ">";
             }
-            //TODO: replace [Icon:name] to spaces
             return res;
         }
     }
 
 	public MessageIndexed(string text, int startIndex = 0)
 	{
-		this.Text = text;
-		this.CurrentIndex = startIndex;
+		Init(text, startIndex);
 	}
 
-	public void Init(string text)
+	public void Init(string text, int index = 0)
 	{
 		this.Text = text;
-		this.CurrentIndex = 0;
+		this.CurrentIndex = index;
+		endIndex_ = 0;
+		string[] texts = Text.Split(new char[]{'<', '>'}, StringSplitOptions.RemoveEmptyEntries);
+		for( int i=0; i<texts.Length; ++i )
+		{
+			if( (Text[0] == '<' && i%2 == 1) || (Text[0] != '<' && i%2 == 0) )
+			{
+				endIndex_ += texts[i].Length;
+			}
+		}
+	}
+	public void Reset()
+	{
+		Text = "";
+		CurrentIndex = 0;
+		endIndex_ = 0;
 	}
 	public void End()
 	{
-		this.CurrentIndex = Text.Length - 1;
+		this.CurrentIndex = endIndex_;
 	}
 }
 
@@ -150,10 +166,17 @@ public class TextWindow : MonoBehaviour
 
 		displayCommnd_ = null;
 
-		this.message_.Text = text;
-		this.message_.CurrentIndex = 0;
+		message_.Init(text);
 		
 		line_.SetColor(Color.white);
+	}
+
+	void Reset_()
+	{
+		TextBase.SetActive(false);
+		CommandBase.SetActive(false);
+		message_.Reset();
+		SetNextCursor_(false);
 	}
 
 	void SetNextCursor_(bool use)
@@ -200,5 +223,9 @@ public class TextWindow : MonoBehaviour
 	public static void SetCommand(PlayerCommand command)
 	{
 		instance_.SetCommand_(command);
+	}
+	public static void Reset()
+	{
+		instance_.Reset_();
 	}
 }

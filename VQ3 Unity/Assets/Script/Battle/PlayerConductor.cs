@@ -9,6 +9,8 @@ public class PlayerConductor : MonoBehaviour {
 	public EnemyExplanation EnemyExp;
 	public MidairPrimitive WindowFrame;
 
+	public GameObject VPMeter;
+
     public int Level = 1;
 	public int TotalMemory;
 	public int RemainMemory;
@@ -66,7 +68,7 @@ public class PlayerConductor : MonoBehaviour {
         SetLevelParams();
         if( Level > 1 )
         {
-            TextWindow.SetMessage( MessageCategory.Result, "オクスは　レベル" + Level + "に　あがった！" );
+            TextWindow.SetMessage( MessageCategory.Result, "システムをレベル" + Level + "にアップグレード。" );
             SEPlayer.Play( "levelUp" );
         }
     }
@@ -162,7 +164,7 @@ public class PlayerConductor : MonoBehaviour {
 		switch( GameContext.State )
 		{
 		case GameState.Battle:
-			TextWindow.SetMessage(MessageCategory.Help, "次のコマンドは　なに？");
+			TextWindow.SetMessage(MessageCategory.Help, "次のコマンドは？");
 			break;
 		case GameState.Result:
 			GameContext.ResultConductor.OnPushedOKButton(this, null);
@@ -199,7 +201,7 @@ public class PlayerConductor : MonoBehaviour {
         Player.DefaultInit();
 		if( WaitCount == 0 )
 		{
-			TextWindow.SetMessage(MessageCategory.PlayerWait, "オクスは　つぎの　いってを　かんがえている");
+			TextWindow.SetMessage(MessageCategory.PlayerWait, "コマンド命令があるまで待機。");
 		}
 		BGAnimBase.DeactivateCurrentAnim();
         ++WaitCount;
@@ -277,6 +279,8 @@ public class PlayerConductor : MonoBehaviour {
         WaitCount = 0;
 		ColorManager.SetBaseColor(EBaseColor.Black);
 		ColorManager.SetThemeColor(EThemeColor.White);
+
+		VPMeter.SetActive(GameContext.FieldConductor.EncountIndex>0);
     }
 
 	public void OnEnterSetting()
@@ -290,6 +294,7 @@ public class PlayerConductor : MonoBehaviour {
 	public void OnEnterResult()
 	{
 		Player.HitPoint = Player.MaxHP;
+		Player.HPPanel.OnUpdateHP();
 		WindowFrame.SetTargetWidth(12);
 		CommandGraph.OnEnterResult();
 		BGAnimBase.DeactivateCurrentAnim();
@@ -302,6 +307,8 @@ public class PlayerConductor : MonoBehaviour {
 
 	public void OnOverFlowed()
 	{
+		if( GameContext.State == GameState.Event ) return;
+
 		Player.EnhanceCutIn.SetOverflow();
 		if( CurrentCommand.BGAnim != null )
 		{

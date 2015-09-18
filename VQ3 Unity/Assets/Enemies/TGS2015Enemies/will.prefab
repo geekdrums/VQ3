@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f4bd825b80c664abf1c572d7882dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoint: 700
+  HitPoint: 900
   BasePower: 0
   BaseMagic: 200
   DisplayName: "\u30A6\u30A3\u30EB"
@@ -95,7 +95,7 @@ MonoBehaviour:
     - {fileID: 11400006}
     nextState: 
   conditions: []
-  ExplanationText: "\u7CBE\u970A\u65CF\u306E\u6700\u3082\u57FA\u672C\u7684\u306A\u5B58\u5728\u3002\r\n\u98A8\u306E\u9B54\u6CD5\u3067\u653B\u6483\u3057\u3066\u304F\u308B\u3002"
+  ExplanationText: "\u7CBE\u970A\u65CF\u306E\u6700\u3082\u57FA\u672C\u7684\u306A\u5B58\u5728\u3002<br/>\u98A8\u306E\u9B54\u6CD5\u300C\u30A2\u30A6\u30E9\u300D\u3092\u4F7F\u3046\u3002"
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,11 +150,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: ExplanationText
-      value: "\u30A2\u30A6\u30E9"
+      value: "\u7CBE\u970A\u65CF\u306E\u6700\u3082\u57FA\u672C\u7684\u306A\u5B58\u5728\u3002<br/>\u98A8\u306E\u9B54\u6CD5\u300C\u30A2\u30A6\u30E9\u300D\u3092\u4F7F\u3046\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: HitPoint
-      value: 700
+      value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: BaseMagic

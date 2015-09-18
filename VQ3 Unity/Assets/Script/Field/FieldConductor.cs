@@ -13,54 +13,34 @@ public enum FieldState
 [ExecuteInEditMode]
 public class FieldConductor : MonoBehaviour {
 
+	public bool RefreshWatchFlags = true;
 	public List<StageData> StageData;
 	public int StageIndex;
 	public int EncountIndex;
 	public GameObject Setting;
 
-	public Encounter CurrentEncounter { get { return StageData[StageIndex].Encounters[EncountIndex]; } }
+	public Encounter CurrentEncounter { get { return (StageIndex >= StageData.Count || EncountIndex >= StageData[StageIndex].Encounters.Count ? null : StageData[StageIndex].Encounters[EncountIndex]); } }
 	public EventData CurrentEvent { get; private set; }
 
 	// Use this for initialization
     void Awake()
     {
 		GameContext.FieldConductor = this;
+		if( RefreshWatchFlags )
+		{
+			foreach( StageData stage in StageData )
+			{
+				foreach( EventData eventData in stage.EventData )
+				{
+					eventData.Watched = false;
+				}
+			}
+		}
 	}
 
 	// Update is called once per frame
     void Update()
     {
-        switch( GameContext.State )
-        {
-		//case GameState.Title:
-		//	if( Input.GetMouseButtonUp(0) )
-		//	{
-		//		foreach( PlayerCommand command in GameContext.PlayerConductor.CommandGraph.CommandNodes )
-		//		{
-		//			command.ValidateState();
-		//			if( command.state != CommandState.DontKnow )
-		//			{
-		//				for( int i=command.currentLevel; i<command.commandData.Count; ++i )
-		//				{
-		//					int needSP = command.commandData[command.currentLevel].RequireSP - (command.currentLevel == 0 ? 0 : command.commandData[command.currentLevel-1].RequireSP);
-		//					if( needSP <= GameContext.PlayerConductor.RemainSP )
-		//					{
-		//						command.LevelUp();
-		//					}
-		//				}
-		//			}
-		//		}
-		//		GameContext.PlayerConductor.CommandGraph.CheckLinkedFromIntro();
-		//		GameContext.SetState(GameState.Setting);
-		//	}
-		//	break;
-        case GameState.Setting:
-            break;
-        case GameState.Result:
-            break;
-        default:
-            break;
-        }
 	}
 
 	public void OnEnterResult()
@@ -85,6 +65,13 @@ public class FieldConductor : MonoBehaviour {
 	public GameState CheckEvent(GameState nextState)
 	{
 		if( StageIndex >= StageData.Count ) return nextState;
+
+		if( CurrentEncounter == null )
+		{
+			CurrentEvent = StageData[StageIndex].EventData[StageData[StageIndex].EventData.Count-1];
+			return GameState.Event;
+		}
+
 		int currentEncountIndex = StageData[StageIndex].Encounters.IndexOf(CurrentEncounter);
 		EventData eventData = StageData[StageIndex].EventData.Find((EventData e) => e.EncounterIndex ==  currentEncountIndex && e.NextState == nextState);
 		if( eventData != null && eventData.Watched == false )
@@ -104,7 +91,5 @@ public class FieldConductor : MonoBehaviour {
 
 	public void OnPlayerLose()
 	{
-		//EncountIndex--;
-		//CommandExp.SetEnemy(CurrentLevel.Encounters[encounterCount].BattleSets[0].Enemies[0].GetComponent<Enemy>());
 	}
 }

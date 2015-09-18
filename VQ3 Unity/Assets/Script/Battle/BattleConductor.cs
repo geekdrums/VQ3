@@ -194,7 +194,7 @@ public class BattleConductor : MonoBehaviour {
 		case BattleState.ShieldBreak:
 			break;
 		case BattleState.Continue:
-			TextWindow.SetMessage(MessageCategory.Result, "オクスは　ちからつきた");
+			TextWindow.SetMessage(MessageCategory.Result, "戦闘不能、緊急離脱。");
 			GameContext.PlayerConductor.OnPlayerLose();
 			GameContext.EnemyConductor.OnPlayerLose();
 			GameContext.VoxSystem.SetState(VoxState.SunSet);

@@ -64,7 +64,7 @@ public class MemoryResult : MonoBehaviour {
 		StartMemory.Count = GameContext.PlayerConductor.LevelInfoList[GameContext.PlayerConductor.Level].NeedMemory;
 		EndMemory.Count = GameContext.PlayerConductor.LevelInfoList[GameContext.PlayerConductor.Level + 1].NeedMemory;
 		targetRate_ = Mathf.Min(1.0f, (float)(GameContext.PlayerConductor.TotalMemory - StartMemory.Count)/(float)(EndMemory.Count - StartMemory.Count));
-		Gauge.Rate = (float)(GameContext.PlayerConductor.TotalMemory - StartMemory.Count - memory)/(float)(EndMemory.Count - StartMemory.Count);
+		Gauge.SetRate((float)(GameContext.PlayerConductor.TotalMemory - StartMemory.Count - memory)/(float)(EndMemory.Count - StartMemory.Count));
 		IsLevelUp = GameContext.PlayerConductor.TotalMemory >= EndMemory.Count;
 		CurrentPhase = MemoryResult.Phase.Anim;
 		GetComponent<Animation>().Play("ResultMemoryAnim");
