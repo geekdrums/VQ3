@@ -1,40 +1,70 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BGAnimAura : MonoBehaviour {
+public class BGAnimAura : BGAnimBase {
 
-	public int Cycle = 2;
-	public float Size = 16.0f;
-	public float MinWitdh = 0.1f;
-	public float Witdh = 0.2f;
-	public float Angle = 360.0f;
-	public float AngleSinCoeff = 0.05f;
+	public float RateAnimTime = 0.1f;
+	public float WidthAnimTime = 0.2f;
+	public float RandomRange = 6.0f;
+	public float AccentWidth = 0.3f;
+	public float DefaultWidth = 0.1f;
 
-	private MidairPrimitive[] primitives_;
+	private GaugeRenderer[] gauges_;
+	private Vector3 invisibleScale_ = new Vector3(0, 1, 1);
+	private int animIndex_ = 0;
 
 	// Use this for initialization
-	void Start () {
-		primitives_ = GetComponentsInChildren<MidairPrimitive>();
-		transform.localScale = Vector3.zero;
+	protected override void Start()
+	{
+		gauges_ = GetComponentsInChildren<GaugeRenderer>();
+		transform.localScale = invisibleScale_;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected override void Update()
+	{
+		if( IsActive == false )
+		{
+			transform.localScale = Vector3.Lerp(transform.localScale, invisibleScale_, 0.2f);
+			if( transform.localScale.x < 0.1f )
+			{
+				transform.localScale = invisibleScale_;
+				gameObject.SetActive(false);
+			}
+			return;
+		}
+		
+		UpdateDamageAnim();
+
 		if( GameContext.BattleState == BattleState.Battle )
 		{
 			transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, 0.2f);
-			for( int i=0; i<primitives_.Length; ++i )
+			if( Music.IsJustChanged )
 			{
-				SetParams(primitives_[i], ((Music.MusicalTimeBar + Cycle * (float)i/primitives_.Length)%Cycle)/Cycle, i % 4 == 0);
+				int mt = Music.Just.MusicalTime % 5;
+				gauges_[animIndex_].SetRate(0);
+				switch( mt )
+				{
+				case 0:
+					gauges_[animIndex_].SetColor(ColorManager.Theme.Bright);
+					gauges_[animIndex_].SetWidth(AccentWidth);
+					break;
+				case 2:
+					gauges_[animIndex_].SetColor(ColorManager.Theme.Shade);
+					gauges_[animIndex_].SetWidth(DefaultWidth);
+					break;
+				case 3:
+					gauges_[animIndex_].SetColor(ColorManager.Theme.Shade);
+					gauges_[animIndex_].SetWidth(DefaultWidth);
+					break;
+				default:
+					return;
+				}
+				gauges_[animIndex_].transform.localPosition = new Vector3(-11, Random.Range(-RandomRange, RandomRange), 0);
+				gauges_[animIndex_].SetRate(1, RateAnimTime);
+				gauges_[animIndex_].SetWidth(0, WidthAnimTime);
+				animIndex_ = (animIndex_ + 1) % gauges_.Length;
 			}
 		}
-	}
-
-	void SetParams(MidairPrimitive primitive, float t, bool accent)
-	{
-		primitive.SetSize(Mathf.Lerp(0, Size, Mathf.Sqrt(t)));
-		primitive.SetWidth(accent ? Witdh : Mathf.Lerp(MinWitdh, Witdh, t));
-		primitive.SetTargetColor(accent ? ColorManager.Theme.Bright : Color.Lerp(ColorManager.Theme.Light, ColorManager.Theme.Shade, t));
-		primitive.transform.localRotation = Quaternion.AngleAxis(Mathf.Lerp(0, Angle, t + Mathf.Sin(t*4*Mathf.PI)*AngleSinCoeff), Vector3.forward);
 	}
 }

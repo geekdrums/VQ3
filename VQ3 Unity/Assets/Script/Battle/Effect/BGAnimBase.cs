@@ -5,15 +5,20 @@ public class BGAnimBase : MonoBehaviour {
 
 	public static BGAnimBase CurrentAnim { get; private set; }
 
+	protected static readonly float DamageTrembleTime = 0.025f;
+
 	public bool IsActive = false;
 	public int Cycle = 2;
 
 	protected MidairPrimitive[] primitives_;
+	protected float damageTime_;
+	protected Vector3 initialPosition_;
 
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
 		primitives_ = GetComponentsInChildren<MidairPrimitive>();
 		transform.localScale = Vector3.zero;
+		initialPosition_ = transform.localPosition;
 	}
 
 	// Update is called once per frame
@@ -30,6 +35,7 @@ public class BGAnimBase : MonoBehaviour {
 			return;
 		}
 
+		UpdateDamageAnim();
 		if( GameContext.State == GameState.Battle )
 		{
 			if( GameContext.BattleState == BattleState.Battle || GameContext.BattleState == BattleState.Eclipse || GameContext.BattleState == BattleState.Win )
@@ -41,6 +47,28 @@ public class BGAnimBase : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	protected void UpdateDamageAnim()
+	{
+		if( damageTime_ > 0 )
+		{
+			if( (int)(damageTime_ / DamageTrembleTime) != (int)((damageTime_ + Time.deltaTime) / DamageTrembleTime) )
+			{
+				transform.localPosition = initialPosition_ + Random.insideUnitSphere * Mathf.Clamp(damageTime_ -  GameContext.PlayerConductor.PlayerDamageTimeMin, 0.2f, 2.0f) * GameContext.PlayerConductor.EnemyDamageBGShake;
+			}
+
+			damageTime_ -= Time.deltaTime;
+			if( damageTime_ <= 0 )
+			{
+				transform.localPosition = initialPosition_;
+			}
+		}
+	}
+
+	public void OnDamage(float damageTime)
+	{
+		damageTime_ = damageTime;
 	}
 
 	public void Activate()

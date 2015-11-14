@@ -87,14 +87,6 @@ MonoBehaviour:
   BaseMagic: 200
   DisplayName: "\u30A6\u30A3\u30EB"
   Speceis: 0
-  States:
-  - name: Default
-    pattern:
-    - {fileID: 11400006}
-    - {fileID: 11400006}
-    - {fileID: 11400006}
-    nextState: 
-  conditions: []
   ExplanationText: "\u7CBE\u970A\u65CF\u306E\u6700\u3082\u57FA\u672C\u7684\u306A\u5B58\u5728\u3002<br/>\u98A8\u306E\u9B54\u6CD5\u300C\u30A2\u30A6\u30E9\u300D\u3092\u4F7F\u3046\u3002"
 --- !u!114 &11400006
 MonoBehaviour:
@@ -112,9 +104,10 @@ MonoBehaviour:
   _timingStr: 0 1
   DefendPercent: 0
   HealPercent: 0
-  nextState: 
   ShortText: "\u30A2\u30A6\u30E9"
   ExplanationText: "\u30A2\u30A6\u30E9"
+  CommandAliases:
+  - Attack
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -149,6 +142,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: CommandAliases.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: ExplanationText
       value: "\u7CBE\u970A\u65CF\u306E\u6700\u3082\u57FA\u672C\u7684\u306A\u5B58\u5728\u3002<br/>\u98A8\u306E\u9B54\u6CD5\u300C\u30A2\u30A6\u30E9\u300D\u3092\u4F7F\u3046\u3002"
       objectReference: {fileID: 0}
@@ -159,6 +156,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: BaseMagic
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: CommandAliases.Array.data[0]
+      value: Attack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

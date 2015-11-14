@@ -59,9 +59,9 @@ public class RevertCommand : PlayerCommand
 
 		if( GameContext.BattleState < BattleState.Intro ) return;
 
-		EyeArc.SetTargetArc((float)GameContext.VoxSystem.currentVP/GameContext.EnemyConductor.InvertVP);
+		EyeArc.SetTargetArc((float)GameContext.LuxSystem.CurrentBP/GameContext.LuxSystem.OverflowBP);
 
-		if( GameContext.VoxSystem.State != VoxState.Overload && GameContext.VoxSystem.IsOverFlow )
+		if( GameContext.LuxSystem.State != LuxState.Overload && GameContext.LuxSystem.IsOverFlow )
 		{
 			CenterRect.SetColor(Color.white);
 			EyeEdge.SetColor(Color.clear);
@@ -86,9 +86,9 @@ public class RevertCommand : PlayerCommand
 		}
     }
 
-	public override GameObject GetIconObj(GameObject iconParent)
+	public override GameObject InstantiateIconObj(GameObject iconParent)
 	{
-		GameObject iconObj = base.GetIconObj(iconParent);
+		GameObject iconObj = base.InstantiateIconObj(iconParent);
 		iconObj.transform.FindChild("EyeCircle").transform.localPosition = centerEyePosition;
 		return iconObj;
 	}

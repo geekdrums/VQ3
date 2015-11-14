@@ -41,20 +41,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerSkill: 1
   _actionStr:
-  - Magic 45 15 7 Select,Weather Rain -5
+  - Magic 45 15 7 Select
   _rhythmStr: nn nn nn ta
   _rhythmBaseTime: 2
   _prefabs: []
   animRandomRange: {x: 0, y: 0}
+  animRandomExcludeRange: {x: 0, y: 0}
+  characterAnimName: 
+  damageParent: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _actionStr.Array.data[0]
+      value: Magic 45 15 7 Select
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

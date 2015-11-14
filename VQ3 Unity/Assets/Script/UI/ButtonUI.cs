@@ -47,14 +47,14 @@ public class ButtonUI : MonoBehaviour
 		case ButtonMode.Disable:
 			return;
 		case ButtonMode.Hiding:
-			if( Primitive.animParam == MidairPrimitive.AnimationParams.None )
+			if( AnimManager.IsAnimating(Primitive.gameObject) == false ) //Primitive.AnimParam == MidairPrimitive.AnimationParams.None )
 			{
 				gameObject.SetActive(false);
 				Mode = ButtonMode.Hide;
 			}
 			break;
 		case ButtonMode.Showing:
-			if( Primitive.animParam == MidairPrimitive.AnimationParams.None )
+			if( AnimManager.IsAnimating(Primitive.gameObject) == false ) //Primitive.AnimParam == MidairPrimitive.AnimationParams.None )
 			{
 				Mode = ButtonMode.Active;
 			}
@@ -148,7 +148,6 @@ public class ButtonUI : MonoBehaviour
 	{
 		if( mode != Mode )
 		{
-			ButtonMode oldMode = Mode;
 			Mode = mode;
 			if( withAnim )
 			{

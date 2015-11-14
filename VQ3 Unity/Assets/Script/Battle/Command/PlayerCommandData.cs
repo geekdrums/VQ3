@@ -102,5 +102,133 @@ public class PlayerCommandData : CommandBase
 		}
 		return enhModules;
 	}
+	public Color GetAtkColor()
+	{
+		float atk = GetAtk();
+		ThemeColor theme = ColorManager.GetThemeColor(OwnerCommand.themeColor);
+		BaseColor baseColor = ColorManager.Base;
+		if( atk <= 0 )
+		{
+			return baseColor.MiddleBack;
+		}
+		else if( atk <= 15 )
+		{
+			return theme.Shade;
+		}
+		else if( atk <= 30 )
+		{
+			return theme.Light;
+		}
+		else
+		{
+			return theme.Bright;
+		}
+	}
+	public Color GetHealColor()
+	{
+		float heal = GetHeal();
+		ThemeColor theme = ColorManager.GetThemeColor(OwnerCommand.themeColor);
+		BaseColor baseColor = ColorManager.Base;
+		if( heal <= 0 )
+		{
+			return baseColor.MiddleBack;
+		}
+		else if( heal <= 5 )
+		{
+			return theme.Shade;
+		}
+		else if( heal <= 30 )
+		{
+			return theme.Light;
+		}
+		else
+		{
+			return theme.Bright;
+		}
+	}
+	public Color GetDefColor()
+	{
+		float def = GetDefend();
+		ThemeColor theme = ColorManager.GetThemeColor(OwnerCommand.themeColor);
+		BaseColor baseColor = ColorManager.Base;
+		if( def <= 0 )
+		{
+			return baseColor.MiddleBack;
+		}
+		else if( def <= 20 )
+		{
+			return theme.Shade;
+		}
+		else if( def <= 50 )
+		{
+			return theme.Light;
+		}
+		else
+		{
+			return theme.Bright;
+		}
+	}
+	public Color GetVPColor()
+	{
+		float vp = GetVP();
+		Color color = ColorManager.Accent.Break;
+		BaseColor baseColor = ColorManager.Base;
+		if( vp <= 0 )
+		{
+			return baseColor.MiddleBack;
+		}
+		else if( vp <= 15 )
+		{
+			return ColorManager.MakeAlpha(color, 0.2f);
+		}
+		else if( vp <= 30 )
+		{
+			return ColorManager.MakeAlpha(color, 0.5f);
+		}
+		else
+		{
+			return color;
+		}
+	}
+	public Color GetVTColor()
+	{
+		float vt = GetVT();
+		Color color = ColorManager.Accent.Time;
+		BaseColor baseColor = ColorManager.Base;
+		if( vt <= 0 )
+		{
+			return baseColor.MiddleBack;
+		}
+		else if( vt <= 15 )
+		{
+			return ColorManager.MakeAlpha(color, 0.2f);
+		}
+		else if( vt <= 30 )
+		{
+			return ColorManager.MakeAlpha(color, 0.5f);
+		}
+		else
+		{
+			return color;
+		}
+	}
+	public Color GetEnhColor()
+	{
+		List<EnhanceModule> enh = GetEnhModules();
+		ThemeColor theme = ColorManager.GetThemeColor(OwnerCommand.themeColor);
+		BaseColor baseColor = ColorManager.Base;
+		if( enh == null || enh.Count == 0 )
+		{
+			return baseColor.Back;
+		}
+		else if( enh.Count == 1 && enh[0].phase == 1 )
+		{
+			return theme.Light;
+		}
+		else
+		{
+			return theme.Bright;
+		}
+	}
 }
 

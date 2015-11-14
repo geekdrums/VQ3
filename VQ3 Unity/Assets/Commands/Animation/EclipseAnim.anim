@@ -6,8 +6,8 @@ AnimationClip:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: EclipseAnim
-  serializedVersion: 4
-  m_AnimationType: 1
+  serializedVersion: 6
+  m_Legacy: 1
   m_Compressed: 0
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
@@ -21,7 +21,7 @@ AnimationClip:
         value: {x: 1.20000005, y: 60, z: 1}
         inSlope: {x: 7.11738968, y: 0, z: 0}
         outSlope: {x: 7.11738968, y: 0, z: 0}
-        tangentMode: 1106771968
+        tangentMode: 0
       - time: .350000024
         value: {x: 4.50021315, y: 60, z: 1}
         inSlope: {x: 3.35088873, y: 0, z: 0}
@@ -31,7 +31,7 @@ AnimationClip:
         value: {x: 0, y: 60, z: 1}
         inSlope: {x: -2.72740197, y: 0, z: 0}
         outSlope: {x: -2.72740197, y: 0, z: 0}
-        tangentMode: -4934476
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: SunLight1
@@ -42,7 +42,7 @@ AnimationClip:
         value: {x: .400000006, y: 60, z: 1}
         inSlope: {x: 5.87769651, y: 0, z: 0}
         outSlope: {x: 5.87769651, y: 0, z: 0}
-        tangentMode: 7143425
+        tangentMode: 0
       - time: .716666639
         value: {x: 3.5773828, y: 60, z: 1}
         inSlope: {x: .822993159, y: 0, z: 0}
@@ -52,7 +52,7 @@ AnimationClip:
         value: {x: 0, y: 60, z: 1}
         inSlope: {x: -2.78757119, y: 0, z: 0}
         outSlope: {x: -2.78757119, y: 0, z: 0}
-        tangentMode: 7274582
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: SunLight2
@@ -63,7 +63,7 @@ AnimationClip:
         value: {x: .200000003, y: 60, z: 1}
         inSlope: {x: 1.08333242, y: 0, z: 0}
         outSlope: {x: 1.08333242, y: 0, z: 0}
-        tangentMode: 1084227585
+        tangentMode: 0
       - time: 1.38333333
         value: {x: 4.25087166, y: 60, z: 1}
         inSlope: {x: -.948883116, y: 0, z: 0}
@@ -73,7 +73,7 @@ AnimationClip:
         value: {x: 0, y: 60, z: 1}
         inSlope: {x: -6.8933053, y: 0, z: 0}
         outSlope: {x: -6.8933053, y: 0, z: 0}
-        tangentMode: 7274582
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: SunLight3
@@ -84,7 +84,7 @@ AnimationClip:
         value: {x: .5, y: 60, z: 1}
         inSlope: {x: 1.09091222, y: 0, z: 0}
         outSlope: {x: 1.09091222, y: 0, z: 0}
-        tangentMode: 1204224001
+        tangentMode: 0
       - time: 1.10000002
         value: {x: 5.41421604, y: 60, z: 1}
         inSlope: {x: -.774163246, y: 0, z: 0}
@@ -94,7 +94,7 @@ AnimationClip:
         value: {x: 0, y: 60, z: 1}
         inSlope: {x: -6.01579571, y: 0, z: 0}
         outSlope: {x: -6.01579571, y: 0, z: 0}
-        tangentMode: 6357069
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: SunLight4
@@ -105,7 +105,7 @@ AnimationClip:
         value: {x: 3, y: 60, z: 1}
         inSlope: {x: -.224162012, y: 0, z: 0}
         outSlope: {x: -.224162012, y: 0, z: 0}
-        tangentMode: 1105723392
+        tangentMode: 0
       - time: 1.36666667
         value: {x: 2.69364524, y: 60, z: 1}
         inSlope: {x: -2.63739991, y: 0, z: 0}
@@ -115,17 +115,17 @@ AnimationClip:
         value: {x: .0841491222, y: 60, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1118699520
+        tangentMode: 0
       - time: 1.91666663
         value: {x: 3, y: 60, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: -1059061760
+        tangentMode: 0
       - time: 2
         value: {x: 3, y: 60, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: -2147483635
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: Mainlight
@@ -1586,4 +1586,7 @@ AnimationClip:
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves: []
+  m_HasGenericRootTransform: 0
+  m_HasMotionFloatCurves: 0
+  m_GenerateMotionCurves: 0
   m_Events: []

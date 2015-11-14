@@ -4,16 +4,16 @@
   <OrcaTree OrcaName="(no name)">
     <Orca OrcaName="全体設定" VersionInfo="Ver.2.13.00" FormatVersion="Ver.1.00.00" OoUniqId="4675cac8-829d-4d86-8dae-b0ebac5cf3ee" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGlobalFolder">
       <Orca OrcaName="グローバルAISAC" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGlobalAisacFolder" />
-      <Orca OrcaName="AISACコントロール" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControlFolder">
+      <Orca OrcaName="AISACコントロール" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControlFolder">
         <Orca OrcaName="AisacControl00" ControlId="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
         <Orca OrcaName="AisacControl01" ControlId="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
         <Orca OrcaName="TrackVolume1" ControlId="2" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
         <Orca OrcaName="TrackVolume2" ControlId="3" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
-        <Orca OrcaName="TrackVolumeEnergy" ControlId="4" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
-        <Orca OrcaName="TrackVolumeTransition" ControlId="5" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
-        <Orca OrcaName="TrackVolumeLoop" ControlId="6" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
-        <Orca OrcaName="IsTransition" ControlId="7" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
-        <Orca OrcaName="AisacControl08" ControlId="8" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+        <Orca OrcaName="TrackVolumeOver" ControlId="4" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+        <Orca OrcaName="AisacControl05" ControlId="5" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+        <Orca OrcaName="AisacControl06" ControlId="6" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+        <Orca OrcaName="AisacControl07" ControlId="7" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
+        <Orca OrcaName="Danger" ControlId="8" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
         <Orca OrcaName="AisacControl09" ControlId="9" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
         <Orca OrcaName="AisacControl10" ControlId="10" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
         <Orca OrcaName="AisacControl11" ControlId="11" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacControl" />
@@ -54,9 +54,9 @@
       <Orca OrcaName="ボイスリミットグループ" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoVoiceLimitGroupFolder">
         <Orca OrcaName="VoiceLimitGroup_0" VoiceLimitNum="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoVoiceLimitGroup" />
       </Orca>
-      <Orca OrcaName="ゲーム変数" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariableFolder">
+      <Orca OrcaName="ゲーム変数" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariableFolder">
         <Orca OrcaName="Default" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariable" />
-        <Orca OrcaName="IsTransition" VariableId="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariable" />
+        <Orca OrcaName="IsOverflow" VariableId="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoGameVariable" />
       </Orca>
       <Orca OrcaName="DSPバス設定" Expand="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspSettingFolder">
         <Orca OrcaName="DspBusSetting_0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoDspSetting">

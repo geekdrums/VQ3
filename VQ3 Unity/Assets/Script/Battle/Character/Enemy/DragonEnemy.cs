@@ -28,47 +28,47 @@ public class DragonEnemy : Enemy {
 	public override void OnExecuted( Skill skill, ActionSet act )
 	{
 		base.OnExecuted(skill, act);
-		switch( currentState.name )
-		{
-		case "Default":
-			if( skill.name.StartsWith( "breath" ) )
-			{
-				firePower_ = 3;
-				SEPlayer.Play("breath");
-			}
-			else if( skill.name.StartsWith( "ignis" ) && skill.Actions.IndexOf(act) == 0 )
-			{
-				--firePower_;
-				if( firePower_ <= 0 )
-				{
-					ShadowSprite.color = Color.clear;
-				}
-			}
-			break;
-		case "Breath":
-			if( skill.name.StartsWith("poisonBreath") )
-			{
-				SEPlayer.Play("poisonBreath");
-			}
-			break;
-		case "Crow":
-			if( skill.name.StartsWith( "moveBack" ) )
-			{
-				transform.localScale = initialScale;
-				SEPlayer.Play("footstep");
-			}
-			else if( skill.name.StartsWith( "move" ) )
-			{
-				transform.localScale = initialScale * 1.7f;
-				SEPlayer.Play("footstep");
-			}
-			break;
-		}
+		//switch( currentState.name )
+		//{
+		//case "Default":
+		//	if( skill.name.StartsWith( "breath" ) )
+		//	{
+		//		firePower_ = 3;
+		//		SEPlayer.Play("breath");
+		//	}
+		//	else if( skill.name.StartsWith( "ignis" ) && skill.Actions.IndexOf(act) == 0 )
+		//	{
+		//		--firePower_;
+		//		if( firePower_ <= 0 )
+		//		{
+		//			ShadowSprite.color = Color.clear;
+		//		}
+		//	}
+		//	break;
+		//case "Breath":
+		//	if( skill.name.StartsWith("poisonBreath") )
+		//	{
+		//		SEPlayer.Play("poisonBreath");
+		//	}
+		//	break;
+		//case "Crow":
+		//	if( skill.name.StartsWith( "moveBack" ) )
+		//	{
+		//		transform.localScale = initialScale;
+		//		SEPlayer.Play("footstep");
+		//	}
+		//	else if( skill.name.StartsWith( "move" ) )
+		//	{
+		//		transform.localScale = initialScale * 1.7f;
+		//		SEPlayer.Play("footstep");
+		//	}
+		//	break;
+		//}
 	}
 
-	public override void OnRevert()
+	public void OnRevert()
 	{
-		currentState = States.Find(( BattleState state ) => state.name == "Default");
+		//currentState = States.Find(( BattleState state ) => state.name == "Default");
 		firePower_ = 0;
 		ShadowSprite.color = Color.clear;
 		transform.localScale = initialScale;
@@ -77,10 +77,10 @@ public class DragonEnemy : Enemy {
 	public override void TurnInit( CommandBase command )
 	{
 		base.TurnInit(command);
-		if( currentState.name != "Default" )
-		{
-			firePower_ = 0;
-			ShadowSprite.color = Color.clear;
-		}
+		//if( currentState.name != "Default" )
+		//{
+		//	firePower_ = 0;
+		//	ShadowSprite.color = Color.clear;
+		//}
 	}
 }

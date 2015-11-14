@@ -16,6 +16,7 @@ public class PlayerConductor : MonoBehaviour {
 	public int RemainMemory;
 	public float PlayerDamageTimeCoeff = 1.0f;
 	public float PlayerDamageTimeMin = 0.15f;
+	public float EnemyDamageBGShake = 1.0f;
 	
 	[System.Serializable]
 	public class LevelInfo
@@ -56,21 +57,23 @@ public class PlayerConductor : MonoBehaviour {
 	{
 	}
 
-	public void OnGainMemory(int memory)
+	public bool OnGainMemory(int memory)
 	{
 		TotalMemory += memory;
 		RemainMemory += memory;
+		if( TotalMemory >= LevelInfoList[Level + 1].NeedMemory )
+		{
+			++Level;
+			SetLevelParams();
+			return true;
+		}
+		else return false;
 	}
 
     public void OnLevelUp()
     {
-		++Level;
-        SetLevelParams();
-        if( Level > 1 )
-        {
-            TextWindow.SetMessage( MessageCategory.Result, "システムをレベル" + Level + "にアップグレード。" );
-            SEPlayer.Play( "levelUp" );
-        }
+        TextWindow.SetMessage( MessageCategory.Result, "システムをレベル" + Level + "にアップグレード。" );
+        SEPlayer.Play( "levelUp" );
     }
 
 	void SetLevelParams()
@@ -165,9 +168,11 @@ public class PlayerConductor : MonoBehaviour {
 		{
 		case GameState.Battle:
 			TextWindow.SetMessage(MessageCategory.Help, "次のコマンドは？");
+			TextWindow.SetCommand(null);
 			break;
 		case GameState.Result:
 			GameContext.ResultConductor.OnPushedOKButton(this, null);
+			TextWindow.SetCommand(null);
 			break;
 		}
 	}
@@ -181,7 +186,7 @@ public class PlayerConductor : MonoBehaviour {
 			CurrentCommand.SetCurrent();
 			ColorManager.SetThemeColor(CurrentCommand.themeColor);
 
-			if( CurrentCommand.BGAnim != null && GameContext.VoxSystem.IsOverFlow )
+			if( CurrentCommand.BGAnim != null && GameContext.LuxSystem.IsOverFlow )
 			{
 				CurrentCommand.BGAnim.Activate();
 			}
@@ -192,6 +197,7 @@ public class PlayerConductor : MonoBehaviour {
 		}
 		Player.TurnInit(CurrentCommand.currentData);
 		TextWindow.SetMessage(MessageCategory.PlayerCommand, CurrentCommand.currentData.DescribeText);
+		TextWindow.SetCommand(null);
         WaitCount = 0;
 	}
 
@@ -236,7 +242,7 @@ public class PlayerConductor : MonoBehaviour {
 				int vpDamage = (int)(attack.VP * Player.VPCoeff);
 				if( vpDamage < 0 )
 				{
-					GameContext.VoxSystem.AddVPVT(vpDamage, 0);
+					GameContext.LuxSystem.AddBP(vpDamage, 0);
 					Player.VPDrained(attack, skill, -vpDamage);
 				}
 				isSucceeded = true;
@@ -279,8 +285,9 @@ public class PlayerConductor : MonoBehaviour {
         WaitCount = 0;
 		ColorManager.SetBaseColor(EBaseColor.Black);
 		ColorManager.SetThemeColor(EThemeColor.White);
+		TextWindow.SetCommand(null);
 
-		VPMeter.SetActive(GameContext.FieldConductor.EncountIndex>0);
+		VPMeter.SetActive(GameContext.FieldConductor.CurrentEncounter.Version != LuxVersion.None);
     }
 
 	public void OnEnterSetting()
@@ -296,13 +303,15 @@ public class PlayerConductor : MonoBehaviour {
 		Player.HitPoint = Player.MaxHP;
 		Player.HPPanel.OnUpdateHP();
 		WindowFrame.SetTargetWidth(12);
-		CommandGraph.OnEnterResult();
 		BGAnimBase.DeactivateCurrentAnim();
 	}
 
 	public void OnEnterEvent()
 	{
+		WindowFrame.SetTargetWidth(12);
+		CommandGraph.OnEnterSetting();
 		EnemyExp.Hide();
+		MemoryPanel.Reset();
 	}
 
 	public void OnOverFlowed()
@@ -336,4 +345,8 @@ public class PlayerConductor : MonoBehaviour {
 		BGAnimBase.DeactivateCurrentAnim();
 		WindowFrame.SetTargetWidth(12);
     }
+	public void OnEndro()
+	{
+		CommandGraph.OnEndro();
+	}
 }

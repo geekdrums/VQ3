@@ -22,7 +22,7 @@ public class HitokageEnemy : Enemy {
 		base.Update();
 		if( isFlarePlaying )
 		{
-			GameContext.VoxSystem.BGOffset = Vector3.Lerp(GameContext.VoxSystem.BGOffset, flareBGOffset, 0.1f);
+			GameContext.LuxSystem.BGOffset = Vector3.Lerp(GameContext.LuxSystem.BGOffset, flareBGOffset, 0.1f);
 			if( sunSpot_ != null )
 			{
 				sunSpot_.transform.localPosition = Vector3.Lerp(sunSpot_.transform.localPosition, initialSunspotPos, 0.1f);
@@ -35,7 +35,7 @@ public class HitokageEnemy : Enemy {
 		}
 		else
 		{
-			GameContext.VoxSystem.BGOffset = Vector3.Lerp(GameContext.VoxSystem.BGOffset, Vector3.zero, 0.1f);
+			GameContext.LuxSystem.BGOffset = Vector3.Lerp(GameContext.LuxSystem.BGOffset, Vector3.zero, 0.1f);
 			if( sunSpot_ != null )
 			{
 				Vector3 targetOffset = Quaternion.AngleAxis(360.0f * (float)Music.MusicalTime/16.0f,Vector3.up) * Vector3.right;
@@ -45,6 +45,7 @@ public class HitokageEnemy : Enemy {
 		}
 	}
 
+	/*
 	public override void OnSkillEnd( Skill skill )
 	{
 		base.OnSkillEnd(skill);
@@ -98,6 +99,7 @@ public class HitokageEnemy : Enemy {
 			break;
 		}
 	}
+	*/
 
 	public override void OnDead()
 	{

@@ -39,14 +39,14 @@ public class Player : Character
 				UIParent.transform.position = initialPosition;
 			}
 		}
-		if( GameContext.VoxSystem.State != VoxState.Overload )
+		if( GameContext.LuxSystem.State != LuxState.Overload )
 		{
 			if( IsDangerMode )
 			{
 				if( HitPoint > MaxHP * (DangerPercentage + DangerHysteresis) / 100.0f )
 				{
 					float rate = (((float)HitPoint / MaxHP) - DangerPercentage)/DangerHysteresis;
-					Music.SetAisac(8, rate);
+					Music.SetAisac("Danger", rate);
 				}
 			}
 		}
@@ -104,7 +104,8 @@ public class Player : Character
 			lastDamageText = damageText.GetComponent<DamageText>();
 			GameObject textPos = skill.damageParent;// transform.FindChild("DamageTextPos");
 			if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().gameObject;
-			lastDamageText.Initialize(damage, (attack.type == AttackType.Attack ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage), textPos.transform.position + Vector3.back);
+			lastDamageText.Initialize(damage, (attack.type == AttackType.Attack ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage));
+			lastDamageText.transform.position = textPos.transform.position + Vector3.back;
 		}
 	}
 	public void VPDrained(AttackModule attack, Skill skill, int drainVP)
@@ -112,7 +113,8 @@ public class Player : Character
 		GameObject damageText = (Instantiate(damageTextPrefab) as GameObject);
 		Transform textPos = skill.transform.FindChild("DamageTextPos");
 		if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().transform;
-		damageText.GetComponent<DamageText>().Initialize(drainVP, ActionResult.VPDrain, textPos.position + Vector3.right * 5 + Vector3.down * 2);
+		damageText.GetComponent<DamageText>().Initialize(drainVP, ActionResult.VPDrain);
+		damageText.transform.position = textPos.position + Vector3.right * 5 + Vector3.down * 2;
 	}
 	protected override void BeDamaged(int damage, Skill skill)
 	{
@@ -186,7 +188,7 @@ public class Player : Character
 
 	public void CheckDangerMode()
 	{
-		if( GameContext.VoxSystem.State != VoxState.Overload )
+		if( GameContext.LuxSystem.State != LuxState.Overload )
 		{
 			if( IsDangerMode )
 			{
@@ -194,7 +196,7 @@ public class Player : Character
 				{
 					IsDangerMode = false;
 					ColorManager.SetBaseColor(EBaseColor.Black);
-					Music.SetAisac(8, 1);
+					Music.SetAisac("Danger", 1);
 				}
 			}
 			else
@@ -204,7 +206,7 @@ public class Player : Character
 					IsDangerMode = true;
 					ColorManager.SetBaseColor(EBaseColor.Red);
 					EnhanceCutIn.SetDanger();
-					Music.SetAisac(8, 0);
+					Music.SetAisac("Danger", 0);
 				}
 			}
 		}

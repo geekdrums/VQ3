@@ -3,7 +3,7 @@ using System.Collections;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class MidairPrimitive : MonoBehaviour
+public class MidairPrimitive : MonoBehaviour, IColoredObject
 {
 
 	static readonly int[] quadIndices = new int[] { 0, 2, 1, 3, 1, 2 };
@@ -21,6 +21,7 @@ public class MidairPrimitive : MonoBehaviour
 	public float Angle;
 	public float GrowSize;
 	public float GrowAlpha;
+	public float[] VertexAlphas;
 
 	public int N { get { return (int)Mathf.Ceil(Num); } }
 	public int ArcN { get { return Mathf.Min(N, (int)Mathf.Ceil(N * ArcRate)); } }
@@ -32,13 +33,8 @@ public class MidairPrimitive : MonoBehaviour
 	public string materialName = "Transparent/Diffuse";
 	public string colorName = "_Color";
 
-	float targetWidth;
-	float targetRadius;
-	Color targetColor;
-	float targetArcRate;
 	float currentArcRate;
 	float linearFactor = 0.3f;
-	float minDistance = 0.05f;
 	Vector3[] meshVertices;
 	Vector3[] normalizedVertices;
 
@@ -63,24 +59,9 @@ public class MidairPrimitive : MonoBehaviour
 		}
 	}
 
-	[System.Flags]
-	public enum AnimationParams
-	{
-		None = 0x0,
-		Width = 0x1,
-		Radius = 0x2,
-		Color = 0x4,
-		Arc = 0x8,
-	}
-	public AnimationParams animParam = AnimationParams.None;
-
 	// Use this for initialization
 	void Start()
 	{
-		targetWidth = Width;
-		targetRadius = Radius;
-		targetColor = Color;
-		targetArcRate = ArcRate;
 		ownerAnimation = GetComponentInParent<Animation>();
 		RecalculatePolygon();
 		InitMaterial();
@@ -108,70 +89,7 @@ public class MidairPrimitive : MonoBehaviour
 			GetComponent<Renderer>().material.SetColor(colorName, Color);
 			UpdateGrow();
 		}
-		if( animParam != AnimationParams.None )
-		{
-			UpdateAnimation();
-		}
 		UpdateArc();
-	}
-
-
-	void UpdateAnimation()
-	{
-		float d = Mathf.Abs(Radius - targetRadius);
-		bool updateRadius = false;
-		if( d > float.Epsilon )
-		{
-			Radius = (d > minDistance ? Mathf.Lerp(Radius, targetRadius, linearFactor) : targetRadius);
-			updateRadius = true;
-		}
-		if( Radius == targetRadius ) animParam &= ~AnimationParams.Radius;
-
-		d = Mathf.Abs(Width - targetWidth);
-		bool updateWidth = false;
-		if( d > float.Epsilon )
-		{
-			Width = (d > minDistance ? Mathf.Lerp(Width, targetWidth, linearFactor) : targetWidth);
-			updateWidth = true;
-		}
-		if( Width == targetWidth ) animParam &= ~AnimationParams.Width;
-
-		d = Mathf.Abs(ArcRate - targetArcRate);
-		bool updateArc = false;
-		if( d > float.Epsilon )
-		{
-			ArcRate = (d > minDistance ? Mathf.Lerp(ArcRate, targetArcRate, linearFactor) : targetArcRate);
-			updateArc = true;
-		}
-		if( ArcRate == targetArcRate ) animParam &= ~AnimationParams.Arc;
-
-		if( updateRadius )
-		{
-			RecalculateRadius();
-			if( GrowChild != null ) GrowChild.SetSize(Radius + GrowSize);
-		}
-		if( updateWidth || updateRadius )
-		{
-			RecalculateWidth();
-			if( GrowChild != null ) GrowChild.SetWidth(Width + GrowSize * 2);
-		}
-		if( updateArc )
-		{
-			UpdateArc();
-			if( GrowChild != null ) GrowChild.SetArc(ArcRate);
-		}
-
-		if( GrowChild != null ) GrowChild.SetColor(ColorManager.MakeAlpha(Color, GrowAlpha));
-		if( ColorManager.Distance(Color, targetColor) < minDistance )
-		{
-			Color = targetColor;
-			animParam &= ~AnimationParams.Color;
-		}
-		else
-		{
-			Color = Color.Lerp(Color, targetColor, linearFactor);
-		}
-		GetComponent<Renderer>().material.SetColor(colorName, Color);
 	}
 
 	public void UpdateGrow()
@@ -358,6 +276,21 @@ public class MidairPrimitive : MonoBehaviour
 			normalizedVertices[ArcN] = normalVertex;
 			mesh.vertices = meshVertices;
 
+			// color
+			if( VertexAlphas != null && VertexAlphas.Length == N )
+			{
+				Color[] colors = new Color[vertexCount];
+				for( int i = 0; i < ArcN; ++i )
+				{
+					colors[2 * i] = ColorManager.MakeAlpha(Color.white, Mathf.Lerp(VertexAlphas[i], VertexAlphas[(i + N/2) % N], (OutR - InR)/(OutR * 2)));
+					colors[2 * i + 1] = ColorManager.MakeAlpha(Color.white, VertexAlphas[i]);
+				}
+				colors[2 * ArcN] = ColorManager.MakeAlpha(Color.white, Mathf.Lerp(VertexAlphas[0], VertexAlphas[N/2], (OutR - InR)/(OutR * 2)));
+				colors[2 * ArcN + 1] = ColorManager.MakeAlpha(Color.white, VertexAlphas[0]);
+
+				mesh.colors = colors;
+			}
+
 			// uv
 			mesh.uv = new Vector2[vertexCount];
 			Vector2[] uvs = new Vector2[vertexCount];
@@ -404,27 +337,19 @@ public class MidairPrimitive : MonoBehaviour
 
 	public void SetTargetSize(float newTargetSize)
 	{
-		if( targetRadius == newTargetSize ) return;
-		targetRadius = newTargetSize;
-		animParam |= AnimationParams.Radius;
+		AnimManager.AddAnim(gameObject, newTargetSize, ParamType.Radius, AnimType.Linear, linearFactor);
 	}
 	public void SetTargetWidth(float newTargetWidth)
 	{
-		if( targetWidth == newTargetWidth ) return;
-		targetWidth = newTargetWidth;
-		animParam |= AnimationParams.Width;
+		AnimManager.AddAnim(gameObject, newTargetWidth, ParamType.Width, AnimType.Linear, linearFactor);
 	}
 	public void SetTargetColor(Color newTargetColor)
 	{
-		if( targetColor == newTargetColor ) return;
-		targetColor = newTargetColor;
-		animParam |= AnimationParams.Color;
+		AnimManager.AddAnim(gameObject, newTargetColor, ParamType.Color, AnimType.Linear, linearFactor);
 	}
 	public void SetTargetArc(float newTargetArcRate)
 	{
-		if( targetArcRate == newTargetArcRate ) return;
-		targetArcRate = newTargetArcRate;
-		animParam |= AnimationParams.Arc;
+		AnimManager.AddAnim(gameObject, newTargetArcRate, ParamType.Arc, AnimType.Linear, linearFactor);
 	}
 
 	public void SetAnimationSize(float startSize, float endSize)
@@ -450,10 +375,9 @@ public class MidairPrimitive : MonoBehaviour
 
 	public void SetSize(float newSize)
 	{
-		animParam &= ~AnimationParams.Radius;
-		targetRadius = newSize;
-		Radius = targetRadius;
+		Radius = newSize;
 		RecalculateRadius();
+		RecalculateWidth();
 		if( GrowChild != null )
 		{
 			GrowChild.SetSize(Radius + GrowSize);
@@ -461,20 +385,16 @@ public class MidairPrimitive : MonoBehaviour
 	}
 	public void SetWidth(float newWidth)
 	{
-		animParam &= ~AnimationParams.Width;
-		targetWidth = newWidth;
-		Width = targetWidth;
+		Width = newWidth;
 		RecalculateWidth();
 		if( GrowChild != null )
 		{
 			GrowChild.SetWidth(Width + GrowSize * 2);
 		}
 	}
-	public void SetColor(Color newTargetColor)
+	public void SetColor(Color newColor)
 	{
-		animParam &= ~AnimationParams.Color;
-		targetColor = newTargetColor;
-		Color = targetColor;
+		Color = newColor;
 		if( GrowChild != null )
 		{
 			GrowChild.SetColor(ColorManager.MakeAlpha(Color, GrowAlpha));
@@ -489,12 +409,16 @@ public class MidairPrimitive : MonoBehaviour
 #endif
 		GetComponent<Renderer>().material.SetColor(colorName, Color);
 	}
+	
+	//IColoredObject
+	public Color GetColor()
+	{
+		return Color;
+	}
 
 	public void SetArc(float newArc)
 	{
-		animParam &= ~AnimationParams.Arc;
-		targetArcRate = newArc;
-		ArcRate = targetArcRate;
+		ArcRate = newArc;
 		UpdateArc();
 		if( GrowChild != null )
 		{
@@ -504,6 +428,8 @@ public class MidairPrimitive : MonoBehaviour
 
 	void InitMaterial()
 	{
+		if( Shader.Find(materialName) == null ) return;
+
 		Material mat = new Material(Shader.Find(materialName));
 		mat.name = "mat";
 		mat.hideFlags = HideFlags.DontSave;

@@ -34,7 +34,7 @@ public class DamageText : CounterSprite
 		time = 0;
 	}
 
-	public void Initialize(int damage, ActionResult actionResult, Vector3 initialPos)
+	public void Initialize(int damage, ActionResult actionResult)
 	{
 		Color color;
 		Count = Mathf.Abs(damage);
@@ -53,11 +53,11 @@ public class DamageText : CounterSprite
 		case ActionResult.MagicGoodDamage:
 		case ActionResult.PhysicGoodDamage:
 			color = ColorManager.Accent.Critical;
-			if( GameContext.VoxSystem.State == VoxState.Overload )
+			if( GameContext.LuxSystem.State == LuxState.Overload )
 			{
 				transform.localScale = Vector3.one * 1.4f;
 			}
-			else if( GameContext.VoxSystem.State == VoxState.Overflow )
+			else if( GameContext.LuxSystem.State == LuxState.Overflow )
 			{
 				transform.localScale = Vector3.one * 1.2f;
 			}
@@ -92,7 +92,6 @@ public class DamageText : CounterSprite
 			transform.localScale = Vector3.one;
 			break;
 		}
-		transform.position = initialPos;
 		GetComponentInChildren<TextMesh>().color = color;
 		CounterColor = color;
 	}

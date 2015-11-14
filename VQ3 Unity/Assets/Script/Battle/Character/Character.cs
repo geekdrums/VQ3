@@ -134,6 +134,10 @@ public class Character : MonoBehaviour
 		else
 		{
 			damageTime += GameContext.EnemyConductor.EnemyDamageTimeMin + ((float)d / (float)RelativeMaxHP) * GameContext.EnemyConductor.EnemyDamageTimeCoeff;
+			if( BGAnimBase.CurrentAnim != null )
+			{
+				BGAnimBase.CurrentAnim.OnDamage(damageTime);
+			}
 		}
 		damageTime = Mathf.Min(damageTime, (float)Music.MusicalTimeUnit * 8);
 	}

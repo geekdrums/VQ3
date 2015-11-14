@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CommandExplanation : MonoBehaviour {
+public class CommandExplanation : MonoBehaviour, IColoredObject
+{
 
 	public GaugeRenderer NameBase;
 	public TextMesh CommandName;
 	public TextMesh Explanation;
-	public TextMesh NewCommmandText;
 	public CounterSprite LVCount;
-	public TextMesh CommandText, LVText;
+	public TextMesh LVText;
 	public GameObject IconParent;
+	public GaugeRenderer TopLine, BottomLine;
 
 	[System.Serializable]
 	public class CommandParam
@@ -28,6 +29,20 @@ public class CommandExplanation : MonoBehaviour {
 		public void SetParam(float param)
 		{
 			Counter.Count = param;
+			Line.SetRate(0, 0);
+			Line.SetRate(param/100.0f);
+		}
+
+		public void SetZero()
+		{
+			SetColor(ColorManager.Base.MiddleBack);
+			SetParam(0);
+		}
+
+		public void Hide()
+		{
+			SetColor(Color.clear);
+			SetParam(0);
 		}
 	}
 
@@ -48,6 +63,7 @@ public class CommandExplanation : MonoBehaviour {
 	public Phase CurrentPhase { get; private set; }
 
 	PlayerCommandData commandData_;
+	Color currentColor_ = Color.clear;
 
 	// Use this for initialization
 	void Start () {
@@ -55,11 +71,11 @@ public class CommandExplanation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if( CurrentPhase == Phase.Showing && GetComponent<Animation>().isPlaying == false )
+		if( CurrentPhase == Phase.Showing && AnimManager.IsAnimating(gameObject) == false )
 		{
 			CurrentPhase = Phase.Wait;
 		}
-		else if( CurrentPhase == Phase.Hiding && GetComponent<Animation>().isPlaying == false )
+		else if( CurrentPhase == Phase.Hiding && AnimManager.IsAnimating(gameObject) == false )
 		{
 			CurrentPhase = Phase.Hide;
 			Reset();
@@ -69,29 +85,32 @@ public class CommandExplanation : MonoBehaviour {
 	public void Set(PlayerCommand command)
 	{
 		gameObject.SetActive(true);
+		TopLine.gameObject.SetActive(true);
 		if( IconParent.transform.childCount > 0 )
 		{
 			Destroy(IconParent.transform.GetChild(0).gameObject);
 		}
 		commandData_ = command.currentData;
 		CommandName.text = command.nameText.ToUpper();
-		CommandName.color = command.themeColor == EThemeColor.White ? Color.black : Color.white;
 		ThemeColor themeColor = ColorManager.GetThemeColor(command.themeColor);
 
+		GameObject iconObj = command.InstantiateIconObj(IconParent);
 		if( GameContext.State == GameState.Result || GameContext.State == GameState.Event )
 		{
 			NameBase.SetColor(themeColor.Bright);
-			NewCommmandText.color = ColorManager.Base.Bright;
-			LVText.color = Color.clear;
-			LVCount.CounterColor= Color.clear;
-			CommandText.color = Color.clear;
+			LVText.gameObject.SetActive(false);
 			Explanation.text = "";
 			commandData_ = command.commandData[command.commandData.Count-1];
+			iconObj.GetComponent<PlayerCommand>().maskPlane.SetActive(false);
+			if( GameContext.State == GameState.Event )
+			{
+				TopLine.gameObject.SetActive(false);
+			}
 		}
 		else if( commandData_ != null )
 		{
 			NameBase.SetColor(themeColor.Bright);
-			CommandText.color = ColorManager.Base.Bright;
+			LVText.gameObject.SetActive(true);
 			LVText.color = ColorManager.Base.Bright;
 			LVCount.CounterColor= ColorManager.Base.Bright;
 			Explanation.text = commandData_.ExplanationText.Replace("<br/>", System.Environment.NewLine);
@@ -99,30 +118,70 @@ public class CommandExplanation : MonoBehaviour {
 			{
 				Explanation.text = commandData_.ExplanationText.Split(new string[]{"<br/>"}, System.StringSplitOptions.RemoveEmptyEntries)[0];
 			}
-			NewCommmandText.color = Color.clear;
 		}
 		else
 		{
 			NameBase.SetColor(themeColor.Shade);
-			CommandText.color = ColorManager.Base.Shade;
+			LVText.gameObject.SetActive(true);
 			LVText.color = ColorManager.Base.Shade;
 			LVCount.CounterColor= ColorManager.Base.Shade;
 			Explanation.text = "未習得";
-			NewCommmandText.color = Color.clear;
 		}
-		command.GetIconObj(IconParent);
 
-		ATParam.SetParam(command.GetAtk());
-		ATParam.SetColor(command.GetAtkColor());
-		DFParam.SetParam(command.GetDefend());
-		DFParam.SetColor(command.GetDefColor());
-		HLParam.SetParam(command.GetHeal());
-		HLParam.SetColor(command.GetHealColor());
-		VTParam.SetParam(command.GetVT());
-		VTParam.SetColor(command.GetVTColor());
-		VPParam.SetParam(command.GetVP());
-		VPParam.SetColor(command.GetVPColor());
+		if( commandData_ != null )
+		{
+			ATParam.SetParam(commandData_.GetAtk());
+			ATParam.SetColor(commandData_.GetAtkColor());
+			DFParam.SetParam(commandData_.GetDefend());
+			DFParam.SetColor(commandData_.GetDefColor());
+			HLParam.SetParam(commandData_.GetHeal());
+			HLParam.SetColor(commandData_.GetHealColor());
+			if( GameContext.FieldConductor.CurrentEncounter.Version < LuxVersion.Shield )
+			{
+				VPParam.Hide();
+			}
+			else
+			{
+				VPParam.SetParam(commandData_.GetVP());
+				VPParam.SetColor(commandData_.GetVPColor());
+			}
+			if( GameContext.FieldConductor.CurrentEncounter.Version < LuxVersion.AutoShield )
+			{
+				VTParam.Hide();
+			}
+			else
+			{
+				VTParam.SetParam(commandData_.GetVT());
+				VTParam.SetColor(commandData_.GetVTColor());
+			}
+		}
+		else
+		{
+			ATParam.SetZero();
+			DFParam.SetZero();
+			HLParam.SetZero();
+			if( GameContext.FieldConductor.CurrentEncounter.Version < LuxVersion.Shield )
+			{
+				VPParam.Hide();
+			}
+			else
+			{
+				VPParam.SetZero();
+			}
+			if( GameContext.FieldConductor.CurrentEncounter.Version < LuxVersion.AutoShield )
+			{
+				VTParam.Hide();
+			}
+			else
+			{
+				VTParam.SetZero();
+			}
+		}
+
 		LVCount.Count = command.currentLevel;
+
+		TopLine.SetColor(themeColor.Bright);
+		BottomLine.SetColor(themeColor.Bright);
 
 		if( CurrentPhase != Phase.Wait || GameContext.State == GameState.Result )
 		{
@@ -133,7 +192,15 @@ public class CommandExplanation : MonoBehaviour {
 
 	public void Show()
 	{
-		GetComponent<Animation>().Play("ShowCommandExp");
+		TopLine.SetRate(0);
+		TopLine.SetRate(1, 0.2f);
+		BottomLine.SetRate(0);
+		BottomLine.SetRate(1, 0.2f);
+		currentColor_ = Color.clear;
+		AnimManager.AddAnim(gameObject, Color.white, ParamType.Color);
+		IconParent.transform.localScale = Vector3.zero;
+		AnimManager.AddAnim(IconParent, 0.3f, ParamType.Scale, AnimType.BounceIn, 0.2f);
+
 		CurrentPhase = Phase.Showing;
 		transform.localScale = Vector3.one;
 	}
@@ -141,7 +208,12 @@ public class CommandExplanation : MonoBehaviour {
 	public void Hide()
 	{
 		gameObject.SetActive(false);
-		GetComponent<Animation>().Play("HideCommandExp");
+		TopLine.SetRate(0, 0.2f);
+		BottomLine.SetRate(0, 0.2f);
+		currentColor_ = Color.white;
+		AnimManager.AddAnim(gameObject, Color.white, ParamType.Color);
+		AnimManager.AddAnim(IconParent, 0.0f, ParamType.Scale, AnimType.BounceOut, 0.2f);
+
 		CurrentPhase = Phase.Hiding;
 	}
 
@@ -156,5 +228,19 @@ public class CommandExplanation : MonoBehaviour {
 		commandData_ = null;
 		CurrentPhase = Phase.Hide;
 		Explanation.text = "";
+	}
+
+	public void SetColor(Color color)
+	{
+		currentColor_ = color;
+		LVText.color = currentColor_;
+		LVCount.CounterColor = currentColor_;
+		CommandName.color = currentColor_;
+		Explanation.color = currentColor_;
+	}
+
+	public Color GetColor()
+	{
+		return currentColor_;
 	}
 }

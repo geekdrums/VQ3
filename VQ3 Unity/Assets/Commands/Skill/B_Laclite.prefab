@@ -27,6 +27,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -45,19 +46,26 @@ MonoBehaviour:
   - Magic 75 3 3 Right
   - Magic 75 10 25 All
   - Magic 75 10 25 All
-  - Magic 75 10 25 All,Weather Dark -15
+  - Magic 75 10 25 All
   _rhythmStr: nn nn nn ta nn nn ta nn nn ta nn nn ta nn nn ta nn nn ta
   _rhythmBaseTime: 4
   _prefabs: []
+  animRandomRange: {x: 0, y: 0}
+  animRandomExcludeRange: {x: 0, y: 0}
+  characterAnimName: 
+  damageParent: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _actionStr.Array.data[5]
+      value: Magic 75 10 25 All
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

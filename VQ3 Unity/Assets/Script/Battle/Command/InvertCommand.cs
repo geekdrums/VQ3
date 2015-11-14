@@ -32,7 +32,7 @@ public class InvertCommand : PlayerCommand
 #endif
 		UpdateTransform();
 
-		if( GameContext.VoxSystem.State != VoxState.Overload )
+		if( GameContext.LuxSystem.State != LuxState.Overload )
 		{
 			GetComponent<MidairPrimitive>().SetColor(Color.white);
 		}
@@ -44,6 +44,6 @@ public class InvertCommand : PlayerCommand
 
 	public override void SetLink(bool linked)
 	{
-		base.SetLink(linked && (GameContext.VoxSystem.State == VoxState.Overload || GameContext.VoxSystem.IsOverFlow));
+		base.SetLink(linked && (GameContext.LuxSystem.State == LuxState.Overload || GameContext.LuxSystem.IsOverFlow));
 	}
 }

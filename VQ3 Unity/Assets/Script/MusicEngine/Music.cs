@@ -384,6 +384,10 @@ public class Music : MonoBehaviour
 	{
 		Current_.musicSource_.SetAisac(controlName, value);
 	}
+	public static void SetGameVariable(string variableName, float value)
+	{
+		CriAtomEx.SetGameVariable(variableName, value);
+	}
 	#endregion
 
 	#region private params
@@ -585,7 +589,6 @@ public class Music : MonoBehaviour
 
 	void UpdateTiming()
 	{
-		int oldSample = currentSample_;
 		long numSamples;
 		int tempOut;
 		if( !playback_.GetNumPlayedSamples(out numSamples, out tempOut) )

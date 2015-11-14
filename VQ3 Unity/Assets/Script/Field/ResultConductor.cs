@@ -40,7 +40,6 @@ public class ResultConductor : MonoBehaviour {
 
 	public void OnEnterResult(int memory)
 	{
-		GameContext.PlayerConductor.OnGainMemory(memory);
 		MemoryResult.Show(memory);
 		State = ResultState.Memory;
 	}

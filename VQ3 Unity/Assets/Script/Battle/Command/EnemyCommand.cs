@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class EnemyCommand : CommandBase
 {
-    public string nextState;
     public string ShortText;
 	public string ExplanationText;
+	public List<string> CommandAliases;
 
     public Skill GetCurrentSkill( int startBar )
     {

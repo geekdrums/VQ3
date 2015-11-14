@@ -58,6 +58,7 @@ public class AccentColor
     public Color Buff;
     public Color DeBuff;
     public Color Break;
+	public Color Time;
 	public Color Drain;
 }
 
@@ -122,6 +123,10 @@ public class ColorManager : MonoBehaviour
 	public Material[] BaseBackMaterials;
 	public Material[] BaseFrontMaterials;
 	public TextMesh[] BaseFrontTextMeshes;
+	public GaugeRenderer[] BaseBackGauges;
+	public GaugeRenderer[] BaseFrontGauges;
+	public GaugeRenderer[] BaseMiddleGauges;
+	public GaugeRenderer[] BaseMiddleBackGauges;
 
     public static BaseColor Base { get; private set; }
 
@@ -188,6 +193,22 @@ public class ColorManager : MonoBehaviour
 		{
 			primitive.SetColor(Base.Light);
 		}
+		foreach( GaugeRenderer gauge in instance.BaseBackGauges )
+		{
+			gauge.SetColor(Base.Back);
+		}
+		foreach( GaugeRenderer gauge in instance.BaseFrontGauges )
+		{
+			gauge.SetColor(Base.Front);
+		}
+		foreach( GaugeRenderer gauge in instance.BaseMiddleGauges )
+		{
+			gauge.SetColor(Base.Middle);
+		}
+		foreach( GaugeRenderer gauge in instance.BaseMiddleBackGauges )
+		{
+			gauge.SetColor(Base.MiddleBack);
+		}
 		foreach( Material material in instance.BaseBackMaterials)
 		{
 			material.color = Base.Back;
@@ -228,7 +249,7 @@ public class ColorManager : MonoBehaviour
         instance.ThemeLightMaterial.color = Theme.Light;
         instance.ThemeShadeMaterial.color = Theme.Shade;
 
-        if( GameContext.VoxSystem.State != VoxState.Overload )
+        if( GameContext.LuxSystem.State != LuxState.Overload )
         {
             instance.BGMaterial.color = Theme.Light;
         }

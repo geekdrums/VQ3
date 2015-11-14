@@ -58,14 +58,16 @@ public class MemoryResult : MonoBehaviour {
 
 	public void Show(int memory)
 	{
+		IsLevelUp = GameContext.PlayerConductor.OnGainMemory(memory);
+		int lastLevel = GameContext.PlayerConductor.Level - ( IsLevelUp ? 1 : 0 );
+		int nextLevel = GameContext.PlayerConductor.Level + 1 - ( IsLevelUp ? 1 : 0 );
 		SEPlayer.Play("result");
 		gameObject.SetActive(true);
 		AcquiredMemory.Count = memory;
-		StartMemory.Count = GameContext.PlayerConductor.LevelInfoList[GameContext.PlayerConductor.Level].NeedMemory;
-		EndMemory.Count = GameContext.PlayerConductor.LevelInfoList[GameContext.PlayerConductor.Level + 1].NeedMemory;
+		StartMemory.Count = GameContext.PlayerConductor.LevelInfoList[lastLevel].NeedMemory;
+		EndMemory.Count = GameContext.PlayerConductor.LevelInfoList[nextLevel].NeedMemory;
 		targetRate_ = Mathf.Min(1.0f, (float)(GameContext.PlayerConductor.TotalMemory - StartMemory.Count)/(float)(EndMemory.Count - StartMemory.Count));
 		Gauge.SetRate((float)(GameContext.PlayerConductor.TotalMemory - StartMemory.Count - memory)/(float)(EndMemory.Count - StartMemory.Count));
-		IsLevelUp = GameContext.PlayerConductor.TotalMemory >= EndMemory.Count;
 		CurrentPhase = MemoryResult.Phase.Anim;
 		GetComponent<Animation>().Play("ResultMemoryAnim");
 		TextWindow.SetMessage(MessageCategory.Result, "メモリーを獲得。");

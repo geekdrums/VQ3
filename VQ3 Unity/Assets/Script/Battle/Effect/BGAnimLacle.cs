@@ -8,18 +8,6 @@ public class BGAnimLacle : BGAnimBase
 	public float Witdh = 0.2f;
 	public float Offset = 0;
 
-	// Use this for initialization
-	void Start()
-	{
-		primitives_ = GetComponentsInChildren<MidairPrimitive>();
-		transform.localScale = Vector3.zero;
-	}
-
-	protected override void Update()
-	{
-		base.Update();
-	}
-
 	protected override void SetParams(MidairPrimitive primitive, float t, bool accent)
 	{
 		primitive.SetSize(Offset + Mathf.Lerp(0, Size, t*t*t));

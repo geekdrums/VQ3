@@ -27,6 +27,7 @@ public class CommandGraph : MonoBehaviour
 	public GameObject EdgePrefab;
 	public GameObject CommandDataPrefab;
 	public List<GameObject> SkillPrefabs;
+	public List<BGAnimBase> BGAnims;
 
 	public GameObject CommandSphere;
 	public GameObject EdgeSphere;
@@ -39,6 +40,8 @@ public class CommandGraph : MonoBehaviour
 	public GameObject GaugeParent;
 	public GaugeRenderer CurrentGauge;
 	public GaugeRenderer NextGauge;
+	public MidairPrimitive NextLight;
+	public MidairPrimitive Mask;
 	public TextMesh CurrentCommandName;
 
 	public Vector3 MaxScale = new Vector3(0.24f, 0.24f, 0.24f);
@@ -70,7 +73,7 @@ public class CommandGraph : MonoBehaviour
 	#region private params
 
 	bool IsInvert { get { return CurrentCommand is InvertCommand; } }
-	bool IsLastInvert { get { return IsInvert && (GameContext.VoxSystem.OverloadTime == 1 || (CurrentCommand as InvertCommand).IsLast); } }
+	bool IsLastInvert { get { return IsInvert && (GameContext.LuxSystem.BreakTime == 1 || (CurrentCommand as InvertCommand).IsLast); } }
 	int CommandLoopCount;
 	float SphereLatitude
 	{
@@ -84,7 +87,6 @@ public class CommandGraph : MonoBehaviour
 		}
 	}
 
-	Vector3 ballTouchStartPosition;
 	Vector3 oldMousePosition;
 	Quaternion targetRotation;
 	Quaternion offsetRotation;
@@ -166,6 +168,7 @@ public class CommandGraph : MonoBehaviour
 		Defend,
 		Heal,
 		Music,
+		BGAnim,
 		Skill1,
 		Skill2,
 		Skill3,
@@ -287,6 +290,10 @@ public class CommandGraph : MonoBehaviour
 					playerCommand.nameText = propertyTexts[(int)CommandListProperty.EnglishName];
 					playerCommand.iconStr = propertyTexts[(int)CommandListProperty.Icon];
 					playerCommand.numSP = int.Parse(propertyTexts[(int)CommandListProperty.InitialStar]);
+					if( propertyTexts[(int)CommandListProperty.BGAnim] != "" )
+					{
+						playerCommand.BGAnim = BGAnims.Find((BGAnimBase anim) => anim.name.StartsWith(propertyTexts[(int)CommandListProperty.BGAnim]));
+					}
 
 					playerCommand.ValidatePosition();
 
@@ -352,20 +359,15 @@ public class CommandGraph : MonoBehaviour
 		{
 		case BattleState.Continue:
 			break;
-		case BattleState.Intro:
-			if( Music.IsJustChangedAt(AllowInputEnd) )
-			{
-				SetNextBlock();
-			}
-			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
-			break;
 		case BattleState.Wait:
 			if( Music.IsJustChangedWhen((Timing t) => t.Unit == 3 && t.Beat == 3) )
 			{
 				SetNextBlock();
 			}
 			CurrentGauge.SetRate(0.0f);
+			NextGauge.SetRate(1.0f);
 			break;
+		case BattleState.Intro:
 		case BattleState.Battle:
 		case BattleState.Eclipse:
 			if( Music.IsJustChangedAt(AllowInputEnd) )
@@ -373,6 +375,7 @@ public class CommandGraph : MonoBehaviour
 				SetNextBlock();
 			}
 			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
+			NextGauge.SetRate((float)(Music.MusicalTime / 64.0));
 			break;
 		case BattleState.Endro:
 			break;
@@ -383,6 +386,8 @@ public class CommandGraph : MonoBehaviour
 			NextRect.SetSize(6 + Music.MusicalCos(4));
 			NextRect.SetColor(Color.Lerp(ColorManager.Base.Front, Color.clear, Music.MusicalCos(4) * 0.5f));
 		}
+		Vector3 gaugePos = NextGauge.transform.parent.localPosition;
+		NextGauge.transform.parent.localPosition = Vector3.Lerp(gaugePos, new Vector3(gaugePos.x, (NextCommand == null ? -7.5f : -9.0f), gaugePos.z), 0.2f);
 		CurrentRect.SetColor(ColorManager.Base.Front);
 	}
 
@@ -398,11 +403,13 @@ public class CommandGraph : MonoBehaviour
 		if( Input.GetMouseButtonDown(0) )
 		{
 			oldMousePosition = Input.mousePosition;
-			if( hit.collider == CommandSphere.GetComponent<Collider>() ) //&& GameContext.VoxSystem.IsOverloading == false )
+			if( hit.collider == CommandSphere.GetComponent<Collider>() )
 			{
-				CurrentButton = VoxButton.Ball;
-				PushCommandButton(hit.point);
-				ballTouchStartPosition = hit.point;
+				if( GameContext.State != GameState.Battle || ( GameContext.BattleState == BattleState.Wait && NextCommand == null ) || Music.Just < AllowInputEnd )
+				{
+					CurrentButton = VoxButton.Ball;
+					PushCommandButton(hit.point);
+				}
 			}
 		}
 		else if( Input.GetMouseButtonUp(0) )
@@ -478,7 +485,7 @@ public class CommandGraph : MonoBehaviour
 
 		if( NextCommand == null || NextCommand == IntroCommand )
 		{
-			if( GameContext.PlayerConductor.IsEclipse && GameContext.VoxSystem.IsOverFlow )
+			if( GameContext.PlayerConductor.IsEclipse && GameContext.LuxSystem.IsOverFlow )
 			{
 				foreach( PlayerCommand c in CurrentCommand.LinkedCommands )
 				{
@@ -524,7 +531,7 @@ public class CommandGraph : MonoBehaviour
 					}
 					else if( NextCommand is InvertCommand )
 					{
-						GameContext.VoxSystem.SetState(VoxState.Overload);
+						GameContext.LuxSystem.SetState(LuxState.Overload);
 						GameContext.BattleConductor.SetState(BattleState.Battle);
 					}
 					else
@@ -549,7 +556,7 @@ public class CommandGraph : MonoBehaviour
 				}
 			}
 		}
-		else if( GameContext.VoxSystem.State == VoxState.Overload && GameContext.VoxSystem.OverloadTime == 1 )
+		else if( GameContext.LuxSystem.State == LuxState.Overload && GameContext.LuxSystem.BreakTime == 1 )
 		{
 			foreach( PlayerCommand c in IntroCommand.LinkedCommands )
 			{
@@ -627,8 +634,10 @@ public class CommandGraph : MonoBehaviour
 			CurrentCommandName.text = CurrentCommand.nameText.ToUpper();
 			CurrentCommandName.color = themeColor;
 			CurrentGauge.SetColor(themeColor, 0.2f);
-			NextGauge.SetColor(Color.clear);
-			NextGauge.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
+			NextGauge.SetColor(ColorManager.Base.Front);
+			NextLight.SetTargetColor(Color.clear);
+			Mask.SetTargetColor(Color.clear);
+			CurrentGauge.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
 		}
 		else
 		{
@@ -692,7 +701,9 @@ public class CommandGraph : MonoBehaviour
 		OnExecCommand();
 		GaugeParent.SetActive(true);
 		CurrentGauge.SetColor(ColorManager.Base.Front);
-		NextGauge.SetColor(Color.clear);
+		NextGauge.SetColor(ColorManager.Base.Front);
+		NextLight.SetColor(Color.clear);
+		Mask.SetColor(Color.clear);
 		transform.rotation = Quaternion.Inverse(Quaternion.LookRotation(-IntroCommand.transform.localPosition)) * offsetRotation;
 		CurrentRect.transform.parent = IntroCommand.transform;
 		CurrentRect.transform.localPosition = Vector3.forward;
@@ -700,7 +711,7 @@ public class CommandGraph : MonoBehaviour
 		CurrentRect.transform.localRotation = Quaternion.identity;
 	}
 
-	public void OnEnterResult()
+	public void OnEndro()
 	{
 		GaugeParent.SetActive(false);
 	}
@@ -712,6 +723,7 @@ public class CommandGraph : MonoBehaviour
 
 	public void OnEnterSetting()
 	{
+		GaugeParent.SetActive(false);
 		CurrentRect.transform.localScale = Vector3.zero;
 		CheckLinkedFromIntro();
 		Deselect();
@@ -725,7 +737,9 @@ public class CommandGraph : MonoBehaviour
 			NextCommand = null;
 			NextRect.transform.localScale = Vector3.zero;
 
-			NextGauge.SetColor(Color.clear);
+			NextGauge.SetColor(ColorManager.Base.Front);
+			NextLight.SetTargetColor(Color.clear);
+			Mask.SetTargetColor(Color.clear);
 		}
 	}
 
@@ -746,17 +760,22 @@ public class CommandGraph : MonoBehaviour
 		}
 		NextRect.GetComponent<Animation>().Play("SelectAnim");
 
-		NextGauge.SetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Shade);
+		if( GameContext.State == GameState.Battle )
+		{
+			NextGauge.SetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Bright);
+			if( command != IntroCommand ) NextLight.SetTargetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Bright);
+			if( command != IntroCommand && GameContext.LuxState != LuxState.Overload ) Mask.SetTargetColor(ColorManager.MakeAlpha(Color.black, 0.5f));
+		}
 
 		targetRotation = Quaternion.Inverse(Quaternion.LookRotation(-command.transform.localPosition)) * offsetRotation;
 		if( command != IntroCommand ) SEPlayer.Play("select");
 
 		GameContext.PlayerConductor.OnSelectedCommand(command);
 
-		if( GameContext.BattleState == BattleState.Intro && command != IntroCommand )
-		{
-			SetNextBlock();
-		}
+		//if( GameContext.BattleState == BattleState.Intro && command != IntroCommand )
+		//{
+		//	SetNextBlock();
+		//}
 	}
 
 	public void SelectInitialInvertCommand()
@@ -776,6 +795,7 @@ public class CommandGraph : MonoBehaviour
 				}
 			}
 		}
+		Mask.SetTargetColor(Color.clear);
 	}
 
 	public void CheckLinkedFromIntro()

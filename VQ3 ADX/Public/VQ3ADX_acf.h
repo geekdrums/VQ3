@@ -5,7 +5,7 @@
  *  File Path          : C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 ADX/Public/VQ3ADX.acf
  *  File Name          : VQ3ADX.acf
  *  File Size          : 4,192 bytes
- *  Date Time          : 2015/01/18 16:30
+ *  Date Time          : 2015/11/08 1:22
  *  Target             : Public
  *  Categories         : 1
  *  AISAC Controls     : 16
@@ -32,22 +32,22 @@
 #define CRI_VQ3ADX_ACF_CATEGORY_CATEGORY_0  ( 0) /* CategoryGroup_0/Category_0  */
 
 /* AISAC Control List (AISAC Control ID) */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL00         ( 0) /* AisacControl00  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL01         ( 1) /* AisacControl01  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUME1           ( 2) /* TrackVolume1  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUME2           ( 3) /* TrackVolume2  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUMEENERGY      ( 4) /* TrackVolumeEnergy  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUMETRANSITION  ( 5) /* TrackVolumeTransition  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUMELOOP        ( 6) /* TrackVolumeLoop  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_ISTRANSITION           ( 7) /* IsTransition  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL08         ( 8) /* AisacControl08  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL09         ( 9) /* AisacControl09  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL10         (10) /* AisacControl10  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL11         (11) /* AisacControl11  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL12         (12) /* AisacControl12  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL13         (13) /* AisacControl13  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL14         (14) /* AisacControl14  */
-#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL15         (15) /* AisacControl15  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL00   ( 0) /* AisacControl00  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL01   ( 1) /* AisacControl01  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_ISOVERFLOW       ( 2) /* IsOverflow  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL03   ( 3) /* AisacControl03  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_TRACKVOLUMEOVER  ( 4) /* TrackVolumeOver  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL05   ( 5) /* AisacControl05  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL06   ( 6) /* AisacControl06  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL07   ( 7) /* AisacControl07  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_DANGER           ( 8) /* Danger  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL09   ( 9) /* AisacControl09  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL10   (10) /* AisacControl10  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL11   (11) /* AisacControl11  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL12   (12) /* AisacControl12  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL13   (13) /* AisacControl13  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL14   (14) /* AisacControl14  */
+#define CRI_VQ3ADX_ACF_AISACCONTROL_AISACCONTROL15   (15) /* AisacControl15  */
 
 /* Global AISAC List (Global AISAC Name) */
 // No Global AISAC 
@@ -64,8 +64,8 @@
 
 
 /* Game Variable (Game Variable Index) */
-#define CRI_VQ3ADX_ACF_GAMEVARIABLE_DEFAULT       "Default"      /*   */
-#define CRI_VQ3ADX_ACF_GAMEVARIABLE_ISTRANSITION  "IsTransition" /*   */
+#define CRI_VQ3ADX_ACF_GAMEVARIABLE_DEFAULT     "Default"    /*   */
+#define CRI_VQ3ADX_ACF_GAMEVARIABLE_ISOVERFLOW  "IsOverflow" /*   */
 
 /* end of file */
 

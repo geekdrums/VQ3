@@ -46,7 +46,7 @@ public class BattleConductor : MonoBehaviour {
 		case BattleState.Intro:
 			if( Music.IsJustChangedAt(0) || Music.IsJustChangedAt(4) )
 			{
-				if( Music.CurrentBlockName != "intro" )
+				if( Music.CurrentBlockName != "Intro" )
 				{
 					SetState(BattleState.Battle);
 					UpdateBattle();
@@ -197,7 +197,7 @@ public class BattleConductor : MonoBehaviour {
 			TextWindow.SetMessage(MessageCategory.Result, "戦闘不能、緊急離脱。");
 			GameContext.PlayerConductor.OnPlayerLose();
 			GameContext.EnemyConductor.OnPlayerLose();
-			GameContext.VoxSystem.SetState(VoxState.SunSet);
+			GameContext.LuxSystem.SetState(LuxState.SunSet);
 			Music.Play("Continue");
 			ClearSkills();
 			OKButton.SetText("Continue");
@@ -210,10 +210,11 @@ public class BattleConductor : MonoBehaviour {
 			break;
 		case BattleState.Endro:
 			ClearSkills();
-			GameContext.VoxSystem.SetState(VoxState.SunSet);
+			GameContext.LuxSystem.SetState(LuxState.SunSet);
 			TextWindow.SetMessage(MessageCategory.Result, "敵の殲滅を確認。");
 			OKButton.SetText("OK");
 			OKButton.SetMode(ButtonMode.Active, true);
+			GameContext.PlayerConductor.OnEndro();
 			break;
 		}
 		Debug.Log("Enter BattleState: " + State.ToString());

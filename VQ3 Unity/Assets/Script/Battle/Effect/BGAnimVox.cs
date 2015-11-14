@@ -8,13 +8,6 @@ public class BGAnimVox : BGAnimBase
 	public float Witdh = 0.2f;
 	public float Offset = 1.0f;
 
-	// Use this for initialization
-	void Start()
-	{
-		primitives_ = GetComponentsInChildren<MidairPrimitive>();
-		transform.localScale = Vector3.zero;
-	}
-
 	// Update is called once per frame
 	protected override void Update()
 	{

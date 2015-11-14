@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.2.13.00
-* Date Time          : 2015/09/19 6:28
+* Date Time          : 2015/11/08 23:38
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -24,13 +24,13 @@ public partial class CriAtomAcfInfo
         acfInfo = new AcfInfo("ACF", 0, "", "VQ3ADX.acf","4675cac8-829d-4d86-8dae-b0ebac5cf3ee","DspBusSetting_0");
         acfInfo.aisacControlNameList.Add("AisacControl00");
         acfInfo.aisacControlNameList.Add("AisacControl01");
-        acfInfo.aisacControlNameList.Add("TrackVolume1");
-        acfInfo.aisacControlNameList.Add("TrackVolume2");
-        acfInfo.aisacControlNameList.Add("TrackVolumeEnergy");
-        acfInfo.aisacControlNameList.Add("TrackVolumeTransition");
-        acfInfo.aisacControlNameList.Add("TrackVolumeLoop");
-        acfInfo.aisacControlNameList.Add("IsTransition");
-        acfInfo.aisacControlNameList.Add("AisacControl08");
+        acfInfo.aisacControlNameList.Add("IsOverflow");
+        acfInfo.aisacControlNameList.Add("AisacControl03");
+        acfInfo.aisacControlNameList.Add("TrackVolumeOver");
+        acfInfo.aisacControlNameList.Add("AisacControl05");
+        acfInfo.aisacControlNameList.Add("AisacControl06");
+        acfInfo.aisacControlNameList.Add("AisacControl07");
+        acfInfo.aisacControlNameList.Add("Danger");
         acfInfo.aisacControlNameList.Add("AisacControl09");
         acfInfo.aisacControlNameList.Add("AisacControl10");
         acfInfo.aisacControlNameList.Add("AisacControl11");

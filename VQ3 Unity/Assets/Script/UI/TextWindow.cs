@@ -103,7 +103,7 @@ public class TextWindow : MonoBehaviour
 	static TextWindow instance_;
 
 	TextMesh displayText_, commandText_;
-	GaugeRenderer line_;
+	//GaugeRenderer line_;
 	ButtonUI cancelButton_;
 	MessageIndexed message_ = new MessageIndexed("");
 	MessageIndexed commandName_= new MessageIndexed("");
@@ -119,7 +119,7 @@ public class TextWindow : MonoBehaviour
 
 		TextBase.SetActive(true);
 		CommandBase.SetActive(true);
-		line_ = GetComponentInChildren<GaugeRenderer>();
+		//line_ = GetComponentInChildren<GaugeRenderer>();
 		displayText_ = TextBase.GetComponentInChildren<TextMesh>();
 		displayText_.text = "";
 		commandText_ = CommandBase.GetComponentInChildren<TextMesh>();
@@ -162,13 +162,13 @@ public class TextWindow : MonoBehaviour
 	void SetMessage_(string text)
 	{
 		TextBase.SetActive(true);
-		CommandBase.SetActive(false);
+		//CommandBase.SetActive(false);
 
 		displayCommnd_ = null;
 
 		message_.Init(text);
 		
-		line_.SetColor(Color.white);
+		//line_.SetColor(Color.white);
 	}
 
 	void Reset_()
@@ -187,8 +187,8 @@ public class TextWindow : MonoBehaviour
 
 	void SetCommand_(PlayerCommand command)
 	{
-		TextBase.SetActive(false);
-		CommandBase.SetActive(true);
+		//TextBase.SetActive(false);
+		CommandBase.SetActive(command != null);
 
 		displayCommnd_ = command;
 
@@ -196,7 +196,9 @@ public class TextWindow : MonoBehaviour
 		{
 			Destroy(IconParent.transform.GetChild(0).gameObject);
 		}
-		commandIconObj_ = command.GetIconObj(IconParent);
+		if( command == null ) return;
+
+		commandIconObj_ = command.InstantiateIconObj(IconParent);
 		commandIconObj_.transform.position = command.transform.position;
 
 		Color commandColor = ColorManager.GetThemeColor(command.themeColor).Bright;
@@ -204,7 +206,7 @@ public class TextWindow : MonoBehaviour
 		commandName_.Init(command.nameText.ToUpper());
 		commandText_.text = "";
 		commandText_.color = commandColor;
-		line_.SetColor(commandColor);
+		//line_.SetColor(commandColor);
 	}
 
 	void OnPushedCancel(object sender, EventArgs e)

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GaugeRenderer : MonoBehaviour {
+[ExecuteInEditMode]
+public class GaugeRenderer : MonoBehaviour, IColoredObject
+{
 
 	public GameObject LineMesh;
 	public GameObject LineParent;
@@ -11,14 +13,7 @@ public class GaugeRenderer : MonoBehaviour {
 	public float Width = 1;
 	public Vector3 Direction = Vector3.right;
 
-	float baseRate_ = 1.0f;
-	float targetRate_ = 1.0f;
-	float animTime_, remainTime_;
-	Color baseColor_ = Color.white;
-	Color targetColor_ = Color.white;
-	float colorAnimTime_, colorRemainTime_;
-
-	bool IsHorizontal { get { return Mathf.Abs(Direction.x) > 0; } }
+	bool IsHorizontal { get { return (Direction.x == 0 && Direction.y == 0 ? Direction.z == 0 : Mathf.Abs(Direction.x) > 0); } }
 
 	void OnValidate()
 	{
@@ -38,7 +33,15 @@ public class GaugeRenderer : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Start()
+	{
+#if UNITY_EDITOR
+		if( !UnityEditor.EditorApplication.isPlaying )
+		{
+			return;
+		}
+#endif
+
 		LineColor = LineMesh.GetComponent<Renderer>().material.color;
 	}
 	
@@ -61,72 +64,54 @@ public class GaugeRenderer : MonoBehaviour {
 		{
 			LineParent.transform.localScale = new Vector3(Width, Length * Rate, 1);
 		}
-
-		if( remainTime_ > 0 )
-		{
-			remainTime_ -= Time.deltaTime;
-			Rate = Mathf.Lerp(targetRate_, baseRate_, Mathf.Max(0, remainTime_/animTime_));
-		}
-
-#if UNITY_EDITOR
-		if( !UnityEditor.EditorApplication.isPlaying )
-		{
-			return;
-		}
-#endif
-		if( colorRemainTime_ > 0 )
-		{
-			colorRemainTime_ -= Time.deltaTime;
-			LineColor = Color.Lerp(targetColor_, baseColor_, Mathf.Max(0, colorRemainTime_/colorAnimTime_));
-			LineMesh.GetComponent<Renderer>().material.color = LineColor;
-		}
-	}
-
-	public void EndAnim()
-	{
-		animTime_ = 0;
-		remainTime_ = 0;
-		baseRate_ = targetRate_;
-		Rate = targetRate_;
 	}
 
 	public void SetRate(float rate, float animTime = 0)
 	{
 		if( animTime > 0 )
 		{
-			animTime_ = animTime;
-			remainTime_ = animTime;
-			targetRate_ = rate;
-			baseRate_ = Rate;
+			AnimManager.AddAnim(gameObject, rate, ParamType.GaugeRate, AnimType.Time, animTime);
 		}
 		else
 		{
-			animTime_ = 0;
-			remainTime_ = 0;
-			targetRate_ = rate;
-			baseRate_ = rate;
 			Rate = rate;
 			UpdateLine();
 		}
 	}
 
-	public void SetColor(Color color, float animTime = 0)
+	public void SetWidth(float width, float animTime = 0)
 	{
 		if( animTime > 0 )
 		{
-			colorAnimTime_ = animTime;
-			colorRemainTime_ = animTime;
-			targetColor_ = color;
-			baseColor_ = LineColor;
+			AnimManager.AddAnim(gameObject, width, ParamType.GaugeWidth, AnimType.Time, animTime);
 		}
 		else
 		{
-			colorAnimTime_ = 0;
-			colorRemainTime_ = 0;
-			targetColor_ = color;
-			baseColor_ = color;
+			Width = width;
+			UpdateLine();
+		}
+	}
+
+	public void SetColor(Color color, float animTime)
+	{
+		if( animTime > 0 )
+		{
+			AnimManager.AddAnim(gameObject, color, ParamType.Color, AnimType.Time, animTime);
+		}
+		else
+		{
 			LineColor = color;
 			LineMesh.GetComponent<Renderer>().material.color = LineColor;
 		}
+	}
+
+	public void SetColor( Color color )
+	{
+		SetColor(color, 0);
+	}
+
+	public Color GetColor()
+	{
+		return LineColor;
 	}
 }

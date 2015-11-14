@@ -224,7 +224,8 @@ public class CounterSprite : MonoBehaviour {
 			suffixMark_ = Mark.Slash;
 		}
         else
-        {
+		{
+			suffixMark_ = Mark.Count;
             if( suffixSprite_ != null )
             {
                 suffixSprite_.enabled = false;

@@ -50,17 +50,18 @@ public static class GameContext
 		switch( NewState )
 		{
 		case GameState.Battle:
-			VoxSystem.OnBattleStarted();
-			Music.Play("BattleMusic", "intro");
+			LuxSystem.OnBattleStarted(FieldConductor.CurrentEncounter);
+			Music.Play("BattleMusic", "Intro");
 			ColorManager.SetBaseColor(EBaseColor.Black);
 			FieldConductor.OnEnterBattle();
 			BattleConductor.SetState(BattleState.Intro);
-			VoxSystem.SetState(VoxState.Sun);
+			LuxSystem.SetState(LuxState.Sun);
 			EnemyConductor.SetEncounter(FieldConductor.CurrentEncounter);
 			PlayerConductor.OnBattleStarted();
 			break;
 		case GameState.Event:
 			EventConductor.OnEnterEvent(FieldConductor.CurrentEvent);
+			FieldConductor.OnEnterEvent();
 			PlayerConductor.OnEnterEvent();
 			break;
 		case GameState.Result:
@@ -81,7 +82,7 @@ public static class GameContext
 	public static BattleConductor BattleConductor;
     public static EnemyConductor EnemyConductor;
 	public static PlayerConductor PlayerConductor;
-	public static VoxSystem VoxSystem;
+	public static LuxSystem LuxSystem;
 	public static FieldConductor FieldConductor;
 	public static ResultConductor ResultConductor;
 	public static EventConductor EventConductor;
@@ -89,6 +90,6 @@ public static class GameContext
 
 	//States
 	public static BattleState BattleState { get { return BattleConductor.State; } }
-	public static VoxState VoxState { get { return VoxSystem.State; } }
+	public static LuxState LuxState { get { return LuxSystem.State; } }
 	public static ResultState ResultState { get { return ResultConductor.State; } }
 }

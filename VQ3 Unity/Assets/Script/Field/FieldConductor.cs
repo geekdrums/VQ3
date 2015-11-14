@@ -10,7 +10,6 @@ public enum FieldState
 	CommandInfo
 }
 
-[ExecuteInEditMode]
 public class FieldConductor : MonoBehaviour {
 
 	public bool RefreshWatchFlags = true;
@@ -22,7 +21,6 @@ public class FieldConductor : MonoBehaviour {
 	public Encounter CurrentEncounter { get { return (StageIndex >= StageData.Count || EncountIndex >= StageData[StageIndex].Encounters.Count ? null : StageData[StageIndex].Encounters[EncountIndex]); } }
 	public EventData CurrentEvent { get; private set; }
 
-	// Use this for initialization
     void Awake()
     {
 		GameContext.FieldConductor = this;
@@ -38,8 +36,24 @@ public class FieldConductor : MonoBehaviour {
 		}
 	}
 
+	// Use this for initialization
+	void Start()
+	{
+		for( int i=0; i<EncountIndex; ++i )
+		{
+			GameContext.PlayerConductor.OnGainMemory(StageData[0].Encounters[i].AcquireMemory);
+		}
+
+		PlayerCommand acquiredCommand = GameContext.PlayerConductor.CheckAcquireCommand();
+		while( acquiredCommand != null )
+		{
+			acquiredCommand.Acquire();
+			acquiredCommand = GameContext.PlayerConductor.CheckAcquireCommand();
+		}
+	}
+
 	// Update is called once per frame
-    void Update()
+	void Update()
     {
 	}
 
@@ -60,6 +74,11 @@ public class FieldConductor : MonoBehaviour {
 	public void OnEnterBattle()
 	{
 		Setting.SetActive(false);
+	}
+
+	public void OnEnterEvent()
+	{
+		Setting.SetActive(true);
 	}
 
 	public GameState CheckEvent(GameState nextState)

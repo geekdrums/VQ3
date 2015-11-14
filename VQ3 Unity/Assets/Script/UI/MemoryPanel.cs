@@ -38,7 +38,7 @@ public class MemoryPanel : MonoBehaviour {
 			float MemoryRatio = (float)GameContext.PlayerConductor.RemainMemory / GameContext.PlayerConductor.TotalMemory;
 			if( GameContext.PlayerConductor.RemainMemory > 0 )
 			{
-				RemainMemoryGauge.SetColor(Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(8) * Mathf.Clamp(MemoryRatio + 0.3f, 0.5f, 1.0f)));
+				RemainMemoryGauge.SetColor(Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(16) * Mathf.Clamp(MemoryRatio + 0.3f, 0.0f, 1.0f)));
 			}
 			else
 			{
@@ -91,7 +91,7 @@ public class MemoryPanel : MonoBehaviour {
 			{
 				levelInfo.transform.localScale = Vector3.one;
 				bool isCurrentData = command.currentLevel-1 == i;
-				levelInfo.GetComponentInChildren<MidairPrimitive>().SetColor(isCurrentData ? ColorManager.GetThemeColor(command.themeColor).Bright : ColorManager.Base.Shade);
+				levelInfo.GetComponentInChildren<MidairPrimitive>().SetColor(isCurrentData ? ColorManager.Base.Front : ColorManager.Base.Shade);
 				levelInfo.GetComponentInChildren<CounterSprite>().Count = command.commandData[i].RequireSP;
 				levelInfo.GetComponentInChildren<CounterSprite>().CounterColor = isCurrentData ? Color.white : ColorManager.Base.Shade;
 				levelInfo.transform.localPosition = memoryZeroPosition_ + (memoryMaxPosition_ - memoryZeroPosition_)*((float)command.commandData[i].RequireSP / maxLvMemory);
@@ -101,7 +101,9 @@ public class MemoryPanel : MonoBehaviour {
 				levelInfo.transform.localScale = Vector3.zero;
 			}
 		}
+		MemorySlimGauge.SetColor(ColorManager.GetThemeColor(command.themeColor).Bright);
 		MemorySlimGauge.SetRate(1, 0.1f);
+		MemoryGauge.SetColor(ColorManager.GetThemeColor(command.themeColor).Bright);
 		MemoryGauge.SetRate((playerCommand_.currentLevel > 0 && maxLvMemory > 0 ? (0.9f * (float)playerCommand_.commandData[playerCommand_.currentLevel-1].RequireSP / maxLvMemory + 0.1f) : 0), 0.1f);
 
 		CommandExp.Set(command);

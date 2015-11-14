@@ -192,12 +192,12 @@ public class EventConductor : MonoBehaviour
 		}
 	}
 
-	IEnumerator Event_ShowVPMeter()
+	IEnumerator Event_ShowBPMeter()
 	{
 		GameContext.PlayerConductor.VPMeter.SetActive(true);
 		while( true )
 		{
-			GameContext.VoxSystem.Event_ShowVPMeter();
+			GameContext.LuxSystem.Event_ShowBPMeter();
 			if( coroutinePhase_ == 1 )
 			{
 				coroutineTime_ += Time.deltaTime;
@@ -206,28 +206,28 @@ public class EventConductor : MonoBehaviour
 					EndMacro();
 				}
 			}
-			else if( GameContext.VoxState == VoxState.Overflow )
+			else if( GameContext.LuxState == LuxState.Overflow )
 			{
 				if( OnPushedOK_Coroutine == null )
 				{
-					OnPushedOK_Coroutine += OnPushedOK_Event_ShowVPMeter;
+					OnPushedOK_Coroutine += OnPushedOK_Event_ShowBPMeter;
 				}
 			}
 			else
 			{
 				if( Music.IsJustChangedBeat() )
 				{
-					GameContext.VoxSystem.AddVPVT(20, 30);
+					GameContext.LuxSystem.AddBP(20, 30);
 				}
 			}
 			yield return null;
 		}
 	}
 
-	void OnPushedOK_Event_ShowVPMeter()
+	void OnPushedOK_Event_ShowBPMeter()
 	{
 		coroutinePhase_ = 1;
-		GameContext.VoxSystem.ResetVPVT();
+		GameContext.LuxSystem.ResetBreak();
 	}
 
 
