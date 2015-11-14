@@ -99,7 +99,7 @@
               <Orca OrcaName="DynamoOver.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/Attack/DynamoOver.wav" SynthType="Waveform" LinkWaveformPathName="Attack/DynamoOver.wav" DelayTimeMS="13333" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
               <Orca OrcaName="DynamoOver.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/Attack/DynamoOver.wav" SynthType="Waveform" LinkWaveformPathName="Attack/DynamoOver.wav" DelayTimeMS="6667" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />
             </Orca>
-            <Orca OrcaName="Intro2" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
+            <Orca OrcaName="Intro2" BlockDivisionNum="4" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockTransitionTiming="Division" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
             <Orca OrcaName="ShieldBreak" BlockDivisionNum="4" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockTransitionTiming="Division" ObjectColor="200, 10, 60, 140" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
             <Orca OrcaName="others" SynthType="Track" SwitchRange="0.5" ObjectColor="200, 10, 60, 140" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
               <Orca OrcaName="intro.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/IntroEndro/intro.wav" SynthType="Waveform" LinkWaveformPathName="IntroEndro/intro.wav" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform" />

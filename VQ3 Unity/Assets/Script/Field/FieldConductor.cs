@@ -39,6 +39,13 @@ public class FieldConductor : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
+		InitEncounter(EncounterIndex);
+	}
+
+	public void InitEncounter(int index)
+	{
+		EncounterIndex = index;
+
 		for( int i=0; i<EncounterIndex; ++i )
 		{
 			GameContext.PlayerConductor.OnGainMemory(StageData[0].Encounters[i].AcquireMemory);

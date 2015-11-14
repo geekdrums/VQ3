@@ -22,6 +22,16 @@ public class TitleUI : MonoBehaviour {
 	void Update () {
 		if( GameContext.State == GameState.Title )
 		{
+			for( int i=1; i<=7; ++i )
+			{
+				if( Input.GetKeyDown(i.ToString()) )
+				{
+					SEPlayer.Play("levelUp");
+					GameContext.FieldConductor.InitEncounter(i);
+					break;
+				}
+			}
+
 			Teams.SetActive(false);
 			if( Input.GetMouseButtonDown(0) )
 			{
