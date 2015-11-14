@@ -27,11 +27,11 @@ public class TitleUI : MonoBehaviour {
 			{
 				GetComponent<Animation>().Play("titleAnim");
 				CurrentPhase = Phase.Anim;
+				GameContext.SetState(GameState.Setting);
 			}
 			if( CurrentPhase == Phase.Anim && GetComponent<Animation>().isPlaying == false )
 			{
 				CurrentPhase = Phase.None;
-				GameContext.SetState(GameState.Setting);
 				gameObject.SetActive(false);
 				Teams.SetActive(true);
 			}

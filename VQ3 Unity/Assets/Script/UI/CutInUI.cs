@@ -9,6 +9,7 @@ public class CutInUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		transform.localScale = Vector3.zero;
+		GetComponent<Animation>()["CutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
 	}
 	
 	// Update is called once per frame
@@ -24,7 +25,6 @@ public class CutInUI : MonoBehaviour {
 		Counter.CounterColor = (phase >= 0 ? ColorManager.Accent.Buff : ColorManager.Accent.DeBuff);
 		Text.color = (phase >= 0 ? ColorManager.Accent.Buff : ColorManager.Accent.DeBuff);
 		Text.anchor = TextAnchor.MiddleRight;
-		GetComponent<Animation>()["CutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
 		GetComponent<Animation>().Play();
 	}
 
@@ -35,7 +35,6 @@ public class CutInUI : MonoBehaviour {
 		Text.text = "DANGER";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.red;
-		GetComponent<Animation>()["CutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
 		GetComponent<Animation>().Play();
 	}
 
@@ -46,7 +45,16 @@ public class CutInUI : MonoBehaviour {
 		Text.text = "OVER FROW";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.white;
-		GetComponent<Animation>()["CutInAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+		GetComponent<Animation>().Play();
+	}
+
+	public void SetShieldRecover()
+	{
+		transform.localScale = Vector3.one;
+		Counter.CounterColor = Color.clear;
+		Text.text = "SHIELD RECOVER";
+		Text.anchor = TextAnchor.MiddleCenter;
+		Text.color = ColorManager.Accent.Time;
 		GetComponent<Animation>().Play();
 	}
 }

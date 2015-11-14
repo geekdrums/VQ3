@@ -12,6 +12,7 @@ public class MemoryPanel : MonoBehaviour {
 	public ButtonUI BattleButton;
 	public ButtonUI UpButton;
 	public ButtonUI DownButton;
+	public ButtonUI BackButton;
 	public MidairPrimitive BaseFrame;
 
 	public CommandExplanation CommandExp;
@@ -26,6 +27,7 @@ public class MemoryPanel : MonoBehaviour {
 		BattleButton.OnPushed += this.OnBattleButtonPushed;
 		UpButton.OnPushed += this.OnUpButtonPushed;
 		DownButton.OnPushed += this.OnDownButtonPushed;
+		BackButton.OnPushed += this.OnBackButtonPushed;
 		memoryZeroPosition_ = LevelInfos[0].transform.localPosition;
 		memoryMaxPosition_ = LevelInfos[LevelInfos.Length-1].transform.localPosition;
 	}
@@ -38,19 +40,18 @@ public class MemoryPanel : MonoBehaviour {
 			float MemoryRatio = (float)GameContext.PlayerConductor.RemainMemory / GameContext.PlayerConductor.TotalMemory;
 			if( GameContext.PlayerConductor.RemainMemory > 0 )
 			{
-				RemainMemoryGauge.SetColor(Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(16) * Mathf.Clamp(MemoryRatio + 0.3f, 0.0f, 1.0f)));
-			}
-			else
-			{
-				RemainMemoryGauge.SetColor(ColorManager.Base.Shade);
+				RemainMemoryGauge.SetColor(Color.Lerp(ColorManager.Base.Middle, ColorManager.Base.Front, Music.MusicalCos(16) * Mathf.Clamp(MemoryRatio + 0.3f, 0.0f, 1.0f)));
 			}
 		}
 	}
 
 	void OnBattleButtonPushed(object sender, EventArgs e)
 	{
-		GameContext.SetState(GameState.Battle);
-		Hide();
+		if( GameContext.State == GameState.Setting )
+		{
+			GameContext.SetState(GameState.Battle);
+			Hide();
+		}
 	}
 
 	void OnUpButtonPushed(object sender, EventArgs e)
@@ -69,6 +70,13 @@ public class MemoryPanel : MonoBehaviour {
 		GameContext.PlayerConductor.CommandGraph.CheckLinkedFromIntro();
 	}
 
+	void OnBackButtonPushed( object sender, EventArgs e )
+	{
+		SEPlayer.Play("tickback");
+		GameContext.PlayerConductor.CommandGraph.Deselect();
+		Reset();
+	}
+
 	public void Set(PlayerCommand command)
 	{
 		UpdateMemory();
@@ -83,6 +91,7 @@ public class MemoryPanel : MonoBehaviour {
 		bool enableDown = command.currentLevel > 0 && command.currentData.RequireSP > 0;
 		UpButton.SetMode(enableUp ? ButtonMode.Active : ButtonMode.Disable);
 		DownButton.SetMode(enableDown ? ButtonMode.Active: ButtonMode.Disable);
+		BackButton.SetMode(ButtonMode.Active);
 		float maxLvMemory = command.commandData[command.commandData.Count-1].RequireSP;
 		for( int i=0; i<LevelInfos.Length; ++i )
 		{
@@ -115,9 +124,10 @@ public class MemoryPanel : MonoBehaviour {
 		BaseFrame.SetTargetWidth(7.5f);
 		BaseFrame.SetColor(ColorManager.Base.Back);
 		UpdateMemory();
-		BattleButton.SetMode((GameContext.PlayerConductor.RemainMemory <= 30 ? ButtonMode.Active : ButtonMode.Disable));
+		BattleButton.SetMode((GameContext.PlayerConductor.CanStartBattle() ? ButtonMode.Active : ButtonMode.Disable));
 		UpButton.SetMode(ButtonMode.Hide);
 		DownButton.SetMode(ButtonMode.Hide);
+		BackButton.SetMode(ButtonMode.Hide);
 		MemoryGauge.SetRate(0);
 		MemorySlimGauge.SetRate(0);
 		foreach( GameObject levelInfo in LevelInfos )
@@ -134,6 +144,7 @@ public class MemoryPanel : MonoBehaviour {
 		BattleButton.SetMode(ButtonMode.Hide);
 		UpButton.SetMode(ButtonMode.Hide);
 		DownButton.SetMode(ButtonMode.Hide);
+		BackButton.SetMode(ButtonMode.Hide);
 		BaseFrame.SetTargetWidth(0);
 		CommandExp.Hide();
 	}
@@ -142,16 +153,8 @@ public class MemoryPanel : MonoBehaviour {
 	{
 		RemainMemory.Count = GameContext.PlayerConductor.RemainMemory;
 		MemorySize.Count = GameContext.PlayerConductor.TotalMemory;
-		if( GameContext.PlayerConductor.RemainMemory <= 0 )
-		{
-			RemainMemory.CounterColor = ColorManager.Base.Light;
-			MemorySize.CounterColor = ColorManager.Base.Light;
-		}
-		else
-		{
-			RemainMemory.CounterColor = Color.white;
-			MemorySize.CounterColor = Color.white;
-		}
+		RemainMemory.CounterColor = ColorManager.Base.Shade;
+		MemorySize.CounterColor = ColorManager.Base.Shade;
 		RemainMemoryGauge.SetRate((float)GameContext.PlayerConductor.RemainMemory/GameContext.PlayerConductor.TotalMemory, 0.1f);
 	}
 }

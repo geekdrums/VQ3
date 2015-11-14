@@ -137,9 +137,9 @@ public class EventConductor : MonoBehaviour
 		messageIndex_ = -1;
 		MessageParent.SetActive(true);
 		animation_ = GetComponentInChildren<Animation>();
+		animation_.Play("EventShowAnim");
 		NextMessage();
 		OKButton.SetMode(ButtonMode.Active, true);
-		animation_.Play("EventShowAnim");
 		TextWindow.Reset();
 		if( Music.IsPlaying == false || Music.CurrentMusicName != data.MusicName )
 		{
@@ -168,8 +168,11 @@ public class EventConductor : MonoBehaviour
 			SenderText.text = "from: " + CurrentMessage.Sender;
 			Cursor.GetComponent<Renderer>().enabled = false;
 			VLine.Length = 2 + 1.5f * numLine;
-			VLine.SetRate(0);
-			VLine.SetRate(1, 0.3f);
+			if( animation_ == null || animation_.IsPlaying("EventShowAnim") == false )
+			{
+				VLine.SetRate(0);
+				VLine.SetRate(1, 0.3f);
+			}
 			Cursor.transform.localPosition = new Vector3(Cursor.transform.localPosition.x, -2 - 1.5f * numLine, 0);
 		}
 	}
@@ -195,6 +198,8 @@ public class EventConductor : MonoBehaviour
 	IEnumerator Event_ShowBPMeter()
 	{
 		GameContext.PlayerConductor.VPMeter.SetActive(true);
+		GameContext.PlayerConductor.MemoryPanel.Hide();
+		GameContext.LuxSystem.Event_ShowBPMeter(init: true);
 		while( true )
 		{
 			GameContext.LuxSystem.Event_ShowBPMeter();

@@ -36,4 +36,5 @@ public class SE {
 	 public const int CURSORSOUND = (35);
 	 public const int VTEMPTY = (36);
 	 public const int RESULT = (37);
+	 public const int DEFEAT = (38);
 }

@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.2.13.00
-* Date Time          : 2015/11/08 23:38
+* Date Time          : 2015/11/15 1:02
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -85,5 +85,6 @@ public partial class CriAtomAcfInfo
         newAcbInfo.cueInfoList.Add(34, new CueInfo("charRead", 34, ""));
         newAcbInfo.cueInfoList.Add(35, new CueInfo("cursorSound", 35, ""));
         newAcbInfo.cueInfoList.Add(37, new CueInfo("result", 37, ""));
+        newAcbInfo.cueInfoList.Add(38, new CueInfo("Defeat", 38, ""));
     }
 }

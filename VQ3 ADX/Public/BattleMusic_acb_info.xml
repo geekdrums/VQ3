@@ -33,8 +33,8 @@
           <Orca OrcaName="wait" BlockEndPositionMs="26666" BlockPlaybackLoopNum="-1" BlockDivisionNum="16" BlockTransitionTiming="Division" ObjectColor="200, 30, 100, 180" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />
           <Orca OrcaName="Danger" AisacControl="/CriAtomCraftV2Root/全体設定/AISACコントロール/Danger" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
             <Orca OrcaName="バイクアッド - Cof" ControlDestinationType="BiquadFreq" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
-              <Orca OrcaName="(no name)" ControlValue="0" DestinationValue="-0.36" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
-              <Orca OrcaName="(no name)" ControlValue="1" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+              <Orca OrcaName="(no name)" DestinationValue="0" ControlValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+              <Orca OrcaName="(no name)" DestinationValue="-0.36" ControlValue="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
             </Orca>
           </Orca>
           <Orca OrcaName="track" SynthType="Track" SwitchRange="0.165" ObjectColor="200, 0, 40, 120" BiquadType="LowPass" BiquadQ="10" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
@@ -163,8 +163,8 @@
           <Orca OrcaName="over" SynthType="Track" BusSend1="0" BusSend2="0" SwitchRange="0.2" ObjectColor="200, 10, 60, 140" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthTrack">
             <Orca OrcaName="Over" AisacControl="/CriAtomCraftV2Root/全体設定/AISACコントロール/TrackVolumeOver" DefaultControlValueFlag="True" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisac">
               <Orca OrcaName="Volume" ControlDestinationType="Volume" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacGraph">
-                <Orca OrcaName="(no name)" ControlValue="0" DestinationValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
-                <Orca OrcaName="(no name)" ControlValue="1" DestinationValue="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                <Orca OrcaName="(no name)" DestinationValue="0" ControlValue="0" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
+                <Orca OrcaName="(no name)" DestinationValue="1" ControlValue="1" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoAisacPoint" />
               </Orca>
             </Orca>
             <Orca OrcaName="mmmmEng.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/Magic/mmmmEng.wav" SynthType="Waveform" LinkWaveformPathName="Magic/mmmmEng.wav" DelayTimeMS="93330" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
@@ -189,13 +189,13 @@
               <Orca OrcaName="lilacle1Over.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFileSize="196512" LastLoadSrcFileTimeStamp="2015/11/03 17:32:47" LastLoadSrcFileMD5="3a1e67e5ec550735413b307ebde34dec" WaveImageCacheWriteTime="2015/11/03 17:32:47" ResamplingRate="44100" ReloopEnd="294000" StreamType="Memory" EncodeType="HCA" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
             <Orca OrcaName="laclite1Over.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/Magic/laclite1Over.wav" SynthType="Waveform" LinkWaveformPathName="Magic/laclite1Over.wav" DelayTimeMS="79999" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
-              <Orca OrcaName="laclite1Over.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFileSize="196512" LastLoadSrcFileTimeStamp="2015/11/03 17:35:11" LastLoadSrcFileMD5="e361a624e5486282c7d16852a9880edb" WaveImageCacheWriteTime="2015/11/03 17:35:11" ResamplingRate="44100" ReloopEnd="294000" StreamType="Memory" EncodeType="HCA" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="laclite1Over.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFileSize="196512" LastLoadSrcFileTimeStamp="2015/11/03 17:35:11" LastLoadSrcFileMD5="e361a624e5486282c7d16852a9880edb" WaveImageCacheWriteTime="2015/11/03 17:27:04" ResamplingRate="44100" ReloopEnd="294000" StreamType="Memory" EncodeType="HCA" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
             <Orca OrcaName="DynamoOver.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/Attack/DynamoOver.wav" SynthType="Waveform" LinkWaveformPathName="Attack/DynamoOver.wav" DelayTimeMS="13333" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
-              <Orca OrcaName="DynamoOver.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFileSize="196512" LastLoadSrcFileTimeStamp="2015/11/08 23:36:23" LastLoadSrcFileMD5="1b1eca6dead0749ab67d5dc0eef12c88" WaveImageCacheWriteTime="2015/11/08 23:36:23" ResamplingRate="44100" ReloopEnd="294000" StreamType="Memory" EncodeType="HCA" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="DynamoOver.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" LastLoadSrcFileTimeStamp="2015/11/08 23:36:23" LastLoadSrcFileMD5="1b1eca6dead0749ab67d5dc0eef12c88" WaveImageCacheWriteTime="2015/11/08 23:36:23" ResamplingRate="44100" ReloopEnd="294000" StreamType="Memory" EncodeType="HCA" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
             <Orca OrcaName="DynamoOver.wav" LinkWaveform="/CriAtomCraftV2Root/ワークユニット/WorkUnit_VQ3ADX_MaterialInfo/マテリアルルートフォルダ/Attack/DynamoOver.wav" SynthType="Waveform" LinkWaveformPathName="Attack/DynamoOver.wav" DelayTimeMS="6667" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoCueSynthWaveform">
-              <Orca OrcaName="DynamoOver.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" EncodeFileSize="196512" LastLoadSrcFileTimeStamp="2015/11/08 23:36:23" LastLoadSrcFileMD5="1b1eca6dead0749ab67d5dc0eef12c88" WaveImageCacheWriteTime="2015/11/08 23:36:23" ResamplingRate="44100" ReloopEnd="294000" StreamType="Memory" EncodeType="HCA" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
+              <Orca OrcaName="DynamoOver.wav" SourceFileSize="1176734" Channels="2" SamplingRate="44100" SampleFrames="294000" LastLoadSrcFileTimeStamp="2015/11/08 23:36:23" LastLoadSrcFileMD5="1b1eca6dead0749ab67d5dc0eef12c88" WaveImageCacheWriteTime="2015/11/08 23:36:23" ResamplingRate="44100" ReloopEnd="294000" StreamType="Memory" EncodeType="HCA" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoWaveform" />
             </Orca>
           </Orca>
           <Orca OrcaName="Intro2" BlockEndPositionMs="6666" BlockTransitionDestinationType="NextBlock" BlockPlaybackLoopNum="-1" BlockDivisionNum="4" BlockTransitionTiming="Division" ObjectColor="200, 20, 80, 160" OrcaType="CriMw.CriAtomCraft.AcCore.AcOoBlock" />

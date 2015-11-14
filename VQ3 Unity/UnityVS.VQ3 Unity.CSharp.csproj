@@ -97,8 +97,6 @@
     <Compile Include="Assets\Script\Battle\Effect\BGAnimIgna.cs" />
     <Compile Include="Assets\Script\Battle\Effect\BGAnimLacle.cs" />
     <Compile Include="Assets\Script\Battle\Effect\BGAnimVox.cs" />
-    <Compile Include="Assets\Script\Battle\Effect\DamageGauge.cs" />
-    <Compile Include="Assets\Script\Battle\Effect\DamageText.cs" />
     <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
     <Compile Include="Assets\Script\Battle\LuxSystem.cs" />
     <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
@@ -119,6 +117,8 @@
     <Compile Include="Assets\Script\UI\ButtonUI.cs" />
     <Compile Include="Assets\Script\UI\CommandExplanation.cs" />
     <Compile Include="Assets\Script\UI\CutInUI.cs" />
+    <Compile Include="Assets\Script\UI\DamageGauge.cs" />
+    <Compile Include="Assets\Script\UI\DamageText.cs" />
     <Compile Include="Assets\Script\UI\EnemyExplanation.cs" />
     <Compile Include="Assets\Script\UI\EnhanceIcons.cs" />
     <Compile Include="Assets\Script\UI\GaugeRenderer.cs" />
@@ -129,7 +129,6 @@
     <Compile Include="Assets\Script\UI\MemoryResult.cs" />
     <Compile Include="Assets\Script\UI\ShortTextWindow.cs" />
     <Compile Include="Assets\Script\UI\TextWindow.cs" />
-    <Compile Include="Assets\Script\UI\TitleLogo.cs" />
     <Compile Include="Assets\Script\UI\TitleUI.cs" />
     <Compile Include="Assets\Script\UI\UIBase.cs" />
     <Compile Include="Assets\Script\Utils\AnimManager.cs" />

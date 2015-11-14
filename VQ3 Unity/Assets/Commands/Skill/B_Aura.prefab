@@ -1414,7 +1414,7 @@ MonoBehaviour:
   - Anim All AuraAnim
   - Magic 10 2 10 All
   - Magic 20 3 15 All
-  - Magic 40 7 25 All
+  - Magic 40 6 25 All
   _rhythmStr: nn nn ta nn nn  ta ta ta
   _rhythmBaseTime: 4
   _prefabs: []
@@ -1641,7 +1641,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _actionStr.Array.data[3]
-      value: Magic 40 7 25 All
+      value: Magic 40 6 25 All
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

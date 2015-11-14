@@ -89,6 +89,19 @@ public class PlayerConductor : MonoBehaviour {
 		return CommandGraph.CheckAcquireCommand(Level);
 	}
 
+	public bool CanStartBattle()
+	{
+		if( GameContext.State == GameState.Event ) return false;
+		foreach( PlayerCommand command in CommandGraph.IntroCommand.LinkedCommands )
+		{
+			if( command.currentLevel > 0 )
+			{
+				return RemainMemory < TotalMemory/2;
+			}
+		}
+		return false;
+	}
+
 	public void ValidateCommands()
 	{
 		PlayerCommand acquiredCommand = CommandGraph.CheckAcquireCommand(Level);
@@ -318,7 +331,7 @@ public class PlayerConductor : MonoBehaviour {
 	{
 		if( GameContext.State == GameState.Event ) return;
 
-		Player.EnhanceCutIn.SetOverflow();
+		Player.CutInUI.SetOverflow();
 		if( CurrentCommand.BGAnim != null )
 		{
 			CurrentCommand.BGAnim.Activate();

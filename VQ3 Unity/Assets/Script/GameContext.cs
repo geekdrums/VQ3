@@ -70,10 +70,10 @@ public static class GameContext
 			PlayerConductor.OnEnterResult();
 			break;
 		case GameState.Setting:
+			ColorManager.SetBaseColor(EBaseColor.Black);
 			FieldConductor.OnEnterSetting();
 			PlayerConductor.OnEnterSetting();
-			ResultConductor.OKButton.SetMode(ButtonMode.Hide);
-			ColorManager.SetBaseColor(EBaseColor.Black);
+			ResultConductor.OKButton.SetMode(ButtonMode.Hide, true);
 			break;
 		}
 	}

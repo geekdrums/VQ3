@@ -10,7 +10,7 @@ public class Player : Character
 	public GameObject UIParent;
 	public CommandGraph commandGraph;
 	public HPPanel HPPanel;
-	public CutInUI EnhanceCutIn;
+	public CutInUI CutInUI;
 	public float DangerPercentage;
 	public int DangerHysteresis = 15;
 
@@ -37,17 +37,6 @@ public class Player : Character
 			if( damageTime <= 0 )
 			{
 				UIParent.transform.position = initialPosition;
-			}
-		}
-		if( GameContext.LuxSystem.State != LuxState.Overload )
-		{
-			if( IsDangerMode )
-			{
-				if( HitPoint > MaxHP * (DangerPercentage + DangerHysteresis) / 100.0f )
-				{
-					float rate = (((float)HitPoint / MaxHP) - DangerPercentage)/DangerHysteresis;
-					Music.SetAisac("Danger", rate);
-				}
 			}
 		}
 	}
@@ -86,13 +75,15 @@ public class Player : Character
 		base.BeAttacked(attack, skill);
 		int damage = oldHP - HitPoint;
 
+		float damageRatio = (float)damage / (float)MaxHP;
+		float danger = (damageRatio >= 0.4f ? 1.0f : (damageRatio >= 0.2f ? 0.7f : (damageRatio >= 0.1f ? 0.5f : (damageRatio >= 0.03f ? 0.3f : 0.0f))));
 		if( attack.type == AttackType.Attack )
 		{
-			SEPlayer.Play(ActionResult.PlayerPhysicDamage, skill.OwnerCharacter, damage);
+			SEPlayer.Play(ActionResult.PlayerPhysicDamage, skill.OwnerCharacter, damage, "Danger", danger);
 		}
 		else
 		{
-			SEPlayer.Play(ActionResult.PlayerMagicDamage, skill.OwnerCharacter, damage);
+			SEPlayer.Play(ActionResult.PlayerMagicDamage, skill.OwnerCharacter, damage, "Danger", danger);
 		}
 		if( lastDamageText != null )
 		{
@@ -188,7 +179,7 @@ public class Player : Character
 
 	public void CheckDangerMode()
 	{
-		if( GameContext.LuxSystem.State != LuxState.Overload )
+		if( GameContext.LuxSystem.State != LuxState.Overload && GameContext.LuxSystem.IsInverting == false )
 		{
 			if( IsDangerMode )
 			{
@@ -196,7 +187,11 @@ public class Player : Character
 				{
 					IsDangerMode = false;
 					ColorManager.SetBaseColor(EBaseColor.Black);
-					Music.SetAisac("Danger", 1);
+					Music.SetAisac("Danger", 0);
+				}
+				else
+				{
+					Music.SetAisac("Danger", 1.0f - Mathf.Clamp01((HitPoint *  -MaxHP * DangerPercentage / 100.0f) / (MaxHP * DangerHysteresis / 100.0f)) * 0.7f);
 				}
 			}
 			else
@@ -205,8 +200,8 @@ public class Player : Character
 				{
 					IsDangerMode = true;
 					ColorManager.SetBaseColor(EBaseColor.Red);
-					EnhanceCutIn.SetDanger();
-					Music.SetAisac("Danger", 0);
+					CutInUI.SetDanger();
+					Music.SetAisac("Danger", 1);
 				}
 			}
 		}

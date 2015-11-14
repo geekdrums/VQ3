@@ -47,23 +47,24 @@ public class ButtonUI : MonoBehaviour
 		case ButtonMode.Disable:
 			return;
 		case ButtonMode.Hiding:
-			if( AnimManager.IsAnimating(Primitive.gameObject) == false ) //Primitive.AnimParam == MidairPrimitive.AnimationParams.None )
+			if( Primitive.Radius <= 0 )
 			{
 				gameObject.SetActive(false);
 				Mode = ButtonMode.Hide;
 			}
-			break;
+			return;
 		case ButtonMode.Showing:
-			if( AnimManager.IsAnimating(Primitive.gameObject) == false ) //Primitive.AnimParam == MidairPrimitive.AnimationParams.None )
+			if( Primitive.Radius >= initialRadius_ )
 			{
 				Mode = ButtonMode.Active;
 			}
-			break;
+			return;
 		}
 
 
 		UpdateInput();
 
+		if( Mode == ButtonMode.Disable || Mode == ButtonMode.Hide || Mode == ButtonMode.Hiding ) return;
 
 		switch( State )
 		{
@@ -153,13 +154,14 @@ public class ButtonUI : MonoBehaviour
 			{
 				if( Mode == ButtonMode.Hide )
 				{
-					Primitive.SetAnimationSize(initialRadius_, 0);
+					Primitive.SetTargetSize(0);
+					Text.color = Color.clear;
 					Mode = ButtonMode.Hiding;
 				}
 				else
 				{
 					gameObject.SetActive(true);
-					Primitive.SetAnimationSize(0, initialRadius_);
+					Primitive.SetTargetSize(initialRadius_);
 					Mode = ButtonMode.Showing;
 				}
 			}
@@ -167,7 +169,7 @@ public class ButtonUI : MonoBehaviour
 			{
 				gameObject.SetActive(Mode != ButtonMode.Hide);
 			}
-			HitCollider.enabled = (Mode != ButtonMode.Hide && Mode != ButtonMode.Disable);
+			HitCollider.enabled = (Mode != ButtonMode.Hide && Mode != ButtonMode.Disable && Mode != ButtonMode.Hiding);
 			if( Mode == ButtonMode.Disable )
 			{
 				Primitive.SetColor(ColorManager.Base.Dark);

@@ -134,6 +134,8 @@ public class ColorManager : MonoBehaviour
 
     public static AccentColor Accent { get; private set; }
 
+	public static event Action<BaseColor> OnBaseColorChanged;
+
     struct HSV
     {
         public float h, s, v;
@@ -221,6 +223,9 @@ public class ColorManager : MonoBehaviour
 		{
 			textMesh.color = Base.Front;
 		}
+
+		if( OnBaseColorChanged != null )
+			OnBaseColorChanged(Base);
     }
     public static void SetThemeColor( EThemeColor themeColor )
     {

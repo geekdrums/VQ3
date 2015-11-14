@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -93,6 +93,7 @@ public class ResultConductor : MonoBehaviour {
 			acquiredCommand.Acquire();
 			GameContext.PlayerConductor.CommandGraph.ShowAcquireCommand(acquiredCommand);
 			TextWindow.SetCommand(acquiredCommand);
+			TextWindow.SetMessage(MessageCategory.Result, acquiredCommand.name + "が習得可能になった");
 			CommandExp.Set(acquiredCommand);
 			OKButton.Primitive.SetTargetWidth(0);
 			OKButton.SetText("");

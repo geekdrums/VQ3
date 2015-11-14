@@ -112,6 +112,8 @@ public class CommandGraph : MonoBehaviour
 		CurrentRect.transform.localScale = Vector3.zero;
 		CurrentRect.transform.localRotation = Quaternion.identity;
 		NextRect.transform.localScale = Vector3.zero;
+
+		ColorManager.OnBaseColorChanged += this.OnBaseColorChanged;
 	}
 
 
@@ -727,6 +729,14 @@ public class CommandGraph : MonoBehaviour
 		CurrentRect.transform.localScale = Vector3.zero;
 		CheckLinkedFromIntro();
 		Deselect();
+	}
+
+	public void OnBaseColorChanged(BaseColor Base)
+	{
+		if( NextCommand == null )
+		{
+			NextGauge.SetColor(Base.Front);
+		}
 	}
 
 	public void Deselect()

@@ -49,6 +49,7 @@ public class LuxSystem : MonoBehaviour
 	public GaugeRenderer TimeGauge;
 	public CounterSprite BreakCount;
 	public GaugeRenderer BreakGauge;
+	public GaugeRenderer BreakAccentGauge;
 	public GameObject[] SunLights;
 	public GameObject MainLight;
 	public GameObject WaveOrigin;
@@ -60,6 +61,7 @@ public class LuxSystem : MonoBehaviour
 	public Color LightWaveTargetColor;
 	public float LightRemainTime = 1.0f;
 	public Material BGMaterial;
+	public CutInUI CutInUI;
 
 	//animation preferences
 	public Color BGColor;
@@ -123,6 +125,7 @@ public class LuxSystem : MonoBehaviour
 	{
 		State = LuxState.None;
 		ColorManager.SetBaseColor(EBaseColor.Black);
+		ColorManager.OnBaseColorChanged += this.OnBaseColorChanged;
 
 		BGColor = ColorManager.Theme.Light;
 		initialSunPosition = Sun.transform.position;
@@ -228,6 +231,7 @@ public class LuxSystem : MonoBehaviour
 			UpdateBGOffset();
 			BGColor = Color.Lerp(BGColor, ColorManager.Theme.Light, 0.1f);
 			BGMaterial.color = BGColor;
+			BreakAccentGauge.SetColor(Color.Lerp(ColorManager.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
 			break;
 		case LuxState.Overload:
 			lightHoleRemainTime_ = -1;
@@ -268,6 +272,7 @@ public class LuxSystem : MonoBehaviour
 					if( CurrentBP >= 20 )
 					{
 						SEPlayer.Play("vtEmpty");
+						CutInUI.SetShieldRecover();
 					}
 					CurrentBP = 0;
 					BreakCount.Count = CurrentBP;
@@ -334,14 +339,14 @@ public class LuxSystem : MonoBehaviour
 			float rms = analyzer_.GetRms(0) * RMSCoeff * vtRate + sin * SinCoeff;
 			waveDelta_.Add(rms);
 		}
-		if( Version >= LuxVersion.AutoShield && CurrentTime >= 16 )
+		if( ( Version < LuxVersion.AutoShield && CurrentBP > 0 ) || CurrentTime >= 16 )
 		{
-			LightWaveMaterial.color = Color.Lerp(LightWaveMaterial.color, ColorManager.MakeAlpha(Color.white, Music.MusicalCos(16,8) * 0.3f + 0.3f), 0.05f);
+			LightWaveMaterial.color = Color.Lerp(LightWaveMaterial.color, initialLightWaveColor, 0.05f);
 			LightEdgeMaterial.color = Color.Lerp(LightEdgeMaterial.color, ColorManager.MakeAlpha(Color.white, 0), 0.05f);
 		}
 		else
 		{
-			LightWaveMaterial.color = Color.Lerp(LightWaveMaterial.color, initialLightWaveColor, 0.05f);
+			LightWaveMaterial.color = Color.Lerp(LightWaveMaterial.color, ColorManager.MakeAlpha(Color.white, 0.8f), 0.05f);
 			LightEdgeMaterial.color = Color.Lerp(LightEdgeMaterial.color, Color.white, 0.05f);
 		}
 	}
@@ -381,6 +386,10 @@ public class LuxSystem : MonoBehaviour
 		{
 			Ring.transform.localScale = Vector3.Lerp(Ring.transform.localScale, targetSunScale, 0.05f);
 			CommandCircle.transform.localScale = Vector3.Lerp(CommandCircle.transform.localScale, Vector3.zero, 0.05f);
+			if( Music.Just.Bar < 3 )
+			{
+				BreakAccentGauge.SetColor(Color.Lerp(ColorManager.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
+			}
 		}
 		else
 		{
@@ -410,7 +419,7 @@ public class LuxSystem : MonoBehaviour
 
 		if( Music.Near.Bar < 2 && GameContext.PlayerConductor.PlayerIsDanger )
 		{
-			Music.SetAisac("Danger", (float)Music.MusicalTime/32);
+			Music.SetAisac("Danger", 1.0f - (float)Music.MusicalTime/32);
 		}
 		if( Music.IsNearChangedAt(2) )
 		{
@@ -419,12 +428,12 @@ public class LuxSystem : MonoBehaviour
 			{
 				TextWindow.SetMessage(MessageCategory.Invert, "オーバーロード完了。");
 				BreakTime = Mathf.Clamp((int)(CurrentTime / 64.0f), 2, MaxInvertTime);
-				Music.SetAisac("Danger", 1);
+				Music.SetAisac("Danger", 0);
 			}
 			else
 			{
 				TextWindow.SetMessage(MessageCategory.Invert, "オーバーロード失敗。");
-				Music.SetAisac("Danger", GameContext.PlayerConductor.PlayerIsDanger ? 0 : 1);
+				Music.SetAisac("Danger", GameContext.PlayerConductor.PlayerIsDanger ? 1 : 0);
 			}
 		}
 		if( IsOverFlow )
@@ -515,7 +524,6 @@ public class LuxSystem : MonoBehaviour
 
 		transform.localPosition = Vector3.Lerp(transform.localPosition, targetSunPosition, 0.1f);
 		Sun.transform.localScale = Vector3.Lerp(Sun.transform.localScale, targetSunScale, 0.05f);
-		//Ring.transform.localScale = Vector3.Lerp(Ring.transform.localScale, targetSunScale, 0.05f);
 	}
 
 	public void OnBattleStarted(Encounter encounter)
@@ -535,6 +543,11 @@ public class LuxSystem : MonoBehaviour
 		{
 			light.SetActive(Version >= LuxVersion.Shield);
 		}
+	}
+
+	public void OnBaseColorChanged( BaseColor Base )
+	{
+		WaveLineMaterial.color = ColorManager.Base.Front;
 	}
 
 	public void SetState(LuxState newState)
@@ -575,13 +588,14 @@ public class LuxSystem : MonoBehaviour
 				Ring.SetWidth(initialRingWidth);
 				Ring.SetTargetSize(initialRingRadius);
 				Ring.transform.localScale = Vector3.zero;
+				BreakAccentGauge.SetColor(Color.clear);
 				
-				WaveLineMaterial.color = ColorManager.Base.Front;
 				Music.SetAisac("TrackVolumeOver", 0);
 				BGAnimBase.DeactivateCurrentAnim();
 				break;
 			case LuxState.Overload:
 				BGColor = Color.black;
+				BreakAccentGauge.SetColor(Color.clear);
 				break;
 			case LuxState.SunSet:
 				BGOffset = Vector3.zero;
@@ -601,6 +615,7 @@ public class LuxSystem : MonoBehaviour
 				Moon.transform.position = initialMoonPosition;
 				WaveLineMaterial.color = ColorManager.Base.Front;
 				Music.SetAisac("TrackVolumeOver", 0);
+				BreakAccentGauge.SetColor(Color.clear);
 				break;
 			case LuxState.Overflow:
 				WaveLineMaterial.color = ColorManager.Accent.Break;
@@ -654,6 +669,7 @@ public class LuxSystem : MonoBehaviour
 		TimeCount.Count = 0;
 		waveRemainCoeff_ = 0;
 		WaveLineMaterial.color = ColorManager.Base.Front;
+		BreakAccentGauge.SetColor(Color.clear);
 		Music.SetAisac("TrackVolumeOver", 0);
 	}
 
@@ -671,9 +687,20 @@ public class LuxSystem : MonoBehaviour
 		}
 	}
 
-	public void Event_ShowBPMeter()
+	public void Event_ShowBPMeter(bool init = false)
 	{
-		UpdateTime();
+		if( init )
+		{
+			CurrentBP = 0;
+			OverflowBP = 100;
+			BreakAccentGauge.SetColor(Color.clear);
+			TimeCount.transform.parent.gameObject.SetActive(false);
+			TimeGauge.transform.parent.gameObject.SetActive(false);
+		}
 		UpdateWaves();
+		if( IsOverFlow )
+		{
+			BreakAccentGauge.SetColor(Color.Lerp(ColorManager.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
+		}
 	}
 }

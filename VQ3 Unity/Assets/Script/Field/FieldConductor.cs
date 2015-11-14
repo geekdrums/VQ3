@@ -15,10 +15,10 @@ public class FieldConductor : MonoBehaviour {
 	public bool RefreshWatchFlags = true;
 	public List<StageData> StageData;
 	public int StageIndex;
-	public int EncountIndex;
+	public int EncounterIndex;
 	public GameObject Setting;
 
-	public Encounter CurrentEncounter { get { return (StageIndex >= StageData.Count || EncountIndex >= StageData[StageIndex].Encounters.Count ? null : StageData[StageIndex].Encounters[EncountIndex]); } }
+	public Encounter CurrentEncounter { get { return (StageIndex >= StageData.Count || EncounterIndex >= StageData[StageIndex].Encounters.Count ? null : StageData[StageIndex].Encounters[EncounterIndex]); } }
 	public EventData CurrentEvent { get; private set; }
 
     void Awake()
@@ -39,7 +39,7 @@ public class FieldConductor : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
-		for( int i=0; i<EncountIndex; ++i )
+		for( int i=0; i<EncounterIndex; ++i )
 		{
 			GameContext.PlayerConductor.OnGainMemory(StageData[0].Encounters[i].AcquireMemory);
 		}
@@ -59,7 +59,7 @@ public class FieldConductor : MonoBehaviour {
 
 	public void OnEnterResult()
 	{
-		EncountIndex++;
+		EncounterIndex++;
 	}
 
     public void OnEnterSetting()

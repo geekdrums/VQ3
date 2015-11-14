@@ -105,7 +105,7 @@ public class GaugeRenderer : MonoBehaviour, IColoredObject
 		}
 	}
 
-	public void SetColor( Color color )
+	public void SetColor(Color color)
 	{
 		SetColor(color, 0);
 	}

@@ -166,6 +166,7 @@ public class TextWindow : MonoBehaviour
 
 		displayCommnd_ = null;
 
+		if( message_.Text == text ) return;
 		message_.Init(text);
 		
 		//line_.SetColor(Color.white);

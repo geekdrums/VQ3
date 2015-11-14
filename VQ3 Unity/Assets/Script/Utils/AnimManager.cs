@@ -215,6 +215,7 @@ public class AnimManager : MonoBehaviour {
 
 	public static void AddAnim(GameObject obj, object target, ParamType paramType, AnimType animType = AnimType.Linear, float factor = 0.1f)
 	{
+		if( instance.Animations.Find((AnimInfo anim) => anim.Object == obj && anim.Param == paramType && anim.Target == target) != null ) return;
 		instance.Animations.RemoveAll((AnimInfo anim) => anim.Object == obj && anim.Param == paramType);
 		instance.Animations.Add(new AnimInfo(obj, target, paramType, animType, factor));
 	}

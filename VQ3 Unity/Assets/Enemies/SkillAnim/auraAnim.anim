@@ -6,8 +6,8 @@ AnimationClip:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: auraAnim
-  serializedVersion: 4
-  m_AnimationType: 1
+  serializedVersion: 6
+  m_Legacy: 1
   m_Compressed: 0
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
@@ -76,6 +76,102 @@ AnimationClip:
       m_PostInfinity: 2
     attribute: Width
     path: MidairCircle
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: .733333349
+        value: 0
+        inSlope: 8.99999905
+        outSlope: 8.99999905
+        tangentMode: 10
+      - time: 1.06666672
+        value: 3
+        inSlope: 5.33333302
+        outSlope: 5.33333302
+        tangentMode: 10
+      - time: 1.66666663
+        value: 4
+        inSlope: 1.66666698
+        outSlope: 1.66666698
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Radius
+    path: MidairCircle (2)
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: .899999976
+        value: 0
+        inSlope: 18.7500019
+        outSlope: 18.7500019
+        tangentMode: 10
+      - time: 1.16666663
+        value: 5
+        inSlope: 10.125001
+        outSlope: 10.125001
+        tangentMode: 10
+      - time: 1.83333337
+        value: 6
+        inSlope: 1.49999988
+        outSlope: 1.49999988
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Radius
+    path: MidairCircle (1)
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: .733333349
+        value: 0
+        inSlope: .899999917
+        outSlope: .899999917
+        tangentMode: 10
+      - time: 1.06666672
+        value: .300000012
+        inSlope: .199999899
+        outSlope: .199999899
+        tangentMode: 10
+      - time: 1.66666663
+        value: 0
+        inSlope: -.500000119
+        outSlope: -.500000119
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Width
+    path: MidairCircle (2)
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: .899999976
+        value: 0
+        inSlope: .75000006
+        outSlope: .75000006
+        tangentMode: 10
+      - time: 1.16666663
+        value: .200000003
+        inSlope: .225000039
+        outSlope: .225000039
+        tangentMode: 10
+      - time: 1.83333337
+        value: 0
+        inSlope: -.299999982
+        outSlope: -.299999982
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Width
+    path: MidairCircle (1)
     classID: 114
     script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
   m_PPtrCurves: []
@@ -168,5 +264,104 @@ AnimationClip:
     path: MidairCircle
     classID: 114
     script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: .733333349
+        value: 0
+        inSlope: 8.99999905
+        outSlope: 8.99999905
+        tangentMode: 10
+      - time: 1.06666672
+        value: 3
+        inSlope: 5.33333302
+        outSlope: 5.33333302
+        tangentMode: 10
+      - time: 1.66666663
+        value: 4
+        inSlope: 1.66666698
+        outSlope: 1.66666698
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Radius
+    path: MidairCircle (2)
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: .899999976
+        value: 0
+        inSlope: 18.7500019
+        outSlope: 18.7500019
+        tangentMode: 10
+      - time: 1.16666663
+        value: 5
+        inSlope: 10.125001
+        outSlope: 10.125001
+        tangentMode: 10
+      - time: 1.83333337
+        value: 6
+        inSlope: 1.49999988
+        outSlope: 1.49999988
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Radius
+    path: MidairCircle (1)
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: .733333349
+        value: 0
+        inSlope: .899999917
+        outSlope: .899999917
+        tangentMode: 10
+      - time: 1.06666672
+        value: .300000012
+        inSlope: .199999899
+        outSlope: .199999899
+        tangentMode: 10
+      - time: 1.66666663
+        value: 0
+        inSlope: -.500000119
+        outSlope: -.500000119
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Width
+    path: MidairCircle (2)
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: .899999976
+        value: 0
+        inSlope: .75000006
+        outSlope: .75000006
+        tangentMode: 10
+      - time: 1.16666663
+        value: .200000003
+        inSlope: .225000039
+        outSlope: .225000039
+        tangentMode: 10
+      - time: 1.83333337
+        value: 0
+        inSlope: -.299999982
+        outSlope: -.299999982
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: Width
+    path: MidairCircle (1)
+    classID: 114
+    script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
   m_EulerEditorCurves: []
+  m_HasGenericRootTransform: 0
+  m_HasMotionFloatCurves: 0
+  m_GenerateMotionCurves: 0
   m_Events: []

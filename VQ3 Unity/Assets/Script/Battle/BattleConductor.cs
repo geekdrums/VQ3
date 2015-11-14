@@ -103,7 +103,6 @@ public class BattleConductor : MonoBehaviour {
 			if( !Music.IsPlaying || Music.Just.MusicalTime > 4 )
 			{
 				GameContext.SetState(GameState.Setting);
-				GameContext.FieldConductor.OnPlayerLose();
 			}
 			break;
 		}

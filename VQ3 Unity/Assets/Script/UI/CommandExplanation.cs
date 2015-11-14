@@ -30,7 +30,7 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 		{
 			Counter.Count = param;
 			Line.SetRate(0, 0);
-			Line.SetRate(param/100.0f);
+			Line.SetRate(Mathf.Clamp01(param/100.0f));
 		}
 
 		public void SetZero()
@@ -114,7 +114,7 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 			LVText.color = ColorManager.Base.Bright;
 			LVCount.CounterColor= ColorManager.Base.Bright;
 			Explanation.text = commandData_.ExplanationText.Replace("<br/>", System.Environment.NewLine);
-			if( GameContext.FieldConductor.EncountIndex == 0 )
+			if( GameContext.FieldConductor.EncounterIndex == 0 )
 			{
 				Explanation.text = commandData_.ExplanationText.Split(new string[]{"<br/>"}, System.StringSplitOptions.RemoveEmptyEntries)[0];
 			}

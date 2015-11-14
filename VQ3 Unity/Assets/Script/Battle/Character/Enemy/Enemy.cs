@@ -93,6 +93,7 @@ public class Enemy : Character
                 if( HitPoint <= 0 )
                 {
                     spriteRenderer.color = Color.clear;
+					//SEPlayer.Play("Defeat");
                     Destroy( this.gameObject );
                 }
                 else
@@ -108,7 +109,7 @@ public class Enemy : Character
 		if( ( GameContext.LuxSystem.Version < LuxVersion.Shield || GameContext.LuxState == LuxState.Overflow ) && damage == 0 ) return;
 		if( lastDamageGauge != null )
 		{
-			lastDamageGauge.AddDamage(damage);
+			lastDamageGauge.AddDamage(damage, actResult);
 		}
 		else if( DamageGauge.GetDesiredMode() == DamageGauge.Mode.Damage || FindObjectOfType<DamageGauge>() == null )
 		{
