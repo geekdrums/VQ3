@@ -1,3 +1,7 @@
+// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced 'unity_World2Shadow' with 'unity_WorldToShadow'
+
 #ifndef AUTOLIGHT_INCLUDED
 #define AUTOLIGHT_INCLUDED
 
@@ -20,7 +24,7 @@ uniform sampler2D _ShadowMapTexture;
 #define SHADOW_COORDS(idx1) float4 _ShadowCoord : TEXCOORD##idx1;
 
 #if (defined(SHADER_API_GLES) || defined(SHADER_API_GLES3)) && defined(SHADER_API_MOBILE)
-#define TRANSFER_SHADOW(a) a._ShadowCoord = mul( unity_World2Shadow[0], mul( _Object2World, v.vertex ) );
+#define TRANSFER_SHADOW(a) a._ShadowCoord = mul( unity_WorldToShadow[0], mul( unity_ObjectToWorld, v.vertex ) );
 
 inline fixed unitySampleShadow (float4 shadowCoord)
 {
@@ -117,7 +121,7 @@ inline fixed unitySampleShadow (float4 shadowCoord)
 	return shadow;
 }
 #define SHADOW_COORDS(idx1) float4 _ShadowCoord : TEXCOORD##idx1;
-#define TRANSFER_SHADOW(a) a._ShadowCoord = mul (unity_World2Shadow[0], mul(_Object2World,v.vertex));
+#define TRANSFER_SHADOW(a) a._ShadowCoord = mul (unity_WorldToShadow[0], mul(unity_ObjectToWorld,v.vertex));
 #define SHADOW_ATTENUATION(a) unitySampleShadow(a._ShadowCoord)
 
 #endif
@@ -153,7 +157,7 @@ inline float unityCubeShadow (float3 vec)
 	#endif
 }
 #define SHADOW_COORDS(idx1) float3 _ShadowCoord : TEXCOORD##idx1;
-#define TRANSFER_SHADOW(a) a._ShadowCoord = mul(_Object2World, v.vertex).xyz - _LightPositionRange.xyz;
+#define TRANSFER_SHADOW(a) a._ShadowCoord = mul(unity_ObjectToWorld, v.vertex).xyz - _LightPositionRange.xyz;
 #define SHADOW_ATTENUATION(a) unityCubeShadow(a._ShadowCoord)
 
 #endif
@@ -182,17 +186,17 @@ inline float unityCubeShadow (float3 vec)
 #ifdef POINT
 #define LIGHTING_COORDS(idx1,idx2) float3 _LightCoord : TEXCOORD##idx1; SHADOW_COORDS(idx2)
 uniform sampler2D _LightTexture0;
-uniform float4x4 _LightMatrix0;
-#define TRANSFER_VERTEX_TO_FRAGMENT(a) a._LightCoord = mul(_LightMatrix0, mul(_Object2World, v.vertex)).xyz; TRANSFER_SHADOW(a)
+uniform float4x4 unity_WorldToLight;
+#define TRANSFER_VERTEX_TO_FRAGMENT(a) a._LightCoord = mul(unity_WorldToLight, mul(unity_ObjectToWorld, v.vertex)).xyz; TRANSFER_SHADOW(a)
 #define LIGHT_ATTENUATION(a)	(tex2D(_LightTexture0, dot(a._LightCoord,a._LightCoord).rr).UNITY_ATTEN_CHANNEL * SHADOW_ATTENUATION(a))
 #endif
 
 #ifdef SPOT
 #define LIGHTING_COORDS(idx1,idx2) float4 _LightCoord : TEXCOORD##idx1; SHADOW_COORDS(idx2)
 uniform sampler2D _LightTexture0;
-uniform float4x4 _LightMatrix0;
+uniform float4x4 unity_WorldToLight;
 uniform sampler2D _LightTextureB0;
-#define TRANSFER_VERTEX_TO_FRAGMENT(a) a._LightCoord = mul(_LightMatrix0, mul(_Object2World, v.vertex)); TRANSFER_SHADOW(a)
+#define TRANSFER_VERTEX_TO_FRAGMENT(a) a._LightCoord = mul(unity_WorldToLight, mul(unity_ObjectToWorld, v.vertex)); TRANSFER_SHADOW(a)
 inline fixed UnitySpotCookie(float4 LightCoord)
 {
 	return tex2D(_LightTexture0, LightCoord.xy / LightCoord.w + 0.5).w;
@@ -215,17 +219,17 @@ inline fixed UnitySpotAttenuate(float3 LightCoord)
 #ifdef POINT_COOKIE
 #define LIGHTING_COORDS(idx1,idx2) float3 _LightCoord : TEXCOORD##idx1; SHADOW_COORDS(idx2)
 uniform samplerCUBE _LightTexture0;
-uniform float4x4 _LightMatrix0;
+uniform float4x4 unity_WorldToLight;
 uniform sampler2D _LightTextureB0;
-#define TRANSFER_VERTEX_TO_FRAGMENT(a) a._LightCoord = mul(_LightMatrix0, mul(_Object2World, v.vertex)).xyz; TRANSFER_SHADOW(a)
+#define TRANSFER_VERTEX_TO_FRAGMENT(a) a._LightCoord = mul(unity_WorldToLight, mul(unity_ObjectToWorld, v.vertex)).xyz; TRANSFER_SHADOW(a)
 #define LIGHT_ATTENUATION(a)	(tex2D(_LightTextureB0, dot(a._LightCoord,a._LightCoord).rr).UNITY_ATTEN_CHANNEL * texCUBE(_LightTexture0, a._LightCoord).w * SHADOW_ATTENUATION(a))
 #endif
 
 #ifdef DIRECTIONAL_COOKIE
 #define LIGHTING_COORDS(idx1,idx2) float2 _LightCoord : TEXCOORD##idx1; SHADOW_COORDS(idx2)
 uniform sampler2D _LightTexture0;
-uniform float4x4 _LightMatrix0;
-#define TRANSFER_VERTEX_TO_FRAGMENT(a) a._LightCoord = mul(_LightMatrix0, mul(_Object2World, v.vertex)).xy; TRANSFER_SHADOW(a)
+uniform float4x4 unity_WorldToLight;
+#define TRANSFER_VERTEX_TO_FRAGMENT(a) a._LightCoord = mul(unity_WorldToLight, mul(unity_ObjectToWorld, v.vertex)).xy; TRANSFER_SHADOW(a)
 #define LIGHT_ATTENUATION(a)	(tex2D(_LightTexture0, a._LightCoord).w * SHADOW_ATTENUATION(a))
 #endif
 

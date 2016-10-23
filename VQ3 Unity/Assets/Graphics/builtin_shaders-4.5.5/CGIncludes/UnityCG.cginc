@@ -1,3 +1,7 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+// Upgrade NOTE: replaced 'unity_World2Shadow' with 'unity_WorldToShadow'
+
 // Upgrade NOTE: unity_Scale shader variable was removed; replaced 'unity_Scale.w' with '1.0'
 
 #ifndef UNITY_CG_INCLUDED
@@ -90,7 +94,7 @@ struct appdata_full {
 // Computes world space light direction
 inline float3 WorldSpaceLightDir( in float4 v )
 {
-	float3 worldPos = mul(_Object2World, v).xyz;
+	float3 worldPos = mul(unity_ObjectToWorld, v).xyz;
 	#ifndef USING_LIGHT_MULTI_COMPILE
 		return _WorldSpaceLightPos0.xyz - worldPos * _WorldSpaceLightPos0.w;
 	#else
@@ -105,7 +109,7 @@ inline float3 WorldSpaceLightDir( in float4 v )
 // Computes object space light direction
 inline float3 ObjSpaceLightDir( in float4 v )
 {
-	float3 objSpaceLightPos = mul(_World2Object, _WorldSpaceLightPos0).xyz;
+	float3 objSpaceLightPos = mul(unity_WorldToObject, _WorldSpaceLightPos0).xyz;
 	#ifndef USING_LIGHT_MULTI_COMPILE
 		return objSpaceLightPos.xyz - v.xyz * _WorldSpaceLightPos0.w;
 	#else
@@ -120,13 +124,13 @@ inline float3 ObjSpaceLightDir( in float4 v )
 // Computes world space view direction
 inline float3 WorldSpaceViewDir( in float4 v )
 {
-	return _WorldSpaceCameraPos.xyz - mul(_Object2World, v).xyz;
+	return _WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld, v).xyz;
 }
 
 // Computes object space view direction
 inline float3 ObjSpaceViewDir( in float4 v )
 {
-	float3 objSpaceCameraPos = mul(_World2Object, float4(_WorldSpaceCameraPos.xyz, 1)).xyz * 1.0;
+	float3 objSpaceCameraPos = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos.xyz, 1)).xyz * 1.0;
 	return objSpaceCameraPos - v.xyz;
 }
 
@@ -472,7 +476,7 @@ inline float3 TransformViewToProjection (float3 v) {
 
 #ifdef SHADOWS_CUBE
 	#define V2F_SHADOW_CASTER float4 pos : SV_POSITION; float3 vec : TEXCOORD0
-	#define TRANSFER_SHADOW_CASTER(o) o.vec = mul( _Object2World, v.vertex ).xyz - _LightPositionRange.xyz; o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+	#define TRANSFER_SHADOW_CASTER(o) o.vec = mul( unity_ObjectToWorld, v.vertex ).xyz - _LightPositionRange.xyz; o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 	#define SHADOW_CASTER_FRAGMENT(i) return EncodeFloatRGBA( min(length(i.vec) * _LightPositionRange.w, 0.999) );
 #else
 	#if defined(UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE)
@@ -499,13 +503,13 @@ UNITY_DECLARE_SHADOWMAP(_ShadowMapTexture);
 #define V2F_SHADOW_COLLECTOR float4 pos : SV_POSITION; float3 _ShadowCoord0 : TEXCOORD0; float3 _ShadowCoord1 : TEXCOORD1; float3 _ShadowCoord2 : TEXCOORD2; float3 _ShadowCoord3 : TEXCOORD3; float4 _WorldPosViewZ : TEXCOORD4
 #define TRANSFER_SHADOW_COLLECTOR(o)	\
 	o.pos = mul(UNITY_MATRIX_MVP, v.vertex); \
-	float4 wpos = mul(_Object2World, v.vertex); \
+	float4 wpos = mul(unity_ObjectToWorld, v.vertex); \
 	o._WorldPosViewZ.xyz = wpos; \
 	o._WorldPosViewZ.w = -mul( UNITY_MATRIX_MV, v.vertex ).z; \
-	o._ShadowCoord0 = mul(unity_World2Shadow[0], wpos).xyz; \
-	o._ShadowCoord1 = mul(unity_World2Shadow[1], wpos).xyz; \
-	o._ShadowCoord2 = mul(unity_World2Shadow[2], wpos).xyz; \
-	o._ShadowCoord3 = mul(unity_World2Shadow[3], wpos).xyz;
+	o._ShadowCoord0 = mul(unity_WorldToShadow[0], wpos).xyz; \
+	o._ShadowCoord1 = mul(unity_WorldToShadow[1], wpos).xyz; \
+	o._ShadowCoord2 = mul(unity_WorldToShadow[2], wpos).xyz; \
+	o._ShadowCoord3 = mul(unity_WorldToShadow[3], wpos).xyz;
 
 
 #if defined (SHADOWS_NATIVE)

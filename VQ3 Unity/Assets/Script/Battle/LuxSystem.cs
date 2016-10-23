@@ -449,7 +449,7 @@ public class LuxSystem : MonoBehaviour
 			{
 				Moon.transform.position = Sun.transform.position + Vector3.back * 0.1f + Vector3.down * 0.1f;
 				BGColor = ColorManager.Base.Back;
-				GetComponent<Animation>()["EclipseAnim"].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+				GetComponent<Animation>()["EclipseAnim"].speed = (float)(Music.CurrentTempo / 60.0);
 				GetComponent<Animation>().Play();
 				GameContext.EnemyConductor.OnInvert();
 				GameContext.PlayerConductor.CommandGraph.SelectInitialInvertCommand();

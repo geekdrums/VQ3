@@ -282,7 +282,7 @@ public class PlayerCommand : MonoBehaviour
 			else if( state <= CommandState.NotAcquired )
 			{
 				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
-				alpha = 0.85f;
+				alpha = 0.6f;
 			}
 			else//DontKnow
 			{
@@ -298,7 +298,7 @@ public class PlayerCommand : MonoBehaviour
 			else if( state <= CommandState.Acquired )
 			{
 				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
-				alpha = Mathf.Clamp((distance + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff, 0.7f, 1.0f);
+				alpha = Mathf.Clamp((distance + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff, 0.6f, 1.0f);
 			}
 			else//NotAcquired,DontKnow
 			{

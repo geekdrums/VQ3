@@ -1,3 +1,7 @@
+// Upgrade NOTE: commented out 'float4x4 _CameraToWorld', a built-in variable
+// Upgrade NOTE: replaced '_CameraToWorld' with 'unity_CameraToWorld'
+// Upgrade NOTE: replaced 'unity_World2Shadow' with 'unity_WorldToShadow'
+
 // Collects cascaded shadows into screen space buffer ready for blurring
 Shader "Hidden/Internal-PrePassCollectShadows" {
 Properties {
@@ -39,7 +43,7 @@ sampler2D_float _CameraDepthTexture;
 float4 unity_LightmapFade;
 
 CBUFFER_START(UnityPerCamera2)
-float4x4 _CameraToWorld;
+// float4x4 _CameraToWorld;
 CBUFFER_END
 
 UNITY_DECLARE_SHADOWMAP(_ShadowMapTexture);
@@ -51,10 +55,10 @@ inline float SquareLength(float3 vec)
 
 inline half unitySampleShadow (float4 wpos, float z)
 {
-	float3 sc0 = mul (unity_World2Shadow[0], wpos).xyz;
-	float3 sc1 = mul (unity_World2Shadow[1], wpos).xyz;
-	float3 sc2 = mul (unity_World2Shadow[2], wpos).xyz;
-	float3 sc3 = mul (unity_World2Shadow[3], wpos).xyz;
+	float3 sc0 = mul (unity_WorldToShadow[0], wpos).xyz;
+	float3 sc1 = mul (unity_WorldToShadow[1], wpos).xyz;
+	float3 sc2 = mul (unity_WorldToShadow[2], wpos).xyz;
+	float3 sc3 = mul (unity_WorldToShadow[3], wpos).xyz;
 
 #if defined (SHADOWS_SPLIT_SPHERES)
 	float3 fromCenter0 = wpos.xyz - unity_ShadowSplitSpheres[0].xyz;
@@ -86,7 +90,7 @@ fixed4 frag (v2f i) : SV_Target
 	float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
 	depth = Linear01Depth (depth);
 	float4 vpos = float4(i.ray * depth,1);
-	float4 wpos = mul (_CameraToWorld, vpos);	
+	float4 wpos = mul (unity_CameraToWorld, vpos);	
 	half shadow = unitySampleShadow (wpos, vpos.z);
 	float4 res;
 	res.x = shadow;

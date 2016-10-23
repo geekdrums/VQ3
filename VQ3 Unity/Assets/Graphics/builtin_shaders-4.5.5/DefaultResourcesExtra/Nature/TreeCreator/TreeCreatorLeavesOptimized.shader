@@ -1,3 +1,6 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Shadow' with 'unity_WorldToShadow[0]'
+
 Shader "Hidden/Nature/Tree Creator Leaves Optimized" {
 Properties {
 	_Color ("Main Color", Color) = (1,1,1,1)
@@ -152,8 +155,8 @@ ENDCG
 			TreeVertLeaf (v);
 			o.hip_pack0.xy = TRANSFORM_TEX(v.texcoord, _MainTex);
 			
-			float3 worldN = mul((float3x3)_Object2World, SCALED_NORMAL);
-			o.normal = mul(_World2Shadow, half4(worldN, 0)).xyz;
+			float3 worldN = mul((float3x3)unity_ObjectToWorld, SCALED_NORMAL);
+			o.normal = mul(unity_WorldToShadow[0], half4(worldN, 0)).xyz;
 
 			TRANSFER_SHADOW_COLLECTOR(o)
 			return o;

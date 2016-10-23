@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Hidden/Nature/Tree Creator Leaves Fast Optimized" {
 Properties {
 	_Color ("Main Color", Color) = (1,1,1,1)
@@ -62,7 +64,7 @@ SubShader {
 
 			fixed3 color = v.color.rgb * _Color.rgb * ao;
 			
-			float3 worldN = mul ((float3x3)_Object2World, SCALED_NORMAL);
+			float3 worldN = mul ((float3x3)unity_ObjectToWorld, SCALED_NORMAL);
 
 			fixed4 mainLight;
 			mainLight.rgb = ShadeTranslucentMainLight (v.vertex, worldN) * color;

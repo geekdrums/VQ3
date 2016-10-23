@@ -1,3 +1,9 @@
+// Upgrade NOTE: replaced '_World2Shadow' with 'unity_WorldToShadow[0]'
+// Upgrade NOTE: replaced '_World2Shadow1' with 'unity_WorldToShadow[1]'
+// Upgrade NOTE: replaced '_World2Shadow2' with 'unity_WorldToShadow[2]'
+// Upgrade NOTE: replaced '_World2Shadow3' with 'unity_WorldToShadow[3]'
+// Upgrade NOTE: replaced 'unity_World2Shadow' with 'unity_WorldToShadow'
+
 // Upgrade NOTE: unity_Scale shader variable was removed; replaced 'unity_Scale' with 'float4(1,1,1,1)'
 
 // Upgrade NOTE: commented out 'float3 _WorldSpaceCameraPos', a built-in variable
@@ -110,15 +116,15 @@ CBUFFER_START(UnityShadows)
 	float4 unity_LightShadowBias;
 	float4 _LightSplitsNear;
 	float4 _LightSplitsFar;
-	float4x4 unity_World2Shadow[4];
+	float4x4 unity_WorldToShadow[4];
 	float4 _LightShadowData;
 	// float4 unity_ShadowFadeCenterAndType;
 CBUFFER_END
 
-#define _World2Shadow unity_World2Shadow[0]
-#define _World2Shadow1 unity_World2Shadow[1]
-#define _World2Shadow2 unity_World2Shadow[2]
-#define _World2Shadow3 unity_World2Shadow[3]
+#define unity_WorldToShadow[0] unity_WorldToShadow[0]
+#define unity_WorldToShadow[1] unity_WorldToShadow[1]
+#define unity_WorldToShadow[2] unity_WorldToShadow[2]
+#define unity_WorldToShadow[3] unity_WorldToShadow[3]
 
 
 // ----------------------------------------------------------------------------

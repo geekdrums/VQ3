@@ -222,6 +222,7 @@ public class Music : MonoBehaviour
 
 	public static int CurrentUnitPerBar { get { return Current_.UnitPerBar; } }
 	public static int CurrentUnitPerBeat { get { return Current_.UnitPerBeat; } }
+	public static double CurrentTempo { get { return Current_.Tempo; } }
 	public static string CurrentMusicName { get { return Current_.name; } }
 	public static string CurrentBlockName { get { return Current_.CurrentBlock_.BlockName; } }
 	public static string NextBlockName { get { return Current_.NextBlock_.BlockName; } }

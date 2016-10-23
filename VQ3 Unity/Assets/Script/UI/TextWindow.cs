@@ -175,7 +175,7 @@ public class TextWindow : MonoBehaviour
 	void Reset_()
 	{
 		TextBase.SetActive(false);
-		CommandBase.SetActive(false);
+		//CommandBase.SetActive(false);
 		message_.Reset();
 		SetNextCursor_(false);
 	}

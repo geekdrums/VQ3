@@ -639,7 +639,7 @@ public class CommandGraph : MonoBehaviour
 			NextGauge.SetColor(ColorManager.Base.Front);
 			NextLight.SetTargetColor(Color.clear);
 			Mask.SetTargetColor(Color.clear);
-			CurrentGauge.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
+			CurrentCommandName.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
 		}
 		else
 		{

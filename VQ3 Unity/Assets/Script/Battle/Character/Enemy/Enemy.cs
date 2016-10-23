@@ -278,7 +278,7 @@ public class Enemy : Character
 
 		if( skill.characterAnimName != "" && GetComponent<Animation>() != null && GetComponent<Animation>().GetClip(skill.characterAnimName) != null )
 		{
-			GetComponent<Animation>()[skill.characterAnimName].speed = 1 / (float)(Music.CurrentUnitPerBeat * Music.MusicalTimeUnit);
+			GetComponent<Animation>()[skill.characterAnimName].speed = (float)(Music.CurrentTempo / 60.0);
 			GetComponent<Animation>().Play(skill.characterAnimName);
 		}
 	}
