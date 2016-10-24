@@ -39,9 +39,9 @@ public class CommandGraph : MonoBehaviour
 
 	public GameObject GaugeParent;
 	public GaugeRenderer CurrentGauge;
-	public GaugeRenderer NextGauge;
-	public MidairPrimitive NextLight;
-	public MidairPrimitive Mask;
+	//public GaugeRenderer NextGauge;
+	//public MidairPrimitive NextLight;
+	//public MidairPrimitive Mask;
 	public TextMesh CurrentCommandName;
 
 	public Vector3 MaxScale = new Vector3(0.24f, 0.24f, 0.24f);
@@ -367,7 +367,7 @@ public class CommandGraph : MonoBehaviour
 				SetNextBlock();
 			}
 			CurrentGauge.SetRate(0.0f);
-			NextGauge.SetRate(1.0f);
+			//NextGauge.SetRate(1.0f);
 			break;
 		case BattleState.Intro:
 		case BattleState.Battle:
@@ -377,7 +377,7 @@ public class CommandGraph : MonoBehaviour
 				SetNextBlock();
 			}
 			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
-			NextGauge.SetRate((float)(Music.MusicalTime / 64.0));
+			//NextGauge.SetRate((float)(Music.MusicalTime / 64.0));
 			break;
 		case BattleState.Endro:
 			break;
@@ -388,8 +388,8 @@ public class CommandGraph : MonoBehaviour
 			NextRect.SetSize(6 + Music.MusicalCos(4));
 			NextRect.SetColor(Color.Lerp(ColorManager.Base.Front, Color.clear, Music.MusicalCos(4) * 0.5f));
 		}
-		Vector3 gaugePos = NextGauge.transform.parent.localPosition;
-		NextGauge.transform.parent.localPosition = Vector3.Lerp(gaugePos, new Vector3(gaugePos.x, (NextCommand == null ? -7.5f : -9.0f), gaugePos.z), 0.2f);
+		//Vector3 gaugePos = NextGauge.transform.parent.localPosition;
+		//NextGauge.transform.parent.localPosition = Vector3.Lerp(gaugePos, new Vector3(gaugePos.x, (NextCommand == null ? -7.5f : -9.0f), gaugePos.z), 0.2f);
 		CurrentRect.SetColor(ColorManager.Base.Front);
 	}
 
@@ -636,9 +636,9 @@ public class CommandGraph : MonoBehaviour
 			CurrentCommandName.text = CurrentCommand.nameText.ToUpper();
 			CurrentCommandName.color = themeColor;
 			CurrentGauge.SetColor(themeColor, 0.2f);
-			NextGauge.SetColor(ColorManager.Base.Front);
-			NextLight.SetTargetColor(Color.clear);
-			Mask.SetTargetColor(Color.clear);
+			//NextGauge.SetColor(ColorManager.Base.Front);
+			//NextLight.SetTargetColor(Color.clear);
+			//Mask.SetTargetColor(Color.clear);
 			CurrentCommandName.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
 		}
 		else
@@ -703,9 +703,9 @@ public class CommandGraph : MonoBehaviour
 		OnExecCommand();
 		GaugeParent.SetActive(true);
 		CurrentGauge.SetColor(ColorManager.Base.Front);
-		NextGauge.SetColor(ColorManager.Base.Front);
-		NextLight.SetColor(Color.clear);
-		Mask.SetColor(Color.clear);
+		//NextGauge.SetColor(ColorManager.Base.Front);
+		//NextLight.SetColor(Color.clear);
+		//Mask.SetColor(Color.clear);
 		transform.rotation = Quaternion.Inverse(Quaternion.LookRotation(-IntroCommand.transform.localPosition)) * offsetRotation;
 		CurrentRect.transform.parent = IntroCommand.transform;
 		CurrentRect.transform.localPosition = Vector3.forward;
@@ -735,7 +735,7 @@ public class CommandGraph : MonoBehaviour
 	{
 		if( NextCommand == null )
 		{
-			NextGauge.SetColor(Base.Front);
+			//NextGauge.SetColor(Base.Front);
 		}
 	}
 
@@ -747,9 +747,9 @@ public class CommandGraph : MonoBehaviour
 			NextCommand = null;
 			NextRect.transform.localScale = Vector3.zero;
 
-			NextGauge.SetColor(ColorManager.Base.Front);
-			NextLight.SetTargetColor(Color.clear);
-			Mask.SetTargetColor(Color.clear);
+			//NextGauge.SetColor(ColorManager.Base.Front);
+			//NextLight.SetTargetColor(Color.clear);
+			//Mask.SetTargetColor(Color.clear);
 		}
 	}
 
@@ -772,9 +772,9 @@ public class CommandGraph : MonoBehaviour
 
 		if( GameContext.State == GameState.Battle )
 		{
-			NextGauge.SetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Bright);
-			if( command != IntroCommand ) NextLight.SetTargetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Bright);
-			if( command != IntroCommand && GameContext.LuxState != LuxState.Overload ) Mask.SetTargetColor(ColorManager.MakeAlpha(Color.black, 0.5f));
+			//NextGauge.SetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Bright);
+			//if( command != IntroCommand ) NextLight.SetTargetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Bright);
+			//if( command != IntroCommand && GameContext.LuxState != LuxState.Overload ) Mask.SetTargetColor(ColorManager.MakeAlpha(Color.black, 0.5f));
 		}
 
 		targetRotation = Quaternion.Inverse(Quaternion.LookRotation(-command.transform.localPosition)) * offsetRotation;
@@ -805,7 +805,7 @@ public class CommandGraph : MonoBehaviour
 				}
 			}
 		}
-		Mask.SetTargetColor(Color.clear);
+		//Mask.SetTargetColor(Color.clear);
 	}
 
 	public void CheckLinkedFromIntro()

@@ -6,6 +6,7 @@ using System.Text;
 
 public class Skill : MonoBehaviour
 {
+	public string shortName;
     public bool isPlayerSkill;
     public string[] _actionStr;
     public string _rhythmStr;

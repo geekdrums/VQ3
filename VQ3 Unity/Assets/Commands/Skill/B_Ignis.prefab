@@ -25,6 +25,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -39,6 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb4918957b1785b44b4981e05af947f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shortName: IGNIS
   isPlayerSkill: 1
   _actionStr:
   - Magic 45 5 3 Select

@@ -6,7 +6,7 @@ using System.Text;
 
 public class CommandBase : MonoBehaviour
 {
-    public List<Skill> _skillList;
+	public List<Skill> _skillList;
     public string _timingStr = "0 2 0";
 	public int DefendPercent;
     public int HealPercent;

@@ -133,7 +133,7 @@ public class PlayerConductor : MonoBehaviour {
 				{
 					line.SetEnabled(false);
 				}
-				TextWindow.SetCommand(command);
+				//TextWindow.SetCommand(command);
 			}
 			//ブレイクからイントロに戻ってきた時
 			else if( command == CommandGraph.IntroCommand )
@@ -145,7 +145,7 @@ public class PlayerConductor : MonoBehaviour {
 			}
 			else
 			{
-				TextWindow.SetCommand(command);
+				//TextWindow.SetCommand(command);
 			}
 			break;
 		case GameState.Setting:
@@ -158,7 +158,7 @@ public class PlayerConductor : MonoBehaviour {
 			{
 				MemoryPanel.Set(command);
 				EnemyExp.Hide();
-				TextWindow.SetCommand(command);
+				//TextWindow.SetCommand(command);
 			}
 			break;
 		}
@@ -181,11 +181,11 @@ public class PlayerConductor : MonoBehaviour {
 		{
 		case GameState.Battle:
 			TextWindow.SetMessage(MessageCategory.Help, "次のコマンドは？");
-			TextWindow.SetCommand(null);
+			//TextWindow.SetCommand(null);
 			break;
 		case GameState.Result:
 			GameContext.ResultConductor.OnPushedOKButton(this, null);
-			TextWindow.SetCommand(null);
+			//TextWindow.SetCommand(null);
 			break;
 		}
 	}
@@ -210,7 +210,7 @@ public class PlayerConductor : MonoBehaviour {
 		}
 		Player.TurnInit(CurrentCommand.currentData);
 		TextWindow.SetMessage(MessageCategory.PlayerCommand, CurrentCommand.currentData.DescribeText);
-		TextWindow.SetCommand(null);
+		//TextWindow.SetCommand(null);
         WaitCount = 0;
 	}
 
@@ -298,7 +298,7 @@ public class PlayerConductor : MonoBehaviour {
         WaitCount = 0;
 		ColorManager.SetBaseColor(EBaseColor.Black);
 		ColorManager.SetThemeColor(EThemeColor.White);
-		TextWindow.SetCommand(null);
+		//TextWindow.SetCommand(null);
 
 		VPMeter.SetActive(GameContext.FieldConductor.CurrentEncounter.Version != LuxVersion.None);
     }

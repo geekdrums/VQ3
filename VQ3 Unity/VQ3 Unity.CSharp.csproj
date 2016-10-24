@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.4.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -137,6 +139,7 @@
     <Compile Include="Assets\Script\Utils\MidairPrimitive.cs" />
     <Compile Include="Assets\Script\Utils\SEPlayer.cs" />
     <Compile Include="Assets\Script\Utils\Utils.cs" />
+    <Compile Include="Assets\Script\UI\SkillList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Graphics\builtin_shaders-4.5.5\CGIncludes\AutoLight.cginc" />
