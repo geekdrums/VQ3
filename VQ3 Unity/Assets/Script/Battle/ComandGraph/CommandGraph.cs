@@ -43,6 +43,9 @@ public class CommandGraph : MonoBehaviour
 	//public MidairPrimitive NextLight;
 	//public MidairPrimitive Mask;
 	public TextMesh CurrentCommandName;
+	public GameObject NextRectEffect;
+
+	public CommandExplanation CommandExp;
 
 	public Vector3 MaxScale = new Vector3(0.24f, 0.24f, 0.24f);
 	public float ScaleCoeff = 0.0f;
@@ -65,6 +68,7 @@ public class CommandGraph : MonoBehaviour
 	public PlayerCommand NextCommand { get; private set; }
 	public PlayerCommand CurrentCommand { get; private set; }
 	public PlayerCommand OldCommand { get; private set; }
+	public PlayerCommand PreviewCommand { get; private set; }
 	public VoxButton CurrentButton { get; private set; }
 
 	#endregion
@@ -382,12 +386,6 @@ public class CommandGraph : MonoBehaviour
 		case BattleState.Endro:
 			break;
 		}
-
-		if( NextCommand != null )
-		{
-			NextRect.SetSize(6 + Music.MusicalCos(4));
-			NextRect.SetColor(Color.Lerp(ColorManager.Base.Front, Color.clear, Music.MusicalCos(4) * 0.5f));
-		}
 		//Vector3 gaugePos = NextGauge.transform.parent.localPosition;
 		//NextGauge.transform.parent.localPosition = Vector3.Lerp(gaugePos, new Vector3(gaugePos.x, (NextCommand == null ? -7.5f : -9.0f), gaugePos.z), 0.2f);
 		CurrentRect.SetColor(ColorManager.Base.Front);
@@ -453,22 +451,63 @@ public class CommandGraph : MonoBehaviour
 		}
 
 		EdgeSphere.transform.rotation = transform.rotation;
+
+		if( NextCommand != null )
+		{
+			NextRect.SetSize(6 + Music.MusicalCos(4));
+			NextRect.SetColor(Color.Lerp(ColorManager.Base.Front, Color.clear, Music.MusicalCos(4) * 0.5f));
+		}
+		else if( hit.collider == CommandSphere.GetComponent<Collider>() )
+		{
+			PlayerCommand command = FindCommand(hit.point);
+			if( command != null )
+			{
+				NextRect.transform.position = Vector3.Lerp(NextRect.transform.position, command.transform.position + Vector3.back * 3, 0.2f);
+				NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.one, 0.2f);
+			}
+			else
+			{
+				NextRect.transform.position = Vector3.Lerp(NextRect.transform.position, hit.point + Vector3.back * 3, 0.2f);
+				NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.one * 0.2f, 0.2f);
+			}
+			NextRect.transform.rotation = Quaternion.identity;
+			NextRect.SetColor(ColorManager.Base.Front);
+			NextRect.SetSize(1.5f);
+			NextRect.SetWidth(0.2f);
+
+			if( command != null && command != PreviewCommand )
+			{
+				PreviewCommand = command;
+				SEPlayer.Play("tick");
+				CommandExp.Set(PreviewCommand);
+			}
+		}
+		else
+		{
+			NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.zero, 0.2f);
+		}
 	}
 
-	void PushCommandButton(Vector3 pushingPosition)
+	PlayerCommand FindCommand(Vector3 position)
 	{
-		PlayerCommand selectedCommand = null;
+		PlayerCommand ret = null;
 		float minDistance = 99999;
 		foreach( PlayerCommand command in GetLinkedCommands() )
 		{
-			float d = (pushingPosition - command.transform.position).magnitude;
+			float d = (position - command.transform.position).magnitude;
 			if( d < minDistance )
 			{
 				minDistance = d;
-				selectedCommand = command;
+				ret = command;
 			}
 		}
-		if( selectedCommand != null && minDistance <= BUTTON_RADIUS )
+		return (minDistance <= BUTTON_RADIUS ? ret : null);
+	}
+
+	void PushCommandButton(Vector3 position)
+	{
+		PlayerCommand selectedCommand = FindCommand(position);
+		if( selectedCommand != null )
 		{
 			Select(selectedCommand);
 		} 
@@ -610,7 +649,9 @@ public class CommandGraph : MonoBehaviour
 			CurrentRect.transform.localPosition = Vector3.forward;
 			CurrentRect.transform.localScale = Vector3.one;
 			CurrentRect.transform.localRotation = Quaternion.identity;
-			NextRect.transform.localScale = Vector3.zero;
+			//NextRect.transform.localScale = Vector3.zero;
+			NextRect.transform.parent = transform;
+			PreviewCommand = null;
 			foreach( PlayerCommand c in GetLinkedCommands() )
 			{
 				c.SetLink(true);
@@ -756,19 +797,24 @@ public class CommandGraph : MonoBehaviour
 	public void Select(PlayerCommand command)
 	{
 		NextCommand = command;
+		CommandExp.Set(NextCommand);
 		NextRect.transform.parent = NextCommand.transform;
 		NextRect.transform.localPosition = Vector3.forward;
 		NextRect.transform.localScale = Vector3.one;
 		NextRect.transform.localRotation = Quaternion.identity;
 		Color themeColor = ColorManager.GetThemeColor(NextCommand.themeColor).Bright;
-		foreach( MidairPrimitive primitive in NextRect.GetComponentsInChildren<MidairPrimitive>() )
+		GameObject effect = Instantiate(NextRectEffect, NextRect.transform.position, Quaternion.identity) as GameObject;
+		effect.transform.parent = NextRect.transform;
+		effect.transform.localPosition = Vector3.forward;
+		effect.transform.localScale = Vector3.one;
+		effect.transform.localRotation = Quaternion.identity;
+		foreach( MidairPrimitive primitive in effect.GetComponentsInChildren<MidairPrimitive>() )
 		{
 			if( primitive != NextRect )
 			{
 				primitive.SetColor(themeColor);
 			}
 		}
-		NextRect.GetComponent<Animation>().Play("SelectAnim");
 
 		if( GameContext.State == GameState.Battle )
 		{

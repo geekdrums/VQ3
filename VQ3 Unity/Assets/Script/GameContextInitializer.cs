@@ -17,6 +17,7 @@ public class GameContextInitializer : MonoBehaviour
 			Screen.SetResolution(ScreenWidth, ScreenHeight, false);
 		}
 		GameContext.FieldConductor.EncounterIndex = EncounterIndex;
+		//Cursor.visible = false;
 	}
 
 	void Start()

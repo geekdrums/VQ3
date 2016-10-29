@@ -9,8 +9,8 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 	public TextMesh Explanation;
 	public CounterSprite LVCount;
 	public TextMesh LVText;
-	public GameObject IconParent;
-	public GaugeRenderer TopLine, BottomLine;
+	//public GameObject IconParent;
+	public GaugeRenderer TopLine;//, BottomLine;
 
 	[System.Serializable]
 	public class CommandParam
@@ -64,9 +64,11 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 
 	PlayerCommandData commandData_;
 	Color currentColor_ = Color.clear;
+	SkillListUI skillListUI_;
 
 	// Use this for initialization
 	void Start () {
+		skillListUI_ = GetComponentInChildren<SkillListUI>();
 	}
 	
 	// Update is called once per frame
@@ -86,22 +88,22 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 	{
 		gameObject.SetActive(true);
 		TopLine.gameObject.SetActive(true);
-		if( IconParent.transform.childCount > 0 )
-		{
-			Destroy(IconParent.transform.GetChild(0).gameObject);
-		}
+		//if( IconParent.transform.childCount > 0 )
+		//{
+		//	Destroy(IconParent.transform.GetChild(0).gameObject);
+		//}
 		commandData_ = command.currentData;
 		CommandName.text = command.nameText.ToUpper();
 		ThemeColor themeColor = ColorManager.GetThemeColor(command.themeColor);
 
-		GameObject iconObj = command.InstantiateIconObj(IconParent);
+		//GameObject iconObj = command.InstantiateIconObj(IconParent);
 		if( GameContext.State == GameState.Result || GameContext.State == GameState.Event )
 		{
 			NameBase.SetColor(themeColor.Bright);
 			LVText.gameObject.SetActive(false);
 			Explanation.text = "";
 			commandData_ = command.commandData[command.commandData.Count-1];
-			iconObj.GetComponent<PlayerCommand>().maskPlane.SetActive(false);
+			//iconObj.GetComponent<PlayerCommand>().maskPlane.SetActive(false);
 			if( GameContext.State == GameState.Event )
 			{
 				TopLine.gameObject.SetActive(false);
@@ -118,6 +120,7 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 			{
 				Explanation.text = commandData_.ExplanationText.Split(new string[]{"<br/>"}, System.StringSplitOptions.RemoveEmptyEntries)[0];
 			}
+			skillListUI_.Set(commandData_);
 		}
 		else
 		{
@@ -181,7 +184,7 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 		LVCount.Count = command.currentLevel;
 
 		TopLine.SetColor(themeColor.Bright);
-		BottomLine.SetColor(themeColor.Bright);
+		//BottomLine.SetColor(themeColor.Bright);
 
 		if( CurrentPhase != Phase.Wait || GameContext.State == GameState.Result )
 		{
@@ -194,12 +197,12 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 	{
 		TopLine.SetRate(0);
 		TopLine.SetRate(1, 0.2f);
-		BottomLine.SetRate(0);
-		BottomLine.SetRate(1, 0.2f);
+		//BottomLine.SetRate(0);
+		//BottomLine.SetRate(1, 0.2f);
 		currentColor_ = Color.clear;
 		AnimManager.AddAnim(gameObject, Color.white, ParamType.Color);
-		IconParent.transform.localScale = Vector3.zero;
-		AnimManager.AddAnim(IconParent, 0.3f, ParamType.Scale, AnimType.BounceIn, 0.2f);
+		//IconParent.transform.localScale = Vector3.zero;
+		//AnimManager.AddAnim(IconParent, 0.3f, ParamType.Scale, AnimType.BounceIn, 0.2f);
 
 		CurrentPhase = Phase.Showing;
 		transform.localScale = Vector3.one;
@@ -209,20 +212,20 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 	{
 		gameObject.SetActive(false);
 		TopLine.SetRate(0, 0.2f);
-		BottomLine.SetRate(0, 0.2f);
+		//BottomLine.SetRate(0, 0.2f);
 		currentColor_ = Color.white;
 		AnimManager.AddAnim(gameObject, Color.white, ParamType.Color);
-		AnimManager.AddAnim(IconParent, 0.0f, ParamType.Scale, AnimType.BounceOut, 0.2f);
+		//AnimManager.AddAnim(IconParent, 0.0f, ParamType.Scale, AnimType.BounceOut, 0.2f);
 
 		CurrentPhase = Phase.Hiding;
 	}
 
 	public void Reset()
 	{
-		if( IconParent.transform.childCount > 0 )
-		{
-			Destroy(IconParent.transform.GetChild(0).gameObject);
-		}
+		//if( IconParent.transform.childCount > 0 )
+		//{
+		//	Destroy(IconParent.transform.GetChild(0).gameObject);
+		//}
 		CommandName.text = "";
 		transform.localScale = Vector3.zero;
 		commandData_ = null;

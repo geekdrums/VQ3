@@ -99,6 +99,7 @@
     <Compile Include="Assets\Script\Battle\Effect\BGAnimIgna.cs" />
     <Compile Include="Assets\Script\Battle\Effect\BGAnimLacle.cs" />
     <Compile Include="Assets\Script\Battle\Effect\BGAnimVox.cs" />
+    <Compile Include="Assets\Script\Battle\Effect\SimpleEffect.cs" />
     <Compile Include="Assets\Script\Battle\EnemyConductor.cs" />
     <Compile Include="Assets\Script\Battle\LuxSystem.cs" />
     <Compile Include="Assets\Script\Battle\PlayerConductor.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Assets\Script\UI\MemoryPanel.cs" />
     <Compile Include="Assets\Script\UI\MemoryResult.cs" />
     <Compile Include="Assets\Script\UI\ShortTextWindow.cs" />
+    <Compile Include="Assets\Script\UI\SkillUI.cs" />
     <Compile Include="Assets\Script\UI\TextWindow.cs" />
     <Compile Include="Assets\Script\UI\TitleUI.cs" />
     <Compile Include="Assets\Script\UI\UIBase.cs" />
@@ -139,7 +141,7 @@
     <Compile Include="Assets\Script\Utils\MidairPrimitive.cs" />
     <Compile Include="Assets\Script\Utils\SEPlayer.cs" />
     <Compile Include="Assets\Script\Utils\Utils.cs" />
-    <Compile Include="Assets\Script\UI\SkillList.cs" />
+    <Compile Include="Assets\Script\UI\SkillListUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Graphics\builtin_shaders-4.5.5\CGIncludes\AutoLight.cginc" />
