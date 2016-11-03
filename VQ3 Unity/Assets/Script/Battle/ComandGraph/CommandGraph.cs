@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 public enum VoxButton
@@ -46,6 +47,7 @@ public class CommandGraph : MonoBehaviour
 	public GameObject NextRectEffect;
 
 	public CommandExplanation CommandExp;
+	public CommandListUI CommandList;
 
 	public Vector3 MaxScale = new Vector3(0.24f, 0.24f, 0.24f);
 	public float ScaleCoeff = 0.0f;
@@ -300,6 +302,25 @@ public class CommandGraph : MonoBehaviour
 					{
 						playerCommand.BGAnim = BGAnims.Find((BGAnimBase anim) => anim.name.StartsWith(propertyTexts[(int)CommandListProperty.BGAnim]));
 					}
+
+					playerCommand.themeColor = EThemeColor.White;
+					if( playerCommand.iconStr.Contains('A') )
+					{
+						playerCommand.themeColor = EThemeColor.Blue;
+					}
+					else if( playerCommand.iconStr.Contains('W') )
+					{
+						playerCommand.themeColor = EThemeColor.Green;
+					}
+					else if( playerCommand.iconStr.Contains('F') )
+					{
+						playerCommand.themeColor = EThemeColor.Red;
+					}
+					else if( playerCommand.iconStr.Contains('L') )
+					{
+						playerCommand.themeColor = EThemeColor.Yellow;
+					}
+
 
 					playerCommand.ValidatePosition();
 
@@ -681,6 +702,7 @@ public class CommandGraph : MonoBehaviour
 			//NextLight.SetTargetColor(Color.clear);
 			//Mask.SetTargetColor(Color.clear);
 			CurrentCommandName.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
+			CommandList.OnExecCommand();
 		}
 		else
 		{
@@ -787,6 +809,7 @@ public class CommandGraph : MonoBehaviour
 			NextCommand.Deselect();
 			NextCommand = null;
 			NextRect.transform.localScale = Vector3.zero;
+			CommandList.DeleteCommand();
 
 			//NextGauge.SetColor(ColorManager.Base.Front);
 			//NextLight.SetTargetColor(Color.clear);
@@ -796,6 +819,11 @@ public class CommandGraph : MonoBehaviour
 
 	public void Select(PlayerCommand command)
 	{
+		if( NextCommand != null )
+		{
+			CommandList.DeleteCommand();
+		}
+		CommandList.AddCommand(command);
 		NextCommand = command;
 		CommandExp.Set(NextCommand);
 		NextRect.transform.parent = NextCommand.transform;
@@ -827,6 +855,8 @@ public class CommandGraph : MonoBehaviour
 		if( command != IntroCommand ) SEPlayer.Play("select");
 
 		GameContext.PlayerConductor.OnSelectedCommand(command);
+
+
 
 		//if( GameContext.BattleState == BattleState.Intro && command != IntroCommand )
 		//{

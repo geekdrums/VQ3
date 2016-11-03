@@ -29,24 +29,6 @@ public class RevertCommand : PlayerCommand
     {
         ValidatePosition();
 
-        themeColor = EThemeColor.White;
-        if( iconStr.Contains( 'A' ) )
-        {
-            themeColor = EThemeColor.Blue;
-        }
-        else if( iconStr.Contains( 'W' ) )
-        {
-            themeColor = EThemeColor.Green;
-        }
-        else if( iconStr.Contains( 'F' ) )
-        {
-            themeColor = EThemeColor.Red;
-        }
-        else if( iconStr.Contains( 'L' ) )
-        {
-            themeColor = EThemeColor.Yellow;
-        }
-
         GrowEdge.SetColor( ColorManager.GetThemeColor( themeColor ).Bright );
     }
     void Update()
@@ -59,7 +41,7 @@ public class RevertCommand : PlayerCommand
 
 		if( GameContext.BattleState < BattleState.Intro ) return;
 
-		EyeArc.SetTargetArc((float)GameContext.LuxSystem.CurrentBP/GameContext.LuxSystem.OverflowBP);
+		EyeArc.SetTargetArc((float)GameContext.LuxSystem.CurrentVP/GameContext.LuxSystem.OverflowVP);
 
 		if( GameContext.LuxSystem.State != LuxState.Overload && GameContext.LuxSystem.IsOverFlow )
 		{

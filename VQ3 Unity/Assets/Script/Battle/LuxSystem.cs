@@ -26,15 +26,18 @@ public class LuxSystem : MonoBehaviour
 	public static readonly int MaxVT = 16 * 4 * 4;
 	public static readonly int WaveNum = 33;
 	public static readonly float WaveHeight = 2.0f;
-	public int CurrentBP { get; private set; }
+	public int CurrentVP { get; private set; }
 	public int CurrentTime { get; private set; }
+	public int LastMaxTime { get; private set; }
+	public float VPRate { get { return (float)CurrentVP / OverflowVP; } }
+	public float VTRate { get { return (LastMaxTime == 0 ? 0 : (float)CurrentTime / LastMaxTime); } }
 
 	public LuxState State { get; private set; }
 	public LuxVersion Version { get; private set; }
 
-	public int OverflowBP { get; private set; }
-	public bool IsOverFlow { get { return CurrentBP >= OverflowBP; } }
-	public bool GetWillEclipse(int addBP) { return CurrentBP + addBP >= OverflowBP; }
+	public int OverflowVP { get; private set; }
+	public bool IsOverFlow { get { return CurrentVP >= OverflowVP; } }
+	public bool GetWillEclipse(int addBP) { return CurrentVP + addBP >= OverflowVP; }
 	public bool IsInverting { get { return GameContext.BattleState == BattleState.Eclipse && IsOverFlow && Music.Just.Bar >= 2; } }
 	public int BreakTime { get; private set; }
 
@@ -62,6 +65,7 @@ public class LuxSystem : MonoBehaviour
 	public float LightRemainTime = 1.0f;
 	public Material BGMaterial;
 	public CutInUI CutInUI;
+	public DamageGauge DamageGauge;
 
 	//animation preferences
 	public Color BGColor;
@@ -152,7 +156,7 @@ public class LuxSystem : MonoBehaviour
 
 		transform.localPosition = sunsetPosition;
 		Sun.transform.localScale = Vector3.zero;
-		Ring.transform.localScale = Vector3.zero;
+		//Ring.transform.localScale = Vector3.zero;
 		for( int i = 0; i < SunLights.Length; i++ )
 		{
 			SunLights[i].transform.rotation = Quaternion.identity;
@@ -190,7 +194,7 @@ public class LuxSystem : MonoBehaviour
 		LightWaveMaterial.color = initialLightWaveColor;
 
 		Version = LuxVersion.None;
-		OverflowBP = 1;
+		OverflowVP = 1;
 	}
 
 	// Update is called once per frame
@@ -269,13 +273,14 @@ public class LuxSystem : MonoBehaviour
 				TimeCount.Count = CurrentTime / 64.0f;
 				if( CurrentTime <= 0 )
 				{
-					if( CurrentBP >= 20 )
+					if( CurrentVP >= 20 )
 					{
 						SEPlayer.Play("vtEmpty");
 						CutInUI.SetShieldRecover();
 					}
-					CurrentBP = 0;
-					BreakCount.Count = CurrentBP;
+					LastMaxTime = 0;
+					CurrentVP = 0;
+					BreakCount.Count = CurrentVP;
 					Music.SetAisac("TrackVolumeOver", 0);
 					WaveLineMaterial.color = ColorManager.Base.Front;
 					SetState(LuxState.Sun);
@@ -290,17 +295,17 @@ public class LuxSystem : MonoBehaviour
 
 	void UpdateWaves()
 	{
-		float vtRate = (Version >= LuxVersion.AutoShield ? (float)CurrentTime / MaxVT : 0.3f + 0.3f * ((float)CurrentBP / OverflowBP));
+		float vtRate = (Version >= LuxVersion.AutoShield ? (float)CurrentTime / MaxVT : 0.3f + 0.3f * ((float)CurrentVP / OverflowVP));
 		float maxWaveScale = Mathf.Min(1.0f, (vtRate <= 0.5f ? 0.6f * (float)vtRate / 0.5f :  0.6f + 0.4f * (vtRate - 0.5f) / 0.5f) + waveRemainCoeff_ * 0.5f);
 		float targetWaveScale = maxWaveScale;
 		float linearFactor = Mathf.Lerp(WaveLinearFactor, 0.99f, vtRate);
 		float targetRemainScale = waveRemainCoeff_;
-		float remainLinearFactor = (0.9f - 0.9f * (float)CurrentBP/OverflowBP);
+		float remainLinearFactor = (0.9f - 0.9f * (float)CurrentVP/OverflowVP);
 		waveRemainCoeff_ *= 0.97f;
 		for( int i = 0; i<WaveNum; ++i )
 		{
 			float waveScale = 0;
-			if( i < ((float)CurrentBP / OverflowBP) * WaveNum )
+			if( i < ((float)CurrentVP / OverflowVP) * WaveNum )
 			{
 				waveScale = Mathf.Clamp(targetWaveScale + waveDelta_[WaveNum - 1 - i], 0.0f, 1.0f);
 				targetWaveScale *= linearFactor;
@@ -313,7 +318,7 @@ public class LuxSystem : MonoBehaviour
 			vtWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(vtWaves_[i].transform.localScale.y, waveScale, 0.2f), 1);
 		}
 		TimeGauge.SetRate(maxWaveScale, 0.1f);
-		BreakGauge.SetRate((float)CurrentBP / OverflowBP, 0.1f);
+		BreakGauge.SetRate((float)CurrentVP / OverflowVP, 0.1f);
 		if( lightHoleRemainTime_ > 0 )
 		{
 			for( int i = 0; i<WaveNum; ++i )
@@ -339,7 +344,7 @@ public class LuxSystem : MonoBehaviour
 			float rms = analyzer_.GetRms(0) * RMSCoeff * vtRate + sin * SinCoeff;
 			waveDelta_.Add(rms);
 		}
-		if( ( Version < LuxVersion.AutoShield && CurrentBP > 0 ) || CurrentTime >= 16 )
+		if( ( Version < LuxVersion.AutoShield && CurrentVP > 0 ) || CurrentTime >= 16 )
 		{
 			LightWaveMaterial.color = Color.Lerp(LightWaveMaterial.color, initialLightWaveColor, 0.05f);
 			LightEdgeMaterial.color = Color.Lerp(LightEdgeMaterial.color, ColorManager.MakeAlpha(Color.white, 0), 0.05f);
@@ -393,7 +398,7 @@ public class LuxSystem : MonoBehaviour
 		}
 		else
 		{
-			Ring.transform.localScale = Vector3.Lerp(Ring.transform.localScale, Vector3.zero, 0.05f);
+			Ring.transform.localScale = Vector3.Lerp(Ring.transform.localScale, Vector3.one, 0.05f);
 			CommandCircle.transform.localScale = Vector3.Lerp(CommandCircle.transform.localScale, Vector3.one, 0.05f);
 		}
 
@@ -531,12 +536,13 @@ public class LuxSystem : MonoBehaviour
 		WaveLineMaterial.color = ColorManager.Base.Front;
 		analyzer_.AttachExPlayer(Music.CurrentSource.Player);//再生開始前じゃないと失敗するらしい
 
-		OverflowBP = encounter.BreakPoint;
+		OverflowVP = encounter.BreakPoint;
 		Version = encounter.Version;
 		TimeGauge.SetRate(0);
 		TimeGauge.transform.parent.gameObject.SetActive(Version >= LuxVersion.AutoShield);
 		TimeCount.transform.parent.gameObject.SetActive(Version >= LuxVersion.AutoShield);
 		BreakGauge.SetRate(0);
+		DamageGauge.OnBattleStarted();
 
 		MainLight.SetActive(Version >= LuxVersion.Shield);
 		foreach( GameObject light in SunLights )
@@ -587,7 +593,7 @@ public class LuxSystem : MonoBehaviour
 
 				Ring.SetWidth(initialRingWidth);
 				Ring.SetTargetSize(initialRingRadius);
-				Ring.transform.localScale = Vector3.zero;
+				//Ring.transform.localScale = Vector3.zero;
 				BreakAccentGauge.SetColor(Color.clear);
 				
 				Music.SetAisac("TrackVolumeOver", 0);
@@ -630,19 +636,20 @@ public class LuxSystem : MonoBehaviour
 	public void AddBP(int BP, int Time)
 	{
 		bool oldIsOverFlow = IsOverFlow;
-		CurrentBP = Mathf.Clamp(CurrentBP + BP, 0, OverflowBP);
+		CurrentVP = Mathf.Clamp(CurrentVP + BP, 0, OverflowVP);
 		if( Version >= LuxVersion.AutoShield )
 		{
 			CurrentTime = Mathf.Clamp(CurrentTime + Time, 0, MaxVT);
+			LastMaxTime = CurrentTime;
 			if( CurrentTime <= 0 )
 			{
-				CurrentBP = 0;
+				CurrentVP = 0;
 			}
 		}
-		BreakCount.Count = 100.0f * ((float)CurrentBP / OverflowBP);
+		BreakCount.Count = 100.0f * ((float)CurrentVP / OverflowVP);
 		TimeCount.Count = CurrentTime / 64.0f;
-		waveRemainCoeff_ = (Version >= LuxVersion.AutoShield ? (float)CurrentTime / MaxVT : 0.1f + 0.3f * ((float)CurrentBP / OverflowBP));
-		if( CurrentBP > 0 )
+		waveRemainCoeff_ = (Version >= LuxVersion.AutoShield ? (float)CurrentTime / MaxVT : 0.1f + 0.3f * ((float)CurrentVP / OverflowVP));
+		if( CurrentVP > 0 )
 		{
 			lightHoleRemainTime_ = LightRemainTime;
 			if( IsOverFlow == false )
@@ -663,7 +670,7 @@ public class LuxSystem : MonoBehaviour
 
 	public void ResetBreak()
 	{
-		CurrentBP = 0;
+		CurrentVP = 0;
 		CurrentTime = 0;
 		BreakCount.Count = 0;
 		TimeCount.Count = 0;
@@ -691,8 +698,8 @@ public class LuxSystem : MonoBehaviour
 	{
 		if( init )
 		{
-			CurrentBP = 0;
-			OverflowBP = 100;
+			CurrentVP = 0;
+			OverflowVP = 100;
 			BreakAccentGauge.SetColor(Color.clear);
 			TimeCount.transform.parent.gameObject.SetActive(false);
 			TimeGauge.transform.parent.gameObject.SetActive(false);

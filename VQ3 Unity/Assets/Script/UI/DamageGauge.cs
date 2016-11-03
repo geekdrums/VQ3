@@ -8,16 +8,21 @@ public class DamageGauge : MonoBehaviour
 	{
 		Damage,
 		Break,
-		Time
+		DamageAndTime,
 	}
 
 	public GaugeRenderer HPGauge;
 	public GaugeRenderer RedGauge;
 	public DamageText DamageText;
 	public GaugeRenderer BaseGauge;
+	public GaugeRenderer TimeGauge2;
 
 	public GaugeRenderer BreakGauge;
+	public GaugeRenderer BreakBaseGauge;
 	public GaugeRenderer TimeGauge;
+	public CounterSprite VPCount;
+	public CounterSprite MaxVPCount;
+	public CounterSprite VTCount;
 
 	int damage_;
 	ActionResult actionResult_;
@@ -27,9 +32,9 @@ public class DamageGauge : MonoBehaviour
 
 	public static Mode GetDesiredMode()
 	{
-		if( GameContext.LuxSystem.Version >= LuxVersion.AutoShield && GameContext.LuxSystem.CurrentTime <= 16 * 4 && GameContext.LuxSystem.BreakCount.Count <= 70 )
+		if( GameContext.LuxSystem.Version >= LuxVersion.AutoShield && GameContext.LuxSystem.IsOverFlow )
 		{
-			return Mode.Time;
+			return Mode.DamageAndTime;
 		}
 		else if( GameContext.LuxSystem.Version >= LuxVersion.Shield && GameContext.LuxSystem.IsOverFlow == false )
 		{
@@ -44,8 +49,8 @@ public class DamageGauge : MonoBehaviour
 	void ModeInit()
 	{
 		HPGauge.transform.parent.gameObject.SetActive(mode_ == Mode.Damage);
-		BreakGauge.transform.parent.gameObject.SetActive(mode_ == Mode.Break || mode_ == Mode.Time);
-		TimeGauge.transform.parent.gameObject.SetActive(mode_ == Mode.Time || (mode_ == Mode.Break && GameContext.LuxSystem.Version >= LuxVersion.AutoShield));
+		BreakGauge.transform.parent.gameObject.SetActive(mode_ == Mode.Break || mode_ == Mode.DamageAndTime);
+		TimeGauge.transform.parent.gameObject.SetActive(mode_ == Mode.DamageAndTime || (mode_ == Mode.Break && GameContext.LuxSystem.Version >= LuxVersion.AutoShield));
 		switch( mode_ )
 		{
 		case Mode.Damage:
@@ -72,7 +77,7 @@ public class DamageGauge : MonoBehaviour
 				TimeGauge.SetRate(GameContext.LuxSystem.TimeGauge.Rate);
 			}
 			break;
-		case Mode.Time:
+		case Mode.DamageAndTime:
 			{
 				DamageText.Count = GameContext.LuxSystem.TimeCount.Count;
 				DamageText.SignificantDigits = 2;
@@ -91,6 +96,7 @@ public class DamageGauge : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		mode_ = GetDesiredMode();
 		ModeInit();
 		BaseGauge.SetColor(ColorManager.Base.Light);
 		HPGauge.SetColor(ColorManager.Base.Back);
@@ -99,11 +105,11 @@ public class DamageGauge : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		time_ += Time.deltaTime;
-		if( time_ >= 2.0f || Music.IsJustChangedAt(0) )
-		{
-			Destroy(transform.parent != null ? transform.parent.gameObject : gameObject);
-		}
+		//time_ += Time.deltaTime;
+		//if( time_ >= 2.0f || Music.IsJustChangedAt(0) )
+		//{
+		//	Destroy(transform.parent != null ? transform.parent.gameObject : gameObject);
+		//}
 
 		Mode newMode = GetDesiredMode();
 		if( mode_ != newMode )
@@ -121,15 +127,27 @@ public class DamageGauge : MonoBehaviour
 			break;
 		case Mode.Break:
 			{
-				BreakGauge.SetRate(GameContext.LuxSystem.BreakGauge.Rate);
-				TimeGauge.SetRate(GameContext.LuxSystem.TimeGauge.Rate);
-				DamageText.Count = GameContext.LuxSystem.BreakCount.Count;
+				float BreakRate = GameContext.LuxSystem.VPRate;
+				BreakGauge.SetRate(1.0f - BreakRate);
+				TimeGauge.SetRate(BreakRate * GameContext.LuxSystem.VTRate);
+				VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
+				VTCount.Count = GameContext.LuxSystem.CurrentTime / 64.0f;
+				BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManager.Accent.Time, 0.2f));
+				EThemeColor timeTheme;
+				switch((int)(GameContext.LuxSystem.LastMaxTime / 64.0f))
+				{
+				case 0: timeTheme = EThemeColor.Red; break;
+				case 1: timeTheme = EThemeColor.Yellow; break;
+				case 2: timeTheme = EThemeColor.Green; break;
+				default: timeTheme = EThemeColor.Blue; break;
+				}
+				TimeGauge.SetColor(ColorManager.GetThemeColor(timeTheme).Bright);
+				VTCount.CounterColor = BreakRate <= 0.0f ? Color.white : ColorManager.GetThemeColor(timeTheme).Bright;
 			}
 			break;
-		case Mode.Time:
+		case Mode.DamageAndTime:
 			{
-				BreakGauge.SetRate(GameContext.LuxSystem.BreakGauge.Rate);
-				TimeGauge.SetRate(GameContext.LuxSystem.TimeGauge.Rate);
+				TimeGauge2.SetRate(GameContext.LuxSystem.VPRate * GameContext.LuxSystem.VTRate);
 				DamageText.Count = GameContext.LuxSystem.TimeCount.Count;
 			}
 			break;
@@ -183,5 +201,10 @@ public class DamageGauge : MonoBehaviour
 		{
 			transform.position = enemy.transform.position + Vector3.down * 6;
 		}
+	}
+
+	public void OnBattleStarted()
+	{
+		MaxVPCount.Count = GameContext.LuxSystem.OverflowVP;
 	}
 }

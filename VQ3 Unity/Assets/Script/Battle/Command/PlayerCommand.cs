@@ -69,10 +69,10 @@ public class PlayerCommand : MonoBehaviour
     public List<Sprite> EnhIcons;
 
 
-    //
-    // graphics properties
 	//
-	public EThemeColor themeColor { get; protected set; }
+	// graphics properties
+	//
+	public EThemeColor themeColor;
 	public List<CommandEdge> linkLines = new List<CommandEdge>();
     private GameObject DefPlane { get { return plane1; } }
     private GameObject HealPlane { get { return plane2; } }
@@ -165,24 +165,6 @@ public class PlayerCommand : MonoBehaviour
 
     public virtual void ValidateIcons()
     {
-        themeColor = EThemeColor.White;
-        if( iconStr.Contains( 'A' ) )
-        {
-            themeColor = EThemeColor.Blue;
-        }
-        else if( iconStr.Contains( 'W' ) )
-        {
-            themeColor = EThemeColor.Green;
-        }
-        else if( iconStr.Contains( 'F' ) )
-        {
-            themeColor = EThemeColor.Red;
-        }
-        else if( iconStr.Contains( 'L' ) )
-        {
-            themeColor = EThemeColor.Yellow;
-        }
-
 		this.GetComponent<MidairPrimitive>().SetColor(ColorManager.GetThemeColor(themeColor).Bright);
 
         if( iconStr.Contains( 'D' ) )

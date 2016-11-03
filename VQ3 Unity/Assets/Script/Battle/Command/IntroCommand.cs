@@ -16,7 +16,6 @@ public class IntroCommand : PlayerCommand
     {
         ValidatePosition();
         ValidateColor();
-		themeColor = EThemeColor.White;
     }
 
     void Update()
