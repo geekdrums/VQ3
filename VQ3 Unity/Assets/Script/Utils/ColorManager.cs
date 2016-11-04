@@ -141,7 +141,7 @@ public class ColorManager : MonoBehaviour
         public float h, s, v;
     }
 
-    void Start()
+    void Awake()
     {
         instance_ = this;
         Base = this.BaseBlack;

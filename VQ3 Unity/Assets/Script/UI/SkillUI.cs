@@ -51,7 +51,7 @@ public class SkillUI : MonoBehaviour {
 	TextMesh text_;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		line_ = GetComponentInChildren<GaugeRenderer>();
 		text_ = GetComponentInChildren<TextMesh>();
 	}

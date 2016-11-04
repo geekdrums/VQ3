@@ -51,6 +51,7 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 	public CommandParam DFParam;
 	public CommandParam VTParam;
 	public CommandParam VPParam;
+	public SkillListUI SkillListUI;
 
 	public enum Phase
 	{
@@ -64,11 +65,9 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 
 	PlayerCommandData commandData_;
 	Color currentColor_ = Color.clear;
-	SkillListUI skillListUI_;
 
 	// Use this for initialization
 	void Start () {
-		skillListUI_ = GetComponentInChildren<SkillListUI>();
 	}
 	
 	// Update is called once per frame
@@ -120,7 +119,7 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 			{
 				Explanation.text = commandData_.ExplanationText.Split(new string[]{"<br/>"}, System.StringSplitOptions.RemoveEmptyEntries)[0];
 			}
-			skillListUI_.Set(commandData_);
+			SkillListUI.Set(commandData_);
 		}
 		else
 		{
