@@ -25,7 +25,7 @@ public class EnhanceIcons : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        for( EnhanceParamType type = EnhanceParamType.Brave; (int)type <= (int)EnhanceParamType.Regene; type++ )
+        for( EnhanceParamType type = EnhanceParamType.Time; (int)type <= (int)EnhanceParamType.Heal; type++ )
         {
             EnhanceParameter enhance = Player.GetActiveEnhance( type );
             if( enhance != null )
@@ -53,10 +53,10 @@ public class EnhanceIcons : MonoBehaviour {
             char iconChar = ' ';
             switch( enhance.type )
             {
-            case EnhanceParamType.Brave: iconChar = 'P'; break;
-            case EnhanceParamType.Faith: iconChar = 'M'; break;
-            case EnhanceParamType.Shield: iconChar = 'S'; break;
-            case EnhanceParamType.Regene: iconChar = 'R'; break;
+            case EnhanceParamType.Time: iconChar = 'P'; break;
+            case EnhanceParamType.Break: iconChar = 'M'; break;
+            case EnhanceParamType.Defend: iconChar = 'S'; break;
+            case EnhanceParamType.Heal: iconChar = 'R'; break;
             }
             string iconName = new string( iconChar, Mathf.Abs( enhance.phase ) );
             if( enhance.phase < 0 ) iconName = iconName.Insert( 0, "-" );

@@ -4,13 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public enum EEnhIcon
-{
-    Power,
-    Magic,
-    Shield,
-    Regene
-}
+
 public enum CommandState
 {
 	Current,
@@ -66,7 +60,6 @@ public class PlayerCommand : MonoBehaviour
     public GameObject centerPlane;
     public GameObject centerIcon;
     public GameObject maskPlane;
-    public List<Sprite> EnhIcons;
 
 
 	//
@@ -198,19 +191,19 @@ public class PlayerCommand : MonoBehaviour
             EnhPlane.SetActive( true );
             if( iconStr.Contains( 'P' ) )
             {
-                EnhIcon.GetComponent<SpriteRenderer>().sprite = EnhIcons[(int)EEnhIcon.Power];
+                EnhIcon.GetComponent<SpriteRenderer>().sprite = GameContext.PlayerConductor.EnhIcons[(int)EnhanceParamType.Time];
             }
             else if( iconStr.Contains( 'M' ) )
             {
-                EnhIcon.GetComponent<SpriteRenderer>().sprite = EnhIcons[(int)EEnhIcon.Magic];
+                EnhIcon.GetComponent<SpriteRenderer>().sprite = GameContext.PlayerConductor.EnhIcons[(int)EnhanceParamType.Break];
             }
             else if( iconStr.Contains( 'S' ) )
             {
-                EnhIcon.GetComponent<SpriteRenderer>().sprite = EnhIcons[(int)EEnhIcon.Shield];
+                EnhIcon.GetComponent<SpriteRenderer>().sprite = GameContext.PlayerConductor.EnhIcons[(int)EnhanceParamType.Defend];
             }
             else if( iconStr.Contains( 'R' ) )
             {
-                EnhIcon.GetComponent<SpriteRenderer>().sprite = EnhIcons[(int)EEnhIcon.Regene];
+                EnhIcon.GetComponent<SpriteRenderer>().sprite = GameContext.PlayerConductor.EnhIcons[(int)EnhanceParamType.Heal];
             }
             if( themeColor != EThemeColor.White )
             {

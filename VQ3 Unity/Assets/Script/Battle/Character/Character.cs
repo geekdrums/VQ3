@@ -4,13 +4,15 @@ using System.Collections.Generic;
 
 public enum EnhanceParamType
 {
-    Brave,
-    Faith,
-    Shield,
-    Regene,
-    Esna,
+    Time,
+    Break,
+    Heal,
+	Defend,
+	Esna,
     Despell,
+	Count
 }
+
 public class EnhanceParameter
 {
     readonly int[] goodPhaseParams;
@@ -54,6 +56,7 @@ public class EnhanceParameter
         remainTurn = 0;
     }
 }
+
 public class Character : MonoBehaviour
 {
 	protected static readonly int LEAST_DAMAGE_RANGE = 3;
@@ -77,10 +80,10 @@ public class Character : MonoBehaviour
 	public float MagicAttack { get { return BaseMagic * (100 + MagicAttackEnhance.currentParam) / 100.0f; } }
 	public EnhanceParameter GetActiveEnhance(EnhanceParamType type) { return ActiveEnhanceParams.Find((EnhanceParameter enhance) => enhance.type == type); }
 
-	protected EnhanceParameter PhysicAttackEnhance = new EnhanceParameter(EnhanceParamType.Brave, -50, -30, 30, 50);
-	protected EnhanceParameter MagicAttackEnhance = new EnhanceParameter(EnhanceParamType.Faith, -50, -30, 30, 50);
-	protected EnhanceParameter DefendEnhance = new EnhanceParameter(EnhanceParamType.Shield, -45, -30, 30, 45);
-	protected EnhanceParameter HitPointEnhance = new EnhanceParameter(EnhanceParamType.Regene, -10, -5, 5, 10);
+	protected EnhanceParameter PhysicAttackEnhance = new EnhanceParameter(EnhanceParamType.Time, -50, -30, 30, 50);
+	protected EnhanceParameter MagicAttackEnhance = new EnhanceParameter(EnhanceParamType.Break, -50, -30, 30, 50);
+	protected EnhanceParameter DefendEnhance = new EnhanceParameter(EnhanceParamType.Defend, -45, -30, 30, 45);
+	protected EnhanceParameter HitPointEnhance = new EnhanceParameter(EnhanceParamType.Heal, -10, -5, 5, 10);
 	protected List<EnhanceParameter> ActiveEnhanceParams = new List<EnhanceParameter>();
 
 	protected float damageTime;
@@ -165,10 +168,10 @@ public class Character : MonoBehaviour
 		int dPhase = enhance.phase;
 		switch( enhance.type )
 		{
-		case EnhanceParamType.Brave: TargetParameter = PhysicAttackEnhance; break;
-		case EnhanceParamType.Faith: TargetParameter = MagicAttackEnhance; break;
-		case EnhanceParamType.Shield: TargetParameter = DefendEnhance; break;
-		case EnhanceParamType.Regene: TargetParameter = HitPointEnhance; break;
+		case EnhanceParamType.Time: TargetParameter = PhysicAttackEnhance; break;
+		case EnhanceParamType.Break: TargetParameter = MagicAttackEnhance; break;
+		case EnhanceParamType.Defend: TargetParameter = DefendEnhance; break;
+		case EnhanceParamType.Heal: TargetParameter = HitPointEnhance; break;
 		case EnhanceParamType.Esna:
 			foreach( EnhanceParameter activeEnhance in ActiveEnhanceParams )
 			{

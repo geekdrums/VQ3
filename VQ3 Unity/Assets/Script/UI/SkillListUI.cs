@@ -7,6 +7,7 @@ public class SkillListUI : MonoBehaviour {
 	GaugeRenderer baseLine_;
 	PlayerCommandData commandData_;
 	List<SkillUI> skillData_ = new List<SkillUI>();
+	List<EnhanceUI> enhanceData_ = new List<EnhanceUI>();
 
 
 
@@ -14,6 +15,7 @@ public class SkillListUI : MonoBehaviour {
 	void Start () {
 		baseLine_ = GetComponentInChildren<GaugeRenderer>();
 		skillData_.AddRange(GetComponentsInChildren<SkillUI>());
+		enhanceData_.AddRange(GetComponentsInChildren<EnhanceUI>());
 	}
 	
 	// Update is called once per frame
@@ -28,32 +30,26 @@ public class SkillListUI : MonoBehaviour {
 		{
 			skill.Reset();
 		}
+		foreach( EnhanceUI enhance in enhanceData_ )
+		{
+			enhance.Reset();
+		}
 
 		int number = 0;
+
+		if( commandData_.DefendPercent > 0 )
+		{
+			enhanceData_[number].Set(EnhanceParamType.Defend);
+			++number;
+		}
+		if( commandData_.HealPercent > 0 )
+		{
+			enhanceData_[number].Set(EnhanceParamType.Heal);
+			++number;
+		}
+
 		ThemeColor themeColor = ColorManager.GetThemeColor(commandData_.OwnerCommand.themeColor);
 		Color baseColor = themeColor.Bright;
-
-		if( commandData_.DefendPercent > 40 )
-		{
-			skillData_[number].Set("GAND", true, 2, baseColor, themeColor.Shade);
-			++number;
-		}
-		else if( commandData_.DefendPercent > 0 )
-		{
-			skillData_[number].Set("GAD", true, 1, baseColor, themeColor.Shade);
-			++number;
-		}
-		if( commandData_.HealPercent > 30 )
-		{
-			skillData_[number].Set("LIMM", true, 2, baseColor, themeColor.Light);
-			++number;
-		}
-		else if( commandData_.DefendPercent > 0 )
-		{
-			skillData_[number].Set("LIL", true, 1, baseColor, themeColor.Light);
-			++number;
-		}
-
 		foreach( KeyValuePair<int,Skill> pair in commandData_.SkillDictionary )
 		{
 			Skill skill = pair.Value;
@@ -62,7 +58,7 @@ public class SkillListUI : MonoBehaviour {
 
 			if( skill.length <= 0 ) continue;
 
-			skillData_[number].Set(skill.shortName, false, skill.length, baseColor, ColorManager.Base.Bright);
+			skillData_[number].Set(skill.shortName, skill.length, baseColor, ColorManager.Base.Bright);
 			++number;
 		}
 

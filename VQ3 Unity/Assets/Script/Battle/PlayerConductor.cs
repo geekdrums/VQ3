@@ -10,8 +10,9 @@ public class PlayerConductor : MonoBehaviour {
 	public MidairPrimitive WindowFrame;
 
 	public GameObject VPMeter;
+	public List<Sprite> EnhIcons;
 
-    public int Level = 1;
+	public int Level = 1;
 	public int TotalMemory;
 	public int RemainMemory;
 	public float PlayerDamageTimeCoeff = 1.0f;
