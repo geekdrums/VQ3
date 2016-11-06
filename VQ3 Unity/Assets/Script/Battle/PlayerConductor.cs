@@ -47,7 +47,7 @@ public class PlayerConductor : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Player = GameObject.Find( "Main Camera" ).GetComponent<Player>();
+		Player = GetComponentInChildren<Player>();
         SetLevelParams();
 		ValidateCommands();
 	}
@@ -255,7 +255,7 @@ public class PlayerConductor : MonoBehaviour {
 				int vpDamage = (int)(attack.VP * Player.VPCoeff);
 				if( vpDamage < 0 )
 				{
-					GameContext.LuxSystem.AddBP(vpDamage, 0);
+					GameContext.LuxSystem.AddVP(vpDamage, 0);
 					Player.VPDrained(attack, skill, -vpDamage);
 				}
 				isSucceeded = true;

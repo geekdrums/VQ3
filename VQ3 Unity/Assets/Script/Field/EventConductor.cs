@@ -222,7 +222,7 @@ public class EventConductor : MonoBehaviour
 			{
 				if( Music.IsJustChangedBeat() )
 				{
-					GameContext.LuxSystem.AddBP(20, 30);
+					GameContext.LuxSystem.AddVP(20, 30);
 				}
 			}
 			yield return null;

@@ -337,11 +337,11 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 
 	public void SetTargetSize(float newTargetSize)
 	{
-		AnimManager.AddAnim(gameObject, newTargetSize, ParamType.Radius, AnimType.Linear, linearFactor);
+		AnimManager.AddAnim(gameObject, newTargetSize, ParamType.PrimitiveRadius, AnimType.Linear, linearFactor);
 	}
 	public void SetTargetWidth(float newTargetWidth)
 	{
-		AnimManager.AddAnim(gameObject, newTargetWidth, ParamType.Width, AnimType.Linear, linearFactor);
+		AnimManager.AddAnim(gameObject, newTargetWidth, ParamType.PrimitiveWidth, AnimType.Linear, linearFactor);
 	}
 	public void SetTargetColor(Color newTargetColor)
 	{
@@ -349,7 +349,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	}
 	public void SetTargetArc(float newTargetArcRate)
 	{
-		AnimManager.AddAnim(gameObject, newTargetArcRate, ParamType.Arc, AnimType.Linear, linearFactor);
+		AnimManager.AddAnim(gameObject, newTargetArcRate, ParamType.PrimitiveArc, AnimType.Linear, linearFactor);
 	}
 
 	public void SetAnimationSize(float startSize, float endSize)

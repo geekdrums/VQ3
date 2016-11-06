@@ -95,7 +95,7 @@ public class Player : Character
 			lastDamageText = damageText.GetComponent<DamageText>();
 			GameObject textPos = skill.damageParent;// transform.FindChild("DamageTextPos");
 			if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().gameObject;
-			lastDamageText.Initialize(damage, (attack.type == AttackType.Attack ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage));
+			lastDamageText.InitializeDamage(damage, (attack.type == AttackType.Attack ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage));
 			lastDamageText.transform.position = textPos.transform.position + Vector3.back;
 		}
 	}
@@ -104,7 +104,7 @@ public class Player : Character
 		GameObject damageText = (Instantiate(damageTextPrefab) as GameObject);
 		Transform textPos = skill.transform.FindChild("DamageTextPos");
 		if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().transform;
-		damageText.GetComponent<DamageText>().Initialize(drainVP, ActionResult.VPDrain);
+		damageText.GetComponent<DamageText>().InitializeDamage(drainVP, ActionResult.VPDrain);
 		damageText.transform.position = textPos.position + Vector3.right * 5 + Vector3.down * 2;
 	}
 	protected override void BeDamaged(int damage, Skill skill)

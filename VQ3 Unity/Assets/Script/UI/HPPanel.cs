@@ -6,7 +6,6 @@ public class HPPanel : MonoBehaviour {
 
     public GaugeRenderer CurrentBar;
     public GaugeRenderer DamageBar;
-    public GaugeRenderer DefendBar;
     public CounterSprite CurrentHPCount;
     public CounterSprite MaxHPCount;
 
@@ -46,18 +45,7 @@ public class HPPanel : MonoBehaviour {
         turnStartHP_ = Player.HitPoint;
 		CurrentBar.SetRate(targetRate);
 		DamageBar.SetRate(targetRate);
-
-		float defend = (Player.DefendEnhParam + currentCommand_.currentData.GetDefend()) / 100.0f;
-        if( defend <= 0 )
-        {
-			DefendBar.SetRate(0.1f, 0.1f);
-			DefendBar.SetColor(ColorManager.Base.Front);
-        }
-        else
-        {
-			DefendBar.SetRate(Mathf.Clamp01(defend), 0.1f);
-			DefendBar.SetColor(ColorManager.Theme.Shade);
-        }
+		
 		if( currentCommand_.currentData.HealPercent > 0 )
         {
             //CurrentHPCount.CounterColor = ColorManager.Theme.Light;

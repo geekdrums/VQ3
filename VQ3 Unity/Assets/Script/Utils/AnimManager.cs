@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public interface IColoredObject
 {
-	void SetColor( Color color );
+	void SetColor(Color color);
 	Color GetColor();
 }
 
@@ -12,17 +12,25 @@ public enum ParamType
 {
 	//Transform
 	Scale,
+	ScaleX,
+	ScaleY,
+	ScaleZ,
 	RotationZ,
+	Position,
+	PositionX,
+	PositionY,
+	PositionZ,
 
 	//MidairPrimitive
-	Radius,
-	Width,
-	Arc,
+	PrimitiveRadius,
+	PrimitiveWidth,
+	PrimitiveArc,
 
 	//Gauge
 	GaugeRate,
 	GaugeWidth,
 
+	//IColoredObject
 	Color,
 }
 
@@ -41,6 +49,7 @@ public class AnimInfo
 	public AnimType Anim;
 	public object Target;
 	public float Factor;
+	public float Delay;
 
 	object initialValue_;
 	float normalizedValue_;
@@ -56,13 +65,14 @@ public class AnimInfo
 	private static float overshoot = 1.70158f;
 
 
-	public AnimInfo(GameObject obj, object target, ParamType paramType, AnimType animType, float factor = 0.1f)
+	public AnimInfo(GameObject obj, object target, ParamType paramType, AnimType animType, float factor = 0.1f, float delay = 0.0f)
 	{
 		Object = obj;
 		Param = paramType;
 		Anim = animType;
 		Target = target;
 		Factor = factor;
+		Delay = delay;
 
 		normalizedValue_ = 0;
 		animValue_ = 0;
@@ -70,21 +80,49 @@ public class AnimInfo
 		{
 		case ParamType.Scale:
 			transform_ = Object.transform;
+			initialValue_ = transform_.localScale;
+			break;
+		case ParamType.ScaleX:
+			transform_ = Object.transform;
 			initialValue_ = (float)transform_.localScale.x;
+			break;
+		case ParamType.ScaleY:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localScale.y;
+			break;
+		case ParamType.ScaleZ:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localScale.z;
+			break;
+		case ParamType.Position:
+			transform_ = Object.transform;
+			initialValue_ = transform_.localPosition;
+			break;
+		case ParamType.PositionX:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localPosition.x;
+			break;
+		case ParamType.PositionY:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localPosition.y;
+			break;
+		case ParamType.PositionZ:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localPosition.z;
 			break;
 		case ParamType.RotationZ:
 			transform_ = Object.transform;
-			initialValue_ = (float)(transform_.rotation.eulerAngles.z + 360)%360;
+			initialValue_ = (float)(transform_.rotation.eulerAngles.z + 360) % 360;
 			break;
-		case ParamType.Radius:
+		case ParamType.PrimitiveRadius:
 			primitive_ = Object.GetComponent<MidairPrimitive>();
 			initialValue_ = (float)primitive_.Radius;
 			break;
-		case ParamType.Width:
+		case ParamType.PrimitiveWidth:
 			primitive_ = Object.GetComponent<MidairPrimitive>();
 			initialValue_ = (float)primitive_.Width;
 			break;
-		case ParamType.Arc:
+		case ParamType.PrimitiveArc:
 			primitive_ = Object.GetComponent<MidairPrimitive>();
 			initialValue_ = (float)primitive_.ArcRate;
 			break;
@@ -110,10 +148,20 @@ public class AnimInfo
 		{
 			IsEnd = true;
 		}
+		else if( initialValue_ is Vector3 && Vector3.Equals(initialValue_, target) )
+		{
+			IsEnd = true;
+		}
 	}
 
 	public void Update()
 	{
+		if( Delay > 0 )
+		{
+			Delay -= Time.deltaTime;
+			return;
+		}
+
 		if( Object == null )
 		{
 			IsEnd = true;
@@ -155,18 +203,39 @@ public class AnimInfo
 		switch( Param )
 		{
 		case ParamType.Scale:
-			transform_.localScale = Vector3.one *  currentValue;
+			transform_.localScale = Vector3.Lerp((Vector3)initialValue_, (Vector3)Target, animValue_);
+			break;
+		case ParamType.ScaleX:
+			transform_.localScale = new Vector3(currentValue, transform_.localScale.y, transform_.localScale.z);
+			break;
+		case ParamType.ScaleY:
+			transform_.localScale = new Vector3(transform_.localScale.x, currentValue, transform_.localScale.z);
+			break;
+		case ParamType.ScaleZ:
+			transform_.localScale = new Vector3(transform_.localScale.x, transform_.localScale.y, currentValue);
+			break;
+		case ParamType.Position:
+			transform_.localPosition = Vector3.Lerp((Vector3)initialValue_, (Vector3)Target, animValue_);
+			break;
+		case ParamType.PositionX:
+			transform_.localPosition = new Vector3(currentValue, transform_.localPosition.y, transform_.localPosition.z);
+			break;
+		case ParamType.PositionY:
+			transform_.localPosition = new Vector3(transform_.localPosition.x, currentValue, transform_.localPosition.z);
+			break;
+		case ParamType.PositionZ:
+			transform_.localPosition = new Vector3(transform_.localPosition.x, transform_.localPosition.y, currentValue);
 			break;
 		case ParamType.RotationZ:
 			transform_.localRotation = Quaternion.AngleAxis(currentValue, Vector3.forward);
 			break;
-		case ParamType.Radius:
+		case ParamType.PrimitiveRadius:
 			primitive_.SetSize(currentValue);
 			break;
-		case ParamType.Width:
+		case ParamType.PrimitiveWidth:
 			primitive_.SetWidth(currentValue);
 			break;
-		case ParamType.Arc:
+		case ParamType.PrimitiveArc:
 			primitive_.SetArc(currentValue);
 			break;
 		case ParamType.GaugeRate:
@@ -182,7 +251,8 @@ public class AnimInfo
 	}
 }
 
-public class AnimManager : MonoBehaviour {
+public class AnimManager : MonoBehaviour
+{
 
 	static AnimManager instance
 	{
@@ -200,12 +270,14 @@ public class AnimManager : MonoBehaviour {
 	public List<AnimInfo> Animations = new List<AnimInfo>();
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start()
+	{
+
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
+	void Update()
+	{
 		foreach( AnimInfo anim in Animations )
 		{
 			anim.Update();
@@ -213,11 +285,11 @@ public class AnimManager : MonoBehaviour {
 		Animations.RemoveAll((AnimInfo anim) => anim.IsEnd);
 	}
 
-	public static void AddAnim(GameObject obj, object target, ParamType paramType, AnimType animType = AnimType.Linear, float factor = 0.1f)
+	public static void AddAnim(GameObject obj, object target, ParamType paramType, AnimType animType = AnimType.Linear, float factor = 0.1f, float delay = 0.0f)
 	{
 		if( instance.Animations.Find((AnimInfo anim) => anim.Object == obj && anim.Param == paramType && anim.Target == target) != null ) return;
 		instance.Animations.RemoveAll((AnimInfo anim) => anim.Object == obj && anim.Param == paramType);
-		instance.Animations.Add(new AnimInfo(obj, target, paramType, animType, factor));
+		instance.Animations.Add(new AnimInfo(obj, target, paramType, animType, factor, delay));
 	}
 
 	public static bool IsAnimating(GameObject obj)

@@ -10,7 +10,8 @@ public class EnemyConductor : MonoBehaviour
 	static readonly int[] CommandExecBars = new int[3] { 2, 3, 1 };
 
 	public EnemyCommandCircle CommandCircle;
-	public GameObject damageGaugePrefab;
+	public GameObject damageTextPrefab;
+	public DamageGauge DamageGauge;
 	public GameObject commandIconPrefab;
 	public List<Sprite> EnemyCommandIcons;
 	public GameObject shortTextWindowPrefab;
@@ -25,21 +26,24 @@ public class EnemyConductor : MonoBehaviour
 
 	public int EnemyCount { get { return Enemies.Count; } }
 	public Enemy targetEnemy { get; private set; }
+	protected DamageText lastDamageText_;
 
-	Color _baseColor;
+	Color baseColor_;
 	public Color baseColor
 	{
-		get { return _baseColor; }
+		get { return baseColor_; }
 		set
 		{
-			_baseColor = value;
+			baseColor_ = value;
 			foreach( Enemy e in Enemies )
 			{
 				e.OnBaseColorChanged(value);
 			}
 		}
 	}
-	public int baseHP { get { return GameContext.PlayerConductor.PlayerMaxHP; } }
+
+
+
 	void Awake()
 	{
 		GameContext.EnemyConductor = this;
@@ -135,7 +139,25 @@ public class EnemyConductor : MonoBehaviour
 		AttackModule attack = Action.GetModule<AttackModule>();
 		if( attack != null && skill.isPlayerSkill )
 		{
-			GameContext.LuxSystem.AddBP((int)(attack.VP*(skill.OwnerCharacter as Player).VPCoeff), (int)(attack.VT*(skill.OwnerCharacter as Player).VTCoeff));
+			int vp = (int)(attack.VP * (skill.OwnerCharacter as Player).VPCoeff);
+			int vt = (int)(attack.VT * (skill.OwnerCharacter as Player).VTCoeff);
+			GameContext.LuxSystem.AddVP(vp, vt);
+
+			if( DamageGauge.CurrentMode == DamageGauge.Mode.Break )
+			{
+				if( lastDamageText_ != null )
+				{
+					lastDamageText_.AddVP(vp, vt);
+				}
+				else
+				{
+					Vector3 position = skill.damageParent != null ? skill.damageParent.transform.position : GetTargetEnemies(attack, skill)[0].transform.position + Vector3.up * 5;
+					GameObject damageText = (Instantiate(damageTextPrefab, position, Quaternion.identity) as GameObject);
+					lastDamageText_ = damageText.GetComponent<DamageText>();
+					lastDamageText_.InitializeVP(vp, vt);
+				}
+			}
+
 			foreach( Enemy e in GetTargetEnemies(attack, skill) )
 			{
 				e.BeAttacked(attack, skill);
@@ -268,6 +290,8 @@ public class EnemyConductor : MonoBehaviour
 			enemy.SetExecBar(CommandExecBars[execIndex]);
 			++execIndex;
 		}
+		lastDamageText_ = null;
+		DamageGauge.TurnInit();
 	}
 	public void CheckWaitCommand()
 	{

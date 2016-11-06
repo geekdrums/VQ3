@@ -73,8 +73,8 @@ public class EnemyCommandPattern : MonoBehaviour {
 			else
 			{
 				primitive.SetTargetColor(GetTargetColor(i));
-				AnimManager.AddAnim(primitive.gameObject, GetTargetSize(i), ParamType.Radius, AnimType.Linear, 0.1f);
-				AnimManager.AddAnim(primitive.gameObject, GetTargetWidth(i), ParamType.Width, AnimType.Linear, 0.1f);
+				AnimManager.AddAnim(primitive.gameObject, GetTargetSize(i), ParamType.PrimitiveRadius, AnimType.Linear, 0.1f);
+				AnimManager.AddAnim(primitive.gameObject, GetTargetWidth(i), ParamType.PrimitiveWidth, AnimType.Linear, 0.1f);
 			}
 		}
 	}

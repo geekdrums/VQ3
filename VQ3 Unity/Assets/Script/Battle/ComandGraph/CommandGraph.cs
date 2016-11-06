@@ -395,6 +395,12 @@ public class CommandGraph : MonoBehaviour
 			//NextGauge.SetRate(1.0f);
 			break;
 		case BattleState.Intro:
+			if( NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == WaitInputEnd.MusicalTime) )
+			{
+				SetNextBlock();
+			}
+			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
+			break;
 		case BattleState.Battle:
 		case BattleState.Eclipse:
 			if( Music.IsJustChangedAt(AllowInputEnd) )

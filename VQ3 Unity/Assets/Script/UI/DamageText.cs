@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DamageText : CounterSprite
+public class DamageText : MonoBehaviour
 {
-	float time = 0;
+	public CounterSprite DamageCount;
+	public CounterSprite VPCount;
+	public CounterSprite VTCount;
+
+	float time_ = 0;
+	DamageGauge.Mode mode_;
 
 	// Use this for initialization
 	void Start()
 	{
 
 	}
-
 
 	// Update is called once per frame
 	void Update()
@@ -21,8 +25,12 @@ public class DamageText : CounterSprite
 			return;
 		}
 #endif
-		time += Time.deltaTime;
-		if( time >= 2.0f )
+		bool isEnd = false;
+		time_ += Time.deltaTime;
+		isEnd |= time_ >= 2.0f;
+		isEnd |= mode_ == DamageGauge.Mode.Break && GameContext.LuxSystem.IsOverFlow;
+		isEnd |= GameContext.LuxSystem.State != LuxState.Overload && Music.IsJustChangedAt(0);
+		if( isEnd )
 		{
 			Destroy(gameObject);
 		}
@@ -30,14 +38,84 @@ public class DamageText : CounterSprite
 
 	public void AddDamage(int damage)
 	{
-		Count += damage;
-		time = 0;
+		DamageCount.Count += damage;
+		time_ = 0;
 	}
 
-	public void Initialize(int damage, ActionResult actionResult)
+	public void AddVP(int VP, int Time)
 	{
+		VTCount.Count += Time / LuxSystem.TurnMusicalUnits;
+		VTCount.gameObject.SetActive(VTCount.Count > 0);
+		VPCount.Count += VP;
+		time_ = 0;
+		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalUnits);
+	}
+
+
+	void ModeInit(DamageGauge.Mode mode)
+	{
+		mode_ = mode;
+		DamageCount.gameObject.SetActive(mode_ == DamageGauge.Mode.Damage || mode_ == DamageGauge.Mode.DamageAndTime);
+		VPCount.gameObject.SetActive(mode_ == DamageGauge.Mode.Break);
+		VTCount.gameObject.SetActive(mode_ == DamageGauge.Mode.Break);
+	}
+
+	public void InitializeVP(int VP, int Time)
+	{
+		ModeInit(DamageGauge.Mode.Break);
+		VTCount.Count = Time / LuxSystem.TurnMusicalUnits;
+		VTCount.gameObject.SetActive(VTCount.Count > 0);
+		VPCount.Count = VP;
+
+		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalUnits);
+	}
+
+	void UpdateVPColors(int VP, float Time)
+	{
+		Color vpColor = Color.white;
+		if( VP >= 10 )
+		{
+			vpColor = ColorManager.Accent.Break;
+			VPCount.transform.localScale = Vector3.one * 1.2f;
+		}
+		else if( VP >= 4 )
+		{
+			vpColor = Color.Lerp(ColorManager.Accent.Break, ColorManager.Base.MiddleBack, 0.3f);
+			VPCount.transform.localScale = Vector3.one;
+		}
+		else
+		{
+			vpColor = ColorManager.Base.MiddleBack;
+			VPCount.transform.localScale = Vector3.one * 0.7f;
+		}
+		VPCount.CounterColor = vpColor;
+		VPCount.GetComponentInChildren<TextMesh>().color = vpColor;
+
+		Color timeColor = Color.white;
+		if( Time >= 0.5f )
+		{
+			timeColor = ColorManager.Accent.Time;
+			VTCount.transform.localScale = Vector3.one * 1.2f;
+		}
+		else if( Time >= 0.2f )
+		{
+			timeColor = Color.Lerp(ColorManager.Accent.Time, ColorManager.Base.MiddleBack, 0.3f);
+			VTCount.transform.localScale = Vector3.one;
+		}
+		else
+		{
+			timeColor = ColorManager.Base.MiddleBack;
+			VTCount.transform.localScale = Vector3.one * 0.7f;
+		}
+		VTCount.CounterColor = timeColor;
+		VTCount.GetComponentInChildren<TextMesh>().color = timeColor;
+	}
+
+	public void InitializeDamage(int damage, ActionResult actionResult)
+	{
+		ModeInit(DamageGauge.Mode.Damage);
 		Color color;
-		Count = Mathf.Abs(damage);
+		DamageCount.Count = Mathf.Abs(damage);
 		switch( actionResult )
 		{
 		case ActionResult.MagicDamage:
@@ -92,8 +170,8 @@ public class DamageText : CounterSprite
 			transform.localScale = Vector3.one;
 			break;
 		}
-		GetComponentInChildren<TextMesh>().color = color;
-		CounterColor = color;
+		DamageCount.GetComponentInChildren<TextMesh>().color = color;
+		DamageCount.CounterColor = color;
 	}
 
 }

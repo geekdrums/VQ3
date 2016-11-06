@@ -28,7 +28,7 @@ public class Enemy : Character
     public Vector3 targetLocalPosition { get; protected set; }
 
 	protected ActionResult lastDamageResult;
-	protected DamageGauge lastDamageGauge;
+	protected DamageText lastDamageText;
     protected SpriteRenderer spriteRenderer;
     protected List<EnemyCommandIcon> commandIcons;
 	protected ShortTextWindow shortText;
@@ -107,15 +107,28 @@ public class Enemy : Character
 	protected void CreateDamageText(int damage, ActionResult actResult, GameObject parent = null)
 	{
 		if( ( GameContext.LuxSystem.Version < LuxVersion.Shield || GameContext.LuxState == LuxState.Overflow ) && damage == 0 ) return;
-		if( lastDamageGauge != null )
+
+		if( GameContext.LuxSystem.IsOverFlow )
 		{
-			lastDamageGauge.AddDamage(damage, actResult);
-		}
-		else if( DamageGauge.GetDesiredMode() == DamageGauge.Mode.Damage || FindObjectOfType<DamageGauge>() == null )
-		{
-			GameObject damageGauge = (Instantiate(GameContext.EnemyConductor.damageGaugePrefab) as GameObject);
-			lastDamageGauge = damageGauge.GetComponent<DamageGauge>();
-			lastDamageGauge.Initialize(this, damage, actResult, parent);
+			if( GameContext.EnemyConductor.DamageGauge.Enemy == this )
+			{
+				GameContext.EnemyConductor.DamageGauge.AddDamage(damage, actResult);
+			}
+			else
+			{
+				GameContext.EnemyConductor.DamageGauge.Initialize(this, damage, actResult, parent != null ? parent.transform.position : transform.position + Vector3.down * 3);
+			}
+
+			if( lastDamageText != null )
+			{
+				lastDamageText.AddDamage(damage);
+			}
+			else
+			{
+				GameObject damageText = (Instantiate(GameContext.EnemyConductor.damageTextPrefab, parent != null ? parent.transform.position : transform.position + Vector3.down * 5, Quaternion.identity) as GameObject);
+				lastDamageText = damageText.GetComponent<DamageText>();
+				lastDamageText.InitializeDamage(damage, actResult);
+			}
 		}
 	}
 
@@ -138,7 +151,7 @@ public class Enemy : Character
 
 		if( GameContext.LuxSystem.State != LuxState.Overload )
 		{
-			lastDamageGauge = null;
+			lastDamageText = null;
 		}
 	}
     public virtual void InvertInit()

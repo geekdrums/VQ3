@@ -26,6 +26,7 @@ public class LuxSystem : MonoBehaviour
 	public static readonly int MaxVT = 16 * 4 * 4;
 	public static readonly int WaveNum = 33;
 	public static readonly float WaveHeight = 2.0f;
+	public static readonly float TurnMusicalUnits = 64.0f;
 	public int CurrentVP { get; private set; }
 	public int CurrentTime { get; private set; }
 	public int LastMaxTime { get; private set; }
@@ -270,7 +271,7 @@ public class LuxSystem : MonoBehaviour
 			if( (State == LuxState.Sun || State == LuxState.Overflow) && IsInverting == false )
 			{
 				--CurrentTime;
-				TimeCount.Count = CurrentTime / 64.0f;
+				TimeCount.Count = CurrentTime / TurnMusicalUnits;
 				if( CurrentTime <= 0 )
 				{
 					if( CurrentVP >= 20 )
@@ -288,7 +289,7 @@ public class LuxSystem : MonoBehaviour
 			}
 			else if( State == LuxState.Overload )
 			{
-				TimeCount.Count = (float)(BreakTime - Music.MusicalTime/64.0f);
+				TimeCount.Count = (float)(BreakTime - Music.MusicalTime/ TurnMusicalUnits);
 			}
 		}
 	}
@@ -432,7 +433,7 @@ public class LuxSystem : MonoBehaviour
 			if( IsOverFlow )
 			{
 				TextWindow.SetMessage(MessageCategory.Invert, "オーバーロード完了。");
-				BreakTime = Mathf.Clamp((int)(CurrentTime / 64.0f), 2, MaxInvertTime);
+				BreakTime = Mathf.Clamp((int)(CurrentTime / TurnMusicalUnits), 2, MaxInvertTime);
 				Music.SetAisac("Danger", 0);
 			}
 			else
@@ -633,10 +634,10 @@ public class LuxSystem : MonoBehaviour
 		}
 	}
 
-	public void AddBP(int BP, int Time)
+	public void AddVP(int VP, int Time)
 	{
 		bool oldIsOverFlow = IsOverFlow;
-		CurrentVP = Mathf.Clamp(CurrentVP + BP, 0, OverflowVP);
+		CurrentVP = Mathf.Clamp(CurrentVP + VP, 0, OverflowVP);
 		if( Version >= LuxVersion.AutoShield )
 		{
 			CurrentTime = Mathf.Clamp(CurrentTime + Time, 0, MaxVT);
@@ -647,7 +648,7 @@ public class LuxSystem : MonoBehaviour
 			}
 		}
 		BreakCount.Count = 100.0f * ((float)CurrentVP / OverflowVP);
-		TimeCount.Count = CurrentTime / 64.0f;
+		TimeCount.Count = CurrentTime / TurnMusicalUnits;
 		waveRemainCoeff_ = (Version >= LuxVersion.AutoShield ? (float)CurrentTime / MaxVT : 0.1f + 0.3f * ((float)CurrentVP / OverflowVP));
 		if( CurrentVP > 0 )
 		{
