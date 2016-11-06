@@ -48,6 +48,7 @@ public class CommandGraph : MonoBehaviour
 
 	public CommandExplanation CommandExp;
 	public CommandListUI CommandList;
+	public SkillCutIn SkillCutIn;
 
 	public Vector3 MaxScale = new Vector3(0.24f, 0.24f, 0.24f);
 	public float ScaleCoeff = 0.0f;
@@ -608,6 +609,8 @@ public class CommandGraph : MonoBehaviour
 					}
 				}
 				));
+
+			SkillCutIn.Set(NextCommand, CommandExp.SkillListUI, CommandExp.CommandName.gameObject);
 		}
 
 	}

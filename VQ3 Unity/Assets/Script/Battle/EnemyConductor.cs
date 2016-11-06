@@ -95,8 +95,8 @@ public class EnemyConductor : MonoBehaviour
 		CommandCircle.BattleInit(battleSet);
 	}
 
-	Vector3 GetInitSpawnPosition(int index, int l) { return new Vector3(EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 3.0f, 5); }
-	Vector3 GetSpawnPosition(int index, int l) { return new Vector3((index == 0 ? 0 : (index == 1 ? EnemyInterval : -EnemyInterval)), 3.0f, 5); }
+	Vector3 GetInitSpawnPosition(int index, int l) { return new Vector3(EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 0, 0); }
+	Vector3 GetSpawnPosition(int index, int l) { return new Vector3((index == 0 ? 0 : (index == 1 ? EnemyInterval : -EnemyInterval)), 0, 0); }
 
 
 	void SpawnEnemy(GameObject enemyPrefab, Vector3 spawnPosition)
@@ -106,9 +106,8 @@ public class EnemyConductor : MonoBehaviour
 		Enemy enemy = TempObj.GetComponent<Enemy>();
 		Enemies.Add(enemy);
 		TextWindow.SetMessage(MessageCategory.EnemyEmerge, enemy.DisplayName + " を発見。");
-		enemy.transform.localPosition = spawnPosition;
-		enemy.transform.localScale *= transform.lossyScale.x;
 		enemy.transform.parent = transform;
+		enemy.transform.localPosition = spawnPosition;
 		enemy.SetTargetPosition(enemy.transform.localPosition);
 		enemy.DisplayName += (char)((int)'A' + Enemies.FindAll((Enemy e) => e.DisplayName.StartsWith(enemy.DisplayName) && e.DisplayName.Length == enemy.DisplayName.Length + 1).Count);
 	}

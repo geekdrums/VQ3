@@ -27,6 +27,7 @@ public enum ParamType
 	PrimitiveArc,
 
 	//Gauge
+	GaugeLength,
 	GaugeRate,
 	GaugeWidth,
 
@@ -65,6 +66,7 @@ public class AnimInfo
 	private static float overshoot = 1.70158f;
 
 
+
 	public AnimInfo(GameObject obj, object target, ParamType paramType, AnimType animType, float factor = 0.1f, float delay = 0.0f)
 	{
 		Object = obj;
@@ -76,96 +78,32 @@ public class AnimInfo
 
 		normalizedValue_ = 0;
 		animValue_ = 0;
-		switch( Param )
-		{
-		case ParamType.Scale:
-			transform_ = Object.transform;
-			initialValue_ = transform_.localScale;
-			break;
-		case ParamType.ScaleX:
-			transform_ = Object.transform;
-			initialValue_ = (float)transform_.localScale.x;
-			break;
-		case ParamType.ScaleY:
-			transform_ = Object.transform;
-			initialValue_ = (float)transform_.localScale.y;
-			break;
-		case ParamType.ScaleZ:
-			transform_ = Object.transform;
-			initialValue_ = (float)transform_.localScale.z;
-			break;
-		case ParamType.Position:
-			transform_ = Object.transform;
-			initialValue_ = transform_.localPosition;
-			break;
-		case ParamType.PositionX:
-			transform_ = Object.transform;
-			initialValue_ = (float)transform_.localPosition.x;
-			break;
-		case ParamType.PositionY:
-			transform_ = Object.transform;
-			initialValue_ = (float)transform_.localPosition.y;
-			break;
-		case ParamType.PositionZ:
-			transform_ = Object.transform;
-			initialValue_ = (float)transform_.localPosition.z;
-			break;
-		case ParamType.RotationZ:
-			transform_ = Object.transform;
-			initialValue_ = (float)(transform_.rotation.eulerAngles.z + 360) % 360;
-			break;
-		case ParamType.PrimitiveRadius:
-			primitive_ = Object.GetComponent<MidairPrimitive>();
-			initialValue_ = (float)primitive_.Radius;
-			break;
-		case ParamType.PrimitiveWidth:
-			primitive_ = Object.GetComponent<MidairPrimitive>();
-			initialValue_ = (float)primitive_.Width;
-			break;
-		case ParamType.PrimitiveArc:
-			primitive_ = Object.GetComponent<MidairPrimitive>();
-			initialValue_ = (float)primitive_.ArcRate;
-			break;
-		case ParamType.GaugeRate:
-			gauge_ = Object.GetComponent<GaugeRenderer>();
-			initialValue_ = (float)gauge_.Rate;
-			break;
-		case ParamType.GaugeWidth:
-			gauge_ = Object.GetComponent<GaugeRenderer>();
-			initialValue_ = (float)gauge_.Width;
-			break;
-		case ParamType.Color:
-			coloredObj_ = Object.GetComponent<IColoredObject>();
-			initialValue_ = coloredObj_.GetColor();
-			break;
-		}
 
-		if( initialValue_ is float && (float)initialValue_ == (float)target )
+		if( Delay <= 0 )
 		{
-			IsEnd = true;
-		}
-		else if( initialValue_ is Color && Color.Equals(initialValue_, target) )
-		{
-			IsEnd = true;
-		}
-		else if( initialValue_ is Vector3 && Vector3.Equals(initialValue_, target) )
-		{
-			IsEnd = true;
+			InitValue();
 		}
 	}
 
 	public void Update()
 	{
-		if( Delay > 0 )
-		{
-			Delay -= Time.deltaTime;
-			return;
-		}
-
 		if( Object == null )
 		{
 			IsEnd = true;
 			return;
+		}
+
+		if( Delay > 0 )
+		{
+			Delay -= Time.deltaTime;
+			if( Delay <= 0 )
+			{
+				InitValue();
+			}
+			else
+			{
+				return;
+			}
 		}
 
 		if( Anim == AnimType.Linear )
@@ -238,6 +176,9 @@ public class AnimInfo
 		case ParamType.PrimitiveArc:
 			primitive_.SetArc(currentValue);
 			break;
+		case ParamType.GaugeLength:
+			gauge_.Length = currentValue;
+			break;
 		case ParamType.GaugeRate:
 			gauge_.SetRate(currentValue);
 			break;
@@ -247,6 +188,90 @@ public class AnimInfo
 		case ParamType.Color:
 			coloredObj_.SetColor(Color.Lerp((Color)initialValue_, (Color)Target, animValue_));
 			break;
+		}
+	}
+
+	void InitValue()
+	{
+		switch( Param )
+		{
+		case ParamType.Scale:
+			transform_ = Object.transform;
+			initialValue_ = transform_.localScale;
+			break;
+		case ParamType.ScaleX:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localScale.x;
+			break;
+		case ParamType.ScaleY:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localScale.y;
+			break;
+		case ParamType.ScaleZ:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localScale.z;
+			break;
+		case ParamType.Position:
+			transform_ = Object.transform;
+			initialValue_ = transform_.localPosition;
+			break;
+		case ParamType.PositionX:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localPosition.x;
+			break;
+		case ParamType.PositionY:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localPosition.y;
+			break;
+		case ParamType.PositionZ:
+			transform_ = Object.transform;
+			initialValue_ = (float)transform_.localPosition.z;
+			break;
+		case ParamType.RotationZ:
+			transform_ = Object.transform;
+			initialValue_ = (float)(transform_.rotation.eulerAngles.z + 360) % 360;
+			break;
+		case ParamType.PrimitiveRadius:
+			primitive_ = Object.GetComponent<MidairPrimitive>();
+			initialValue_ = (float)primitive_.Radius;
+			break;
+		case ParamType.PrimitiveWidth:
+			primitive_ = Object.GetComponent<MidairPrimitive>();
+			initialValue_ = (float)primitive_.Width;
+			break;
+		case ParamType.PrimitiveArc:
+			primitive_ = Object.GetComponent<MidairPrimitive>();
+			initialValue_ = (float)primitive_.ArcRate;
+			break;
+		case ParamType.GaugeLength:
+			gauge_ = Object.GetComponent<GaugeRenderer>();
+			initialValue_ = (float)gauge_.Length;
+			break;
+		case ParamType.GaugeRate:
+			gauge_ = Object.GetComponent<GaugeRenderer>();
+			initialValue_ = (float)gauge_.Rate;
+			break;
+		case ParamType.GaugeWidth:
+			gauge_ = Object.GetComponent<GaugeRenderer>();
+			initialValue_ = (float)gauge_.Width;
+			break;
+		case ParamType.Color:
+			coloredObj_ = Object.GetComponent<IColoredObject>();
+			initialValue_ = coloredObj_.GetColor();
+			break;
+		}
+
+		if( initialValue_ is float && (float)initialValue_ == (float)Target )
+		{
+			IsEnd = true;
+		}
+		else if( initialValue_ is Color && Color.Equals(initialValue_, Target) )
+		{
+			IsEnd = true;
+		}
+		else if( initialValue_ is Vector3 && Vector3.Equals(initialValue_, Target) )
+		{
+			IsEnd = true;
 		}
 	}
 }
@@ -288,7 +313,7 @@ public class AnimManager : MonoBehaviour
 	public static void AddAnim(GameObject obj, object target, ParamType paramType, AnimType animType = AnimType.Linear, float factor = 0.1f, float delay = 0.0f)
 	{
 		if( instance.Animations.Find((AnimInfo anim) => anim.Object == obj && anim.Param == paramType && anim.Target == target) != null ) return;
-		instance.Animations.RemoveAll((AnimInfo anim) => anim.Object == obj && anim.Param == paramType);
+		//instance.Animations.RemoveAll((AnimInfo anim) => anim.Object == obj && anim.Param == paramType);
 		instance.Animations.Add(new AnimInfo(obj, target, paramType, animType, factor, delay));
 	}
 

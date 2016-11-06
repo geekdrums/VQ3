@@ -158,6 +158,7 @@ public class BattleConductor : MonoBehaviour {
 	public void ExecSkill(Skill NewSkill)
 	{
 		NewSkill.gameObject.transform.parent = SkillParent.transform;
+		NewSkill.gameObject.transform.localPosition = new Vector3(NewSkill.gameObject.transform.localPosition.x, NewSkill.gameObject.transform.localPosition.y, NewSkill.isPlayerSkill ? -1 : 0);
 		Skills.Add(new Pair<Timing, Skill>(new Timing(Music.Just), NewSkill));
 	}
 

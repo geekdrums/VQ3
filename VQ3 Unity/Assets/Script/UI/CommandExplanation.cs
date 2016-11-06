@@ -92,8 +92,9 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 		//	Destroy(IconParent.transform.GetChild(0).gameObject);
 		//}
 		commandData_ = command.currentData;
-		CommandName.text = command.nameText.ToUpper();
 		ThemeColor themeColor = ColorManager.GetThemeColor(command.themeColor);
+		CommandName.text = command.nameText.ToUpper();
+		CommandName.color = themeColor.Bright;
 
 		//GameObject iconObj = command.InstantiateIconObj(IconParent);
 		if( GameContext.State == GameState.Result || GameContext.State == GameState.Event )
@@ -113,7 +114,8 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 			NameBase.SetColor(themeColor.Bright);
 			LVText.gameObject.SetActive(true);
 			LVText.color = ColorManager.Base.Bright;
-			LVCount.CounterColor= ColorManager.Base.Bright;
+			LVText.color = themeColor.Bright;
+			LVCount.CounterColor= themeColor.Bright;
 			Explanation.text = commandData_.ExplanationText.Replace("<br/>", System.Environment.NewLine);
 			if( GameContext.FieldConductor.EncounterIndex == 0 )
 			{

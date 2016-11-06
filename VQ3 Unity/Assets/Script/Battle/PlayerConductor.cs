@@ -7,7 +7,6 @@ public class PlayerConductor : MonoBehaviour {
 	public CommandGraph CommandGraph;
 	public MemoryPanel MemoryPanel;
 	public EnemyExplanation EnemyExp;
-	public MidairPrimitive WindowFrame;
 
 	public GameObject VPMeter;
 	public List<Sprite> EnhIcons;
@@ -289,7 +288,6 @@ public class PlayerConductor : MonoBehaviour {
 
 	public void OnBattleStarted()
 	{
-		WindowFrame.SetTargetWidth(1);
 		EnemyExp.Hide();
 		MemoryPanel.Hide();
         Player.OnBattleStart();
@@ -306,7 +304,6 @@ public class PlayerConductor : MonoBehaviour {
 
 	public void OnEnterSetting()
 	{
-		WindowFrame.SetTargetWidth(12);
 		CommandGraph.OnEnterSetting();
 		MemoryPanel.Reset();
 		EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
@@ -316,13 +313,11 @@ public class PlayerConductor : MonoBehaviour {
 	{
 		Player.HitPoint = Player.MaxHP;
 		Player.HPPanel.OnUpdateHP();
-		WindowFrame.SetTargetWidth(12);
 		BGAnimBase.DeactivateCurrentAnim();
 	}
 
 	public void OnEnterEvent()
 	{
-		WindowFrame.SetTargetWidth(12);
 		CommandGraph.OnEnterSetting();
 		EnemyExp.Hide();
 		MemoryPanel.Reset();
@@ -357,7 +352,6 @@ public class PlayerConductor : MonoBehaviour {
         Player.HitPoint = Player.MaxHP;
 		Player.DefaultInit();
 		BGAnimBase.DeactivateCurrentAnim();
-		WindowFrame.SetTargetWidth(12);
     }
 	public void OnEndro()
 	{

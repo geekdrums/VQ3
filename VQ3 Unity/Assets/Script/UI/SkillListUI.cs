@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class SkillListUI : MonoBehaviour {
 
+	bool isExecuting_;
+	bool isTurnStarted_;
+
 	GaugeRenderer baseLine_;
 	PlayerCommandData commandData_;
 	List<SkillUI> skillData_ = new List<SkillUI>();
@@ -12,7 +15,7 @@ public class SkillListUI : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		baseLine_ = GetComponentInChildren<GaugeRenderer>();
 		skillData_.AddRange(GetComponentsInChildren<SkillUI>());
 		enhanceData_.AddRange(GetComponentsInChildren<EnhanceUI>());
@@ -20,7 +23,49 @@ public class SkillListUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if( isExecuting_ )
+		{
+			if( isTurnStarted_ == false )
+			{
+				if( Music.IsJustChangedAt(0) )
+				{
+					isTurnStarted_ = true;
+				}
+				else
+				{
+					return;
+				}
+			}
+
+			if( Music.IsJustChangedAt(CommandGraph.AllowInputEnd) )
+			{
+				Destroy(this.gameObject);
+				return;
+			}
+
+			if( Music.IsJustChangedBar() )
+			{
+				int bar = Music.Just.Bar;
+				if( skillData_[bar].length > 0 )
+				{
+					skillData_[bar].Execute();
+				}
+			}
+		}
+	}
+
+	public void Execute(GameObject enhIconParent)
+	{
+		isExecuting_ = true;
+		for( int i = 0; i < enhanceData_.Count; ++i )
+		{
+			if( enhanceData_[i].paramType != EnhanceParamType.Count )
+			{
+				enhanceData_[i].transform.parent = enhIconParent.transform;
+				AnimManager.AddAnim(enhanceData_[i].gameObject, Vector3.right * 2.4f * i, ParamType.Position, AnimType.Linear, 0.2f);
+				enhanceData_[i].Execute();
+			}
+		}
 	}
 
 	public void Set(PlayerCommandData commandData)

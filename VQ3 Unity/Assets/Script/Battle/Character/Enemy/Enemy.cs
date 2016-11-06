@@ -17,96 +17,96 @@ public enum EnemySpecies
 
 public class Enemy : Character
 {
-    protected static readonly float DamageTrembleTime = 0.025f;
+	protected static readonly float DamageTrembleTime = 0.025f;
 
-    public string DisplayName;
-    public EnemySpecies Speceis;
+	public string DisplayName;
+	public EnemySpecies Speceis;
 	public string ExplanationText;
 
-    public EnemyCommand currentCommand { get; protected set; }
-    public int commandExecBar { get; protected set; }
-    public Vector3 targetLocalPosition { get; protected set; }
+	public EnemyCommand currentCommand { get; protected set; }
+	public int commandExecBar { get; protected set; }
+	public Vector3 targetLocalPosition { get; protected set; }
 
 	protected ActionResult lastDamageResult;
 	protected DamageText lastDamageText;
-    protected SpriteRenderer spriteRenderer;
-    protected List<EnemyCommandIcon> commandIcons;
+	protected SpriteRenderer spriteRenderer;
+	protected List<EnemyCommandIcon> commandIcons;
 	protected ShortTextWindow shortText;
 
 
-    // Use this for initialization
+	// Use this for initialization
 	public virtual void Start()
-    {
-        Initialize();
-    }
+	{
+		Initialize();
+	}
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        foreach( EnemyCommand c in GetComponentsInChildren<EnemyCommand>() )
-        {
-            c.Parse();
-        }
-        initialPosition = transform.localPosition;
-        targetLocalPosition = initialPosition;
+	public override void Initialize()
+	{
+		base.Initialize();
+		foreach( EnemyCommand c in GetComponentsInChildren<EnemyCommand>() )
+		{
+			c.Parse();
+		}
+		initialPosition = transform.localPosition;
+		targetLocalPosition = initialPosition;
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+		spriteRenderer = GetComponent<SpriteRenderer>();
+	}
 
-    // Update is called once per frame
+	// Update is called once per frame
 	public virtual void Update()
-    {
-        UpdateAnimation();
+	{
+		UpdateAnimation();
 
-        if( GameContext.State == GameState.Battle )
-        {
-            if( Music.IsJustChangedAt( commandExecBar ) && currentCommand != null && currentCommand.ShortText != "" )
-            {
-                if( shortText != null )
-                {
-                    Destroy( shortText.gameObject );
-                    shortText = null;
-                }
-                if( !GameContext.LuxSystem.IsInverting )
-                {
-                    shortText = (Instantiate( GameContext.EnemyConductor.shortTextWindowPrefab ) as GameObject).GetComponent<ShortTextWindow>();
-                    shortText.Initialize( currentCommand.ShortText );
-                    shortText.transform.position = new Vector3( transform.position.x, shortText.transform.position.y, shortText.transform.position.z );
-                }
-            }
-        }
-    }
-    protected virtual void UpdateAnimation()
-    {
-        if( damageTime > 0 )
-        {
-            if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
-            {
-				transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp(damageTime -  GameContext.EnemyConductor.EnemyDamageTimeMin, 0.2f, 2.0f) * GameContext.EnemyConductor.EnemyDamageShake;
-            }
-            spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? ( GameContext.LuxSystem.IsOverFlow ? ColorManager.Theme.Bright : Color.clear ) : GameContext.EnemyConductor.baseColor);
+		if( GameContext.State == GameState.Battle )
+		{
+			if( Music.IsJustChangedAt(commandExecBar) && currentCommand != null && currentCommand.ShortText != "" )
+			{
+				if( shortText != null )
+				{
+					Destroy(shortText.gameObject);
+					shortText = null;
+				}
+				if( !GameContext.LuxSystem.IsInverting )
+				{
+					shortText = (Instantiate(GameContext.EnemyConductor.shortTextWindowPrefab) as GameObject).GetComponent<ShortTextWindow>();
+					shortText.Initialize(currentCommand.ShortText);
+					shortText.transform.position = new Vector3(transform.position.x, shortText.transform.position.y, shortText.transform.position.z);
+				}
+			}
+		}
+	}
+	protected virtual void UpdateAnimation()
+	{
+		if( damageTime > 0 )
+		{
+			if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
+			{
+				transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp(damageTime - GameContext.EnemyConductor.EnemyDamageTimeMin, 0.2f, 2.0f) * GameContext.EnemyConductor.EnemyDamageShake;
+			}
+			spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? (GameContext.LuxSystem.IsOverFlow ? ColorManager.Theme.Bright : Color.clear) : GameContext.EnemyConductor.baseColor);
 
-            damageTime -= Time.deltaTime;
-            if( damageTime <= 0 )
-            {
-                transform.localPosition = initialPosition;
-                if( HitPoint <= 0 )
-                {
-                    spriteRenderer.color = Color.clear;
+			damageTime -= Time.deltaTime;
+			if( damageTime <= 0 )
+			{
+				transform.localPosition = initialPosition;
+				if( HitPoint <= 0 )
+				{
+					spriteRenderer.color = Color.clear;
 					//SEPlayer.Play("Defeat");
-                    Destroy( this.gameObject );
-                }
-                else
-                {
-                    spriteRenderer.color = GameContext.EnemyConductor.baseColor;
-                }
-            }
-        }
-    }
+					Destroy(this.gameObject);
+				}
+				else
+				{
+					spriteRenderer.color = GameContext.EnemyConductor.baseColor;
+				}
+			}
+		}
+	}
 
 	protected void CreateDamageText(int damage, ActionResult actResult, GameObject parent = null)
 	{
-		if( ( GameContext.LuxSystem.Version < LuxVersion.Shield || GameContext.LuxState == LuxState.Overflow ) && damage == 0 ) return;
+		if( (GameContext.LuxSystem.Version < LuxVersion.Shield || GameContext.LuxState == LuxState.Overflow) && damage == 0 ) return;
 
 		if( GameContext.LuxSystem.IsOverFlow )
 		{
@@ -154,34 +154,34 @@ public class Enemy : Character
 			lastDamageText = null;
 		}
 	}
-    public virtual void InvertInit()
-    {
+	public virtual void InvertInit()
+	{
 		DefendPercent = 0;
-        HealPercent = 0;
-        TurnDamage = 0;
-        currentCommand = null;
-    }
-    public void SetWaitCommand( EnemyCommand WaitCommand )
-    {
-        DefaultInit();
-        currentCommand = WaitCommand;
-    }
-    public void SetExecBar( int bar )
-    {
-        commandExecBar = bar;
-    }
-    public void CheckSkill()
-    {
-        Skill skill = (currentCommand != null ? currentCommand.GetCurrentSkill( commandExecBar ) : null);
-        if( skill != null )
-        {
-            Skill objSkill = (Skill)Instantiate( skill, new Vector3(), transform.rotation );
-            objSkill.SetOwner( this );
-            GameContext.BattleConductor.ExecSkill( objSkill );
-        }
-    }
+		HealPercent = 0;
+		TurnDamage = 0;
+		currentCommand = null;
+	}
+	public void SetWaitCommand(EnemyCommand WaitCommand)
+	{
+		DefaultInit();
+		currentCommand = WaitCommand;
+	}
+	public void SetExecBar(int bar)
+	{
+		commandExecBar = bar;
+	}
+	public void CheckSkill()
+	{
+		Skill skill = (currentCommand != null ? currentCommand.GetCurrentSkill(commandExecBar) : null);
+		if( skill != null )
+		{
+			Skill objSkill = (Skill)Instantiate(skill);
+			objSkill.SetOwner(this);
+			GameContext.BattleConductor.ExecSkill(objSkill);
+		}
+	}
 
-    public override void BeAttacked(AttackModule attack, Skill skill)
+	public override void BeAttacked(AttackModule attack, Skill skill)
 	{
 		float typeCoeff = 1.0f;
 		float shildCoeff = 1.0f;
@@ -220,7 +220,7 @@ public class Enemy : Character
 				if( GameContext.LuxSystem.Version >= LuxVersion.Shield ) shildCoeff = 0.0f;
 			}
 		}
-        
+
 
 		float overFlowPower = 0.0f;
 		if( GameContext.LuxSystem.IsOverFlow && GameContext.LuxSystem.State != LuxState.Overload )
@@ -229,14 +229,14 @@ public class Enemy : Character
 		}
 
 		float damage = skill.OwnerCharacter.PhysicAttack * ((attack.Power + overFlowPower) / 100.0f) * typeCoeff * shildCoeff * DefendCoeff;
-        BeDamaged( Mathf.Max( 0, (int)damage ), skill );
-        Debug.Log( this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint );
-		
+		BeDamaged(Mathf.Max(0, (int)damage), skill);
+		Debug.Log(this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint);
+
 		if( lastDamageResult != ActionResult.NoDamage )
 		{
 			SEPlayer.Play(lastDamageResult, skill.OwnerCharacter, (int)damage);
 		}
-    }
+	}
 	protected override void BeDamaged(int damage, Skill skill)
 	{
 		base.BeDamaged(damage, skill);
@@ -261,31 +261,31 @@ public class Enemy : Character
 	public override void Drain(DrainModule drain, int drainDamage)
 	{
 		int oldHitPoint = HitPoint;
- 		base.Drain(drain, drainDamage);
+		base.Drain(drain, drainDamage);
 		CreateDamageText(-(HitPoint - oldHitPoint), ActionResult.EnemyHeal);
 		SEPlayer.Play(ActionResult.EnemyHeal, this, HitPoint - oldHitPoint);
 	}
-    public override void UpdateHealHP()
-    {
-        base.UpdateHealHP();
-    }
+	public override void UpdateHealHP()
+	{
+		base.UpdateHealHP();
+	}
 
-    public void SetTargetPosition( Vector3 target )
-    {
-        targetLocalPosition = target;
-        initialPosition = target;
-    }
+	public void SetTargetPosition(Vector3 target)
+	{
+		targetLocalPosition = target;
+		initialPosition = target;
+	}
 
-    public void OnBaseColorChanged( Color newColor )
-    {
-        if( spriteRenderer == null ) spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = newColor;
-    }
-    public void OnPlayerLose()
-    {
-    }
+	public void OnBaseColorChanged(Color newColor)
+	{
+		if( spriteRenderer == null ) spriteRenderer = GetComponent<SpriteRenderer>();
+		spriteRenderer.color = newColor;
+	}
+	public void OnPlayerLose()
+	{
+	}
 
-	public override void OnExecuted( Skill skill, ActionSet act )
+	public override void OnExecuted(Skill skill, ActionSet act)
 	{
 		base.OnExecuted(skill, act);
 
@@ -299,8 +299,8 @@ public class Enemy : Character
 	{
 	}
 
-    public override string ToString()
-    {
-        return DisplayName;
-    }
+	public override string ToString()
+	{
+		return DisplayName;
+	}
 }
