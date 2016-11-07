@@ -8,6 +8,8 @@ using System.Text;
 public enum CommandState
 {
 	Current,
+	Selected,
+	NotSelected,
 	Linked,
 	Acquired,
 	NotAcquired,
@@ -266,18 +268,29 @@ public class PlayerCommand : MonoBehaviour
 		}
 		else
 		{
-			if( state <= CommandState.Linked )
+			Vector3 scale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff);
+			switch( state )
 			{
-				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * ( this is InvertCommand ? 1.0f : 1.2f );
-			}
-			else if( state <= CommandState.Acquired )
-			{
-				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
+			case CommandState.Current:
+				transform.localScale = scale;
+				break;
+			case CommandState.Selected:
+				transform.localScale = scale;
+				break;
+			case CommandState.NotSelected:
+				transform.localScale = scale;
+				alpha = 0.4f;
+				break;
+			case CommandState.Linked:
+				transform.localScale = scale * (this is InvertCommand ? 1.0f : 1.2f);
+				break;
+			case CommandState.Acquired:
+				transform.localScale = scale * 0.8f;
 				alpha = Mathf.Clamp((distance + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff, 0.6f, 1.0f);
-			}
-			else//NotAcquired,DontKnow
-			{
+				break;
+			default://NotAcquired,DontKnow
 				transform.localScale = Vector3.zero;
+				break;
 			}
 		}
 		maskPlane.GetComponent<Renderer>().material.color = ColorManager.MakeAlpha(Color.black, alpha);
@@ -376,10 +389,19 @@ public class PlayerCommand : MonoBehaviour
     }
     public void Select()
 	{
-    }
-    public void Deselect()
+		state = CommandState.Selected;
+	}
+	public void Deselect()
 	{
-    }
+		if( state == CommandState.Selected )
+		{
+			state = CommandState.Linked;
+		}
+		else
+		{
+			state = CommandState.NotSelected;
+		}
+	}
     public void Acquire()
 	{
 		state = CommandState.NotAcquired;

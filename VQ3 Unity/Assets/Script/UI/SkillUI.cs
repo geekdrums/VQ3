@@ -8,6 +8,8 @@ public class SkillUI : MonoBehaviour {
 	public Color textColor;
 	public Color baseColor;
 
+	public bool WillBeExecuted { get { return length > 0 && isExecuting_ == false; } }
+
 	bool isExecuting_;
 	int remainLength_;
 
@@ -39,15 +41,15 @@ public class SkillUI : MonoBehaviour {
 	public void Execute()
 	{
 		isExecuting_ = true;
-		text_.transform.parent = transform.parent;
-		text_.color = line_.LineColor;
-		AnimManager.AddAnim(text_.gameObject, new Vector3(-49, 1.2f, 0), ParamType.Position, AnimType.Linear, 0.2f);
-		AnimManager.AddAnim(gameObject, new Vector3(-50, 0.3f, 0), ParamType.Position, AnimType.Linear, 0.2f);
-		AnimManager.AddAnim(gameObject, 7.0f, ParamType.GaugeLength, AnimType.Linear, 0.1f);
+
+		AnimManager.AddAnim(gameObject, new Vector3(0, 2.3f, 0), ParamType.Position, AnimType.Linear, 0.2f);
+		AnimManager.AddAnim(text_.gameObject, new Vector3(0, 0.9f, 0), ParamType.Position, AnimType.Linear, 0.2f);
+		AnimManager.AddAnim(text_.gameObject, Color.white, ParamType.TextColor, AnimType.Linear, 0.2f);
+		AnimManager.AddAnim(gameObject, Color.white, ParamType.Color, AnimType.Linear, 0.2f);
 		AnimManager.AddAnim(gameObject, 0.2f, ParamType.GaugeWidth, AnimType.Linear, 0.3f);
 
-		AnimManager.AddAnim(text_.gameObject, new Vector3(-100, 1.2f, 0), ParamType.Position, AnimType.Linear, 0.1f, (length * 16 - 8) * (float)Music.MusicalTimeUnit);
-		AnimManager.AddAnim(gameObject, new Vector3(-100, 0.3f, 0), ParamType.Position, AnimType.Linear, 0.1f, (length * 16 - 8) * (float)Music.MusicalTimeUnit);
+		AnimManager.AddAnim(text_.gameObject, Color.clear, ParamType.TextColor, AnimType.Linear, 0.2f, (length * 16 - 8) * (float)Music.MusicalTimeUnit);
+		AnimManager.AddAnim(gameObject, 0.0f, ParamType.GaugeLength, AnimType.BounceOut, 0.2f, (length * 16 - 8) * (float)Music.MusicalTimeUnit);
 
 		remainLength_ = length;
 	}

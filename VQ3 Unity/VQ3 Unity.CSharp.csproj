@@ -126,7 +126,7 @@
     <Compile Include="Assets\Script\UI\DamageText.cs" />
     <Compile Include="Assets\Script\UI\EnemyExplanation.cs" />
     <Compile Include="Assets\Script\UI\EnhanceIcons.cs" />
-    <Compile Include="Assets\Script\UI\GaugeRenderer.cs" />
+    <Compile Include="Assets\Script\Utils\GaugeRenderer.cs" />
     <Compile Include="Assets\Script\UI\HPCircle.cs" />
     <Compile Include="Assets\Script\UI\HPPanel.cs" />
     <Compile Include="Assets\Script\UI\LevelResult.cs" />
@@ -138,7 +138,6 @@
     <Compile Include="Assets\Script\UI\SkillUI.cs" />
     <Compile Include="Assets\Script\UI\TextWindow.cs" />
     <Compile Include="Assets\Script\UI\TitleUI.cs" />
-    <Compile Include="Assets\Script\UI\UIBase.cs" />
     <Compile Include="Assets\Script\Utils\AnimManager.cs" />
     <Compile Include="Assets\Script\Utils\ColorManager.cs" />
     <Compile Include="Assets\Script\Utils\CounterSprite.cs" />

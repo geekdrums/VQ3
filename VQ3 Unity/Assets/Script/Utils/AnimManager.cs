@@ -33,6 +33,8 @@ public enum ParamType
 
 	//IColoredObject
 	Color,
+
+	TextColor,
 }
 
 public enum AnimType
@@ -60,6 +62,7 @@ public class AnimInfo
 	MidairPrimitive primitive_;
 	GaugeRenderer gauge_;
 	IColoredObject coloredObj_;
+	TextMesh text_;
 
 	public bool IsEnd { get { return normalizedValue_ >= 1.0f; } private set { normalizedValue_ = 1.0f; } }
 	private float currentValue { get { return (float)initialValue_ + ((float)Target - (float)initialValue_) * animValue_; } }
@@ -188,6 +191,9 @@ public class AnimInfo
 		case ParamType.Color:
 			coloredObj_.SetColor(Color.Lerp((Color)initialValue_, (Color)Target, animValue_));
 			break;
+		case ParamType.TextColor:
+			text_.color = Color.Lerp((Color)initialValue_, (Color)Target, animValue_);
+			break;
 		}
 	}
 
@@ -258,6 +264,10 @@ public class AnimInfo
 		case ParamType.Color:
 			coloredObj_ = Object.GetComponent<IColoredObject>();
 			initialValue_ = coloredObj_.GetColor();
+			break;
+		case ParamType.TextColor:
+			text_ = Object.GetComponent<TextMesh>();
+			initialValue_ = text_.color;
 			break;
 		}
 

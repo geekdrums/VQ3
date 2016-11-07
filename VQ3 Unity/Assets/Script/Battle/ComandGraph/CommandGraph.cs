@@ -400,7 +400,7 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
-			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
+			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			break;
 		case BattleState.Battle:
 		case BattleState.Eclipse:
@@ -408,8 +408,8 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
-			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
-			//NextGauge.SetRate((float)(Music.MusicalTime / 64.0));
+			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+			//NextGauge.SetRate((float)(Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			break;
 		case BattleState.Endro:
 			break;
@@ -816,6 +816,10 @@ public class CommandGraph : MonoBehaviour
 		if( NextCommand != null )
 		{
 			NextCommand.Deselect();
+			foreach( PlayerCommand linkedCommand in GetLinkedCommands() )
+			{
+				linkedCommand.SetLink(true);
+			}
 			NextCommand = null;
 			NextRect.transform.localScale = Vector3.zero;
 			CommandList.DeleteCommand();
@@ -834,6 +838,12 @@ public class CommandGraph : MonoBehaviour
 		}
 		CommandList.AddCommand(command);
 		NextCommand = command;
+		foreach(PlayerCommand notSelectedCommand in GetLinkedCommands())
+		{
+			if( notSelectedCommand != NextCommand )
+				notSelectedCommand.Deselect();
+		}
+		NextCommand.Select();
 		CommandExp.Set(NextCommand);
 		NextRect.transform.parent = NextCommand.transform;
 		NextRect.transform.localPosition = Vector3.forward;

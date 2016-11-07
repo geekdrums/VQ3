@@ -51,6 +51,17 @@ public class SkillListUI : MonoBehaviour {
 					skillData_[bar].Execute();
 				}
 			}
+
+			float mtRate = (float)(Music.MusicalTime / LuxSystem.TurnMusicalUnits);
+			baseLine_.SetRate(1.0f - mtRate);
+
+			for( int i = 0; i < skillData_.Count; ++i )
+			{
+				if( skillData_[i].WillBeExecuted )
+				{
+					skillData_[i].transform.localPosition = Vector3.right * (5 * i - 19.5f * mtRate) + Vector3.up * skillData_[i].transform.localPosition.y;
+				}
+			}
 		}
 	}
 

@@ -43,7 +43,7 @@ public class CommandListUI : MonoBehaviour
 				commandIcons_[i].transform.localPosition = Vector3.Lerp(commandIcons_[i].transform.localPosition, targetPos, 0.2f);
 				commandIcons_[i].transform.localScale = Vector3.Lerp(commandIcons_[i].transform.localScale, Vector3.one * ActiveIconScale, 0.2f);
 				CurrentGauge.transform.localPosition = Vector3.Lerp(CurrentGauge.transform.localPosition, targetPos + Vector3.up * GaugeHeight + Vector3.left * CurrentGaugeBase.Length/2, 0.2f);
-				CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / 64.0));
+				CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 				targetPos += Vector3.left * (ActiveIconScale * IconLength + Interval);
 			}
 			else// (i > currentIndex_ )
