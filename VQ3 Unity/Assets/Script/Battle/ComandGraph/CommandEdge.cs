@@ -40,24 +40,62 @@ public class CommandEdge : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float width = 0;
+		Color color = Color.white;
 		switch( state_ )
 		{
 		case EdgeState.Linked:
 			width = LinkedLineWidth;
+			if( IsInvert )
+			{
+				color = InvertLinkedLineColor;
+			}
+			else
+			{
+				if( Command1.state == CommandState.Selected || Command2.state == CommandState.Selected )
+				{
+					color = LinkedLineColor;
+				}
+				else if( Command1.state == CommandState.NotSelected || Command2.state == CommandState.NotSelected )
+				{
+					color = PrelinkedLineColor;
+				}
+				else
+				{
+					color = LinkedLineColor;
+				}
+			}
 			break;
 		case EdgeState.PreLinked:
 			width = PrelinkedLineWidth;
+			if( IsInvert )
+			{
+				color = InvertPrelinkedLineColor;
+			}
+			else
+			{
+				color = PrelinkedLineColor;
+			}
 			break;
 		case EdgeState.Unlinked:
 			width = UnlinkedLineWidth;
+			if( IsInvert )
+			{
+				color = InvertUnlinkedLineColor;
+			}
+			else
+			{
+				color = UnlinkedLineColor;
+			}
 			break;
 		case EdgeState.Unacquired:
 			width = UnlinkedLineWidth;
+			color = UnlinkedLineColor;
 			break;
 		case EdgeState.DontKnow:
 			break;
 		}
 		line_.SetWidth(width * Command1.transform.localScale.x * 4, width * Command2.transform.localScale.x * 4);
+		line_.SetColors(color, color);
 	}
 
 	public void SetEnabled( bool enable )
@@ -74,50 +112,7 @@ public class CommandEdge : MonoBehaviour {
 	public EdgeState State
 	{
 		get { return state_; }
-		set
-		{
-			{
-				state_ = value;
-				switch( state_ )
-				{
-				case EdgeState.Linked:
-					if( IsInvert )
-					{
-						line_.SetColors(InvertLinkedLineColor, InvertLinkedLineColor);
-					}
-					else
-					{
-						line_.SetColors(LinkedLineColor, LinkedLineColor);
-					}
-					break;
-				case EdgeState.PreLinked:
-					if( IsInvert )
-					{
-						line_.SetColors(InvertPrelinkedLineColor, InvertPrelinkedLineColor);
-					}
-					else
-					{
-						line_.SetColors(PrelinkedLineColor, PrelinkedLineColor);
-					}
-					break;
-				case EdgeState.Unlinked:
-					if( IsInvert )
-					{
-						line_.SetColors(InvertUnlinkedLineColor, InvertUnlinkedLineColor);
-					}
-					else
-					{
-						line_.SetColors(UnlinkedLineColor, UnlinkedLineColor);
-					}
-					break;
-				case EdgeState.Unacquired:
-					line_.SetColors(UnlinkedLineColor, UnlinkedLineColor);
-					break;
-				case EdgeState.DontKnow:
-					break;
-				}
-			}
-		}
+		set { state_ = value; }
 	}
 
 	public PlayerCommand GetOtherSide( PlayerCommand oneSide )

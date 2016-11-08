@@ -7,6 +7,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 {
 
 	static readonly int[] quadIndices = new int[] { 0, 2, 1, 3, 1, 2 };
+	static readonly int[] quadFlipIndices = new int[] { 0, 1, 2, 3, 2, 1 };
 	static readonly Vector2 UVZero = new Vector2(0, 0);
 	static readonly Vector2 UVRight = new Vector2(0, 1);
 	static readonly Vector2 UVUp  = new Vector2(1, 0);
@@ -24,7 +25,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	public float[] VertexAlphas;
 
 	public int N { get { return (int)Mathf.Ceil(Num); } }
-	public int ArcN { get { return Mathf.Min(N, (int)Mathf.Ceil(N * ArcRate)); } }
+	public int ArcN { get { return Mathf.Min(N, (int)Mathf.Ceil(N * Mathf.Abs(ArcRate))); } }
 	public float WholeRadius { get { return Radius - Width; } }
 
 	public Texture2D GrowTexture;
@@ -118,6 +119,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 		CheckVertex();
 		if( currentArcRate != ArcRate || force )
 		{
+			ArcRate = Mathf.Clamp(ArcRate, -1.0f, 1.0f);
 			float OutR = Radius / Mathf.Cos(Mathf.PI / N);
 			float InR = Mathf.Max(0, (Radius - Width)) / Mathf.Cos(Mathf.PI / N);
 
@@ -125,7 +127,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			Vector3 OutVertex = normalVertex * OutR;
 			Vector3 InVertex = normalVertex * InR;
 
-			float angle = (2 * Mathf.PI / N) * ((float)ArcN - ArcRate * N);
+			float angle = (2 * Mathf.PI / N) * ((float)ArcN - Mathf.Abs(ArcRate) * N);
 			Matrix4x4 rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(-angle * (180.0f / Mathf.PI), Vector3.forward), Vector3.one);
 			InVertex = rotateMatrix * InVertex;
 			OutVertex = rotateMatrix * OutVertex;
@@ -139,7 +141,20 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			normalizedVertices[ArcN] = normalVertex;
 
 			Mesh mesh = UsableMesh;
-			mesh.vertices = meshVertices;
+			if( ArcRate < 0 )
+			{
+				Vector3[] flipVertices = meshVertices;
+				for( int i = 0; i < flipVertices.Length; ++i )
+				{
+					flipVertices[i] = new Vector3(-flipVertices[i].x, flipVertices[i].y, 0);//-1;//+= Vector3.left * flipVertices[i].x * 2;
+				}
+				mesh.vertices = flipVertices;
+			}
+			else
+			{
+				mesh.vertices = meshVertices;
+			}
+
 			GetComponent<MeshFilter>().mesh = mesh;
 			currentArcRate = ArcRate;
 		}
@@ -250,9 +265,10 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 				OutVertex = rotateMatrix * OutVertex;
 				normalVertex = rotateMatrix * normalVertex;
 			}
+			ArcRate = Mathf.Clamp(ArcRate, -1.0f, 1.0f);
 			if( ArcRate < 1.0f )
 			{
-				float angle = (2*Mathf.PI / N) * ((float)ArcN - ArcRate * N);
+				float angle = (2 * Mathf.PI / N) * ((float)ArcN - Mathf.Abs(ArcRate) * N);
 				rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(-angle * (180.0f / Mathf.PI), Vector3.forward), Vector3.one);
 				InVertex = rotateMatrix * InVertex;
 				OutVertex = rotateMatrix * OutVertex;
@@ -274,7 +290,20 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			}
 
 			normalizedVertices[ArcN] = normalVertex;
-			mesh.vertices = meshVertices;
+
+			if( ArcRate < 0 )
+			{
+				Vector3[] flipVertices = meshVertices;
+				for( int i = 0; i < flipVertices.Length; ++i )
+				{
+					flipVertices[i] = new Vector3(-flipVertices[i].x, flipVertices[i].y, 0);//-1;//+= Vector3.left * flipVertices[i].x * 2;
+				}
+				mesh.vertices = flipVertices;
+			}
+			else
+			{
+				mesh.vertices = meshVertices;
+			}
 
 			// color
 			if( VertexAlphas != null && VertexAlphas.Length == N )
@@ -315,7 +344,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			{
 				for( int j = 0; j < 6; ++j )
 				{
-					indices[6 * i + j] = (2 * i + quadIndices[j]);// % mesh.vertices.Length;
+					indices[6 * i + j] = (2 * i + (ArcRate >= 0.0f ? quadIndices[j] : quadFlipIndices[j]));// % mesh.vertices.Length;
 				}
 			}
 			mesh.SetIndices(indices, MeshTopology.Triangles, 0);

@@ -38,8 +38,8 @@ public class CommandGraph : MonoBehaviour
 	public MidairPrimitive CurrentRect;
 	public MidairPrimitive NextRect;
 
-	public GameObject GaugeParent;
-	public GaugeRenderer CurrentGauge;
+	//public GameObject GaugeParent;
+	//public GaugeRenderer CurrentGauge;
 	//public GaugeRenderer NextGauge;
 	//public MidairPrimitive NextLight;
 	//public MidairPrimitive Mask;
@@ -392,7 +392,8 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
-			CurrentGauge.SetRate(0.0f);
+			CurrentRect.SetArc(0);
+			//CurrentGauge.SetRate(0.0f);
 			//NextGauge.SetRate(1.0f);
 			break;
 		case BattleState.Intro:
@@ -400,7 +401,8 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
-			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+			//CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			break;
 		case BattleState.Battle:
 		case BattleState.Eclipse:
@@ -408,7 +410,8 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
-			CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+			//CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			//NextGauge.SetRate((float)(Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			break;
 		case BattleState.Endro:
@@ -482,8 +485,11 @@ public class CommandGraph : MonoBehaviour
 
 		if( NextCommand != null )
 		{
-			NextRect.SetSize(6 + Music.MusicalCos(4));
-			NextRect.SetColor(Color.Lerp(ColorManager.Base.Front, Color.clear, Music.MusicalCos(4) * 0.5f));
+			NextRect.SetSize(7.0f);
+			NextRect.SetWidth(3.0f);
+			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
+			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(3.0f);
+			NextRect.SetArc(-Music.MusicalTime / LuxSystem.TurnMusicalUnits);
 		}
 		else if( hit.collider == CommandSphere.GetComponent<Collider>() )
 		{
@@ -501,7 +507,9 @@ public class CommandGraph : MonoBehaviour
 			NextRect.transform.rotation = Quaternion.identity;
 			NextRect.SetColor(ColorManager.Base.Front);
 			NextRect.SetSize(1.5f);
-			NextRect.SetWidth(0.2f);
+			NextRect.SetWidth(0.1f);
+			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(1.5f);
+			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(0.1f);
 
 			if( command != null && command != PreviewCommand )
 			{
@@ -513,6 +521,14 @@ public class CommandGraph : MonoBehaviour
 		else
 		{
 			NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.zero, 0.2f);
+		}
+
+		if( Music.IsJustChangedBar() )
+		{
+			AnimManager.AddAnim(CurrentRect.gameObject, 9.0f, ParamType.PrimitiveRadius, AnimType.Time, 0.05f);
+			AnimManager.AddAnim(CurrentRect.gameObject, 7.0f, ParamType.PrimitiveRadius, AnimType.Time, 0.1f, 0.05f);
+			AnimManager.AddAnim(CurrentRect.gameObject, 5.0f, ParamType.PrimitiveWidth, AnimType.Time, 0.05f);
+			AnimManager.AddAnim(CurrentRect.gameObject, 3.0f, ParamType.PrimitiveWidth, AnimType.Time, 0.1f, 0.05f);
 		}
 	}
 
@@ -706,7 +722,7 @@ public class CommandGraph : MonoBehaviour
 			Color themeColor = ColorManager.GetThemeColor(CurrentCommand.themeColor).Bright;
 			CurrentCommandName.text = CurrentCommand.nameText.ToUpper();
 			CurrentCommandName.color = themeColor;
-			CurrentGauge.SetColor(themeColor, 0.2f);
+			//CurrentGauge.SetColor(themeColor, 0.2f);
 			//NextGauge.SetColor(ColorManager.Base.Front);
 			//NextLight.SetTargetColor(Color.clear);
 			//Mask.SetTargetColor(Color.clear);
@@ -716,7 +732,7 @@ public class CommandGraph : MonoBehaviour
 		else
 		{
 			CurrentCommandName.text = "";
-			CurrentGauge.SetColor(Color.clear);
+			//CurrentGauge.SetColor(Color.clear);
 		}
 	}
 
@@ -773,8 +789,8 @@ public class CommandGraph : MonoBehaviour
 		CommandLoopCount = 0;
 		Select(IntroCommand);
 		OnExecCommand();
-		GaugeParent.SetActive(true);
-		CurrentGauge.SetColor(ColorManager.Base.Front);
+		//GaugeParent.SetActive(true);
+		//CurrentGauge.SetColor(ColorManager.Base.Front);
 		//NextGauge.SetColor(ColorManager.Base.Front);
 		//NextLight.SetColor(Color.clear);
 		//Mask.SetColor(Color.clear);
@@ -787,17 +803,17 @@ public class CommandGraph : MonoBehaviour
 
 	public void OnEndro()
 	{
-		GaugeParent.SetActive(false);
+		//GaugeParent.SetActive(false);
 	}
 
 	public void OnEnterContinue()
 	{
-		GaugeParent.SetActive(false);
+		//GaugeParent.SetActive(false);
 	}
 
 	public void OnEnterSetting()
 	{
-		GaugeParent.SetActive(false);
+		//GaugeParent.SetActive(false);
 		CurrentRect.transform.localScale = Vector3.zero;
 		CheckLinkedFromIntro();
 		Deselect();
@@ -857,10 +873,7 @@ public class CommandGraph : MonoBehaviour
 		effect.transform.localRotation = Quaternion.identity;
 		foreach( MidairPrimitive primitive in effect.GetComponentsInChildren<MidairPrimitive>() )
 		{
-			if( primitive != NextRect )
-			{
-				primitive.SetColor(themeColor);
-			}
+			primitive.SetColor(themeColor);
 		}
 
 		if( GameContext.State == GameState.Battle )
