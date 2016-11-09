@@ -80,8 +80,7 @@
     <Compile Include="Assets\Script\Battle\Character\Player.cs" />
     <Compile Include="Assets\Script\Battle\ComandGraph\CommandEdge.cs" />
     <Compile Include="Assets\Script\Battle\ComandGraph\CommandGraph.cs" />
-    <Compile Include="Assets\Script\Battle\ComandGraph\EnemyCommandCircle.cs" />
-    <Compile Include="Assets\Script\Battle\ComandGraph\EnemyCommandPattern.cs" />
+    <Compile Include="Assets\Script\Battle\ComandGraph\EnemyCommandGraph.cs" />
     <Compile Include="Assets\Script\Battle\Command\CommandBase.cs" />
     <Compile Include="Assets\Script\Battle\Command\EnemyCommand.cs" />
     <Compile Include="Assets\Script\Battle\Command\EnemyCommandIcon.cs" />
@@ -119,6 +118,7 @@
     <Compile Include="Assets\Script\MusicEngine\Music.cs" />
     <Compile Include="Assets\Script\UI\ButtonUI.cs" />
     <Compile Include="Assets\Script\UI\CommandExplanation.cs" />
+    <Compile Include="Assets\Script\UI\EnemyCommandListUI.cs" />
     <Compile Include="Assets\Script\UI\CommandListUI.cs" />
     <Compile Include="Assets\Script\UI\SkillCutIn.cs" />
     <Compile Include="Assets\Script\UI\CutInUI.cs" />

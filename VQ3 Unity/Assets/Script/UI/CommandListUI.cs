@@ -15,8 +15,8 @@ public class CommandListUI : MonoBehaviour
 	public float GaugeHeight;
 	List<GameObject> commandIcons_ = new List<GameObject>();
 
-	public GaugeRenderer CurrentGauge;
-	public GaugeRenderer CurrentGaugeBase;
+	//public GaugeRenderer CurrentGauge;
+	//public GaugeRenderer CurrentGaugeBase;
 	public GaugeRenderer EdgeLine;
 
 	int currentIndex_;
@@ -42,8 +42,8 @@ public class CommandListUI : MonoBehaviour
 				// 現在のコマンド
 				commandIcons_[i].transform.localPosition = Vector3.Lerp(commandIcons_[i].transform.localPosition, targetPos, 0.2f);
 				commandIcons_[i].transform.localScale = Vector3.Lerp(commandIcons_[i].transform.localScale, Vector3.one * ActiveIconScale, 0.2f);
-				CurrentGauge.transform.localPosition = Vector3.Lerp(CurrentGauge.transform.localPosition, targetPos + Vector3.up * GaugeHeight + Vector3.left * CurrentGaugeBase.Length/2, 0.2f);
-				CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+				//CurrentGauge.transform.localPosition = Vector3.Lerp(CurrentGauge.transform.localPosition, targetPos + Vector3.up * GaugeHeight + Vector3.left * CurrentGaugeBase.Length/2, 0.2f);
+				//CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 				targetPos += Vector3.left * (ActiveIconScale * IconLength + Interval);
 			}
 			else// (i > currentIndex_ )
@@ -83,8 +83,8 @@ public class CommandListUI : MonoBehaviour
 	public void OnExecCommand()
 	{
 		--currentIndex_;
-		CurrentGauge.SetColor(ColorManager.GetThemeColor(commandIcons_[currentIndex_].GetComponent<PlayerCommand>().themeColor).Bright);
-		CurrentGaugeBase.SetColor(ColorManager.Base.Shade);
+		//CurrentGauge.SetColor(ColorManager.GetThemeColor(commandIcons_[currentIndex_].GetComponent<PlayerCommand>().themeColor).Bright);
+		//CurrentGaugeBase.SetColor(ColorManager.Base.Shade);
 		EdgeLine.SetColor(ColorManager.Base.Bright);
 
 		for( int i = currentIndex_ + 1; i < commandIcons_.Count; ++i )

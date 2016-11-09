@@ -217,7 +217,7 @@ public class BattleConductor : MonoBehaviour {
 			GameContext.PlayerConductor.OnEndro();
 			break;
 		}
-		Debug.Log("Enter BattleState: " + State.ToString());
+		//Debug.Log("Enter BattleState: " + State.ToString());
 	}
 
 	//public void OnPlayerRunaway()

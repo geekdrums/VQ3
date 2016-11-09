@@ -52,7 +52,7 @@ public class Encounter
 public class EnemyCommandSet
 {
 	public string Command;
-	public GameObject RingPrefab;
+	public GameObject IconPrefab;
 	public float Threat;
 }
 

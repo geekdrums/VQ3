@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemyCommandCircle : MonoBehaviour {
-
-	public GameObject PatternCirclePrefab;
+public class EnemyCommandGraph : MonoBehaviour {
+	
 	public MidairPrimitive Shade;
+	public EnemyCommandListUI CommandListUI;
 
 	public Encounter.BattleSet BattleSet { get; set; }
 
@@ -16,9 +16,6 @@ public class EnemyCommandCircle : MonoBehaviour {
 
 	static readonly Timing StateChangeTiming = new Timing(3, 0, 0);
 	static readonly Timing SetNextTiming = new Timing(3, 3, 0);
-
-	List<EnemyCommandPattern> patternCircles_ = new List<EnemyCommandPattern>();
-	EnemyCommandPattern currentPatternCircle_ = null;
 
 	// Use this for initialization
 	void Start () {
@@ -45,7 +42,7 @@ public class EnemyCommandCircle : MonoBehaviour {
 				}
 				else if( Music.IsJustChangedAt(SetNextTiming) )
 				{
-					currentPatternCircle_.SetNext();
+					//currentPatternCircle_.SetNext();
 					UpdateShade();
 				}
 			}
@@ -53,9 +50,26 @@ public class EnemyCommandCircle : MonoBehaviour {
 		}
 	}
 
+	
 	private void UpdateShade()
 	{
-		Shade.SetTargetColor(ColorManager.MakeAlpha(Color.black, Mathf.Pow(currentPatternCircle_.GetCurrentThreat()/100.0f, 2)));
+		float threat = 0;
+		if( GameContext.LuxState == LuxState.Overload || GameContext.LuxSystem.IsInverting )
+		{
+			threat = 0;
+		}
+		else
+		{
+			for( int i = TurnCount; i < TurnCount + CurrentState.Pattern.Length; ++i )
+			{
+				threat += CurrentState.Pattern[i % CurrentState.Pattern.Length].Threat / Mathf.Pow(2, (i - TurnCount));
+				if( i >= TurnCount + 3 )
+				{
+					break;
+				}
+			}
+		}
+		Shade.SetTargetColor(ColorManager.MakeAlpha(Color.black, Mathf.Pow(threat / 100.0f, 2)));
 	}
 
 
@@ -114,7 +128,8 @@ public class EnemyCommandCircle : MonoBehaviour {
 		}
 		++TurnCount;
 
-		currentPatternCircle_.SetCurrent();
+		//currentPatternCircle_.SetCurrent();
+		CommandListUI.OnExecCommand();
 
 		return CurrentCommandSet;
 	}
@@ -130,6 +145,12 @@ public class EnemyCommandCircle : MonoBehaviour {
 				print("ChangeState Failed: " + name);
 			}
 			TurnCount = 0;
+
+			CommandListUI.ClearCommands();
+			for( int i = 0; i < CurrentState.Pattern.Length; ++i )
+			{
+				CommandListUI.AddCommand(CurrentState.Pattern[i]);
+			}
 		}
 	}
 
@@ -144,21 +165,6 @@ public class EnemyCommandCircle : MonoBehaviour {
 		}
 		ChangeState(battleSet.States[0].Name);
 
-		foreach( EnemyCommandPattern pattern in patternCircles_ )
-		{
-			Destroy(pattern.gameObject);
-		}
-		patternCircles_.Clear();
-		for( int i=0; i<battleSet.States.Count; ++i )
-		{
-			EnemyCommandPattern pattern = Instantiate(PatternCirclePrefab).GetComponent<EnemyCommandPattern>();
-			pattern.transform.parent = this.transform;
-			pattern.transform.localPosition = Vector3.zero;
-			pattern.transform.localScale = Vector3.one;
-			pattern.Initialize(battleSet.States[i]);
-			patternCircles_.Add(pattern);
-		}
-		currentPatternCircle_ = patternCircles_[0];
 		UpdateShade();
 	}
 

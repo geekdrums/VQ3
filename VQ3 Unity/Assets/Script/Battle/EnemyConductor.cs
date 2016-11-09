@@ -8,12 +8,11 @@ public class EnemyConductor : MonoBehaviour
 
 	static readonly float EnemyInterval = 7.0f;
 	static readonly int[] CommandExecBars = new int[3] { 2, 3, 1 };
-
-	public EnemyCommandCircle CommandCircle;
+	
+	public EnemyCommandGraph CommandGraph;
 	public GameObject damageTextPrefab;
 	public DamageGauge DamageGauge;
 	public GameObject commandIconPrefab;
-	public List<Sprite> EnemyCommandIcons;
 	public GameObject shortTextWindowPrefab;
 	public EnemyCommand PhysicDefaultCommand;
 	public EnemyCommand MagicDefaultCommand;
@@ -92,7 +91,7 @@ public class EnemyConductor : MonoBehaviour
 		}
 		targetEnemy = Enemies[0];
 		GameContext.LuxSystem.SetTargetEnemy(targetEnemy);
-		CommandCircle.BattleInit(battleSet);
+		CommandGraph.BattleInit(battleSet);
 	}
 
 	Vector3 GetInitSpawnPosition(int index, int l) { return new Vector3(EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 0, 0); }
@@ -282,7 +281,7 @@ public class EnemyConductor : MonoBehaviour
 	public void CheckCommand()
 	{
 		int execIndex = 0;
-		EnemyCommandSet commandSet = CommandCircle.CheckCommand();
+		EnemyCommandSet commandSet = CommandGraph.CheckCommand();
 		foreach( Enemy enemy in Enemies )
 		{
 			enemy.TellCommand((commandSet != null ? commandSet.Command : ""));
@@ -317,11 +316,11 @@ public class EnemyConductor : MonoBehaviour
 		{
 			e.InvertInit();
 		}
-		CommandCircle.InvertInit();
+		CommandGraph.InvertInit();
 	}
 	public void OnRevert()
 	{
-		CommandCircle.OnRevert();
+		CommandGraph.OnRevert();
 	}
 
 	public void OnArrowPushed(bool LorR)

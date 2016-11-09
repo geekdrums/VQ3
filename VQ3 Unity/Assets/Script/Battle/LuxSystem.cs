@@ -48,7 +48,7 @@ public class LuxSystem : MonoBehaviour
 	public MidairPrimitive Sun;
 	public MidairPrimitive Ring;
 	public MidairPrimitive Moon;
-	public EnemyCommandCircle CommandCircle;
+	//public EnemyCommandCircle CommandCircle;
 	public CounterSprite TimeCount;
 	public GaugeRenderer TimeGauge;
 	public CounterSprite BreakCount;
@@ -391,7 +391,7 @@ public class LuxSystem : MonoBehaviour
 		if( IsOverFlow )
 		{
 			Ring.transform.localScale = Vector3.Lerp(Ring.transform.localScale, targetSunScale, 0.05f);
-			CommandCircle.transform.localScale = Vector3.Lerp(CommandCircle.transform.localScale, Vector3.zero, 0.05f);
+			//CommandCircle.transform.localScale = Vector3.Lerp(CommandCircle.transform.localScale, Vector3.zero, 0.05f);
 			if( Music.Just.Bar < 3 )
 			{
 				BreakAccentGauge.SetColor(Color.Lerp(ColorManager.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
@@ -400,7 +400,7 @@ public class LuxSystem : MonoBehaviour
 		else
 		{
 			Ring.transform.localScale = Vector3.Lerp(Ring.transform.localScale, Vector3.one, 0.05f);
-			CommandCircle.transform.localScale = Vector3.Lerp(CommandCircle.transform.localScale, Vector3.one, 0.05f);
+			//CommandCircle.transform.localScale = Vector3.Lerp(CommandCircle.transform.localScale, Vector3.one, 0.05f);
 		}
 
 		if( Music.Just.Bar < 3 || !IsOverFlow )
