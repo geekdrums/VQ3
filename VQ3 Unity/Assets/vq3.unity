@@ -5488,7 +5488,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -8330,7 +8332,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -11908,7 +11912,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -17914,10 +17920,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 681572036}
   - 20: {fileID: 681572035}
-  - 92: {fileID: 681572034}
-  - 124: {fileID: 681572033}
   - 81: {fileID: 681572032}
-  - 45: {fileID: 681572038}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -17932,20 +17935,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 681572031}
   m_Enabled: 1
---- !u!124 &681572033
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 681572031}
-  m_Enabled: 0
---- !u!92 &681572034
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 681572031}
-  m_Enabled: 0
 --- !u!20 &681572035
 Camera:
   m_ObjectHideFlags: 0
@@ -17994,14 +17983,6 @@ Transform:
   - {fileID: 1890948937}
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!45 &681572038
-Skybox:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 681572031}
-  m_Enabled: 0
-  m_CustomSkybox: {fileID: 2100000, guid: a47ad912bc17b714f99ee2ba4cd797f3, type: 2}
 --- !u!1 &681633784
 GameObject:
   m_ObjectHideFlags: 0
@@ -18311,7 +18292,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -26174,7 +26157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -28638,7 +28623,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -32522,7 +32509,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -35979,7 +35968,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -51006,7 +50997,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -52399,7 +52392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -52516,7 +52511,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0
@@ -54920,7 +54917,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98200c6f0e27ece4fbe457297ea3d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillName: 
   length: 1
+  number: 0
   textColor: {r: 1, g: 1, b: 1, a: 1}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   isEnemySkill: 0

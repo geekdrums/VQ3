@@ -93,24 +93,25 @@ public class SkillUI : MonoBehaviour {
 			if( Music.IsJustChangedBar() && Music.Just.Bar > number )
 			{
 				--remainLength_;
-				if( remainLength_ <= 0 )
-				{
-					if( isEnemySkill )
-					{
-						isExecuting_ = false;
-						transform.localPosition = initialPosition_;
-						text_.transform.localPosition = Vector3.zero;
-						text_.text = "";
-						line_.SetWidth(1.5f);
-						Reset();
+			}
 
-						if( isEnemySkill && length > 0 )
-							print("Text Reset");
-					}
-					else
-					{
-						Destroy(this.gameObject);
-					}
+			if( remainLength_ <= 0 || Music.IsJustChangedAt(CommandGraph.AllowInputEnd) )
+			{
+				if( isEnemySkill )
+				{
+					isExecuting_ = false;
+					transform.localPosition = initialPosition_;
+					text_.transform.localPosition = Vector3.zero;
+					text_.text = "";
+					line_.SetWidth(1.5f);
+					Reset();
+
+					if( isEnemySkill && length > 0 )
+						print("Text Reset");
+				}
+				else
+				{
+					Destroy(this.gameObject);
 				}
 			}
 		}

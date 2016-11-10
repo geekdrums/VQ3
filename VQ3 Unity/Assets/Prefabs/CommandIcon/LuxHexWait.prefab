@@ -64,7 +64,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013914378056
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,10 +295,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 6
   ArcRate: 1
-  Width: 1.5
-  Radius: 2.5
+  Width: 2
+  Radius: 3
   ScaleX: 1
-  Color: {r: 1, g: 1, b: 1, a: 0.5}
+  Color: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 0.5}
   Angle: 0
   GrowSize: 0
   GrowAlpha: 1
@@ -347,10 +347,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 6
   ArcRate: 1
-  Width: 0.5
-  Radius: 2
+  Width: 1
+  Radius: 2.5
   ScaleX: 1
-  Color: {r: 1, g: 1, b: 1, a: 1}
+  Color: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 1}
   Angle: 0
   GrowSize: 0.5
   GrowAlpha: 0.5

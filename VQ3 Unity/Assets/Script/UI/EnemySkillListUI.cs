@@ -71,7 +71,7 @@ public class EnemySkillListUI : MonoBehaviour {
 		
 		foreach( KeyValuePair<int, EnemyCommand> pair in commandData_ )
 		{
-			skillData_[pair.Key].Set(pair.Value.ShortText, 1, ColorManager.Base.Dark, ColorManager.Base.Bright, isEnemySkill: true);
+			skillData_[pair.Key].Set(pair.Value.ShortText, 2/*temp*/, ColorManager.Base.Dark, ColorManager.Base.Bright, isEnemySkill: true);
 		}
 
 		foreach( SkillUI skill in skillData_ )
