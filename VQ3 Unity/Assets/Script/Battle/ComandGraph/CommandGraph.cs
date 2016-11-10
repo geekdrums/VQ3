@@ -485,10 +485,6 @@ public class CommandGraph : MonoBehaviour
 
 		if( NextCommand != null )
 		{
-			NextRect.SetSize(7.0f);
-			NextRect.SetWidth(3.0f);
-			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
-			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(3.0f);
 			NextRect.SetArc(-Music.MusicalTime / LuxSystem.TurnMusicalUnits);
 		}
 		else if( hit.collider == CommandSphere.GetComponent<Collider>() )
@@ -865,6 +861,10 @@ public class CommandGraph : MonoBehaviour
 		NextRect.transform.localPosition = Vector3.forward;
 		NextRect.transform.localScale = Vector3.one;
 		NextRect.transform.localRotation = Quaternion.identity;
+		NextRect.SetSize(7.0f);
+		NextRect.SetWidth(3.0f);
+		NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
+		NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(3.0f);
 		Color themeColor = ColorManager.GetThemeColor(NextCommand.themeColor).Bright;
 		GameObject effect = Instantiate(NextRectEffect, NextRect.transform.position, Quaternion.identity) as GameObject;
 		effect.transform.parent = NextRect.transform;

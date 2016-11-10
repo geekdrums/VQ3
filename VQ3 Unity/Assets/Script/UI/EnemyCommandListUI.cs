@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class EnemyCommandListUI : MonoBehaviour
 {
-	public float OldIconScale = 0.12f;
-	public float ActiveIconScale = 0.22f;
-	public float FutureIconScale = 0.17f;
-	public float Interval = 2.2f;
-	//public float IconLength = 4.0f;
+	public float OldIconScale;
+	public float ActiveIconScale;
+	public float FutureIconScale;
+	public float Interval;
+	public float CenterInterval;
 	public GaugeRenderer EdgeLine;
+	public MidairPrimitive CurrentHex;
 
 	List<GameObject> commandIcons_ = new List<GameObject>();
 	int currentIndex_;
@@ -24,30 +25,58 @@ public class EnemyCommandListUI : MonoBehaviour
 	{
 		for( int i = 0; i < commandIcons_.Count; ++i )
 		{
-			if( i < currentIndex_ )
-			{
-				// 過去のコマンド
-				Vector3 targetPos = Vector3.left * (currentIndex_ - i) * (OldIconScale * Interval);
-				commandIcons_[i].transform.localPosition = Vector3.Lerp(commandIcons_[i].transform.localPosition, targetPos, 0.2f);
-				commandIcons_[i].transform.localScale = Vector3.Lerp(commandIcons_[i].transform.localScale, Vector3.one * OldIconScale, 0.2f);
-			}
-			else if( i == currentIndex_ )
-			{
-				// 現在のコマンド
-				commandIcons_[i].transform.localPosition = Vector3.Lerp(commandIcons_[i].transform.localPosition, Vector3.zero, 0.2f);
-				commandIcons_[i].transform.localScale = Vector3.Lerp(commandIcons_[i].transform.localScale, Vector3.one * ActiveIconScale, 0.2f);
-				//CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
-			}
-			else// (i > currentIndex_ )
-			{
-				// 実行予定のコマンド
-				Vector3 targetPos = Vector3.right * (i - currentIndex_) * (FutureIconScale * Interval);
-				commandIcons_[i].transform.localPosition = Vector3.Lerp(commandIcons_[i].transform.localPosition, targetPos, 0.2f);
-				commandIcons_[i].transform.localScale = Vector3.Lerp(commandIcons_[i].transform.localScale, Vector3.one * FutureIconScale, 0.2f);
-			}
+			if( AnimManager.IsAnimating(commandIcons_[i].gameObject) ) continue;
+
+			commandIcons_[i].transform.localPosition = Vector3.Lerp(commandIcons_[i].transform.localPosition, GetTargetPos(i), 0.2f);
+			commandIcons_[i].transform.localScale = Vector3.Lerp(commandIcons_[i].transform.localScale, GetTargetScale(i), 0.2f);
 		}
-		EdgeLine.transform.localPosition = commandIcons_[0].transform.localPosition;
-		EdgeLine.Length = commandIcons_[commandIcons_.Count - 1].transform.localPosition.x - commandIcons_[0].transform.localPosition.x;
+
+		if( AnimManager.IsAnimating(EdgeLine.gameObject) == false && commandIcons_.Count > 0 )
+		{
+			EdgeLine.transform.localPosition = commandIcons_[0].transform.localPosition + Vector3.forward * 10;
+			EdgeLine.Length = commandIcons_[commandIcons_.Count - 1].transform.localPosition.x - commandIcons_[0].transform.localPosition.x;
+		}
+
+		if( currentIndex_ >= 0 && commandIcons_.Count > 0 && GameContext.BattleState != BattleState.Wait )
+		{
+			CurrentHex.transform.position = commandIcons_[currentIndex_].transform.position + Vector3.back * 10;
+			CurrentHex.SetArc((float)(-Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+		}
+	}
+
+	Vector3 GetTargetScale(int index)
+	{
+		if( index < currentIndex_ )
+		{
+			return Vector3.one * OldIconScale;
+		}
+		else if( index == currentIndex_ )
+		{
+			return Vector3.one * ActiveIconScale;
+		}
+		else// (i > currentIndex_ )
+		{
+			return Vector3.one * FutureIconScale;
+		}
+	}
+
+	Vector3 GetTargetPos(int index)
+	{
+		if( index < currentIndex_ )
+		{
+			// 過去のコマンド
+			return Vector3.left * ((currentIndex_ - index) * (OldIconScale * Interval) + CenterInterval);
+		}
+		else if( index == currentIndex_ )
+		{
+			// 現在のコマンド
+			return Vector3.zero;
+		}
+		else// (i > currentIndex_ )
+		{
+			// 実行予定のコマンド
+			return Vector3.right * ((index - currentIndex_) * (FutureIconScale * Interval) + CenterInterval);
+		}
 	}
 
 
@@ -59,12 +88,30 @@ public class EnemyCommandListUI : MonoBehaviour
 		commandIcons_.Add(iconObj);
 	}
 
+	public void ShowAnim()
+	{
+		for( int i = 0; i < commandIcons_.Count; ++i )
+		{
+			Vector3 targetPos = GetTargetPos(i);
+			commandIcons_[i].transform.localPosition = targetPos + Vector3.up * 5;
+			commandIcons_[i].transform.localScale = GetTargetScale(i);
+			AnimManager.AddAnim(commandIcons_[i].gameObject, targetPos, ParamType.Position, AnimType.BounceIn, 0.2f, i * (float)Music.MusicalTimeUnit * 4.0f / commandIcons_.Count);
+		}
+		EdgeLine.transform.localPosition = commandIcons_[0].transform.localPosition;
+		EdgeLine.Length = commandIcons_[commandIcons_.Count - 1].transform.localPosition.x - commandIcons_[0].transform.localPosition.x;
+		EdgeLine.SetRate(0);
+		AnimManager.AddAnim(EdgeLine.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, 0.2f, (float)Music.MusicalTimeUnit * 4);
+	}
+
 	public void ClearCommands()
 	{
-		foreach(GameObject command in commandIcons_)
+		for( int i = 0; i < commandIcons_.Count; ++i )
 		{
-			Destroy(command.gameObject);
+			Vector3 targetPos = GetTargetPos(i) + Vector3.up * 5;
+			AnimManager.AddAnim(commandIcons_[i].gameObject, targetPos, ParamType.Position, AnimType.BounceOut, 0.3f, i * (float)Music.MusicalTimeUnit * 4.0f / commandIcons_.Count, true);
 		}
+		AnimManager.AddAnim(EdgeLine.gameObject, 0.0f, ParamType.GaugeRate, AnimType.BounceOut, 0.2f, (float)Music.MusicalTimeUnit * 4);
+		CurrentHex.SetArc(0);
 		commandIcons_.Clear();
 		currentIndex_ = -1;
 	}
@@ -87,6 +134,9 @@ public class EnemyCommandListUI : MonoBehaviour
 		}
 		else
 		{
+			CurrentHex.SetSize(commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius + 0.5f);
+			CurrentHex.SetWidth(commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius + 0.5f);
+			CurrentHex.transform.localScale = Vector3.one * ActiveIconScale;
 			for( int i = 0; i < currentIndex_; ++i )
 			{
 				MidairPrimitive mask = commandIcons_[i].GetComponentsInChildren<MidairPrimitive>().First((MidairPrimitive primitive) => primitive.name == "Mask");

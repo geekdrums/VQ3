@@ -5,9 +5,8 @@ using System.Collections;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class MidairPrimitive : MonoBehaviour, IColoredObject
 {
-
 	static readonly int[] quadIndices = new int[] { 0, 2, 1, 3, 1, 2 };
-	static readonly int[] quadFlipIndices = new int[] { 0, 1, 2, 3, 2, 1 };
+	//static readonly int[] quadFlipIndices = new int[] { 0, 1, 2, 3, 2, 1 };
 	static readonly Vector2 UVZero = new Vector2(0, 0);
 	static readonly Vector2 UVRight = new Vector2(0, 1);
 	static readonly Vector2 UVUp  = new Vector2(1, 0);
@@ -38,6 +37,10 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	float linearFactor = 0.3f;
 	Vector3[] meshVertices;
 	Vector3[] normalizedVertices;
+
+	bool isFlip_ { get { return ArcRate < 0.0f; } }
+	int inOffset_ { get { return (isFlip_ ? 1 : 0); } }
+	int outOffset_ { get { return (isFlip_ ? 0 : 1); } }
 
 	Mesh UsableMesh
 	{
@@ -123,12 +126,12 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			float OutR = Radius / Mathf.Cos(Mathf.PI / N);
 			float InR = Mathf.Max(0, (Radius - Width)) / Mathf.Cos(Mathf.PI / N);
 
-			Vector3 normalVertex = Quaternion.AngleAxis(Angle + ArcN * (360.0f / N), Vector3.forward) * Vector3.up;
+			Vector3 normalVertex = Quaternion.AngleAxis(Angle + Mathf.Sign(ArcRate) * ArcN * (360.0f / N), Vector3.forward) * Vector3.up;
 			Vector3 OutVertex = normalVertex * OutR;
 			Vector3 InVertex = normalVertex * InR;
 
 			float angle = (2 * Mathf.PI / N) * ((float)ArcN - Mathf.Abs(ArcRate) * N);
-			Matrix4x4 rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(-angle * (180.0f / Mathf.PI), Vector3.forward), Vector3.one);
+			Matrix4x4 rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(Mathf.Sign(ArcRate) * (-angle) * (180.0f / Mathf.PI), Vector3.forward), Vector3.one);
 			InVertex = rotateMatrix * InVertex;
 			OutVertex = rotateMatrix * OutVertex;
 			normalVertex = rotateMatrix * normalVertex;
@@ -136,24 +139,13 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			float rRatio = 2 * Mathf.Sin(angle / 2) * Mathf.Sin(Mathf.PI / N - angle / 2);
 			InVertex *= lRatio / (lRatio + rRatio);
 			OutVertex *= lRatio / (lRatio + rRatio);
-			meshVertices[2 * ArcN] = InVertex;
-			meshVertices[2 * ArcN + 1] = OutVertex;
+			meshVertices[2 * ArcN + inOffset_] = InVertex;
+			meshVertices[2 * ArcN + outOffset_] = OutVertex;
 			normalizedVertices[ArcN] = normalVertex;
 
 			Mesh mesh = UsableMesh;
-			if( ArcRate < 0 )
-			{
-				Vector3[] flipVertices = meshVertices;
-				for( int i = 0; i < flipVertices.Length; ++i )
-				{
-					flipVertices[i] = new Vector3(-flipVertices[i].x, flipVertices[i].y, 0);//-1;//+= Vector3.left * flipVertices[i].x * 2;
-				}
-				mesh.vertices = flipVertices;
-			}
-			else
-			{
-				mesh.vertices = meshVertices;
-			}
+			mesh.vertices = meshVertices;
+
 
 			GetComponent<MeshFilter>().mesh = mesh;
 			currentArcRate = ArcRate;
@@ -164,6 +156,8 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	{
 		CheckVertex();
 		float OutR = Radius / Mathf.Cos(Mathf.PI / N);
+		int InOffset = inOffset_;
+		int OutOffset = outOffset_;
 		for( int i = 0; i < ArcN + 1; ++i )
 		{
 			if( 2 * i >= meshVertices.Length )
@@ -172,15 +166,15 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			}
 			else
 			{
-				meshVertices[2 * i + 1] = normalizedVertices[i] * OutR;
+				meshVertices[2 * i + OutOffset] = normalizedVertices[i] * OutR;
 			}
 		}
 		if( ScaleX != 1.0f )
 		{
 			for( int i = 0; i <= ArcN; ++i )
 			{
-				meshVertices[2 * i + 1].x *= ScaleX;
-				meshVertices[2 * i].x = meshVertices[2 * i + 1].x - Mathf.Sign(meshVertices[2 * i].x) * Mathf.Abs(meshVertices[2 * i + 1].y - meshVertices[2 * i].y);
+				meshVertices[2 * i + OutOffset].x *= ScaleX;
+				meshVertices[2 * i + InOffset].x = meshVertices[2 * i + OutOffset].x - Mathf.Sign(meshVertices[2 * i + InOffset].x) * Mathf.Abs(meshVertices[2 * i + OutOffset].y - meshVertices[2 * i + InOffset].y);
 			}
 		}
 
@@ -193,6 +187,8 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	{
 		CheckVertex();
 		float InR = Mathf.Max(0, (Radius - Width)) / Mathf.Cos(Mathf.PI / N);
+		int InOffset = inOffset_;
+		int OutOffset = outOffset_;
 		for( int i = 0; i < ArcN + 1; ++i )
 		{
 			if( 2 * i >= meshVertices.Length )
@@ -201,14 +197,14 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			}
 			else
 			{
-				meshVertices[2 * i] = normalizedVertices[i] * InR;
+				meshVertices[2 * i + InOffset] = normalizedVertices[i] * InR;
 			}
 		}
 		if( ScaleX != 1.0f )
 		{
 			for( int i = 0; i <= ArcN; ++i )
 			{
-				meshVertices[2 * i].x = meshVertices[2 * i + 1].x - Mathf.Sign(meshVertices[2 * i].x) * Mathf.Abs(meshVertices[2 * i + 1].y - meshVertices[2 * i].y);
+				meshVertices[2 * i + InOffset].x = meshVertices[2 * i + OutOffset].x - Mathf.Sign(meshVertices[2 * i + InOffset].x) * Mathf.Abs(meshVertices[2 * i + OutOffset].y - meshVertices[2 * i + InOffset].y);
 			}
 		}
 
@@ -250,26 +246,28 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			float OutR = Radius / Mathf.Cos(Mathf.PI / N);
 			float InR = Mathf.Max(0, (Radius - Width)) / Mathf.Cos(Mathf.PI / N);
 
-			Vector3 normalVertex = Quaternion.AngleAxis(Angle, Vector3.forward) * Vector3.up;
+			Vector3 normalVertex = Quaternion.AngleAxis(Mathf.Sign(ArcRate) * Angle, Vector3.forward) * Vector3.up;
 			Vector3 OutVertex = normalVertex * OutR;
 			Vector3 InVertex = normalVertex * InR;
+			int InOffset = inOffset_;
+			int OutOffset = outOffset_;
 
 			//vertex
-			Matrix4x4 rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis((360.0f / N), Vector3.forward), Vector3.one);
+			Matrix4x4 rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(Mathf.Sign(ArcRate) * (360.0f / N), Vector3.forward), Vector3.one);
 			for( int i = 0; i < ArcN; ++i )
 			{
-				meshVertices[2 * i] = InVertex;
-				meshVertices[2 * i + 1] = OutVertex;
+				meshVertices[2 * i + InOffset] = InVertex;
+				meshVertices[2 * i + OutOffset] = OutVertex;
 				normalizedVertices[i] = normalVertex;
 				InVertex = rotateMatrix * InVertex;
 				OutVertex = rotateMatrix * OutVertex;
 				normalVertex = rotateMatrix * normalVertex;
 			}
 			ArcRate = Mathf.Clamp(ArcRate, -1.0f, 1.0f);
-			if( ArcRate < 1.0f )
+			if( Mathf.Abs(ArcRate) < 1.0f )
 			{
 				float angle = (2 * Mathf.PI / N) * ((float)ArcN - Mathf.Abs(ArcRate) * N);
-				rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(-angle * (180.0f / Mathf.PI), Vector3.forward), Vector3.one);
+				rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(Mathf.Sign(ArcRate) * (-angle) * (180.0f / Mathf.PI), Vector3.forward), Vector3.one);
 				InVertex = rotateMatrix * InVertex;
 				OutVertex = rotateMatrix * OutVertex;
 				float lRatio = Mathf.Cos(Mathf.PI / N);
@@ -278,19 +276,21 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 				OutVertex *= lRatio / (lRatio + rRatio);
 				normalVertex = rotateMatrix * normalVertex;
 			}
-			meshVertices[2 * ArcN] = InVertex;
-			meshVertices[2 * ArcN + 1] = OutVertex;
+			meshVertices[2 * ArcN + InOffset] = InVertex;
+			meshVertices[2 * ArcN + OutOffset] = OutVertex;
 			if( ScaleX != 1.0f )
 			{
 				for( int i = 0; i <= ArcN; ++i )
 				{
-					meshVertices[2 * i + 1].x *= ScaleX;
-					meshVertices[2 * i].x = meshVertices[2 * i + 1].x - Mathf.Sign(meshVertices[2 * i].x) * Mathf.Abs(meshVertices[2 * i + 1].y - meshVertices[2 * i].y);
+					meshVertices[2 * i + OutOffset].x *= ScaleX;
+					meshVertices[2 * i + InOffset].x = meshVertices[2 * i + 1].x - Mathf.Sign(meshVertices[2 * i].x) * Mathf.Abs(meshVertices[2 * i + 1].y - meshVertices[2 * i].y);
 				}
 			}
 
 			normalizedVertices[ArcN] = normalVertex;
 
+			mesh.vertices = meshVertices;
+			/*
 			if( ArcRate < 0 )
 			{
 				Vector3[] flipVertices = meshVertices;
@@ -304,6 +304,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			{
 				mesh.vertices = meshVertices;
 			}
+			*/
 
 			// color
 			if( VertexAlphas != null && VertexAlphas.Length == N )
@@ -311,11 +312,11 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 				Color[] colors = new Color[vertexCount];
 				for( int i = 0; i < ArcN; ++i )
 				{
-					colors[2 * i] = ColorManager.MakeAlpha(Color.white, Mathf.Lerp(VertexAlphas[i], VertexAlphas[(i + N/2) % N], (OutR - InR)/(OutR * 2)));
-					colors[2 * i + 1] = ColorManager.MakeAlpha(Color.white, VertexAlphas[i]);
+					colors[2 * i + InOffset] = ColorManager.MakeAlpha(Color.white, Mathf.Lerp(VertexAlphas[i], VertexAlphas[(i + N/2) % N], (OutR - InR)/(OutR * 2)));
+					colors[2 * i + OutOffset] = ColorManager.MakeAlpha(Color.white, VertexAlphas[i]);
 				}
-				colors[2 * ArcN] = ColorManager.MakeAlpha(Color.white, Mathf.Lerp(VertexAlphas[0], VertexAlphas[N/2], (OutR - InR)/(OutR * 2)));
-				colors[2 * ArcN + 1] = ColorManager.MakeAlpha(Color.white, VertexAlphas[0]);
+				colors[2 * ArcN + InOffset] = ColorManager.MakeAlpha(Color.white, Mathf.Lerp(VertexAlphas[0], VertexAlphas[N/2], (OutR - InR)/(OutR * 2)));
+				colors[2 * ArcN + OutOffset] = ColorManager.MakeAlpha(Color.white, VertexAlphas[0]);
 
 				mesh.colors = colors;
 			}
@@ -327,13 +328,13 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			{
 				if( i % 2 == 0 )
 				{
-					uvs[2 * i] = UVZero;
-					uvs[2 * i + 1] = UVRight;
+					uvs[2 * i + InOffset] = UVZero;
+					uvs[2 * i + OutOffset] = UVRight;
 				}
 				else
 				{
-					uvs[2 * i] = UVUp;
-					uvs[2 * i + 1] = UVOne;
+					uvs[2 * i + InOffset] = UVUp;
+					uvs[2 * i + OutOffset] = UVOne;
 				}
 			}
 			mesh.uv = uvs;
@@ -344,7 +345,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			{
 				for( int j = 0; j < 6; ++j )
 				{
-					indices[6 * i + j] = (2 * i + (ArcRate >= 0.0f ? quadIndices[j] : quadFlipIndices[j]));// % mesh.vertices.Length;
+					indices[6 * i + j] = (2 * i + quadIndices[j]);
 				}
 			}
 			mesh.SetIndices(indices, MeshTopology.Triangles, 0);
@@ -451,7 +452,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 		UpdateArc();
 		if( GrowChild != null )
 		{
-			GrowChild.SetArc(Width + GrowSize * 2);
+			GrowChild.SetArc(newArc);
 		}
 	}
 

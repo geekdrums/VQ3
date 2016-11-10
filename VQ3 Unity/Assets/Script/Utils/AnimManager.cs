@@ -53,6 +53,7 @@ public class AnimInfo
 	public object Target;
 	public float Factor;
 	public float Delay;
+	public bool DestroyAtEnd;
 
 	object initialValue_;
 	float normalizedValue_;
@@ -65,12 +66,13 @@ public class AnimInfo
 	TextMesh text_;
 
 	public bool IsEnd { get { return normalizedValue_ >= 1.0f; } private set { normalizedValue_ = 1.0f; } }
-	private float currentValue { get { return (float)initialValue_ + ((float)Target - (float)initialValue_) * animValue_; } }
+	private float currentValueFloat { get { return (float)initialValue_ + ((float)Target - (float)initialValue_) * animValue_; } }
+	private Vector3 currentValueVector3 { get { return (Vector3)initialValue_ + ((Vector3)Target - (Vector3)initialValue_) * animValue_; } }
 	private static float overshoot = 1.70158f;
 
 
 
-	public AnimInfo(GameObject obj, object target, ParamType paramType, AnimType animType, float factor = 0.1f, float delay = 0.0f)
+	public AnimInfo(GameObject obj, object target, ParamType paramType, AnimType animType, float factor = 0.1f, float delay = 0.0f, bool destroyAtEnd = false)
 	{
 		Object = obj;
 		Param = paramType;
@@ -78,6 +80,7 @@ public class AnimInfo
 		Target = target;
 		Factor = factor;
 		Delay = delay;
+		DestroyAtEnd = destroyAtEnd;
 
 		normalizedValue_ = 0;
 		animValue_ = 0;
@@ -144,49 +147,49 @@ public class AnimInfo
 		switch( Param )
 		{
 		case ParamType.Scale:
-			transform_.localScale = Vector3.Lerp((Vector3)initialValue_, (Vector3)Target, animValue_);
+			transform_.localScale = currentValueVector3;
 			break;
 		case ParamType.ScaleX:
-			transform_.localScale = new Vector3(currentValue, transform_.localScale.y, transform_.localScale.z);
+			transform_.localScale = new Vector3(currentValueFloat, transform_.localScale.y, transform_.localScale.z);
 			break;
 		case ParamType.ScaleY:
-			transform_.localScale = new Vector3(transform_.localScale.x, currentValue, transform_.localScale.z);
+			transform_.localScale = new Vector3(transform_.localScale.x, currentValueFloat, transform_.localScale.z);
 			break;
 		case ParamType.ScaleZ:
-			transform_.localScale = new Vector3(transform_.localScale.x, transform_.localScale.y, currentValue);
+			transform_.localScale = new Vector3(transform_.localScale.x, transform_.localScale.y, currentValueFloat);
 			break;
 		case ParamType.Position:
-			transform_.localPosition = Vector3.Lerp((Vector3)initialValue_, (Vector3)Target, animValue_);
+			transform_.localPosition = currentValueVector3;
 			break;
 		case ParamType.PositionX:
-			transform_.localPosition = new Vector3(currentValue, transform_.localPosition.y, transform_.localPosition.z);
+			transform_.localPosition = new Vector3(currentValueFloat, transform_.localPosition.y, transform_.localPosition.z);
 			break;
 		case ParamType.PositionY:
-			transform_.localPosition = new Vector3(transform_.localPosition.x, currentValue, transform_.localPosition.z);
+			transform_.localPosition = new Vector3(transform_.localPosition.x, currentValueFloat, transform_.localPosition.z);
 			break;
 		case ParamType.PositionZ:
-			transform_.localPosition = new Vector3(transform_.localPosition.x, transform_.localPosition.y, currentValue);
+			transform_.localPosition = new Vector3(transform_.localPosition.x, transform_.localPosition.y, currentValueFloat);
 			break;
 		case ParamType.RotationZ:
-			transform_.localRotation = Quaternion.AngleAxis(currentValue, Vector3.forward);
+			transform_.localRotation = Quaternion.AngleAxis(currentValueFloat, Vector3.forward);
 			break;
 		case ParamType.PrimitiveRadius:
-			primitive_.SetSize(currentValue);
+			primitive_.SetSize(currentValueFloat);
 			break;
 		case ParamType.PrimitiveWidth:
-			primitive_.SetWidth(currentValue);
+			primitive_.SetWidth(currentValueFloat);
 			break;
 		case ParamType.PrimitiveArc:
-			primitive_.SetArc(currentValue);
+			primitive_.SetArc(currentValueFloat);
 			break;
 		case ParamType.GaugeLength:
-			gauge_.Length = currentValue;
+			gauge_.Length = currentValueFloat;
 			break;
 		case ParamType.GaugeRate:
-			gauge_.SetRate(currentValue);
+			gauge_.SetRate(currentValueFloat);
 			break;
 		case ParamType.GaugeWidth:
-			gauge_.SetWidth(currentValue);
+			gauge_.SetWidth(currentValueFloat);
 			break;
 		case ParamType.Color:
 			coloredObj_.SetColor(Color.Lerp((Color)initialValue_, (Color)Target, animValue_));
@@ -194,6 +197,12 @@ public class AnimInfo
 		case ParamType.TextColor:
 			text_.color = Color.Lerp((Color)initialValue_, (Color)Target, animValue_);
 			break;
+		}
+
+		if( IsEnd && DestroyAtEnd )
+		{
+			GameObject.Destroy(Object);
+			return;
 		}
 	}
 
@@ -320,11 +329,11 @@ public class AnimManager : MonoBehaviour
 		Animations.RemoveAll((AnimInfo anim) => anim.IsEnd);
 	}
 
-	public static void AddAnim(GameObject obj, object target, ParamType paramType, AnimType animType = AnimType.Linear, float factor = 0.1f, float delay = 0.0f)
+	public static void AddAnim(GameObject obj, object target, ParamType paramType, AnimType animType = AnimType.Linear, float factor = 0.1f, float delay = 0.0f, bool destroyAtEnd = false)
 	{
 		if( instance.Animations.Find((AnimInfo anim) => anim.Object == obj && anim.Param == paramType && anim.Target == target) != null ) return;
 		//instance.Animations.RemoveAll((AnimInfo anim) => anim.Object == obj && anim.Param == paramType);
-		instance.Animations.Add(new AnimInfo(obj, target, paramType, animType, factor, delay));
+		instance.Animations.Add(new AnimInfo(obj, target, paramType, animType, factor, delay, destroyAtEnd));
 	}
 
 	public static bool IsAnimating(GameObject obj)

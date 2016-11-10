@@ -38,11 +38,13 @@ public class EnemyCommandGraph : MonoBehaviour {
 				{
 					if( CurrentState.Name != "Invert" ) OldState = CurrentState;
 					CheckState();
-					//todo: パターンサークルどうしよう？
+					if( OldState != CurrentState || TurnCount >= CurrentState.Pattern.Length )
+					{
+						CommandListUI.ClearCommands();
+					}
 				}
 				else if( Music.IsJustChangedAt(SetNextTiming) )
 				{
-					//currentPatternCircle_.SetNext();
 					UpdateShade();
 				}
 			}
@@ -128,8 +130,16 @@ public class EnemyCommandGraph : MonoBehaviour {
 		}
 		++TurnCount;
 
-		//currentPatternCircle_.SetCurrent();
 		CommandListUI.OnExecCommand();
+		if( (OldState != CurrentState || TurnCount > CurrentState.Pattern.Length) && CurrentState.Pattern.Length > 0 )
+		{
+			for( int i = 0; i < CurrentState.Pattern.Length; ++i )
+			{
+				CommandListUI.AddCommand(CurrentState.Pattern[i]);
+			}
+			CommandListUI.ShowAnim();
+			TurnCount %= CurrentState.Pattern.Length;
+		}
 
 		return CurrentCommandSet;
 	}
@@ -164,6 +174,8 @@ public class EnemyCommandGraph : MonoBehaviour {
 			condition.Parse();
 		}
 		ChangeState(battleSet.States[0].Name);
+		OldState = CurrentState;
+		CommandListUI.ShowAnim();
 
 		UpdateShade();
 	}

@@ -130,19 +130,24 @@ MonoBehaviour:
       - Name: Default
         Pattern:
         - Command: Wait
-          IconPrefab: {fileID: 0}
+          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
+            type: 2}
           Threat: 0
         - Command: Attack
-          IconPrefab: {fileID: 0}
+          IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
+            type: 2}
           Threat: 20
         - Command: Attack
-          IconPrefab: {fileID: 0}
+          IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
+            type: 2}
           Threat: 20
         - Command: Attack3
-          IconPrefab: {fileID: 0}
+          IconPrefab: {fileID: 1000012387805298, guid: 973319b6721c9814db536eb5110e5653,
+            type: 2}
           Threat: 75
         - Command: Wait
-          IconPrefab: {fileID: 0}
+          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
+            type: 2}
           Threat: 0
         NextState: 
       Conditions: []
@@ -193,22 +198,10 @@ MonoBehaviour:
           IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
             type: 2}
           Threat: 20
-        - Command: Attack
-          IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
-            type: 2}
-          Threat: 20
         - Command: Attack2
           IconPrefab: {fileID: 1000012387805298, guid: 973319b6721c9814db536eb5110e5653,
             type: 2}
-          Threat: 60
-        - Command: Attack3
-          IconPrefab: {fileID: 1000011355508276, guid: c23aae0226f0d8440a501b7360debaa3,
-            type: 2}
-          Threat: 100
-        - Command: Wait
-          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
-            type: 2}
-          Threat: 0
+          Threat: 40
         NextState: 
       Conditions: []
     AcquireMemory: 20
