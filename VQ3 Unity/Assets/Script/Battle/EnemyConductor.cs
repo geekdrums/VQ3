@@ -9,9 +9,11 @@ public class EnemyConductor : MonoBehaviour
 	static readonly float EnemyInterval = 7.0f;
 	static readonly int[] CommandExecBars = new int[3] { 2, 3, 1 };
 	
-	public EnemyCommandGraph CommandGraph;
+	public EnemyCommandGraph commandGraph;
+	public EnemySkillListUI skillList;
+	public GameObject skillListParent;
 	public GameObject damageTextPrefab;
-	public DamageGauge DamageGauge;
+	public DamageGauge damageGauge;
 	public GameObject commandIconPrefab;
 	public GameObject shortTextWindowPrefab;
 	public EnemyCommand PhysicDefaultCommand;
@@ -91,7 +93,7 @@ public class EnemyConductor : MonoBehaviour
 		}
 		targetEnemy = Enemies[0];
 		GameContext.LuxSystem.SetTargetEnemy(targetEnemy);
-		CommandGraph.BattleInit(battleSet);
+		commandGraph.BattleInit(battleSet);
 	}
 
 	Vector3 GetInitSpawnPosition(int index, int l) { return new Vector3(EnemyInterval * (-(l - 1) / 2.0f + index) * (l == 2 ? 1.2f : 1.0f), 0, 0); }
@@ -141,7 +143,7 @@ public class EnemyConductor : MonoBehaviour
 			int vt = (int)(attack.VT * (skill.OwnerCharacter as Player).VTCoeff);
 			GameContext.LuxSystem.AddVP(vp, vt);
 
-			if( DamageGauge.CurrentMode == DamageGauge.Mode.Break )
+			if( damageGauge.CurrentMode == DamageGauge.Mode.Break )
 			{
 				if( lastDamageText_ != null )
 				{
@@ -281,15 +283,26 @@ public class EnemyConductor : MonoBehaviour
 	public void CheckCommand()
 	{
 		int execIndex = 0;
-		EnemyCommandSet commandSet = CommandGraph.CheckCommand();
+		EnemyCommandSet commandSet = commandGraph.CheckCommand();
+		Dictionary<int, EnemyCommand> commandDict = new Dictionary<int, EnemyCommand>();
 		foreach( Enemy enemy in Enemies )
 		{
 			enemy.TellCommand((commandSet != null ? commandSet.Command : ""));
 			enemy.SetExecBar(CommandExecBars[execIndex]);
+
+			if( enemy.currentCommand != null )
+			{
+				commandDict.Add(CommandExecBars[execIndex], enemy.currentCommand);
+			}
+
 			++execIndex;
 		}
+		skillList.Set(commandDict);
+		skillList.Execute();
+		AnimManager.AddAnim(skillList.gameObject, skillListParent.transform.localPosition, ParamType.Position, AnimType.Time, 0.4f, (float)Music.MusicalTimeUnit * 9);
+
 		lastDamageText_ = null;
-		DamageGauge.TurnInit();
+		damageGauge.TurnInit();
 	}
 	public void CheckWaitCommand()
 	{
@@ -316,11 +329,11 @@ public class EnemyConductor : MonoBehaviour
 		{
 			e.InvertInit();
 		}
-		CommandGraph.InvertInit();
+		commandGraph.InvertInit();
 	}
 	public void OnRevert()
 	{
-		CommandGraph.OnRevert();
+		commandGraph.OnRevert();
 	}
 
 	public void OnArrowPushed(bool LorR)

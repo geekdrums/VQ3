@@ -110,13 +110,13 @@ public class Enemy : Character
 
 		if( GameContext.LuxSystem.IsOverFlow )
 		{
-			if( GameContext.EnemyConductor.DamageGauge.Enemy == this )
+			if( GameContext.EnemyConductor.damageGauge.Enemy == this )
 			{
-				GameContext.EnemyConductor.DamageGauge.AddDamage(damage, actResult);
+				GameContext.EnemyConductor.damageGauge.AddDamage(damage, actResult);
 			}
 			else
 			{
-				GameContext.EnemyConductor.DamageGauge.Initialize(this, damage, actResult, parent != null ? parent.transform.position : transform.position + Vector3.down * 3);
+				GameContext.EnemyConductor.damageGauge.Initialize(this, damage, actResult, parent != null ? parent.transform.position : transform.position + Vector3.down * 3);
 			}
 
 			if( lastDamageText != null )

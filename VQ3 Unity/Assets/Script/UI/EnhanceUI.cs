@@ -46,7 +46,6 @@ public class EnhanceUI : MonoBehaviour {
 			if( Music.IsJustChangedAt(CommandGraph.AllowInputEnd) && GameContext.BattleState != BattleState.Wait )
 			{
 				--remainTurns;
-				print(remainTurns);
 				if( remainTurns <= 0 )
 				{
 					Destroy(this.gameObject);

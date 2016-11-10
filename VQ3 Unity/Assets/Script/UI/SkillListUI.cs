@@ -60,7 +60,7 @@ public class SkillListUI : MonoBehaviour {
 			{
 				if( skillData_[i].WillBeExecuted )
 				{
-					Vector3 targetPos = Vector3.right * (5 * targetIndex /*- 19.5f * mtRate*/) + Vector3.up * skillData_[i].transform.localPosition.y;
+					Vector3 targetPos = Vector3.right * (5 * targetIndex) + Vector3.up * skillData_[i].transform.localPosition.y;
 					skillData_[i].transform.localPosition = Vector3.Lerp(skillData_[i].transform.localPosition, targetPos, 0.2f);
 					targetIndex += skillData_[i].length;
 				}

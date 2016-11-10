@@ -37,12 +37,7 @@ public class CommandGraph : MonoBehaviour
 
 	public MidairPrimitive CurrentRect;
 	public MidairPrimitive NextRect;
-
-	//public GameObject GaugeParent;
-	//public GaugeRenderer CurrentGauge;
-	//public GaugeRenderer NextGauge;
-	//public MidairPrimitive NextLight;
-	//public MidairPrimitive Mask;
+	
 	public TextMesh CurrentCommandName;
 	public GameObject NextRectEffect;
 
@@ -393,15 +388,13 @@ public class CommandGraph : MonoBehaviour
 				SetNextBlock();
 			}
 			CurrentRect.SetArc(0);
-			//CurrentGauge.SetRate(0.0f);
-			//NextGauge.SetRate(1.0f);
+			CurrentRect.SetArc(0);
 			break;
 		case BattleState.Intro:
 			if( NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == WaitInputEnd.MusicalTime) )
 			{
 				SetNextBlock();
 			}
-			//CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			break;
 		case BattleState.Battle:
@@ -410,15 +403,11 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
-			//CurrentGauge.SetRate((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
-			//NextGauge.SetRate((float)(Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			break;
 		case BattleState.Endro:
 			break;
 		}
-		//Vector3 gaugePos = NextGauge.transform.parent.localPosition;
-		//NextGauge.transform.parent.localPosition = Vector3.Lerp(gaugePos, new Vector3(gaugePos.x, (NextCommand == null ? -7.5f : -9.0f), gaugePos.z), 0.2f);
 		CurrentRect.SetColor(ColorManager.Base.Front);
 	}
 
@@ -691,7 +680,6 @@ public class CommandGraph : MonoBehaviour
 			CurrentRect.transform.localPosition = Vector3.forward;
 			CurrentRect.transform.localScale = Vector3.one;
 			CurrentRect.transform.localRotation = Quaternion.identity;
-			//NextRect.transform.localScale = Vector3.zero;
 			NextRect.transform.parent = transform;
 			PreviewCommand = null;
 			foreach( PlayerCommand c in GetLinkedCommands() )
@@ -718,17 +706,12 @@ public class CommandGraph : MonoBehaviour
 			Color themeColor = ColorManager.GetThemeColor(CurrentCommand.themeColor).Bright;
 			CurrentCommandName.text = CurrentCommand.nameText.ToUpper();
 			CurrentCommandName.color = themeColor;
-			//CurrentGauge.SetColor(themeColor, 0.2f);
-			//NextGauge.SetColor(ColorManager.Base.Front);
-			//NextLight.SetTargetColor(Color.clear);
-			//Mask.SetTargetColor(Color.clear);
 			CurrentCommandName.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
 			CommandList.OnExecCommand();
 		}
 		else
 		{
 			CurrentCommandName.text = "";
-			//CurrentGauge.SetColor(Color.clear);
 		}
 	}
 
@@ -785,11 +768,6 @@ public class CommandGraph : MonoBehaviour
 		CommandLoopCount = 0;
 		Select(IntroCommand);
 		OnExecCommand();
-		//GaugeParent.SetActive(true);
-		//CurrentGauge.SetColor(ColorManager.Base.Front);
-		//NextGauge.SetColor(ColorManager.Base.Front);
-		//NextLight.SetColor(Color.clear);
-		//Mask.SetColor(Color.clear);
 		transform.rotation = Quaternion.Inverse(Quaternion.LookRotation(-IntroCommand.transform.localPosition)) * offsetRotation;
 		CurrentRect.transform.parent = IntroCommand.transform;
 		CurrentRect.transform.localPosition = Vector3.forward;
@@ -799,17 +777,14 @@ public class CommandGraph : MonoBehaviour
 
 	public void OnEndro()
 	{
-		//GaugeParent.SetActive(false);
 	}
 
 	public void OnEnterContinue()
 	{
-		//GaugeParent.SetActive(false);
 	}
 
 	public void OnEnterSetting()
 	{
-		//GaugeParent.SetActive(false);
 		CurrentRect.transform.localScale = Vector3.zero;
 		CheckLinkedFromIntro();
 		Deselect();
@@ -819,7 +794,6 @@ public class CommandGraph : MonoBehaviour
 	{
 		if( NextCommand == null )
 		{
-			//NextGauge.SetColor(Base.Front);
 		}
 	}
 
@@ -835,10 +809,6 @@ public class CommandGraph : MonoBehaviour
 			NextCommand = null;
 			NextRect.transform.localScale = Vector3.zero;
 			CommandList.DeleteCommand();
-
-			//NextGauge.SetColor(ColorManager.Base.Front);
-			//NextLight.SetTargetColor(Color.clear);
-			//Mask.SetTargetColor(Color.clear);
 		}
 	}
 
@@ -876,24 +846,10 @@ public class CommandGraph : MonoBehaviour
 			primitive.SetColor(themeColor);
 		}
 
-		if( GameContext.State == GameState.Battle )
-		{
-			//NextGauge.SetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Bright);
-			//if( command != IntroCommand ) NextLight.SetTargetColor(ColorManager.GetThemeColor(NextCommand.themeColor).Bright);
-			//if( command != IntroCommand && GameContext.LuxState != LuxState.Overload ) Mask.SetTargetColor(ColorManager.MakeAlpha(Color.black, 0.5f));
-		}
-
 		targetRotation = Quaternion.Inverse(Quaternion.LookRotation(-command.transform.localPosition)) * offsetRotation;
 		if( command != IntroCommand ) SEPlayer.Play("select");
 
 		GameContext.PlayerConductor.OnSelectedCommand(command);
-
-
-
-		//if( GameContext.BattleState == BattleState.Intro && command != IntroCommand )
-		//{
-		//	SetNextBlock();
-		//}
 	}
 
 	public void SelectInitialInvertCommand()
@@ -913,7 +869,6 @@ public class CommandGraph : MonoBehaviour
 				}
 			}
 		}
-		//Mask.SetTargetColor(Color.clear);
 	}
 
 	public void CheckLinkedFromIntro()
