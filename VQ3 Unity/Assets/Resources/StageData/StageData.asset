@@ -186,26 +186,34 @@ MonoBehaviour:
     Version: 2
   - BattleSets:
     - Enemies:
-      - {fileID: 100000, guid: ca8b14af462e1374cb452d76f909f1cc, type: 2}
+      - {fileID: 100000, guid: 0d9bc74352646ca44a5077a9e70591d5, type: 2}
       States:
       - Name: Default
         Pattern:
         - Command: Wait
-          IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
+          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
             type: 2}
           Threat: 0
         - Command: Attack
           IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
             type: 2}
           Threat: 20
-        - Command: Attack2
-          IconPrefab: {fileID: 1000012387805298, guid: 973319b6721c9814db536eb5110e5653,
+        - Command: Attack
+          IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
             type: 2}
           Threat: 40
+        - Command: Attack3
+          IconPrefab: {fileID: 1000012387805298, guid: 973319b6721c9814db536eb5110e5653,
+            type: 2}
+          Threat: 60
+        - Command: Wait
+          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
+            type: 2}
+          Threat: 0
         NextState: 
       Conditions: []
     AcquireMemory: 20
-    BreakPoint: 100
+    BreakPoint: 10
     Version: 2
   EventData:
   - Messages:

@@ -16,6 +16,7 @@ public class EnemyCommandListUI : MonoBehaviour
 
 	List<GameObject> commandIcons_ = new List<GameObject>();
 	int currentIndex_;
+	GameObject CurrentCommandIcon { get { return (commandIcons_.Count > 0 && 0 <= currentIndex_ && currentIndex_ < commandIcons_.Count ? commandIcons_[currentIndex_] : null); } }
 
 	void Start()
 	{
@@ -31,15 +32,21 @@ public class EnemyCommandListUI : MonoBehaviour
 			commandIcons_[i].transform.localScale = Vector3.Lerp(commandIcons_[i].transform.localScale, GetTargetScale(i), 0.2f);
 		}
 
+		if( Music.IsJustChangedAt(EnemySkillListUI.ShowSkillCutInTiming) && CurrentCommandIcon != null )
+		{
+			AnimManager.AddAnim(CurrentCommandIcon, Vector3.down * 2.5f, ParamType.Position, AnimType.BounceIn, 0.3f);
+			AnimManager.AddAnim(CurrentCommandIcon, Vector3.zero, ParamType.Position, AnimType.BounceOut, 0.3f, (float)Music.MusicalTimeUnit * 8);
+		}
+
 		if( AnimManager.IsAnimating(EdgeLine.gameObject) == false && commandIcons_.Count > 0 )
 		{
-			EdgeLine.transform.localPosition = commandIcons_[0].transform.localPosition + Vector3.forward * 10;
+			EdgeLine.transform.localPosition = new Vector3(commandIcons_[0].transform.localPosition.x, 0, 10);
 			EdgeLine.Length = commandIcons_[commandIcons_.Count - 1].transform.localPosition.x - commandIcons_[0].transform.localPosition.x;
 		}
 
-		if( currentIndex_ >= 0 && commandIcons_.Count > 0 && GameContext.BattleState != BattleState.Wait )
+		if( CurrentCommandIcon != null && GameContext.BattleState != BattleState.Wait )
 		{
-			CurrentHex.transform.position = commandIcons_[currentIndex_].transform.position + Vector3.back * 10;
+			CurrentHex.transform.localPosition = new Vector3(CurrentCommandIcon.transform.localPosition.x, 0, -1);
 			CurrentHex.SetArc((float)(-Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 		}
 	}
@@ -134,8 +141,8 @@ public class EnemyCommandListUI : MonoBehaviour
 		}
 		else
 		{
-			CurrentHex.SetSize(commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius + 0.5f);
-			CurrentHex.SetWidth(commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius + 0.5f);
+			CurrentHex.SetSize(commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius);
+			CurrentHex.SetWidth(commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius);
 			CurrentHex.transform.localScale = Vector3.one * ActiveIconScale;
 			for( int i = 0; i < currentIndex_; ++i )
 			{

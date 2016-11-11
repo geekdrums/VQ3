@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CommandExplanation : MonoBehaviour, IColoredObject
+public class CommandExplanation : MonoBehaviour
 {
 
 	public GaugeRenderer NameBase;
@@ -9,8 +9,8 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 	public TextMesh Explanation;
 	public CounterSprite LVCount;
 	public TextMesh LVText;
-	//public GameObject IconParent;
-	public GaugeRenderer TopLine;//, BottomLine;
+	//public GaugeRenderer EdgeLine;
+	public GaugeRenderer Mask;
 
 	[System.Serializable]
 	public class CommandParam
@@ -64,7 +64,6 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 	public Phase CurrentPhase { get; private set; }
 
 	PlayerCommandData commandData_;
-	Color currentColor_ = Color.clear;
 
 	// Use this for initialization
 	void Start () {
@@ -83,10 +82,10 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 		}
 	}
 
-	public void Set(PlayerCommand command)
+	public void Set(PlayerCommand command, bool isPreview = false)
 	{
 		gameObject.SetActive(true);
-		TopLine.gameObject.SetActive(true);
+		//EdgeLine.gameObject.SetActive(true);
 		//if( IconParent.transform.childCount > 0 )
 		//{
 		//	Destroy(IconParent.transform.GetChild(0).gameObject);
@@ -96,6 +95,12 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 		CommandName.text = command.nameText.ToUpper();
 		CommandName.color = themeColor.Bright;
 
+		if( isPreview )
+		{
+			Mask.SetColor(ColorManager.Base.Back);
+		}
+		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, isPreview ? 0.6f : 0.0f), ParamType.Color, AnimType.Linear, 0.1f);
+
 		//GameObject iconObj = command.InstantiateIconObj(IconParent);
 		if( GameContext.State == GameState.Result || GameContext.State == GameState.Event )
 		{
@@ -104,10 +109,6 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 			Explanation.text = "";
 			commandData_ = command.commandData[command.commandData.Count-1];
 			//iconObj.GetComponent<PlayerCommand>().maskPlane.SetActive(false);
-			if( GameContext.State == GameState.Event )
-			{
-				TopLine.gameObject.SetActive(false);
-			}
 		}
 		else if( commandData_ != null )
 		{
@@ -115,8 +116,9 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 			LVText.gameObject.SetActive(true);
 			LVText.color = ColorManager.Base.Bright;
 			LVText.color = themeColor.Bright;
-			LVCount.CounterColor= themeColor.Bright;
+			LVCount.CounterColor = themeColor.Bright;
 			Explanation.text = commandData_.ExplanationText.Replace("<br/>", System.Environment.NewLine);
+			Explanation.color = themeColor.Bright;
 			if( GameContext.FieldConductor.EncounterIndex == 0 )
 			{
 				Explanation.text = commandData_.ExplanationText.Split(new string[]{"<br/>"}, System.StringSplitOptions.RemoveEmptyEntries)[0];
@@ -184,24 +186,26 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 
 		LVCount.Count = command.currentLevel;
 
-		TopLine.SetColor(themeColor.Bright);
-		//BottomLine.SetColor(themeColor.Bright);
-
 		if( CurrentPhase != Phase.Wait || GameContext.State == GameState.Result )
 		{
 			Show();
 		}
 	}
 
+	public void OnExecCommand()
+	{
+		NameBase.SetColor(ColorManager.Base.Bright);
+		CommandName.text = "NEXT?";
+		CommandName.color = ColorManager.Base.Bright;
+		LVText.color = Color.clear;
+		LVCount.CounterColor = Color.clear;
+		Explanation.text = "";
+		Mask.SetColor(ColorManager.MakeAlpha(ColorManager.Base.Back, 0.6f));
+		SkillListUI.Set(null);
+	}
 
 	public void Show()
 	{
-		TopLine.SetRate(0);
-		TopLine.SetRate(1, 0.2f);
-		//BottomLine.SetRate(0);
-		//BottomLine.SetRate(1, 0.2f);
-		currentColor_ = Color.clear;
-		AnimManager.AddAnim(gameObject, Color.white, ParamType.Color);
 		//IconParent.transform.localScale = Vector3.zero;
 		//AnimManager.AddAnim(IconParent, 0.3f, ParamType.Scale, AnimType.BounceIn, 0.2f);
 
@@ -212,10 +216,6 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 	public void Hide()
 	{
 		gameObject.SetActive(false);
-		TopLine.SetRate(0, 0.2f);
-		//BottomLine.SetRate(0, 0.2f);
-		currentColor_ = Color.white;
-		AnimManager.AddAnim(gameObject, Color.white, ParamType.Color);
 		//AnimManager.AddAnim(IconParent, 0.0f, ParamType.Scale, AnimType.BounceOut, 0.2f);
 
 		CurrentPhase = Phase.Hiding;
@@ -232,19 +232,5 @@ public class CommandExplanation : MonoBehaviour, IColoredObject
 		commandData_ = null;
 		CurrentPhase = Phase.Hide;
 		Explanation.text = "";
-	}
-
-	public void SetColor(Color color)
-	{
-		currentColor_ = color;
-		LVText.color = currentColor_;
-		LVCount.CounterColor = currentColor_;
-		CommandName.color = currentColor_;
-		Explanation.color = currentColor_;
-	}
-
-	public Color GetColor()
-	{
-		return currentColor_;
 	}
 }

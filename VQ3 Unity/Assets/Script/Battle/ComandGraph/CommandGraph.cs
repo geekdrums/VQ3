@@ -500,7 +500,7 @@ public class CommandGraph : MonoBehaviour
 			{
 				PreviewCommand = command;
 				SEPlayer.Play("tick");
-				CommandExp.Set(PreviewCommand);
+				CommandExp.Set(PreviewCommand, isPreview: true);
 			}
 		}
 		else
@@ -611,6 +611,10 @@ public class CommandGraph : MonoBehaviour
 				}
 				));
 
+			NextRect.SetArc(1);
+			NextRect.SetSize(7.0f);
+			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
+			CurrentRect.SetArc(0);
 			SkillCutIn.Set(NextCommand, CommandExp.SkillListUI, CommandExp.CommandName.gameObject);
 		}
 
@@ -708,6 +712,7 @@ public class CommandGraph : MonoBehaviour
 			CurrentCommandName.color = themeColor;
 			CurrentCommandName.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
 			CommandList.OnExecCommand();
+			CommandExp.OnExecCommand();
 		}
 		else
 		{
@@ -831,9 +836,17 @@ public class CommandGraph : MonoBehaviour
 		NextRect.transform.localPosition = Vector3.forward;
 		NextRect.transform.localScale = Vector3.one;
 		NextRect.transform.localRotation = Quaternion.identity;
-		NextRect.SetSize(7.0f);
+		if( NextCommand == CurrentCommand )
+		{
+			NextRect.SetSize(10.0f);
+			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(10.0f);
+		}
+		else
+		{
+			NextRect.SetSize(7.0f);
+			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
+		}
 		NextRect.SetWidth(3.0f);
-		NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
 		NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(3.0f);
 		Color themeColor = ColorManager.GetThemeColor(NextCommand.themeColor).Bright;
 		GameObject effect = Instantiate(NextRectEffect, NextRect.transform.position, Quaternion.identity) as GameObject;

@@ -17,13 +17,15 @@ public class CommandEdge : MonoBehaviour {
 	static Color LinkedLineColor = Color.white;
 	static Color UnlinkedLineColor = ColorManager.MakeAlpha(Color.white, 0.2f);
 	static Color PrelinkedLineColor = ColorManager.MakeAlpha(Color.white, 0.2f);
+	static Color NotSelectedLineColor = ColorManager.MakeAlpha(Color.white, 0.9f);
 	static Color InvertLinkedLineColor = Color.black;
 	static Color InvertUnlinkedLineColor = ColorManager.MakeAlpha(Color.black, 0.2f);
 	static Color InvertPrelinkedLineColor = ColorManager.MakeAlpha(Color.black, 0.2f);
 	static float LinkedLineWidth = 0.3f;
 	static float PrelinkedLineWidth = 0.1f;
 	static float UnlinkedLineWidth = 0.05f;
-	
+	static float NotSelectedLineWidth = 0.15f;
+
 	LineRenderer line_;
 	EdgeState state_ = EdgeState.None;
 	public bool IsInvert { get { return Command1 is InvertCommand || Command2 is InvertCommand; } }
@@ -45,6 +47,7 @@ public class CommandEdge : MonoBehaviour {
 		{
 		case EdgeState.Linked:
 			width = LinkedLineWidth;
+			color = LinkedLineColor;
 			if( IsInvert )
 			{
 				color = InvertLinkedLineColor;
@@ -53,15 +56,12 @@ public class CommandEdge : MonoBehaviour {
 			{
 				if( Command1.state == CommandState.Selected || Command2.state == CommandState.Selected )
 				{
-					color = LinkedLineColor;
+					width = LinkedLineWidth;
 				}
 				else if( Command1.state == CommandState.NotSelected || Command2.state == CommandState.NotSelected )
 				{
-					color = PrelinkedLineColor;
-				}
-				else
-				{
-					color = LinkedLineColor;
+					color = NotSelectedLineColor;
+					width = NotSelectedLineWidth;
 				}
 			}
 			break;

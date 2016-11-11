@@ -46,7 +46,7 @@ public class SkillListUI : MonoBehaviour {
 			if( Music.IsJustChangedBar() )
 			{
 				int bar = Music.Just.Bar;
-				if( skillData_[bar].length > 0 )
+				if( skillData_[bar].WillBeExecuted )
 				{
 					skillData_[bar].Execute();
 				}
@@ -94,31 +94,36 @@ public class SkillListUI : MonoBehaviour {
 			enhance.Reset();
 		}
 
-		int number = 0;
+		Color baseColor = ColorManager.Base.Bright;
 
-		if( commandData_.DefendPercent > 0 )
+		if( commandData_ != null )
 		{
-			enhanceData_[number].Set(EnhanceParamType.Defend);
-			++number;
-		}
-		if( commandData_.HealPercent > 0 )
-		{
-			enhanceData_[number].Set(EnhanceParamType.Heal);
-			++number;
-		}
+			int number = 0;
 
-		ThemeColor themeColor = ColorManager.GetThemeColor(commandData_.OwnerCommand.themeColor);
-		Color baseColor = themeColor.Bright;
-		foreach( KeyValuePair<int,Skill> pair in commandData_.SkillDictionary )
-		{
-			Skill skill = pair.Value;
-			int bar = (int)(pair.Key / 16);
-			number = Mathf.Min(4 - skill.length, Mathf.Max(bar, number));
+			if( commandData_.DefendPercent > 0 )
+			{
+				enhanceData_[number].Set(EnhanceParamType.Defend);
+				++number;
+			}
+			if( commandData_.HealPercent > 0 )
+			{
+				enhanceData_[number].Set(EnhanceParamType.Heal);
+				++number;
+			}
 
-			if( skill.length <= 0 ) continue;
+			ThemeColor themeColor = ColorManager.GetThemeColor(commandData_.OwnerCommand.themeColor);
+			baseColor = themeColor.Bright;
+			foreach( KeyValuePair<int, Skill> pair in commandData_.SkillDictionary )
+			{
+				Skill skill = pair.Value;
+				int bar = (int)(pair.Key / 16);
+				number = Mathf.Min(4 - skill.length, Mathf.Max(bar, number));
 
-			skillData_[number].Set(skill.shortName, skill.length, baseColor, ColorManager.Base.Bright);
-			++number;
+				if( skill.length <= 0 ) continue;
+
+				skillData_[number].Set(skill.shortName, skill.length, baseColor, ColorManager.Base.Bright);
+				++number;
+			}
 		}
 
 		foreach( SkillUI skill in skillData_ )

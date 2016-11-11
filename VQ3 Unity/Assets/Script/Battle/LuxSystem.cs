@@ -391,7 +391,6 @@ public class LuxSystem : MonoBehaviour
 		if( IsOverFlow )
 		{
 			Ring.transform.localScale = Vector3.Lerp(Ring.transform.localScale, targetSunScale, 0.05f);
-			//CommandCircle.transform.localScale = Vector3.Lerp(CommandCircle.transform.localScale, Vector3.zero, 0.05f);
 			if( Music.Just.Bar < 3 )
 			{
 				BreakAccentGauge.SetColor(Color.Lerp(ColorManager.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
@@ -400,7 +399,6 @@ public class LuxSystem : MonoBehaviour
 		else
 		{
 			Ring.transform.localScale = Vector3.Lerp(Ring.transform.localScale, Vector3.one, 0.05f);
-			//CommandCircle.transform.localScale = Vector3.Lerp(CommandCircle.transform.localScale, Vector3.one, 0.05f);
 		}
 
 		if( Music.Just.Bar < 3 || !IsOverFlow )
@@ -410,7 +408,7 @@ public class LuxSystem : MonoBehaviour
 			{
 				t = (2.0f / 3.0f) * (Mathf.Max(0, 1.0f - (float)(Music.MusicalTime - Music.CurrentUnitPerBar * 2) / Music.CurrentUnitPerBar));
 			}
-			Moon.transform.position = Vector3.Lerp(initialMoonPosition, Sun.transform.position + Vector3.back * 0.2f, (-Mathf.Cos(t * Mathf.PI) + 1) / 2);
+			Moon.transform.position = Vector3.Lerp(initialMoonPosition, Sun.transform.position + Vector3.back * 10, (-Mathf.Cos(t * Mathf.PI) + 1) / 2);
 			BGColor = Color.Lerp(BGColor, Color.Lerp(ColorManager.Theme.Light, Color.black, 1.0f / (1.0f + (Moon.transform.position - Sun.transform.position).magnitude)), 0.3f);
 			BGOffset = Vector3.Lerp(Vector3.zero, Vector3.forward * 10, t * t);
 			for( int i = 0; i < lightAngles.Length; i++ )

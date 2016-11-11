@@ -11,7 +11,6 @@ public class EnemyConductor : MonoBehaviour
 	
 	public EnemyCommandGraph commandGraph;
 	public EnemySkillListUI skillList;
-	public GameObject skillListParent;
 	public GameObject damageTextPrefab;
 	public DamageGauge damageGauge;
 	public GameObject commandIconPrefab;
@@ -110,7 +109,7 @@ public class EnemyConductor : MonoBehaviour
 		enemy.transform.parent = transform;
 		enemy.transform.localPosition = spawnPosition;
 		enemy.SetTargetPosition(enemy.transform.localPosition);
-		enemy.DisplayName += (char)((int)'A' + Enemies.FindAll((Enemy e) => e.DisplayName.StartsWith(enemy.DisplayName) && e.DisplayName.Length == enemy.DisplayName.Length + 1).Count);
+		//enemy.DisplayName += (char)((int)'A' + Enemies.FindAll((Enemy e) => e.DisplayName.StartsWith(enemy.DisplayName) && e.DisplayName.Length == enemy.DisplayName.Length + 1).Count);
 	}
 
 	public bool ReceiveAction(ActionSet Action, Skill skill)
@@ -297,9 +296,12 @@ public class EnemyConductor : MonoBehaviour
 
 			++execIndex;
 		}
-		skillList.Set(commandDict);
-		skillList.Execute();
-		AnimManager.AddAnim(skillList.gameObject, skillListParent.transform.localPosition, ParamType.Position, AnimType.Time, 0.4f, (float)Music.MusicalTimeUnit * 9);
+
+		if( commandDict.Count > 0 )
+		{
+			skillList.Set(commandDict);
+			skillList.Execute();
+		}
 
 		lastDamageText_ = null;
 		damageGauge.TurnInit();
@@ -330,6 +332,7 @@ public class EnemyConductor : MonoBehaviour
 			e.InvertInit();
 		}
 		commandGraph.InvertInit();
+		skillList.OnInvert();
 	}
 	public void OnRevert()
 	{

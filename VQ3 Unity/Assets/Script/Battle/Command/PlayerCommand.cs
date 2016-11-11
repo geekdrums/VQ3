@@ -24,10 +24,6 @@ public class PlayerCommand : MonoBehaviour
     //
     // static properties
     //
-    protected static Vector3 MaxScale = new Vector3( 0.24f, 0.24f, 0.24f );
-    protected static float ScaleCoeff = 0.0f;
-    protected static float MaskColorCoeff = 0.06f;
-    protected static float MaskStartPos = 3.0f;
     protected static Vector3 SelectSpot
     {
         get
@@ -138,16 +134,19 @@ public class PlayerCommand : MonoBehaviour
 	}
 
     public virtual void ValidatePosition()
-    {
-        if( GetComponentInParent<CommandGraph>() == null ) return;
+	{
+		CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
+		if( commandGraph == null ) return;
         transform.localPosition = Quaternion.AngleAxis( longitude, Vector3.down ) * Quaternion.AngleAxis( latitude, Vector3.right ) * Vector3.back * GetComponentInParent<CommandGraph>().SphereRadius;
-        transform.localScale = MaxScale * (1.0f - (this.transform.position - SelectSpot).magnitude * ScaleCoeff);
+        transform.localScale = commandGraph.MaxScale * (1.0f - (this.transform.position - SelectSpot).magnitude * commandGraph.ScaleCoeff);
         transform.rotation = Quaternion.identity;
     }
 
     public virtual void ValidateColor()
-    {
-        float alpha = (transform.localPosition.z + MaskStartPos) * MaskColorCoeff;
+	{
+		CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
+		if( commandGraph == null ) return;
+		float alpha = (transform.localPosition.z + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff;
         Material maskMat = new Material( Shader.Find( "Transparent/Diffuse" ) );
         maskMat.hideFlags = HideFlags.DontSave;
         maskMat.color = ColorManager.MakeAlpha( Color.black, alpha );

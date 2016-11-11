@@ -44,6 +44,12 @@ public class SkillCutIn : MonoBehaviour {
 
 		commandName_ = (GameObject)Instantiate(commandName, commandNameParent.transform);
 		commandName_.transform.position = commandName_.transform.position + Vector3.back * 50;
+		if( command.themeColor == EThemeColor.White )
+		{
+			commandName_.GetComponentsInChildren<TextMesh>()[0].color = ColorManager.Base.Dark;
+			commandName_.GetComponentsInChildren<TextMesh>()[1].color = ColorManager.Base.Dark;
+			commandName_.GetComponentInChildren<CounterSprite>().CounterColor = ColorManager.Base.Dark;
+		}
 
 		skillList_ = (SkillListUI)Instantiate(skillList, transform.parent);
 		skillList_.transform.position = skillList_.transform.position + Vector3.back * 50;
@@ -52,7 +58,7 @@ public class SkillCutIn : MonoBehaviour {
 
 		float mtu = (float)Music.MusicalTimeUnit;
 
-		AnimManager.AddAnim(commandIcon_.gameObject, commandIcon_.transform.localScale * 1.3f, ParamType.Scale, AnimType.BounceIn, 2 * mtu, mtu);
+		AnimManager.AddAnim(commandIcon_.gameObject, commandIcon_.transform.localScale * 1.3f, ParamType.Scale, AnimType.BounceIn, 3 * mtu, mtu);
 
 		AnimManager.AddAnim(commandName_.gameObject, Vector3.zero, ParamType.Position, AnimType.Linear, 0.2f, mtu);
 		AnimManager.AddAnim(commandName_.gameObject, Vector3.left * 200, ParamType.Position, AnimType.Time, nameAnimLength, mtu * 9);

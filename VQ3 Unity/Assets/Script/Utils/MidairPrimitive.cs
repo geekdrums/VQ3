@@ -162,7 +162,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 		{
 			if( 2 * i >= meshVertices.Length )
 			{
-				Debug.Log("vertexCount = " + meshVertices.Length + ", i = " + i);
+				//Debug.Log("vertexCount = " + meshVertices.Length + ", i = " + i);
 			}
 			else
 			{
@@ -193,7 +193,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 		{
 			if( 2 * i >= meshVertices.Length )
 			{
-				Debug.Log("vertexCount = " + meshVertices.Length + ", i = " + i);
+				//Debug.Log("vertexCount = " + meshVertices.Length + ", i = " + i);
 			}
 			else
 			{

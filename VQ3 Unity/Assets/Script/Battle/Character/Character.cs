@@ -122,7 +122,7 @@ public class Character : MonoBehaviour
 		int damageResult = Mathf.Max(0, (int)damage);
 		BeDamaged(damageResult, skill);
 		attack.SetDamageResult(damageResult);
-		Debug.Log(this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint);
+		//Debug.Log(this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint);
 	}
 	protected virtual void BeDamaged(int damage, Skill skill)
 	{
@@ -150,7 +150,7 @@ public class Character : MonoBehaviour
 		if( h > 0 )
 		{
 			HitPoint += h;
-			Debug.Log(this.ToString() + " used Heal! HitPoint is " + HitPoint);
+			//Debug.Log(this.ToString() + " used Heal! HitPoint is " + HitPoint);
 		}
 	}
 	public virtual void Drain(DrainModule drain, int drainDamage)
@@ -159,7 +159,7 @@ public class Character : MonoBehaviour
 		if( h > 0 )
 		{
 			HitPoint += h;
-			Debug.Log(this.ToString() + " used Drain! HitPoint is " + HitPoint);
+			//Debug.Log(this.ToString() + " used Drain! HitPoint is " + HitPoint);
 		}
 	}
 	public virtual void Enhance(EnhanceModule enhance)

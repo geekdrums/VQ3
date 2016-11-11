@@ -31,7 +31,7 @@ public static class GameContext
 		OnLeaveState(OldState);
 		OnEnterState(State);
 
-		Debug.Log("Enter GameState: " + State.ToString());
+		//Debug.Log("Enter GameState: " + State.ToString());
 	}
 	static void OnLeaveState(GameState OldState)
 	{

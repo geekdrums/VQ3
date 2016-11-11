@@ -41,9 +41,6 @@ public class SkillUI : MonoBehaviour {
 
 		text_.text = skillName;
 		text_.color = textColor;
-
-		if( isEnemySkill && length > 0 )
-			print(skillName + " " + length.ToString());
 	}
 
 	public void Execute()
@@ -53,7 +50,7 @@ public class SkillUI : MonoBehaviour {
 		if( isEnemySkill )
 		{
 			AnimManager.AddAnim(gameObject, Vector3.zero, ParamType.Position, AnimType.Linear, 0.2f);
-			AnimManager.AddAnim(text_.gameObject, new Vector3(0, -0.7f, 0), ParamType.Position, AnimType.Linear, 0.2f);
+			AnimManager.AddAnim(text_.gameObject, new Vector3(0, -0.7f, -1), ParamType.Position, AnimType.Linear, 0.2f);
 			AnimManager.AddAnim(text_.gameObject, ColorManager.Base.Dark, ParamType.TextColor, AnimType.Linear, 0.2f);
 			AnimManager.AddAnim(gameObject, 0.2f, ParamType.GaugeWidth, AnimType.Linear, 0.3f);
 
@@ -63,7 +60,7 @@ public class SkillUI : MonoBehaviour {
 		else
 		{
 			AnimManager.AddAnim(gameObject, new Vector3(0, 2.3f, 0), ParamType.Position, AnimType.Linear, 0.2f);
-			AnimManager.AddAnim(text_.gameObject, new Vector3(0, 0.9f, 0), ParamType.Position, AnimType.Linear, 0.2f);
+			AnimManager.AddAnim(text_.gameObject, new Vector3(0, 0.9f, -1), ParamType.Position, AnimType.Linear, 0.2f);
 			AnimManager.AddAnim(text_.gameObject, Color.white, ParamType.TextColor, AnimType.Linear, 0.2f);
 			AnimManager.AddAnim(gameObject, Color.white, ParamType.Color, AnimType.Linear, 0.2f);
 			AnimManager.AddAnim(gameObject, 0.2f, ParamType.GaugeWidth, AnimType.Linear, 0.3f);
@@ -97,17 +94,14 @@ public class SkillUI : MonoBehaviour {
 
 			if( remainLength_ <= 0 || Music.IsJustChangedAt(CommandGraph.AllowInputEnd) )
 			{
+				isExecuting_ = false;
+				Reset();
 				if( isEnemySkill )
 				{
-					isExecuting_ = false;
 					transform.localPosition = initialPosition_;
-					text_.transform.localPosition = Vector3.zero;
+					text_.transform.localPosition = Vector3.back;
 					text_.text = "";
 					line_.SetWidth(1.5f);
-					Reset();
-
-					if( isEnemySkill && length > 0 )
-						print("Text Reset");
 				}
 				else
 				{

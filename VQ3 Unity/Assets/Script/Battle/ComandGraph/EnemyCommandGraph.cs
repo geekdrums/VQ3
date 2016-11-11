@@ -192,6 +192,7 @@ public class EnemyCommandGraph : MonoBehaviour {
 			invertState.NextState = "";
 		}
 		CurrentState = invertState;
+		CommandListUI.ClearCommands();
 		Shade.SetColor(Color.clear);
 	}
 

@@ -320,7 +320,7 @@ public class Music : MonoBehaviour
 	public static void SetNextBlock(string blockName, EventHandler onNextBlockStarted = null)
 	{
 		if( blockName == CurrentBlockName ) return;
-		Debug.Log("SetNextBlock : " + blockName);
+		//Debug.Log("SetNextBlock : " + blockName);
 		int index = Current_.BlockInfos.FindIndex((BlockInfo info) => info.BlockName == blockName);
 		if( index >= 0 )
 		{
@@ -692,7 +692,7 @@ public class Music : MonoBehaviour
 	void OnBlockChanged()
 	{
 		numRepeat_ = 0;
-		Debug.Log("Music::OnBlockChanged " + CurrentBlockName);
+		//Debug.Log("Music::OnBlockChanged " + CurrentBlockName);
 		if( OnNextBlockStarted != null )
 		{
 			OnNextBlockStarted(null, null);
