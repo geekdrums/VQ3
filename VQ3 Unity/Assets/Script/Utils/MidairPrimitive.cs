@@ -6,7 +6,6 @@ using System.Collections;
 public class MidairPrimitive : MonoBehaviour, IColoredObject
 {
 	static readonly int[] quadIndices = new int[] { 0, 2, 1, 3, 1, 2 };
-	//static readonly int[] quadFlipIndices = new int[] { 0, 1, 2, 3, 2, 1 };
 	static readonly Vector2 UVZero = new Vector2(0, 0);
 	static readonly Vector2 UVRight = new Vector2(0, 1);
 	static readonly Vector2 UVUp  = new Vector2(1, 0);
@@ -33,14 +32,22 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	public string materialName = "Transparent/Diffuse";
 	public string colorName = "_Color";
 
-	float currentArcRate;
-	float linearFactor = 0.3f;
-	Vector3[] meshVertices;
-	Vector3[] normalizedVertices;
+	float currentArcRate_;
+	Color currentColor_;
+	float linearFactor_ = 0.3f;
+	Vector3[] meshVertices_;
+	Vector3[] normalizedVertices_;
 
+	bool needArc_ { get { return Mathf.Abs(ArcRate) < 1.0f; } }
 	bool isFlip_ { get { return ArcRate < 0.0f; } }
 	int inOffset_ { get { return (isFlip_ ? 1 : 0); } }
 	int outOffset_ { get { return (isFlip_ ? 0 : 1); } }
+
+#if UNITY_EDITOR
+	Mesh mesh_;
+#endif
+	Material mat_;
+	float cos_;
 
 	Mesh UsableMesh
 	{
@@ -64,9 +71,20 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	}
 
 	// Use this for initialization
-	void Start()
+	void Awake()
 	{
+#if UNITY_EDITOR
+		mesh_ = new Mesh();
+		mesh_.hideFlags = HideFlags.DontSave;
+#endif
 		ownerAnimation = GetComponentInParent<Animation>();
+
+		if( Shader.Find(materialName) == null ) return;
+		mat_ = new Material(Shader.Find(materialName));
+		mat_.name = materialName;
+		mat_.hideFlags = HideFlags.DontSave;
+
+		cos_ = Mathf.Cos(Mathf.PI / N);
 		RecalculatePolygon();
 		InitMaterial();
 	}
@@ -80,6 +98,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			RecalculatePolygon();
 			RecalculateRadius();
 			RecalculateWidth();
+			UpdateArc(needArc_);
 			SetColor(Color);
 			UpdateGrow();
 			return;
@@ -92,8 +111,8 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			RecalculateWidth();
 			GetComponent<Renderer>().material.SetColor(colorName, Color);
 			UpdateGrow();
+			UpdateArc(needArc_);
 		}
-		UpdateArc();
 	}
 
 	public void UpdateGrow()
@@ -110,7 +129,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	void CheckVertex()
 	{
 		int vertexCount = ArcN * 2 + 2;
-		bool isNChanged = (meshVertices == null || meshVertices.Length != vertexCount);
+		bool isNChanged = (meshVertices_ == null || meshVertices_.Length != vertexCount);
 		if( isNChanged )
 		{
 			RecalculatePolygon();
@@ -120,11 +139,13 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	public void UpdateArc(bool force = false)
 	{
 		CheckVertex();
-		if( currentArcRate != ArcRate || force )
+		if( currentArcRate_ != ArcRate || force )
 		{
 			ArcRate = Mathf.Clamp(ArcRate, -1.0f, 1.0f);
-			float OutR = Radius / Mathf.Cos(Mathf.PI / N);
-			float InR = Mathf.Max(0, (Radius - Width)) / Mathf.Cos(Mathf.PI / N);
+			if( currentArcRate_ * ArcRate <= 0 ) RecalculatePolygon();
+
+			float OutR = Radius / cos_;
+			float InR = Mathf.Max(0, (Radius - Width)) / cos_;
 
 			Vector3 normalVertex = Quaternion.AngleAxis(Angle + Mathf.Sign(ArcRate) * ArcN * (360.0f / N), Vector3.forward) * Vector3.up;
 			Vector3 OutVertex = normalVertex * OutR;
@@ -135,81 +156,66 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			InVertex = rotateMatrix * InVertex;
 			OutVertex = rotateMatrix * OutVertex;
 			normalVertex = rotateMatrix * normalVertex;
-			float lRatio = Mathf.Cos(Mathf.PI / N);
+			float lRatio = cos_;
 			float rRatio = 2 * Mathf.Sin(angle / 2) * Mathf.Sin(Mathf.PI / N - angle / 2);
 			InVertex *= lRatio / (lRatio + rRatio);
 			OutVertex *= lRatio / (lRatio + rRatio);
-			meshVertices[2 * ArcN + inOffset_] = InVertex;
-			meshVertices[2 * ArcN + outOffset_] = OutVertex;
-			normalizedVertices[ArcN] = normalVertex;
+			meshVertices_[2 * ArcN + inOffset_] = InVertex;
+			meshVertices_[2 * ArcN + outOffset_] = OutVertex;
+			normalizedVertices_[ArcN] = normalVertex;
 
 			Mesh mesh = UsableMesh;
-			mesh.vertices = meshVertices;
+			mesh.vertices = meshVertices_;
 
 
 			GetComponent<MeshFilter>().mesh = mesh;
-			currentArcRate = ArcRate;
+			currentArcRate_ = ArcRate;
 		}
 	}
 
 	void RecalculateRadius()
 	{
 		CheckVertex();
-		float OutR = Radius / Mathf.Cos(Mathf.PI / N);
+		float OutR = Radius / cos_;
 		int InOffset = inOffset_;
 		int OutOffset = outOffset_;
-		for( int i = 0; i < ArcN + 1; ++i )
+		for( int i = 0; i < ArcN + (needArc_ ? 0 : 1); ++i )
 		{
-			if( 2 * i >= meshVertices.Length )
+			if( 2 * i >= meshVertices_.Length )
 			{
 				//Debug.Log("vertexCount = " + meshVertices.Length + ", i = " + i);
 			}
 			else
 			{
-				meshVertices[2 * i + OutOffset] = normalizedVertices[i] * OutR;
-			}
-		}
-		if( ScaleX != 1.0f )
-		{
-			for( int i = 0; i <= ArcN; ++i )
-			{
-				meshVertices[2 * i + OutOffset].x *= ScaleX;
-				meshVertices[2 * i + InOffset].x = meshVertices[2 * i + OutOffset].x - Mathf.Sign(meshVertices[2 * i + InOffset].x) * Mathf.Abs(meshVertices[2 * i + OutOffset].y - meshVertices[2 * i + InOffset].y);
+				meshVertices_[2 * i + OutOffset] = normalizedVertices_[i] * OutR;
 			}
 		}
 
 		Mesh mesh = UsableMesh;
-		mesh.vertices = meshVertices;
+		mesh.vertices = meshVertices_;
 		GetComponent<MeshFilter>().mesh = mesh;
 	}
 
 	void RecalculateWidth()
 	{
 		CheckVertex();
-		float InR = Mathf.Max(0, (Radius - Width)) / Mathf.Cos(Mathf.PI / N);
+		float InR = Mathf.Max(0, (Radius - Width)) / cos_;
 		int InOffset = inOffset_;
 		int OutOffset = outOffset_;
-		for( int i = 0; i < ArcN + 1; ++i )
+		for( int i = 0; i < ArcN + (needArc_ ? 0 : 1); ++i )
 		{
-			if( 2 * i >= meshVertices.Length )
+			if( 2 * i >= meshVertices_.Length )
 			{
 				//Debug.Log("vertexCount = " + meshVertices.Length + ", i = " + i);
 			}
 			else
 			{
-				meshVertices[2 * i + InOffset] = normalizedVertices[i] * InR;
-			}
-		}
-		if( ScaleX != 1.0f )
-		{
-			for( int i = 0; i <= ArcN; ++i )
-			{
-				meshVertices[2 * i + InOffset].x = meshVertices[2 * i + OutOffset].x - Mathf.Sign(meshVertices[2 * i + InOffset].x) * Mathf.Abs(meshVertices[2 * i + OutOffset].y - meshVertices[2 * i + InOffset].y);
+				meshVertices_[2 * i + InOffset] = normalizedVertices_[i] * InR;
 			}
 		}
 
 		Mesh mesh = UsableMesh;
-		mesh.vertices = meshVertices;
+		mesh.vertices = meshVertices_;
 		GetComponent<MeshFilter>().mesh = mesh;
 	}
 
@@ -228,23 +234,28 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 		}
 		else
 		{
-			mesh = new Mesh();
-			mesh.hideFlags = HideFlags.DontSave;
+			if( mesh_ == null )
+			{
+				mesh_ = new Mesh();
+				mesh_.hideFlags = HideFlags.DontSave;
+			}
+			mesh = mesh_;
 		}
 #else
         mesh = GetComponent<MeshFilter>().mesh;
 #endif
 
 		int vertexCount = ArcN * 2 + 2;
-		bool isNChanged = (mesh.vertices.Length != vertexCount || meshVertices == null || meshVertices.Length != vertexCount);
+		bool isNChanged = (mesh.vertices.Length != vertexCount || meshVertices_ == null || meshVertices_.Length != vertexCount || currentArcRate_ * ArcRate <= 0);
 		if( isNChanged )
 		{
+			cos_ = Mathf.Cos(Mathf.PI / N);
 			mesh.triangles = null;
-			meshVertices = new Vector3[vertexCount];
-			normalizedVertices = new Vector3[ArcN+1];
+			meshVertices_ = new Vector3[vertexCount];
+			normalizedVertices_ = new Vector3[ArcN+1];
 
-			float OutR = Radius / Mathf.Cos(Mathf.PI / N);
-			float InR = Mathf.Max(0, (Radius - Width)) / Mathf.Cos(Mathf.PI / N);
+			float OutR = Radius / cos_;
+			float InR =  Mathf.Max(0, (Radius - Width)) / cos_;
 
 			Vector3 normalVertex = Quaternion.AngleAxis(Mathf.Sign(ArcRate) * Angle, Vector3.forward) * Vector3.up;
 			Vector3 OutVertex = normalVertex * OutR;
@@ -256,55 +267,32 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 			Matrix4x4 rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(Mathf.Sign(ArcRate) * (360.0f / N), Vector3.forward), Vector3.one);
 			for( int i = 0; i < ArcN; ++i )
 			{
-				meshVertices[2 * i + InOffset] = InVertex;
-				meshVertices[2 * i + OutOffset] = OutVertex;
-				normalizedVertices[i] = normalVertex;
+				meshVertices_[2 * i + InOffset] = InVertex;
+				meshVertices_[2 * i + OutOffset] = OutVertex;
+				normalizedVertices_[i] = normalVertex;
 				InVertex = rotateMatrix * InVertex;
 				OutVertex = rotateMatrix * OutVertex;
 				normalVertex = rotateMatrix * normalVertex;
 			}
 			ArcRate = Mathf.Clamp(ArcRate, -1.0f, 1.0f);
-			if( Mathf.Abs(ArcRate) < 1.0f )
+			if( needArc_ )
 			{
 				float angle = (2 * Mathf.PI / N) * ((float)ArcN - Mathf.Abs(ArcRate) * N);
 				rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(Mathf.Sign(ArcRate) * (-angle) * (180.0f / Mathf.PI), Vector3.forward), Vector3.one);
 				InVertex = rotateMatrix * InVertex;
 				OutVertex = rotateMatrix * OutVertex;
-				float lRatio = Mathf.Cos(Mathf.PI / N);
+				float lRatio = cos_;
 				float rRatio = 2 * Mathf.Sin(angle / 2) * Mathf.Sin(Mathf.PI / N - angle / 2);
 				InVertex *= lRatio / (lRatio + rRatio);
 				OutVertex *= lRatio / (lRatio + rRatio);
 				normalVertex = rotateMatrix * normalVertex;
 			}
-			meshVertices[2 * ArcN + InOffset] = InVertex;
-			meshVertices[2 * ArcN + OutOffset] = OutVertex;
-			if( ScaleX != 1.0f )
-			{
-				for( int i = 0; i <= ArcN; ++i )
-				{
-					meshVertices[2 * i + OutOffset].x *= ScaleX;
-					meshVertices[2 * i + InOffset].x = meshVertices[2 * i + 1].x - Mathf.Sign(meshVertices[2 * i].x) * Mathf.Abs(meshVertices[2 * i + 1].y - meshVertices[2 * i].y);
-				}
-			}
+			meshVertices_[2 * ArcN + InOffset] = InVertex;
+			meshVertices_[2 * ArcN + OutOffset] = OutVertex;
 
-			normalizedVertices[ArcN] = normalVertex;
+			normalizedVertices_[ArcN] = normalVertex;
 
-			mesh.vertices = meshVertices;
-			/*
-			if( ArcRate < 0 )
-			{
-				Vector3[] flipVertices = meshVertices;
-				for( int i = 0; i < flipVertices.Length; ++i )
-				{
-					flipVertices[i] = new Vector3(-flipVertices[i].x, flipVertices[i].y, 0);//-1;//+= Vector3.left * flipVertices[i].x * 2;
-				}
-				mesh.vertices = flipVertices;
-			}
-			else
-			{
-				mesh.vertices = meshVertices;
-			}
-			*/
+			mesh.vertices = meshVertices_;
 
 			// color
 			if( VertexAlphas != null && VertexAlphas.Length == N )
@@ -359,7 +347,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 				GrowChild.RecalculatePolygon();
 			}
 
-			currentArcRate = ArcRate;
+			currentArcRate_ = ArcRate;
 		}
 
 		return mesh;
@@ -367,19 +355,19 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 
 	public void SetTargetSize(float newTargetSize)
 	{
-		AnimManager.AddAnim(gameObject, newTargetSize, ParamType.PrimitiveRadius, AnimType.Linear, linearFactor);
+		AnimManager.AddAnim(gameObject, newTargetSize, ParamType.PrimitiveRadius, AnimType.Linear, linearFactor_);
 	}
 	public void SetTargetWidth(float newTargetWidth)
 	{
-		AnimManager.AddAnim(gameObject, newTargetWidth, ParamType.PrimitiveWidth, AnimType.Linear, linearFactor);
+		AnimManager.AddAnim(gameObject, newTargetWidth, ParamType.PrimitiveWidth, AnimType.Linear, linearFactor_);
 	}
 	public void SetTargetColor(Color newTargetColor)
 	{
-		AnimManager.AddAnim(gameObject, newTargetColor, ParamType.Color, AnimType.Linear, linearFactor);
+		AnimManager.AddAnim(gameObject, newTargetColor, ParamType.Color, AnimType.Linear, linearFactor_);
 	}
 	public void SetTargetArc(float newTargetArcRate)
 	{
-		AnimManager.AddAnim(gameObject, newTargetArcRate, ParamType.PrimitiveArc, AnimType.Linear, linearFactor);
+		AnimManager.AddAnim(gameObject, newTargetArcRate, ParamType.PrimitiveArc, AnimType.Linear, linearFactor_);
 	}
 
 	public void SetAnimationSize(float startSize, float endSize)
@@ -424,7 +412,13 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 	}
 	public void SetColor(Color newColor)
 	{
+		if( currentColor_ == newColor )
+		{
+			return;
+		}
+
 		Color = newColor;
+		currentColor_ = Color;
 		if( GrowChild != null )
 		{
 			GrowChild.SetColor(ColorManager.MakeAlpha(Color, GrowAlpha));
@@ -458,25 +452,28 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 
 	void InitMaterial()
 	{
-		if( Shader.Find(materialName) == null ) return;
+		if( mat_ == null || mat_.name != materialName )
+		{
+			if( Shader.Find(materialName) == null ) return;
+			mat_ = new Material(Shader.Find(materialName));
+		}
 
-		Material mat = new Material(Shader.Find(materialName));
-		mat.name = "mat";
-		mat.hideFlags = HideFlags.DontSave;
-		mat.SetColor(colorName, Color);
+		mat_.name = materialName;
+		mat_.hideFlags = HideFlags.DontSave;
+		mat_.SetColor(colorName, Color);
 		if( materialName == "Standard" )
 		{
-			mat.SetInt("_Mode", 3);
+			mat_.SetInt("_Mode", 3);
 		}
 		if( this.name == "_grow" )
 		{
 			if( GetComponentInParent<MidairPrimitive>() != null )
 			{
-				mat.mainTexture = GetComponentInParent<MidairPrimitive>().GrowTexture;
+				mat_.mainTexture = GetComponentInParent<MidairPrimitive>().GrowTexture;
 			}
 			else return;
 		}
-		GetComponent<Renderer>().material = mat;
+		GetComponent<Renderer>().material = mat_;
 	}
 
 	public void SetGrowSize(float newGrowSize)
@@ -498,14 +495,6 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 
 	public void SetLinearFactor(float factor)
 	{
-		linearFactor = factor;
-	}
-
-	void OnValidate()
-	{
-		RecalculatePolygon();
-		RecalculateRadius();
-		RecalculateWidth();
-		UpdateGrow();
+		linearFactor_ = factor;
 	}
 }

@@ -408,8 +408,10 @@ public class LuxSystem : MonoBehaviour
 			{
 				t = (2.0f / 3.0f) * (Mathf.Max(0, 1.0f - (float)(Music.MusicalTime - Music.CurrentUnitPerBar * 2) / Music.CurrentUnitPerBar));
 			}
-			Moon.transform.position = Vector3.Lerp(initialMoonPosition, Sun.transform.position + Vector3.back * 10, (-Mathf.Cos(t * Mathf.PI) + 1) / 2);
-			BGColor = Color.Lerp(BGColor, Color.Lerp(ColorManager.Theme.Light, Color.black, 1.0f / (1.0f + (Moon.transform.position - Sun.transform.position).magnitude)), 0.3f);
+			Moon.transform.position = Vector3.Lerp(initialMoonPosition, Sun.transform.position + Vector3.back * 75, (-Mathf.Cos(t * Mathf.PI) + 1) / 2);
+			Vector3 distance = Moon.transform.position - Sun.transform.position;
+			distance.z = 0;
+			BGColor = Color.Lerp(BGColor, Color.Lerp(ColorManager.Theme.Light, Color.black, 1.0f / (1.0f + distance.magnitude)), 0.3f);
 			BGOffset = Vector3.Lerp(Vector3.zero, Vector3.forward * 10, t * t);
 			for( int i = 0; i < lightAngles.Length; i++ )
 			{
@@ -451,7 +453,7 @@ public class LuxSystem : MonoBehaviour
 			}
 			if( Music.IsJustChangedAt(3) )
 			{
-				Moon.transform.position = Sun.transform.position + Vector3.back * 10.0f;// + Vector3.down * 0.1f;
+				Moon.transform.position = Sun.transform.position + Vector3.back * 75.0f;
 				BGColor = ColorManager.Base.Back;
 				GetComponent<Animation>()["EclipseAnim"].speed = (float)(Music.CurrentTempo / 60.0);
 				GetComponent<Animation>().Play();
@@ -491,8 +493,10 @@ public class LuxSystem : MonoBehaviour
 
 	public void UpdateAnimation()
 	{
-		GameContext.BattleConductor.transform.position = BGOffset;
-		GameContext.BattleConductor.transform.localScale = Vector3.one * BGScaleCoeff / (BGScaleCoeff + BGOffset.magnitude);
+
+		GameContext.BattleConductor.transform.position = new Vector3(BGOffset.x, BGOffset.y, 0);
+		float bgScale = BGScaleCoeff / (BGScaleCoeff + BGOffset.magnitude);
+		GameContext.BattleConductor.transform.localScale = new Vector3(bgScale, bgScale, 1);
 
 		if( useTargetMainLightScale )
 		{

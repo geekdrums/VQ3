@@ -124,6 +124,11 @@ public class SkillListUI : MonoBehaviour {
 				skillData_[number].Set(skill.shortName, skill.length, baseColor, ColorManager.Base.Bright);
 				++number;
 			}
+
+			if( commandData_.OwnerCommand is RevertCommand )
+			{
+				skillData_[number].Set("OVERLOAD", 2, ColorManager.Base.Back, ColorManager.Base.Bright);
+			}
 		}
 
 		foreach( SkillUI skill in skillData_ )

@@ -6,12 +6,13 @@ AnimationClip:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: IgniteStartAnim
-  serializedVersion: 4
-  m_AnimationType: 1
+  serializedVersion: 6
+  m_Legacy: 1
   m_Compressed: 0
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
   m_CompressedRotationCurves: []
+  m_EulerCurves: []
   m_PositionCurves: []
   m_ScaleCurves:
   - curve:
@@ -19,39 +20,39 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .0720000044, z: 0}
-        outSlope: {x: 0, y: .0720000044, z: 0}
-        tangentMode: 343
+        inSlope: {x: 0, y: 0.072000004, z: 0}
+        outSlope: {x: 0, y: 0.072000004, z: 0}
+        tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .0900000036, z: 1}
-        inSlope: {x: 0, y: .256000012, z: 0}
-        outSlope: {x: 0, y: .256000012, z: 0}
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.256, z: 0}
+        outSlope: {x: 0, y: 0.256, z: 0}
         tangentMode: 0
       - time: 1.5
-        value: {x: 1, y: .200000003, z: 1}
-        inSlope: {x: 0, y: -.0799999833, z: 0}
-        outSlope: {x: 0, y: -.0799999833, z: 0}
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.07999998, z: 0}
+        outSlope: {x: 0, y: -0.07999998, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: -2145686612
-      - time: 3.5999999
+        tangentMode: 0
+      - time: 3.6
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1098907648
+        tangentMode: 0
       - time: 3.75
-        value: {x: 1, y: .430000007, z: 1}
+        value: {x: 1, y: 0.43, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: -2145869276
-      - time: 5.01666689
+        tangentMode: 0
+      - time: 5.016667
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 27
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
@@ -59,50 +60,51 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent18
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .0720000044, z: 0}
-        outSlope: {x: 0, y: .0720000044, z: 0}
+        inSlope: {x: 0, y: 0.072000004, z: 0}
+        outSlope: {x: 0, y: 0.072000004, z: 0}
         tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .0900000036, z: 1}
-        inSlope: {x: 0, y: .256000012, z: 0}
-        outSlope: {x: 0, y: .256000012, z: 0}
-        tangentMode: 1
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.256, z: 0}
+        outSlope: {x: 0, y: 0.256, z: 0}
+        tangentMode: 0
       - time: 1.5
-        value: {x: 1, y: .200000003, z: 1}
-        inSlope: {x: 0, y: -.0799999833, z: 0}
-        outSlope: {x: 0, y: -.0799999833, z: 0}
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.07999998, z: 0}
+        outSlope: {x: 0, y: -0.07999998, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: -1069547520
-      - time: 5.66666651
+        tangentMode: 0
+      - time: 5.6666665
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 56
+        tangentMode: 0
       - time: 5.75
-        value: {x: 1, y: .430000007, z: 1}
+        value: {x: 1, y: 0.43, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: -4934476
+        tangentMode: 0
       - time: 6.5
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 57
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
@@ -110,41 +112,42 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent17
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .0720000044, z: 0}
-        outSlope: {x: 0, y: .0720000044, z: 0}
-        tangentMode: 57
+        inSlope: {x: 0, y: 0.072000004, z: 0}
+        outSlope: {x: 0, y: 0.072000004, z: 0}
+        tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .0900000036, z: 1}
-        inSlope: {x: 0, y: .0759999901, z: 0}
-        outSlope: {x: 0, y: .0759999901, z: 0}
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.07599999, z: 0}
+        outSlope: {x: 0, y: 0.07599999, z: 0}
         tangentMode: 0
       - time: 1.5
-        value: {x: 1, y: .109999999, z: 1}
-        inSlope: {x: 0, y: -.124999985, z: 0}
-        outSlope: {x: 0, y: -.124999985, z: 0}
+        value: {x: 1, y: 0.11, z: 1}
+        inSlope: {x: 0, y: -0.124999985, z: 0}
+        outSlope: {x: 0, y: -0.124999985, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 3.5999999
+      - time: 3.6
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: -1
+        tangentMode: 0
       - time: 3.75
-        value: {x: 1, y: .330000013, z: 1}
+        value: {x: 1, y: 0.33, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 5.01666689
+      - time: 5.016667
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -153,84 +156,86 @@ AnimationClip:
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1090519040
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent16
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .0720000044, z: 0}
-        outSlope: {x: 0, y: .0720000044, z: 0}
-        tangentMode: 1
+        inSlope: {x: 0, y: 0.072000004, z: 0}
+        outSlope: {x: 0, y: 0.072000004, z: 0}
+        tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .0900000036, z: 1}
-        inSlope: {x: 0, y: .0759999901, z: 0}
-        outSlope: {x: 0, y: .0759999901, z: 0}
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.07599999, z: 0}
+        outSlope: {x: 0, y: 0.07599999, z: 0}
         tangentMode: 0
       - time: 1.5
-        value: {x: 1, y: .109999999, z: 1}
-        inSlope: {x: 0, y: -.124999985, z: 0}
-        outSlope: {x: 0, y: -.124999985, z: 0}
+        value: {x: 1, y: 0.11, z: 1}
+        inSlope: {x: 0, y: -0.124999985, z: 0}
+        outSlope: {x: 0, y: -0.124999985, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 5.66666651
+      - time: 5.6666665
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 5.75
-        value: {x: 1, y: .189999998, z: 1}
+        value: {x: 1, y: 0.19, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
-      - time: 6.4000001
+        tangentMode: 0
+      - time: 6.4
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
+        tangentMode: 0
       - time: 6.5
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1281716841
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent15
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .136000007, z: 0}
-        outSlope: {x: 0, y: .136000007, z: 0}
+        inSlope: {x: 0, y: 0.136, z: 0}
+        outSlope: {x: 0, y: 0.136, z: 0}
         tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .170000002, z: 1}
-        inSlope: {x: 0, y: -.272000015, z: 0}
-        outSlope: {x: 0, y: -.272000015, z: 0}
-        tangentMode: 50331648
+        value: {x: 1, y: 0.17, z: 1}
+        inSlope: {x: 0, y: -0.272, z: 0}
+        outSlope: {x: 0, y: -0.272, z: 0}
+        tangentMode: 0
       - time: 1.5
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.340000004, z: 0}
-        outSlope: {x: 0, y: -.340000004, z: 0}
+        inSlope: {x: 0, y: -0.34, z: 0}
+        outSlope: {x: 0, y: -0.34, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 384
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
@@ -238,30 +243,31 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent11
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .136000007, z: 0}
-        outSlope: {x: 0, y: .136000007, z: 0}
+        inSlope: {x: 0, y: 0.136, z: 0}
+        outSlope: {x: 0, y: 0.136, z: 0}
         tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .170000002, z: 1}
-        inSlope: {x: 0, y: -.272000015, z: 0}
-        outSlope: {x: 0, y: -.272000015, z: 0}
-        tangentMode: 50331648
+        value: {x: 1, y: 0.17, z: 1}
+        inSlope: {x: 0, y: -0.272, z: 0}
+        outSlope: {x: 0, y: -0.272, z: 0}
+        tangentMode: 0
       - time: 1.5
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.340000004, z: 0}
-        outSlope: {x: 0, y: -.340000004, z: 0}
+        inSlope: {x: 0, y: -0.34, z: 0}
+        outSlope: {x: 0, y: -0.34, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 480
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
@@ -269,37 +275,38 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent12
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .136000007, z: 0}
-        outSlope: {x: 0, y: .136000007, z: 0}
-        tangentMode: 39
+        inSlope: {x: 0, y: 0.136, z: 0}
+        outSlope: {x: 0, y: 0.136, z: 0}
+        tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .170000002, z: 1}
-        inSlope: {x: 0, y: -.272000015, z: 0}
-        outSlope: {x: 0, y: -.272000015, z: 0}
+        value: {x: 1, y: 0.17, z: 1}
+        inSlope: {x: 0, y: -0.272, z: 0}
+        outSlope: {x: 0, y: -0.272, z: 0}
         tangentMode: 0
       - time: 1.5
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.340000004, z: 0}
-        outSlope: {x: 0, y: -.340000004, z: 0}
+        inSlope: {x: 0, y: -0.34, z: 0}
+        outSlope: {x: 0, y: -0.34, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 4.36666679
+      - time: 4.366667
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 4.5
-        value: {x: 1, y: .270000011, z: 1}
+        value: {x: 1, y: 0.27, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -315,30 +322,31 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent13
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .136000007, z: 0}
-        outSlope: {x: 0, y: .136000007, z: 0}
+        inSlope: {x: 0, y: 0.136, z: 0}
+        outSlope: {x: 0, y: 0.136, z: 0}
         tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .170000002, z: 1}
-        inSlope: {x: 0, y: -.272000015, z: 0}
-        outSlope: {x: 0, y: -.272000015, z: 0}
-        tangentMode: 50331648
+        value: {x: 1, y: 0.17, z: 1}
+        inSlope: {x: 0, y: -0.272, z: 0}
+        outSlope: {x: 0, y: -0.272, z: 0}
+        tangentMode: 0
       - time: 1.5
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.340000004, z: 0}
-        outSlope: {x: 0, y: -.340000004, z: 0}
+        inSlope: {x: 0, y: -0.34, z: 0}
+        outSlope: {x: 0, y: -0.34, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 576
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
@@ -346,31 +354,32 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent14
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .266666681, z: 0}
-        outSlope: {x: 0, y: .266666681, z: 0}
+        inSlope: {x: 0, y: 0.26666668, z: 0}
+        outSlope: {x: 0, y: 0.26666668, z: 0}
         tangentMode: 0
-      - time: .75
-        value: {x: 1, y: .200000003, z: 1}
-        inSlope: {x: 0, y: .13333334, z: 0}
-        outSlope: {x: 0, y: .13333334, z: 0}
-        tangentMode: 1110441984
+      - time: 0.75
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: 0.13333334, z: 0}
+        outSlope: {x: 0, y: 0.13333334, z: 0}
+        tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .200000003, z: 1}
-        inSlope: {x: 0, y: -.400000006, z: 0}
-        outSlope: {x: 0, y: -.400000006, z: 0}
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.4, z: 0}
+        outSlope: {x: 0, y: -0.4, z: 0}
         tangentMode: 0
       - time: 1.5
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.400000006, z: 0}
-        outSlope: {x: 0, y: -.400000006, z: 0}
-        tangentMode: 1121452032
-      - time: 1.83333337
+        inSlope: {x: 0, y: -0.4, z: 0}
+        outSlope: {x: 0, y: -0.4, z: 0}
+        tangentMode: 0
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -379,104 +388,106 @@ AnimationClip:
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent10
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .266666681, z: 0}
-        outSlope: {x: 0, y: .266666681, z: 0}
+        inSlope: {x: 0, y: 0.26666668, z: 0}
+        outSlope: {x: 0, y: 0.26666668, z: 0}
         tangentMode: 0
-      - time: .75
-        value: {x: 1, y: .200000003, z: 1}
-        inSlope: {x: 0, y: .13333334, z: 0}
-        outSlope: {x: 0, y: .13333334, z: 0}
-        tangentMode: 1281716841
+      - time: 0.75
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: 0.13333334, z: 0}
+        outSlope: {x: 0, y: 0.13333334, z: 0}
+        tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .200000003, z: 1}
-        inSlope: {x: 0, y: -.400000006, z: 0}
-        outSlope: {x: 0, y: -.400000006, z: 0}
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.4, z: 0}
+        outSlope: {x: 0, y: -0.4, z: 0}
         tangentMode: 0
       - time: 1.5
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.400000006, z: 0}
-        outSlope: {x: 0, y: -.400000006, z: 0}
+        inSlope: {x: 0, y: -0.4, z: 0}
+        outSlope: {x: 0, y: -0.4, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 4.61666679
+      - time: 4.616667
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 4.75
-        value: {x: 1, y: .209999993, z: 1}
+        value: {x: 1, y: 0.21, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 5.33333349
+      - time: 5.3333335
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 6.75
-        value: {x: 1, y: .159999996, z: 1}
+        value: {x: 1, y: 0.16, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.639999986, z: 0}
-        outSlope: {x: 0, y: -.639999986, z: 0}
+        inSlope: {x: 0, y: -0.64, z: 0}
+        outSlope: {x: 0, y: -0.64, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent9
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .660000026, z: 0}
-        outSlope: {x: 0, y: .660000026, z: 0}
+        inSlope: {x: 0, y: 0.66, z: 0}
+        outSlope: {x: 0, y: 0.66, z: 0}
         tangentMode: 0
-      - time: .5
-        value: {x: 1, y: .330000013, z: 1}
-        inSlope: {x: 0, y: -.330000013, z: 0}
-        outSlope: {x: 0, y: -.330000013, z: 0}
-        tangentMode: 50331648
-      - time: .75
+      - time: 0.5
+        value: {x: 1, y: 0.33, z: 1}
+        inSlope: {x: 0, y: -0.33, z: 0}
+        outSlope: {x: 0, y: -0.33, z: 0}
+        tangentMode: 0
+      - time: 0.75
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.560000002, z: 0}
-        outSlope: {x: 0, y: -.560000002, z: 0}
+        inSlope: {x: 0, y: -0.56, z: 0}
+        outSlope: {x: 0, y: -0.56, z: 0}
         tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .100000001, z: 1}
-        inSlope: {x: 0, y: -.100000001, z: 0}
-        outSlope: {x: 0, y: -.100000001, z: 0}
-        tangentMode: 288
+        value: {x: 1, y: 0.1, z: 1}
+        inSlope: {x: 0, y: -0.1, z: 0}
+        outSlope: {x: 0, y: -0.1, z: 0}
+        tangentMode: 0
       - time: 1.5
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.200000003, z: 0}
-        outSlope: {x: 0, y: -.200000003, z: 0}
+        inSlope: {x: 0, y: -0.2, z: 0}
+        outSlope: {x: 0, y: -0.2, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1281716841
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
@@ -484,91 +495,93 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent8
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .660000026, z: 0}
-        outSlope: {x: 0, y: .660000026, z: 0}
-        tangentMode: 1
-      - time: .5
-        value: {x: 1, y: .330000013, z: 1}
-        inSlope: {x: 0, y: -.330000013, z: 0}
-        outSlope: {x: 0, y: -.330000013, z: 0}
+        inSlope: {x: 0, y: 0.66, z: 0}
+        outSlope: {x: 0, y: 0.66, z: 0}
         tangentMode: 0
-      - time: .75
+      - time: 0.5
+        value: {x: 1, y: 0.33, z: 1}
+        inSlope: {x: 0, y: -0.33, z: 0}
+        outSlope: {x: 0, y: -0.33, z: 0}
+        tangentMode: 0
+      - time: 0.75
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.560000002, z: 0}
-        outSlope: {x: 0, y: -.560000002, z: 0}
+        inSlope: {x: 0, y: -0.56, z: 0}
+        outSlope: {x: 0, y: -0.56, z: 0}
         tangentMode: 0
       - time: 1.25
-        value: {x: 1, y: .100000001, z: 1}
-        inSlope: {x: 0, y: -.100000001, z: 0}
-        outSlope: {x: 0, y: -.100000001, z: 0}
+        value: {x: 1, y: 0.1, z: 1}
+        inSlope: {x: 0, y: -0.1, z: 0}
+        outSlope: {x: 0, y: -0.1, z: 0}
         tangentMode: 0
       - time: 1.5
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.200000003, z: 0}
-        outSlope: {x: 0, y: -.200000003, z: 0}
+        inSlope: {x: 0, y: -0.2, z: 0}
+        outSlope: {x: 0, y: -0.2, z: 0}
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
-      - time: 5.66666651
+        tangentMode: 0
+      - time: 5.6666665
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
+        tangentMode: 0
       - time: 5.75
-        value: {x: 1, y: .189999998, z: 1}
+        value: {x: 1, y: 0.19, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
-      - time: 6.4000001
+        tangentMode: 0
+      - time: 6.4
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
+        tangentMode: 0
       - time: 6.5
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent7
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .660000026, z: 0}
-        outSlope: {x: 0, y: .660000026, z: 0}
-        tangentMode: 1065353216
-      - time: .5
-        value: {x: 1, y: .330000013, z: 1}
-        inSlope: {x: 0, y: -.330000013, z: 0}
-        outSlope: {x: 0, y: -.330000013, z: 0}
-        tangentMode: 59
-      - time: .75
+        inSlope: {x: 0, y: 0.66, z: 0}
+        outSlope: {x: 0, y: 0.66, z: 0}
+        tangentMode: 0
+      - time: 0.5
+        value: {x: 1, y: 0.33, z: 1}
+        inSlope: {x: 0, y: -0.33, z: 0}
+        outSlope: {x: 0, y: -0.33, z: 0}
+        tangentMode: 0
+      - time: 0.75
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.660000026, z: 0}
-        outSlope: {x: 0, y: -.660000026, z: 0}
-        tangentMode: 1852142177
+        inSlope: {x: 0, y: -0.66, z: 0}
+        outSlope: {x: 0, y: -0.66, z: 0}
+        tangentMode: 0
       - time: 1
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1701994832
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
@@ -576,25 +589,26 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent6
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: .660000026, z: 0}
-        outSlope: {x: 0, y: .660000026, z: 0}
+        inSlope: {x: 0, y: 0.66, z: 0}
+        outSlope: {x: 0, y: 0.66, z: 0}
         tangentMode: 0
-      - time: .5
-        value: {x: 1, y: .330000013, z: 1}
-        inSlope: {x: 0, y: -.330000013, z: 0}
-        outSlope: {x: 0, y: -.330000013, z: 0}
+      - time: 0.5
+        value: {x: 1, y: 0.33, z: 1}
+        inSlope: {x: 0, y: -0.33, z: 0}
+        outSlope: {x: 0, y: -0.33, z: 0}
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.660000026, z: 0}
-        outSlope: {x: 0, y: -.660000026, z: 0}
-        tangentMode: 1065353216
+        inSlope: {x: 0, y: -0.66, z: 0}
+        outSlope: {x: 0, y: -0.66, z: 0}
+        tangentMode: 0
       - time: 1
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
@@ -604,78 +618,80 @@ AnimationClip:
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 10024
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent5
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: 1.08749986, z: 0}
-        outSlope: {x: 0, y: 1.08749986, z: 0}
+        inSlope: {x: 0, y: 1.0874999, z: 0}
+        outSlope: {x: 0, y: 1.0874999, z: 0}
         tangentMode: 0
-      - time: .266666681
-        value: {x: 1, y: .289999992, z: 1}
-        inSlope: {x: 0, y: .0508927703, z: 0}
-        outSlope: {x: 0, y: .0508927703, z: 0}
-        tangentMode: 1
-      - time: .5
-        value: {x: 1, y: .0599999987, z: 1}
-        inSlope: {x: 0, y: -.612857163, z: 0}
-        outSlope: {x: 0, y: -.612857163, z: 0}
+      - time: 0.26666668
+        value: {x: 1, y: 0.29, z: 1}
+        inSlope: {x: 0, y: 0.05089277, z: 0}
+        outSlope: {x: 0, y: 0.05089277, z: 0}
         tangentMode: 0
-      - time: .75
+      - time: 0.5
+        value: {x: 1, y: 0.06, z: 1}
+        inSlope: {x: 0, y: -0.61285716, z: 0}
+        outSlope: {x: 0, y: -0.61285716, z: 0}
+        tangentMode: 0
+      - time: 0.75
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.119999997, z: 0}
-        outSlope: {x: 0, y: -.119999997, z: 0}
-        tangentMode: 57
+        inSlope: {x: 0, y: -0.12, z: 0}
+        outSlope: {x: 0, y: -0.12, z: 0}
+        tangentMode: 0
       - time: 1
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 264
+        tangentMode: 0
       - time: 6.75
-        value: {x: 1, y: .219999999, z: 1}
+        value: {x: 1, y: 0.22, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1281716841
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.879999995, z: 0}
-        outSlope: {x: 0, y: -.879999995, z: 0}
-        tangentMode: 142553660
+        inSlope: {x: 0, y: -0.88, z: 0}
+        outSlope: {x: 0, y: -0.88, z: 0}
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent4
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: 1.08749986, z: 0}
-        outSlope: {x: 0, y: 1.08749986, z: 0}
+        inSlope: {x: 0, y: 1.0874999, z: 0}
+        outSlope: {x: 0, y: 1.0874999, z: 0}
         tangentMode: 0
-      - time: .266666681
-        value: {x: 1, y: .289999992, z: 1}
-        inSlope: {x: 0, y: .0508927703, z: 0}
-        outSlope: {x: 0, y: .0508927703, z: 0}
-        tangentMode: 1049918177
-      - time: .5
-        value: {x: 1, y: .0599999987, z: 1}
-        inSlope: {x: 0, y: -.612857163, z: 0}
-        outSlope: {x: 0, y: -.612857163, z: 0}
-        tangentMode: 1031127695
-      - time: .75
+      - time: 0.26666668
+        value: {x: 1, y: 0.29, z: 1}
+        inSlope: {x: 0, y: 0.05089277, z: 0}
+        outSlope: {x: 0, y: 0.05089277, z: 0}
+        tangentMode: 0
+      - time: 0.5
+        value: {x: 1, y: 0.06, z: 1}
+        inSlope: {x: 0, y: -0.61285716, z: 0}
+        outSlope: {x: 0, y: -0.61285716, z: 0}
+        tangentMode: 0
+      - time: 0.75
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -.119999997, z: 0}
-        outSlope: {x: 0, y: -.119999997, z: 0}
+        inSlope: {x: 0, y: -0.12, z: 0}
+        outSlope: {x: 0, y: -0.12, z: 0}
         tangentMode: 0
       - time: 1
         value: {x: 1, y: 0, z: 1}
@@ -689,6 +705,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent3
   - curve:
       serializedVersion: 2
@@ -697,29 +714,30 @@ AnimationClip:
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 1.12, z: 0}
         outSlope: {x: 0, y: 1.12, z: 0}
-        tangentMode: 6357091
-      - time: .25
-        value: {x: 1, y: .280000001, z: 1}
+        tangentMode: 0
+      - time: 0.25
+        value: {x: 1, y: 0.28, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .5
+      - time: 0.5
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1124794368
-      - time: .75
+        tangentMode: 0
+      - time: 0.75
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1731543
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1953064005
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent2
   - curve:
       serializedVersion: 2
@@ -728,49 +746,50 @@ AnimationClip:
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 1.12, z: 0}
         outSlope: {x: 0, y: 1.12, z: 0}
-        tangentMode: 1065353216
-      - time: .25
-        value: {x: 1, y: .280000001, z: 1}
+        tangentMode: 0
+      - time: 0.25
+        value: {x: 1, y: 0.28, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
-      - time: .5
+        tangentMode: 0
+      - time: 0.5
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
-      - time: .75
+        tangentMode: 0
+      - time: 0.75
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
+        tangentMode: 0
       - time: 7
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1065353216
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent1
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
         value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: 2.03999996, z: 0}
-        outSlope: {x: 0, y: 2.03999996, z: 0}
+        inSlope: {x: 0, y: 2.04, z: 0}
+        outSlope: {x: 0, y: 2.04, z: 0}
         tangentMode: 0
-      - time: .25
-        value: {x: 1, y: .50999999, z: 1}
+      - time: 0.25
+        value: {x: 1, y: 0.51, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1049582633
-      - time: .5
-        value: {x: 1, y: 0, z: 1}
-        inSlope: {x: 0, y: -1.01999998, z: 0}
-        outSlope: {x: 0, y: -1.01999998, z: 0}
         tangentMode: 0
-      - time: .75
+      - time: 0.5
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: -1.02, z: 0}
+        outSlope: {x: 0, y: -1.02, z: 0}
+        tangentMode: 0
+      - time: 0.75
         value: {x: 1, y: 0, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -782,23 +801,282 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: FireParent/FireLineParent0
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: 0, y: 1, z: .00999999978}
-        inSlope: {x: 1.96721315, y: 0, z: 0}
-        outSlope: {x: 6.34628105, y: 0, z: 0}
-        tangentMode: 64
-      - time: 1.01666665
-        value: {x: 2, y: 1, z: .00999999978}
-        inSlope: {x: .173462927, y: 0, z: 0}
-        outSlope: {x: 1.96721315, y: 0, z: 0}
-        tangentMode: 1845506932
+        value: {x: 0, y: 1, z: 0.01}
+        inSlope: {x: 1.9672132, y: 0, z: 0}
+        outSlope: {x: 3.8204956, y: 0, z: 0}
+        tangentMode: 0
+      - time: 1.0166667
+        value: {x: 2.3381479, y: 1, z: 0.01}
+        inSlope: {x: 1.1368376, y: 0, z: 0}
+        outSlope: {x: 1.1368376, y: 0, z: 0}
+        tangentMode: 0
+      - time: 1.9666667
+        value: {x: 3, y: 1, z: 0.01}
+        inSlope: {x: 0.56886035, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: VPBase
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0.05346535, z: 0}
+        outSlope: {x: 0, y: 0.05346535, z: 0}
+        tangentMode: 0
+      - time: 1.5
+        value: {x: 1, y: 0.05206336, z: 1}
+        inSlope: {x: 0, y: 0.16941442, z: 0}
+        outSlope: {x: 0, y: 0.16941442, z: 0}
+        tangentMode: 0
+      - time: 1.6833333
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.24673268, z: 0}
+        outSlope: {x: 0, y: 0.24673268, z: 0}
+        tangentMode: 0
+      - time: 1.9333333
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.07999998, z: 0}
+        outSlope: {x: 0, y: -0.07999998, z: 0}
+        tangentMode: 0
+      - time: 2.0166667
+        value: {x: 1, y: 0.16499998, z: 1}
+        inSlope: {x: 0, y: -0.69000006, z: 0}
+        outSlope: {x: 0, y: -0.69000006, z: 0}
+        tangentMode: 0
+      - time: 2.2666667
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2.4499998
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: FireParent/FireLineParent21
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0.061363637, z: 0}
+        outSlope: {x: 0, y: 0.061363637, z: 0}
+        tangentMode: 0
+      - time: 1.4666667
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.25068182, z: 0}
+        outSlope: {x: 0, y: 0.25068182, z: 0}
+        tangentMode: 0
+      - time: 1.5
+        value: {x: 1, y: 0.10192965, z: 1}
+        inSlope: {x: 0, y: 0.45248768, z: 0}
+        outSlope: {x: 0, y: 0.45248768, z: 0}
+        tangentMode: 0
+      - time: 1.7166667
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.079999864, z: 0}
+        outSlope: {x: 0, y: -0.079999864, z: 0}
+        tangentMode: 0
+      - time: 2.0166667
+        value: {x: 1, y: 0.0053600683, z: 1}
+        inSlope: {x: 0, y: -0.3104015, z: 0}
+        outSlope: {x: 0, y: -0.3104015, z: 0}
+        tangentMode: 0
+      - time: 2.0500002
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2.2333333
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: FireParent/FireLineParent20
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0.045762714, z: 0}
+        outSlope: {x: 0, y: 0.045762714, z: 0}
+        tangentMode: 0
+      - time: 1.5
+        value: {x: 1, y: 0.015131518, z: 1}
+        inSlope: {x: 0, y: 0.089082375, z: 0}
+        outSlope: {x: 0, y: 0.089082375, z: 0}
+        tangentMode: 0
+      - time: 1.9666667
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.24288136, z: 0}
+        outSlope: {x: 0, y: 0.24288136, z: 0}
+        tangentMode: 0
+      - time: 2.0166667
+        value: {x: 1, y: 0.10985218, z: 1}
+        inSlope: {x: 0, y: 0.5225218, z: 0}
+        outSlope: {x: 0, y: 0.5225218, z: 0}
+        tangentMode: 0
+      - time: 2.2166667
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.079999864, z: 0}
+        outSlope: {x: 0, y: -0.079999864, z: 0}
+        tangentMode: 0
+      - time: 2.5500002
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2.7333333
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: FireParent/FireLineParent24
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0.06352942, z: 0}
+        outSlope: {x: 0, y: 0.06352942, z: 0}
+        tangentMode: 0
+      - time: 1.4166666
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.2517647, z: 0}
+        outSlope: {x: 0, y: 0.2517647, z: 0}
+        tangentMode: 0
+      - time: 1.5
+        value: {x: 1, y: 0.12932464, z: 1}
+        inSlope: {x: 0, y: 0.61333334, z: 0}
+        outSlope: {x: 0, y: 0.61333334, z: 0}
+        tangentMode: 0
+      - time: 1.6666666
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.07999998, z: 0}
+        outSlope: {x: 0, y: -0.07999998, z: 0}
+        tangentMode: 0
+      - time: 2
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2.0166667
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2.1833334
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: FireParent/FireLineParent19
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0.045762714, z: 0}
+        outSlope: {x: 0, y: 0.045762714, z: 0}
+        tangentMode: 0
+      - time: 1.5
+        value: {x: 1, y: 0.015131518, z: 1}
+        inSlope: {x: 0, y: 0.089082375, z: 0}
+        outSlope: {x: 0, y: 0.089082375, z: 0}
+        tangentMode: 0
+      - time: 1.9666667
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.24288136, z: 0}
+        outSlope: {x: 0, y: 0.24288136, z: 0}
+        tangentMode: 0
+      - time: 2.0166667
+        value: {x: 1, y: 0.10985218, z: 1}
+        inSlope: {x: 0, y: 0.5225218, z: 0}
+        outSlope: {x: 0, y: 0.5225218, z: 0}
+        tangentMode: 0
+      - time: 2.2166667
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.079999864, z: 0}
+        outSlope: {x: 0, y: -0.079999864, z: 0}
+        tangentMode: 0
+      - time: 2.5500002
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2.7333333
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: FireParent/FireLineParent23
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0.05454546, z: 0}
+        outSlope: {x: 0, y: 0.05454546, z: 0}
+        tangentMode: 0
+      - time: 1.5
+        value: {x: 1, y: 0.057926387, z: 1}
+        inSlope: {x: 0, y: 0.18196848, z: 0}
+        outSlope: {x: 0, y: 0.18196848, z: 0}
+        tangentMode: 0
+      - time: 1.65
+        value: {x: 1, y: 0.09, z: 1}
+        inSlope: {x: 0, y: 0.24727273, z: 0}
+        outSlope: {x: 0, y: 0.24727273, z: 0}
+        tangentMode: 0
+      - time: 1.9
+        value: {x: 1, y: 0.2, z: 1}
+        inSlope: {x: 0, y: -0.07999998, z: 0}
+        outSlope: {x: 0, y: -0.07999998, z: 0}
+        tangentMode: 0
+      - time: 2.0166667
+        value: {x: 1, y: 0.13970667, z: 1}
+        inSlope: {x: 0, y: -0.8163999, z: 0}
+        outSlope: {x: 0, y: -0.8163999, z: 0}
+        tangentMode: 0
+      - time: 2.2333333
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2.4166665
+        value: {x: 1, y: 0, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: FireParent/FireLineParent22
   m_FloatCurves: []
   m_PPtrCurves: []
   m_SampleRate: 60
@@ -811,11 +1089,14 @@ AnimationClip:
     pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
+    m_AdditiveReferencePoseClip: {fileID: 0}
+    m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
     m_StopTime: 7
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
+    m_HasAdditiveReferencePose: 0
     m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
@@ -845,12 +1126,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 3.5999999
+      - time: 3.6
         value: 1
         inSlope: 0
         outSlope: 0
@@ -860,7 +1141,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.01666689
+      - time: 5.016667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -872,6 +1153,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent18
     classID: 4
@@ -881,35 +1163,35 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .0720000044
-        outSlope: .0720000044
+        inSlope: 0.072000004
+        outSlope: 0.072000004
         tangentMode: 10
       - time: 1.25
-        value: .0900000036
-        inSlope: .256000012
-        outSlope: .256000012
+        value: 0.09
+        inSlope: 0.256
+        outSlope: 0.256
         tangentMode: 10
       - time: 1.5
-        value: .200000003
-        inSlope: -.0799999833
-        outSlope: -.0799999833
+        value: 0.2
+        inSlope: -0.07999998
+        outSlope: -0.07999998
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 3.5999999
+      - time: 3.6
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 3.75
-        value: .430000007
+        value: 0.43
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.01666689
+      - time: 5.016667
         value: 0
         inSlope: 0
         outSlope: 0
@@ -921,56 +1203,8 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: FireParent/FireLineParent18
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1.5
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1.83333337
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 3.5999999
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 3.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 5.01666689
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 7
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalScale.z
     path: FireParent/FireLineParent18
     classID: 4
     script: {fileID: 0}
@@ -992,174 +1226,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.66666651
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 5.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 6.4000001
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 6.5
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 7
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalScale.x
-    path: FireParent/FireLineParent17
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: .0720000044
-        outSlope: .0720000044
-        tangentMode: 10
-      - time: 1.25
-        value: .0900000036
-        inSlope: .256000012
-        outSlope: .256000012
-        tangentMode: 10
-      - time: 1.5
-        value: .200000003
-        inSlope: -.0799999833
-        outSlope: -.0799999833
-        tangentMode: 10
-      - time: 1.83333337
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 5.66666651
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 5.75
-        value: .430000007
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 6.4000001
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 6.5
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 7
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalScale.y
-    path: FireParent/FireLineParent17
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1.5
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1.83333337
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 5.66666651
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 5.75
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 6.4000001
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 6.5
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 7
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_LocalScale.z
-    path: FireParent/FireLineParent17
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1.5
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      - time: 1.83333337
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 3.5999999
+      - time: 3.6
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1169,7 +1241,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.01666689
+      - time: 5.016667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1181,6 +1253,222 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.z
+    path: FireParent/FireLineParent18
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.8333334
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 5.6666665
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 5.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 6.4
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 6.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 7
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.x
+    path: FireParent/FireLineParent17
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0.072000004
+        outSlope: 0.072000004
+        tangentMode: 10
+      - time: 1.25
+        value: 0.09
+        inSlope: 0.256
+        outSlope: 0.256
+        tangentMode: 10
+      - time: 1.5
+        value: 0.2
+        inSlope: -0.07999998
+        outSlope: -0.07999998
+        tangentMode: 10
+      - time: 1.8333334
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 5.6666665
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 5.75
+        value: 0.43
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 6.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 6.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 7
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.y
+    path: FireParent/FireLineParent17
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.8333334
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 5.6666665
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 5.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 6.4
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 6.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 7
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.z
+    path: FireParent/FireLineParent17
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.8333334
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 3.6
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 3.75
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 5.016667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 7
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent16
     classID: 4
@@ -1190,35 +1478,35 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .0720000044
-        outSlope: .0720000044
+        inSlope: 0.072000004
+        outSlope: 0.072000004
         tangentMode: 10
       - time: 1.25
-        value: .0900000036
-        inSlope: .0759999901
-        outSlope: .0759999901
+        value: 0.09
+        inSlope: 0.07599999
+        outSlope: 0.07599999
         tangentMode: 10
       - time: 1.5
-        value: .109999999
-        inSlope: -.124999985
-        outSlope: -.124999985
+        value: 0.11
+        inSlope: -0.124999985
+        outSlope: -0.124999985
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 3.5999999
+      - time: 3.6
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 3.75
-        value: .330000013
+        value: 0.33
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.01666689
+      - time: 5.016667
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1230,6 +1518,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent16
     classID: 4
@@ -1252,12 +1541,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 3.5999999
+      - time: 3.6
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1267,7 +1556,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.01666689
+      - time: 5.016667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1279,6 +1568,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent16
     classID: 4
@@ -1301,12 +1591,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.66666651
+      - time: 5.6666665
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1316,7 +1606,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1333,6 +1623,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent15
     classID: 4
@@ -1342,35 +1633,35 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .0720000044
-        outSlope: .0720000044
+        inSlope: 0.072000004
+        outSlope: 0.072000004
         tangentMode: 10
       - time: 1.25
-        value: .0900000036
-        inSlope: .0759999901
-        outSlope: .0759999901
+        value: 0.09
+        inSlope: 0.07599999
+        outSlope: 0.07599999
         tangentMode: 10
       - time: 1.5
-        value: .109999999
-        inSlope: -.124999985
-        outSlope: -.124999985
+        value: 0.11
+        inSlope: -0.124999985
+        outSlope: -0.124999985
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.66666651
+      - time: 5.6666665
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 5.75
-        value: .189999998
+        value: 0.19
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1387,6 +1678,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent15
     classID: 4
@@ -1409,12 +1701,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.66666651
+      - time: 5.6666665
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1424,7 +1716,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1441,6 +1733,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent15
     classID: 4
@@ -1463,7 +1756,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1475,6 +1768,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent11
     classID: 4
@@ -1484,20 +1778,20 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .136000007
-        outSlope: .136000007
+        inSlope: 0.136
+        outSlope: 0.136
         tangentMode: 10
       - time: 1.25
-        value: .170000002
-        inSlope: -.272000015
-        outSlope: -.272000015
+        value: 0.17
+        inSlope: -0.272
+        outSlope: -0.272
         tangentMode: 10
       - time: 1.5
         value: 0
-        inSlope: -.340000004
-        outSlope: -.340000004
+        inSlope: -0.34
+        outSlope: -0.34
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1509,6 +1803,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent11
     classID: 4
@@ -1531,7 +1826,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1543,6 +1838,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent11
     classID: 4
@@ -1565,7 +1861,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1577,6 +1873,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent12
     classID: 4
@@ -1586,20 +1883,20 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .136000007
-        outSlope: .136000007
+        inSlope: 0.136
+        outSlope: 0.136
         tangentMode: 10
       - time: 1.25
-        value: .170000002
-        inSlope: -.272000015
-        outSlope: -.272000015
+        value: 0.17
+        inSlope: -0.272
+        outSlope: -0.272
         tangentMode: 10
       - time: 1.5
         value: 0
-        inSlope: -.340000004
-        outSlope: -.340000004
+        inSlope: -0.34
+        outSlope: -0.34
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1611,6 +1908,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent12
     classID: 4
@@ -1633,7 +1931,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1645,6 +1943,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent12
     classID: 4
@@ -1667,12 +1966,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 4.36666679
+      - time: 4.366667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1694,6 +1993,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent13
     classID: 4
@@ -1703,31 +2003,31 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .136000007
-        outSlope: .136000007
+        inSlope: 0.136
+        outSlope: 0.136
         tangentMode: 10
       - time: 1.25
-        value: .170000002
-        inSlope: -.272000015
-        outSlope: -.272000015
+        value: 0.17
+        inSlope: -0.272
+        outSlope: -0.272
         tangentMode: 10
       - time: 1.5
         value: 0
-        inSlope: -.340000004
-        outSlope: -.340000004
+        inSlope: -0.34
+        outSlope: -0.34
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 4.36666679
+      - time: 4.366667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 4.5
-        value: .270000011
+        value: 0.27
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1743,6 +2043,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent13
     classID: 4
@@ -1765,12 +2066,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 4.36666679
+      - time: 4.366667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1792,6 +2093,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent13
     classID: 4
@@ -1814,7 +2116,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1826,6 +2128,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent14
     classID: 4
@@ -1835,20 +2138,20 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .136000007
-        outSlope: .136000007
+        inSlope: 0.136
+        outSlope: 0.136
         tangentMode: 10
       - time: 1.25
-        value: .170000002
-        inSlope: -.272000015
-        outSlope: -.272000015
+        value: 0.17
+        inSlope: -0.272
+        outSlope: -0.272
         tangentMode: 10
       - time: 1.5
         value: 0
-        inSlope: -.340000004
-        outSlope: -.340000004
+        inSlope: -0.34
+        outSlope: -0.34
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1860,6 +2163,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent14
     classID: 4
@@ -1882,7 +2186,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1894,6 +2198,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent14
     classID: 4
@@ -1906,7 +2211,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1921,7 +2226,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1933,6 +2238,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent10
     classID: 4
@@ -1942,25 +2248,25 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .266666681
-        outSlope: .266666681
+        inSlope: 0.26666668
+        outSlope: 0.26666668
         tangentMode: 10
-      - time: .75
-        value: .200000003
-        inSlope: .13333334
-        outSlope: .13333334
+      - time: 0.75
+        value: 0.2
+        inSlope: 0.13333334
+        outSlope: 0.13333334
         tangentMode: 10
       - time: 1.25
-        value: .200000003
-        inSlope: -.400000006
-        outSlope: -.400000006
+        value: 0.2
+        inSlope: -0.4
+        outSlope: -0.4
         tangentMode: 10
       - time: 1.5
         value: 0
-        inSlope: -.400000006
-        outSlope: -.400000006
+        inSlope: -0.4
+        outSlope: -0.4
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1972,6 +2278,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent10
     classID: 4
@@ -1984,7 +2291,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1999,7 +2306,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2011,6 +2318,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent10
     classID: 4
@@ -2023,7 +2331,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2038,12 +2346,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 4.61666679
+      - time: 4.616667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2053,12 +2361,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.33333349
+      - time: 5.3333335
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2075,6 +2383,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent9
     classID: 4
@@ -2084,61 +2393,62 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .266666681
-        outSlope: .266666681
+        inSlope: 0.26666668
+        outSlope: 0.26666668
         tangentMode: 10
-      - time: .75
-        value: .200000003
-        inSlope: .13333334
-        outSlope: .13333334
+      - time: 0.75
+        value: 0.2
+        inSlope: 0.13333334
+        outSlope: 0.13333334
         tangentMode: 10
       - time: 1.25
-        value: .200000003
-        inSlope: -.400000006
-        outSlope: -.400000006
+        value: 0.2
+        inSlope: -0.4
+        outSlope: -0.4
         tangentMode: 10
       - time: 1.5
         value: 0
-        inSlope: -.400000006
-        outSlope: -.400000006
+        inSlope: -0.4
+        outSlope: -0.4
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 4.61666679
+      - time: 4.616667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 4.75
-        value: .209999993
+        value: 0.21
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.33333349
+      - time: 5.3333335
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 6.75
-        value: .159999996
+        value: 0.16
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 7
         value: 0
-        inSlope: -.639999986
-        outSlope: -.639999986
+        inSlope: -0.64
+        outSlope: -0.64
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent9
     classID: 4
@@ -2151,7 +2461,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2166,12 +2476,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 4.61666679
+      - time: 4.616667
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2181,12 +2491,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.33333349
+      - time: 5.3333335
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2203,6 +2513,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent9
     classID: 4
@@ -2215,12 +2526,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2235,7 +2546,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2247,6 +2558,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent8
     classID: 4
@@ -2256,30 +2568,30 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .660000026
-        outSlope: .660000026
+        inSlope: 0.66
+        outSlope: 0.66
         tangentMode: 10
-      - time: .5
-        value: .330000013
-        inSlope: -.330000013
-        outSlope: -.330000013
+      - time: 0.5
+        value: 0.33
+        inSlope: -0.33
+        outSlope: -0.33
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 0
-        inSlope: -.560000002
-        outSlope: -.560000002
+        inSlope: -0.56
+        outSlope: -0.56
         tangentMode: 10
       - time: 1.25
-        value: .100000001
-        inSlope: -.100000001
-        outSlope: -.100000001
+        value: 0.1
+        inSlope: -0.1
+        outSlope: -0.1
         tangentMode: 10
       - time: 1.5
         value: 0
-        inSlope: -.200000003
-        outSlope: -.200000003
+        inSlope: -0.2
+        outSlope: -0.2
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -2291,6 +2603,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent8
     classID: 4
@@ -2303,12 +2616,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2323,7 +2636,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2335,6 +2648,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent8
     classID: 4
@@ -2347,12 +2661,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2367,12 +2681,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.66666651
+      - time: 5.6666665
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2382,7 +2696,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2399,6 +2713,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent7
     classID: 4
@@ -2408,45 +2723,45 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .660000026
-        outSlope: .660000026
+        inSlope: 0.66
+        outSlope: 0.66
         tangentMode: 10
-      - time: .5
-        value: .330000013
-        inSlope: -.330000013
-        outSlope: -.330000013
+      - time: 0.5
+        value: 0.33
+        inSlope: -0.33
+        outSlope: -0.33
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 0
-        inSlope: -.560000002
-        outSlope: -.560000002
+        inSlope: -0.56
+        outSlope: -0.56
         tangentMode: 10
       - time: 1.25
-        value: .100000001
-        inSlope: -.100000001
-        outSlope: -.100000001
+        value: 0.1
+        inSlope: -0.1
+        outSlope: -0.1
         tangentMode: 10
       - time: 1.5
         value: 0
-        inSlope: -.200000003
-        outSlope: -.200000003
+        inSlope: -0.2
+        outSlope: -0.2
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.66666651
+      - time: 5.6666665
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 5.75
-        value: .189999998
+        value: 0.19
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 0
         inSlope: 0
         outSlope: 0
@@ -2463,6 +2778,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent7
     classID: 4
@@ -2475,12 +2791,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2495,12 +2811,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 5.66666651
+      - time: 5.6666665
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2510,7 +2826,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2527,6 +2843,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent7
     classID: 4
@@ -2539,12 +2856,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2561,6 +2878,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent6
     classID: 4
@@ -2570,18 +2888,18 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .660000026
-        outSlope: .660000026
+        inSlope: 0.66
+        outSlope: 0.66
         tangentMode: 10
-      - time: .5
-        value: .330000013
-        inSlope: -.330000013
-        outSlope: -.330000013
+      - time: 0.5
+        value: 0.33
+        inSlope: -0.33
+        outSlope: -0.33
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 0
-        inSlope: -.660000026
-        outSlope: -.660000026
+        inSlope: -0.66
+        outSlope: -0.66
         tangentMode: 10
       - time: 1
         value: 0
@@ -2595,6 +2913,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent6
     classID: 4
@@ -2607,12 +2926,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2629,6 +2948,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent6
     classID: 4
@@ -2641,12 +2961,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2663,6 +2983,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent5
     classID: 4
@@ -2672,18 +2993,18 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: .660000026
-        outSlope: .660000026
+        inSlope: 0.66
+        outSlope: 0.66
         tangentMode: 10
-      - time: .5
-        value: .330000013
-        inSlope: -.330000013
-        outSlope: -.330000013
+      - time: 0.5
+        value: 0.33
+        inSlope: -0.33
+        outSlope: -0.33
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 0
-        inSlope: -.660000026
-        outSlope: -.660000026
+        inSlope: -0.66
+        outSlope: -0.66
         tangentMode: 10
       - time: 1
         value: 0
@@ -2697,6 +3018,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent5
     classID: 4
@@ -2709,12 +3031,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2731,6 +3053,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent5
     classID: 4
@@ -2743,17 +3066,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .266666681
+      - time: 0.26666668
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2763,7 +3086,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2780,6 +3103,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent4
     classID: 4
@@ -2789,46 +3113,47 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: 1.08749986
-        outSlope: 1.08749986
+        inSlope: 1.0874999
+        outSlope: 1.0874999
         tangentMode: 10
-      - time: .266666681
-        value: .289999992
-        inSlope: .0508927703
-        outSlope: .0508927703
+      - time: 0.26666668
+        value: 0.29
+        inSlope: 0.05089277
+        outSlope: 0.05089277
         tangentMode: 10
-      - time: .5
-        value: .0599999987
-        inSlope: -.612857163
-        outSlope: -.612857163
+      - time: 0.5
+        value: 0.06
+        inSlope: -0.61285716
+        outSlope: -0.61285716
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 0
-        inSlope: -.119999997
-        outSlope: -.119999997
+        inSlope: -0.12
+        outSlope: -0.12
         tangentMode: 10
       - time: 1
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 6.75
-        value: .219999999
+        value: 0.22
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 7
         value: 0
-        inSlope: -.879999995
-        outSlope: -.879999995
+        inSlope: -0.88
+        outSlope: -0.88
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent4
     classID: 4
@@ -2841,17 +3166,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .266666681
+      - time: 0.26666668
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2861,7 +3186,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 6.4000001
+      - time: 6.4
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2878,6 +3203,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent4
     classID: 4
@@ -2890,17 +3216,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .266666681
+      - time: 0.26666668
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2917,6 +3243,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent3
     classID: 4
@@ -2926,23 +3253,23 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: 1.08749986
-        outSlope: 1.08749986
+        inSlope: 1.0874999
+        outSlope: 1.0874999
         tangentMode: 10
-      - time: .266666681
-        value: .289999992
-        inSlope: .0508927703
-        outSlope: .0508927703
+      - time: 0.26666668
+        value: 0.29
+        inSlope: 0.05089277
+        outSlope: 0.05089277
         tangentMode: 10
-      - time: .5
-        value: .0599999987
-        inSlope: -.612857163
-        outSlope: -.612857163
+      - time: 0.5
+        value: 0.06
+        inSlope: -0.61285716
+        outSlope: -0.61285716
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 0
-        inSlope: -.119999997
-        outSlope: -.119999997
+        inSlope: -0.12
+        outSlope: -0.12
         tangentMode: 10
       - time: 1
         value: 0
@@ -2956,6 +3283,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent3
     classID: 4
@@ -2968,17 +3296,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .266666681
+      - time: 0.26666668
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2995,6 +3323,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent3
     classID: 4
@@ -3007,17 +3336,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -3029,6 +3358,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent2
     classID: 4
@@ -3041,17 +3371,17 @@ AnimationClip:
         inSlope: 1.12
         outSlope: 1.12
         tangentMode: 10
-      - time: .25
-        value: .280000001
+      - time: 0.25
+        value: 0.28
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 0
         inSlope: 0
         outSlope: 0
@@ -3063,6 +3393,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent2
     classID: 4
@@ -3075,17 +3406,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -3097,6 +3428,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent2
     classID: 4
@@ -3109,17 +3441,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -3131,6 +3463,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent1
     classID: 4
@@ -3143,17 +3476,17 @@ AnimationClip:
         inSlope: 1.12
         outSlope: 1.12
         tangentMode: 10
-      - time: .25
-        value: .280000001
+      - time: 0.25
+        value: 0.28
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 0
         inSlope: 0
         outSlope: 0
@@ -3165,6 +3498,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent1
     classID: 4
@@ -3177,17 +3511,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -3199,6 +3533,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent1
     classID: 4
@@ -3211,17 +3546,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -3233,6 +3568,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: FireParent/FireLineParent0
     classID: 4
@@ -3242,20 +3578,20 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: 2.03999996
-        outSlope: 2.03999996
+        inSlope: 2.04
+        outSlope: 2.04
         tangentMode: 10
-      - time: .25
-        value: .50999999
+      - time: 0.25
+        value: 0.51
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 0
-        inSlope: -1.01999998
-        outSlope: -1.01999998
+        inSlope: -1.02
+        outSlope: -1.02
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 0
         inSlope: 0
         outSlope: 0
@@ -3267,6 +3603,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: FireParent/FireLineParent0
     classID: 4
@@ -3279,17 +3616,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -3301,6 +3638,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: FireParent/FireLineParent0
     classID: 4
@@ -3310,16 +3648,17 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: 0
-        inSlope: 1.96721315
-        outSlope: 6.34628105
+        inSlope: 1.9672132
+        outSlope: 3.8204956
         tangentMode: 1
-      - time: 1.01666665
-        value: 2
-        inSlope: .173462927
-        outSlope: 1.96721315
+      - time: 1.9666667
+        value: 3
+        inSlope: 0.56886035
+        outSlope: 0
         tangentMode: 1
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: VPBase
     classID: 4
@@ -3332,13 +3671,14 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.01666665
+      - time: 1.0166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: VPBase
     classID: 4
@@ -3347,20 +3687,534 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: .00999999978
+        value: 0.01
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 1.01666665
-        value: .00999999978
+      - time: 1.0166667
+        value: 0.01
         inSlope: 0
         outSlope: 0
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: VPBase
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.x
+    path: FireParent/FireLineParent21
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0.05346535
+        outSlope: 0.05346535
+        tangentMode: 10
+      - time: 1.6833333
+        value: 0.09
+        inSlope: 0.24673268
+        outSlope: 0.24673268
+        tangentMode: 10
+      - time: 1.9333333
+        value: 0.2
+        inSlope: -0.07999998
+        outSlope: -0.07999998
+        tangentMode: 10
+      - time: 2.2666667
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.4499998
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.y
+    path: FireParent/FireLineParent21
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.z
+    path: FireParent/FireLineParent21
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.x
+    path: FireParent/FireLineParent20
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0.061363637
+        outSlope: 0.061363637
+        tangentMode: 10
+      - time: 1.4666667
+        value: 0.09
+        inSlope: 0.25068182
+        outSlope: 0.25068182
+        tangentMode: 10
+      - time: 1.7166667
+        value: 0.2
+        inSlope: -0.079999864
+        outSlope: -0.079999864
+        tangentMode: 10
+      - time: 2.0500002
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.2333333
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.y
+    path: FireParent/FireLineParent20
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.z
+    path: FireParent/FireLineParent20
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.x
+    path: FireParent/FireLineParent24
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0.045762714
+        outSlope: 0.045762714
+        tangentMode: 10
+      - time: 1.9666667
+        value: 0.09
+        inSlope: 0.24288136
+        outSlope: 0.24288136
+        tangentMode: 10
+      - time: 2.2166667
+        value: 0.2
+        inSlope: -0.079999864
+        outSlope: -0.079999864
+        tangentMode: 10
+      - time: 2.5500002
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.7333333
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.y
+    path: FireParent/FireLineParent24
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.z
+    path: FireParent/FireLineParent24
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.x
+    path: FireParent/FireLineParent19
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0.06352942
+        outSlope: 0.06352942
+        tangentMode: 10
+      - time: 1.4166666
+        value: 0.09
+        inSlope: 0.2517647
+        outSlope: 0.2517647
+        tangentMode: 10
+      - time: 1.6666666
+        value: 0.2
+        inSlope: -0.07999998
+        outSlope: -0.07999998
+        tangentMode: 10
+      - time: 2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.1833334
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.y
+    path: FireParent/FireLineParent19
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.z
+    path: FireParent/FireLineParent19
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.x
+    path: FireParent/FireLineParent23
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0.045762714
+        outSlope: 0.045762714
+        tangentMode: 10
+      - time: 1.9666667
+        value: 0.09
+        inSlope: 0.24288136
+        outSlope: 0.24288136
+        tangentMode: 10
+      - time: 2.2166667
+        value: 0.2
+        inSlope: -0.079999864
+        outSlope: -0.079999864
+        tangentMode: 10
+      - time: 2.5500002
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.7333333
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.y
+    path: FireParent/FireLineParent23
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.z
+    path: FireParent/FireLineParent23
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.x
+    path: FireParent/FireLineParent22
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0.05454546
+        outSlope: 0.05454546
+        tangentMode: 10
+      - time: 1.65
+        value: 0.09
+        inSlope: 0.24727273
+        outSlope: 0.24727273
+        tangentMode: 10
+      - time: 1.9
+        value: 0.2
+        inSlope: -0.07999998
+        outSlope: -0.07999998
+        tangentMode: 10
+      - time: 2.2333333
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2.4166665
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.y
+    path: FireParent/FireLineParent22
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      - time: 2.0166667
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalScale.z
+    path: FireParent/FireLineParent22
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves: []
+  m_HasGenericRootTransform: 0
+  m_HasMotionFloatCurves: 0
+  m_GenerateMotionCurves: 0
   m_Events: []
