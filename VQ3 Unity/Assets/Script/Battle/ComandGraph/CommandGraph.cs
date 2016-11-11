@@ -569,6 +569,7 @@ public class CommandGraph : MonoBehaviour
 			else if( IsInvert && !IsLastInvert )
 			{
 				NextCommand = CurrentCommand;
+				CommandExp.Set(NextCommand);
 			}
 			else
 			{
@@ -778,6 +779,46 @@ public class CommandGraph : MonoBehaviour
 		CurrentRect.transform.localPosition = Vector3.forward;
 		CurrentRect.transform.localScale = Vector3.one;
 		CurrentRect.transform.localRotation = Quaternion.identity;
+	}
+
+	public void OnShieldBreak()
+	{
+		foreach( PlayerCommand linkedCommand in GetLinkedCommands() )
+		{
+			if( linkedCommand is RevertCommand )
+			{
+				linkedCommand.SetLink(true);
+				foreach( CommandEdge edge in linkedCommand.linkLines )
+				{
+					if( edge.GetOtherSide(linkedCommand) == CurrentCommand )
+					{
+						edge.State = EdgeState.Linked;
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	public void OnShieldRecover()
+	{
+		foreach( PlayerCommand linkedCommand in CurrentCommand.LinkedCommands )
+		{
+			if( linkedCommand is RevertCommand )
+			{
+				linkedCommand.SetLink(false);
+				foreach( CommandEdge edge in linkedCommand.linkLines )
+				{
+					if( edge.GetOtherSide(linkedCommand) == CurrentCommand )
+					{
+						edge.State = EdgeState.Unlinked;
+						break;
+					}
+				}
+				break;
+			}
+		}
 	}
 
 	public void OnEndro()

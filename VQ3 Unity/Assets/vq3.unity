@@ -7585,7 +7585,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 313610058}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalPosition: {x: 0, y: -13, z: 90}
   m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -11730,8 +11730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 4
   ArcRate: 1
-  Width: 1.2
-  Radius: 5.9
+  Width: 3
+  Radius: 8
   ScaleX: 1
   Color: {r: 1, g: 0.80689657, b: 0, a: 1}
   Angle: 0
@@ -22237,6 +22237,12 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!114 &906978372 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11462584, guid: 6be9e781919ff5d43a87799ba49dcf57,
+    type: 2}
+  m_PrefabInternal: {fileID: 10957117}
+  m_Script: {fileID: 11500000, guid: 37b700e71926a1f4a82fa29e04029b1e, type: 3}
 --- !u!4 &908285942
 Transform:
   m_ObjectHideFlags: 0
@@ -23434,7 +23440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sun: {fileID: 1199834413}
   Ring: {fileID: 1011765964}
-  Moon: {fileID: 1675493090}
+  Moon: {fileID: 313610058}
   TimeCount: {fileID: 1060113483}
   TimeGauge: {fileID: 1623543219}
   BreakCount: {fileID: 1647229265}
@@ -29605,7 +29611,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1207209414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: -1}
+  m_LocalPosition: {x: 0, y: -0, z: 1}
   m_LocalScale: {x: 0.85, y: 0.85, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -29625,12 +29631,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 4
   ArcRate: 1
-  Width: 0.4
-  Radius: 5.5
+  Width: 1
+  Radius: 7
   ScaleX: 1
   Color: {r: 1, g: 0.80689657, b: 0, a: 1}
   Angle: 0
-  GrowSize: 0.4
+  GrowSize: 1
   GrowAlpha: 1
   VertexAlphas: []
   GrowTexture: {fileID: 2800000, guid: 9d5f83f94a0ae0547a532278cc48c2c9, type: 3}
@@ -33097,10 +33103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 30
   ArcRate: 1
-  Width: 0.5
-  Radius: 3.7
+  Width: 0.13
+  Radius: 3.25
   ScaleX: 1
-  Color: {r: 0.043137256, g: 0.043137256, b: 0.043137256, a: 0.1455}
+  Color: {r: 0.20392157, g: 0.20392157, b: 0.20392157, a: 0.5}
   Angle: 0
   GrowSize: 0
   GrowAlpha: 0
@@ -41627,7 +41633,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1675493088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -4.97, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -49366,7 +49372,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1957412525}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -4.97, z: 1}
+  m_LocalPosition: {x: 0.01, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -49386,12 +49392,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 30
   ArcRate: 1
-  Width: 0.1
-  Radius: 3.5
+  Width: 0.03
+  Radius: 3.2
   ScaleX: 1
-  Color: {r: 0.043137256, g: 0.043137256, b: 0.043137256, a: 0.291}
+  Color: {r: 0.20392157, g: 0.20392157, b: 0.20392157, a: 1}
   Angle: 0
-  GrowSize: 0.2
+  GrowSize: 0.05
   GrowAlpha: 0.5
   VertexAlphas: []
   GrowTexture: {fileID: 2800000, guid: 9d5f83f94a0ae0547a532278cc48c2c9, type: 3}
@@ -52619,11 +52625,13 @@ MonoBehaviour:
   - {fileID: 2101187581}
   - {fileID: 171037402}
   - {fileID: 1080036976}
-  BaseBackGauges: []
+  BaseBackGauges:
+  - {fileID: 906978372}
   BaseFrontGauges:
   - {fileID: 1937326870}
   - {fileID: 940642202}
   - {fileID: 1668906808}
+  - {fileID: 2125673835}
   BaseMiddleGauges:
   - {fileID: 768121250}
   - {fileID: 305863442}
@@ -53799,6 +53807,12 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!114 &2125673835 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11462584, guid: 6be9e781919ff5d43a87799ba49dcf57,
+    type: 2}
+  m_PrefabInternal: {fileID: 535081630}
+  m_Script: {fileID: 11500000, guid: 37b700e71926a1f4a82fa29e04029b1e, type: 3}
 --- !u!1 &2127801338
 GameObject:
   m_ObjectHideFlags: 0

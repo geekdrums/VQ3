@@ -29,7 +29,7 @@ public class CommandEdge : MonoBehaviour {
 	LineRenderer line_;
 	EdgeState state_ = EdgeState.None;
 	public bool IsInvert { get { return Command1 is InvertCommand || Command2 is InvertCommand; } }
-	public bool IsUsable { get { return Command1.state <= CommandState.Acquired && Command2.state <= CommandState.Acquired; } }
+	public bool IsUsable { get { return Command1.IsUsable() && Command2.IsUsable(); } }
 	public PlayerCommand Command1;
 	public PlayerCommand Command2;
 

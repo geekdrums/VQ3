@@ -41,30 +41,38 @@ public class RevertCommand : PlayerCommand
 
 		if( GameContext.BattleState < BattleState.Intro ) return;
 
-		EyeArc.SetTargetArc((float)GameContext.LuxSystem.CurrentVP/GameContext.LuxSystem.OverflowVP);
+		EyeArc.SetArc((float)GameContext.LuxSystem.CurrentVP/GameContext.LuxSystem.OverflowVP);
 
 		if( GameContext.LuxSystem.State != LuxState.Overload && GameContext.LuxSystem.IsOverFlow )
 		{
 			CenterRect.SetColor(Color.white);
 			EyeEdge.SetColor(Color.clear);
 			EyeArc.SetColor(Color.black);
-			GrowEdge.SetGrowSize(Music.MusicalCos(4));
-			Vector3 lookDirection = (SelectSpot - EyeArc.transform.position);
+			GrowEdge.SetSize(7);
+			GrowEdge.SetGrowSize(Music.MusicalCos(8) * 4);
+
+			if( Music.IsJustChanged && AnimManager.IsAnimating(EyeArc.gameObject) == false && UnityEngine.Random.Range(0, 8) == 0 )
+			{
+				AnimManager.AddAnim(EyeArc.gameObject, 0.0f, ParamType.ScaleY, AnimType.Time, 0.05f);
+				AnimManager.AddAnim(EyeArc.gameObject, 1.0f, ParamType.ScaleY, AnimType.Time, 0.05f, 0.07f);
+			}
+
+			Vector3 lookDirection = (SelectSpot + Vector3.down * 2 + Vector3.right * Music.MusicalCos(8, 0, -1, 1) - EyeArc.transform.position);
 			lookDirection.z = 0;
 			float distance = lookDirection.magnitude;
 			lookDirection.Normalize();
 			EyeArc.transform.localPosition = centerEyePosition + lookDirection * Mathf.Clamp(distance/3.0f, 0.0f, 2.0f);
-			EyeArc.SetTargetWidth(EyeEdge.Radius);
+			EyeArc.SetWidth(EyeEdge.Radius);
 		}
 		else
 		{
 			CenterRect.SetColor(Color.black);
 			EyeEdge.SetColor(Color.white);
 			EyeArc.SetColor(Color.white);
-			GrowEdge.SetGrowSize(0.5f);
-			EyeEdge.SetTargetWidth(0.5f);
+			GrowEdge.SetSize(0.0f);
+			EyeEdge.SetWidth(0.5f);
 			EyeArc.transform.localPosition = centerEyePosition;
-			EyeArc.SetTargetWidth(EyeEdge.Radius - EyeEdge.Width);
+			EyeArc.SetWidth(EyeEdge.Radius - EyeEdge.Width);
 		}
     }
 
@@ -73,5 +81,10 @@ public class RevertCommand : PlayerCommand
 		GameObject iconObj = base.InstantiateIconObj(iconParent);
 		iconObj.transform.FindChild("EyeCircle").transform.localPosition = centerEyePosition;
 		return iconObj;
+	}
+
+	public override bool IsUsable()
+	{
+		return base.IsUsable() && GameContext.LuxSystem.IsOverFlow;
 	}
 }

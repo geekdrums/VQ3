@@ -47,8 +47,7 @@ public class LuxSystem : MonoBehaviour
 	//game objects
 	public MidairPrimitive Sun;
 	public MidairPrimitive Ring;
-	public MidairPrimitive Moon;
-	//public EnemyCommandCircle CommandCircle;
+	public GameObject Moon;
 	public CounterSprite TimeCount;
 	public GaugeRenderer TimeGauge;
 	public CounterSprite BreakCount;
@@ -285,6 +284,7 @@ public class LuxSystem : MonoBehaviour
 					Music.SetAisac("TrackVolumeOver", 0);
 					WaveLineMaterial.color = ColorManager.Base.Front;
 					SetState(LuxState.Sun);
+					GameContext.PlayerConductor.CommandGraph.OnShieldRecover();
 				}
 			}
 			else if( State == LuxState.Overload )
@@ -451,7 +451,7 @@ public class LuxSystem : MonoBehaviour
 			}
 			if( Music.IsJustChangedAt(3) )
 			{
-				Moon.transform.position = Sun.transform.position + Vector3.back * 0.1f + Vector3.down * 0.1f;
+				Moon.transform.position = Sun.transform.position + Vector3.back * 10.0f;// + Vector3.down * 0.1f;
 				BGColor = ColorManager.Base.Back;
 				GetComponent<Animation>()["EclipseAnim"].speed = (float)(Music.CurrentTempo / 60.0);
 				GetComponent<Animation>().Play();
@@ -660,10 +660,12 @@ public class LuxSystem : MonoBehaviour
 		if( IsOverFlow && !oldIsOverFlow )
 		{
 			SetState(LuxState.Overflow);
+			GameContext.PlayerConductor.CommandGraph.OnShieldBreak();
 		}
 		else if( oldIsOverFlow && !IsOverFlow && State != LuxState.SunSet )
 		{
 			SetState(LuxState.Sun);
+			GameContext.PlayerConductor.CommandGraph.OnShieldRecover();
 		}
 	}
 
