@@ -111,6 +111,10 @@ public class CounterSprite : MonoBehaviour {
 	public float Width { get; private set; }
 	public float Height { get; private set; }
 
+	float maxShakeAnimTime_;
+	float shakeAnimTime_;
+	float shakeAnimMagnitude_;
+
 	// Use this for initialization
     void Start()
     {
@@ -119,6 +123,17 @@ public class CounterSprite : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+		if( shakeAnimTime_ > 0 )
+		{
+			shakeAnimTime_ -= Time.deltaTime;
+			if( shakeAnimTime_ <= 0 )
+			{
+				shakeAnimTime_ = 0;
+				shakeAnimMagnitude_ = 0;
+				maxShakeAnimTime_ = 0;
+			}
+			UpdateSprite();
+		}
     }
 
     void CreateNumberParent()
@@ -275,12 +290,12 @@ public class CounterSprite : MonoBehaviour {
         for( int i = 0; i < numDigits; i++ )
         {
             currentPos += vInterval * CounterIntervals[numbers[i]] / 2;
-            digits_[i].transform.localPosition = currentPos;
+            digits_[i].transform.localPosition = currentPos + Vector3.up * GetShakeOffset(i);
             currentPos += vInterval * CounterIntervals[numbers[i]] / 2;
             if( i == SignificantDigits - 1 )
             {
                 currentPos += vInterval * MarksIntervals[(int)Mark.Dot] / 2;
-                dotSprite_.transform.localPosition = currentPos;
+                dotSprite_.transform.localPosition = currentPos + Vector3.up * GetShakeOffset(i);
                 currentPos += vInterval * MarksIntervals[(int)Mark.Dot] / 2;
             }
         }
@@ -329,4 +344,21 @@ public class CounterSprite : MonoBehaviour {
             sprite.color = CounterColor;
         }
     }
+
+	public void Shake(float time, float magnitude)
+	{
+		maxShakeAnimTime_ = shakeAnimTime_ = time;
+		shakeAnimMagnitude_ = magnitude;
+	}
+
+	const float waveSpeed = 0.3f;
+	const float waveDecreaseRate = 0.2f;
+	const float timeWaveRate = 30.0f;
+	const float timeDecreaseRate = 1.0f;
+	const float timeDecreaseMin = 0.0f;
+	float GetShakeOffset(int index)
+	{
+		if( shakeAnimTime_ <= 0 ) return 0;
+		else return shakeAnimMagnitude_ * -Mathf.Cos(timeWaveRate * shakeAnimTime_ + index * waveSpeed) * (1.0f - index * waveDecreaseRate) * Mathf.Min(1.0f, (timeDecreaseMin + (shakeAnimTime_ / maxShakeAnimTime_) * timeDecreaseRate));
+	}
 }

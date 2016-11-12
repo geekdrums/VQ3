@@ -55,6 +55,7 @@ public class DamageText : MonoBehaviour
 	{
 		DamageCount.Count += damage;
 		time_ = 0;
+		DamageCount.Shake(0.3f, 1.0f);
 	}
 
 	public void AddVP(int VP, int Time)
@@ -64,6 +65,9 @@ public class DamageText : MonoBehaviour
 		VPCount.Count += VP;
 		time_ = 0;
 		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalUnits);
+
+		VPCount.Shake(0.3f, 1.0f);
+		VTCount.Shake(0.3f, 1.0f);
 	}
 
 
@@ -81,6 +85,9 @@ public class DamageText : MonoBehaviour
 		VTCount.Count = Time / LuxSystem.TurnMusicalUnits;
 		VTCount.gameObject.SetActive(VTCount.Count > 0);
 		VPCount.Count = VP;
+
+		VPCount.Shake(0.4f, 1.0f);
+		VTCount.Shake(0.4f, 1.0f);
 
 		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalUnits);
 		isPlayerDamage_ = false;
@@ -132,6 +139,7 @@ public class DamageText : MonoBehaviour
 		ModeInit(DamageGauge.Mode.Damage);
 		Color color;
 		DamageCount.Count = Mathf.Abs(damage);
+		DamageCount.Shake(0.4f, 1.0f);
 		isPlayerDamage_ = isPlayerDamage;
 		switch( actionResult )
 		{

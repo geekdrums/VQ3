@@ -1078,6 +1078,12 @@ MonoBehaviour:
   dotSprite_: {fileID: 212000013566052026}
   prefixSprit_: {fileID: 0}
   suffixSprite_: {fileID: 0}
+  shakeCoeff: 1
+  waveSpeed: 0.3
+  waveDecreaseRate: 0.2
+  timeWaveRate: 30
+  timeDecreaseRate: 1
+  timeDecreaseMin: 0
 --- !u!114 &114000011542190126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1123,6 +1129,12 @@ MonoBehaviour:
   dotSprite_: {fileID: 212000010617538686}
   prefixSprit_: {fileID: 0}
   suffixSprite_: {fileID: 0}
+  shakeCoeff: 1
+  waveSpeed: 0.3
+  waveDecreaseRate: 0.2
+  timeWaveRate: 30
+  timeDecreaseRate: 1
+  timeDecreaseMin: 0
 --- !u!114 &114000013171101086
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1168,6 +1180,12 @@ MonoBehaviour:
   dotSprite_: {fileID: 0}
   prefixSprit_: {fileID: 0}
   suffixSprite_: {fileID: 0}
+  shakeCoeff: 10
+  waveSpeed: 1
+  waveDecreaseRate: 0.05
+  timeWaveRate: 1
+  timeDecreaseRate: 0.05
+  timeDecreaseMin: 0.2
 --- !u!114 &114000013707037204
 MonoBehaviour:
   m_ObjectHideFlags: 1

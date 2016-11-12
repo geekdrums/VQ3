@@ -481,21 +481,23 @@ public class CommandGraph : MonoBehaviour
 			PlayerCommand command = FindCommand(hit.point);
 			if( command != null )
 			{
+				float commandCoeff = command.transform.localScale.x / 0.24f;
+				if( command == CurrentCommand ) commandCoeff += 0.2f;
 				NextRect.transform.position = Vector3.Lerp(NextRect.transform.position, command.transform.position + Vector3.back * 3, 0.2f);
-				NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.one, 0.2f);
+				NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.one * commandCoeff, 0.2f);
 			}
 			else
 			{
 				NextRect.transform.position = Vector3.Lerp(NextRect.transform.position, hit.point + Vector3.back * 3, 0.2f);
-				NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.one * 0.2f, 0.2f);
+				NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.one * 0.1f, 0.2f);
 			}
 			NextRect.transform.rotation = Quaternion.identity;
 			NextRect.SetColor(ColorManager.Base.Front);
 			NextRect.SetSize(1.5f);
-			NextRect.SetWidth(0.1f);
+			NextRect.SetWidth(0.2f);
 			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(1.5f);
-			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(0.1f);
-			NextRect.SetArc(1.0f);
+			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(0.2f);
+			NextRect.SetArc(GameContext.BattleState == BattleState.Wait ? -1.0f : -Music.MusicalTime / LuxSystem.TurnMusicalUnits);
 
 			if( command != null && command != PreviewCommand )
 			{
