@@ -142,7 +142,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 		if( currentArcRate_ != ArcRate || force )
 		{
 			ArcRate = Mathf.Clamp(ArcRate, -1.0f, 1.0f);
-			if( currentArcRate_ * ArcRate <= 0 ) RecalculatePolygon();
+			if( currentArcRate_ * ArcRate <= 0 || force ) RecalculatePolygon(true);
 
 			float OutR = Radius / cos_;
 			float InR = Mathf.Max(0, (Radius - Width)) / cos_;
@@ -219,7 +219,7 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 		GetComponent<MeshFilter>().mesh = mesh;
 	}
 
-	Mesh RecalculatePolygon()
+	Mesh RecalculatePolygon(bool force = false)
 	{
 		if( Num < 3 )
 		{
@@ -246,8 +246,8 @@ public class MidairPrimitive : MonoBehaviour, IColoredObject
 #endif
 
 		int vertexCount = ArcN * 2 + 2;
-		bool isNChanged = (mesh.vertices.Length != vertexCount || meshVertices_ == null || meshVertices_.Length != vertexCount || currentArcRate_ * ArcRate <= 0);
-		if( isNChanged )
+		bool isNChanged = (mesh.vertices.Length != vertexCount || meshVertices_ == null || meshVertices_.Length != vertexCount);
+		if( isNChanged || force )
 		{
 			cos_ = Mathf.Cos(Mathf.PI / N);
 			mesh.triangles = null;

@@ -12,44 +12,47 @@ AnimationClip:
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
   m_CompressedRotationCurves: []
+  m_EulerCurves: []
   m_PositionCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: 0, y: 2.87688971, z: 0}
+        value: {x: 0, y: 2.8768897, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.93333328
-        value: {x: 0, y: 2.87688971, z: 0}
+      - time: 1.9333333
+        value: {x: 0, y: 2.8768897, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 1.9666667
-        value: {x: 0, y: -2.24603271, z: 0}
-        inSlope: {x: 0, y: -153.687271, z: 0}
-        outSlope: {x: 0, y: -153.687271, z: 0}
+        value: {x: 0, y: -2.2460327, z: 0}
+        inSlope: {x: 0, y: -153.68727, z: 0}
+        outSlope: {x: 0, y: -153.68727, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder
   m_ScaleCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 1.75
-        value: {x: 1.5, y: 1, z: 1.66999996}
+        value: {x: 1.5, y: 1, z: 1.67}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2
-        value: {x: 1.5, y: 1, z: 1.66999996}
+        value: {x: 1.5, y: 1, z: 1.67}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: BoldThunder
   - curve:
       serializedVersion: 2
@@ -59,13 +62,13 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .75
-        value: {x: 1, y: 1, z: .689999998}
+      - time: 0.75
+        value: {x: 1, y: 1, z: 0.69}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -80,7 +83,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.0333333
-        value: {x: 1, y: 1, z: .689999998}
+        value: {x: 1, y: 1, z: 0.69}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -91,6 +94,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point11
   - curve:
       serializedVersion: 2
@@ -100,12 +104,12 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: {x: 0, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .833333313
+      - time: 0.8333333
         value: {x: 1, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -132,6 +136,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point10
   - curve:
       serializedVersion: 2
@@ -141,17 +146,17 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .766666651
+      - time: 0.76666665
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .899999976
-        value: {x: 1, y: 1, z: .310000002}
+      - time: 0.9
+        value: {x: 1, y: 1, z: 0.31}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -162,7 +167,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.0333333
-        value: {x: 1, y: 1, z: .310000002}
+        value: {x: 1, y: 1, z: 0.31}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -173,6 +178,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point9
   - curve:
       serializedVersion: 2
@@ -182,17 +188,17 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: {x: 0, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .766666651
-        value: {x: 1, y: 1, z: .690000057}
+      - time: 0.76666665
+        value: {x: 1, y: 1, z: 0.69000006}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: {x: 0, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -203,7 +209,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.0333333
-        value: {x: 1, y: 1, z: .690000057}
+        value: {x: 1, y: 1, z: 0.69000006}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -214,6 +220,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point8
   - curve:
       serializedVersion: 2
@@ -223,17 +230,17 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .5
+      - time: 0.5
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .633333325
-        value: {x: 1, y: 1, z: .850000024}
+      - time: 0.6333333
+        value: {x: 1, y: 1, z: 0.85}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -244,7 +251,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.0333333
-        value: {x: 1, y: 1, z: .850000024}
+        value: {x: 1, y: 1, z: 0.85}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -255,6 +262,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point7
   - curve:
       serializedVersion: 2
@@ -264,17 +272,17 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: {x: 1, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -296,6 +304,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point6
   - curve:
       serializedVersion: 2
@@ -305,27 +314,27 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .416666657
+      - time: 0.41666666
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .5
-        value: {x: 1, y: 1, z: .449999988}
+      - time: 0.5
+        value: {x: 1, y: 1, z: 0.45}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .916666687
-        value: {x: 1, y: 1, z: .449999988}
+      - time: 0.9166667
+        value: {x: 1, y: 1, z: 0.45}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -336,7 +345,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.0333333
-        value: {x: 1, y: 1, z: .449999988}
+        value: {x: 1, y: 1, z: 0.45}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -347,6 +356,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point5
   - curve:
       serializedVersion: 2
@@ -356,32 +366,32 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .333333343
+      - time: 0.33333334
         value: {x: 0, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .416666657
-        value: {x: .280000031, y: 1, z: 1}
+      - time: 0.41666666
+        value: {x: 0.28000003, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .583333313
-        value: {x: .280000031, y: 1, z: 1}
+      - time: 0.5833333
+        value: {x: 0.28000003, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: {x: 0, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .916666687
-        value: {x: .280000031, y: 1, z: 1}
+      - time: 0.9166667
+        value: {x: 0.28000003, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: {x: 0, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -392,7 +402,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.0333333
-        value: {x: .280000031, y: 1, z: 1}
+        value: {x: 0.28000003, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -403,6 +413,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point4
   - curve:
       serializedVersion: 2
@@ -412,32 +423,32 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .25
+      - time: 0.25
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .333333343
-        value: {x: 1, y: 1, z: .310000002}
+      - time: 0.33333334
+        value: {x: 1, y: 1, z: 0.31}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .583333313
-        value: {x: 1, y: 1, z: .310000002}
+      - time: 0.5833333
+        value: {x: 1, y: 1, z: 0.31}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .916666687
-        value: {x: 1, y: 1, z: .310000002}
+      - time: 0.9166667
+        value: {x: 1, y: 1, z: 0.31}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -448,7 +459,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.0333333
-        value: {x: 1, y: 1, z: .310000002}
+        value: {x: 1, y: 1, z: 0.31}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -459,6 +470,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point3
   - curve:
       serializedVersion: 2
@@ -468,32 +480,32 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: {x: 0, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .25
-        value: {x: .699999988, y: 1, z: 1}
+      - time: 0.25
+        value: {x: 0.7, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .583333313
-        value: {x: .699999988, y: 1, z: 1}
+      - time: 0.5833333
+        value: {x: 0.7, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: {x: 0, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .916666687
-        value: {x: .699999988, y: 1, z: 1}
+      - time: 0.9166667
+        value: {x: 0.7, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: {x: 0, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -504,7 +516,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.0333333
-        value: {x: .699999988, y: 1, z: 1}
+        value: {x: 0.7, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -515,6 +527,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point2
   - curve:
       serializedVersion: 2
@@ -524,32 +537,32 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .0833333358
+      - time: 0.083333336
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .166666672
-        value: {x: 1, y: 1, z: .400000006}
+      - time: 0.16666667
+        value: {x: 1, y: 1, z: 0.4}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .583333313
-        value: {x: 1, y: 1, z: .400000006}
+      - time: 0.5833333
+        value: {x: 1, y: 1, z: 0.4}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .916666687
-        value: {x: 1, y: 1, z: .400000006}
+      - time: 0.9166667
+        value: {x: 1, y: 1, z: 0.4}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: {x: 1, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -560,7 +573,7 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.0333333
-        value: {x: 1, y: 1, z: .400000006}
+        value: {x: 1, y: 1, z: 0.4}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -571,68 +584,71 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/Point1
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: .189999998, y: 1, z: .00499999989}
-        inSlope: {x: 9, y: 0, z: 0}
-        outSlope: {x: 9, y: 0, z: 0}
+        value: {x: 0.19, y: 1, z: 0.005}
+        inSlope: {x: 16.199999, y: 0, z: 0}
+        outSlope: {x: 16.199999, y: 0, z: 0}
         tangentMode: 0
-      - time: .0500000007
-        value: {x: .639999986, y: 1, z: .00499999989}
+      - time: 0.05
+        value: {x: 1, y: 1, z: 0.005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 1.5
-        value: {x: .639999986, y: 1, z: .00499999989}
+        value: {x: 1, y: 1, z: 0.005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.83333337
-        value: {x: .639999986, y: 1, z: .00499999989}
+      - time: 1.8333334
+        value: {x: 1, y: 1, z: 0.005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.91666663
-        value: {x: 0, y: 1, z: .00499999989}
+      - time: 1.9166666
+        value: {x: 0, y: 1, z: 0.005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder/TopLine
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: 0, y: 1, z: .00499999989}
+        value: {x: 0, y: 1, z: 0.005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.41666663
-        value: {x: 0, y: 1, z: .00499999989}
+      - time: 1.4166666
+        value: {x: 0, y: 1, z: 0.005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.66666663
-        value: {x: .639999986, y: 1, z: .00499999989}
+      - time: 1.6666666
+        value: {x: 1.0016236, y: 1, z: 0.005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 2.23333335
-        value: {x: .639999986, y: 1, z: .00499999989}
+      - time: 2.2333333
+        value: {x: 1.0016236, y: 1, z: 0.005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 2.5
-        value: {x: 0, y: 1, z: .00499999989}
+        value: {x: 0, y: 1, z: 0.005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: BottomLine
   - curve:
       serializedVersion: 2
@@ -642,7 +658,7 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: {x: 1, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -652,60 +668,62 @@ AnimationClip:
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: 1.93333328
+      - time: 1.9333333
         value: {x: 1, y: 1, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - time: 1.9666667
-        value: {x: 1, y: 1, z: -1}
+        value: {x: 1.2, y: 1, z: -1.2}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: LightThunder
   m_FloatCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 2.01055336
+        value: 2.0105534
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .483333319
-        value: 2.01055336
+      - time: 0.48333332
+        value: 2.0105534
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.16666663
-        value: 1.55513287
-        inSlope: -3.45447993
-        outSlope: -11.7332296
+      - time: 1.1666666
+        value: 1.5551329
+        inSlope: -3.45448
+        outSlope: -11.73323
         tangentMode: 1
       - time: 1.25
-        value: .100000001
+        value: 0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 1.5
-        value: .100000001
+        value: 0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.61666667
+      - time: 1.6166667
         value: 2
-        inSlope: 13.4758492
-        outSlope: 3.11748719
+        inSlope: 13.475849
+        outSlope: 3.1174872
         tangentMode: 1
-      - time: 2.33333325
+      - time: 2.3333333
         value: 3
-        inSlope: .56073606
+        inSlope: 0.56073606
         outSlope: 0
         tangentMode: 1
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: Radius
     path: MidairCircle
     classID: 114
@@ -718,28 +736,29 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 0
-        inSlope: .0671246052
-        outSlope: .0671246052
+        inSlope: 0.067124605
+        outSlope: 0.067124605
         tangentMode: 10
-      - time: 1.08333337
-        value: .0783120468
-        inSlope: .0244089402
-        outSlope: .0244089402
+      - time: 1.0833334
+        value: 0.07831205
+        inSlope: 0.02440894
+        outSlope: 0.02440894
         tangentMode: 10
       - time: 2
         value: 0
-        inSlope: .00228434429
-        outSlope: .00228434429
+        inSlope: 0.0022843443
+        outSlope: 0.0022843443
         tangentMode: 10
-      - time: 2.33333325
-        value: .0299999993
-        inSlope: .0900000185
-        outSlope: .0900000185
+      - time: 2.3333333
+        value: 0.03
+        inSlope: 0.09000002
+        outSlope: 0.09000002
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: Width
     path: MidairCircle
     classID: 114
@@ -752,43 +771,44 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .5
+      - time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
-        value: .064731814
+      - time: 1.0833334
+        value: 0.064731814
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.16666663
-        value: .5
-        inSlope: .811612368
-        outSlope: .811612368
+      - time: 1.1666666
+        value: 0.5
+        inSlope: 0.81161237
+        outSlope: 0.81161237
         tangentMode: 10
       - time: 1.25
-        value: .200000003
-        inSlope: -1.79999924
-        outSlope: -1.79999924
+        value: 0.2
+        inSlope: -1.7999992
+        outSlope: -1.7999992
         tangentMode: 10
       - time: 1.5
-        value: .200000003
-        inSlope: 1.19160831
-        outSlope: 1.19160831
+        value: 0.2
+        inSlope: 1.1916083
+        outSlope: 1.1916083
         tangentMode: 10
-      - time: 1.61666667
-        value: .478041947
-        inSlope: -1.48377502
-        outSlope: -1.48377502
+      - time: 1.6166667
+        value: 0.47804195
+        inSlope: -1.483775
+        outSlope: -1.483775
         tangentMode: 0
-      - time: 2.33333325
+      - time: 2.3333333
         value: 0
-        inSlope: -.667035341
-        outSlope: -.667035341
+        inSlope: -0.66703534
+        outSlope: -0.66703534
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: GrowSize
     path: MidairCircle
     classID: 114
@@ -806,7 +826,7 @@ AnimationClip:
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
-      - time: 1.70000005
+      - time: 1.7
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -816,13 +836,14 @@ AnimationClip:
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
-      - time: 2.16666675
+      - time: 2.1666667
         value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_IsActive
     path: BoldThunder
     classID: 1
@@ -838,11 +859,14 @@ AnimationClip:
     pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
+    m_AdditiveReferencePoseClip: {fileID: 0}
+    m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
     m_StopTime: 2.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
+    m_HasAdditiveReferencePose: 0
     m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
@@ -869,6 +893,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: BoldThunder
     classID: 4
@@ -888,6 +913,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: BoldThunder
     classID: 4
@@ -896,17 +922,18 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 1.75
-        value: 1.66999996
+        value: 1.67
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 2
-        value: 1.66999996
+        value: 1.67
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: BoldThunder
     classID: 4
@@ -919,12 +946,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -951,6 +978,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point11
     classID: 4
@@ -963,12 +991,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
@@ -995,6 +1023,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point11
     classID: 4
@@ -1007,13 +1036,13 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
-        value: .689999998
+      - time: 0.75
+        value: 0.69
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1028,7 +1057,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 0
       - time: 2.0333333
-        value: .689999998
+        value: 0.69
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1039,6 +1068,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point11
     classID: 4
@@ -1051,12 +1081,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .833333313
+      - time: 0.8333333
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1083,6 +1113,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point10
     classID: 4
@@ -1095,12 +1126,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .833333313
+      - time: 0.8333333
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1127,6 +1158,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point10
     classID: 4
@@ -1139,12 +1171,12 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .75
+      - time: 0.75
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .833333313
+      - time: 0.8333333
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1171,6 +1203,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point10
     classID: 4
@@ -1183,17 +1216,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .766666651
+      - time: 0.76666665
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .899999976
+      - time: 0.9
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1215,6 +1248,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point9
     classID: 4
@@ -1227,17 +1261,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .766666651
+      - time: 0.76666665
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .899999976
+      - time: 0.9
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1259,6 +1293,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point9
     classID: 4
@@ -1271,17 +1306,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .766666651
+      - time: 0.76666665
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .899999976
-        value: .310000002
+      - time: 0.9
+        value: 0.31
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1292,7 +1327,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 0
       - time: 2.0333333
-        value: .310000002
+        value: 0.31
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1303,6 +1338,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point9
     classID: 4
@@ -1315,17 +1351,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .766666651
+      - time: 0.76666665
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1347,6 +1383,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point8
     classID: 4
@@ -1359,17 +1396,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .766666651
+      - time: 0.76666665
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1391,6 +1428,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point8
     classID: 4
@@ -1403,17 +1441,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .766666651
-        value: .690000057
+      - time: 0.76666665
+        value: 0.69000006
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1424,7 +1462,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 0
       - time: 2.0333333
-        value: .690000057
+        value: 0.69000006
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1435,6 +1473,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point8
     classID: 4
@@ -1447,17 +1486,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1479,6 +1518,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point7
     classID: 4
@@ -1491,17 +1531,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1523,6 +1563,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point7
     classID: 4
@@ -1535,17 +1576,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .5
+      - time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .633333325
-        value: .850000024
+      - time: 0.6333333
+        value: 0.85
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1556,7 +1597,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 0
       - time: 2.0333333
-        value: .850000024
+        value: 0.85
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1567,6 +1608,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point7
     classID: 4
@@ -1579,17 +1621,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1611,6 +1653,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point6
     classID: 4
@@ -1623,17 +1666,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1655,6 +1698,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point6
     classID: 4
@@ -1667,17 +1711,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .633333325
+      - time: 0.6333333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .966666639
+      - time: 0.96666664
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1699,6 +1743,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point6
     classID: 4
@@ -1711,27 +1756,27 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .416666657
+      - time: 0.41666666
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1753,6 +1798,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point5
     classID: 4
@@ -1765,27 +1811,27 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .416666657
+      - time: 0.41666666
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .5
+      - time: 0.5
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1807,6 +1853,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point5
     classID: 4
@@ -1819,27 +1866,27 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .416666657
+      - time: 0.41666666
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .5
-        value: .449999988
+      - time: 0.5
+        value: 0.45
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
-        value: .449999988
+      - time: 0.9166667
+        value: 0.45
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1850,7 +1897,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 0
       - time: 2.0333333
-        value: .449999988
+        value: 0.45
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1861,6 +1908,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point5
     classID: 4
@@ -1873,32 +1921,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .333333343
+      - time: 0.33333334
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .416666657
-        value: .280000031
+      - time: 0.41666666
+        value: 0.28000003
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
-        value: .280000031
+      - time: 0.5833333
+        value: 0.28000003
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
-        value: .280000031
+      - time: 0.9166667
+        value: 0.28000003
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1909,7 +1957,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 0
       - time: 2.0333333
-        value: .280000031
+        value: 0.28000003
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1920,6 +1968,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point4
     classID: 4
@@ -1932,32 +1981,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .333333343
+      - time: 0.33333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .416666657
+      - time: 0.41666666
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
+      - time: 0.5833333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1979,6 +2028,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point4
     classID: 4
@@ -1991,32 +2041,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .333333343
+      - time: 0.33333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .416666657
+      - time: 0.41666666
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
+      - time: 0.5833333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2038,6 +2088,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point4
     classID: 4
@@ -2050,32 +2101,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .333333343
+      - time: 0.33333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
+      - time: 0.5833333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2097,6 +2148,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point3
     classID: 4
@@ -2109,32 +2161,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .333333343
+      - time: 0.33333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
+      - time: 0.5833333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2156,6 +2208,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point3
     classID: 4
@@ -2168,32 +2221,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .25
+      - time: 0.25
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .333333343
-        value: .310000002
+      - time: 0.33333334
+        value: 0.31
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
-        value: .310000002
+      - time: 0.5833333
+        value: 0.31
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
-        value: .310000002
+      - time: 0.9166667
+        value: 0.31
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -2204,7 +2257,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 0
       - time: 2.0333333
-        value: .310000002
+        value: 0.31
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2215,6 +2268,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point3
     classID: 4
@@ -2227,32 +2281,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .25
-        value: .699999988
+      - time: 0.25
+        value: 0.7
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
-        value: .699999988
+      - time: 0.5833333
+        value: 0.7
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
-        value: .699999988
+      - time: 0.9166667
+        value: 0.7
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -2263,7 +2317,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 0
       - time: 2.0333333
-        value: .699999988
+        value: 0.7
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2274,6 +2328,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point2
     classID: 4
@@ -2286,32 +2341,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
+      - time: 0.5833333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2333,6 +2388,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point2
     classID: 4
@@ -2345,32 +2401,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .25
+      - time: 0.25
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
+      - time: 0.5833333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2392,6 +2448,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point2
     classID: 4
@@ -2404,32 +2461,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .0833333358
+      - time: 0.083333336
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
+      - time: 0.5833333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2451,6 +2508,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/Point1
     classID: 4
@@ -2463,32 +2521,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .0833333358
+      - time: 0.083333336
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .166666672
+      - time: 0.16666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
+      - time: 0.5833333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
+      - time: 0.9166667
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2510,6 +2568,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/Point1
     classID: 4
@@ -2522,32 +2581,32 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .0833333358
+      - time: 0.083333336
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .166666672
-        value: .400000006
+      - time: 0.16666667
+        value: 0.4
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .583333313
-        value: .400000006
+      - time: 0.5833333
+        value: 0.4
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .666666687
+      - time: 0.6666667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .916666687
-        value: .400000006
+      - time: 0.9166667
+        value: 0.4
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 0
         inSlope: 0
         outSlope: 0
@@ -2558,7 +2617,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 0
       - time: 2.0333333
-        value: .400000006
+        value: 0.4
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2569,6 +2628,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/Point1
     classID: 4
@@ -2577,32 +2637,28 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: .189999998
-        inSlope: 9
-        outSlope: 9
+        value: 0.19
+        inSlope: 16.199999
+        outSlope: 16.199999
         tangentMode: 10
-      - time: .0500000007
-        value: .639999986
+      - time: 0.05
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.5
-        value: .639999986
+      - time: 1.8333334
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.83333337
-        value: .639999986
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 1.91666663
+      - time: 1.9166666
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder/TopLine
     classID: 4
@@ -2615,7 +2671,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .0500000007
+      - time: 0.05
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2625,18 +2681,19 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.83333337
+      - time: 1.8333334
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.91666663
+      - time: 1.9166666
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder/TopLine
     classID: 4
@@ -2645,32 +2702,33 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: .00499999989
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .0500000007
-        value: .00499999989
+      - time: 0.05
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 1.5
-        value: .00499999989
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.83333337
-        value: .00499999989
+      - time: 1.8333334
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.91666663
-        value: .00499999989
+      - time: 1.9166666
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder/TopLine
     classID: 4
@@ -2679,42 +2737,43 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 2.01055336
+        value: 2.0105534
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .483333319
-        value: 2.01055336
+      - time: 0.48333332
+        value: 2.0105534
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.16666663
-        value: 1.55513287
-        inSlope: -3.45447993
-        outSlope: -11.7332296
+      - time: 1.1666666
+        value: 1.5551329
+        inSlope: -3.45448
+        outSlope: -11.73323
         tangentMode: 1
       - time: 1.25
-        value: .100000001
+        value: 0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 1.5
-        value: .100000001
+        value: 0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.61666667
+      - time: 1.6166667
         value: 2
-        inSlope: 13.4758492
-        outSlope: 3.11748719
+        inSlope: 13.475849
+        outSlope: 3.1174872
         tangentMode: 1
-      - time: 2.33333325
+      - time: 2.3333333
         value: 3
-        inSlope: .56073606
+        inSlope: 0.56073606
         outSlope: 0
         tangentMode: 1
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: Radius
     path: MidairCircle
     classID: 114
@@ -2727,28 +2786,29 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: .5
+      - time: 0.5
         value: 0
-        inSlope: .0671246052
-        outSlope: .0671246052
+        inSlope: 0.067124605
+        outSlope: 0.067124605
         tangentMode: 10
-      - time: 1.08333337
-        value: .0783120468
-        inSlope: .0244089402
-        outSlope: .0244089402
+      - time: 1.0833334
+        value: 0.07831205
+        inSlope: 0.02440894
+        outSlope: 0.02440894
         tangentMode: 10
       - time: 2
         value: 0
-        inSlope: .00228434429
-        outSlope: .00228434429
+        inSlope: 0.0022843443
+        outSlope: 0.0022843443
         tangentMode: 10
-      - time: 2.33333325
-        value: .0299999993
-        inSlope: .0900000185
-        outSlope: .0900000185
+      - time: 2.3333333
+        value: 0.03
+        inSlope: 0.09000002
+        outSlope: 0.09000002
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: Width
     path: MidairCircle
     classID: 114
@@ -2761,43 +2821,44 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: .5
+      - time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
-        value: .064731814
+      - time: 1.0833334
+        value: 0.064731814
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.16666663
-        value: .5
-        inSlope: .811612368
-        outSlope: .811612368
+      - time: 1.1666666
+        value: 0.5
+        inSlope: 0.81161237
+        outSlope: 0.81161237
         tangentMode: 10
       - time: 1.25
-        value: .200000003
-        inSlope: -1.79999924
-        outSlope: -1.79999924
+        value: 0.2
+        inSlope: -1.7999992
+        outSlope: -1.7999992
         tangentMode: 10
       - time: 1.5
-        value: .200000003
-        inSlope: 1.19160831
-        outSlope: 1.19160831
+        value: 0.2
+        inSlope: 1.1916083
+        outSlope: 1.1916083
         tangentMode: 10
-      - time: 1.61666667
-        value: .478041947
-        inSlope: -1.48377502
-        outSlope: -1.48377502
+      - time: 1.6166667
+        value: 0.47804195
+        inSlope: -1.483775
+        outSlope: -1.483775
         tangentMode: 0
-      - time: 2.33333325
+      - time: 2.3333333
         value: 0
-        inSlope: -.667035341
-        outSlope: -.667035341
+        inSlope: -0.66703534
+        outSlope: -0.66703534
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: GrowSize
     path: MidairCircle
     classID: 114
@@ -2815,7 +2876,7 @@ AnimationClip:
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
-      - time: 1.70000005
+      - time: 1.7
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -2825,13 +2886,14 @@ AnimationClip:
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
-      - time: 2.16666675
+      - time: 2.1666667
         value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 31
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_IsActive
     path: BoldThunder
     classID: 1
@@ -2844,18 +2906,18 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.41666663
+      - time: 1.4166666
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.66666663
-        value: .639999986
+      - time: 1.6666666
+        value: 1.0016236
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 2.23333335
-        value: .639999986
+      - time: 2.2333333
+        value: 1.0016236
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2866,6 +2928,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: BottomLine
     classID: 4
@@ -2878,17 +2941,17 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.41666663
+      - time: 1.4166666
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.66666663
+      - time: 1.6666666
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 2.23333335
+      - time: 2.2333333
         value: 1
         inSlope: 0
         outSlope: 0
@@ -2900,6 +2963,7 @@ AnimationClip:
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: BottomLine
     classID: 4
@@ -2908,32 +2972,33 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: .00499999989
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.41666663
-        value: .00499999989
+      - time: 1.4166666
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.66666663
-        value: .00499999989
+      - time: 1.6666666
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 2.23333335
-        value: .00499999989
+      - time: 2.2333333
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 2.5
-        value: .00499999989
+        value: 0.005
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: BottomLine
     classID: 4
@@ -2946,7 +3011,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.93333328
+      - time: 1.9333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -2958,6 +3023,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalPosition.x
     path: LightThunder
     classID: 4
@@ -2966,22 +3032,23 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 2.87688971
+        value: 2.8768897
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.93333328
-        value: 2.87688971
+      - time: 1.9333333
+        value: 2.8768897
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 1.9666667
-        value: -2.24603271
-        inSlope: -153.687271
-        outSlope: -153.687271
+        value: -2.2460327
+        inSlope: -153.68727
+        outSlope: -153.68727
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalPosition.y
     path: LightThunder
     classID: 4
@@ -2994,7 +3061,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.93333328
+      - time: 1.9333333
         value: 0
         inSlope: 0
         outSlope: 0
@@ -3006,6 +3073,7 @@ AnimationClip:
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalPosition.z
     path: LightThunder
     classID: 4
@@ -3018,7 +3086,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -3028,13 +3096,19 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.93333328
+      - time: 1.9333333
         value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 1.9666667
+        value: 1.2
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.x
     path: LightThunder
     classID: 4
@@ -3047,7 +3121,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -3057,13 +3131,14 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.93333328
+      - time: 1.9333333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.y
     path: LightThunder
     classID: 4
@@ -3076,7 +3151,7 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.08333337
+      - time: 1.0833334
         value: 1
         inSlope: 0
         outSlope: 0
@@ -3086,18 +3161,19 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-      - time: 1.93333328
+      - time: 1.9333333
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - time: 1.9666667
-        value: -1
+        value: -1.2
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalScale.z
     path: LightThunder
     classID: 4

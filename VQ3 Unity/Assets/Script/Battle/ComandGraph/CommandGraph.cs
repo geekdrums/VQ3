@@ -573,10 +573,11 @@ public class CommandGraph : MonoBehaviour
 			}
 			else
 			{
-				if( IsInvert ) CurrentCommand = IntroCommand;
-				NextCommand = null;
-				OldCommand = null;
-				Music.SetNextBlock("wait", new System.EventHandler((object sender, System.EventArgs e) => { GameContext.BattleConductor.SetState(BattleState.Wait); }));
+				NextCommand = CurrentCommand;
+				//if( IsInvert ) CurrentCommand = IntroCommand;
+				//NextCommand = null;
+				//OldCommand = null;
+				//Music.SetNextBlock("wait", new System.EventHandler((object sender, System.EventArgs e) => { GameContext.BattleConductor.SetState(BattleState.Wait); }));
 			}
 		}
 

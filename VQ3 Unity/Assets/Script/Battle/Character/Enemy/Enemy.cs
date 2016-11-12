@@ -58,6 +58,7 @@ public class Enemy : Character
 	{
 		UpdateAnimation();
 
+		/*
 		if( GameContext.State == GameState.Battle )
 		{
 			if( Music.IsJustChangedAt(commandExecBar) && currentCommand != null && currentCommand.ShortText != "" )
@@ -75,6 +76,7 @@ public class Enemy : Character
 				}
 			}
 		}
+		*/
 	}
 	protected virtual void UpdateAnimation()
 	{

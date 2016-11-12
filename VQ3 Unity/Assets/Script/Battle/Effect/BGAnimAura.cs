@@ -60,7 +60,7 @@ public class BGAnimAura : BGAnimBase {
 				default:
 					return;
 				}
-				gauges_[animIndex_].transform.localPosition = new Vector3(-11, Random.Range(-RandomRange, RandomRange), 0);
+				gauges_[animIndex_].transform.localPosition = new Vector3(-40, Random.Range(-RandomRange, RandomRange), 0);
 				gauges_[animIndex_].SetRate(1, RateAnimTime);
 				gauges_[animIndex_].SetWidth(0, WidthAnimTime);
 				animIndex_ = (animIndex_ + 1) % gauges_.Length;

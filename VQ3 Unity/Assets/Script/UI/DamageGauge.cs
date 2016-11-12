@@ -8,6 +8,7 @@ public class DamageGauge : MonoBehaviour
 		Damage,
 		Break,
 		DamageAndTime,
+		None,
 	}
 
 	public GaugeRenderer BreakGauge;
@@ -34,7 +35,7 @@ public class DamageGauge : MonoBehaviour
 
 	int damage_;
 
-	public static Mode GetDesiredMode()
+	public Mode GetDesiredMode()
 	{
 		if( GameContext.LuxSystem.Version >= LuxVersion.AutoShield && GameContext.LuxSystem.IsOverFlow )
 		{
@@ -44,9 +45,13 @@ public class DamageGauge : MonoBehaviour
 		{
 			return Mode.Break;
 		}
-		else
+		else if( Enemy != null )
 		{
 			return Mode.Damage;
+		}
+		else
+		{
+			return Mode.None;
 		}
 	}
 
