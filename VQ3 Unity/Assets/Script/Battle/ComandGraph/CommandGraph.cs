@@ -16,8 +16,9 @@ public enum VoxButton
 [ExecuteInEditMode]
 public class CommandGraph : MonoBehaviour
 {
-	public static Timing AllowInputEnd = new Timing(3, 3, 3);
-	public static Timing WaitInputEnd = new Timing(0, 3, 3);
+	public static Timing AllowInputEnd = new Timing(3, 3, 0);
+	public static Timing SkillCutInTiming = new Timing(3, 3, 2);
+	public static Timing WaitInputEnd = new Timing(0, 3, 0);
 
 	#region editor params
 
@@ -243,7 +244,7 @@ public class CommandGraph : MonoBehaviour
 					}
 					else
 					{
-						Debug.Log("Can't find " + skillText);
+						Debug.LogError("Can't find " + skillText);
 					}
 				}
 				commandData.DescribeText = propertyTexts[(int)CommandListProperty.DescribeText].Replace("\"", "");
@@ -383,7 +384,7 @@ public class CommandGraph : MonoBehaviour
 		case BattleState.Continue:
 			break;
 		case BattleState.Wait:
-			if( Music.IsJustChangedWhen((Timing t) => t.Unit == 3 && t.Beat == 3) )
+			if( Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == WaitInputEnd.MusicalTime) )
 			{
 				SetNextBlock();
 			}
@@ -402,6 +403,14 @@ public class CommandGraph : MonoBehaviour
 			if( Music.IsJustChangedAt(AllowInputEnd) )
 			{
 				SetNextBlock();
+			}
+			else if( Music.IsJustChangedAt(SkillCutInTiming) )
+			{
+				NextRect.SetArc(1);
+				NextRect.SetSize(7.0f);
+				NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
+				CurrentRect.SetArc(0);
+				SkillCutIn.Set(NextCommand, CommandExp.SkillListUI, CommandExp.CommandName.gameObject);
 			}
 			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			break;
@@ -616,12 +625,6 @@ public class CommandGraph : MonoBehaviour
 					}
 				}
 				));
-
-			NextRect.SetArc(1);
-			NextRect.SetSize(7.0f);
-			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
-			CurrentRect.SetArc(0);
-			SkillCutIn.Set(NextCommand, CommandExp.SkillListUI, CommandExp.CommandName.gameObject);
 		}
 
 	}

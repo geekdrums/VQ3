@@ -205,12 +205,13 @@ public class Character : MonoBehaviour
 	public virtual void UpdateHealHP()
 	{
 		int mt = Music.Just.MusicalTime;
+		int deltaMT = Music.DeltaMT;
 		if( mt <= 0 ) return;
 		else
 		{
 			int HealHP = (int)(MaxHP * (HealPercent + HitPointEnhance.currentParam) / 100.0f);
-			int previousHealHP = HealHP * (mt-1) / 64;// 4 bars
-			int currentHealHP  = HealHP * mt / 64;
+			int previousHealHP = (int)(HealHP * (mt - deltaMT) / LuxSystem.TurnMusicalUnits);
+			int currentHealHP  = (int)(HealHP * mt / LuxSystem.TurnMusicalUnits);
 			HitPoint += (currentHealHP - previousHealHP);
 			HitPoint = Mathf.Clamp(HitPoint, 0, MaxHP);
 		}

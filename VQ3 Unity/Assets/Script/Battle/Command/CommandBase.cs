@@ -11,7 +11,7 @@ public class CommandBase : MonoBehaviour
 	public int DefendPercent;
     public int HealPercent;
 
-    public Dictionary<int, Skill> SkillDictionary = new Dictionary<int, Skill>();
+    public Dictionary<Timing, Skill> SkillDictionary = new Dictionary<Timing, Skill>();
 
     public virtual void Parse()
     {
@@ -30,7 +30,7 @@ public class CommandBase : MonoBehaviour
             int bar = int.Parse( barBeatUnitStr[0] );
             int beat = barBeatUnitStr.Length > 1 ? int.Parse( barBeatUnitStr[1] ) : 0;
             int unit = barBeatUnitStr.Length > 2 ? int.Parse( barBeatUnitStr[2] ) : 0;
-            SkillDictionary.Add( new Timing( bar, beat, unit ).MusicalTime, _skillList[i] );
+			SkillDictionary.Add(new Timing(bar, beat, unit), _skillList[i]);
             _skillList[i].Parse();
         }
     }

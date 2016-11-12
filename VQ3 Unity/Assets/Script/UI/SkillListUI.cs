@@ -113,11 +113,10 @@ public class SkillListUI : MonoBehaviour {
 
 			ThemeColor themeColor = ColorManager.GetThemeColor(commandData_.OwnerCommand.themeColor);
 			baseColor = themeColor.Bright;
-			foreach( KeyValuePair<int, Skill> pair in commandData_.SkillDictionary )
+			foreach( KeyValuePair<Timing, Skill> pair in commandData_.SkillDictionary )
 			{
 				Skill skill = pair.Value;
-				int bar = (int)(pair.Key / 16);
-				number = Mathf.Min(4 - skill.length, Mathf.Max(bar, number));
+				number = Mathf.Min(4 - skill.length, Mathf.Max(pair.Key.Bar, number));
 
 				if( skill.length <= 0 ) continue;
 

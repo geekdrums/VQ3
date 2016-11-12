@@ -314,7 +314,11 @@ public class PlayerCommand : MonoBehaviour
     public virtual GameObject GetCurrentSkill()
     {
 		if( GameContext.PlayerConductor.IsEclipse && Music.Just.Bar >= 2 ) return null;
-		return currentData.SkillDictionary.ContainsKey(Music.Just.MusicalTime) ? currentData.SkillDictionary[Music.Just.MusicalTime].gameObject : null;
+		foreach( KeyValuePair<Timing, Skill> pair in currentData.SkillDictionary )
+		{
+			if( Music.IsJustChangedAt(pair.Key) ) return pair.Value.gameObject;
+		}
+		return null;
     }
     public IEnumerable<PlayerCommand> LinkedCommands
     {

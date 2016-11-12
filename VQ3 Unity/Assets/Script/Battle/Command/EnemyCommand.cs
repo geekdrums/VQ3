@@ -10,7 +10,10 @@ public class EnemyCommand : CommandBase
 
     public Skill GetCurrentSkill( int startBar )
     {
-		int totalUnit = Music.Just.MusicalTime - startBar * Music.CurrentUnitPerBar;
-        return SkillDictionary.ContainsKey( totalUnit ) ? SkillDictionary[totalUnit] : null;
-    }
+		foreach( KeyValuePair<Timing, Skill> pair in SkillDictionary )
+		{
+			if( Music.IsJustChangedAt(startBar + pair.Key.Bar, pair.Key.Beat, pair.Key.Unit) ) return pair.Value;
+		}
+		return null;
+	}
 }

@@ -183,6 +183,11 @@ public class Music : MonoBehaviour
 	/// </summary>
 	public static double LagUnit { get { return Current_.LagUnit_; } }
 	/// <summary>
+	/// delta musical time from last update.
+	/// only positive when IsJustChanged == true.
+	/// </summary>
+	public static int DeltaMT { get { return Current_.deltaMusicalTime_; } }
+	/// <summary>
 	/// sec / musicalUnit
 	/// </summary>
 	public static double MusicalTimeUnit { get { return Current_.musicalTimeUnit_; } }
@@ -396,10 +401,13 @@ public class Music : MonoBehaviour
 	private Timing near_;
 	private bool isJustChanged_;
 	private bool isNearChanged_;
+	private bool isJustLooped_;
+	private bool isNearLooped_;
 	private bool isFormerHalf_;
 	private double timeSecFromJust_;
 	private int numRepeat_;
 	private double musicalTimeUnit_;
+	private int deltaMusicalTime_;
 
 	private CriAtomSource musicSource_;
 	private CriAtomExPlayback playback_;
@@ -455,37 +463,71 @@ public class Music : MonoBehaviour
 	#region private predicates
 	private bool IsNearChangedWhen_(Predicate<Timing> pred)
 	{
-		return isNearChanged_ && pred(near_);
+		if( isNearChanged_ )
+		{
+			Timing t = new Timing(oldNear_);
+			t.Add(0, 0, 1);
+			int numBar = BlockInfos[oldBlockIndex_].NumBar;
+			t.LoopBack(numBar);
+			for( ; t <= near_; t.Add(0, 0, 1), t.LoopBack(numBar) )
+			{
+				if( pred(t) )
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	private bool IsNearChangedBar_()
 	{
-		return isNearChanged_ && near_.Beat == 0 && near_.Unit == 0;
+		return isNearChanged_ && (oldNear_.Bar != near_.Bar);
 	}
 	private bool IsNearChangedBeat_()
 	{
-		return isNearChanged_ && near_.Unit == 0;
+		return isNearChanged_ && (oldNear_.Beat != near_.Beat);
 	}
-	private bool IsNearChangedAt_(int bar, int beat = 0, int unit = 0)
+	private bool IsNearChangedAt_(int bar = 0, int beat = 0, int unit = 0)
 	{
-		return isNearChanged_ &&
-			near_.Bar == bar && near_.Beat == beat && near_.Unit == unit;
+		return IsNearChangedAt_(new Timing(bar, beat, unit));
+	}
+	private bool IsNearChangedAt_(Timing t)
+	{
+		return (isNearChanged_ && (oldNear_ < t && t <= near_)) || (isNearLooped_ && (oldNear_ < t || t <= near_));
 	}
 	private bool IsJustChangedWhen_(Predicate<Timing> pred)
 	{
-		return isJustChanged_ && pred(just_);
+		if( isJustChanged_ )
+		{
+			Timing t = new Timing(oldJust_);
+			t.Add(0, 0, 1);
+			int numBar = BlockInfos[oldBlockIndex_].NumBar;
+			t.LoopBack(numBar);
+			for( ; t <= just_; t.Add(0, 0, 1), t.LoopBack(numBar) )
+			{
+				if( pred(t) )
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	private bool IsJustChangedBar_()
 	{
-		return isJustChanged_ && just_.Beat == 0 && just_.Unit == 0;
+		return isJustChanged_ && (oldJust_.Bar != just_.Bar);
 	}
 	private bool IsJustChangedBeat_()
 	{
-		return isJustChanged_ && just_.Unit == 0;
+		return isJustChanged_ && (oldJust_.Beat != just_.Beat);
 	}
 	private bool IsJustChangedAt_(int bar = 0, int beat = 0, int unit = 0)
 	{
-		return isJustChanged_ &&
-			just_.Bar == bar && just_.Beat == beat && just_.Unit == unit;
+		return IsJustChangedAt_(new Timing(bar, beat, unit));
+	}
+	private bool IsJustChangedAt_(Timing t)
+	{
+		return (isJustChanged_ && (oldJust_ < t && t <= just_)) || (isJustLooped_ && (oldJust_ < t || t <= just_));
 	}
 	#endregion
 
@@ -590,6 +632,8 @@ public class Music : MonoBehaviour
 
 	void UpdateTiming()
 	{
+		oldNear_.Copy(near_);
+		oldJust_.Copy(just_);
 		long numSamples;
 		int tempOut;
 		if( !playback_.GetNumPlayedSamples(out numSamples, out tempOut) )
@@ -598,6 +642,8 @@ public class Music : MonoBehaviour
 		}
 		isNearChanged_ = false;
 		isJustChanged_ = false;
+		isJustLooped_ = false;
+		isNearLooped_ = false;
 		currentSample_ = (int)numSamples;
 		if( currentSample_ >= 0 )
 		{
@@ -626,18 +672,46 @@ public class Music : MonoBehaviour
 			isJustChanged_ = (just_.Equals(oldJust_) == false);
 			isNearChanged_ = (near_.Equals(oldNear_) == false);
 
-			CallEvents();
+			if( isJustChanged_ )
+			{
+				foreach( CriAtomSource cue in quantizedCue_ )
+				{
+					cue.Play();
+				}
+				quantizedCue_.Clear();
+			}
 
-			oldNear_.Copy(near_);
-			oldJust_.Copy(just_);
+			isJustLooped_ = isJustChanged_ && just_ < oldJust_;
+			isNearLooped_ = isNearChanged_ && near_ < oldNear_;
+			deltaMusicalTime_ = just_.MusicalTime - oldJust_.MusicalTime;
+			if( isJustLooped_ )
+			{
+				oldBlockIndex_ = currentBlockIndex_;
+				currentBlockIndex_ = playback_.GetCurrentBlockIndex();
+				numBlockBar_ = BlockInfos[currentBlockIndex_].NumBar;
+				if( oldBlockIndex_ == currentBlockIndex_ )
+				{
+					OnBlockRepeated();
+				}
+				else
+				{
+					OnBlockChanged();
+					oldJust_.Set(BlockInfos[oldBlockIndex_].NumBar);
+					oldJust_.Subtract(0, 0, 1);
+					deltaMusicalTime_ += BlockInfos[oldBlockIndex_].NumBar * UnitPerBar;
+					deltaMusicalTime_ %= UnitPerBar;//小節合わせでブロック遷移する前提
+				}
+			}
+
+
 		}
 
 		if( DebugText != null )
 		{
-			DebugText.text = "Just = " + Just.ToString() + ", MusicalTime = " + MusicalTime_;
+			DebugText.text = String.Format("Just = {0}, old = {1}, MusicalTime = {2}", Just.ToString(), oldJust_.ToString(), MusicalTime_);
 			if( BlockInfos.Count > 0 )
 			{
-				DebugText.text += System.Environment.NewLine + "block[" + currentBlockIndex_ + "] = " + CurrentBlock_.BlockName + "(" + numBlockBar_ + "bar)";
+				DebugText.text += String.Format("{0}block[{1}] = {2}({3}bar)", System.Environment.NewLine, currentBlockIndex_, CurrentBlock_.BlockName, numBlockBar_);
 			}
 		}
 	}
@@ -645,44 +719,6 @@ public class Music : MonoBehaviour
 	#endregion
 
 	#region Events
-	void CallEvents()
-	{
-		if( isJustChanged_ ) OnJustChanged();
-		if( isJustChanged_ && just_.Unit == 0 ) OnBeat();
-		if( isJustChanged_ && just_.Beat == 0 && just_.Unit == 0 ) OnBar();
-		if( isJustChanged_ && just_ < oldJust_ )
-		{
-			currentBlockIndex_ = playback_.GetCurrentBlockIndex();
-			numBlockBar_ = BlockInfos[currentBlockIndex_].NumBar;
-			if( oldBlockIndex_ == currentBlockIndex_ )
-			{
-				OnBlockRepeated();
-			}
-			else
-			{
-				OnBlockChanged();
-			}
-			oldBlockIndex_ = currentBlockIndex_;
-		}
-	}
-
-	//On events (when isJustChanged)
-	void OnJustChanged()
-	{
-		foreach( CriAtomSource cue in quantizedCue_ )
-		{
-			cue.Play();
-		}
-		quantizedCue_.Clear();
-	}
-
-	void OnBeat()
-	{
-	}
-
-	void OnBar()
-	{
-	}
 
 	void OnBlockRepeated()
 	{
@@ -699,6 +735,7 @@ public class Music : MonoBehaviour
 			OnNextBlockStarted = null;
 		}
 	}
+
 	#endregion
 }
 
@@ -741,6 +778,12 @@ public class Timing : IComparable<Timing>, IEquatable<Timing>
 		Beat += beat;
 		Unit += unit;
 		Fix();
+	}
+	public void Set(int bar, int beat = 0, int unit = 0)
+	{
+		Bar = bar;
+		Beat = beat;
+		Unit = unit;
 	}
 	public void Add(Timing t)
 	{
