@@ -109,7 +109,6 @@ public class EnemyConductor : MonoBehaviour
 		enemy.transform.parent = transform;
 		enemy.transform.localPosition = spawnPosition;
 		enemy.SetTargetPosition(enemy.transform.localPosition);
-		//enemy.DisplayName += (char)((int)'A' + Enemies.FindAll((Enemy e) => e.DisplayName.StartsWith(enemy.DisplayName) && e.DisplayName.Length == enemy.DisplayName.Length + 1).Count);
 	}
 
 	public bool ReceiveAction(ActionSet Action, Skill skill)

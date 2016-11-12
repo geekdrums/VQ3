@@ -105,9 +105,9 @@ public class DamageGauge : MonoBehaviour
 	{
 		if( Enemy != null )
 		{
-			RedGauge.SetRate((float)(Enemy.HitPoint + damage_) / Enemy.MaxHP);
-			HPGauge.SetRate(RedGauge.Rate);
-			HPGauge.SetRate((float)Enemy.HitPoint / Enemy.MaxHP, 0.1f);
+			damage_ = 0;
+			HPGauge.SetRate((float)Enemy.HitPoint / Enemy.MaxHP);
+			RedGauge.SetRate(HPGauge.Rate);
 		}
 	}
 
@@ -149,7 +149,6 @@ public class DamageGauge : MonoBehaviour
 	{
 		isInitialized_ = true;
 		Enemy = null;
-		damage_ = 0;
 		CurrentMode = GetDesiredMode();
 		ModeInit();
 
@@ -166,7 +165,7 @@ public class DamageGauge : MonoBehaviour
 		Vector3 initialPosition_ = transform.position;
 		transform.position = position;
 
-		float delay = (float)Music.MusicalTimeUnit * 24;
+		float delay = Mathf.Min(48.0f - (float)Music.MusicalTime, (float)Music.MusicalTimeUnit * 32);
 		float animTime = 0.2f;
 		float animTime2 = 0.5f;
 		AnimManager.AddAnim(gameObject, initialPosition_, ParamType.Position, AnimType.Time, animTime, delay);
@@ -176,6 +175,8 @@ public class DamageGauge : MonoBehaviour
 		Vector3 initialScale = ShieldText.transform.localScale;
 		ShieldText.transform.localScale = Vector3.zero;
 		AnimManager.AddAnim(ShieldText.gameObject, initialScale, ParamType.Scale, AnimType.Time, 0.0f, delay + animTime);
+		VPCount.transform.parent.localScale = Vector3.zero;
+		AnimManager.AddAnim(VPCount.transform.parent.gameObject, Vector3.one, ParamType.Scale, AnimType.Time, 0.0f, delay + animTime);
 		TextBase.SetRate(0);
 		AnimManager.AddAnim(TextBase.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime + animTime2);
 	}

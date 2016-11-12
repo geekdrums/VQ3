@@ -44,7 +44,11 @@ public class SkillCutIn : MonoBehaviour {
 		commandIcon_.transform.localPosition = Vector3.zero;
 		commandIcon_.transform.localScale = Vector3.zero;
 		commandIcon_.enabled = false;
-		Destroy(commandIcon_.transform.FindChild("nextRect").gameObject);
+		Transform nextRect = commandIcon_.transform.FindChild("nextRect");
+		if( nextRect != null )
+		{
+			Destroy(nextRect.gameObject);
+		}
 
 		commandName_ = (GameObject)Instantiate(commandName, commandNameParent.transform);
 		commandName_.transform.position = commandName_.transform.position + Vector3.back * 50;

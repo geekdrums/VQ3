@@ -474,7 +474,7 @@ public class CommandGraph : MonoBehaviour
 
 		if( NextCommand != null )
 		{
-			NextRect.SetArc(-Music.MusicalTime / LuxSystem.TurnMusicalUnits);
+			NextRect.SetArc(GameContext.BattleState == BattleState.Wait ? -1.0f : -Music.MusicalTime / LuxSystem.TurnMusicalUnits);
 		}
 		else if( hit.collider == CommandSphere.GetComponent<Collider>() )
 		{
@@ -495,6 +495,7 @@ public class CommandGraph : MonoBehaviour
 			NextRect.SetWidth(0.1f);
 			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(1.5f);
 			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(0.1f);
+			NextRect.SetArc(1.0f);
 
 			if( command != null && command != PreviewCommand )
 			{
@@ -523,6 +524,8 @@ public class CommandGraph : MonoBehaviour
 		float minDistance = 99999;
 		foreach( PlayerCommand command in GetLinkedCommands() )
 		{
+			if( command is IntroCommand ) continue;
+
 			float d = (position - command.transform.position).magnitude;
 			if( d < minDistance )
 			{

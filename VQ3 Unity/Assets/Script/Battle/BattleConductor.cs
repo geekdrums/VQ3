@@ -8,7 +8,7 @@ public enum BattleState
 	Intro,
 	Battle,
 	Wait,
-	ShieldBreak,
+	//ShieldBreak,
 	Eclipse,
 	Continue,
 	Win,
@@ -54,8 +54,6 @@ public class BattleConductor : MonoBehaviour {
 					UpdateBattle();
 				}
 			}
-			break;
-		case BattleState.ShieldBreak:
 			break;
 		case BattleState.Wait:
 			if( Music.IsJustChangedAt(0) )
@@ -192,8 +190,6 @@ public class BattleConductor : MonoBehaviour {
 		case BattleState.Wait:
 			break;
 		case BattleState.Eclipse:
-			break;
-		case BattleState.ShieldBreak:
 			break;
 		case BattleState.Continue:
 			TextWindow.SetMessage(MessageCategory.Result, "戦闘不能、緊急離脱。");

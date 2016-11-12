@@ -126,6 +126,7 @@ public class EnemyCommandListUI : MonoBehaviour
 
 	public void ClearCommands()
 	{
+		CurrentCommandState = null;
 		for( int i = 0; i < commandIcons_.Count; ++i )
 		{
 			Vector3 targetPos = GetTargetPos(i) + Vector3.up * 5;

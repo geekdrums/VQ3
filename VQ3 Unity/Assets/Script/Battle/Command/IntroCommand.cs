@@ -25,8 +25,9 @@ public class IntroCommand : PlayerCommand
 #endif
 		UpdateTransform();
     }
+
 	public override bool IsUsable()
 	{
-		return GameContext.State == GameState.Setting ? true : false;
+		return true;
 	}
 }

@@ -31,7 +31,7 @@ public class EnemyCommandGraph : MonoBehaviour {
 			}
 			else
 			{
-				if( GameContext.BattleState == BattleState.Intro || GameContext.BattleState == BattleState.Wait || GameContext.BattleState == BattleState.ShieldBreak )
+				if( GameContext.BattleState == BattleState.Intro || GameContext.BattleState == BattleState.Wait )
 				{
 				}
 				else if( Music.IsJustChangedAt(StateChangeTiming) )
