@@ -8,7 +8,7 @@
 * Module   : CRI Atom for Unity
 * File     : CriAtomProjInfo_Unity.cs
 * Tool Ver.          : CRI Atom Craft LE Ver.2.13.00
-* Date Time          : 2015/11/15 2:42
+* Date Time          : 2016/11/13 4:10
 * Project Name       : VQ3ADX
 * Project Comment    : 
 *
@@ -49,10 +49,12 @@ public partial class CriAtomAcfInfo
         newAcbInfo = new AcbInfo("SE", 1, "", "SE.acb", "SE.awb","61f6c484-c862-4d1d-b6ad-5f194ae823c8");
         acfInfo.acbInfoList.Add(newAcbInfo);
         newAcbInfo.cueInfoList.Add(2, new CueInfo("PhysicGoodDamage", 2, ""));
+        newAcbInfo.cueInfoList.Add(26, new CueInfo("MagicGoodDamage", 26, ""));
+        newAcbInfo.cueInfoList.Add(39, new CueInfo("PhysicShieldDamage", 39, ""));
+        newAcbInfo.cueInfoList.Add(40, new CueInfo("MagicShieldDamage", 40, ""));
+        newAcbInfo.cueInfoList.Add(7, new CueInfo("PhysicNoDamage", 7, ""));
         newAcbInfo.cueInfoList.Add(5, new CueInfo("PhysicDamage", 5, ""));
         newAcbInfo.cueInfoList.Add(6, new CueInfo("PhysicBadDamage", 6, ""));
-        newAcbInfo.cueInfoList.Add(7, new CueInfo("PhysicNoDamage", 7, ""));
-        newAcbInfo.cueInfoList.Add(26, new CueInfo("MagicGoodDamage", 26, ""));
         newAcbInfo.cueInfoList.Add(9, new CueInfo("MagicDamage", 9, ""));
         newAcbInfo.cueInfoList.Add(8, new CueInfo("MagicBadDamage", 8, ""));
         newAcbInfo.cueInfoList.Add(11, new CueInfo("MagicNoDamage", 11, ""));

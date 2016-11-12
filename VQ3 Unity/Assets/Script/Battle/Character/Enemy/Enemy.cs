@@ -189,7 +189,7 @@ public class Enemy : Character
 	public override void BeAttacked(AttackModule attack, Skill skill)
 	{
 		float typeCoeff = 1.0f;
-		float shildCoeff = 1.0f;
+		float shieldCoeff = 1.0f;
 
 		if( attack.type == AttackType.Vox )
 		{
@@ -205,6 +205,10 @@ public class Enemy : Character
 			}
 			else
 			{
+				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicShieldDamage;
+				else lastDamageResult = ActionResult.MagicShieldDamage;
+
+				/*
 				switch( Speceis )
 				{
 				case EnemySpecies.Fairy:
@@ -221,8 +225,9 @@ public class Enemy : Character
 					break;
 				}
 				if( lastDamageResult.ToString().EndsWith("GoodDamage") ) typeCoeff = 2.0f;
+				*/
 
-				if( GameContext.LuxSystem.Version >= LuxVersion.Shield ) shildCoeff = 0.0f;
+				if( GameContext.LuxSystem.Version >= LuxVersion.Shield ) shieldCoeff = 0.0f;
 			}
 		}
 
@@ -233,7 +238,7 @@ public class Enemy : Character
 			overFlowPower = attack.VP * 8.0f;
 		}
 
-		float damage = skill.OwnerCharacter.PhysicAttack * ((attack.Power + overFlowPower) / 100.0f) * typeCoeff * shildCoeff * DefendCoeff;
+		float damage = skill.OwnerCharacter.PhysicAttack * ((attack.Power + overFlowPower) / 100.0f) * typeCoeff * shieldCoeff * DefendCoeff;
 		BeDamaged(Mathf.Max(0, (int)damage), skill);
 		//Debug.Log(this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint);
 

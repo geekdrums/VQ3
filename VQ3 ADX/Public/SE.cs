@@ -37,4 +37,6 @@ public class SE {
 	 public const int VTEMPTY = (36);
 	 public const int RESULT = (37);
 	 public const int DEFEAT = (38);
+	 public const int PHYSICSHIELDDAMAGE = (39);
+	 public const int MAGICSHIELDDAMAGE = (40);
 }
