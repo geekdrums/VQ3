@@ -6,7 +6,7 @@ public class EnemySkillListUI : MonoBehaviour {
 
 	public GameObject SkillCutIn;
 
-	public static readonly Timing ShowSkillCutInTiming = new Timing(0, 2, 0);
+	public static readonly Timing ShowSkillCutInTiming = new Timing(0, 3, 0);
 
 	bool isExecuting_;
 

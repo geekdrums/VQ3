@@ -133,9 +133,9 @@ public class EnemyCommandGraph : MonoBehaviour {
 		CommandListUI.OnExecCommand();
 		if( (OldState != CurrentState || TurnCount > CurrentState.Pattern.Length) && CurrentState.Pattern.Length > 0 )
 		{
-			for( int i = 0; i < CurrentState.Pattern.Length; ++i )
+			if( CommandListUI.CurrentCommandState != CurrentState )
 			{
-				CommandListUI.AddCommand(CurrentState.Pattern[i]);
+				CommandListUI.Set(CurrentState);
 			}
 			CommandListUI.ShowAnim();
 			TurnCount %= CurrentState.Pattern.Length;
@@ -157,10 +157,7 @@ public class EnemyCommandGraph : MonoBehaviour {
 			TurnCount = 0;
 
 			CommandListUI.ClearCommands();
-			for( int i = 0; i < CurrentState.Pattern.Length; ++i )
-			{
-				CommandListUI.AddCommand(CurrentState.Pattern[i]);
-			}
+			CommandListUI.Set(CurrentState);
 		}
 	}
 
@@ -174,8 +171,6 @@ public class EnemyCommandGraph : MonoBehaviour {
 			condition.Parse();
 		}
 		ChangeState(battleSet.States[0].Name);
-		OldState = CurrentState;
-		CommandListUI.ShowAnim();
 
 		UpdateShade();
 	}

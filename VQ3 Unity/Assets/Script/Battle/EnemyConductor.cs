@@ -142,6 +142,11 @@ public class EnemyConductor : MonoBehaviour
 			int vt = (int)(attack.VT * (skill.OwnerCharacter as Player).VTCoeff);
 			GameContext.LuxSystem.AddVP(vp, vt);
 
+			Vector3 damageTextPos = (skill.damageParent != null ? skill.damageParent.transform.position : skill.GetComponentInChildren<Animation>().transform.position);
+			if( damageGauge.CurrentMode == DamageGauge.Mode.None )
+			{
+				damageGauge.InitializeVPVT(damageTextPos + Vector3.down * 2.3f + Vector3.right);
+			}
 			if( damageGauge.CurrentMode == DamageGauge.Mode.Break )
 			{
 				if( lastDamageText_ != null )
@@ -150,8 +155,8 @@ public class EnemyConductor : MonoBehaviour
 				}
 				else
 				{
-					Vector3 position = skill.damageParent != null ? skill.damageParent.transform.position : GetTargetEnemies(attack, skill)[0].transform.position + Vector3.up * 5;
-					GameObject damageText = (Instantiate(damageTextPrefab, position, Quaternion.identity) as GameObject);
+					GameObject damageText = (GameObject)Instantiate(damageTextPrefab, damageTextPos, Quaternion.identity);
+					damageText.transform.parent = GameContext.BattleConductor.DamageTextParent.transform;
 					lastDamageText_ = damageText.GetComponent<DamageText>();
 					lastDamageText_.InitializeVP(vp, vt);
 				}

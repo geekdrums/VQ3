@@ -112,13 +112,14 @@ public class Enemy : Character
 
 		if( GameContext.LuxSystem.IsOverFlow )
 		{
+			Vector3 damageTextPos = parent != null ? parent.transform.position : transform.position + Vector3.left * 5;
 			if( GameContext.EnemyConductor.damageGauge.Enemy == this )
 			{
-				GameContext.EnemyConductor.damageGauge.AddDamage(damage, actResult);
+				GameContext.EnemyConductor.damageGauge.AddDamage(damage);
 			}
 			else
 			{
-				GameContext.EnemyConductor.damageGauge.Initialize(this, damage, actResult, parent != null ? parent.transform.position : transform.position + Vector3.down * 3);
+				GameContext.EnemyConductor.damageGauge.InitializeDamage(this, damage, damageTextPos + Vector3.down + Vector3.right);
 			}
 
 			if( lastDamageText != null )
@@ -127,7 +128,9 @@ public class Enemy : Character
 			}
 			else
 			{
-				GameObject damageText = (Instantiate(GameContext.EnemyConductor.damageTextPrefab, parent != null ? parent.transform.position : transform.position + Vector3.down * 5, Quaternion.identity) as GameObject);
+				GameObject damageText = (Instantiate(GameContext.EnemyConductor.damageTextPrefab, damageTextPos, Quaternion.identity) as GameObject);
+				damageText.transform.parent = GameContext.BattleConductor.DamageTextParent.transform;
+				damageText.transform.localPosition = new Vector3(damageText.transform.localPosition.x, damageText.transform.localPosition.y, 0);
 				lastDamageText = damageText.GetComponent<DamageText>();
 				lastDamageText.InitializeDamage(damage, actResult);
 			}

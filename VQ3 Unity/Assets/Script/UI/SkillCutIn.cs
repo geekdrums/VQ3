@@ -16,6 +16,7 @@ public class SkillCutIn : MonoBehaviour {
 
 	public float skillAnimLength = 0.2f;
 	public float nameAnimLength = 0.2f;
+	public float iconAnimDisntace = 10.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +26,7 @@ public class SkillCutIn : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if( animation_.isPlaying == false && commandIcon_ != null )
+		if( animation_.isPlaying == false && commandIcon_ != null && AnimManager.IsAnimating(commandIcon_.gameObject) == false )
 		{
 			Destroy(commandIcon_.gameObject);
 			Destroy(commandName_.gameObject);
@@ -39,8 +40,11 @@ public class SkillCutIn : MonoBehaviour {
 	public void Set(PlayerCommand command, SkillListUI skillList, GameObject commandName)
 	{
 		commandIcon_ = (PlayerCommand)Instantiate(command, commandIconParent.transform);
+		Vector3 initialScale = commandIcon_.transform.localScale;
 		commandIcon_.transform.localPosition = Vector3.zero;
+		commandIcon_.transform.localScale = Vector3.zero;
 		commandIcon_.enabled = false;
+		Destroy(commandIcon_.transform.FindChild("nextRect").gameObject);
 
 		commandName_ = (GameObject)Instantiate(commandName, commandNameParent.transform);
 		commandName_.transform.position = commandName_.transform.position + Vector3.back * 50;
@@ -51,19 +55,21 @@ public class SkillCutIn : MonoBehaviour {
 			commandName_.GetComponentInChildren<CounterSprite>().CounterColor = ColorManager.Base.Dark;
 		}
 
-		skillList_ = (SkillListUI)Instantiate(skillList, transform.parent);
+		skillList_ = (SkillListUI)Instantiate(skillList, transform);
 		skillList_.transform.position = skillList_.transform.position + Vector3.back * 50;
 		skillList_.Execute(enhIconParent);
 
 
 		float mtu = (float)Music.MusicalTimeUnit;
 
-		AnimManager.AddAnim(commandIcon_.gameObject, commandIcon_.transform.localScale * 1.3f, ParamType.Scale, AnimType.BounceIn, 3 * mtu, mtu);
+		AnimManager.AddAnim(commandIcon_.gameObject, initialScale, ParamType.Scale, AnimType.BounceIn, 3 * mtu, mtu);
 
 		AnimManager.AddAnim(commandName_.gameObject, Vector3.zero, ParamType.Position, AnimType.Linear, 0.2f, mtu);
 		AnimManager.AddAnim(commandName_.gameObject, Vector3.left * 200, ParamType.Position, AnimType.Time, nameAnimLength, mtu * 9);
 
-		AnimManager.AddAnim(skillList_.gameObject, skillListParent.transform.position, ParamType.Position, AnimType.Time, skillAnimLength, mtu * 9);
+		AnimManager.AddAnim(commandIcon_.gameObject, Vector3.up * iconAnimDisntace, ParamType.Position, AnimType.BounceIn, skillAnimLength, mtu * 5);
+		AnimManager.AddAnim(commandIcon_.gameObject, Vector3.zero, ParamType.Position, AnimType.BounceOut, skillAnimLength, (float)Music.MusicalTimeUnit * 13);
+		AnimManager.AddAnim(skillList_.gameObject, skillListParent.transform.localPosition, ParamType.Position, AnimType.BounceIn, skillAnimLength, mtu * 5);
 
 		animation_["SkillCutInAnim"].speed = (float)(Music.CurrentTempo / 60.0);
 		animation_.Play();

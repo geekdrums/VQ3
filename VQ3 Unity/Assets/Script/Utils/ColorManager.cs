@@ -128,7 +128,9 @@ public class ColorManager : MonoBehaviour
 	public GaugeRenderer[] BaseMiddleGauges;
 	public GaugeRenderer[] BaseMiddleBackGauges;
 
-    public static BaseColor Base { get; private set; }
+	public MidairPrimitive[] MoonPrimitives;
+
+	public static BaseColor Base { get; private set; }
 
     public static ThemeColor Theme { get; private set; }
 
@@ -186,6 +188,10 @@ public class ColorManager : MonoBehaviour
 		foreach( MidairPrimitive primitive in instance.BaseBackPrimitives )
 		{
 			primitive.SetColor(Base.Back);
+		}
+		foreach( MidairPrimitive primitive in instance.MoonPrimitives )
+		{
+			primitive.SetColor(baseColor != EBaseColor.White ? Base.Back : instance.BaseBlack.Back);
 		}
 		foreach( MidairPrimitive primitive in instance.BaseFrontPrimitives )
 		{

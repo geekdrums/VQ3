@@ -91,12 +91,12 @@ public class Player : Character
 		}
 		else
 		{
-			GameObject damageText = (Instantiate(damageTextPrefab) as GameObject);
+			Vector3 damageTextPos = (skill.damageParent != null ? skill.damageParent.transform.position : skill.GetComponentInChildren<Animation>().transform.position) + Vector3.back;
+			GameObject damageText = (GameObject)Instantiate(damageTextPrefab, damageTextPos, Quaternion.identity);
+			damageText.transform.parent = GameContext.BattleConductor.DamageTextParent.transform;
+			damageText.transform.localPosition = new Vector3(damageText.transform.localPosition.x, damageText.transform.localPosition.y, 0);
 			lastDamageText = damageText.GetComponent<DamageText>();
-			GameObject textPos = skill.damageParent;// transform.FindChild("DamageTextPos");
-			if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().gameObject;
-			lastDamageText.InitializeDamage(damage, (attack.type == AttackType.Attack ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage));
-			lastDamageText.transform.position = textPos.transform.position + Vector3.back;
+			lastDamageText.InitializeDamage(damage, (attack.type == AttackType.Attack ? ActionResult.PlayerPhysicDamage : ActionResult.PlayerMagicDamage), true);
 		}
 	}
 	public void VPDrained(AttackModule attack, Skill skill, int drainVP)

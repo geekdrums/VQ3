@@ -19,6 +19,7 @@ public class DamageGauge : MonoBehaviour
 	public CounterSprite VTCount;
 	public GaugeRenderer TextBase;
 	public TextMesh ShieldText;
+	public GaugeRenderer Split;
 
 	public GaugeRenderer HPGauge;
 	public GaugeRenderer RedGauge;
@@ -27,55 +28,13 @@ public class DamageGauge : MonoBehaviour
 	public CounterSprite VTCount2;
 	public GaugeRenderer TextBase2;
 	public TextMesh EnemyText;
-
-	public GaugeRenderer[] Splits;
+	public GaugeRenderer Split2;
 
 	public Enemy Enemy { get; private set; }
 	public Mode CurrentMode { get; private set; }
 
 	int damage_;
-
-	public Mode GetDesiredMode()
-	{
-		if( GameContext.LuxSystem.Version >= LuxVersion.AutoShield && GameContext.LuxSystem.IsOverFlow )
-		{
-			return Mode.DamageAndTime;
-		}
-		else if( GameContext.LuxSystem.Version >= LuxVersion.Shield && GameContext.LuxSystem.IsOverFlow == false )
-		{
-			return Mode.Break;
-		}
-		else if( Enemy != null )
-		{
-			return Mode.Damage;
-		}
-		else
-		{
-			return Mode.None;
-		}
-	}
-
-	void ModeInit()
-	{
-		HPGauge.transform.parent.gameObject.SetActive(CurrentMode == Mode.Damage || CurrentMode == Mode.DamageAndTime);
-		BreakGauge.transform.parent.gameObject.SetActive(CurrentMode == Mode.Break);
-		TimeGauge2.transform.parent.gameObject.SetActive(CurrentMode == Mode.DamageAndTime);
-		switch( CurrentMode )
-		{
-		case Mode.Damage:
-			{
-				RedGauge.SetRate((float)(Enemy.HitPoint + damage_) / Enemy.MaxHP);
-				HPGauge.SetRate(RedGauge.Rate);
-				HPGauge.SetRate((float)Enemy.HitPoint / Enemy.MaxHP, 0.1f);
-			}
-			break;
-		case Mode.Break:
-			break;
-		case Mode.DamageAndTime:
-			break;
-		}
-	}
-
+	bool isInitialized_ = false;
 
 	// Use this for initialization
 	void Start()
@@ -126,7 +85,7 @@ public class DamageGauge : MonoBehaviour
 		}
 	}
 
-	public void AddDamage(int damage, ActionResult actionResult)
+	public void AddDamage(int damage)
 	{
 		Mode newMode = GetDesiredMode();
 		if( CurrentMode != newMode )
@@ -152,8 +111,9 @@ public class DamageGauge : MonoBehaviour
 		}
 	}
 
-	public void Initialize(Enemy enemy, int damage, ActionResult actionResult, Vector3 position)
+	public void InitializeDamage(Enemy enemy, int damage, Vector3 position)
 	{
+		isInitialized_ = true;
 		Enemy = enemy;
 		damage_ = damage;
 		CurrentMode = GetDesiredMode();
@@ -167,25 +127,57 @@ public class DamageGauge : MonoBehaviour
 
 		Vector3 initialPosition_ = transform.position;
 		transform.position = position;
-		transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 5.0f);
 
-		float delay = 2.0f;
+		float delay = (float)Music.MusicalTimeUnit * 24;
 		float animTime = 0.2f;
-		float animTime2 = 0.4f;
+		float animTime2 = 0.5f;
 		AnimManager.AddAnim(gameObject, initialPosition_, ParamType.Position, AnimType.Time, animTime, delay);
-		TextBase2.SetRate(0);
-		AnimManager.AddAnim(TextBase2.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime);
-		foreach( GaugeRenderer split in Splits )
-		{
-			split.SetRate(0);
-			AnimManager.AddAnim(split.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime);
-		}
+		Split2.SetRate(0);
+		AnimManager.AddAnim(Split2.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime);
+
 		TimeGauge2.transform.parent.localScale = Vector3.zero;
 		AnimManager.AddAnim(TimeGauge2.transform.parent.gameObject, Vector3.one, ParamType.Scale, AnimType.Time, 0.0f, delay + animTime);
 		Vector3 initialScale = EnemyText.transform.localScale;
 		EnemyText.text = Enemy.DisplayName;
 		EnemyText.transform.localScale = Vector3.zero;
 		AnimManager.AddAnim(EnemyText.gameObject, initialScale, ParamType.Scale, AnimType.Time, 0.0f, delay + animTime);
+		TextBase2.SetRate(0);
+		AnimManager.AddAnim(TextBase2.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime + animTime2);
+	}
+
+	public void InitializeVPVT(Vector3 position)
+	{
+		isInitialized_ = true;
+		Enemy = null;
+		damage_ = 0;
+		CurrentMode = GetDesiredMode();
+		ModeInit();
+
+		float BreakRate = GameContext.LuxSystem.VPRate;
+		BreakGauge.SetRate(1.0f - BreakRate);
+		TimeGauge.SetRate(BreakRate * GameContext.LuxSystem.VTRate);
+		VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
+		VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalUnits;
+		BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManager.Accent.Time, 0.2f));
+		Color timeColor = GetTimeColor();
+		TimeGauge.SetColor(timeColor);
+		VTCount.CounterColor = timeColor;
+
+		Vector3 initialPosition_ = transform.position;
+		transform.position = position;
+
+		float delay = (float)Music.MusicalTimeUnit * 24;
+		float animTime = 0.2f;
+		float animTime2 = 0.5f;
+		AnimManager.AddAnim(gameObject, initialPosition_, ParamType.Position, AnimType.Time, animTime, delay);
+		Split.SetRate(0);
+		AnimManager.AddAnim(Split.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime);
+
+		Vector3 initialScale = ShieldText.transform.localScale;
+		ShieldText.transform.localScale = Vector3.zero;
+		AnimManager.AddAnim(ShieldText.gameObject, initialScale, ParamType.Scale, AnimType.Time, 0.0f, delay + animTime);
+		TextBase.SetRate(0);
+		AnimManager.AddAnim(TextBase.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime + animTime2);
 	}
 
 	public void OnBattleStarted()
@@ -193,6 +185,53 @@ public class DamageGauge : MonoBehaviour
 		MaxVPCount.Count = GameContext.LuxSystem.OverflowVP;
 		CurrentMode = GetDesiredMode();
 		ModeInit();
+	}
+
+	private Mode GetDesiredMode()
+	{
+		if( isInitialized_ == false )
+		{
+			return Mode.None;
+		}
+		else if( GameContext.LuxSystem.Version >= LuxVersion.AutoShield && GameContext.LuxSystem.IsOverFlow )
+		{
+			return Mode.DamageAndTime;
+		}
+		else if( GameContext.LuxSystem.Version >= LuxVersion.Shield && GameContext.LuxSystem.IsOverFlow == false )
+		{
+			return Mode.Break;
+		}
+		else if( Enemy != null )
+		{
+			return Mode.Damage;
+		}
+		else
+		{
+			return Mode.None;
+		}
+	}
+
+	private void ModeInit()
+	{
+		HPGauge.transform.parent.gameObject.SetActive(CurrentMode == Mode.Damage || CurrentMode == Mode.DamageAndTime);
+		BreakGauge.transform.parent.gameObject.SetActive(CurrentMode == Mode.Break);
+		TimeGauge2.transform.parent.gameObject.SetActive(CurrentMode == Mode.DamageAndTime);
+		switch( CurrentMode )
+		{
+		case Mode.Damage:
+			{
+				RedGauge.SetRate((float)(Enemy.HitPoint + damage_) / Enemy.MaxHP);
+				HPGauge.SetRate(RedGauge.Rate);
+				HPGauge.SetRate((float)Enemy.HitPoint / Enemy.MaxHP, 0.1f);
+			}
+			break;
+		case Mode.Break:
+			break;
+		case Mode.DamageAndTime:
+			break;
+		case Mode.None:
+			break;
+		}
 	}
 
 	private Color GetTimeColor()

@@ -20,7 +20,9 @@ public class BattleConductor : MonoBehaviour {
 	public BattleState State { get; private set; }
 
     public GameObject SkillParent;
+	public GameObject DamageTextParent;
 	public ButtonUI OKButton;
+
 
     List<Pair<Timing, Skill>> Skills;
 

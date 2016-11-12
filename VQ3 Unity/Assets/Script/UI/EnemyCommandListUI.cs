@@ -14,6 +14,7 @@ public class EnemyCommandListUI : MonoBehaviour
 	public GaugeRenderer EdgeLine;
 	public MidairPrimitive CurrentHex;
 
+	public EnemyCommandState CurrentCommandState { get; private set; }
 	List<GameObject> commandIcons_ = new List<GameObject>();
 	int currentIndex_;
 	GameObject CurrentCommandIcon { get { return (commandIcons_.Count > 0 && 0 <= currentIndex_ && currentIndex_ < commandIcons_.Count ? commandIcons_[currentIndex_] : null); } }
@@ -24,6 +25,8 @@ public class EnemyCommandListUI : MonoBehaviour
 
 	void Update()
 	{
+		if( GameContext.BattleState == BattleState.Intro ) return;
+
 		for( int i = 0; i < commandIcons_.Count; ++i )
 		{
 			if( AnimManager.IsAnimating(commandIcons_[i].gameObject) ) continue;
@@ -35,7 +38,7 @@ public class EnemyCommandListUI : MonoBehaviour
 		if( Music.IsJustChangedAt(EnemySkillListUI.ShowSkillCutInTiming) && CurrentCommandIcon != null )
 		{
 			AnimManager.AddAnim(CurrentCommandIcon, Vector3.down * 2.5f, ParamType.Position, AnimType.BounceIn, 0.3f);
-			AnimManager.AddAnim(CurrentCommandIcon, Vector3.zero, ParamType.Position, AnimType.BounceOut, 0.3f, (float)Music.MusicalTimeUnit * 8);
+			AnimManager.AddAnim(CurrentCommandIcon, Vector3.zero, ParamType.Position, AnimType.BounceOut, 0.3f, (float)Music.MusicalTimeUnit * 4);
 		}
 
 		if( AnimManager.IsAnimating(EdgeLine.gameObject) == false && commandIcons_.Count > 0 )
@@ -86,12 +89,20 @@ public class EnemyCommandListUI : MonoBehaviour
 		}
 	}
 
+	public void Set(EnemyCommandState commandState)
+	{
+		CurrentCommandState = commandState;
+		for( int i = 0; i < CurrentCommandState.Pattern.Length; ++i )
+		{
+			AddCommand(CurrentCommandState.Pattern[i]);
+		}
+	}
 
 	public void AddCommand(EnemyCommandSet command)
 	{
 		GameObject iconObj = Instantiate(command.IconPrefab);
 		iconObj.transform.parent = this.transform;
-		iconObj.transform.localPosition = Vector3.zero;
+		iconObj.transform.localPosition = GetTargetPos(commandIcons_.Count) + Vector3.up * 5;
 		commandIcons_.Add(iconObj);
 	}
 
@@ -104,8 +115,11 @@ public class EnemyCommandListUI : MonoBehaviour
 			commandIcons_[i].transform.localScale = GetTargetScale(i);
 			AnimManager.AddAnim(commandIcons_[i].gameObject, targetPos, ParamType.Position, AnimType.BounceIn, 0.2f, i * (float)Music.MusicalTimeUnit * 4.0f / commandIcons_.Count);
 		}
-		EdgeLine.transform.localPosition = commandIcons_[0].transform.localPosition;
-		EdgeLine.Length = commandIcons_[commandIcons_.Count - 1].transform.localPosition.x - commandIcons_[0].transform.localPosition.x;
+		if( commandIcons_.Count > 0 )
+		{
+			EdgeLine.transform.localPosition = commandIcons_[0].transform.localPosition;
+			EdgeLine.Length = commandIcons_[commandIcons_.Count - 1].transform.localPosition.x - commandIcons_[0].transform.localPosition.x;
+		}
 		EdgeLine.SetRate(0);
 		AnimManager.AddAnim(EdgeLine.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, 0.2f, (float)Music.MusicalTimeUnit * 4);
 	}

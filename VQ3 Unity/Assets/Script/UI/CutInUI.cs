@@ -32,7 +32,7 @@ public class CutInUI : MonoBehaviour {
 	{
 		transform.localScale = Vector3.one;
 		Counter.CounterColor = Color.clear;
-		Text.text = "DANGER";
+		Text.text = "瀕死";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.red;
 		GetComponent<Animation>().Play();
@@ -42,7 +42,7 @@ public class CutInUI : MonoBehaviour {
 	{
 		transform.localScale = Vector3.one;
 		Counter.CounterColor = Color.clear;
-		Text.text = "OVERFLOW";
+		Text.text = "シールド破壊";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.white;
 		GetComponent<Animation>().Play();
@@ -52,7 +52,7 @@ public class CutInUI : MonoBehaviour {
 	{
 		transform.localScale = Vector3.one;
 		Counter.CounterColor = Color.clear;
-		Text.text = "SHIELD RECOVER";
+		Text.text = "シールド回復";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = ColorManager.Accent.Time;
 		GetComponent<Animation>().Play();
