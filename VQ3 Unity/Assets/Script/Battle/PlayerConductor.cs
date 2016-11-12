@@ -127,7 +127,7 @@ public class PlayerConductor : MonoBehaviour {
 		{
 		case GameState.Battle:
 			//イントロから別のコマンドを選んだ時
-			if( command != CommandGraph.IntroCommand && (CurrentCommand == CommandGraph.IntroCommand || (CurrentCommand is InvertCommand)) )
+			if( command != CommandGraph.IntroCommand && (CommandGraph.CurrentCommand == CommandGraph.IntroCommand || (CurrentCommand is InvertCommand)) )
 			{
 				foreach( CommandEdge line in CommandGraph.IntroCommand.linkLines )
 				{

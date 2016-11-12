@@ -396,11 +396,11 @@ public class CommandGraph : MonoBehaviour
 			CurrentRect.SetArc(0);
 			break;
 		case BattleState.Intro:
-			if( Music.IsJustChangedAt(AllowInputEnd) || (NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == WaitInputEnd.MusicalTime)) )
+			if( Music.IsJustChangedAt(AllowInputEnd) /*|| (NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == WaitInputEnd.MusicalTime))*/ )
 			{
 				SetNextBlock();
 			}
-			if( NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == SkillCutInTiming.MusicalTime % 16) )
+			if( NextCommand != null && Music.IsJustChangedAt(SkillCutInTiming) )
 			{
 				OnSkillCutIn();
 			}

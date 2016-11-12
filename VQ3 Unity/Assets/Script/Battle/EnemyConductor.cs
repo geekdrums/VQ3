@@ -368,6 +368,8 @@ public class EnemyConductor : MonoBehaviour
 	public void OnPlayerWin()
 	{
 		Cleanup();
+		commandGraph.OnPlayerWin();
+		skillList.OnPlayerWin();
 	}
 	public void OnPlayerLose()
 	{

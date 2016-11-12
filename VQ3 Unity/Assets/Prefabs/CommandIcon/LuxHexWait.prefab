@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013468112518
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,8 +295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 6
   ArcRate: 1
-  Width: 2
-  Radius: 3
+  Width: 3
+  Radius: 2.5
   ScaleX: 1
   Color: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 0.5}
   Angle: 0
@@ -347,8 +347,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 6
   ArcRate: 1
-  Width: 1
-  Radius: 2.5
+  Width: 2
+  Radius: 2
   ScaleX: 1
   Color: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 1}
   Angle: 0

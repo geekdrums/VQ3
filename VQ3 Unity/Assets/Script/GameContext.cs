@@ -75,6 +75,9 @@ public static class GameContext
 			PlayerConductor.OnEnterSetting();
 			ResultConductor.OKButton.SetMode(ButtonMode.Hide, true);
 			break;
+		case GameState.Title:
+			Music.Play("ambient");
+			break;
 		}
 	}
 

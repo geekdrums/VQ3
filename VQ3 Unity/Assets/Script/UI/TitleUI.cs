@@ -3,15 +3,8 @@ using System.Collections;
 
 public class TitleUI : MonoBehaviour {
 
-	public enum Phase
-	{
-		None,
-		Title,
-		Anim,
-		Ending
-	}
-	public GameObject Teams;
-	Phase CurrentPhase = Phase.Title;
+	public TextMesh ClickToStart;
+	public TextMesh TitleText;
 
 	// Use this for initialization
 	void Start () {
@@ -22,28 +15,13 @@ public class TitleUI : MonoBehaviour {
 	void Update () {
 		if( GameContext.State == GameState.Title )
 		{
-			for( int i=1; i<=7; ++i )
-			{
-				if( Input.GetKeyDown(i.ToString()) )
-				{
-					SEPlayer.Play("levelUp");
-					GameContext.FieldConductor.InitEncounter(i);
-					break;
-				}
-			}
-
-			Teams.SetActive(false);
+			ClickToStart.color = ColorManager.MakeAlpha(Color.white, 0.7f + 0.3f * Music.MusicalCos());
 			if( Input.GetMouseButtonDown(0) )
 			{
-				GetComponent<Animation>().Play("titleAnim");
-				CurrentPhase = Phase.Anim;
-				GameContext.SetState(GameState.Setting);
-			}
-			if( CurrentPhase == Phase.Anim && GetComponent<Animation>().isPlaying == false )
-			{
-				CurrentPhase = Phase.None;
-				gameObject.SetActive(false);
-				Teams.SetActive(true);
+				AnimManager.AddAnim(ClickToStart.gameObject, ColorManager.MakeAlpha(Color.white, 0.0f), ParamType.TextColor, AnimType.Linear, 0.1f);
+				AnimManager.AddAnim(TitleText.gameObject, TitleText.transform.localPosition + Vector3.down * 10, ParamType.Position, AnimType.BounceOut, 0.3f);
+				AnimManager.AddAnim(gameObject, 0.0f, ParamType.PrimitiveWidth, AnimType.Time, 0.5f, 0, true);
+				GameContext.SetState(GameState.Battle);
 			}
 		}
 	}

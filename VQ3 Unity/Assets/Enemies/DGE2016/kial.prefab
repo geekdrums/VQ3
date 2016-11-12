@@ -74,7 +74,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 400006}
@@ -166,7 +166,7 @@ MonoBehaviour:
   _timingStr: 0 1 0
   DefendPercent: 0
   HealPercent: 0
-  ShortText: "\u3064\u308B\u304E"
+  ShortText: "\u30C4\u30EB\u30AE"
   ExplanationText: "\u30C4\u30EB\u30AE"
   CommandAliases: []
 --- !u!114 &11400004
@@ -187,7 +187,7 @@ MonoBehaviour:
   _timingStr: 0 1 0,0 1 1,,0 1 3
   DefendPercent: 0
   HealPercent: 0
-  ShortText: "\u307F\u3064\u308B\u304E"
+  ShortText: "\u30DF\u30C4\u30EB\u30AE"
   ExplanationText: "\u30DF\u30C4\u30EB\u30AE"
   CommandAliases: []
 --- !u!114 &11400006

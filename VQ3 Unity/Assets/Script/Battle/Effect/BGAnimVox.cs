@@ -23,9 +23,9 @@ public class BGAnimVox : BGAnimBase
 		}
 		else if( GameContext.BattleState == BattleState.Endro && IsActive )
 		{
+			Quaternion targetRot = Quaternion.AngleAxis(45, Vector3.forward);
 			for( int i = 0; i < primitives_.Length; ++i )
 			{
-				Quaternion targetRot = Quaternion.AngleAxis((45 * (int)(Music.MusicalTimeBar + i / 32.0f)) % 180, Vector3.forward);
 				primitives_[i].transform.localRotation = targetRot;
 			}
 		}

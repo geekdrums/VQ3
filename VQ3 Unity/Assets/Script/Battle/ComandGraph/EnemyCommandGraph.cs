@@ -191,7 +191,7 @@ public class EnemyCommandGraph : MonoBehaviour {
 		Shade.SetColor(Color.clear);
 	}
 
-	public virtual void OnRevert()
+	public void OnRevert()
 	{
 		if( CurrentState.Name == "Invert" )
 		{
@@ -199,5 +199,10 @@ public class EnemyCommandGraph : MonoBehaviour {
 			OldState = CurrentState;
 			CurrentState = nextState;
 		}
+	}
+
+	public void OnPlayerWin()
+	{
+		CommandListUI.ClearCommands();
 	}
 }

@@ -209,10 +209,9 @@ public class Enemy : Character
 			}
 			else
 			{
-				if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicShieldDamage;
-				else lastDamageResult = ActionResult.MagicShieldDamage;
-
-				/*
+				//if( attack.type == AttackType.Dain ) lastDamageResult = ActionResult.PhysicShieldDamage;
+				//else lastDamageResult = ActionResult.MagicShieldDamage;
+				
 				switch( Speceis )
 				{
 				case EnemySpecies.Fairy:
@@ -229,7 +228,6 @@ public class Enemy : Character
 					break;
 				}
 				if( lastDamageResult.ToString().EndsWith("GoodDamage") ) typeCoeff = 2.0f;
-				*/
 
 				if( GameContext.LuxSystem.Version >= LuxVersion.Shield ) shieldCoeff = 0.0f;
 			}

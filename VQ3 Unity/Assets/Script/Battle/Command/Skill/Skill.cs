@@ -86,9 +86,9 @@ public class Skill : MonoBehaviour
 				SkillAnim[AnimName].speed = (float)(Music.CurrentTempo / 60.0);
 				SkillAnim.Play(AnimName);
 				Vector2 randomUnit = UnityEngine.Random.insideUnitCircle;
-				transform.localPosition += 
-					new Vector3(animRandomExcludeRange.x + randomUnit.x * (animRandomRange.x - animRandomExcludeRange.x),
-					animRandomExcludeRange.y + randomUnit.y * (animRandomRange.y - animRandomExcludeRange.y), 0);
+				transform.localPosition +=
+					new Vector3(Mathf.Sign(randomUnit.x) * animRandomExcludeRange.x + randomUnit.x * (animRandomRange.x - animRandomExcludeRange.x),
+					Mathf.Sign(randomUnit.y) * animRandomExcludeRange.y + randomUnit.y * (animRandomRange.y - animRandomExcludeRange.y), 0);
             }
         }
 		OwnerCharacter.OnExecuted(this, act);

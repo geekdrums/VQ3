@@ -110,4 +110,10 @@ public class EnemySkillListUI : MonoBehaviour {
 			skill.Reset();
 		}
 	}
+
+	public void OnPlayerWin()
+	{
+		transform.localScale = Vector3.zero;
+		isExecuting_ = false;
+	}
 }

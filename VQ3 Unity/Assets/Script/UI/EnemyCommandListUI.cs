@@ -25,7 +25,7 @@ public class EnemyCommandListUI : MonoBehaviour
 
 	void Update()
 	{
-		if( GameContext.BattleState == BattleState.Intro ) return;
+		if( GameContext.BattleState == BattleState.Intro || GameContext.BattleState == BattleState.Wait ) return;
 
 		for( int i = 0; i < commandIcons_.Count; ++i )
 		{
