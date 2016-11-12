@@ -230,10 +230,10 @@ public class Music : MonoBehaviour
 	public static double CurrentTempo { get { return Current_.Tempo; } }
 	public static string CurrentMusicName { get { return Current_.name; } }
 	public static string CurrentBlockName { get { return Current_.CurrentBlock_.BlockName; } }
-	public static string NextBlockName { get { return Current_.NextBlock_.BlockName; } }
+	public static string NextBlockName { get { return (Current_.nextBlockIndex_ >= 0 ? Current_.NextBlock_.BlockName : ""); } }
 	public static CriAtomSource CurrentSource { get { return Current_.musicSource_; } }
 	public static BlockInfo CurrentBlock { get { return Current_.CurrentBlock_; } }
-	public static BlockInfo NextBlock { get { return Current_.NextBlock_; } }
+	public static BlockInfo NextBlock { get { return (Current_.nextBlockIndex_ >= 0 ? Current_.NextBlock_ : null); } }
 	#endregion
 
 	#region public static predicates
@@ -467,13 +467,27 @@ public class Music : MonoBehaviour
 		{
 			Timing t = new Timing(oldNear_);
 			t.Add(0, 0, 1);
-			int numBar = BlockInfos[oldBlockIndex_].NumBar;
-			t.LoopBack(numBar);
-			for( ; t <= near_; t.Add(0, 0, 1), t.LoopBack(numBar) )
+			if( isNearLooped_ )
 			{
-				if( pred(t) )
+				int numBar = BlockInfos[oldBlockIndex_].NumBar;
+				t.LoopBack(numBar);
+				Timing end = new Timing(near_);
+				end.Add(numBar);
+				for( ; t <= end; t.Add(0, 0, 1) )
 				{
-					return true;
+					if( t.Bar >= numBar )
+					{
+						t.LoopBack(numBar);
+						end.LoopBack(numBar);
+					}
+					if( pred(t) ) return true;
+				}
+			}
+			else
+			{
+				for( ; t <= near_; t.Add(0, 0, 1) )
+				{
+					if( pred(t) ) return true;
 				}
 			}
 		}
@@ -501,13 +515,27 @@ public class Music : MonoBehaviour
 		{
 			Timing t = new Timing(oldJust_);
 			t.Add(0, 0, 1);
-			int numBar = BlockInfos[oldBlockIndex_].NumBar;
-			t.LoopBack(numBar);
-			for( ; t <= just_; t.Add(0, 0, 1), t.LoopBack(numBar) )
+			if( isJustLooped_ )
 			{
-				if( pred(t) )
+				int numBar = BlockInfos[oldBlockIndex_].NumBar;
+				t.LoopBack(numBar);
+				Timing end = new Timing(just_);
+				end.Add(numBar);
+				for( ; t <= end; t.Add(0, 0, 1) )
 				{
-					return true;
+					if( t.Bar >= numBar )
+					{
+						t.LoopBack(numBar);
+						end.LoopBack(numBar);
+					}
+					if( pred(t) ) return true;
+				}
+			}
+			else
+			{
+				for( ; t <= just_; t.Add(0, 0, 1) )
+				{
+					if( pred(t) ) return true;
 				}
 			}
 		}
@@ -698,9 +726,9 @@ public class Music : MonoBehaviour
 					OnBlockChanged();
 					oldJust_.Set(BlockInfos[oldBlockIndex_].NumBar);
 					oldJust_.Subtract(0, 0, 1);
-					deltaMusicalTime_ += BlockInfos[oldBlockIndex_].NumBar * UnitPerBar;
-					deltaMusicalTime_ %= UnitPerBar;//小節合わせでブロック遷移する前提
 				}
+				deltaMusicalTime_ += BlockInfos[oldBlockIndex_].NumBar * UnitPerBar;
+				deltaMusicalTime_ %= UnitPerBar;//小節合わせでブロック遷移する前提
 			}
 
 
@@ -722,12 +750,14 @@ public class Music : MonoBehaviour
 
 	void OnBlockRepeated()
 	{
+		nextBlockIndex_ = -1;
 		++numRepeat_;
 	}
 
 	void OnBlockChanged()
 	{
 		numRepeat_ = 0;
+		nextBlockIndex_ = -1;
 		//Debug.Log("Music::OnBlockChanged " + CurrentBlockName);
 		if( OnNextBlockStarted != null )
 		{

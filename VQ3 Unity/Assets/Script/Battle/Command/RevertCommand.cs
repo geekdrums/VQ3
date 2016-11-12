@@ -69,7 +69,8 @@ public class RevertCommand : PlayerCommand
 			CenterRect.SetColor(Color.black);
 			EyeEdge.SetColor(Color.white);
 			EyeArc.SetColor(Color.white);
-			GrowEdge.SetSize(0.0f);
+			GrowEdge.SetSize(7.0f);
+			GrowEdge.SetGrowSize(0);
 			EyeEdge.SetWidth(0.5f);
 			EyeArc.transform.localPosition = centerEyePosition;
 			EyeArc.SetWidth(EyeEdge.Radius - EyeEdge.Width);

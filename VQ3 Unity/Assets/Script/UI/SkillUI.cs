@@ -98,6 +98,8 @@ public class SkillUI : MonoBehaviour {
 				Reset();
 				if( isEnemySkill )
 				{
+					AnimManager.RemoveAnim(text_.gameObject);
+					AnimManager.RemoveAnim(gameObject);
 					transform.localPosition = initialPosition_;
 					text_.transform.localPosition = Vector3.back;
 					text_.text = "";

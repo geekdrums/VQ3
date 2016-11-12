@@ -269,7 +269,7 @@ public class LuxSystem : MonoBehaviour
 		{
 			if( (State == LuxState.Sun || State == LuxState.Overflow) && IsInverting == false )
 			{
-				--CurrentTime;
+				CurrentTime -= Music.DeltaMT;
 				TimeCount.Count = CurrentTime / TurnMusicalUnits;
 				if( CurrentTime <= 0 )
 				{
@@ -278,6 +278,7 @@ public class LuxSystem : MonoBehaviour
 						SEPlayer.Play("vtEmpty");
 						CutInUI.SetShieldRecover();
 					}
+					CurrentTime = 0;
 					LastMaxTime = 0;
 					CurrentVP = 0;
 					BreakCount.Count = CurrentVP;
@@ -493,7 +494,6 @@ public class LuxSystem : MonoBehaviour
 
 	public void UpdateAnimation()
 	{
-
 		GameContext.BattleConductor.transform.position = new Vector3(BGOffset.x, BGOffset.y, 0);
 		float bgScale = BGScaleCoeff / (BGScaleCoeff + BGOffset.magnitude);
 		GameContext.BattleConductor.transform.localScale = new Vector3(bgScale, bgScale, 1);
@@ -554,6 +554,21 @@ public class LuxSystem : MonoBehaviour
 		}
 	}
 
+	public void OnEclipseEnd()
+	{
+		if( IsOverFlow == false )
+		{
+			rotTime_ = 0;
+			for( int i = 0; i < lightAngles.Length; i++ )
+			{
+				targetLightAngles[i] = lightAngles[i] = initialLightAngles[i];
+				SunLights[i].transform.rotation = Quaternion.AngleAxis(initialLightAngles[i], Vector3.forward);
+			}
+			targetLightAngle = 0;
+			MainLight.transform.rotation = Quaternion.identity;
+		}
+	}
+
 	public void OnBaseColorChanged( BaseColor Base )
 	{
 		WaveLineMaterial.color = ColorManager.Base.Front;
@@ -587,16 +602,10 @@ public class LuxSystem : MonoBehaviour
 				targetBGColor = ColorManager.Theme.Light;
 				targetSunScale = Vector3.one;
 				targetSunPosition = initialSunPosition;
-				for( int i = 0; i < lightAngles.Length; i++ )
-				{
-					targetLightAngles[i] = initialLightAngles[i];
-					targetLightScales[i] = initialLightScales[i];
-				}
 				targetMainLightScale = initialMainLightScale;
 
 				Ring.SetWidth(initialRingWidth);
 				Ring.SetTargetSize(initialRingRadius);
-				//Ring.transform.localScale = Vector3.zero;
 				BreakAccentGauge.SetColor(Color.clear);
 				
 				Music.SetAisac("TrackVolumeOver", 0);
@@ -647,6 +656,8 @@ public class LuxSystem : MonoBehaviour
 			if( CurrentTime <= 0 )
 			{
 				CurrentVP = 0;
+				CurrentTime = 0;
+				LastMaxTime = 0;
 			}
 		}
 		BreakCount.Count = 100.0f * ((float)CurrentVP / OverflowVP);
@@ -677,6 +688,7 @@ public class LuxSystem : MonoBehaviour
 	{
 		CurrentVP = 0;
 		CurrentTime = 0;
+		LastMaxTime = 0;
 		BreakCount.Count = 0;
 		TimeCount.Count = 0;
 		waveRemainCoeff_ = 0;

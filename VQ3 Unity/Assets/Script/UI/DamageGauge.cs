@@ -61,8 +61,8 @@ public class DamageGauge : MonoBehaviour
 		case Mode.Break:
 			{
 				float BreakRate = GameContext.LuxSystem.VPRate;
-				BreakGauge.SetRate(1.0f - BreakRate);
-				TimeGauge.SetRate(BreakRate * GameContext.LuxSystem.VTRate);
+				BreakGauge.SetRate(Mathf.Clamp01(1.0f - BreakRate));
+				TimeGauge.SetRate(Mathf.Clamp01(BreakRate * GameContext.LuxSystem.VTRate));
 				VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
 				VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalUnits;
 				BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManager.Accent.Time, 0.2f));
@@ -153,8 +153,8 @@ public class DamageGauge : MonoBehaviour
 		ModeInit();
 
 		float BreakRate = GameContext.LuxSystem.VPRate;
-		BreakGauge.SetRate(1.0f - BreakRate);
-		TimeGauge.SetRate(BreakRate * GameContext.LuxSystem.VTRate);
+		BreakGauge.SetRate(Mathf.Clamp01(1.0f - BreakRate));
+		TimeGauge.SetRate(Mathf.Clamp01(BreakRate * GameContext.LuxSystem.VTRate));
 		VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
 		VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalUnits;
 		BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManager.Accent.Time, 0.2f));

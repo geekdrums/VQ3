@@ -42,7 +42,7 @@ public class CutInUI : MonoBehaviour {
 	{
 		transform.localScale = Vector3.one;
 		Counter.CounterColor = Color.clear;
-		Text.text = "シールド破壊";
+		Text.text = "シールドブレイク";
 		Text.anchor = TextAnchor.MiddleCenter;
 		Text.color = Color.white;
 		GetComponent<Animation>().Play();

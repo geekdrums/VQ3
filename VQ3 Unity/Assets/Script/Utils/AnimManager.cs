@@ -35,6 +35,9 @@ public enum ParamType
 	Color,
 
 	TextColor,
+
+	// for RemoveAnim
+	Any,
 }
 
 public enum AnimType
@@ -332,6 +335,7 @@ public class AnimManager : MonoBehaviour
 	public static void AddAnim(GameObject obj, object target, ParamType paramType, AnimType animType = AnimType.Linear, float factor = 0.1f, float delay = 0.0f, bool destroyAtEnd = false)
 	{
 		if( instance.Animations.Find((AnimInfo anim) => anim.Object == obj && anim.Param == paramType && anim.Target == target) != null ) return;
+		//delayを考慮してやらないといけないので一旦諦め
 		//instance.Animations.RemoveAll((AnimInfo anim) => anim.Object == obj && anim.Param == paramType);
 		instance.Animations.Add(new AnimInfo(obj, target, paramType, animType, factor, delay, destroyAtEnd));
 	}
@@ -341,8 +345,8 @@ public class AnimManager : MonoBehaviour
 		return instance.Animations.Find((AnimInfo anim) => anim.Object == obj) != null;
 	}
 
-	public static void RemoveAnim(GameObject obj, ParamType paramType)
+	public static void RemoveAnim(GameObject obj, ParamType paramType = ParamType.Any)
 	{
-		instance.Animations.RemoveAll((AnimInfo anim) => anim.Object == obj && anim.Param == paramType);
+		instance.Animations.RemoveAll((AnimInfo anim) => anim.Object == obj && (paramType == ParamType.Any || anim.Param == paramType));
 	}
 }

@@ -388,13 +388,21 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
+			if( NextCommand != null && Music.NextBlockName == NextCommand.GetBlockName() && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == SkillCutInTiming.MusicalTime % 16) )
+			{
+				OnSkillCutIn();
+			}
 			CurrentRect.SetArc(0);
 			CurrentRect.SetArc(0);
 			break;
 		case BattleState.Intro:
-			if( NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == WaitInputEnd.MusicalTime) )
+			if( Music.IsJustChangedAt(AllowInputEnd) || (NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == WaitInputEnd.MusicalTime)) )
 			{
 				SetNextBlock();
+			}
+			if( NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == SkillCutInTiming.MusicalTime % 16) )
+			{
+				OnSkillCutIn();
 			}
 			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			break;
@@ -404,13 +412,9 @@ public class CommandGraph : MonoBehaviour
 			{
 				SetNextBlock();
 			}
-			else if( Music.IsJustChangedAt(SkillCutInTiming) )
+			if( NextCommand != null && Music.IsJustChangedAt(SkillCutInTiming) )
 			{
-				NextRect.SetArc(1);
-				NextRect.SetSize(7.0f);
-				NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
-				CurrentRect.SetArc(0);
-				SkillCutIn.Set(NextCommand, CommandExp.SkillListUI, CommandExp.CommandName.gameObject);
+				OnSkillCutIn();
 			}
 			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
 			break;
@@ -418,6 +422,15 @@ public class CommandGraph : MonoBehaviour
 			break;
 		}
 		CurrentRect.SetColor(ColorManager.Base.Front);
+	}
+
+	void OnSkillCutIn()
+	{
+		NextRect.SetArc(1);
+		NextRect.SetSize(7.0f);
+		NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
+		CurrentRect.SetArc(0);
+		SkillCutIn.Set(NextCommand, CommandExp.SkillListUI, CommandExp.CommandName.gameObject);
 	}
 
 

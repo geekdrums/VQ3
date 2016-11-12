@@ -28,17 +28,27 @@ public class SkillCutIn : MonoBehaviour {
 	{
 		if( animation_.isPlaying == false && commandIcon_ != null && AnimManager.IsAnimating(commandIcon_.gameObject) == false )
 		{
-			Destroy(commandIcon_.gameObject);
-			Destroy(commandName_.gameObject);
-
-			commandIcon_ = null;
-			commandName_ = null;
-			skillList_ = null;
+			DestroyIconAndName();
 		}
+	}
+
+	void DestroyIconAndName()
+	{
+		Destroy(commandIcon_.gameObject);
+		Destroy(commandName_.gameObject);
+
+		commandIcon_ = null;
+		commandName_ = null;
+		skillList_ = null;
 	}
 
 	public void Set(PlayerCommand command, SkillListUI skillList, GameObject commandName)
 	{
+		if( commandIcon_ != null )
+		{
+			DestroyIconAndName();
+		}
+
 		commandIcon_ = (PlayerCommand)Instantiate(command, commandIconParent.transform);
 		Vector3 initialScale = commandIcon_.transform.localScale;
 		commandIcon_.transform.localPosition = Vector3.zero;

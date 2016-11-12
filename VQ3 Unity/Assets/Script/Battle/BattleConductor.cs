@@ -170,6 +170,9 @@ public class BattleConductor : MonoBehaviour {
 		//Leave State
 		switch( State )
 		{
+		case BattleState.Eclipse:
+			GameContext.LuxSystem.OnEclipseEnd();
+			break;
 		case BattleState.Continue:
 			GameContext.EnemyConductor.OnContinue();
 			GameContext.PlayerConductor.OnContinue();

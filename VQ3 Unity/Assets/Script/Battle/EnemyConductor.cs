@@ -144,7 +144,7 @@ public class EnemyConductor : MonoBehaviour
 			Vector3 damageTextPos = (skill.damageParent != null ? skill.damageParent.transform.position : skill.GetComponentInChildren<Animation>().transform.position);
 			if( damageGauge.CurrentMode == DamageGauge.Mode.None )
 			{
-				damageGauge.InitializeVPVT(damageTextPos + Vector3.down * 2.3f + Vector3.right);
+				damageGauge.InitializeVPVT(damageTextPos + Vector3.up * 2.0f + Vector3.right);
 			}
 			if( damageGauge.CurrentMode == DamageGauge.Mode.Break )
 			{
