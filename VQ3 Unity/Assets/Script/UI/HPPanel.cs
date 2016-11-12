@@ -35,9 +35,11 @@ public class HPPanel : MonoBehaviour {
 		CurrentBar.SetColor(ColorManager.Base.Front);
 		CurrentBar.SetRate(1);
 		UpdateHPText();
-        CurrentHPCount.CounterColor = ColorManager.Base.Front;
-        MaxHPCount.CounterColor = ColorManager.Base.Front;
-    }
+
+		CurrentBar.transform.parent.localScale = new Vector3(0, 1, 1);
+		float mtu = (float)Music.MusicalTimeUnit;
+		AnimManager.AddAnim(CurrentBar.transform.parent.gameObject, 1.0f, ParamType.ScaleX, AnimType.Linear, 0.1f, mtu * 16);
+	}
     public void OnTurnStart( PlayerCommand command )
     {
         currentCommand_ = command;
@@ -48,13 +50,11 @@ public class HPPanel : MonoBehaviour {
 		
 		if( currentCommand_.currentData.HealPercent > 0 )
         {
-            //CurrentHPCount.CounterColor = ColorManager.Theme.Light;
             MaxHPCount.CounterColor = ColorManager.Theme.Light;
             CurrentBar.SetColor( ColorManager.Theme.Light );
         }
         else
         {
-            //CurrentHPCount.CounterColor = ColorManager.Base.Front;
             MaxHPCount.CounterColor = ColorManager.Base.Front;
             CurrentBar.SetColor( ColorManager.Base.Front );
         }

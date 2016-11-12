@@ -19,7 +19,7 @@ public enum CounterVerticalAlign
 
 
 [ExecuteInEditMode]
-public class CounterSprite : MonoBehaviour {
+public class CounterSprite : MonoBehaviour, IColoredObject {
 
     enum Mark
     {
@@ -98,7 +98,10 @@ public class CounterSprite : MonoBehaviour {
     }
     public Color counterColor_;
 
-    public Options optionFlags_ = Options.None;
+	public void SetColor(Color color) { CounterColor = color; }
+	public Color GetColor() { return CounterColor; }
+
+	public Options optionFlags_ = Options.None;
     bool HasFlag( Options opt ) { return (optionFlags_ & opt) == opt; }
 
     public GameObject NumberParent;

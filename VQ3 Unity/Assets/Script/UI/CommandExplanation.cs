@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CommandExplanation : MonoBehaviour
 {
-
 	public GaugeRenderer NameBase;
 	public TextMesh CommandName;
 	public TextMesh Explanation;
@@ -221,6 +220,16 @@ public class CommandExplanation : MonoBehaviour
 		//AnimManager.AddAnim(IconParent, 0.0f, ParamType.Scale, AnimType.BounceOut, 0.2f);
 
 		CurrentPhase = Phase.Hiding;
+	}
+
+	public void OnBattleStart()
+	{
+		float mtu = (float)Music.MusicalTimeUnit;
+		Mask.SetColor(ColorManager.Base.Back);
+		AnimManager.RemoveAnim(Mask.gameObject);
+		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, 0.6f), ParamType.Color, AnimType.Linear, 0.1f, mtu * 8);
+		NameBase.SetRate(0);
+		AnimManager.AddAnim(NameBase.gameObject, 1.0f, ParamType.GaugeRate, AnimType.Linear, 0.1f, mtu * 12);
 	}
 
 	/*

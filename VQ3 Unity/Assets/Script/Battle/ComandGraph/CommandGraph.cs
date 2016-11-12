@@ -814,6 +814,17 @@ public class CommandGraph : MonoBehaviour
 		CurrentRect.transform.localPosition = Vector3.forward;
 		CurrentRect.transform.localScale = Vector3.one;
 		CurrentRect.transform.localRotation = Quaternion.identity;
+
+		float delay = 0;
+		foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
+		{
+			Vector3 commandPosition = command.transform.localPosition;
+			command.transform.localPosition = Vector3.zero;
+			AnimManager.AddAnim(command.gameObject, commandPosition, ParamType.Position, AnimType.BounceIn, 0.5f, delay);
+			delay += 0.07f;
+		}
+
+		CommandExp.OnBattleStart();
 	}
 
 	public void OnShieldBreak()
@@ -934,7 +945,7 @@ public class CommandGraph : MonoBehaviour
 		{
 			primitive.SetColor(themeColor);
 		}
-
+		
 		targetRotation = Quaternion.Inverse(Quaternion.LookRotation(-command.transform.localPosition)) * offsetRotation;
 		if( command != IntroCommand ) SEPlayer.Play("select");
 

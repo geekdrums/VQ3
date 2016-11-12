@@ -96,6 +96,8 @@ public class CommandEdge : MonoBehaviour {
 		}
 		line_.SetWidth(width * Command1.transform.localScale.x * 4, width * Command2.transform.localScale.x * 4);
 		line_.SetColors(color, color);
+		line_.SetPosition(0, Command1.transform.localPosition);
+		line_.SetPosition(1, Command2.transform.localPosition);
 	}
 
 	public void SetEnabled( bool enable )

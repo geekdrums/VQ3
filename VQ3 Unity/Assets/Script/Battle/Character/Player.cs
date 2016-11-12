@@ -21,7 +21,7 @@ public class Player : Character
 	{
 		Initialize();
 		initialPosition = UIParent.transform.position;
-		HPPanel.OnBattleStart();
+		//HPPanel.OnBattleStart();
 	}
 
 	// Update is called once per frame
