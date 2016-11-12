@@ -188,9 +188,16 @@ public class DamageGauge : MonoBehaviour
 		ModeInit();
 	}
 
+	public void OnShieldRecover()
+	{
+		isInitialized_ = false;
+		CurrentMode = GetDesiredMode();
+		ModeInit();
+	}
+
 	private Mode GetDesiredMode()
 	{
-		if( isInitialized_ == false )
+		if( isInitialized_ == false || GameContext.BattleState == BattleState.Endro )
 		{
 			return Mode.None;
 		}

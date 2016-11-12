@@ -92,8 +92,12 @@ public class Enemy : Character
 			if( damageTime <= 0 )
 			{
 				transform.localPosition = initialPosition;
+				
 				if( HitPoint <= 0 )
 				{
+					//overkill
+					if( GameContext.LuxState == LuxState.Overload && Music.Just.Bar < 3 ) return;
+
 					spriteRenderer.color = Color.clear;
 					//SEPlayer.Play("Defeat");
 					Destroy(this.gameObject);
@@ -240,7 +244,7 @@ public class Enemy : Character
 
 		float damage = skill.OwnerCharacter.PhysicAttack * ((attack.Power + overFlowPower) / 100.0f) * typeCoeff * shieldCoeff * DefendCoeff;
 		BeDamaged(Mathf.Max(0, (int)damage), skill);
-		//Debug.Log(this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint);
+		Debug.Log(this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint);
 
 		if( lastDamageResult != ActionResult.NoDamage )
 		{

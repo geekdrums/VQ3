@@ -193,6 +193,9 @@ public class EnemyConductor : MonoBehaviour
 		}
 
 
+		//overkill
+		if( GameContext.LuxState == LuxState.Overload && (Music.Just.Bar < 3 || attack == null) ) return isSucceeded;
+
 		Enemies.RemoveAll((Enemy e) => e.HitPoint<=0);
 		if( Enemies.Count == 0 )
 		{

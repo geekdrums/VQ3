@@ -192,7 +192,7 @@ public class CommandExplanation : MonoBehaviour
 		}
 	}
 
-	public void OnExecCommand()
+	public void Reset()
 	{
 		NameBase.SetColor(ColorManager.Base.Bright);
 		CommandName.text = "NEXT?";
@@ -200,7 +200,9 @@ public class CommandExplanation : MonoBehaviour
 		LVText.color = Color.clear;
 		LVCount.CounterColor = Color.clear;
 		Explanation.text = "";
-		Mask.SetColor(ColorManager.MakeAlpha(ColorManager.Base.Back, 0.6f));
+		Mask.SetColor(ColorManager.Base.Back);
+		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, 0.6f), ParamType.Color, AnimType.Linear, 0.1f);
+
 		SkillListUI.Set(null);
 	}
 
@@ -221,6 +223,7 @@ public class CommandExplanation : MonoBehaviour
 		CurrentPhase = Phase.Hiding;
 	}
 
+	/*
 	public void Reset()
 	{
 		//if( IconParent.transform.childCount > 0 )
@@ -233,4 +236,5 @@ public class CommandExplanation : MonoBehaviour
 		CurrentPhase = Phase.Hide;
 		Explanation.text = "";
 	}
+	*/
 }

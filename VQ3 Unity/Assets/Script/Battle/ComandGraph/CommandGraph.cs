@@ -496,7 +496,14 @@ public class CommandGraph : MonoBehaviour
 
 		if( NextCommand != null )
 		{
-			NextRect.SetArc(GameContext.BattleState == BattleState.Wait ? -1.0f : -Music.MusicalTime / LuxSystem.TurnMusicalUnits);
+			if( GameContext.BattleState == BattleState.Wait || GameContext.BattleState == BattleState.Endro || GameContext.BattleState == BattleState.Continue )
+			{
+				NextRect.SetArc(-1);
+			}
+			else
+			{
+				NextRect.SetArc(-Music.MusicalTime / LuxSystem.TurnMusicalUnits);
+			}
 		}
 		else if( hit.collider == CommandSphere.GetComponent<Collider>() )
 		{
@@ -521,11 +528,18 @@ public class CommandGraph : MonoBehaviour
 			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(0.2f);
 			NextRect.SetArc(GameContext.BattleState == BattleState.Wait ? -1.0f : -Music.MusicalTime / LuxSystem.TurnMusicalUnits);
 
-			if( command != null && command != PreviewCommand )
+			if( command != PreviewCommand )
 			{
 				PreviewCommand = command;
-				SEPlayer.Play("tick");
-				CommandExp.Set(PreviewCommand, isPreview: true);
+				if( command != null )
+				{
+					SEPlayer.Play("tick");
+					CommandExp.Set(PreviewCommand, isPreview: true);
+				}
+				else
+				{
+					CommandExp.Reset();
+				}
 			}
 		}
 		else
@@ -734,7 +748,7 @@ public class CommandGraph : MonoBehaviour
 			CurrentCommandName.color = themeColor;
 			CurrentCommandName.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
 			CommandList.OnExecCommand();
-			CommandExp.OnExecCommand();
+			CommandExp.Reset();
 		}
 		else
 		{

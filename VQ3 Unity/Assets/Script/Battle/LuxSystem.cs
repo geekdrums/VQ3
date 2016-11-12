@@ -277,6 +277,7 @@ public class LuxSystem : MonoBehaviour
 					{
 						SEPlayer.Play("vtEmpty");
 						CutInUI.SetShieldRecover();
+						DamageGauge.OnShieldRecover();
 					}
 					CurrentTime = 0;
 					LastMaxTime = 0;
@@ -428,9 +429,12 @@ public class LuxSystem : MonoBehaviour
 		{
 			Music.SetAisac("Danger", 1.0f - (float)Music.MusicalTime/32);
 		}
-		if( Music.IsNearChangedAt(2) )
+		if( Music.IsJustChanged && Music.Just.Bar < 2 )
 		{
 			Music.SetGameVariable("IsOverflow", IsOverFlow ? 1 : 0);
+		}
+		if( Music.IsNearChangedAt(2) )
+		{
 			if( IsOverFlow )
 			{
 				TextWindow.SetMessage(MessageCategory.Invert, "オーバーロード完了。");
@@ -658,6 +662,7 @@ public class LuxSystem : MonoBehaviour
 				CurrentVP = 0;
 				CurrentTime = 0;
 				LastMaxTime = 0;
+				DamageGauge.OnShieldRecover();
 			}
 		}
 		BreakCount.Count = 100.0f * ((float)CurrentVP / OverflowVP);

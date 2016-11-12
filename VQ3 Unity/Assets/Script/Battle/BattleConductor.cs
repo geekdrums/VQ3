@@ -201,8 +201,8 @@ public class BattleConductor : MonoBehaviour {
 			GameContext.LuxSystem.SetState(LuxState.SunSet);
 			Music.Play("Continue");
 			ClearSkills();
-			OKButton.SetText("Continue");
-			OKButton.SetMode(ButtonMode.Active, true);
+			//OKButton.SetText("Continue");
+			//OKButton.SetMode(ButtonMode.Active, true);
 			break;
 		case BattleState.Win:
 			Music.SetNextBlock("endro", new System.EventHandler((object sender, System.EventArgs e) => { SetState(BattleState.Endro); }));
@@ -212,9 +212,9 @@ public class BattleConductor : MonoBehaviour {
 		case BattleState.Endro:
 			ClearSkills();
 			GameContext.LuxSystem.SetState(LuxState.SunSet);
-			TextWindow.SetMessage(MessageCategory.Result, "敵の殲滅を確認。");
-			OKButton.SetText("OK");
-			OKButton.SetMode(ButtonMode.Active, true);
+			TextWindow.SetMessage(MessageCategory.Result, "敵性反応ゼロ。殲滅を確認。");
+			//OKButton.SetText("OK");
+			//OKButton.SetMode(ButtonMode.Active, true);
 			GameContext.PlayerConductor.OnEndro();
 			break;
 		}
