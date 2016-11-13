@@ -38,7 +38,7 @@ public class EnemyCommandListUI : MonoBehaviour
 		if( Music.IsJustChangedAt(EnemySkillListUI.ShowSkillCutInTiming) && CurrentCommandIcon != null )
 		{
 			AnimManager.AddAnim(CurrentCommandIcon, Vector3.down * 2.5f, ParamType.Position, AnimType.BounceIn, 0.3f);
-			AnimManager.AddAnim(CurrentCommandIcon, Vector3.zero, ParamType.Position, AnimType.BounceOut, 0.3f, (float)Music.MusicalTimeUnit * 4);
+			AnimManager.AddAnim(CurrentCommandIcon, Vector3.zero, ParamType.Position, AnimType.BounceOut, 0.3f, (float)Music.MusicalTimeUnit * 8);
 		}
 
 		if( AnimManager.IsAnimating(EdgeLine.gameObject) == false && commandIcons_.Count > 0 )
@@ -72,20 +72,41 @@ public class EnemyCommandListUI : MonoBehaviour
 
 	Vector3 GetTargetPos(int index)
 	{
+		Vector3 res = Vector3.zero;
+
+		if( currentIndex_ < 0 )
+		{
+			return res;
+		}
+
+		float currentLength = ActiveIconScale * commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f;
+		float selfLength = GetTargetScale(index).x * commandIcons_[index].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f;
 		if( index < currentIndex_ )
 		{
 			// 過去のコマンド
-			return Vector3.left * ((currentIndex_ - index) * (OldIconScale * Interval) + CenterInterval);
+			res += Vector3.left * CenterInterval;
+			for( int i = currentIndex_ - 1; i >= index; --i )
+			{
+				res += Vector3.left * (OldIconScale * commandIcons_[i].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f * Interval);
+			}
+			res += Vector3.left * (currentLength - selfLength);
+			return res;
 		}
 		else if( index == currentIndex_ )
 		{
 			// 現在のコマンド
 			return Vector3.zero;
 		}
-		else// (i > currentIndex_ )
+		else// (index > currentIndex_ )
 		{
 			// 実行予定のコマンド
-			return Vector3.right * ((index - currentIndex_) * (FutureIconScale * Interval) + CenterInterval);
+			res += Vector3.right * CenterInterval;
+			for( int i = currentIndex_ + 1; i <= index; ++i )
+			{
+				res += Vector3.right * (FutureIconScale * commandIcons_[i].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f * Interval);
+			}
+			res += Vector3.right * (currentLength - selfLength);
+			return res;
 		}
 	}
 
@@ -101,9 +122,9 @@ public class EnemyCommandListUI : MonoBehaviour
 	public void AddCommand(EnemyCommandSet command)
 	{
 		GameObject iconObj = Instantiate(command.IconPrefab);
-		iconObj.transform.parent = this.transform;
-		iconObj.transform.localPosition = GetTargetPos(commandIcons_.Count) + Vector3.up * 5;
 		commandIcons_.Add(iconObj);
+		iconObj.transform.parent = this.transform;
+		iconObj.transform.localPosition = GetTargetPos(commandIcons_.Count - 1) + Vector3.up * 5;
 	}
 
 	public void ShowAnim()
@@ -164,7 +185,7 @@ public class EnemyCommandListUI : MonoBehaviour
 				MidairPrimitive mask = commandIcons_[i].GetComponentsInChildren<MidairPrimitive>().First((MidairPrimitive primitive) => primitive.name == "Mask");
 				if( mask != null )
 				{
-					mask.SetColor(ColorManager.MakeAlpha(Color.black, 0.6f));
+					mask.SetColor(ColorManager.MakeAlpha(Color.black, 0.3f));
 				}
 			}
 		}

@@ -29,24 +29,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1000011154266806
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 4000011300819408}
-  - 23: {fileID: 23000011852424674}
-  - 114: {fileID: 114000010508535478}
-  - 33: {fileID: 33000011008361718}
-  m_Layer: 0
-  m_Name: _grow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &1000012061542972
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,19 +47,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000011300819408
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011154266806}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 4000014114203700}
-  m_RootOrder: 0
 --- !u!4 &4000012451398934
 Transform:
   m_ObjectHideFlags: 1
@@ -90,7 +59,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000014114203700}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &4000014114203700
 Transform:
   m_ObjectHideFlags: 1
@@ -102,7 +71,6 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 4000011300819408}
   - {fileID: 4000012451398934}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -164,48 +132,12 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!23 &23000011852424674
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011154266806}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!33 &33000010565413256
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012061542972}
-  m_Mesh: {fileID: 0}
---- !u!33 &33000011008361718
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011154266806}
   m_Mesh: {fileID: 0}
 --- !u!33 &33000012325462260
 MeshFilter:
@@ -236,36 +168,10 @@ MonoBehaviour:
   GrowAlpha: 1
   VertexAlphas: []
   GrowTexture: {fileID: 0}
-  GrowChild: {fileID: 114000010508535478}
+  GrowChild: {fileID: 0}
   ownerAnimation: {fileID: 0}
   materialName: Transparent/Diffuse
   colorName: _Color
---- !u!114 &114000010508535478
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011154266806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e6a726a687702842a4c4fcc25d77fc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Num: 6
-  ArcRate: 1
-  Width: 5
-  Radius: 4
-  ScaleX: 1
-  Color: {r: 1, g: 1, b: 1, a: 1}
-  Angle: 0
-  GrowSize: 0
-  GrowAlpha: 1
-  VertexAlphas: []
-  GrowTexture: {fileID: 2800000, guid: 9d5f83f94a0ae0547a532278cc48c2c9, type: 3}
-  GrowChild: {fileID: 0}
-  ownerAnimation: {fileID: 0}
-  materialName: Particles/Alpha Blended
-  colorName: _TintColor
 --- !u!114 &114000011135053264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -279,8 +185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Num: 6
   ArcRate: 1
-  Width: 4
-  Radius: 4
+  Width: 3
+  Radius: 3
   ScaleX: 1
   Color: {r: 0, g: 0, b: 0, a: 0}
   Angle: 0

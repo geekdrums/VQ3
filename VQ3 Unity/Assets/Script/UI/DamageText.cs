@@ -46,6 +46,11 @@ public class DamageText : MonoBehaviour
 		if( isEnd )
 		{
 			isEnd_ = true;
+			if( GameContext.BattleState == BattleState.Win )
+			{
+				Destroy(this.gameObject);
+				return;
+			}
 			AnimManager.AddAnim(gameObject, destination_, ParamType.Position, AnimType.Time, 0.2f);
 			AnimManager.AddAnim(gameObject, destination_ + ( isPlayerDamage_ ? Vector3.down : Vector3.up ) * 5, ParamType.Position, AnimType.Time, 0.2f, 0.3f, true);
 		}
