@@ -16,7 +16,7 @@ public class GameContextInitializer : MonoBehaviour
         Application.platform == RuntimePlatform.LinuxPlayer )
 		{
 			Screen.SetResolution(ScreenWidth, ScreenHeight, false);
-			//Screen.fullScreen = true;
+			Screen.fullScreen = true;
 		}
 		GameContext.FieldConductor.EncounterIndex = EncounterIndex;
 		//Cursor.visible = false;

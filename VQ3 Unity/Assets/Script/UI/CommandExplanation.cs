@@ -10,6 +10,7 @@ public class CommandExplanation : MonoBehaviour
 	public TextMesh LVText;
 	//public GaugeRenderer EdgeLine;
 	public GaugeRenderer Mask;
+	public float MaskAlpha = 0.3f;
 
 	[System.Serializable]
 	public class CommandParam
@@ -98,7 +99,7 @@ public class CommandExplanation : MonoBehaviour
 		{
 			Mask.SetColor(ColorManager.Base.Back);
 		}
-		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, isPreview ? 0.6f : 0.0f), ParamType.Color, AnimType.Linear, 0.1f);
+		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, isPreview ? MaskAlpha : 0.0f), ParamType.Color, AnimType.Linear, 0.1f);
 
 		//GameObject iconObj = command.InstantiateIconObj(IconParent);
 		if( GameContext.State == GameState.Result || GameContext.State == GameState.Event )
@@ -200,7 +201,7 @@ public class CommandExplanation : MonoBehaviour
 		LVCount.CounterColor = Color.clear;
 		Explanation.text = "";
 		Mask.SetColor(ColorManager.Base.Back);
-		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, 0.6f), ParamType.Color, AnimType.Linear, 0.1f);
+		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, MaskAlpha), ParamType.Color, AnimType.Linear, 0.1f);
 
 		SkillListUI.Set(null);
 	}
@@ -227,7 +228,7 @@ public class CommandExplanation : MonoBehaviour
 		float mtu = (float)Music.MusicalTimeUnit;
 		Mask.SetColor(ColorManager.Base.Back);
 		AnimManager.RemoveAnim(Mask.gameObject);
-		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, 0.6f), ParamType.Color, AnimType.Linear, 0.1f, mtu * 8);
+		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, MaskAlpha), ParamType.Color, AnimType.Linear, 0.1f, mtu * 8);
 		NameBase.SetRate(0);
 		AnimManager.AddAnim(NameBase.gameObject, 1.0f, ParamType.GaugeRate, AnimType.Linear, 0.1f, mtu * 12);
 	}

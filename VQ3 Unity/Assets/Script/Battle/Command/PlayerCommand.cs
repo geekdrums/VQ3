@@ -274,11 +274,11 @@ public class PlayerCommand : MonoBehaviour
 				transform.localScale = scale;
 				break;
 			case CommandState.Selected:
-				transform.localScale = scale;
+				transform.localScale = Music.Just.Unit < 3 ? scale : Vector3.zero;
 				break;
 			case CommandState.NotSelected:
 				transform.localScale = scale;
-				alpha = 0.4f;
+				alpha = 0.2f;
 				break;
 			case CommandState.Linked:
 				transform.localScale = scale * (this is InvertCommand ? 1.0f : 1.2f);

@@ -577,7 +577,7 @@ public class CommandGraph : MonoBehaviour
 	void PushCommandButton(Vector3 position)
 	{
 		PlayerCommand selectedCommand = FindCommand(position);
-		if( selectedCommand != null )
+		if( selectedCommand != null && selectedCommand != NextCommand )
 		{
 			Select(selectedCommand);
 		} 

@@ -1,0 +1,306 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 505a6022ffb516a4abec6e3a7ebf26c7, type: 3}
+  m_Name: StageData_DGE2016Easy
+  m_EditorClassIdentifier: 
+  Encounters:
+  - BattleSets:
+    - Enemies:
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
+      States:
+      - Name: Default
+        Pattern:
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 20
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 20
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 20
+        NextState: 
+      Conditions: []
+    AcquireMemory: 10
+    BreakPoint: 100
+    Version: 0
+  - BattleSets:
+    - Enemies:
+      - {fileID: 100000, guid: dd0a5c1083192c14892b05a3e3ac623d, type: 2}
+      States:
+      - Name: Default
+        Pattern:
+        - Command: Wait
+          IconPrefab: {fileID: 0}
+          Threat: 0
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 60
+        - Command: Wait
+          IconPrefab: {fileID: 0}
+          Threat: 0
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 60
+        NextState: 
+      Conditions: []
+    AcquireMemory: 10
+    BreakPoint: 100
+    Version: 0
+  - BattleSets:
+    - Enemies:
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
+      States:
+      - Name: Default
+        Pattern:
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 10
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 10
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 10
+        NextState: 
+      Conditions: []
+    AcquireMemory: 10
+    BreakPoint: 40
+    Version: 1
+  - BattleSets:
+    - Enemies:
+      - {fileID: 100000, guid: ec79f847f2c531e47be880685bce11ca, type: 2}
+      States:
+      - Name: Default
+        Pattern:
+        - Command: Wait
+          IconPrefab: {fileID: 0}
+          Threat: 0
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 20
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 20
+        - Command: Attack3
+          IconPrefab: {fileID: 0}
+          Threat: 75
+        - Command: Wait
+          IconPrefab: {fileID: 0}
+          Threat: 0
+        NextState: 
+      Conditions: []
+    AcquireMemory: 20
+    BreakPoint: 60
+    Version: 1
+  - BattleSets:
+    - Enemies:
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
+      States:
+      - Name: Default
+        Pattern:
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 20
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 20
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 20
+        NextState: 
+      Conditions: []
+    AcquireMemory: 10
+    BreakPoint: 60
+    Version: 1
+  - BattleSets:
+    - Enemies:
+      - {fileID: 100000, guid: ec79f847f2c531e47be880685bce11ca, type: 2}
+      States:
+      - Name: Default
+        Pattern:
+        - Command: Wait
+          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
+            type: 2}
+          Threat: 0
+        - Command: Attack
+          IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
+            type: 2}
+          Threat: 20
+        - Command: Attack
+          IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
+            type: 2}
+          Threat: 20
+        - Command: Attack3
+          IconPrefab: {fileID: 1000012387805298, guid: 973319b6721c9814db536eb5110e5653,
+            type: 2}
+          Threat: 75
+        - Command: Wait
+          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
+            type: 2}
+          Threat: 0
+        NextState: 
+      Conditions: []
+    AcquireMemory: 20
+    BreakPoint: 80
+    Version: 2
+  - BattleSets:
+    - Enemies:
+      - {fileID: 100000, guid: dd0a5c1083192c14892b05a3e3ac623d, type: 2}
+      - {fileID: 100000, guid: dd0a5c1083192c14892b05a3e3ac623d, type: 2}
+      States:
+      - Name: Default
+        Pattern:
+        - Command: Wait
+          IconPrefab: {fileID: 0}
+          Threat: 0
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 70
+        - Command: Wait
+          IconPrefab: {fileID: 0}
+          Threat: 0
+        - Command: Attack
+          IconPrefab: {fileID: 0}
+          Threat: 70
+        - Command: Wait
+          IconPrefab: {fileID: 0}
+          Threat: 0
+        - Command: Wait
+          IconPrefab: {fileID: 0}
+          Threat: 0
+        NextState: 
+      Conditions: []
+    AcquireMemory: 10
+    BreakPoint: 80
+    Version: 2
+  - BattleSets:
+    - Enemies:
+      - {fileID: 100000, guid: 0d9bc74352646ca44a5077a9e70591d5, type: 2}
+      States:
+      - Name: Default
+        Pattern:
+        - Command: Wait
+          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
+            type: 2}
+          Threat: 0
+        - Command: Wait
+          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
+            type: 2}
+          Threat: 0
+        - Command: Wait
+          IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
+            type: 2}
+          Threat: 0
+        - Command: Attack
+          IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
+            type: 2}
+          Threat: 20
+        - Command: Attack
+          IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
+            type: 2}
+          Threat: 30
+        - Command: Attack3
+          IconPrefab: {fileID: 1000012387805298, guid: 973319b6721c9814db536eb5110e5653,
+            type: 2}
+          Threat: 60
+        NextState: 
+      Conditions: []
+    AcquireMemory: 20
+    BreakPoint: 160
+    Version: 2
+  EventData:
+  - Messages:
+    - Text: "\u4EEE\u8C61\u8A13\u7DF4\u6226\u95D8\u3092\u958B\u59CB\u3057\u307E\u3059\u3002<br/>\u5229\u7528\u3059\u308B\u30B3\u30DE\u30F3\u30C9\u306B<br/>\u30E1\u30E2\u30EA\u30FC\u3092\u5272\u308A\u5F53\u3066\u3066\u304F\u3060\u3055\u3044\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: 
+    EncounterIndex: 0
+    NextState: 3
+    MusicName: ambient
+    Watched: 0
+  - Messages:
+    - Text: "\u6226\u95D8\u3067\u5F97\u3089\u308C\u305F\u30E1\u30E2\u30EA\u30FC\u306F\u3001<br/>\u81EA\u7531\u306B\u30B3\u30DE\u30F3\u30C9\u306B\u5272\u308A\u5F53\u3066\u3089\u308C\u307E\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: 
+    EncounterIndex: 1
+    NextState: 3
+    MusicName: ambient
+    Watched: 0
+  - Messages:
+    - Text: "\u6B21\u306E\u4EEE\u8C61\u6226\u95D8\u3067\u306F<br/>\u6575\u5074\u306B\u30B7\u30FC\u30EB\u30C9\u304C\u767A\u751F\u3057\u307E\u3059\u3002<br/>\u3053\u308C\u3092\u7834\u58CA\u3059\u308B\u3068\u3001<br/>\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u3089\u308C\u307E\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: 
+    - Text: "\u30B7\u30FC\u30EB\u30C9\u306E\u7834\u58CA\u7387\u3092\u3001<br/>\u300C\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u300D\u3068\u3057\u3066\u8868\u793A\u3057\u307E\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: Event_ShowBPMeter
+    - Text: "\u30B2\u30FC\u30B8\u304C\u6700\u5927\u306B\u306A\u308B\u3068\u3001<br/>\u6575\u30B7\u30FC\u30EB\u30C9\u304C\u30AA\u30FC\u30D0\u30FC\u30D5\u30ED\u30FC\u3057\u307E\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: 
+    EncounterIndex: 2
+    NextState: 3
+    MusicName: ambient
+    Watched: 0
+  - Messages:
+    - Text: "\u7A7A\u304C\u6697\u304F\u306A\u308B\u306E\u306F\u3001<br/>\u5371\u967A\u306A\u6280\u304C\u5B9F\u884C\u3055\u308C\u308B\u4E88\u5146\u3067\u3059\u3002<br/>\u6697\u3044\u5929\u8F2A\u304C\u898B\u3048\u305F\u6642\u306F<br/>\u8B66\u6212\u3092\u63A8\u5968\u3057\u307E\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: 
+    EncounterIndex: 3
+    NextState: 3
+    MusicName: ambient
+    Watched: 0
+  - Messages:
+    - Text: "\u30A4\u30B0\u30CB\u30B9\u306F\u5F37\u529B\u306A\u5168\u4F53\u708E\u9B54\u6CD5\u3067\u3001<br/>\u30B7\u30FC\u30EB\u30C9\u306E\u7834\u58CA\u529B\u3082\u6700\u5927\u3092\u8A87\u308A\u307E\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: "Event_ShowCommand \u30A4\u30B0\u30CB\u30B9"
+    EncounterIndex: 4
+    NextState: 3
+    MusicName: ambient
+    Watched: 0
+  - Messages:
+    - Text: "\u6B21\u306E\u4EEE\u8C61\u6226\u95D8\u306F\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u306B<br/><color=red>\u6301\u7D9A\u6642\u9593</color>\u304C\u767A\u751F\u3057\u307E\u3059\u3002<br/>\u6301\u7D9A\u304C\u9014\u5207\u308C\u308B\u3068\u3001\u30B7\u30FC\u30EB\u30C9\u7834\u58CA\u7387\u304C<br/><color=red>\u30BC\u30ED</color>\u306B\u623B\u3055\u308C\u307E\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: 
+    - Text: "\u6301\u7D9A\u6642\u9593\u3092\u9AD8\u3081\u308B\u306B\u306F\u3001<br/><color=aqua>\u9752\uFF08\u30C0\u30A4\u30F3\uFF09</color>\u3001<color=green>\u7DD1\uFF08\u30A2\u30A6\u30E9\uFF09</color>\u7CFB\u306E<br/>\u653B\u6483\u304C\u6709\u52B9\u3067\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: 
+    EncounterIndex: 5
+    NextState: 3
+    MusicName: ambient
+    Watched: 0
+  - Messages:
+    - Text: "<color=yellow>\u9EC4\uFF08\u30E9\u30AF\u30EB\uFF09</color>\u3001<color=red>\u8D64\uFF08\u30A4\u30B0\u30CA\uFF09</color>\u7CFB\u306E<br/>\u9B54\u6CD5\u306F\u30B7\u30FC\u30EB\u30C9\u7834\u58CA\u7387\u304C\u9AD8\u3044\u4E00\u65B9\u3001<br/>\u6301\u7D9A\u6642\u9593\u306F\u77ED\u3081\u3067\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: 
+    EncounterIndex: 6
+    NextState: 3
+    MusicName: ambient
+    Watched: 0
+  - Messages:
+    - Text: "\u30D6\u30EC\u30A4\u30AF\u30B2\u30FC\u30B8\u3092\u6E9C\u3081\u3066\u304B\u3089<br/>\u300C\u30A8\u30AF\u30B9\u30E9\u30A4\u30C8\u300D\u3092\u767A\u52D5\u3059\u308B\u3068\u3001<br/>\u6575\u306E\u30B7\u30B9\u30C6\u30E0\u3092\u30AA\u30FC\u30D0\u30FC\u30ED\u30FC\u30C9\u3057\u3001<br/><color=red>\u300C\u30D6\u30EC\u30A4\u30AF\u300D</color>\u72B6\u614B\u306B\u3067\u304D\u307E\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: "Event_ShowCommand \u30A8\u30AF\u30B9\u30E9\u30A4\u30C8"
+    - Text: "\u5149\u306E\u5263\u621F\u9B54\u6CD5\u300C\u30DE\u30B0\u30B9\u300D\u306F<br/>\u30D6\u30EC\u30A4\u30AF\u5F8C\u306B\u767A\u52D5\u3067\u304D\u307E\u3059\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: "Event_ShowCommand \u30DE\u30B0\u30B9 "
+    EncounterIndex: 7
+    NextState: 3
+    MusicName: ambient
+    Watched: 0
+  - Messages:
+    - Text: "\u7D20\u6674\u3089\u3057\u3044\u6226\u3044\u3076\u308A\u3060\u3063\u305F\u308F\u3002<br/>\u4EEE\u8C61\u8A13\u7DF4\u306F\u3053\u3053\u307E\u3067\u306B\u3057\u307E\u3057\u3087\u3046\u3002<br/>\u305D\u308C\u3058\u3083\u3042\u3001\u307E\u305F\u3002"
+      Sender: "\u30E9\u30F3\u30B0\u30E9\u30B9\u30AB"
+      Macro: Event_ShowTitle
+    EncounterIndex: 8
+    NextState: 3
+    MusicName: ambient
+    Watched: 0
