@@ -52,7 +52,7 @@ public class SkillListUI : MonoBehaviour {
 				}
 			}
 
-			float mtRate = (float)(Music.MusicalTime / LuxSystem.TurnMusicalUnits);
+			float mtRate = (float)(Music.MusicalTime / LuxSystem.TurnMusicalBars);
 			baseLine_.SetRate(1.0f - mtRate);
 
 			int targetIndex = 0;

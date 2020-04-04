@@ -404,7 +404,7 @@ public class CommandGraph : MonoBehaviour
 			{
 				OnSkillCutIn();
 			}
-			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalBars));
 			break;
 		case BattleState.Battle:
 		case BattleState.Eclipse:
@@ -416,7 +416,7 @@ public class CommandGraph : MonoBehaviour
 			{
 				OnSkillCutIn();
 			}
-			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+			CurrentRect.SetArc((float)(1.0f - Music.MusicalTime / LuxSystem.TurnMusicalBars));
 			break;
 		case BattleState.Endro:
 			break;
@@ -502,7 +502,7 @@ public class CommandGraph : MonoBehaviour
 			}
 			else
 			{
-				NextRect.SetArc(-Music.MusicalTime / LuxSystem.TurnMusicalUnits);
+				NextRect.SetArc(-Music.MusicalTime / LuxSystem.TurnMusicalBars);
 			}
 		}
 		else if( hit.collider == CommandSphere.GetComponent<Collider>() )
@@ -526,7 +526,7 @@ public class CommandGraph : MonoBehaviour
 			NextRect.SetWidth(0.2f);
 			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(1.5f);
 			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(0.2f);
-			NextRect.SetArc(GameContext.BattleState == BattleState.Wait ? -1.0f : -Music.MusicalTime / LuxSystem.TurnMusicalUnits);
+			NextRect.SetArc(GameContext.BattleState == BattleState.Wait ? -1.0f : -Music.MusicalTime / LuxSystem.TurnMusicalBars);
 
 			if( command != PreviewCommand )
 			{

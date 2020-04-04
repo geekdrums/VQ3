@@ -64,7 +64,7 @@ public class DamageGauge : MonoBehaviour
 				BreakGauge.SetRate(Mathf.Clamp01(1.0f - BreakRate));
 				TimeGauge.SetRate(Mathf.Clamp01(BreakRate * GameContext.LuxSystem.VTRate));
 				VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
-				VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalUnits;
+				VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalBars;
 				BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManager.Accent.Time, 0.2f));
 				Color timeColor = GetTimeColor();
 				TimeGauge.SetColor(timeColor);
@@ -74,7 +74,7 @@ public class DamageGauge : MonoBehaviour
 		case Mode.DamageAndTime:
 			{
 				TimeGauge2.SetRate(GameContext.LuxSystem.VTRate);
-				VTCount2.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalUnits;
+				VTCount2.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalBars;
 				Color timeColor = GetTimeColor();
 				TimeGauge2.SetColor(timeColor);
 				VTCount2.CounterColor = timeColor;
@@ -156,7 +156,7 @@ public class DamageGauge : MonoBehaviour
 		BreakGauge.SetRate(Mathf.Clamp01(1.0f - BreakRate));
 		TimeGauge.SetRate(Mathf.Clamp01(BreakRate * GameContext.LuxSystem.VTRate));
 		VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
-		VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalUnits;
+		VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalBars;
 		BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManager.Accent.Time, 0.2f));
 		Color timeColor = GetTimeColor();
 		TimeGauge.SetColor(timeColor);
@@ -165,7 +165,7 @@ public class DamageGauge : MonoBehaviour
 		Vector3 initialPosition_ = transform.position;
 		transform.position = position;
 
-		float delay = Mathf.Min(48.0f - (float)Music.MusicalTime, (float)Music.Meter.SecPerUnit * 32);
+		float delay = (float)Music.Meter.SecPerUnit * Mathf.Min(48.0f - (float)Music.MusicalTime * 16, 32);
 		float animTime = 0.2f;
 		float animTime2 = 0.5f;
 		transform.AnimatePosition(initialPosition_, time: animTime, delay: delay);
@@ -245,7 +245,7 @@ public class DamageGauge : MonoBehaviour
 	private Color GetTimeColor()
 	{
 		Color timeColor = Color.white;
-		float time = GameContext.LuxSystem.LastMaxTime / LuxSystem.TurnMusicalUnits;
+		float time = GameContext.LuxSystem.LastMaxTime / LuxSystem.TurnMusicalBars;
 		if( GameContext.LuxSystem.VPRate <= 0.0f )
 		{
 			timeColor = Color.white;

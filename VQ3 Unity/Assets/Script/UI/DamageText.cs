@@ -65,11 +65,11 @@ public class DamageText : MonoBehaviour
 
 	public void AddVP(int VP, int Time)
 	{
-		VTCount.Count += Time / LuxSystem.TurnMusicalUnits;
+		VTCount.Count += Time / LuxSystem.TurnMusicalBars;
 		VTCount.gameObject.SetActive(VTCount.Count > 0);
 		VPCount.Count += VP;
 		time_ = 0;
-		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalUnits);
+		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalBars);
 
 		VPCount.Shake(0.3f, 1.0f);
 		VTCount.Shake(0.3f, 1.0f);
@@ -87,14 +87,14 @@ public class DamageText : MonoBehaviour
 	public void InitializeVP(int VP, int Time)
 	{
 		ModeInit(DamageGauge.Mode.Break);
-		VTCount.Count = Time / LuxSystem.TurnMusicalUnits;
+		VTCount.Count = Time / LuxSystem.TurnMusicalBars;
 		VTCount.gameObject.SetActive(VTCount.Count > 0);
 		VPCount.Count = VP;
 
 		VPCount.Shake(0.4f, 1.0f);
 		VTCount.Shake(0.4f, 1.0f);
 
-		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalUnits);
+		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalBars);
 		isPlayerDamage_ = false;
 	}
 

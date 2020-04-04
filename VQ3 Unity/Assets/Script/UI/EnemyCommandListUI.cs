@@ -50,7 +50,7 @@ public class EnemyCommandListUI : MonoBehaviour
 		if( CurrentCommandIcon != null && GameContext.BattleState != BattleState.Wait )
 		{
 			CurrentHex.transform.localPosition = new Vector3(CurrentCommandIcon.transform.localPosition.x, 0, -1);
-			CurrentHex.SetArc((float)(-Music.MusicalTime / LuxSystem.TurnMusicalUnits));
+			CurrentHex.SetArc((float)(-Music.MusicalTime / LuxSystem.TurnMusicalBars));
 		}
 	}
 

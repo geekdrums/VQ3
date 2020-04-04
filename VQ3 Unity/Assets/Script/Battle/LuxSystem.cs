@@ -26,7 +26,7 @@ public class LuxSystem : MonoBehaviour
 	public static readonly int MaxVT = 16 * 4 * 4;
 	public static readonly int WaveNum = 33;
 	public static readonly float WaveHeight = 2.0f;
-	public static readonly float TurnMusicalUnits = 64.0f;
+	public static readonly float TurnMusicalBars = 4.0f;
 	public int CurrentVP { get; private set; }
 	public int CurrentTime { get; private set; }
 	public int LastMaxTime { get; private set; }
@@ -228,13 +228,13 @@ public class LuxSystem : MonoBehaviour
 			UpdateLightAngles();
 			UpdateBGOffset();
 			BGColor = Color.Lerp(BGColor, ColorManager.Theme.Light, 0.1f);
-			BGMaterial.color = BGColor;
+			BGMaterial.SetColor("_BaseColor", BGColor);
 			break;
 		case LuxState.Overflow:
 			UpdateLightAngles();
 			UpdateBGOffset();
 			BGColor = Color.Lerp(BGColor, ColorManager.Theme.Light, 0.1f);
-			BGMaterial.color = BGColor;
+			BGMaterial.SetColor("_BaseColor", BGColor);
 			BreakAccentGauge.SetColor(Color.Lerp(ColorManager.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
 			break;
 		case LuxState.Overload:
@@ -270,7 +270,7 @@ public class LuxSystem : MonoBehaviour
 			if( (State == LuxState.Sun || State == LuxState.Overflow) && IsInverting == false )
 			{
 				CurrentTime -= (Music.IsJustChanged ? 1 : 0); //Music.DeltaMT;
-				TimeCount.Count = CurrentTime / TurnMusicalUnits;
+				TimeCount.Count = CurrentTime / TurnMusicalBars;
 				if( CurrentTime <= 0 )
 				{
 					if( CurrentVP >= 20 )
@@ -291,7 +291,7 @@ public class LuxSystem : MonoBehaviour
 			}
 			else if( State == LuxState.Overload )
 			{
-				TimeCount.Count = (float)(BreakTime - Music.MusicalTime/ TurnMusicalUnits);
+				TimeCount.Count = (float)(BreakTime - Music.MusicalTime/ TurnMusicalBars);
 			}
 		}
 	}
@@ -343,7 +343,7 @@ public class LuxSystem : MonoBehaviour
 		if( Music.IsJustChanged )
 		{
 			waveDelta_.RemoveAt(0);
-			float sin = Mathf.Sin(SinSpeed * (float)Music.MusicalTime);
+			float sin = Mathf.Sin(SinSpeed * (float)Music.MusicalTime * 16);
 			float rms = analyzer_.GetRms(0) * RMSCoeff * vtRate + sin * SinCoeff;
 			waveDelta_.Add(rms);
 		}
@@ -405,10 +405,10 @@ public class LuxSystem : MonoBehaviour
 
 		if( Music.Just.Bar < 3 || !IsOverFlow )
 		{
-			float t = (float)Music.MusicalTime / (Music.CurrentUnitPerBar * 3);
+			float t = (float)Music.MusicalTime / 3;
 			if( !IsOverFlow && Music.Just.Bar >= 2 )
 			{
-				t = (2.0f / 3.0f) * (Mathf.Max(0, 1.0f - (float)(Music.MusicalTime - Music.CurrentUnitPerBar * 2) / Music.CurrentUnitPerBar));
+				t = (2.0f / 3.0f) * (Mathf.Max(0, 1.0f - (float)(Music.MusicalTime - 2)));
 			}
 			Moon.transform.position = Vector3.Lerp(initialMoonPosition, Sun.transform.position + Vector3.back * 75, (-Mathf.Cos(t * Mathf.PI) + 1) / 2);
 			Vector3 distance = Moon.transform.position - Sun.transform.position;
@@ -427,7 +427,7 @@ public class LuxSystem : MonoBehaviour
 
 		if( Music.Near.Bar < 2 && GameContext.PlayerConductor.PlayerIsDanger )
 		{
-			Music.SetAisac("Danger", 1.0f - (float)Music.MusicalTime/32);
+			Music.SetAisac("Danger", 1.0f - (float)Music.MusicalTime/2);
 		}
 		if( Music.IsJustChanged && Music.Just.Bar < 2 )
 		{
@@ -438,7 +438,7 @@ public class LuxSystem : MonoBehaviour
 			if( IsOverFlow )
 			{
 				TextWindow.SetMessage(MessageCategory.Invert, "オーバーロード完了。");
-				BreakTime = Mathf.Clamp((int)(CurrentTime / TurnMusicalUnits), 2, MaxInvertTime);
+				BreakTime = Mathf.Clamp((int)(CurrentTime / TurnMusicalBars), 2, MaxInvertTime);
 				Music.SetAisac("Danger", 0);
 			}
 			else
@@ -493,7 +493,7 @@ public class LuxSystem : MonoBehaviour
 		}
 
 		BGColor = Color.Lerp(BGColor, targetBGColor, 0.1f);
-		BGMaterial.color = BGColor;
+		BGMaterial.SetColor("_BaseColor", BGColor);
 	}
 
 	public void UpdateAnimation()
@@ -666,7 +666,7 @@ public class LuxSystem : MonoBehaviour
 			}
 		}
 		BreakCount.Count = 100.0f * ((float)CurrentVP / OverflowVP);
-		TimeCount.Count = CurrentTime / TurnMusicalUnits;
+		TimeCount.Count = CurrentTime / TurnMusicalBars;
 		waveRemainCoeff_ = (Version >= LuxVersion.AutoShield ? (float)CurrentTime / MaxVT : 0.1f + 0.3f * ((float)CurrentVP / OverflowVP));
 		if( CurrentVP > 0 )
 		{

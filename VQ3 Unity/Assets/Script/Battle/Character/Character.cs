@@ -210,8 +210,8 @@ public class Character : MonoBehaviour
 		else
 		{
 			int HealHP = (int)(MaxHP * (HealPercent + HitPointEnhance.currentParam) / 100.0f);
-			int previousHealHP = (int)(HealHP * (mt - deltaMT) / LuxSystem.TurnMusicalUnits);
-			int currentHealHP  = (int)(HealHP * mt / LuxSystem.TurnMusicalUnits);
+			int previousHealHP = (int)(HealHP * (mt - deltaMT) / LuxSystem.TurnMusicalBars);
+			int currentHealHP  = (int)(HealHP * mt / LuxSystem.TurnMusicalBars);
 			HitPoint += (currentHealHP - previousHealHP);
 			HitPoint = Mathf.Clamp(HitPoint, 0, MaxHP);
 		}
