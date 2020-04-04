@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -14,7 +15,7 @@ MonoBehaviour:
   Encounters:
   - BattleSets:
     - Enemies:
-      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 3}
       States:
       - Name: Default
         Pattern:
@@ -34,7 +35,7 @@ MonoBehaviour:
     Version: 0
   - BattleSets:
     - Enemies:
-      - {fileID: 100000, guid: dd0a5c1083192c14892b05a3e3ac623d, type: 2}
+      - {fileID: 100000, guid: dd0a5c1083192c14892b05a3e3ac623d, type: 3}
       States:
       - Name: Default
         Pattern:
@@ -57,7 +58,7 @@ MonoBehaviour:
     Version: 0
   - BattleSets:
     - Enemies:
-      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 3}
       States:
       - Name: Default
         Pattern:
@@ -77,7 +78,7 @@ MonoBehaviour:
     Version: 1
   - BattleSets:
     - Enemies:
-      - {fileID: 100000, guid: ec79f847f2c531e47be880685bce11ca, type: 2}
+      - {fileID: 100000, guid: ec79f847f2c531e47be880685bce11ca, type: 3}
       States:
       - Name: Default
         Pattern:
@@ -103,9 +104,9 @@ MonoBehaviour:
     Version: 1
   - BattleSets:
     - Enemies:
-      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
-      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
-      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 2}
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 3}
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 3}
+      - {fileID: 100000, guid: 277a0f7e6cc9ef040b003a25b6aaf315, type: 3}
       States:
       - Name: Default
         Pattern:
@@ -125,29 +126,29 @@ MonoBehaviour:
     Version: 1
   - BattleSets:
     - Enemies:
-      - {fileID: 100000, guid: ec79f847f2c531e47be880685bce11ca, type: 2}
+      - {fileID: 100000, guid: ec79f847f2c531e47be880685bce11ca, type: 3}
       States:
       - Name: Default
         Pattern:
         - Command: Wait
           IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
-            type: 2}
+            type: 3}
           Threat: 0
         - Command: Attack
           IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
-            type: 2}
+            type: 3}
           Threat: 20
         - Command: Attack
           IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
-            type: 2}
+            type: 3}
           Threat: 20
         - Command: Attack3
           IconPrefab: {fileID: 1000012387805298, guid: 973319b6721c9814db536eb5110e5653,
-            type: 2}
+            type: 3}
           Threat: 75
         - Command: Wait
           IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
-            type: 2}
+            type: 3}
           Threat: 0
         NextState: 
       Conditions: []
@@ -156,8 +157,8 @@ MonoBehaviour:
     Version: 2
   - BattleSets:
     - Enemies:
-      - {fileID: 100000, guid: dd0a5c1083192c14892b05a3e3ac623d, type: 2}
-      - {fileID: 100000, guid: dd0a5c1083192c14892b05a3e3ac623d, type: 2}
+      - {fileID: 100000, guid: dd0a5c1083192c14892b05a3e3ac623d, type: 3}
+      - {fileID: 100000, guid: dd0a5c1083192c14892b05a3e3ac623d, type: 3}
       States:
       - Name: Default
         Pattern:
@@ -186,34 +187,34 @@ MonoBehaviour:
     Version: 2
   - BattleSets:
     - Enemies:
-      - {fileID: 100000, guid: 0d9bc74352646ca44a5077a9e70591d5, type: 2}
+      - {fileID: 100000, guid: 0d9bc74352646ca44a5077a9e70591d5, type: 3}
       States:
       - Name: Default
         Pattern:
         - Command: Wait
           IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
-            type: 2}
+            type: 3}
           Threat: 0
         - Command: Wait
           IconPrefab: {fileID: 1000013468112518, guid: 248a04cb93ae27346a6dc6ac14f1df93,
-            type: 2}
+            type: 3}
           Threat: 0
         - Command: Attack
           IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
-            type: 2}
+            type: 3}
           Threat: 20
         - Command: Attack
           IconPrefab: {fileID: 1000012061542972, guid: 1230a4050056ffd4abe359afd1de9048,
-            type: 2}
+            type: 3}
           Threat: 30
         - Command: Attack3
           IconPrefab: {fileID: 1000012387805298, guid: 973319b6721c9814db536eb5110e5653,
-            type: 2}
+            type: 3}
           Threat: 60
         NextState: 
       Conditions: []
     AcquireMemory: 20
-    BreakPoint: 200
+    BreakPoint: 20
     Version: 2
   EventData:
   - Messages:
