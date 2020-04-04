@@ -17,7 +17,7 @@ public class BGAnimVox : BGAnimBase
 		{
 			for( int i=0; i<primitives_.Length; ++i )
 			{
-				Quaternion targetRot = Quaternion.AngleAxis((45 * (int)(Music.MusicalTimeBar + i/32.0f))%180, Vector3.forward);
+				Quaternion targetRot = Quaternion.AngleAxis((45 * (int)(Music.MusicalTime + i/32.0f))%180, Vector3.forward);
 				primitives_[i].transform.localRotation = Quaternion.Lerp(primitives_[i].transform.localRotation, targetRot, 0.2f);
 			}
 		}

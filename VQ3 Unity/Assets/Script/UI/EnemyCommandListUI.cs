@@ -38,7 +38,7 @@ public class EnemyCommandListUI : MonoBehaviour
 		if( Music.IsJustChangedAt(EnemySkillListUI.ShowSkillCutInTiming) && CurrentCommandIcon != null )
 		{
 			AnimManager.AddAnim(CurrentCommandIcon, Vector3.down * 2.5f, ParamType.Position, AnimType.BounceIn, 0.3f);
-			AnimManager.AddAnim(CurrentCommandIcon, Vector3.zero, ParamType.Position, AnimType.BounceOut, 0.3f, (float)Music.MusicalTimeUnit * 8);
+			AnimManager.AddAnim(CurrentCommandIcon, Vector3.zero, ParamType.Position, AnimType.BounceOut, 0.3f, (float)Music.Meter.SecPerUnit * 8);
 		}
 
 		if( AnimManager.IsAnimating(EdgeLine.gameObject) == false && commandIcons_.Count > 0 )
@@ -134,7 +134,7 @@ public class EnemyCommandListUI : MonoBehaviour
 			Vector3 targetPos = GetTargetPos(i);
 			commandIcons_[i].transform.localPosition = targetPos + Vector3.up * 5;
 			commandIcons_[i].transform.localScale = GetTargetScale(i);
-			AnimManager.AddAnim(commandIcons_[i].gameObject, targetPos, ParamType.Position, AnimType.BounceIn, 0.2f, i * (float)Music.MusicalTimeUnit * 4.0f / commandIcons_.Count);
+			AnimManager.AddAnim(commandIcons_[i].gameObject, targetPos, ParamType.Position, AnimType.BounceIn, 0.2f, i * (float)Music.Meter.SecPerUnit * 4.0f / commandIcons_.Count);
 		}
 		if( commandIcons_.Count > 0 )
 		{
@@ -142,7 +142,7 @@ public class EnemyCommandListUI : MonoBehaviour
 			EdgeLine.Length = commandIcons_[commandIcons_.Count - 1].transform.localPosition.x - commandIcons_[0].transform.localPosition.x;
 		}
 		EdgeLine.SetRate(0);
-		AnimManager.AddAnim(EdgeLine.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, 0.2f, (float)Music.MusicalTimeUnit * 4);
+		AnimManager.AddAnim(EdgeLine.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, 0.2f, (float)Music.Meter.SecPerUnit * 4);
 	}
 
 	public void ClearCommands()
@@ -151,9 +151,9 @@ public class EnemyCommandListUI : MonoBehaviour
 		for( int i = 0; i < commandIcons_.Count; ++i )
 		{
 			Vector3 targetPos = GetTargetPos(i) + Vector3.up * 5;
-			AnimManager.AddAnim(commandIcons_[i].gameObject, targetPos, ParamType.Position, AnimType.BounceOut, 0.3f, i * (float)Music.MusicalTimeUnit * 4.0f / commandIcons_.Count, true);
+			AnimManager.AddAnim(commandIcons_[i].gameObject, targetPos, ParamType.Position, AnimType.BounceOut, 0.3f, i * (float)Music.Meter.SecPerUnit * 4.0f / commandIcons_.Count, true);
 		}
-		AnimManager.AddAnim(EdgeLine.gameObject, 0.0f, ParamType.GaugeRate, AnimType.BounceOut, 0.2f, (float)Music.MusicalTimeUnit * 4);
+		AnimManager.AddAnim(EdgeLine.gameObject, 0.0f, ParamType.GaugeRate, AnimType.BounceOut, 0.2f, (float)Music.Meter.SecPerUnit * 4);
 		CurrentHex.SetArc(0);
 		commandIcons_.Clear();
 		currentIndex_ = -1;

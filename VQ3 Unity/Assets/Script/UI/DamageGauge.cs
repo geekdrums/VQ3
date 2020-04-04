@@ -55,7 +55,7 @@ public class DamageGauge : MonoBehaviour
 		{
 		case Mode.Damage:
 			{
-				if( Music.IsJustChanged ) RedGauge.GetComponentInChildren<Renderer>().enabled = Music.Just.MusicalTime % 3 <= 1;
+				if( Music.IsJustChanged ) RedGauge.GetComponentInChildren<Renderer>().enabled = Music.JustTotalUnits % 3 <= 1;
 			}
 			break;
 		case Mode.Break:
@@ -79,7 +79,7 @@ public class DamageGauge : MonoBehaviour
 				TimeGauge2.SetColor(timeColor);
 				VTCount2.CounterColor = timeColor;
 
-				if( Music.IsJustChanged ) RedGauge.GetComponentInChildren<Renderer>().enabled = Music.Just.MusicalTime % 3 <= 1;
+				if( Music.IsJustChanged ) RedGauge.GetComponentInChildren<Renderer>().enabled = Music.JustTotalUnits % 3 <= 1;
 			}
 			break;
 		}
@@ -128,7 +128,7 @@ public class DamageGauge : MonoBehaviour
 		Vector3 initialPosition_ = transform.position;
 		transform.position = position;
 
-		float delay = (float)Music.MusicalTimeUnit * 24;
+		float delay = (float)Music.Meter.SecPerUnit * 24;
 		float animTime = 0.2f;
 		float animTime2 = 0.5f;
 		AnimManager.AddAnim(gameObject, initialPosition_, ParamType.Position, AnimType.Time, animTime, delay);
@@ -165,7 +165,7 @@ public class DamageGauge : MonoBehaviour
 		Vector3 initialPosition_ = transform.position;
 		transform.position = position;
 
-		float delay = Mathf.Min(48.0f - (float)Music.MusicalTime, (float)Music.MusicalTimeUnit * 32);
+		float delay = Mathf.Min(48.0f - (float)Music.MusicalTime, (float)Music.Meter.SecPerUnit * 32);
 		float animTime = 0.2f;
 		float animTime2 = 0.5f;
 		AnimManager.AddAnim(gameObject, initialPosition_, ParamType.Position, AnimType.Time, animTime, delay);

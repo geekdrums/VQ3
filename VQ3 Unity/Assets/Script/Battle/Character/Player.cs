@@ -102,7 +102,7 @@ public class Player : Character
 	public void VPDrained(AttackModule attack, Skill skill, int drainVP)
 	{
 		GameObject damageText = (Instantiate(damageTextPrefab) as GameObject);
-		Transform textPos = skill.transform.FindChild("DamageTextPos");
+		Transform textPos = skill.transform.Find("DamageTextPos");
 		if( textPos == null ) textPos = skill.GetComponentInChildren<Animation>().transform;
 		damageText.GetComponent<DamageText>().InitializeDamage(drainVP, ActionResult.VPDrain);
 		damageText.transform.position = textPos.position + Vector3.right * 5 + Vector3.down * 2;

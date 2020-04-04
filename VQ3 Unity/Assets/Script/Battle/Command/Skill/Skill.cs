@@ -108,7 +108,7 @@ public class Skill : MonoBehaviour
 
 	public ActionSet GetCurrentAction( Timing startedTiming )
 	{
-        int mt = Music.Just.MusicalTime - startedTiming.MusicalTime;
+        int mt = Music.JustTotalUnits - startedTiming.GetTotalUnits(Music.Meter);
 		Note n = ActionRhythm.GetNote(mt);
         if( n != null && n.hasNote )
         {
@@ -124,7 +124,7 @@ public class Skill : MonoBehaviour
 	}
     public bool CheckIsEnd(Timing startedTiming)
     {
-		isEnd = OwnerCharacter.isAlive == false || Music.Just.MusicalTime - startedTiming.MusicalTime >= ActionRhythm.MTLength();
+		isEnd = OwnerCharacter.isAlive == false || Music.JustTotalUnits - startedTiming.GetTotalUnits(Music.Meter) >= ActionRhythm.MTLength();
         return isEnd;
     }
 }

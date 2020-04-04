@@ -24,7 +24,7 @@ public class HPPanel : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-		if( Music.IsJustChanged ) DamageBar.gameObject.SetActive(Music.Just.MusicalTime % 3 <= 1);
+		if( Music.IsJustChanged ) DamageBar.gameObject.SetActive(Music.JustTotalUnits % 3 <= 1);
 	}
 
 
@@ -37,7 +37,7 @@ public class HPPanel : MonoBehaviour {
 		UpdateHPText();
 
 		CurrentBar.transform.parent.localScale = new Vector3(0, 1, 1);
-		float mtu = (float)Music.MusicalTimeUnit;
+		float mtu = (float)Music.Meter.SecPerUnit;
 		AnimManager.AddAnim(CurrentBar.transform.parent.gameObject, 1.0f, ParamType.ScaleX, AnimType.Linear, 0.1f, mtu * 16);
 	}
     public void OnTurnStart( PlayerCommand command )

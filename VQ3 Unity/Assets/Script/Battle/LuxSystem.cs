@@ -269,7 +269,7 @@ public class LuxSystem : MonoBehaviour
 		{
 			if( (State == LuxState.Sun || State == LuxState.Overflow) && IsInverting == false )
 			{
-				CurrentTime -= Music.DeltaMT;
+				CurrentTime -= (Music.IsJustChanged ? 1 : 0); //Music.DeltaMT;
 				TimeCount.Count = CurrentTime / TurnMusicalUnits;
 				if( CurrentTime <= 0 )
 				{
@@ -326,7 +326,7 @@ public class LuxSystem : MonoBehaviour
 		{
 			for( int i = 0; i<WaveNum; ++i )
 			{
-				float offset = (State == LuxState.Overflow ? LightHoleOverflowOffset * (GameContext.BattleState == BattleState.Eclipse ? 1.0f - Music.MusicalTimeBar/3.0f : 1.0f) : LightHoleDefaultOffset);
+				float offset = (State == LuxState.Overflow ? LightHoleOverflowOffset * (GameContext.BattleState == BattleState.Eclipse ? 1.0f - Music.MusicalTime/3.0f : 1.0f) : LightHoleDefaultOffset);
 				float targetScale = Mathf.Max(0, 1.0f - vtWaves_[i].transform.localScale.y * LightHoleCoeff - offset);
 				lightUpWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightUpWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
 				lightBottomWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightBottomWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
@@ -363,7 +363,7 @@ public class LuxSystem : MonoBehaviour
 	{
 		if( Version < LuxVersion.Shield ) return;
 
-		rotTime_ += Time.deltaTime / (float)Music.MusicalTimeUnit;
+		rotTime_ += Time.deltaTime / (float)Music.Meter.SecPerUnit;
 		for( int i = 0; i < lightAngles.Length; i++ )
 		{
 			float diffToMainLight = SunLights[i].transform.eulerAngles.z - MainLight.transform.eulerAngles.z;

@@ -41,7 +41,7 @@ public class BGAnimAura : BGAnimBase {
 			transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, 0.2f);
 			if( Music.IsJustChanged )
 			{
-				int mt = Music.Just.MusicalTime % 5;
+				int mt = Music.JustTotalUnits % 5;
 				gauges_[animIndex_].SetRate(0);
 				switch( mt )
 				{

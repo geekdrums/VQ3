@@ -80,7 +80,7 @@ public class RevertCommand : PlayerCommand
 	public override GameObject InstantiateIconObj(GameObject iconParent)
 	{
 		GameObject iconObj = base.InstantiateIconObj(iconParent);
-		iconObj.transform.FindChild("EyeCircle").transform.localPosition = centerEyePosition;
+		iconObj.transform.Find("EyeCircle").transform.localPosition = centerEyePosition;
 		return iconObj;
 	}
 

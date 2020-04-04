@@ -333,13 +333,13 @@ public class PlayerCommand : MonoBehaviour
 	public virtual GameObject InstantiateIconObj(GameObject iconParent)
 	{
 		GameObject iconObj = Instantiate(gameObject) as GameObject;
-		if( iconObj.transform.FindChild("nextRect") != null )
+		if( iconObj.transform.Find("nextRect") != null )
 		{
-			Destroy(iconObj.transform.FindChild("nextRect").gameObject);
+			Destroy(iconObj.transform.Find("nextRect").gameObject);
 		}
-		if( iconObj.transform.FindChild("currentRect") != null )
+		if( iconObj.transform.Find("currentRect") != null )
 		{
-			Destroy(iconObj.transform.FindChild("currentRect").gameObject);
+			Destroy(iconObj.transform.Find("currentRect").gameObject);
 		}
 		iconObj.transform.parent = iconParent.transform;
 		iconObj.transform.localPosition = Vector3.zero;

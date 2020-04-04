@@ -142,7 +142,7 @@ public class Character : MonoBehaviour
 				BGAnimBase.CurrentAnim.OnDamage(damageTime);
 			}
 		}
-		damageTime = Mathf.Min(damageTime, (float)Music.MusicalTimeUnit * 8);
+		damageTime = Mathf.Min(damageTime, (float)Music.Meter.SecPerUnit * 8);
 	}
 	public virtual void Heal(HealModule heal)
 	{
@@ -204,8 +204,8 @@ public class Character : MonoBehaviour
 	}
 	public virtual void UpdateHealHP()
 	{
-		int mt = Music.Just.MusicalTime;
-		int deltaMT = Music.DeltaMT;
+		int mt = Music.JustTotalUnits;
+		int deltaMT = Music.IsJustChanged ? 1 : 0; //Music.DeltaMT;
 		if( mt <= 0 ) return;
 		else
 		{

@@ -91,7 +91,7 @@ public class BattleConductor : MonoBehaviour {
 		switch( GameContext.BattleState )
 		{
 		case BattleState.Endro:
-			if( !Music.IsPlaying || Music.Just.MusicalTime >= 8 )
+			if( !Music.IsPlaying || Music.MusicalTime >= 0.5f )
 			{
 				ClearSkills();
 				GameContext.SetState(GameState.Result);
@@ -100,7 +100,7 @@ public class BattleConductor : MonoBehaviour {
 			}
 			break;
 		case BattleState.Continue:
-			if( !Music.IsPlaying || Music.Just.MusicalTime > 4 )
+			if( !Music.IsPlaying || Music.MusicalTime > 0.25f )
 			{
 				GameContext.SetState(GameState.Setting);
 			}

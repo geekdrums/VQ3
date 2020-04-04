@@ -384,11 +384,11 @@ public class CommandGraph : MonoBehaviour
 		case BattleState.Continue:
 			break;
 		case BattleState.Wait:
-			if( Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == WaitInputEnd.MusicalTime) )
+			if( Music.IsJustChangedWhen((Timing t) => t.GetTotalUnits(Music.Meter) % 16 == WaitInputEnd.GetTotalUnits(Music.Meter)) )
 			{
 				SetNextBlock();
 			}
-			if( NextCommand != null && Music.NextBlockName == NextCommand.GetBlockName() && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == SkillCutInTiming.MusicalTime % 16) )
+			if( NextCommand != null && Music.NextBlockName == NextCommand.GetBlockName() && Music.IsJustChangedWhen((Timing t) => t.GetTotalUnits(Music.Meter) % 16 == SkillCutInTiming.GetTotalUnits(Music.Meter) % 16) )
 			{
 				OnSkillCutIn();
 			}

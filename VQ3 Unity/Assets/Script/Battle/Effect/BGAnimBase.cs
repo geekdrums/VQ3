@@ -43,7 +43,7 @@ public class BGAnimBase : MonoBehaviour {
 				transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, 0.2f);
 				for( int i=0; i<primitives_.Length; ++i )
 				{
-					SetParams(primitives_[i], ((Music.MusicalTimeBar + Cycle * (float)i/primitives_.Length)%Cycle)/Cycle, i % 4 == 0);
+					SetParams(primitives_[i], ((Music.MusicalTime + Cycle * (float)i/primitives_.Length)%Cycle)/Cycle, i % 4 == 0);
 				}
 			}
 		}

@@ -20,7 +20,7 @@ public class DamageText : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		destination_ = transform.parent.FindChild(isPlayerDamage_ ? "PlayerDestination" : "EnemyDestination").transform.localPosition;
+		destination_ = transform.parent.Find(isPlayerDamage_ ? "PlayerDestination" : "EnemyDestination").transform.localPosition;
 	}
 
 	// Update is called once per frame

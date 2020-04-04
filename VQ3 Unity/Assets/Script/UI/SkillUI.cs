@@ -54,8 +54,8 @@ public class SkillUI : MonoBehaviour {
 			AnimManager.AddAnim(text_.gameObject, ColorManager.Base.Dark, ParamType.TextColor, AnimType.Linear, 0.2f);
 			AnimManager.AddAnim(gameObject, 0.2f, ParamType.GaugeWidth, AnimType.Linear, 0.3f);
 
-			AnimManager.AddAnim(text_.gameObject, Color.clear, ParamType.TextColor, AnimType.Linear, 0.2f, (length * 16 - 8) * (float)Music.MusicalTimeUnit);
-			AnimManager.AddAnim(gameObject, 0.0f, ParamType.GaugeLength, AnimType.BounceOut, 0.2f, (length * 16 - 8) * (float)Music.MusicalTimeUnit);
+			AnimManager.AddAnim(text_.gameObject, Color.clear, ParamType.TextColor, AnimType.Linear, 0.2f, (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
+			AnimManager.AddAnim(gameObject, 0.0f, ParamType.GaugeLength, AnimType.BounceOut, 0.2f, (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
 		}
 		else
 		{
@@ -65,8 +65,8 @@ public class SkillUI : MonoBehaviour {
 			AnimManager.AddAnim(gameObject, Color.white, ParamType.Color, AnimType.Linear, 0.2f);
 			AnimManager.AddAnim(gameObject, 0.2f, ParamType.GaugeWidth, AnimType.Linear, 0.3f);
 
-			AnimManager.AddAnim(text_.gameObject, Color.clear, ParamType.TextColor, AnimType.Linear, 0.2f, (length * 16 - 8) * (float)Music.MusicalTimeUnit);
-			AnimManager.AddAnim(gameObject, 0.0f, ParamType.GaugeLength, AnimType.BounceOut, 0.2f, (length * 16 - 8) * (float)Music.MusicalTimeUnit);
+			AnimManager.AddAnim(text_.gameObject, Color.clear, ParamType.TextColor, AnimType.Linear, 0.2f, (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
+			AnimManager.AddAnim(gameObject, 0.0f, ParamType.GaugeLength, AnimType.BounceOut, 0.2f, (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
 		}
 
 		remainLength_ = length;

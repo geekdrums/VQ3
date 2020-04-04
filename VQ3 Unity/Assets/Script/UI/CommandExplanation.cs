@@ -225,7 +225,8 @@ public class CommandExplanation : MonoBehaviour
 
 	public void OnBattleStart()
 	{
-		float mtu = (float)Music.MusicalTimeUnit;
+		test
+		float mtu = (float)Music.Meter.SecPerUnit;
 		Mask.SetColor(ColorManager.Base.Back);
 		AnimManager.RemoveAnim(Mask.gameObject);
 		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, MaskAlpha), ParamType.Color, AnimType.Linear, 0.1f, mtu * 8);
