@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Hidden/Shadow-ScreenBlur" {
 Properties {
 	_MainTex ("Base", 2D) = "white" {}
@@ -16,7 +18,7 @@ CGPROGRAM
 v2f_img vert (appdata_img v)
 {
 	v2f_img o;
-	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+	o.pos = UnityObjectToClipPos (v.vertex);
 	o.uv = v.texcoord.xy;
 	#if SHADER_API_FLASH
 	o.uv.xy *= unity_NPOTScale.xy;

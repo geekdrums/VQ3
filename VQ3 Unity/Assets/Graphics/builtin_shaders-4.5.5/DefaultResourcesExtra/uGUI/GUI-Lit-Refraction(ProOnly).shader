@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "uGUI/Lit/Refraction (Pro Only)"
 {
 	Properties
@@ -90,7 +92,7 @@ Shader "uGUI/Lit/Refraction (Pro Only)"
 				
 			void vert (inout appdata_t v, out Input o)
 			{
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.texcoord1.xy = TRANSFORM_TEX(v.texcoord1, _MainTex);
 				o.texcoord1.zw = TRANSFORM_TEX(v.texcoord1, _MainBump);
 				o.color = v.color;

@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "uGUI/Lit/Detail"
 {
 	Properties
@@ -87,7 +89,7 @@ Shader "uGUI/Lit/Detail"
 				
 			void vert (inout appdata_t v, out Input o)
 			{
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.tc0.xy = TRANSFORM_TEX(v.texcoord1, _MainTex);
 				o.tc0.zw = TRANSFORM_TEX(v.texcoord1, _MainBump);
 				o.tc1.xy = TRANSFORM_TEX(v.texcoord2 * _DetailTex_TexelSize.xy, _DetailTex);
@@ -197,7 +199,7 @@ Shader "uGUI/Lit/Detail"
 				
 			void vert (inout appdata_t v, out Input o)
 			{
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.tc0 = TRANSFORM_TEX(v.texcoord1, _MainTex);
 				o.tc1 = TRANSFORM_TEX(v.texcoord2 * _DetailTex_TexelSize.xy, _DetailTex);
 				o.color = v.color;

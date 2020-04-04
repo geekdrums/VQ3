@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "Nature/Tree Creator Leaves Fast" {
@@ -56,7 +58,7 @@ SubShader {
 		{
 			v2f_leaf o;
 			TreeVertLeaf(v);
-			o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+			o.pos = UnityObjectToClipPos(v.vertex);
 
 			fixed ao = v.color.a;
 			ao += 0.1; ao = saturate(ao * ao * ao); // emphasize AO

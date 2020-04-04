@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 // Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
 // Upgrade NOTE: replaced 'unity_World2Shadow' with 'unity_WorldToShadow'
@@ -292,7 +294,7 @@ float2 MultiplyUV (float4x4 mat, float2 inUV) {
 v2f_img vert_img( appdata_img v )
 {
 	v2f_img o;
-	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+	o.pos = UnityObjectToClipPos (v.vertex);
 	o.uv = MultiplyUV( UNITY_MATRIX_TEXTURE0, v.texcoord );
 	return o;
 }
@@ -476,16 +478,16 @@ inline float3 TransformViewToProjection (float3 v) {
 
 #ifdef SHADOWS_CUBE
 	#define V2F_SHADOW_CASTER float4 pos : SV_POSITION; float3 vec : TEXCOORD0
-	#define TRANSFER_SHADOW_CASTER(o) o.vec = mul( unity_ObjectToWorld, v.vertex ).xyz - _LightPositionRange.xyz; o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+	#define TRANSFER_SHADOW_CASTER(o) o.vec = mul( unity_ObjectToWorld, v.vertex ).xyz - _LightPositionRange.xyz; o.pos = UnityObjectToClipPos(v.vertex);
 	#define SHADOW_CASTER_FRAGMENT(i) return EncodeFloatRGBA( min(length(i.vec) * _LightPositionRange.w, 0.999) );
 #else
 	#if defined(UNITY_MIGHT_NOT_HAVE_DEPTH_TEXTURE)
 	#define V2F_SHADOW_CASTER float4 pos : SV_POSITION; float4 hpos : TEXCOORD0
-	#define TRANSFER_SHADOW_CASTER(o) o.pos = mul(UNITY_MATRIX_MVP, v.vertex); o.pos.z += unity_LightShadowBias.x; \
+	#define TRANSFER_SHADOW_CASTER(o) o.pos = UnityObjectToClipPos(v.vertex); o.pos.z += unity_LightShadowBias.x; \
 	float clamped = max(o.pos.z, o.pos.w*UNITY_NEAR_CLIP_VALUE); o.pos.z = lerp(o.pos.z, clamped, unity_LightShadowBias.y); o.hpos = o.pos;
 	#else
 	#define V2F_SHADOW_CASTER float4 pos : SV_POSITION
-	#define TRANSFER_SHADOW_CASTER(o) o.pos = mul(UNITY_MATRIX_MVP, v.vertex); o.pos.z += unity_LightShadowBias.x; \
+	#define TRANSFER_SHADOW_CASTER(o) o.pos = UnityObjectToClipPos(v.vertex); o.pos.z += unity_LightShadowBias.x; \
 	float clamped = max(o.pos.z, o.pos.w*UNITY_NEAR_CLIP_VALUE); o.pos.z = lerp(o.pos.z, clamped, unity_LightShadowBias.y);
 	#endif
 	#define SHADOW_CASTER_FRAGMENT(i) UNITY_OUTPUT_DEPTH(i.hpos.zw);
@@ -502,7 +504,7 @@ UNITY_DECLARE_SHADOWMAP(_ShadowMapTexture);
 
 #define V2F_SHADOW_COLLECTOR float4 pos : SV_POSITION; float3 _ShadowCoord0 : TEXCOORD0; float3 _ShadowCoord1 : TEXCOORD1; float3 _ShadowCoord2 : TEXCOORD2; float3 _ShadowCoord3 : TEXCOORD3; float4 _WorldPosViewZ : TEXCOORD4
 #define TRANSFER_SHADOW_COLLECTOR(o)	\
-	o.pos = mul(UNITY_MATRIX_MVP, v.vertex); \
+	o.pos = UnityObjectToClipPos(v.vertex); \
 	float4 wpos = mul(unity_ObjectToWorld, v.vertex); \
 	o._WorldPosViewZ.xyz = wpos; \
 	o._WorldPosViewZ.w = -mul( UNITY_MATRIX_MV, v.vertex ).z; \

@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_GUIClipTextureMatrix' with 'unity_GUIClipTextureMatrix'
 
 
@@ -46,7 +48,7 @@ Shader "Hidden/Internal-GUITextureClip"
 			v2f vert (appdata_t v)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				float4 texgen = mul(UNITY_MATRIX_MV, v.vertex);
 				o.texgencoord = mul(unity_GUIClipTextureMatrix, texgen);
 				o.color = v.color;

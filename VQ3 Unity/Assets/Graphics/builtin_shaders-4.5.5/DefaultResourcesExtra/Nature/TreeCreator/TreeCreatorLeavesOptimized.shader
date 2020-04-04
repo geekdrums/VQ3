@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 // Upgrade NOTE: replaced '_World2Shadow' with 'unity_WorldToShadow[0]'
 
@@ -211,7 +213,7 @@ SubShader {
 
 			o.color.rgb = ShadeVertexLights (v.vertex, v.normal);
 				
-			o.pos = mul (UNITY_MATRIX_MVP, v.vertex);	
+			o.pos = UnityObjectToClipPos (v.vertex);	
 			o.uv = v.texcoord;
 			o.color.a = 1.0f;
 			return o;

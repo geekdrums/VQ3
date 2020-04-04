@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "uGUI/Lit/Transparent"
 {
 	Properties
@@ -66,7 +68,7 @@ Shader "uGUI/Lit/Transparent"
 				
 			void vert (inout appdata_t v, out Input o)
 			{
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.texcoord1 = TRANSFORM_TEX(v.texcoord1, _MainTex);
 				o.color = v.color;
 			}

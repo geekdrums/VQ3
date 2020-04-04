@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 // Upgrade NOTE: commented out 'float4 unity_LightmapST', a built-in variable
@@ -75,7 +77,7 @@ float4 unity_LightmapFade;
 float4 _MainTex_ST;
 v2f_surf vert_surf (appdata_full v) {
 	v2f_surf o;
-	o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+	o.pos = UnityObjectToClipPos (v.vertex);
 	o.pack0.xy = TRANSFORM_TEX(v.texcoord, _MainTex);
 	#ifndef LIGHTMAP_OFF
 	o.lmap.xy = v.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw;

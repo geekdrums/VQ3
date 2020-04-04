@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "RenderFX/Skybox Cubed" {
 Properties {
 	_Tint ("Tint Color", Color) = (.5, .5, .5, .5)
@@ -32,7 +34,7 @@ SubShader {
 		v2f vert (appdata_t v)
 		{
 			v2f o;
-			o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+			o.vertex = UnityObjectToClipPos(v.vertex);
 			o.texcoord = v.texcoord;
 			return o;
 		}
