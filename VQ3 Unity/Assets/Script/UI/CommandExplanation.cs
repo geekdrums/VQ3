@@ -225,7 +225,6 @@ public class CommandExplanation : MonoBehaviour
 
 	public void OnBattleStart()
 	{
-		test
 		float mtu = (float)Music.Meter.SecPerUnit;
 		Mask.SetColor(ColorManager.Base.Back);
 		AnimManager.RemoveAnim(Mask.gameObject);
