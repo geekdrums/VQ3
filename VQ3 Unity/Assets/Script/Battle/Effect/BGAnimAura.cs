@@ -61,8 +61,8 @@ public class BGAnimAura : BGAnimBase {
 					return;
 				}
 				gauges_[animIndex_].transform.localPosition = new Vector3(-40, Random.Range(-RandomRange, RandomRange), 0);
-				gauges_[animIndex_].SetRate(1, RateAnimTime);
-				gauges_[animIndex_].SetWidth(0, WidthAnimTime);
+				gauges_[animIndex_].AnimateRate(1, time: RateAnimTime);
+				gauges_[animIndex_].AnimateWidth(0, time: WidthAnimTime);
 				animIndex_ = (animIndex_ + 1) % gauges_.Length;
 			}
 		}

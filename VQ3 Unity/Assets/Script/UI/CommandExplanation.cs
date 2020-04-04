@@ -29,7 +29,7 @@ public class CommandExplanation : MonoBehaviour
 		public void SetParam(float param)
 		{
 			Counter.Count = param;
-			Line.SetRate(0, 0);
+			Line.SetRate(0);
 			Line.SetRate(Mathf.Clamp01(param/100.0f));
 		}
 
@@ -99,7 +99,7 @@ public class CommandExplanation : MonoBehaviour
 		{
 			Mask.SetColor(ColorManager.Base.Back);
 		}
-		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, isPreview ? MaskAlpha : 0.0f), ParamType.Color, AnimType.Linear, 0.1f);
+		Mask.AnimateColor(ColorManager.MakeAlpha(ColorManager.Base.Back, isPreview ? MaskAlpha : 0.0f));//, AnimType.Linear, 0.1f);
 
 		//GameObject iconObj = command.InstantiateIconObj(IconParent);
 		if( GameContext.State == GameState.Result || GameContext.State == GameState.Event )
@@ -201,7 +201,7 @@ public class CommandExplanation : MonoBehaviour
 		LVCount.CounterColor = Color.clear;
 		Explanation.text = "";
 		Mask.SetColor(ColorManager.Base.Back);
-		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, MaskAlpha), ParamType.Color, AnimType.Linear, 0.1f);
+		Mask.AnimateColor(ColorManager.MakeAlpha(ColorManager.Base.Back, MaskAlpha));// AnimType.Linear, 0.1f);
 
 		SkillListUI.Set(null);
 	}
@@ -209,7 +209,7 @@ public class CommandExplanation : MonoBehaviour
 	public void Show()
 	{
 		//IconParent.transform.localScale = Vector3.zero;
-		//AnimManager.AddAnim(IconParent, 0.3f, ParamType.Scale, AnimType.BounceIn, 0.2f);
+		//AnimManager.AddAnim(IconParent, 0.3f, ParamType.Scale, InterpType.BackOut, 0.2f);
 
 		CurrentPhase = Phase.Showing;
 		transform.localScale = Vector3.one;
@@ -218,7 +218,7 @@ public class CommandExplanation : MonoBehaviour
 	public void Hide()
 	{
 		gameObject.SetActive(false);
-		//AnimManager.AddAnim(IconParent, 0.0f, ParamType.Scale, AnimType.BounceOut, 0.2f);
+		//AnimManager.AddAnim(IconParent, 0.0f, ParamType.Scale, InterpType.BackIn, 0.2f);
 
 		CurrentPhase = Phase.Hiding;
 	}
@@ -227,10 +227,10 @@ public class CommandExplanation : MonoBehaviour
 	{
 		float mtu = (float)Music.Meter.SecPerUnit;
 		Mask.SetColor(ColorManager.Base.Back);
-		AnimManager.RemoveAnim(Mask.gameObject);
-		AnimManager.AddAnim(Mask.gameObject, ColorManager.MakeAlpha(ColorManager.Base.Back, MaskAlpha), ParamType.Color, AnimType.Linear, 0.1f, mtu * 8);
+		AnimManager.RemoveOtherAnim(Mask.gameObject);
+		Mask.AnimateColor(ColorManager.MakeAlpha(ColorManager.Base.Back, MaskAlpha), delay: mtu * 8);// AnimType.Linear, 0.1f, mtu * 8);
 		NameBase.SetRate(0);
-		AnimManager.AddAnim(NameBase.gameObject, 1.0f, ParamType.GaugeRate, AnimType.Linear, 0.1f, mtu * 12);
+		NameBase.AnimateRate(1.0f, delay: mtu * 12);// AnimType.Linear, 0.1f, mtu * 12);
 	}
 
 	/*

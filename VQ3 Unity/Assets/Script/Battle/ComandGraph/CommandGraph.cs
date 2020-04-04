@@ -549,10 +549,10 @@ public class CommandGraph : MonoBehaviour
 
 		if( Music.IsJustChangedBar() )
 		{
-			AnimManager.AddAnim(CurrentRect.gameObject, 9.0f, ParamType.PrimitiveRadius, AnimType.Time, 0.05f);
-			AnimManager.AddAnim(CurrentRect.gameObject, 7.0f, ParamType.PrimitiveRadius, AnimType.Time, 0.1f, 0.05f);
-			AnimManager.AddAnim(CurrentRect.gameObject, 5.0f, ParamType.PrimitiveWidth, AnimType.Time, 0.05f);
-			AnimManager.AddAnim(CurrentRect.gameObject, 3.0f, ParamType.PrimitiveWidth, AnimType.Time, 0.1f, 0.05f);
+			CurrentRect.AnimateRadius(9.0f, time: 0.05f);
+			CurrentRect.AnimateRadius(7.0f, time: 0.1f, delay: 0.05f);
+			CurrentRect.AnimateWidth(5.0f, time: 0.05f);
+			CurrentRect.AnimateWidth(3.0f, time: 0.1f, delay: 0.05f);
 		}
 	}
 
@@ -820,7 +820,7 @@ public class CommandGraph : MonoBehaviour
 		{
 			Vector3 commandPosition = command.transform.localPosition;
 			command.transform.localPosition = Vector3.zero;
-			AnimManager.AddAnim(command.gameObject, commandPosition, ParamType.Position, AnimType.BounceIn, 0.5f, delay);
+			command.transform.AnimatePosition(commandPosition, InterpType.BackOut, time: 0.5f, delay: delay);
 			delay += 0.07f;
 		}
 

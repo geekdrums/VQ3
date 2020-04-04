@@ -95,7 +95,7 @@ public class ResultConductor : MonoBehaviour {
 			//TextWindow.SetCommand(acquiredCommand);
 			TextWindow.SetMessage(MessageCategory.Result, acquiredCommand.name + "が習得可能になった");
 			CommandExp.Set(acquiredCommand);
-			OKButton.Primitive.SetTargetWidth(0);
+			OKButton.Primitive.AnimateWidth(0);// AnimType.Linear
 			OKButton.SetText("");
 		}
 		else

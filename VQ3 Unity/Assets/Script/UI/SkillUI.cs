@@ -49,24 +49,24 @@ public class SkillUI : MonoBehaviour {
 
 		if( isEnemySkill )
 		{
-			AnimManager.AddAnim(gameObject, Vector3.zero, ParamType.Position, AnimType.Linear, 0.2f);
-			AnimManager.AddAnim(text_.gameObject, new Vector3(0, -0.7f, -1), ParamType.Position, AnimType.Linear, 0.2f);
-			AnimManager.AddAnim(text_.gameObject, ColorManager.Base.Dark, ParamType.TextColor, AnimType.Linear, 0.2f);
-			AnimManager.AddAnim(gameObject, 0.2f, ParamType.GaugeWidth, AnimType.Linear, 0.3f);
+			AnimManager.AddAnim(gameObject, Vector3.zero, AnimParamType.Position, InterpType.Linear, time: 0.2f); // AnimType.Linear
+			AnimManager.AddAnim(text_.gameObject, new Vector3(0, -0.7f, -1), AnimParamType.Position, InterpType.Linear, time: 0.2f);// AnimType.Linear
+			AnimManager.AddAnim(text_.gameObject, ColorManager.Base.Dark, AnimParamType.TextColor, InterpType.Linear, time: 0.2f);// AnimType.Linear
+			AnimManager.AddAnim(gameObject, 0.2f, AnimParamType.GaugeWidth, InterpType.Linear, time: 0.3f);// AnimType.Linear
 
-			AnimManager.AddAnim(text_.gameObject, Color.clear, ParamType.TextColor, AnimType.Linear, 0.2f, (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
-			AnimManager.AddAnim(gameObject, 0.0f, ParamType.GaugeLength, AnimType.BounceOut, 0.2f, (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
+			AnimManager.AddAnim(text_.gameObject, Color.clear, AnimParamType.TextColor, InterpType.Linear, time: 0.2f, delay: (length * 16 - 8) * (float)Music.Meter.SecPerUnit);// AnimType.Linear
+			AnimManager.AddAnim(gameObject, 0.0f, AnimParamType.GaugeLength, InterpType.BackIn, time: 0.2f, delay: (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
 		}
 		else
 		{
-			AnimManager.AddAnim(gameObject, new Vector3(0, 2.3f, 0), ParamType.Position, AnimType.Linear, 0.2f);
-			AnimManager.AddAnim(text_.gameObject, new Vector3(0, 0.9f, -1), ParamType.Position, AnimType.Linear, 0.2f);
-			AnimManager.AddAnim(text_.gameObject, Color.white, ParamType.TextColor, AnimType.Linear, 0.2f);
-			AnimManager.AddAnim(gameObject, Color.white, ParamType.Color, AnimType.Linear, 0.2f);
-			AnimManager.AddAnim(gameObject, 0.2f, ParamType.GaugeWidth, AnimType.Linear, 0.3f);
+			AnimManager.AddAnim(gameObject, new Vector3(0, 2.3f, 0), AnimParamType.Position, InterpType.Linear, time: 0.2f);// AnimType.Linear
+			AnimManager.AddAnim(text_.gameObject, new Vector3(0, 0.9f, -1), AnimParamType.Position, InterpType.Linear, time: 0.2f);// AnimType.Linear
+			AnimManager.AddAnim(text_.gameObject, Color.white, AnimParamType.TextColor, InterpType.Linear, time: 0.2f);// AnimType.Linear
+			AnimManager.AddAnim(gameObject, Color.white, AnimParamType.Color, InterpType.Linear, time: 0.2f);// AnimType.Linear
+			AnimManager.AddAnim(gameObject, 0.2f, AnimParamType.GaugeWidth, InterpType.Linear, time: 0.3f);// AnimType.Linear
 
-			AnimManager.AddAnim(text_.gameObject, Color.clear, ParamType.TextColor, AnimType.Linear, 0.2f, (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
-			AnimManager.AddAnim(gameObject, 0.0f, ParamType.GaugeLength, AnimType.BounceOut, 0.2f, (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
+			AnimManager.AddAnim(text_.gameObject, Color.clear, AnimParamType.TextColor, InterpType.Linear, time: 0.2f, delay: (length * 16 - 8) * (float)Music.Meter.SecPerUnit);// AnimType.Linear
+			AnimManager.AddAnim(gameObject, 0.0f, AnimParamType.GaugeLength, InterpType.BackIn, time: 0.2f, delay: (length * 16 - 8) * (float)Music.Meter.SecPerUnit);
 		}
 
 		remainLength_ = length;
@@ -98,8 +98,8 @@ public class SkillUI : MonoBehaviour {
 				Reset();
 				if( isEnemySkill )
 				{
-					AnimManager.RemoveAnim(text_.gameObject);
-					AnimManager.RemoveAnim(gameObject);
+					AnimManager.RemoveOtherAnim(text_.gameObject);
+					AnimManager.RemoveOtherAnim(gameObject);
 					transform.localPosition = initialPosition_;
 					text_.transform.localPosition = Vector3.back;
 					text_.text = "";

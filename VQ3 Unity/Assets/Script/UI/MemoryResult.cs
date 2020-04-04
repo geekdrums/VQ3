@@ -34,7 +34,7 @@ public class MemoryResult : MonoBehaviour {
 			if( GetComponent<Animation>().isPlaying == false )
 			{
 				CurrentPhase = Phase.Gauge;
-				Gauge.SetRate(targetRate_, 0.3f);
+				Gauge.AnimateRate(targetRate_, time: 0.3f);
 			}
 			break;
 		case Phase.Gauge:

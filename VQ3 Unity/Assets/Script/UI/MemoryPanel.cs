@@ -111,9 +111,9 @@ public class MemoryPanel : MonoBehaviour {
 			}
 		}
 		MemorySlimGauge.SetColor(ColorManager.GetThemeColor(command.themeColor).Bright);
-		MemorySlimGauge.SetRate(1, 0.1f);
+		MemorySlimGauge.AnimateAlphaColor(1, time: 0.1f);
 		MemoryGauge.SetColor(ColorManager.GetThemeColor(command.themeColor).Bright);
-		MemoryGauge.SetRate((playerCommand_.currentLevel > 0 && maxLvMemory > 0 ? (0.9f * (float)playerCommand_.commandData[playerCommand_.currentLevel-1].RequireSP / maxLvMemory + 0.1f) : 0), 0.1f);
+		MemoryGauge.AnimateRate((playerCommand_.currentLevel > 0 && maxLvMemory > 0 ? (0.9f * (float)playerCommand_.commandData[playerCommand_.currentLevel-1].RequireSP / maxLvMemory + 0.1f) : 0), time: 0.1f);
 
 		CommandExp.Set(command);
 	}
@@ -121,7 +121,7 @@ public class MemoryPanel : MonoBehaviour {
 	public void Reset()
 	{
 		this.transform.localScale = Vector3.one;
-		BaseFrame.SetTargetWidth(7.5f);
+		BaseFrame.AnimateWidth(7.5f);// AnimType.Linear
 		BaseFrame.SetColor(ColorManager.Base.Back);
 		UpdateMemory();
 		BattleButton.SetMode((GameContext.PlayerConductor.CanStartBattle() ? ButtonMode.Active : ButtonMode.Disable));
@@ -145,7 +145,7 @@ public class MemoryPanel : MonoBehaviour {
 		UpButton.SetMode(ButtonMode.Hide);
 		DownButton.SetMode(ButtonMode.Hide);
 		BackButton.SetMode(ButtonMode.Hide);
-		BaseFrame.SetTargetWidth(0);
+		BaseFrame.AnimateWidth(0);// AnimType.Linear
 		CommandExp.Hide();
 	}
 
@@ -155,6 +155,6 @@ public class MemoryPanel : MonoBehaviour {
 		MemorySize.Count = GameContext.PlayerConductor.TotalMemory;
 		RemainMemory.CounterColor = ColorManager.Base.Shade;
 		MemorySize.CounterColor = ColorManager.Base.Shade;
-		RemainMemoryGauge.SetRate((float)GameContext.PlayerConductor.RemainMemory/GameContext.PlayerConductor.TotalMemory, 0.1f);
+		RemainMemoryGauge.AnimateRate((float)GameContext.PlayerConductor.RemainMemory/GameContext.PlayerConductor.TotalMemory, time: 0.1f);
 	}
 }

@@ -76,7 +76,7 @@ public class SkillListUI : MonoBehaviour {
 			if( enhanceData_[i].paramType != EnhanceParamType.Count )
 			{
 				enhanceData_[i].transform.parent = enhIconParent.transform;
-				AnimManager.AddAnim(enhanceData_[i].gameObject, Vector3.right * 2.4f * i, ParamType.Position, AnimType.Linear, 0.2f);
+				AnimManager.AddAnim(enhanceData_[i].gameObject, Vector3.right * 2.4f * i, AnimParamType.Position, InterpType.Linear, time: 0.2f);//AnimType.Linear
 				enhanceData_[i].Execute();
 			}
 		}

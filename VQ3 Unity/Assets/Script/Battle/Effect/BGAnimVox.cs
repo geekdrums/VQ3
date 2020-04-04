@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BGAnimVox : BGAnimBase
@@ -35,6 +35,6 @@ public class BGAnimVox : BGAnimBase
 	{
 		primitive.SetSize(Offset + Mathf.Lerp(0, Size, 1.0f - Mathf.Sqrt(t)));
 		primitive.SetWidth(Mathf.Lerp(MinWitdh, Witdh, 1.0f - t));
-		primitive.SetTargetColor(accent ? ColorManager.Theme.Bright : Color.Lerp(ColorManager.Theme.Light, ColorManager.Theme.Shade, t));
+		primitive.SetColor(accent ? ColorManager.Theme.Bright : Color.Lerp(ColorManager.Theme.Light, ColorManager.Theme.Shade, t));// AnimType.Linear
 	}
 }

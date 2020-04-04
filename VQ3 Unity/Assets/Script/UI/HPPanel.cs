@@ -28,17 +28,17 @@ public class HPPanel : MonoBehaviour {
 	}
 
 
-    public void OnBattleStart()
-    {
-        turnStartHP_ = Player.HitPoint;
-        MaxHPCount.Count = Player.MaxHP;
+	public void OnBattleStart()
+	{
+		turnStartHP_ = Player.HitPoint;
+		MaxHPCount.Count = Player.MaxHP;
 		CurrentBar.SetColor(ColorManager.Base.Front);
 		CurrentBar.SetRate(1);
 		UpdateHPText();
 
 		CurrentBar.transform.parent.localScale = new Vector3(0, 1, 1);
 		float mtu = (float)Music.Meter.SecPerUnit;
-		AnimManager.AddAnim(CurrentBar.transform.parent.gameObject, 1.0f, ParamType.ScaleX, AnimType.Linear, 0.1f, mtu * 16);
+		CurrentBar.transform.parent.AnimateScaleX(1.0f, time: 0.1f, delay: mtu * 16);// AnimType.Linear
 	}
     public void OnTurnStart( PlayerCommand command )
     {
@@ -62,12 +62,12 @@ public class HPPanel : MonoBehaviour {
     public void OnDamage( int damage )
     {
         UpdateHPText();
-		CurrentBar.SetRate(targetRate, 0.1f);
+		CurrentBar.AnimateRate(targetRate, time: 0.1f);
     }
     public void OnHeal( int heal )
     {
         UpdateHPText();
-		CurrentBar.SetRate(targetRate, 0.1f);
+		CurrentBar.AnimateRate(targetRate, time: 0.1f);
         if( Player.HitPoint >= turnStartHP_ )
         {
             turnStartHP_ = Player.HitPoint;

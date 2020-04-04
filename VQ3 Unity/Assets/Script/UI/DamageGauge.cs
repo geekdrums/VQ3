@@ -97,7 +97,7 @@ public class DamageGauge : MonoBehaviour
 		if( CurrentMode == Mode.Damage || CurrentMode == Mode.DamageAndTime )
 		{
 			damage_ += damage;
-			HPGauge.SetRate((float)Enemy.HitPoint / Enemy.MaxHP, 0.1f);
+			HPGauge.AnimateRate((float)Enemy.HitPoint / Enemy.MaxHP, time: 0.1f);
 		}
 	}
 
@@ -123,7 +123,7 @@ public class DamageGauge : MonoBehaviour
 		HPGauge.SetColor(ColorManager.Base.Bright);
 		RedGauge.SetRate((float)(Enemy.HitPoint + damage_) / Enemy.MaxHP);
 		HPGauge.SetRate(RedGauge.Rate);
-		HPGauge.SetRate((float)Enemy.HitPoint / Enemy.MaxHP, 0.1f);
+		HPGauge.AnimateRate((float)Enemy.HitPoint / Enemy.MaxHP, time: 0.1f);
 
 		Vector3 initialPosition_ = transform.position;
 		transform.position = position;
@@ -131,18 +131,18 @@ public class DamageGauge : MonoBehaviour
 		float delay = (float)Music.Meter.SecPerUnit * 24;
 		float animTime = 0.2f;
 		float animTime2 = 0.5f;
-		AnimManager.AddAnim(gameObject, initialPosition_, ParamType.Position, AnimType.Time, animTime, delay);
+		transform.AnimatePosition(initialPosition_, time: animTime, delay: delay);
 		Split2.SetRate(0);
-		AnimManager.AddAnim(Split2.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime);
+		Split2.AnimateRate(1.0f, InterpType.BackOut, time: animTime2, delay: delay + animTime);
 
 		TimeGauge2.transform.parent.localScale = Vector3.zero;
-		AnimManager.AddAnim(TimeGauge2.transform.parent.gameObject, Vector3.one, ParamType.Scale, AnimType.Time, 0.0f, delay + animTime);
+		TimeGauge2.transform.parent.AnimateScale(1.0f, time: 0.0f, delay: delay + animTime);
 		Vector3 initialScale = EnemyText.transform.localScale;
 		EnemyText.text = Enemy.DisplayName;
 		EnemyText.transform.localScale = Vector3.zero;
-		AnimManager.AddAnim(EnemyText.gameObject, initialScale, ParamType.Scale, AnimType.Time, 0.0f, delay + animTime);
+		EnemyText.transform.AnimateScale(initialScale.x, time: 0.0f, delay: delay + animTime);
 		TextBase2.SetRate(0);
-		AnimManager.AddAnim(TextBase2.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime + animTime2);
+		TextBase2.AnimateRate(1.0f, InterpType.BackOut, time: animTime2, delay: delay + animTime + animTime2);
 	}
 
 	public void InitializeVPVT(Vector3 position)
@@ -168,17 +168,17 @@ public class DamageGauge : MonoBehaviour
 		float delay = Mathf.Min(48.0f - (float)Music.MusicalTime, (float)Music.Meter.SecPerUnit * 32);
 		float animTime = 0.2f;
 		float animTime2 = 0.5f;
-		AnimManager.AddAnim(gameObject, initialPosition_, ParamType.Position, AnimType.Time, animTime, delay);
+		transform.AnimatePosition(initialPosition_, time: animTime, delay: delay);
 		Split.SetRate(0);
-		AnimManager.AddAnim(Split.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime);
+		Split.AnimateRate(1.0f, InterpType.BackOut, time: animTime2, delay: delay + animTime);
 
 		Vector3 initialScale = ShieldText.transform.localScale;
 		ShieldText.transform.localScale = Vector3.zero;
-		AnimManager.AddAnim(ShieldText.gameObject, initialScale, ParamType.Scale, AnimType.Time, 0.0f, delay + animTime);
+		ShieldText.transform.parent.AnimateScale(1.0f, time: 0.0f, delay: delay + animTime);
 		VPCount.transform.parent.localScale = Vector3.zero;
-		AnimManager.AddAnim(VPCount.transform.parent.gameObject, Vector3.one, ParamType.Scale, AnimType.Time, 0.0f, delay + animTime);
+		VPCount.transform.parent.AnimateScale(1.0f, time: 0.0f, delay: delay + animTime);
 		TextBase.SetRate(0);
-		AnimManager.AddAnim(TextBase.gameObject, 1.0f, ParamType.GaugeRate, AnimType.BounceIn, animTime2, delay + animTime + animTime2);
+		TextBase.AnimateRate(1.0f, InterpType.BackOut, time: animTime2, delay: delay + animTime + animTime2);
 	}
 
 	public void OnBattleStarted()
@@ -230,7 +230,7 @@ public class DamageGauge : MonoBehaviour
 			{
 				RedGauge.SetRate((float)(Enemy.HitPoint + damage_) / Enemy.MaxHP);
 				HPGauge.SetRate(RedGauge.Rate);
-				HPGauge.SetRate((float)Enemy.HitPoint / Enemy.MaxHP, 0.1f);
+				HPGauge.AnimateRate((float)Enemy.HitPoint / Enemy.MaxHP, time: 0.1f);
 			}
 			break;
 		case Mode.Break:

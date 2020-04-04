@@ -53,8 +53,8 @@ public class RevertCommand : PlayerCommand
 
 			if( Music.IsJustChanged && AnimManager.IsAnimating(EyeArc.gameObject) == false && UnityEngine.Random.Range(0, 8) == 0 )
 			{
-				AnimManager.AddAnim(EyeArc.gameObject, 0.0f, ParamType.ScaleY, AnimType.Time, 0.05f);
-				AnimManager.AddAnim(EyeArc.gameObject, 1.0f, ParamType.ScaleY, AnimType.Time, 0.05f, 0.07f);
+				EyeArc.transform.AnimateScaleY(0.0f, time: 0.05f);
+				EyeArc.transform.AnimateScaleY(0.0f, time: 0.05f, delay: 0.07f);
 			}
 
 			Vector3 lookDirection = (SelectSpot + Vector3.down * 2 + Vector3.right * Music.MusicalCos(8, 0, -1, 1) - EyeArc.transform.position);

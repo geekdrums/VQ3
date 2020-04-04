@@ -171,7 +171,7 @@ public class EventConductor : MonoBehaviour
 			if( animation_ == null || animation_.IsPlaying("EventShowAnim") == false )
 			{
 				VLine.SetRate(0);
-				VLine.SetRate(1, 0.3f);
+				VLine.AnimateRate(1, time: 0.3f);
 			}
 			Cursor.transform.localPosition = new Vector3(Cursor.transform.localPosition.x, -2 - 1.5f * numLine, 0);
 		}

@@ -51,8 +51,8 @@ public class DamageText : MonoBehaviour
 				Destroy(this.gameObject);
 				return;
 			}
-			AnimManager.AddAnim(gameObject, destination_, ParamType.Position, AnimType.Time, 0.2f);
-			AnimManager.AddAnim(gameObject, destination_ + ( isPlayerDamage_ ? Vector3.down : Vector3.up ) * 5, ParamType.Position, AnimType.Time, 0.2f, 0.3f, true);
+			transform.AnimatePosition(destination_, time: 0.2f);
+			transform.AnimatePosition(destination_ + (isPlayerDamage_ ? Vector3.down : Vector3.up) * 5, time: 0.2f, delay: 0.3f, endOption: AnimEndOption.Destroy);
 		}
 	}
 

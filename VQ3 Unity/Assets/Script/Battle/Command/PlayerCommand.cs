@@ -147,7 +147,8 @@ public class PlayerCommand : MonoBehaviour
 		CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
 		if( commandGraph == null ) return;
 		float alpha = (transform.localPosition.z + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff;
-        Material maskMat = new Material( Shader.Find( "Transparent/Diffuse" ) );
+        /*
+		Material maskMat = new Material( Shader.Find( "Transparent/Diffuse" ) );
         maskMat.hideFlags = HideFlags.DontSave;
         maskMat.color = ColorManager.MakeAlpha( Color.black, alpha );
         maskMat.name = "maskMat";
@@ -155,6 +156,7 @@ public class PlayerCommand : MonoBehaviour
 		{
 			maskPlane.GetComponent<Renderer>().material = maskMat;
 		}
+		*/
     }
 
     public virtual void ValidateIcons()

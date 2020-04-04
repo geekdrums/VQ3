@@ -76,14 +76,14 @@ public class SkillCutIn : MonoBehaviour {
 
 		float mtu = (float)Music.Meter.SecPerUnit;
 
-		AnimManager.AddAnim(commandIcon_.gameObject, initialScale, ParamType.Scale, AnimType.BounceIn, 3 * mtu, mtu);
+		AnimManager.AddAnim(commandIcon_.gameObject, initialScale.x, AnimParamType.Scale, InterpType.BackOut, time: 3 * mtu, delay: mtu);
 
-		AnimManager.AddAnim(commandName_.gameObject, Vector3.zero, ParamType.Position, AnimType.Linear, 0.2f, mtu);
-		AnimManager.AddAnim(commandName_.gameObject, Vector3.left * 200, ParamType.Position, AnimType.Time, nameAnimLength, mtu * 9);
+		AnimManager.AddAnim(commandName_.gameObject, Vector3.zero, AnimParamType.Position, InterpType.Linear, time: 0.2f, delay:mtu);
+		AnimManager.AddAnim(commandName_.gameObject, Vector3.left * 200, AnimParamType.Position, InterpType.Linear, time: nameAnimLength, delay: mtu * 9);
 
-		AnimManager.AddAnim(commandIcon_.gameObject, Vector3.up * iconAnimDisntace, ParamType.Position, AnimType.BounceIn, skillAnimLength, mtu * 5);
-		AnimManager.AddAnim(commandIcon_.gameObject, Vector3.zero, ParamType.Position, AnimType.BounceOut, skillAnimLength, (float)Music.Meter.SecPerUnit * 13);
-		AnimManager.AddAnim(skillList_.gameObject, skillListParent.transform.localPosition, ParamType.Position, AnimType.BounceIn, skillAnimLength, mtu * 5);
+		AnimManager.AddAnim(commandIcon_.gameObject, Vector3.up * iconAnimDisntace, AnimParamType.Position, InterpType.BackOut, time: skillAnimLength, delay: mtu * 5);
+		AnimManager.AddAnim(commandIcon_.gameObject, Vector3.zero, AnimParamType.Position, InterpType.BackIn, time: skillAnimLength, delay: (float)Music.Meter.SecPerUnit * 13);
+		AnimManager.AddAnim(skillList_.gameObject, skillListParent.transform.localPosition, AnimParamType.Position, InterpType.BackOut, time: skillAnimLength, delay: mtu * 5);
 
 		animation_["SkillCutInAnim"].speed = (float)(Music.CurrentTempo / 60.0);
 		animation_.Play();

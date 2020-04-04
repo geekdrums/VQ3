@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BGAnimLacle : BGAnimBase
@@ -12,6 +12,6 @@ public class BGAnimLacle : BGAnimBase
 	{
 		primitive.SetSize(Offset + Mathf.Lerp(0, Size, t*t*t));
 		primitive.SetWidth(Mathf.Lerp(MinWitdh, Witdh, t));
-		primitive.SetTargetColor(accent ? ColorManager.Theme.Bright : Color.Lerp(ColorManager.Theme.Light, ColorManager.Theme.Shade, t*t));
+		primitive.SetColor(accent ? ColorManager.Theme.Bright : Color.Lerp(ColorManager.Theme.Light, ColorManager.Theme.Shade, t*t));// AnimType.Linear
 	}
 }

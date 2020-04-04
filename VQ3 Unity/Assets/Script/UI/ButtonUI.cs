@@ -85,17 +85,17 @@ public class ButtonUI : MonoBehaviour
 				Text.color = ColorManager.Base.Bright;
 				break;
 			}
-			Primitive.SetTargetSize(initialRadius_);
+			Primitive.AnimateRadius(initialRadius_);// AnimType.Linear
 			break;
 		case PushState.Pressing:
 			Primitive.SetColor(ColorManager.Base.Light);
 			Text.color = Color.black;
-			Primitive.SetTargetSize(initialRadius_ - 0.5f);
+			Primitive.AnimateRadius(initialRadius_ - 0.5f);// AnimType.Linear
 			break;
 		case PushState.Leaving:
 			Primitive.SetColor(ColorManager.Base.Shade);
 			Text.color = Color.white;
-			Primitive.SetTargetSize(initialRadius_);
+			Primitive.AnimateRadius(initialRadius_);// AnimType.Linear
 			break;
 		}
 	}
@@ -154,14 +154,14 @@ public class ButtonUI : MonoBehaviour
 			{
 				if( Mode == ButtonMode.Hide )
 				{
-					Primitive.SetTargetSize(0);
+					Primitive.AnimateRadius(0);// AnimType.Linear
 					Text.color = Color.clear;
 					Mode = ButtonMode.Hiding;
 				}
 				else
 				{
 					gameObject.SetActive(true);
-					Primitive.SetTargetSize(initialRadius_);
+					Primitive.AnimateRadius(initialRadius_);// AnimType.Linear
 					Mode = ButtonMode.Showing;
 				}
 			}

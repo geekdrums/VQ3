@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -320,8 +320,8 @@ public class LuxSystem : MonoBehaviour
 			}
 			vtWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(vtWaves_[i].transform.localScale.y, waveScale, 0.2f), 1);
 		}
-		TimeGauge.SetRate(maxWaveScale, 0.1f);
-		BreakGauge.SetRate((float)CurrentVP / OverflowVP, 0.1f);
+		TimeGauge.SetRate(maxWaveScale);//, 0.1f);
+		BreakGauge.SetRate((float)CurrentVP / OverflowVP);//, 0.1f);
 		if( lightHoleRemainTime_ > 0 )
 		{
 			for( int i = 0; i<WaveNum; ++i )
@@ -422,7 +422,7 @@ public class LuxSystem : MonoBehaviour
 			Ring.SetWidth(initialRingWidth * (1.1f - t));
 			Ring.SetSize(initialRingRadius + t);
 			Sun.GrowSize = t;
-			Sun.SetTargetColor(Color.Lerp(Color.white, Color.black, t*0.2f));
+			Sun.SetColor(Color.Lerp(Color.white, Color.black, t*0.2f));// AnimType.Linear
 		}
 
 		if( Music.Near.Bar < 2 && GameContext.PlayerConductor.PlayerIsDanger )
@@ -598,9 +598,9 @@ public class LuxSystem : MonoBehaviour
 					SunLights[i].transform.localPosition = Vector3.zero;
 				}
 				GameContext.EnemyConductor.baseColor = Color.black;
-				Ring.SetTargetColor(Color.white);
+				Ring.AnimateColor(Color.white);// AnimType.Linear
 				Sun.transform.localScale = Vector3.one;
-				Sun.SetTargetColor(Color.white);
+				Sun.AnimateColor(Color.white);// AnimType.Linear
 				Moon.transform.position = initialMoonPosition;
 
 				targetBGColor = ColorManager.Theme.Light;
@@ -609,7 +609,7 @@ public class LuxSystem : MonoBehaviour
 				targetMainLightScale = initialMainLightScale;
 
 				Ring.SetWidth(initialRingWidth);
-				Ring.SetTargetSize(initialRingRadius);
+				Ring.AnimateRadius(initialRingRadius);// AnimType.Linear
 				BreakAccentGauge.SetColor(Color.clear);
 				
 				Music.SetAisac("TrackVolumeOver", 0);
