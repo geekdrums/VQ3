@@ -53,7 +53,7 @@ public class EnhanceUI : MonoBehaviour {
 				}
 			}
 
-			line_.SetColor(ColorManager.Accent.Buff * (0.8f + 0.2f * Music.MusicalCos(8)));
+			line_.SetColor(ColorManagerObsolete.Accent.Buff * (0.8f + 0.2f * Music.MusicalCos(8)));
 		}
 	}
 }

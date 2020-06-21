@@ -86,7 +86,7 @@ public class Enemy : Character
 			{
 				transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp(damageTime - GameContext.EnemyConductor.EnemyDamageTimeMin, 0.2f, 2.0f) * GameContext.EnemyConductor.EnemyDamageShake;
 			}
-			spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? (GameContext.LuxSystem.IsOverFlow ? ColorManager.Theme.Bright : Color.clear) : GameContext.EnemyConductor.baseColor);
+			spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? (GameContext.LuxSystem.IsOverFlow ? ColorManagerObsolete.Theme.Bright : Color.clear) : GameContext.EnemyConductor.baseColor);
 
 			damageTime -= Time.deltaTime;
 			if( damageTime <= 0 )

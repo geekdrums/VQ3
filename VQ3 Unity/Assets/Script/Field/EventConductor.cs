@@ -197,8 +197,8 @@ public class EventConductor : MonoBehaviour
 
 	IEnumerator Event_ShowBPMeter()
 	{
-		GameContext.PlayerConductor.VPMeter.SetActive(true);
-		GameContext.PlayerConductor.MemoryPanel.Hide();
+		//GameContext.PlayerConductor.VPMeter.SetActive(true);
+		//GameContext.PlayerConductor.MemoryPanel.Hide();
 		GameContext.LuxSystem.Event_ShowBPMeter(init: true);
 		while( true )
 		{

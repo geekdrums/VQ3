@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 [RequireComponent(typeof(Renderer))]
 public class MeshComponentBase : MonoBehaviour
 {
@@ -63,20 +64,17 @@ public class MeshComponentBase : MonoBehaviour
 			}
 			return mesh_;
 		}
-		set
-		{
-			mesh_ = value;
-			meshFilter_.sharedMesh = value;
-		}
 	}
 	protected MeshFilter meshFilter_;
 	protected Mesh mesh_;
 	protected Renderer renderer_;
+	protected Material material_;
 
 	public bool MeshDirty { get; protected set; }
 
-	protected static readonly string DefaultMaterialName = "Shader Graphs/SimpleVertexColor";
+	protected virtual string DefaultMaterialName { get { return "Shader Graphs/SimpleVertexColor"; } }
 	protected static readonly int[] QuadIndices = new int[] { 0, 2, 1, 3, 1, 2 };
+	protected static readonly Vector2[] QuadUVs = new Vector2[] { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 0), new Vector2(1, 1) };
 	protected static readonly Vector2 UVZero = new Vector2(0, 0);
 	protected static readonly Vector2 UVRight = new Vector2(0, 1);
 	protected static readonly Vector2 UVUp = new Vector2(1, 0);
@@ -85,6 +83,7 @@ public class MeshComponentBase : MonoBehaviour
 	protected virtual void Start()
 	{
 		RecalculatePolygon();
+		meshFilter_.sharedMesh = mesh_;
 	}
 
 	public virtual void RecalculatePolygon(bool forceReflesh = false)
@@ -99,7 +98,7 @@ public class MeshComponentBase : MonoBehaviour
 			renderer_ = GetComponent<Renderer>();
 		}
 
-		if( renderer_ != null && renderer_.sharedMaterial == null )
+		if( renderer_ != null && material_ == null )
 		{
 			InitMaterial();
 		}
@@ -129,9 +128,9 @@ public class MeshComponentBase : MonoBehaviour
 
 	protected void InitMaterial()
 	{
-		Material mat = new Material(Shader.Find(DefaultMaterialName));
-		mat.name = "mat";
-		mat.hideFlags = HideFlags.DontSave;
-		renderer_.sharedMaterial = mat;
+		material_ = new Material(Shader.Find(DefaultMaterialName));
+		material_.name = "_GeneratedMaterial";
+		material_.hideFlags = HideFlags.DontSave;
+		renderer_.sharedMaterial = material_;
 	}
 }

@@ -71,7 +71,7 @@ public class EnemyCommandGraph : MonoBehaviour {
 				}
 			}
 		}
-		Shade.AnimateColor(ColorManager.MakeAlpha(Color.black, Mathf.Pow(threat / 100.0f, 2)));// AnimType.Linear
+		Shade.AnimateColor(ColorManagerObsolete.MakeAlpha(Color.black, Mathf.Pow(threat / 100.0f, 2)));// AnimType.Linear
 	}
 
 

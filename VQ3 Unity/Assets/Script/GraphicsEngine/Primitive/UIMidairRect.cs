@@ -247,8 +247,8 @@ public class UIMidairRect : MaskableGraphic, IColoredObject
 			for( int i = 0; i < 8; ++i )
 			{
 				rectVertices_[i].color = color;
-				growInVertices_[i].color = ColorManager.MakeAlpha(color, color.a * (i % 2 == 0 ? 0 : GrowAlpha));
-				growOutVertices_[i].color = ColorManager.MakeAlpha(color, color.a * (i % 2 == 0 ? GrowAlpha : 0));
+				growInVertices_[i].color = ColorPropertyUtil.MakeAlpha(color, color.a * (i % 2 == 0 ? 0 : GrowAlpha));
+				growOutVertices_[i].color = ColorPropertyUtil.MakeAlpha(color, color.a * (i % 2 == 0 ? GrowAlpha : 0));
 			}
 		}
 	}

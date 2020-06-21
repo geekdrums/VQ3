@@ -165,8 +165,8 @@ public class MidairRect : MeshComponentBase, IColoredObject
 			growInVertices_[RightDownInnerIndex] = new Vector3(xMax - (Thickness + GrowInSize), yMin + (Thickness + GrowInSize), 0);
 		}
 
-		Color growAlpha = ColorManager.MakeAlpha(RectColor, RectColor.a * GrowAlpha);
-		Color growClear = ColorManager.MakeAlpha(RectColor, 0);
+		Color growAlpha = ColorPropertyUtil.MakeAlpha(RectColor, RectColor.a * GrowAlpha);
+		Color growClear = ColorPropertyUtil.MakeAlpha(RectColor, 0);
 		for( int i = 0; i < vertCount; ++i )
 		{
 			meshColors_[i] = RectColor;
@@ -183,8 +183,6 @@ public class MidairRect : MeshComponentBase, IColoredObject
 		mesh.SetVertices(meshVertices_);
 		mesh.SetColors(meshColors_);
 		mesh.RecalculateBounds();
-
-		MeshInstance = mesh;
 	}
 
 	public void SetColor(Color color)
@@ -203,8 +201,8 @@ public class MidairRect : MeshComponentBase, IColoredObject
 		if( meshColors_ != null )
 		{
 			int vertCount = 8;
-			Color growAlpha = ColorManager.MakeAlpha(RectColor, RectColor.a * GrowAlpha);
-			Color growClear = ColorManager.MakeAlpha(RectColor, 0);
+			Color growAlpha = ColorPropertyUtil.MakeAlpha(RectColor, RectColor.a * GrowAlpha);
+			Color growClear = ColorPropertyUtil.MakeAlpha(RectColor, 0);
 			for( int i = 0; i < vertCount; ++i )
 			{
 				meshColors_[i] = RectColor;

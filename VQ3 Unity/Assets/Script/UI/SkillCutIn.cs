@@ -64,9 +64,9 @@ public class SkillCutIn : MonoBehaviour {
 		commandName_.transform.position = commandName_.transform.position + Vector3.back * 50;
 		if( command.themeColor == EThemeColor.White )
 		{
-			commandName_.GetComponentsInChildren<TextMesh>()[0].color = ColorManager.Base.Dark;
-			commandName_.GetComponentsInChildren<TextMesh>()[1].color = ColorManager.Base.Dark;
-			commandName_.GetComponentInChildren<CounterSprite>().CounterColor = ColorManager.Base.Dark;
+			commandName_.GetComponentsInChildren<TextMesh>()[0].color = ColorManagerObsolete.Base.Dark;
+			commandName_.GetComponentsInChildren<TextMesh>()[1].color = ColorManagerObsolete.Base.Dark;
+			commandName_.GetComponentInChildren<CounterSprite>().CounterColor = ColorManagerObsolete.Base.Dark;
 		}
 
 		skillList_ = (SkillListUI)Instantiate(skillList, transform);

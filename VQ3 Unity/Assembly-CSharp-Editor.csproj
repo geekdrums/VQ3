@@ -70,8 +70,15 @@
     <Compile Include="Assets\Editor\CriWare\CriWareInitializerEditor.cs" />
     <Compile Include="Assets\Editor\CriWare\CriWareVersionWindow.cs" />
     <Compile Include="Assets\Script\GraphicsEngine\Editor\AnimComponentEditor.cs" />
+    <Compile Include="Assets\Script\GraphicsEngine\Editor\Color\BlendColorSourceEditor.cs" />
+    <Compile Include="Assets\Script\GraphicsEngine\Editor\Color\ColorManagerEditor.cs" />
+    <Compile Include="Assets\Script\GraphicsEngine\Editor\Color\ColorSourceEditor.cs" />
+    <Compile Include="Assets\Script\GraphicsEngine\Editor\Color\InheritColorSourceEditor.cs" />
+    <Compile Include="Assets\Script\GraphicsEngine\Editor\Color\StaticColorSourceEditor.cs" />
+    <Compile Include="Assets\Script\GraphicsEngine\Editor\Color\SwitchColorSourceEditor.cs" />
     <Compile Include="Assets\Script\GraphicsEngine\Editor\PrimitiveEditor.cs" />
     <Compile Include="Assets\Script\GraphicsEngine\Editor\SaveAnimComponentData.cs" />
+    <Compile Include="Assets\Script\GraphicsEngine\Editor\SerializableDictionaryEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/geekdrums/Documents/GitHub/VQ3/VQ3 Unity/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>

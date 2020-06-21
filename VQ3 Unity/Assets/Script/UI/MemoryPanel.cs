@@ -40,7 +40,7 @@ public class MemoryPanel : MonoBehaviour {
 			float MemoryRatio = (float)GameContext.PlayerConductor.RemainMemory / GameContext.PlayerConductor.TotalMemory;
 			if( GameContext.PlayerConductor.RemainMemory > 0 )
 			{
-				RemainMemoryGauge.SetColor(Color.Lerp(ColorManager.Base.Middle, ColorManager.Base.Front, Music.MusicalCos(16) * Mathf.Clamp(MemoryRatio + 0.3f, 0.0f, 1.0f)));
+				RemainMemoryGauge.SetColor(Color.Lerp(ColorManagerObsolete.Base.Middle, ColorManagerObsolete.Base.Front, Music.MusicalCos(16) * Mathf.Clamp(MemoryRatio + 0.3f, 0.0f, 1.0f)));
 			}
 		}
 	}
@@ -100,9 +100,9 @@ public class MemoryPanel : MonoBehaviour {
 			{
 				levelInfo.transform.localScale = Vector3.one;
 				bool isCurrentData = command.currentLevel-1 == i;
-				levelInfo.GetComponentInChildren<MidairPrimitive>().SetColor(isCurrentData ? ColorManager.Base.Front : ColorManager.Base.Shade);
+				levelInfo.GetComponentInChildren<MidairPrimitive>().SetColor(isCurrentData ? ColorManagerObsolete.Base.Front : ColorManagerObsolete.Base.Shade);
 				levelInfo.GetComponentInChildren<CounterSprite>().Count = command.commandData[i].RequireSP;
-				levelInfo.GetComponentInChildren<CounterSprite>().CounterColor = isCurrentData ? Color.white : ColorManager.Base.Shade;
+				levelInfo.GetComponentInChildren<CounterSprite>().CounterColor = isCurrentData ? Color.white : ColorManagerObsolete.Base.Shade;
 				levelInfo.transform.localPosition = memoryZeroPosition_ + (memoryMaxPosition_ - memoryZeroPosition_)*((float)command.commandData[i].RequireSP / maxLvMemory);
 			}
 			else
@@ -110,9 +110,9 @@ public class MemoryPanel : MonoBehaviour {
 				levelInfo.transform.localScale = Vector3.zero;
 			}
 		}
-		MemorySlimGauge.SetColor(ColorManager.GetThemeColor(command.themeColor).Bright);
+		MemorySlimGauge.SetColor(ColorManagerObsolete.GetThemeColor(command.themeColor).Bright);
 		MemorySlimGauge.AnimateAlphaColor(1, time: 0.1f);
-		MemoryGauge.SetColor(ColorManager.GetThemeColor(command.themeColor).Bright);
+		MemoryGauge.SetColor(ColorManagerObsolete.GetThemeColor(command.themeColor).Bright);
 		MemoryGauge.AnimateRate((playerCommand_.currentLevel > 0 && maxLvMemory > 0 ? (0.9f * (float)playerCommand_.commandData[playerCommand_.currentLevel-1].RequireSP / maxLvMemory + 0.1f) : 0), time: 0.1f);
 
 		CommandExp.Set(command);
@@ -122,7 +122,7 @@ public class MemoryPanel : MonoBehaviour {
 	{
 		this.transform.localScale = Vector3.one;
 		BaseFrame.AnimateWidth(7.5f);// AnimType.Linear
-		BaseFrame.SetColor(ColorManager.Base.Back);
+		BaseFrame.SetColor(ColorManagerObsolete.Base.Back);
 		UpdateMemory();
 		BattleButton.SetMode((GameContext.PlayerConductor.CanStartBattle() ? ButtonMode.Active : ButtonMode.Disable));
 		UpButton.SetMode(ButtonMode.Hide);
@@ -153,8 +153,8 @@ public class MemoryPanel : MonoBehaviour {
 	{
 		RemainMemory.Count = GameContext.PlayerConductor.RemainMemory;
 		MemorySize.Count = GameContext.PlayerConductor.TotalMemory;
-		RemainMemory.CounterColor = ColorManager.Base.Shade;
-		MemorySize.CounterColor = ColorManager.Base.Shade;
+		RemainMemory.CounterColor = ColorManagerObsolete.Base.Shade;
+		MemorySize.CounterColor = ColorManagerObsolete.Base.Shade;
 		RemainMemoryGauge.AnimateRate((float)GameContext.PlayerConductor.RemainMemory/GameContext.PlayerConductor.TotalMemory, time: 0.1f);
 	}
 }

@@ -44,7 +44,7 @@ public class LevelResult : MonoBehaviour {
 			break;
 		case Phase.Wait:
 			animTime_ += Time.deltaTime;
-			After.Level.CounterColor = (Color.Lerp(ColorManager.Base.Bright, ColorManager.Base.Light, (Mathf.Cos(animTime_*8) + 1)/2));
+			After.Level.CounterColor = (Color.Lerp(ColorManagerObsolete.Base.Bright, ColorManagerObsolete.Base.Light, (Mathf.Cos(animTime_*8) + 1)/2));
 			break;
 		}
 	}

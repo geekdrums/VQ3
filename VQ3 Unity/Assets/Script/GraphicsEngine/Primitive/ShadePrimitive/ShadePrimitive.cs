@@ -298,7 +298,7 @@ public class ShadePrimitive : MeshComponentBase, IColoredObject
 
 		CalculateVertexInfos(lightPosition, forceReflesh);
 		
-		Color innerColor = ColorManager.MakeAlpha(Color, Alpha);
+		Color innerColor = ColorPropertyUtil.MakeAlpha(Color, Alpha);
 		Color outerColor = Color;
 
 		// 面を構成
@@ -419,8 +419,6 @@ public class ShadePrimitive : MeshComponentBase, IColoredObject
 		mesh.SetUVs(0, vertexUVs_);
 		mesh.SetColors(vertexColors_);
 		mesh.RecalculateBounds();
-
-		MeshInstance = mesh;
 	}
 
 	void InitVertexInfos(Vector2 lightPosition)
@@ -627,7 +625,7 @@ public class ShadePrimitive : MeshComponentBase, IColoredObject
 
 	void UpdateColor()
 	{
-		Color innerColor = ColorManager.MakeAlpha(Color, Alpha);
+		Color innerColor = ColorPropertyUtil.MakeAlpha(Color, Alpha);
 		Color outerColor = Color;
 		for( int i = 0; i < vertexCount_; ++i )
 		{

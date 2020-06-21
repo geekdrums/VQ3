@@ -65,7 +65,7 @@ public class DamageGauge : MonoBehaviour
 				TimeGauge.SetRate(Mathf.Clamp01(BreakRate * GameContext.LuxSystem.VTRate));
 				VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
 				VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalBars;
-				BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManager.Accent.Time, 0.2f));
+				BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManagerObsolete.Accent.Time, 0.2f));
 				Color timeColor = GetTimeColor();
 				TimeGauge.SetColor(timeColor);
 				VTCount.CounterColor = timeColor;
@@ -119,8 +119,8 @@ public class DamageGauge : MonoBehaviour
 		CurrentMode = GetDesiredMode();
 		ModeInit();
 
-		HPBaseGauge.SetColor(ColorManager.Base.Light);
-		HPGauge.SetColor(ColorManager.Base.Bright);
+		HPBaseGauge.SetColor(ColorManagerObsolete.Base.Light);
+		HPGauge.SetColor(ColorManagerObsolete.Base.Bright);
 		RedGauge.SetRate((float)(Enemy.HitPoint + damage_) / Enemy.MaxHP);
 		HPGauge.SetRate(RedGauge.Rate);
 		HPGauge.AnimateRate((float)Enemy.HitPoint / Enemy.MaxHP, time: 0.1f);
@@ -157,7 +157,7 @@ public class DamageGauge : MonoBehaviour
 		TimeGauge.SetRate(Mathf.Clamp01(BreakRate * GameContext.LuxSystem.VTRate));
 		VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
 		VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalBars;
-		BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManager.Accent.Time, 0.2f));
+		BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManagerObsolete.Accent.Time, 0.2f));
 		Color timeColor = GetTimeColor();
 		TimeGauge.SetColor(timeColor);
 		VTCount.CounterColor = timeColor;
@@ -252,19 +252,19 @@ public class DamageGauge : MonoBehaviour
 		}
 		else if( time < 1.0f )
 		{
-			timeColor = Color.Lerp(ColorManager.GetThemeColor(EThemeColor.Red).Bright, ColorManager.GetThemeColor(EThemeColor.Yellow).Bright, time);
+			timeColor = Color.Lerp(ColorManagerObsolete.GetThemeColor(EThemeColor.Red).Bright, ColorManagerObsolete.GetThemeColor(EThemeColor.Yellow).Bright, time);
 		}
 		else if( time < 2.0f )
 		{
-			timeColor = Color.Lerp(ColorManager.GetThemeColor(EThemeColor.Yellow).Bright, ColorManager.GetThemeColor(EThemeColor.Green).Bright, time - 1.0f);
+			timeColor = Color.Lerp(ColorManagerObsolete.GetThemeColor(EThemeColor.Yellow).Bright, ColorManagerObsolete.GetThemeColor(EThemeColor.Green).Bright, time - 1.0f);
 		}
 		else if( time < 3.0f )
 		{
-			timeColor = Color.Lerp(ColorManager.GetThemeColor(EThemeColor.Green).Bright, ColorManager.GetThemeColor(EThemeColor.Blue).Bright, time - 2.0f);
+			timeColor = Color.Lerp(ColorManagerObsolete.GetThemeColor(EThemeColor.Green).Bright, ColorManagerObsolete.GetThemeColor(EThemeColor.Blue).Bright, time - 2.0f);
 		}
 		else
 		{
-			timeColor = ColorManager.GetThemeColor(EThemeColor.Blue).Bright;
+			timeColor = ColorManagerObsolete.GetThemeColor(EThemeColor.Blue).Bright;
 		}
 		return timeColor;
 	}

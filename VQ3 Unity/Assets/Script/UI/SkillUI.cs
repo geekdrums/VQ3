@@ -51,7 +51,7 @@ public class SkillUI : MonoBehaviour {
 		{
 			AnimManager.AddAnim(gameObject, Vector3.zero, AnimParamType.Position, InterpType.Linear, time: 0.2f); // AnimType.Linear
 			AnimManager.AddAnim(text_.gameObject, new Vector3(0, -0.7f, -1), AnimParamType.Position, InterpType.Linear, time: 0.2f);// AnimType.Linear
-			AnimManager.AddAnim(text_.gameObject, ColorManager.Base.Dark, AnimParamType.TextColor, InterpType.Linear, time: 0.2f);// AnimType.Linear
+			AnimManager.AddAnim(text_.gameObject, ColorManagerObsolete.Base.Dark, AnimParamType.TextColor, InterpType.Linear, time: 0.2f);// AnimType.Linear
 			AnimManager.AddAnim(gameObject, 0.2f, AnimParamType.GaugeWidth, InterpType.Linear, time: 0.3f);// AnimType.Linear
 
 			AnimManager.AddAnim(text_.gameObject, Color.clear, AnimParamType.TextColor, InterpType.Linear, time: 0.2f, delay: (length * 16 - 8) * (float)Music.Meter.SecPerUnit);// AnimType.Linear

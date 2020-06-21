@@ -16,7 +16,7 @@ public class FieldConductor : MonoBehaviour {
 	public List<StageData> StageData;
 	public int StageIndex;
 	public int EncounterIndex;
-	public GameObject Setting;
+	//public GameObject Setting;
 
 	public Encounter CurrentEncounter { get { return (StageIndex >= StageData.Count || EncounterIndex >= StageData[StageIndex].Encounters.Count ? null : StageData[StageIndex].Encounters[EncounterIndex]); } }
 	public EventData CurrentEvent { get; private set; }
@@ -71,7 +71,7 @@ public class FieldConductor : MonoBehaviour {
 
     public void OnEnterSetting()
 	{
-		Setting.SetActive(true);
+		//Setting.SetActive(true);
 		if( Music.IsPlaying == false || Music.CurrentMusicName != "ambient" )
 		{
 			Music.Play("ambient");
@@ -80,12 +80,12 @@ public class FieldConductor : MonoBehaviour {
 
 	public void OnEnterBattle()
 	{
-		Setting.SetActive(false);
+		//Setting.SetActive(false);
 	}
 
 	public void OnEnterEvent()
 	{
-		Setting.SetActive(true);
+		//Setting.SetActive(true);
 	}
 
 	public GameState CheckEvent(GameState nextState)

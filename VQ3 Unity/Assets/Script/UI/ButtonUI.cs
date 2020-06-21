@@ -73,27 +73,27 @@ public class ButtonUI : MonoBehaviour
 			switch( Mode )
 			{
 			case ButtonMode.Blink:
-				Primitive.SetColor(Color.Lerp(ColorManager.Base.Shade, ColorManager.Base.Light, Music.MusicalCos(8)));
-				Text.color = ColorManager.Base.Bright;
+				Primitive.SetColor(Color.Lerp(ColorManagerObsolete.Base.Shade, ColorManagerObsolete.Base.Light, Music.MusicalCos(8)));
+				Text.color = ColorManagerObsolete.Base.Bright;
 				break;
 			case ButtonMode.Disable:
-				Primitive.SetColor(ColorManager.Base.Dark);
-				Text.color = ColorManager.Base.Shade;
+				Primitive.SetColor(ColorManagerObsolete.Base.Dark);
+				Text.color = ColorManagerObsolete.Base.Shade;
 				break;
 			default:
-				Primitive.SetColor(ColorManager.Base.Shade);
-				Text.color = ColorManager.Base.Bright;
+				Primitive.SetColor(ColorManagerObsolete.Base.Shade);
+				Text.color = ColorManagerObsolete.Base.Bright;
 				break;
 			}
 			Primitive.AnimateRadius(initialRadius_);// AnimType.Linear
 			break;
 		case PushState.Pressing:
-			Primitive.SetColor(ColorManager.Base.Light);
+			Primitive.SetColor(ColorManagerObsolete.Base.Light);
 			Text.color = Color.black;
 			Primitive.AnimateRadius(initialRadius_ - 0.5f);// AnimType.Linear
 			break;
 		case PushState.Leaving:
-			Primitive.SetColor(ColorManager.Base.Shade);
+			Primitive.SetColor(ColorManagerObsolete.Base.Shade);
 			Text.color = Color.white;
 			Primitive.AnimateRadius(initialRadius_);// AnimType.Linear
 			break;
@@ -172,8 +172,8 @@ public class ButtonUI : MonoBehaviour
 			HitCollider.enabled = (Mode != ButtonMode.Hide && Mode != ButtonMode.Disable && Mode != ButtonMode.Hiding);
 			if( Mode == ButtonMode.Disable )
 			{
-				Primitive.SetColor(ColorManager.Base.Dark);
-				Text.color = ColorManager.Base.Shade;
+				Primitive.SetColor(ColorManagerObsolete.Base.Dark);
+				Text.color = ColorManagerObsolete.Base.Shade;
 			}
 		}
 	}

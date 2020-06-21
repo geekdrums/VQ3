@@ -47,6 +47,8 @@ public class AnimComponentEditor : Editor
 			delayTimeUnitProperty_ = serializedObject.FindProperty("DelayTimeUnit");
 			childListProperty_ = serializedObject.FindProperty("ChildAnimList");
 		}
+
+		/// <img src="D:\UNITY\imagecomments\QS_20200513-035459.png"/>
 		EditorGUILayout.PropertyField(playOnStartProperty_);
 		EditorGUILayout.PropertyField(resetOnEndProperty_);
 		EditorGUILayout.PropertyField(delayProperty_);
@@ -69,6 +71,7 @@ public class AnimComponentEditor : Editor
 
 		EditorGUILayout.Space();
 		{
+			/// <img src="D:\UNITY\imagecomments\QS_20200513-035744.png"/>
 			GUILayout.BeginHorizontal();
 			{
 				EditorGUILayout.LabelField("Animations", EditorStyles.boldLabel, GUILayout.MinWidth(100));
@@ -178,8 +181,9 @@ public class AnimComponentEditor : Editor
 
 		AnimParamType paramType = ((AnimParamType)(paramProp.enumValueIndex));
 		UnityEngine.Object refObj = objectProp.objectReferenceValue;
-		
+
 		// object & property & interp params
+		/// <img src="D:\UNITY\imagecomments\QS_20200513-035744.png"/>
 		EditorGUILayout.BeginHorizontal();
 		{
 			// object
@@ -299,6 +303,8 @@ public class AnimComponentEditor : Editor
 		}
 		if( targetProp != null )
 		{
+			// from / to
+			/// <img src="D:\UNITY\imagecomments\QS_20200513-040033.png"/>
 			EditorGUILayout.BeginHorizontal();
 			{
 				EditorGUILayout.LabelField("", GUILayout.Width(10));
@@ -332,6 +338,7 @@ public class AnimComponentEditor : Editor
 		}
 
 		// time params
+		/// <img src="D:\UNITY\imagecomments\QS_20200513-040129.png"/>
 		EditorGUILayout.BeginHorizontal();
 		{
 			EditorGUILayout.LabelField("", GUILayout.Width(10));
@@ -381,6 +388,7 @@ public class AnimComponentEditor : Editor
 
 	void ListItemRightClickMenu(int index)
 	{
+		/// <img src="D:\UNITY\imagecomments\QS_20200513-040214.png"/>
 		GenericMenu menu = new GenericMenu();
 		menu.AddItem(new GUIContent("Delete"), false, () => {
 			rightClickAction_ = () =>

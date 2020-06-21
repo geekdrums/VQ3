@@ -85,12 +85,12 @@ public class CommandListUI : MonoBehaviour
 		--currentIndex_;
 		//CurrentGauge.SetColor(ColorManager.GetThemeColor(commandIcons_[currentIndex_].GetComponent<PlayerCommand>().themeColor).Bright);
 		//CurrentGaugeBase.SetColor(ColorManager.Base.Shade);
-		EdgeLine.SetColor(ColorManager.Base.Bright);
+		EdgeLine.SetColor(ColorManagerObsolete.Base.Bright);
 
 		for( int i = currentIndex_ + 1; i < commandIcons_.Count; ++i )
 		{
 			commandIcons_[i].GetComponent<PlayerCommand>().maskPlane.SetActive(true);
-			commandIcons_[i].GetComponent<PlayerCommand>().maskPlane.GetComponent<Renderer>().material.color = ColorManager.MakeAlpha(Color.black, 0.6f);
+			commandIcons_[i].GetComponent<PlayerCommand>().maskPlane.GetComponent<Renderer>().material.color = ColorManagerObsolete.MakeAlpha(Color.black, 0.6f);
 		}
 	}
 }

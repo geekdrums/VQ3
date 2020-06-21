@@ -39,11 +39,11 @@ public class CommandGraph : MonoBehaviour
 	public MidairPrimitive CurrentRect;
 	public MidairPrimitive NextRect;
 	
-	public TextMesh CurrentCommandName;
+	//public TextMesh CurrentCommandName;
 	public GameObject NextRectEffect;
 
 	public CommandExplanation CommandExp;
-	public CommandListUI CommandList;
+	//public CommandListUI CommandList;
 	public SkillCutIn SkillCutIn;
 
 	public Vector3 MaxScale = new Vector3(0.24f, 0.24f, 0.24f);
@@ -116,7 +116,7 @@ public class CommandGraph : MonoBehaviour
 		CurrentRect.transform.localRotation = Quaternion.identity;
 		NextRect.transform.localScale = Vector3.zero;
 
-		ColorManager.OnBaseColorChanged += this.OnBaseColorChanged;
+		ColorManagerObsolete.OnBaseColorChanged += this.OnBaseColorChanged;
 	}
 
 
@@ -421,7 +421,7 @@ public class CommandGraph : MonoBehaviour
 		case BattleState.Endro:
 			break;
 		}
-		CurrentRect.SetColor(ColorManager.Base.Front);
+		CurrentRect.SetColor(ColorManagerObsolete.Base.Front);
 	}
 
 	void OnSkillCutIn()
@@ -521,7 +521,7 @@ public class CommandGraph : MonoBehaviour
 				NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.one * 0.1f, 0.2f);
 			}
 			NextRect.transform.rotation = Quaternion.identity;
-			NextRect.SetColor(ColorManager.Base.Front);
+			NextRect.SetColor(ColorManagerObsolete.Base.Front);
 			NextRect.SetSize(1.5f);
 			NextRect.SetWidth(0.2f);
 			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(1.5f);
@@ -743,16 +743,16 @@ public class CommandGraph : MonoBehaviour
 				CurrentRect.transform.localRotation = Quaternion.identity;
 			}
 
-			Color themeColor = ColorManager.GetThemeColor(CurrentCommand.themeColor).Bright;
-			CurrentCommandName.text = CurrentCommand.nameText.ToUpper();
-			CurrentCommandName.color = themeColor;
-			CurrentCommandName.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
-			CommandList.OnExecCommand();
+			Color themeColor = ColorManagerObsolete.GetThemeColor(CurrentCommand.themeColor).Bright;
+			//CurrentCommandName.text = CurrentCommand.nameText.ToUpper();
+			//CurrentCommandName.color = themeColor;
+			//CurrentCommandName.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
+			//CommandList.OnExecCommand();
 			CommandExp.Reset();
 		}
 		else
 		{
-			CurrentCommandName.text = "";
+			//CurrentCommandName.text = "";
 		}
 	}
 
@@ -900,7 +900,7 @@ public class CommandGraph : MonoBehaviour
 			}
 			NextCommand = null;
 			NextRect.transform.localScale = Vector3.zero;
-			CommandList.DeleteCommand();
+			//CommandList.DeleteCommand();
 		}
 	}
 
@@ -908,9 +908,9 @@ public class CommandGraph : MonoBehaviour
 	{
 		if( NextCommand != null )
 		{
-			CommandList.DeleteCommand();
+			//CommandList.DeleteCommand();
 		}
-		CommandList.AddCommand(command);
+		//CommandList.AddCommand(command);
 		NextCommand = command;
 		foreach(PlayerCommand notSelectedCommand in GetLinkedCommands())
 		{
@@ -935,7 +935,7 @@ public class CommandGraph : MonoBehaviour
 		}
 		NextRect.SetWidth(3.0f);
 		NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(3.0f);
-		Color themeColor = ColorManager.GetThemeColor(NextCommand.themeColor).Bright;
+		Color themeColor = ColorManagerObsolete.GetThemeColor(NextCommand.themeColor).Bright;
 		GameObject effect = Instantiate(NextRectEffect, NextRect.transform.position, Quaternion.identity) as GameObject;
 		effect.transform.parent = NextRect.transform;
 		effect.transform.localPosition = Vector3.forward;

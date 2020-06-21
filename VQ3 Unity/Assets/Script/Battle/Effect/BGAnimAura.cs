@@ -46,15 +46,15 @@ public class BGAnimAura : BGAnimBase {
 				switch( mt )
 				{
 				case 0:
-					gauges_[animIndex_].SetColor(ColorManager.Theme.Bright);
+					gauges_[animIndex_].SetColor(ColorManagerObsolete.Theme.Bright);
 					gauges_[animIndex_].SetWidth(AccentWidth);
 					break;
 				case 2:
-					gauges_[animIndex_].SetColor(ColorManager.Theme.Shade);
+					gauges_[animIndex_].SetColor(ColorManagerObsolete.Theme.Shade);
 					gauges_[animIndex_].SetWidth(DefaultWidth);
 					break;
 				case 3:
-					gauges_[animIndex_].SetColor(ColorManager.Theme.Shade);
+					gauges_[animIndex_].SetColor(ColorManagerObsolete.Theme.Shade);
 					gauges_[animIndex_].SetWidth(DefaultWidth);
 					break;
 				default:

@@ -94,7 +94,7 @@ public class SkillListUI : MonoBehaviour {
 			enhance.Reset();
 		}
 
-		Color baseColor = ColorManager.Base.Bright;
+		Color baseColor = ColorManagerObsolete.Base.Bright;
 
 		if( commandData_ != null )
 		{
@@ -111,7 +111,7 @@ public class SkillListUI : MonoBehaviour {
 				++number;
 			}
 
-			ThemeColor themeColor = ColorManager.GetThemeColor(commandData_.OwnerCommand.themeColor);
+			ThemeColor themeColor = ColorManagerObsolete.GetThemeColor(commandData_.OwnerCommand.themeColor);
 			baseColor = themeColor.Bright;
 			foreach( KeyValuePair<Timing, Skill> pair in commandData_.SkillDictionary )
 			{
@@ -120,13 +120,13 @@ public class SkillListUI : MonoBehaviour {
 
 				if( skill.length <= 0 ) continue;
 
-				skillData_[number].Set(skill.shortName, skill.length, baseColor, ColorManager.Base.Bright);
+				skillData_[number].Set(skill.shortName, skill.length, baseColor, ColorManagerObsolete.Base.Bright);
 				++number;
 			}
 
 			if( commandData_.OwnerCommand is RevertCommand )
 			{
-				skillData_[number].Set("OVERLOAD", 2, ColorManager.Base.Back, ColorManager.Base.Bright);
+				skillData_[number].Set("OVERLOAD", 2, ColorManagerObsolete.Base.Back, ColorManagerObsolete.Base.Bright);
 			}
 		}
 

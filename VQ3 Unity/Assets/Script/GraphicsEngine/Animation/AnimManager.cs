@@ -6,12 +6,6 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-public interface IColoredObject
-{
-	void SetColor(Color color);
-	Color GetColor();
-}
-
 public enum AnimParamType
 {
 	// for RemoveAnim
@@ -245,7 +239,18 @@ public abstract class AnimationBase
 	public float TotalTimeSec { get { return DelayTimeSec + AnimTimeSec; } }
 	public bool IsPlaying { get { return State == AnimationState.Playing; } }
 
-	protected float currentValueFloat { get { return (float)initialValue_ + ((float)targetValue_ - (float)initialValue_) * animValue_; } }
+	protected float currentValueFloat
+	{
+		get
+		{
+			if( targetValue_ is float == false || initialValue_ is float == false )
+			{
+				Debug.LogError(string.Format("value is not float! Object: {0}, Param: {1}", Object, Param));
+				return 0;
+			}
+			return (float)initialValue_ + ((float)targetValue_ - (float)initialValue_) * animValue_;
+		}
+	}
 	protected Vector3 currentValueVector3 { get { return (Vector3)initialValue_ + ((Vector3)targetValue_ - (Vector3)initialValue_) * animValue_; } }
 	protected Vector2 currentValueVector2 { get { return (Vector2)initialValue_ + ((Vector2)targetValue_ - (Vector2)initialValue_) * animValue_; } }
 	protected Color currentValueColor { get { return Color.Lerp((Color)initialValue_, (Color)targetValue_, animValue_); } }
@@ -320,7 +325,10 @@ public abstract class AnimationBase
 
 		State = AnimationState.End;
 		UpdateAnimation();
-		AnimManager.RemoveAnim(this);
+		if( OnEnd != null )
+		{
+			OnEnd(this);
+		}
 	}
 
 	#endregion
@@ -362,15 +370,12 @@ public abstract class AnimationBase
 
 		if( State == AnimationState.Playing )
 		{
+			UpdateTimeValue();
 			UpdateAnimation();
 
 			if( IsEnd )
 			{
-				EndAnim();
-			}
-			else
-			{
-				UpdateTimeValue();
+				OnEndAnim();
 			}
 		}
 	}
@@ -410,11 +415,11 @@ public abstract class AnimationBase
 			animValue_ = 1.0f;
 			remainDelayTime_ = 0;
 			State = AnimationState.End;
-			EndAnim();
+			OnEndAnim();
 		}
 	}
 	
-	protected void EndAnim()
+	protected void OnEndAnim()
 	{
 		if( Object == null ) return;
 
@@ -433,7 +438,7 @@ public abstract class AnimationBase
 			animValue_ = 0;
 			return;
 		}
-		else if( AnimManager.IsAnimating(Object) == false )
+		else if( AnimManager.IsAnimating(Object, self: this) == false )
 		{
 			if( EndOption == AnimEndOption.Destroy )
 			{
@@ -669,7 +674,7 @@ public abstract class AnimationBase
 
 	#region set
 
-	public AnimationBase SetInitialValue(object initValue)
+	public AnimationBase From(object initValue)
 	{
 		initialValue_ = initValue;
 		UpdateAnimation();
@@ -1015,7 +1020,7 @@ public class PrimitiveAnimaion : AnimationBase
 				initialValue_ = (float)primitive_.ArcRate;
 				break;
 			case AnimParamType.PrimitiveStartArc:
-				//initialValue_ = (float)primitive_.StartArcRate;
+				initialValue_ = (float)primitive_.StartArcRate;
 				break;
 			}
 		}
@@ -1055,7 +1060,7 @@ public class PrimitiveAnimaion : AnimationBase
 				primitive_.SetArc(currentValueFloat);
 				break;
 			case AnimParamType.PrimitiveStartArc:
-				//primitive_.SetStartArc(currentValueFloat);
+				primitive_.SetStartArc(currentValueFloat);
 				break;
 			}
 		}
@@ -1183,6 +1188,7 @@ public class GaugeAnimaion : AnimationBase
 public class ColorAnimaion : AnimationBase
 {
 	protected IColoredObject coloredObj_;
+	protected Image image_;
 	protected Color baseColor_;
 
 	public ColorAnimaion(GameObject obj, object target, AnimParamType paramType, InterpType interpType, TimeUnitType timeUnit, float time = 0.1f, float delay = 0.0f, AnimEndOption endOption = AnimEndOption.None)
@@ -1194,34 +1200,63 @@ public class ColorAnimaion : AnimationBase
 		}
 
 		coloredObj_ = Object.GetComponent<IColoredObject>();
+		image_ = Object.GetComponent<Image>();
 		if( Param == AnimParamType.AlphaColor )
 		{
-			baseColor_ = (Color)coloredObj_.GetColor();
+			baseColor_ = coloredObj_ != null ? coloredObj_.GetColor() : image_.color;
 			baseColor_.a = 1.0f;
 		}
 	}
 
 	protected override void CacheInitialValue()
 	{
-		if( Param == AnimParamType.AlphaColor )
+		if( coloredObj_ != null )
 		{
-			initialValue_ = coloredObj_.GetColor().a;
+			if( Param == AnimParamType.AlphaColor )
+			{
+				initialValue_ = coloredObj_.GetColor().a;
+			}
+			else
+			{
+				initialValue_ = coloredObj_.GetColor();
+			}
 		}
-		else
+		else if( image_ != null )
 		{
-			initialValue_ = coloredObj_.GetColor();
+			if( Param == AnimParamType.AlphaColor )
+			{
+				initialValue_ = image_.color.a;
+			}
+			else
+			{
+				initialValue_ = image_.color;
+			}
 		}
 	}
 
 	protected override void UpdateAnimation()
 	{
-		if( Param == AnimParamType.Color )
+		if( coloredObj_ != null )
 		{
-			coloredObj_.SetColor(currentValueColor);
+			if( Param == AnimParamType.Color )
+			{
+				coloredObj_.SetColor(currentValueColor);
+			}
+			else if( Param == AnimParamType.AlphaColor )
+			{
+				coloredObj_.SetColor(ColorPropertyUtil.MakeAlpha(baseColor_, Mathf.Lerp((float)initialValue_, (float)targetValue_, animValue_)));
+			}
 		}
-		else if( Param == AnimParamType.AlphaColor )
+		else if( image_ != null )
 		{
-			coloredObj_.SetColor(ColorManager.MakeAlpha(baseColor_, Mathf.Lerp((float)initialValue_, (float)targetValue_, animValue_)));
+			if( Param == AnimParamType.Color )
+			{
+				image_.color = currentValueColor;
+			}
+			else if( Param == AnimParamType.AlphaColor )
+			{
+				image_.color = ColorPropertyUtil.MakeAlpha(baseColor_, Mathf.Lerp((float)initialValue_, (float)targetValue_, animValue_));
+			}
 		}
 	}
 }
@@ -1320,7 +1355,7 @@ public class TextColorAnimaion : AnimationBase
 			}
 			else if( Param == AnimParamType.TextAlphaColor )
 			{
-				text_.color = ColorManager.MakeAlpha(baseColor_, Mathf.Lerp((float)initialValue_, (float)targetValue_, animValue_));
+				text_.color = ColorPropertyUtil.MakeAlpha(baseColor_, Mathf.Lerp((float)initialValue_, (float)targetValue_, animValue_));
 			}
 		}
 		else if( uitext_ != null )
@@ -1331,7 +1366,7 @@ public class TextColorAnimaion : AnimationBase
 			}
 			else if( Param == AnimParamType.TextAlphaColor )
 			{
-				uitext_.color = ColorManager.MakeAlpha(baseColor_, Mathf.Lerp((float)initialValue_, (float)targetValue_, animValue_));
+				uitext_.color = ColorPropertyUtil.MakeAlpha(baseColor_, Mathf.Lerp((float)initialValue_, (float)targetValue_, animValue_));
 			}
 		}
 	}
@@ -1498,22 +1533,22 @@ public class AnimManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		// Removeされるように命令されたものをEndしてから抜く
+		foreach( AnimationBase removeAnim in removeAnims_ )
+		{
+			animations_.Remove(removeAnim);
+		}
+		removeAnims_.Clear();
+
 		// Updateしつつ、終わったものはRemoveリストに入れる
 		foreach( AnimationBase anim in animations_ )
 		{
 			anim.Update();
-			if( anim.State == AnimationBase.AnimationState.End )
+			if( anim.IsEnd )
 			{
 				removeAnims_.Add(anim);
 			}
 		}
-
-		// Removeリストから全てのEndAnimを呼んでリストから抜く
-		foreach( AnimationBase endAnim in removeAnims_ )
-		{
-			animations_.Remove(endAnim);
-		}
-		removeAnims_.Clear();
 	}
 
 	public static GameObject ToGameObject(Object obj)
@@ -1663,22 +1698,57 @@ public class AnimManager : MonoBehaviour
 
 	public static void RemoveAnim(AnimationBase anim)
 	{
-		Instance.animations_.Remove(anim);
+		if( Instance.removeAnims_.Contains(anim) == false )
+		{
+			anim.End();
+			Instance.removeAnims_.Add(anim);
+		}
 	}
 
 	public static void RemoveOtherAnim(AnimationBase anim, bool includeDaly = false)
 	{
-		Instance.animations_.RemoveAll((AnimationBase other) => other != anim && other.Object == anim.Object && other.Param == anim.Param && (includeDaly || other.IsPlaying));
+		foreach( AnimationBase foundAnim in Instance.animations_.FindAll((AnimationBase other) => other != anim && other.Object == anim.Object && other.Param == anim.Param && (includeDaly || other.IsPlaying)) )
+		{
+			if( Instance.removeAnims_.Contains(foundAnim) == false )
+			{
+				foundAnim.End();
+				Instance.removeAnims_.Add(foundAnim);
+			}
+		}
 	}
 
 	public static void RemoveOtherAnim(Object obj, AnimParamType type = AnimParamType.Any, bool includeDaly = true)
 	{
-		Instance.animations_.RemoveAll((AnimationBase other) => other.Object == ToGameObject(obj) && (type == AnimParamType.Any || type == other.Param) && (includeDaly || other.IsPlaying));
+		foreach( AnimationBase foundAnim in Instance.animations_.FindAll((AnimationBase other) => other.Object == ToGameObject(obj) && (type == AnimParamType.Any || type == other.Param) && (includeDaly || other.IsPlaying)) )
+		{
+			if( Instance.removeAnims_.Contains(foundAnim) == false )
+			{
+				foundAnim.End();
+				Instance.removeAnims_.Add(foundAnim);
+			}
+		}
+	}
+
+	public static void RemoveChildAnim(Object obj, AnimParamType type = AnimParamType.Any, bool includeDaly = true)
+	{
+		foreach( AnimationBase foundAnim in Instance.animations_.FindAll((AnimationBase other) => other.Object.transform.IsChildOf(ToGameObject(obj).transform) && (type == AnimParamType.Any || type == other.Param) && (includeDaly || other.IsPlaying)) )
+		{
+			if( Instance.removeAnims_.Contains(foundAnim) == false )
+			{
+				foundAnim.End();
+				Instance.removeAnims_.Add(foundAnim);
+			}
+		}
 	}
 }
 
 public static class AnimFunctionExtents
 {
+	public static void RemoveOtherAnim(this GameObject obj)
+	{
+		AnimManager.RemoveOtherAnim(obj);
+	}
+
 	// --------------- AnimateGameObject --------------- //
 	public static AnimationBase AnimateON(this GameObject obj, float time, TimeUnitType timeUnit = TimeUnitType.Sec, AnimEndOption endOption = AnimEndOption.None)
 	{
@@ -1885,6 +1955,13 @@ public static class AnimFunctionExtents
 	public static AnimationBase AnimateAlphaColor(this GaugeRenderer obj, float target, InterpType interpType = InterpType.Linear, TimeUnitType timeUnit = TimeUnitType.Sec,  float time = 0.1f, float delay = 0.0f, AnimEndOption endOption = AnimEndOption.None)
 	{
 		return AnimManager.AddAnim(obj.gameObject, target, AnimParamType.AlphaColor, interpType, timeUnit, time, delay, endOption);
+	}
+
+
+	// --------------- AnimateColor --------------- //
+	public static AnimationBase AnimateColor(this Image obj, Color target, InterpType interpType = InterpType.Linear, TimeUnitType timeUnit = TimeUnitType.Sec, float time = 0.1f, float delay = 0.0f, AnimEndOption endOption = AnimEndOption.None)
+	{
+		return AnimManager.AddAnim(obj.gameObject, target, AnimParamType.Color, interpType, timeUnit, time, delay, endOption);
 	}
 
 	// --------------- AnimateTextColor --------------- //

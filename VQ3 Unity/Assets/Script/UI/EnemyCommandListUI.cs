@@ -185,7 +185,7 @@ public class EnemyCommandListUI : MonoBehaviour
 				MidairPrimitive mask = commandIcons_[i].GetComponentsInChildren<MidairPrimitive>().First((MidairPrimitive primitive) => primitive.name == "Mask");
 				if( mask != null )
 				{
-					mask.SetColor(ColorManager.MakeAlpha(Color.black, 0.3f));
+					mask.SetColor(ColorManagerObsolete.MakeAlpha(Color.black, 0.3f));
 				}
 			}
 		}

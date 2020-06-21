@@ -77,11 +77,11 @@ public class AnimComponent : MonoBehaviour
 
 			if( ai.HasInitialValue && ai.GetInitial() != null )
 			{
-				animation.SetInitialValue(ai.GetInitial());
+				animation.From(ai.GetInitial());
 			}
 			if( animation is TextAnimaion )
 			{
-				animation.SetInitialValue("");
+				animation.From("");
 			}
 			if( animation is ShaderAnimation )
 			{

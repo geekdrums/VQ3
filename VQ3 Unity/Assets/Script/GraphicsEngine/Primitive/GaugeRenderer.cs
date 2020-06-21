@@ -7,9 +7,11 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class GaugeRenderer : MeshComponentBase, IColoredObject
 {
-	public float Length = 200.0f;
-	public float Width = 2.0f;
+	public float Length = 1.0f;
+	public float Width = 0.1f;
+	[Range(0, 1)]
 	public float Rate = 1.0f;
+	[Range(0, 1)]
 	public float StartRate = 0.0f;
 	public Color LineColor = Color.black;
 	public float Slide = 0.0f;
@@ -18,6 +20,50 @@ public class GaugeRenderer : MeshComponentBase, IColoredObject
 	Rect rect_ = new Rect();
 	List<Vector3> meshVertices_;
 	List<Color> meshColors_;
+
+	float cachedRate_;
+	float cachedStartRate_;
+	float cachedWidth_;
+	float cachedLength_;
+	Color cachedColor_;
+
+	void Awake()
+	{
+		UpdatePropertyCache();
+	}
+
+	void Update()
+	{
+		CheckPropertyCacheUpdate();
+	}
+
+	void UpdatePropertyCache()
+	{
+		cachedRate_ = Rate;
+		cachedStartRate_ = StartRate;
+		cachedWidth_ = Width;
+		cachedLength_ = Length;
+		cachedColor_ = LineColor;
+	}
+
+	void CheckPropertyCacheUpdate()
+	{
+		bool rateChanged		= cachedRate_		!= Rate;
+		bool startRateChanged	= cachedStartRate_	!= StartRate;
+		bool widthChanged		= cachedWidth_		!= Width;
+		bool lengthChanged		= cachedLength_		!= Length;
+		bool colorChanged		= cachedColor_		!= LineColor;
+
+		if( rateChanged || startRateChanged || widthChanged || lengthChanged )
+		{
+			RecalculatePolygon();
+		}
+		else  if( colorChanged )
+		{
+			UpdateColor();
+		}
+	}
+
 
 	public override void RecalculatePolygon(bool forceReflesh = false)
 	{
@@ -114,8 +160,7 @@ public class GaugeRenderer : MeshComponentBase, IColoredObject
 		mesh.SetVertices(meshVertices_);
 		mesh.SetColors(meshColors_);
 		mesh.RecalculateBounds();
-
-		MeshInstance = mesh;
+		UpdatePropertyCache();
 	}
 
 	public void SetLength(float length)
@@ -156,7 +201,7 @@ public class GaugeRenderer : MeshComponentBase, IColoredObject
 
 	void UpdateColor()
 	{
-		if( meshColors_ != null )
+		if( meshColors_ != null && mesh_ != null && mesh_.vertexCount == meshColors_.Count )
 		{
 			for( int i = 0; i < meshColors_.Count; ++i )
 			{
@@ -170,5 +215,6 @@ public class GaugeRenderer : MeshComponentBase, IColoredObject
 		{
 			RecalculatePolygon();
 		}
+		cachedColor_ = LineColor;
 	}
 }

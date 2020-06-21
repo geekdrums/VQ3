@@ -95,7 +95,7 @@ public class BattleConductor : MonoBehaviour {
 			{
 				ClearSkills();
 				GameContext.SetState(GameState.Result);
-				ColorManager.SetBaseColor(EBaseColor.Black);
+				ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
 				SetState(BattleState.None);
 			}
 			break;

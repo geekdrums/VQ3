@@ -105,8 +105,8 @@ public class PlayerCommandData : CommandBase
 	public Color GetAtkColor()
 	{
 		float atk = GetAtk();
-		ThemeColor theme = ColorManager.GetThemeColor(OwnerCommand.themeColor);
-		BaseColor baseColor = ColorManager.Base;
+		ThemeColor theme = ColorManagerObsolete.GetThemeColor(OwnerCommand.themeColor);
+		BaseColor baseColor = ColorManagerObsolete.Base;
 		if( atk <= 0 )
 		{
 			return baseColor.MiddleBack;
@@ -127,8 +127,8 @@ public class PlayerCommandData : CommandBase
 	public Color GetHealColor()
 	{
 		float heal = GetHeal();
-		ThemeColor theme = ColorManager.GetThemeColor(OwnerCommand.themeColor);
-		BaseColor baseColor = ColorManager.Base;
+		ThemeColor theme = ColorManagerObsolete.GetThemeColor(OwnerCommand.themeColor);
+		BaseColor baseColor = ColorManagerObsolete.Base;
 		if( heal <= 0 )
 		{
 			return baseColor.MiddleBack;
@@ -149,8 +149,8 @@ public class PlayerCommandData : CommandBase
 	public Color GetDefColor()
 	{
 		float def = GetDefend();
-		ThemeColor theme = ColorManager.GetThemeColor(OwnerCommand.themeColor);
-		BaseColor baseColor = ColorManager.Base;
+		ThemeColor theme = ColorManagerObsolete.GetThemeColor(OwnerCommand.themeColor);
+		BaseColor baseColor = ColorManagerObsolete.Base;
 		if( def <= 0 )
 		{
 			return baseColor.MiddleBack;
@@ -171,19 +171,19 @@ public class PlayerCommandData : CommandBase
 	public Color GetVPColor()
 	{
 		float vp = GetVP();
-		Color color = ColorManager.Accent.Break;
-		BaseColor baseColor = ColorManager.Base;
+		Color color = ColorManagerObsolete.Accent.Break;
+		BaseColor baseColor = ColorManagerObsolete.Base;
 		if( vp <= 0 )
 		{
 			return baseColor.MiddleBack;
 		}
 		else if( vp <= 15 )
 		{
-			return ColorManager.MakeAlpha(color, 0.2f);
+			return ColorManagerObsolete.MakeAlpha(color, 0.2f);
 		}
 		else if( vp <= 30 )
 		{
-			return ColorManager.MakeAlpha(color, 0.5f);
+			return ColorManagerObsolete.MakeAlpha(color, 0.5f);
 		}
 		else
 		{
@@ -193,19 +193,19 @@ public class PlayerCommandData : CommandBase
 	public Color GetVTColor()
 	{
 		float vt = GetVT();
-		Color color = ColorManager.Accent.Time;
-		BaseColor baseColor = ColorManager.Base;
+		Color color = ColorManagerObsolete.Accent.Time;
+		BaseColor baseColor = ColorManagerObsolete.Base;
 		if( vt <= 0 )
 		{
 			return baseColor.MiddleBack;
 		}
 		else if( vt <= 15 )
 		{
-			return ColorManager.MakeAlpha(color, 0.2f);
+			return ColorManagerObsolete.MakeAlpha(color, 0.2f);
 		}
 		else if( vt <= 30 )
 		{
-			return ColorManager.MakeAlpha(color, 0.5f);
+			return ColorManagerObsolete.MakeAlpha(color, 0.5f);
 		}
 		else
 		{
@@ -215,8 +215,8 @@ public class PlayerCommandData : CommandBase
 	public Color GetEnhColor()
 	{
 		List<EnhanceModule> enh = GetEnhModules();
-		ThemeColor theme = ColorManager.GetThemeColor(OwnerCommand.themeColor);
-		BaseColor baseColor = ColorManager.Base;
+		ThemeColor theme = ColorManagerObsolete.GetThemeColor(OwnerCommand.themeColor);
+		BaseColor baseColor = ColorManagerObsolete.Base;
 		if( enh == null || enh.Count == 0 )
 		{
 			return baseColor.Back;

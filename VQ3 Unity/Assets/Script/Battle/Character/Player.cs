@@ -186,7 +186,7 @@ public class Player : Character
 				if( HitPoint > MaxHP * (DangerPercentage + DangerHysteresis) / 100.0f )
 				{
 					IsDangerMode = false;
-					ColorManager.SetBaseColor(EBaseColor.Black);
+					ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
 					Music.SetAisac("Danger", 0);
 				}
 				else
@@ -199,7 +199,7 @@ public class Player : Character
 				if( HitPoint <= MaxHP * DangerPercentage / 100.0f )
 				{
 					IsDangerMode = true;
-					ColorManager.SetBaseColor(EBaseColor.Red);
+					ColorManagerObsolete.SetBaseColor(EBaseColor.Red);
 					CutInUI.SetDanger();
 					Music.SetAisac("Danger", 1);
 				}

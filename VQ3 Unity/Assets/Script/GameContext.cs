@@ -52,7 +52,7 @@ public static class GameContext
 		case GameState.Battle:
 			LuxSystem.OnBattleStarted(FieldConductor.CurrentEncounter);
 			Music.Play("BattleMusic", "Intro");
-			ColorManager.SetBaseColor(EBaseColor.Black);
+			ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
 			FieldConductor.OnEnterBattle();
 			BattleConductor.SetState(BattleState.Intro);
 			LuxSystem.SetState(LuxState.Sun);
@@ -70,7 +70,7 @@ public static class GameContext
 			PlayerConductor.OnEnterResult();
 			break;
 		case GameState.Setting:
-			ColorManager.SetBaseColor(EBaseColor.Black);
+			ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
 			FieldConductor.OnEnterSetting();
 			PlayerConductor.OnEnterSetting();
 			ResultConductor.OKButton.SetMode(ButtonMode.Hide, true);

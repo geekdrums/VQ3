@@ -103,17 +103,17 @@ public class DamageText : MonoBehaviour
 		Color vpColor = Color.white;
 		if( VP >= 10 )
 		{
-			vpColor = ColorManager.Accent.Break;
+			vpColor = ColorManagerObsolete.Accent.Break;
 			VPCount.CounterScale = MaxCounterScale;
 		}
 		else if( VP >= 4 )
 		{
-			vpColor = Color.Lerp(ColorManager.Accent.Break, ColorManager.Base.Bright, 0.3f);
+			vpColor = Color.Lerp(ColorManagerObsolete.Accent.Break, ColorManagerObsolete.Base.Bright, 0.3f);
 			VPCount.CounterScale = MidCounterScale;
 		}
 		else
 		{
-			vpColor = ColorManager.Base.MiddleBack;
+			vpColor = ColorManagerObsolete.Base.MiddleBack;
 			VPCount.CounterScale = MinCounterScale;
 		}
 		VPCount.CounterColor = vpColor;
@@ -122,17 +122,17 @@ public class DamageText : MonoBehaviour
 		Color timeColor = Color.white;
 		if( Time >= 0.5f )
 		{
-			timeColor = ColorManager.Accent.Time;
+			timeColor = ColorManagerObsolete.Accent.Time;
 			VTCount.CounterScale = MaxCounterScale;
 		}
 		else if( Time >= 0.2f )
 		{
-			timeColor = Color.Lerp(ColorManager.Accent.Time, ColorManager.Base.Bright, 0.3f);
+			timeColor = Color.Lerp(ColorManagerObsolete.Accent.Time, ColorManagerObsolete.Base.Bright, 0.3f);
 			VTCount.CounterScale = MidCounterScale;
 		}
 		else
 		{
-			timeColor = ColorManager.Base.MiddleBack;
+			timeColor = ColorManagerObsolete.Base.MiddleBack;
 			VTCount.CounterScale = MinCounterScale;
 		}
 		VTCount.CounterColor = timeColor;
@@ -150,17 +150,17 @@ public class DamageText : MonoBehaviour
 		{
 		case ActionResult.MagicDamage:
 		case ActionResult.PhysicDamage:
-			color = ColorManager.Accent.Damage;
+			color = ColorManagerObsolete.Accent.Damage;
 			transform.localScale = Vector3.one;
 			break;
 		case ActionResult.MagicBadDamage:
 		case ActionResult.PhysicBadDamage:
-			color = ColorManager.Base.MiddleBack;
+			color = ColorManagerObsolete.Base.MiddleBack;
 			transform.localScale = Vector3.one * 0.7f;
 			break;
 		case ActionResult.MagicGoodDamage:
 		case ActionResult.PhysicGoodDamage:
-			color = ColorManager.Accent.Critical;
+			color = ColorManagerObsolete.Accent.Critical;
 			if( GameContext.LuxSystem.State == LuxState.Overload )
 			{
 				transform.localScale = Vector3.one * 1.4f;
@@ -175,7 +175,7 @@ public class DamageText : MonoBehaviour
 			}
 			break;
 		case ActionResult.EnemyHeal:
-			color = ColorManager.Accent.Heal;
+			color = ColorManagerObsolete.Accent.Heal;
 			transform.localScale = Vector3.one;
 			foreach( TextMesh text in GetComponentsInChildren<TextMesh>() )
 			{
@@ -184,11 +184,11 @@ public class DamageText : MonoBehaviour
 			break;
 		case ActionResult.PlayerPhysicDamage:
 		case ActionResult.PlayerMagicDamage:
-			color = ColorManager.Accent.PlayerDamage;
+			color = ColorManagerObsolete.Accent.PlayerDamage;
 			transform.localScale = Vector3.one;
 			break;
 		case ActionResult.VPDrain:
-			color = ColorManager.Accent.Drain;
+			color = ColorManagerObsolete.Accent.Drain;
 			transform.localScale = Vector3.one;
 			foreach( TextMesh text in GetComponentsInChildren<TextMesh>() )
 			{
@@ -196,7 +196,7 @@ public class DamageText : MonoBehaviour
 			}
 			break;
 		default:
-			color = ColorManager.Accent.Drain;
+			color = ColorManagerObsolete.Accent.Drain;
 			transform.localScale = Vector3.one;
 			break;
 		}

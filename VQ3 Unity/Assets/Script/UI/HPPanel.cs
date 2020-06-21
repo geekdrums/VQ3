@@ -32,7 +32,7 @@ public class HPPanel : MonoBehaviour {
 	{
 		turnStartHP_ = Player.HitPoint;
 		MaxHPCount.Count = Player.MaxHP;
-		CurrentBar.SetColor(ColorManager.Base.Front);
+		CurrentBar.SetColor(ColorManagerObsolete.Base.Front);
 		CurrentBar.SetRate(1);
 		UpdateHPText();
 
@@ -50,13 +50,13 @@ public class HPPanel : MonoBehaviour {
 		
 		if( currentCommand_.currentData.HealPercent > 0 )
         {
-            MaxHPCount.CounterColor = ColorManager.Theme.Light;
-            CurrentBar.SetColor( ColorManager.Theme.Light );
+            MaxHPCount.CounterColor = ColorManagerObsolete.Theme.Light;
+            CurrentBar.SetColor( ColorManagerObsolete.Theme.Light );
         }
         else
         {
-            MaxHPCount.CounterColor = ColorManager.Base.Front;
-            CurrentBar.SetColor( ColorManager.Base.Front );
+            MaxHPCount.CounterColor = ColorManagerObsolete.Base.Front;
+            CurrentBar.SetColor( ColorManagerObsolete.Base.Front );
         }
     }
     public void OnDamage( int damage )

@@ -35,7 +35,7 @@ public class CommandExplanation : MonoBehaviour
 
 		public void SetZero()
 		{
-			SetColor(ColorManager.Base.MiddleBack);
+			SetColor(ColorManagerObsolete.Base.MiddleBack);
 			SetParam(0);
 		}
 
@@ -46,11 +46,11 @@ public class CommandExplanation : MonoBehaviour
 		}
 	}
 
-	public CommandParam ATParam;
-	public CommandParam HLParam;
-	public CommandParam DFParam;
-	public CommandParam VTParam;
-	public CommandParam VPParam;
+	//public CommandParam ATParam;
+	//public CommandParam HLParam;
+	//public CommandParam DFParam;
+	//public CommandParam VTParam;
+	//public CommandParam VPParam;
 	public SkillListUI SkillListUI;
 
 	public enum Phase
@@ -91,15 +91,15 @@ public class CommandExplanation : MonoBehaviour
 		//	Destroy(IconParent.transform.GetChild(0).gameObject);
 		//}
 		commandData_ = command.currentData;
-		ThemeColor themeColor = ColorManager.GetThemeColor(command.themeColor);
+		ThemeColor themeColor = ColorManagerObsolete.GetThemeColor(command.themeColor);
 		CommandName.text = command.nameText.ToUpper();
 		CommandName.color = themeColor.Bright;
 
 		if( isPreview )
 		{
-			Mask.SetColor(ColorManager.Base.Back);
+			Mask.SetColor(ColorManagerObsolete.Base.Back);
 		}
-		Mask.AnimateColor(ColorManager.MakeAlpha(ColorManager.Base.Back, isPreview ? MaskAlpha : 0.0f));//, AnimType.Linear, 0.1f);
+		Mask.AnimateColor(ColorManagerObsolete.MakeAlpha(ColorManagerObsolete.Base.Back, isPreview ? MaskAlpha : 0.0f));//, AnimType.Linear, 0.1f);
 
 		//GameObject iconObj = command.InstantiateIconObj(IconParent);
 		if( GameContext.State == GameState.Result || GameContext.State == GameState.Event )
@@ -114,7 +114,7 @@ public class CommandExplanation : MonoBehaviour
 		{
 			NameBase.SetColor(themeColor.Bright);
 			LVText.gameObject.SetActive(true);
-			LVText.color = ColorManager.Base.Bright;
+			LVText.color = ColorManagerObsolete.Base.Bright;
 			LVText.color = themeColor.Bright;
 			LVCount.CounterColor = themeColor.Bright;
 			Explanation.text = commandData_.ExplanationText.Replace("<br/>", System.Environment.NewLine);
@@ -129,11 +129,12 @@ public class CommandExplanation : MonoBehaviour
 		{
 			NameBase.SetColor(themeColor.Shade);
 			LVText.gameObject.SetActive(true);
-			LVText.color = ColorManager.Base.Shade;
-			LVCount.CounterColor= ColorManager.Base.Shade;
+			LVText.color = ColorManagerObsolete.Base.Shade;
+			LVCount.CounterColor= ColorManagerObsolete.Base.Shade;
 			Explanation.text = "未習得";
 		}
 
+		/*
 		if( commandData_ != null )
 		{
 			ATParam.SetParam(commandData_.GetAtk());
@@ -183,6 +184,7 @@ public class CommandExplanation : MonoBehaviour
 				VTParam.SetZero();
 			}
 		}
+		*/
 
 		LVCount.Count = command.currentLevel;
 
@@ -194,14 +196,14 @@ public class CommandExplanation : MonoBehaviour
 
 	public void Reset()
 	{
-		NameBase.SetColor(ColorManager.Base.Bright);
+		NameBase.SetColor(ColorManagerObsolete.Base.Bright);
 		CommandName.text = "NEXT?";
-		CommandName.color = ColorManager.Base.Bright;
+		CommandName.color = ColorManagerObsolete.Base.Bright;
 		LVText.color = Color.clear;
 		LVCount.CounterColor = Color.clear;
 		Explanation.text = "";
-		Mask.SetColor(ColorManager.Base.Back);
-		Mask.AnimateColor(ColorManager.MakeAlpha(ColorManager.Base.Back, MaskAlpha));// AnimType.Linear, 0.1f);
+		Mask.SetColor(ColorManagerObsolete.Base.Back);
+		Mask.AnimateColor(ColorManagerObsolete.MakeAlpha(ColorManagerObsolete.Base.Back, MaskAlpha));// AnimType.Linear, 0.1f);
 
 		SkillListUI.Set(null);
 	}
@@ -226,9 +228,9 @@ public class CommandExplanation : MonoBehaviour
 	public void OnBattleStart()
 	{
 		float mtu = (float)Music.Meter.SecPerUnit;
-		Mask.SetColor(ColorManager.Base.Back);
+		Mask.SetColor(ColorManagerObsolete.Base.Back);
 		AnimManager.RemoveOtherAnim(Mask.gameObject);
-		Mask.AnimateColor(ColorManager.MakeAlpha(ColorManager.Base.Back, MaskAlpha), delay: mtu * 8);// AnimType.Linear, 0.1f, mtu * 8);
+		Mask.AnimateColor(ColorManagerObsolete.MakeAlpha(ColorManagerObsolete.Base.Back, MaskAlpha), delay: mtu * 8);// AnimType.Linear, 0.1f, mtu * 8);
 		NameBase.SetRate(0);
 		NameBase.AnimateRate(1.0f, delay: mtu * 12);// AnimType.Linear, 0.1f, mtu * 12);
 	}

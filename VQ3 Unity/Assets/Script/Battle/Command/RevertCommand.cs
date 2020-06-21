@@ -29,7 +29,7 @@ public class RevertCommand : PlayerCommand
     {
         ValidatePosition();
 
-        GrowEdge.SetColor( ColorManager.GetThemeColor( themeColor ).Bright );
+        GrowEdge.SetColor( ColorManagerObsolete.GetThemeColor( themeColor ).Bright );
     }
     void Update()
     {

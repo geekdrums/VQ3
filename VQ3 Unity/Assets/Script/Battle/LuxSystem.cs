@@ -48,11 +48,11 @@ public class LuxSystem : MonoBehaviour
 	public MidairPrimitive Sun;
 	public MidairPrimitive Ring;
 	public GameObject Moon;
-	public CounterSprite TimeCount;
-	public GaugeRenderer TimeGauge;
-	public CounterSprite BreakCount;
-	public GaugeRenderer BreakGauge;
-	public GaugeRenderer BreakAccentGauge;
+	//public CounterSprite TimeCount;
+	//public GaugeRenderer TimeGauge;
+	//public CounterSprite BreakCount;
+	//public GaugeRenderer BreakGauge;
+	//public GaugeRenderer BreakAccentGauge;
 	public GameObject[] SunLights;
 	public GameObject MainLight;
 	public GameObject WaveOrigin;
@@ -110,7 +110,7 @@ public class LuxSystem : MonoBehaviour
 	//etc
 	Enemy currentTargetEnemy_;
 	float rotTime_;
-	GameObject[] vtWaves_;
+	float[] vtScales_;
 	GameObject[] lightUpWaves_;
 	GameObject[] lightBottomWaves_;
 	float lightHoleRemainTime_ = 0;
@@ -128,10 +128,10 @@ public class LuxSystem : MonoBehaviour
 	void Start()
 	{
 		State = LuxState.None;
-		ColorManager.SetBaseColor(EBaseColor.Black);
-		ColorManager.OnBaseColorChanged += this.OnBaseColorChanged;
+		ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
+		ColorManagerObsolete.OnBaseColorChanged += this.OnBaseColorChanged;
 
-		BGColor = ColorManager.Theme.Light;
+		BGColor = ColorManagerObsolete.Theme.Light;
 		initialSunPosition = Sun.transform.position;
 		initialMoonPosition = Moon.transform.position;
 		initialMainLightScale = MainLight.transform.localScale.x;
@@ -164,15 +164,12 @@ public class LuxSystem : MonoBehaviour
 		}
 		MainLight.transform.localScale = new Vector3(0, MainLight.transform.localScale.y, MainLight.transform.localScale.z);
 
-		vtWaves_ = new GameObject[WaveNum];
+		vtScales_ = new float[WaveNum];
 		lightUpWaves_ = new GameObject[WaveNum];
 		lightBottomWaves_ = new GameObject[WaveNum];
 		for( int i = 0; i < WaveNum; i++ )
 		{
-			vtWaves_[i] = (Instantiate(WaveOrigin) as GameObject);
-			vtWaves_[i].transform.parent = WaveOrigin.transform.parent;
-			vtWaves_[i].transform.localPosition = WaveOrigin.transform.localPosition + (i % 2 == 0 ? Vector3.right : Vector3.left) * (int)((i + 1)/2);
-			vtWaves_[i].transform.localScale = new Vector3(1, 0, 1);
+			vtScales_[i] = 0;
 			waveDelta_.Add(0);
 
 			lightUpWaves_[i] = (Instantiate(LightWaveUpOrigin) as GameObject);
@@ -189,8 +186,8 @@ public class LuxSystem : MonoBehaviour
 		Destroy(LightWaveUpOrigin.gameObject);
 		Destroy(LightWaveBottomOrigin.gameObject);
 
-		WaveLineMaterial.color = ColorManager.Base.Front;
-		initialLightWaveColor = ColorManager.MakeAlpha(Color.white, 0.333f);
+		WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
+		initialLightWaveColor = ColorManagerObsolete.MakeAlpha(Color.white, 0.333f);
 		LightWaveMaterial.color = initialLightWaveColor;
 
 		Version = LuxVersion.None;
@@ -227,15 +224,15 @@ public class LuxSystem : MonoBehaviour
 			}
 			UpdateLightAngles();
 			UpdateBGOffset();
-			BGColor = Color.Lerp(BGColor, ColorManager.Theme.Light, 0.1f);
+			BGColor = Color.Lerp(BGColor, ColorManagerObsolete.Theme.Light, 0.1f);
 			BGMaterial.SetColor("_BaseColor", BGColor);
 			break;
 		case LuxState.Overflow:
 			UpdateLightAngles();
 			UpdateBGOffset();
-			BGColor = Color.Lerp(BGColor, ColorManager.Theme.Light, 0.1f);
+			BGColor = Color.Lerp(BGColor, ColorManagerObsolete.Theme.Light, 0.1f);
 			BGMaterial.SetColor("_BaseColor", BGColor);
-			BreakAccentGauge.SetColor(Color.Lerp(ColorManager.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
+			//BreakAccentGauge.SetColor(Color.Lerp(ColorManagerObsolete.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
 			break;
 		case LuxState.Overload:
 			lightHoleRemainTime_ = -1;
@@ -245,12 +242,12 @@ public class LuxSystem : MonoBehaviour
 			}
 			if( Music.IsJustChangedAt(3, 2) && BreakTime == 1 && GameContext.BattleState != BattleState.Win )
 			{
-				ColorManager.SetBaseColor(EBaseColor.Black);
-				ColorManager.SetThemeColor(EThemeColor.White);
+				ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
+				ColorManagerObsolete.SetThemeColor(EThemeColor.White);
 				GameContext.EnemyConductor.OnRevert();
 				GameContext.PlayerConductor.OnRevert();
 				SetState(LuxState.Sun);
-				WaveLineMaterial.color = ColorManager.Base.Front;
+				WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
 			}
 			break;
 		case LuxState.SunSet:
@@ -270,7 +267,7 @@ public class LuxSystem : MonoBehaviour
 			if( (State == LuxState.Sun || State == LuxState.Overflow) && IsInverting == false )
 			{
 				CurrentTime -= (Music.IsJustChanged ? 1 : 0); //Music.DeltaMT;
-				TimeCount.Count = CurrentTime / TurnMusicalBars;
+				//TimeCount.Count = CurrentTime / TurnMusicalBars;
 				if( CurrentTime <= 0 )
 				{
 					if( CurrentVP >= 20 )
@@ -282,16 +279,16 @@ public class LuxSystem : MonoBehaviour
 					CurrentTime = 0;
 					LastMaxTime = 0;
 					CurrentVP = 0;
-					BreakCount.Count = CurrentVP;
+					//BreakCount.Count = CurrentVP;
 					Music.SetAisac("TrackVolumeOver", 0);
-					WaveLineMaterial.color = ColorManager.Base.Front;
+					WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
 					SetState(LuxState.Sun);
 					GameContext.PlayerConductor.CommandGraph.OnShieldRecover();
 				}
 			}
 			else if( State == LuxState.Overload )
 			{
-				TimeCount.Count = (float)(BreakTime - Music.MusicalTime/ TurnMusicalBars);
+				//TimeCount.Count = (float)(BreakTime - Music.MusicalTime/ TurnMusicalBars);
 			}
 		}
 	}
@@ -318,16 +315,16 @@ public class LuxSystem : MonoBehaviour
 				waveScale = Mathf.Min(targetWaveScale * 2, targetRemainScale);
 				targetRemainScale *= remainLinearFactor;
 			}
-			vtWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(vtWaves_[i].transform.localScale.y, waveScale, 0.2f), 1);
+			vtScales_[i] = Mathf.Lerp(vtScales_[i], waveScale, 0.2f);
 		}
-		TimeGauge.SetRate(maxWaveScale);//, 0.1f);
-		BreakGauge.SetRate((float)CurrentVP / OverflowVP);//, 0.1f);
+		//TimeGauge.SetRate(maxWaveScale);//, 0.1f);
+		//BreakGauge.SetRate((float)CurrentVP / OverflowVP);//, 0.1f);
 		if( lightHoleRemainTime_ > 0 )
 		{
 			for( int i = 0; i<WaveNum; ++i )
 			{
 				float offset = (State == LuxState.Overflow ? LightHoleOverflowOffset * (GameContext.BattleState == BattleState.Eclipse ? 1.0f - Music.MusicalTime/3.0f : 1.0f) : LightHoleDefaultOffset);
-				float targetScale = Mathf.Max(0, 1.0f - vtWaves_[i].transform.localScale.y * LightHoleCoeff - offset);
+				float targetScale = Mathf.Max(0, 1.0f - vtScales_[i] * LightHoleCoeff - offset);
 				lightUpWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightUpWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
 				lightBottomWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightBottomWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
 			}
@@ -350,11 +347,11 @@ public class LuxSystem : MonoBehaviour
 		if( ( Version < LuxVersion.AutoShield && CurrentVP > 0 ) || CurrentTime >= 16 )
 		{
 			LightWaveMaterial.color = Color.Lerp(LightWaveMaterial.color, initialLightWaveColor, 0.05f);
-			LightEdgeMaterial.color = Color.Lerp(LightEdgeMaterial.color, ColorManager.MakeAlpha(Color.white, 0), 0.05f);
+			LightEdgeMaterial.color = Color.Lerp(LightEdgeMaterial.color, ColorManagerObsolete.MakeAlpha(Color.white, 0), 0.05f);
 		}
 		else
 		{
-			LightWaveMaterial.color = Color.Lerp(LightWaveMaterial.color, ColorManager.MakeAlpha(Color.white, 0.8f), 0.05f);
+			LightWaveMaterial.color = Color.Lerp(LightWaveMaterial.color, ColorManagerObsolete.MakeAlpha(Color.white, 0.8f), 0.05f);
 			LightEdgeMaterial.color = Color.Lerp(LightEdgeMaterial.color, Color.white, 0.05f);
 		}
 	}
@@ -395,7 +392,7 @@ public class LuxSystem : MonoBehaviour
 			Ring.transform.localScale = Vector3.Lerp(Ring.transform.localScale, targetSunScale, 0.05f);
 			if( Music.Just.Bar < 3 )
 			{
-				BreakAccentGauge.SetColor(Color.Lerp(ColorManager.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
+				//BreakAccentGauge.SetColor(Color.Lerp(ColorManagerObsolete.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
 			}
 		}
 		else
@@ -413,7 +410,7 @@ public class LuxSystem : MonoBehaviour
 			Moon.transform.position = Vector3.Lerp(initialMoonPosition, Sun.transform.position + Vector3.back * 75, (-Mathf.Cos(t * Mathf.PI) + 1) / 2);
 			Vector3 distance = Moon.transform.position - Sun.transform.position;
 			distance.z = 0;
-			BGColor = Color.Lerp(BGColor, Color.Lerp(ColorManager.Theme.Light, Color.black, 1.0f / (1.0f + distance.magnitude)), 0.3f);
+			BGColor = Color.Lerp(BGColor, Color.Lerp(ColorManagerObsolete.Theme.Light, Color.black, 1.0f / (1.0f + distance.magnitude)), 0.3f);
 			BGOffset = Vector3.Lerp(Vector3.zero, Vector3.forward * 10, t * t);
 			for( int i = 0; i < lightAngles.Length; i++ )
 			{
@@ -459,7 +456,7 @@ public class LuxSystem : MonoBehaviour
 			if( Music.IsJustChangedAt(3) )
 			{
 				Moon.transform.position = Sun.transform.position + Vector3.back * 75.0f;
-				BGColor = ColorManager.Base.Back;
+				BGColor = ColorManagerObsolete.Base.Back;
 				GetComponent<Animation>()["EclipseAnim"].speed = (float)(Music.CurrentTempo / 60.0);
 				GetComponent<Animation>().Play();
 				GameContext.EnemyConductor.OnInvert();
@@ -471,8 +468,8 @@ public class LuxSystem : MonoBehaviour
 				SetState(LuxState.Overload);
 				GetComponent<Animation>().Stop();
 				GameContext.EnemyConductor.baseColor = Color.white;
-				ColorManager.SetBaseColor(EBaseColor.White);
-				targetBGColor = ColorManager.Base.Front;
+				ColorManagerObsolete.SetBaseColor(EBaseColor.White);
+				targetBGColor = ColorManagerObsolete.Base.Front;
 				BGOffset = Vector3.zero;
 				Ring.SetColor(Color.clear);
 				Ring.SetWidth(initialRingWidth);
@@ -540,15 +537,15 @@ public class LuxSystem : MonoBehaviour
 
 	public void OnBattleStarted(Encounter encounter)
 	{
-		WaveLineMaterial.color = ColorManager.Base.Front;
+		WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
 		analyzer_.AttachExPlayer(Music.CurrentSource.Player);//再生開始前じゃないと失敗するらしい
 
 		OverflowVP = encounter.BreakPoint;
 		Version = encounter.Version;
-		TimeGauge.SetRate(0);
-		TimeGauge.transform.parent.gameObject.SetActive(Version >= LuxVersion.AutoShield);
-		TimeCount.transform.parent.gameObject.SetActive(Version >= LuxVersion.AutoShield);
-		BreakGauge.SetRate(0);
+		//TimeGauge.SetRate(0);
+		//TimeGauge.transform.parent.gameObject.SetActive(Version >= LuxVersion.AutoShield);
+		//TimeCount.transform.parent.gameObject.SetActive(Version >= LuxVersion.AutoShield);
+		//BreakGauge.SetRate(0);
 		DamageGauge.OnBattleStarted();
 
 		MainLight.SetActive(Version >= LuxVersion.Shield);
@@ -575,7 +572,7 @@ public class LuxSystem : MonoBehaviour
 
 	public void OnBaseColorChanged( BaseColor Base )
 	{
-		WaveLineMaterial.color = ColorManager.Base.Front;
+		WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
 	}
 
 	public void SetState(LuxState newState)
@@ -587,7 +584,7 @@ public class LuxSystem : MonoBehaviour
 			{
 			case LuxState.Sun:
 				ResetBreak();
-				WaveLineMaterial.color = ColorManager.Base.Front;
+				WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
 
 				useTargetLightAngles = true;
 				useTargetLightScales = true;
@@ -603,21 +600,21 @@ public class LuxSystem : MonoBehaviour
 				Sun.AnimateColor(Color.white);// AnimType.Linear
 				Moon.transform.position = initialMoonPosition;
 
-				targetBGColor = ColorManager.Theme.Light;
+				targetBGColor = ColorManagerObsolete.Theme.Light;
 				targetSunScale = Vector3.one;
 				targetSunPosition = initialSunPosition;
 				targetMainLightScale = initialMainLightScale;
 
 				Ring.SetWidth(initialRingWidth);
 				Ring.AnimateRadius(initialRingRadius);// AnimType.Linear
-				BreakAccentGauge.SetColor(Color.clear);
+				//BreakAccentGauge.SetColor(Color.clear);
 				
 				Music.SetAisac("TrackVolumeOver", 0);
 				BGAnimBase.DeactivateCurrentAnim();
 				break;
 			case LuxState.Overload:
 				BGColor = Color.black;
-				BreakAccentGauge.SetColor(Color.clear);
+				//BreakAccentGauge.SetColor(Color.clear);
 				break;
 			case LuxState.SunSet:
 				BGOffset = Vector3.zero;
@@ -635,12 +632,12 @@ public class LuxSystem : MonoBehaviour
 				}
 				targetMainLightScale = 0;
 				Moon.transform.position = initialMoonPosition;
-				WaveLineMaterial.color = ColorManager.Base.Front;
+				WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
 				Music.SetAisac("TrackVolumeOver", 0);
-				BreakAccentGauge.SetColor(Color.clear);
+				//BreakAccentGauge.SetColor(Color.clear);
 				break;
 			case LuxState.Overflow:
-				WaveLineMaterial.color = ColorManager.Accent.Break;
+				WaveLineMaterial.color = ColorManagerObsolete.Accent.Break;
 				SEPlayer.Play("invert");
 				GameContext.PlayerConductor.OnOverFlowed();
 				Music.SetAisac("TrackVolumeOver", 1);
@@ -665,8 +662,8 @@ public class LuxSystem : MonoBehaviour
 				DamageGauge.OnShieldRecover();
 			}
 		}
-		BreakCount.Count = 100.0f * ((float)CurrentVP / OverflowVP);
-		TimeCount.Count = CurrentTime / TurnMusicalBars;
+		//BreakCount.Count = 100.0f * ((float)CurrentVP / OverflowVP);
+		//TimeCount.Count = CurrentTime / TurnMusicalBars;
 		waveRemainCoeff_ = (Version >= LuxVersion.AutoShield ? (float)CurrentTime / MaxVT : 0.1f + 0.3f * ((float)CurrentVP / OverflowVP));
 		if( CurrentVP > 0 )
 		{
@@ -694,11 +691,11 @@ public class LuxSystem : MonoBehaviour
 		CurrentVP = 0;
 		CurrentTime = 0;
 		LastMaxTime = 0;
-		BreakCount.Count = 0;
-		TimeCount.Count = 0;
+		//BreakCount.Count = 0;
+		//TimeCount.Count = 0;
 		waveRemainCoeff_ = 0;
-		WaveLineMaterial.color = ColorManager.Base.Front;
-		BreakAccentGauge.SetColor(Color.clear);
+		WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
+		//BreakAccentGauge.SetColor(Color.clear);
 		Music.SetAisac("TrackVolumeOver", 0);
 	}
 
@@ -722,14 +719,14 @@ public class LuxSystem : MonoBehaviour
 		{
 			CurrentVP = 0;
 			OverflowVP = 100;
-			BreakAccentGauge.SetColor(Color.clear);
-			TimeCount.transform.parent.gameObject.SetActive(false);
-			TimeGauge.transform.parent.gameObject.SetActive(false);
+			//BreakAccentGauge.SetColor(Color.clear);
+			//TimeCount.transform.parent.gameObject.SetActive(false);
+			//TimeGauge.transform.parent.gameObject.SetActive(false);
 		}
 		UpdateWaves();
 		if( IsOverFlow )
 		{
-			BreakAccentGauge.SetColor(Color.Lerp(ColorManager.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
+			//BreakAccentGauge.SetColor(Color.Lerp(ColorManagerObsolete.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
 		}
 	}
 }

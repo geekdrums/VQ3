@@ -91,7 +91,7 @@ public class EnemySkillListUI : MonoBehaviour {
 
 		foreach( KeyValuePair<int, EnemyCommand> pair in commandData_ )
 		{
-			skillData_[pair.Key].Set(pair.Value.ShortText, 2/*temp*/, ColorManager.Base.Dark, ColorManager.Base.Bright, isEnemySkill: true);
+			skillData_[pair.Key].Set(pair.Value.ShortText, 2/*temp*/, ColorManagerObsolete.Base.Dark, ColorManagerObsolete.Base.Bright, isEnemySkill: true);
 		}
 
 		foreach( SkillUI skill in skillData_ )
@@ -99,7 +99,7 @@ public class EnemySkillListUI : MonoBehaviour {
 			skill.Show();
 		}
 
-		baseLine_.SetColor(ColorManager.Base.Dark);
+		baseLine_.SetColor(ColorManagerObsolete.Base.Dark);
 	}
 
 	public void OnInvert()

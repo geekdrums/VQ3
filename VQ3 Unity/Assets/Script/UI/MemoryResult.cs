@@ -49,7 +49,7 @@ public class MemoryResult : MonoBehaviour {
 			if( IsLevelUp )
 			{
 				animTime_ += Time.deltaTime;
-				Gauge.SetColor(Color.Lerp(ColorManager.Base.Bright, ColorManager.Base.Light, (Mathf.Cos(animTime_*8) + 1)/2));
+				Gauge.SetColor(Color.Lerp(ColorManagerObsolete.Base.Bright, ColorManagerObsolete.Base.Light, (Mathf.Cos(animTime_*8) + 1)/2));
 			}
 			break;
 		}

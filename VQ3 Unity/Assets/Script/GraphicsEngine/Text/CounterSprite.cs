@@ -158,9 +158,6 @@ public class CounterSprite : MonoBehaviour, IColoredObject {
 
     public void UpdateSprite()
     {
-#if UNITY_EDITOR
-		if( UnityEditor.PrefabUtility.GetPrefabType(this) == UnityEditor.PrefabType.Prefab || NumberParent == null ) return;
-#endif
         //digits
         int numDigits = Mathf.Max( 1, Mathf.CeilToInt( Mathf.Log10( (int)Mathf.Abs( Count ) + 0.5f ) ) ) + SignificantDigits;
         for( int i = 0; i < numDigits; i++ )

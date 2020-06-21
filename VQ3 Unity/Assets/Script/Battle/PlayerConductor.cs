@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class PlayerConductor : MonoBehaviour {
 
 	public CommandGraph CommandGraph;
-	public MemoryPanel MemoryPanel;
-	public EnemyExplanation EnemyExp;
+	//public MemoryPanel MemoryPanel;
+	//public EnemyExplanation EnemyExp;
 
-	public GameObject VPMeter;
+	//public GameObject VPMeter;
 	public List<Sprite> EnhIcons;
 
 	public int Level = 1;
@@ -151,13 +151,13 @@ public class PlayerConductor : MonoBehaviour {
 		case GameState.Setting:
 			if( command == CommandGraph.IntroCommand )
 			{
-				MemoryPanel.Reset();
-				EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
+				//MemoryPanel.Reset();
+				//EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
 			}
 			else
 			{
-				MemoryPanel.Set(command);
-				EnemyExp.Hide();
+				//MemoryPanel.Set(command);
+				//EnemyExp.Hide();
 				//TextWindow.SetCommand(command);
 			}
 			break;
@@ -173,8 +173,8 @@ public class PlayerConductor : MonoBehaviour {
 			CommandGraph.Deselect();
 			if( GameContext.State == GameState.Setting )
 			{
-				MemoryPanel.Reset();
-				EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
+				//MemoryPanel.Reset();
+				//EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
 			}
 		}
 		switch( GameContext.State )
@@ -197,7 +197,7 @@ public class PlayerConductor : MonoBehaviour {
 		if( CurrentCommand != null )
 		{
 			CurrentCommand.SetCurrent();
-			ColorManager.SetThemeColor(CurrentCommand.themeColor);
+			ColorManagerObsolete.SetThemeColor(CurrentCommand.themeColor);
 
 			if( CurrentCommand.BGAnim != null && GameContext.LuxSystem.IsOverFlow )
 			{
@@ -288,25 +288,25 @@ public class PlayerConductor : MonoBehaviour {
 
 	public void OnBattleStarted()
 	{
-		EnemyExp.Hide();
-		MemoryPanel.Hide();
+		//EnemyExp.Hide();
+		//MemoryPanel.Hide();
         Player.OnBattleStart();
         CommandGraph.OnBattleStart();
 		CurrentCommand = CommandGraph.IntroCommand;
 		CurrentCommand.SetCurrent();
         WaitCount = 0;
-		ColorManager.SetBaseColor(EBaseColor.Black);
-		ColorManager.SetThemeColor(EThemeColor.White);
+		ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
+		ColorManagerObsolete.SetThemeColor(EThemeColor.White);
 		//TextWindow.SetCommand(null);
 
-		VPMeter.SetActive(GameContext.FieldConductor.CurrentEncounter.Version != LuxVersion.None);
+		//VPMeter.SetActive(GameContext.FieldConductor.CurrentEncounter.Version != LuxVersion.None);
     }
 
 	public void OnEnterSetting()
 	{
 		CommandGraph.OnEnterSetting();
-		MemoryPanel.Reset();
-		EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
+		//MemoryPanel.Reset();
+		//EnemyExp.SetEnemy(GameContext.FieldConductor.CurrentEncounter.BattleSets[0].Enemies[0].GetComponent<Enemy>());
 	}
 
 	public void OnEnterResult()
@@ -319,8 +319,8 @@ public class PlayerConductor : MonoBehaviour {
 	public void OnEnterEvent()
 	{
 		CommandGraph.OnEnterSetting();
-		EnemyExp.Hide();
-		MemoryPanel.Reset();
+		//EnemyExp.Hide();
+		//MemoryPanel.Reset();
 	}
 
 	public void OnOverFlowed()

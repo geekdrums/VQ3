@@ -14,7 +14,7 @@ public class BGAnimDain : BGAnimBase
 	{
 		primitive.SetSize(Offset + Mathf.Lerp(0, Size, t * t));
 		primitive.SetWidth(Mathf.Lerp(MinWitdh, Witdh, t));
-		primitive.SetColor(accent ? ColorManager.Theme.Bright : Color.Lerp(ColorManager.Theme.Light, ColorManager.Theme.Shade, t));
+		primitive.SetColor(accent ? ColorManagerObsolete.Theme.Bright : Color.Lerp(ColorManagerObsolete.Theme.Light, ColorManagerObsolete.Theme.Shade, t));
 		primitive.transform.localRotation = Quaternion.AngleAxis(Mathf.Lerp(0, Angle, t + Mathf.Sin(t*4*Mathf.PI)*AngleSinCoeff), Vector3.forward);
 	}
 }

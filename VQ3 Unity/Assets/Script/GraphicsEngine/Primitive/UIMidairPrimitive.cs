@@ -18,7 +18,7 @@ public class UIMidairPrimitive : MaskableGraphic, IColoredObject
 	[Range(0, 1)]
 	public float StartArcRate = 0.0f;
 	public float Angle;
-	public float GrowSize = 1;
+	public float GrowSize = 0;
 	public float GrowAlpha = 1;
 
 	#region params
@@ -290,20 +290,28 @@ public class UIMidairPrimitive : MaskableGraphic, IColoredObject
 		SetVerticesDirty();
 	}
 	
-	void UpdateRadiusParams()
+	void UpdateCulculateCache()
 	{
 		float factor = 1.0f / Mathf.Cos(Mathf.PI / Num);
-		outRadius_ = Radius * factor;
-		inRadius_ = Mathf.Max(0, (Radius - Width)) * factor;
-		growOutRadius_ = outRadius_ + GrowSize;
-		growInRadius_ = Mathf.Max(0, inRadius_ - GrowSize);
+		if( Width >= 0 )
+		{
+			outRadius_ = Mathf.Max(0, Radius) * factor;
+			inRadius_ = Mathf.Max(0, (Radius - Width)) * factor;
+		}
+		else
+		{
+			outRadius_ = (Mathf.Max(0, Radius) - Width) * factor;
+			inRadius_ = Mathf.Max(0, Radius) * factor;
+		}
+		growOutRadius_ = outRadius_ + Mathf.Max(0, GrowSize);
+		growInRadius_ = Mathf.Max(0, inRadius_ - Mathf.Max(0, GrowSize));
 	}
 
 	void RecalculateRadius()
 	{
 		if( CheckInit() ) return;
 
-		UpdateRadiusParams();
+		UpdateCulculateCache();
 
 		for( int i = 0; i <= arcStartIndex_; ++i )
 		{
@@ -327,7 +335,7 @@ public class UIMidairPrimitive : MaskableGraphic, IColoredObject
 	{
 		if( CheckInit() ) return;
 
-		UpdateRadiusParams();
+		UpdateCulculateCache();
 
 		for( int i = 0; i <= arcStartIndex_; ++i )
 		{
@@ -424,7 +432,7 @@ public class UIMidairPrimitive : MaskableGraphic, IColoredObject
 			normalVertex = rotateMatrix * normalVertex;
 		}
 
-		UpdateRadiusParams();
+		UpdateCulculateCache();
 		UpdateArcStartParams();
 		UpdateArcEndParams();
 
@@ -470,7 +478,8 @@ public class UIMidairPrimitive : MaskableGraphic, IColoredObject
 
 	Vector3 CalcArcEdgeNormal(float arcRate, Vector3 normalVertex)
 	{
-		float angleOffset = (2 * Mathf.PI / Num) * (1.0f - (arcRate * Num) % 1.0f);
+		float arcN = arcRate * Num;
+		float angleOffset = (2 * Mathf.PI / Num) * ((Mathf.Ceil(arcN) - arcN) % 1.0f);
 		Matrix4x4 rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(-angleOffset * (180.0f / Mathf.PI), Vector3.forward), Vector3.one);
 		normalVertex = rotateMatrix * normalVertex;
 		float lRatio = Mathf.Cos(Mathf.PI / Num);
@@ -572,8 +581,8 @@ public class UIMidairPrimitive : MaskableGraphic, IColoredObject
 			for( int i = 0; i < vertices_.Length; ++i )
 			{
 				vertices_[i].color = color;
-				growInVertices_[i].color = ColorManager.MakeAlpha(color, color.a * (i % 2 == 0 ? 0 : GrowAlpha));
-				growOutVertices_[i].color = ColorManager.MakeAlpha(color, color.a * (i % 2 == 0 ? GrowAlpha : 0));
+				growInVertices_[i].color = ColorPropertyUtil.MakeAlpha(color, color.a * (i % 2 == 0 ? 0 : GrowAlpha));
+				growOutVertices_[i].color = ColorPropertyUtil.MakeAlpha(color, color.a * (i % 2 == 0 ? GrowAlpha : 0));
 			}
 			cachedGrowAlpha_ = GrowAlpha;
 		}

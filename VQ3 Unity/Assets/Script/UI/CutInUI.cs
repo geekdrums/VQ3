@@ -22,8 +22,8 @@ public class CutInUI : MonoBehaviour {
 		transform.localScale = Vector3.one;
 		Text.text = text;
 		Counter.Count = percent;
-		Counter.CounterColor = (phase >= 0 ? ColorManager.Accent.Buff : ColorManager.Accent.DeBuff);
-		Text.color = (phase >= 0 ? ColorManager.Accent.Buff : ColorManager.Accent.DeBuff);
+		Counter.CounterColor = (phase >= 0 ? ColorManagerObsolete.Accent.Buff : ColorManagerObsolete.Accent.DeBuff);
+		Text.color = (phase >= 0 ? ColorManagerObsolete.Accent.Buff : ColorManagerObsolete.Accent.DeBuff);
 		Text.anchor = TextAnchor.MiddleRight;
 		GetComponent<Animation>().Play();
 	}
@@ -54,7 +54,7 @@ public class CutInUI : MonoBehaviour {
 		Counter.CounterColor = Color.clear;
 		Text.text = "シールド回復";
 		Text.anchor = TextAnchor.MiddleCenter;
-		Text.color = ColorManager.Accent.Time;
+		Text.color = ColorManagerObsolete.Accent.Time;
 		GetComponent<Animation>().Play();
 	}
 }

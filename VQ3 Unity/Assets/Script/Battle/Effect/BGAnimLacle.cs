@@ -12,6 +12,6 @@ public class BGAnimLacle : BGAnimBase
 	{
 		primitive.SetSize(Offset + Mathf.Lerp(0, Size, t*t*t));
 		primitive.SetWidth(Mathf.Lerp(MinWitdh, Witdh, t));
-		primitive.SetColor(accent ? ColorManager.Theme.Bright : Color.Lerp(ColorManager.Theme.Light, ColorManager.Theme.Shade, t*t));// AnimType.Linear
+		primitive.SetColor(accent ? ColorManagerObsolete.Theme.Bright : Color.Lerp(ColorManagerObsolete.Theme.Light, ColorManagerObsolete.Theme.Shade, t*t));// AnimType.Linear
 	}
 }

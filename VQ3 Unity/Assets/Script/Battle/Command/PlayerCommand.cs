@@ -161,14 +161,14 @@ public class PlayerCommand : MonoBehaviour
 
     public virtual void ValidateIcons()
     {
-		this.GetComponent<MidairPrimitive>().SetColor(ColorManager.GetThemeColor(themeColor).Bright);
+		this.GetComponent<MidairPrimitive>().SetColor(ColorManagerObsolete.GetThemeColor(themeColor).Bright);
 
         if( iconStr.Contains( 'D' ) )
         {
             DefPlane.SetActive( true );
             Material defMat = new Material( Shader.Find( "Diffuse" ) );
             defMat.hideFlags = HideFlags.DontSave;
-            defMat.color = ColorManager.GetThemeColor( themeColor ).Shade;
+            defMat.color = ColorManagerObsolete.GetThemeColor( themeColor ).Shade;
             defMat.name = "defMat";
             DefPlane.GetComponent<Renderer>().material = defMat;
         }
@@ -181,7 +181,7 @@ public class PlayerCommand : MonoBehaviour
             HealPlane.SetActive( true );
             Material healMat = new Material( Shader.Find( "Diffuse" ) );
             healMat.hideFlags = HideFlags.DontSave;
-            healMat.color = ColorManager.GetThemeColor( themeColor ).Light;
+            healMat.color = ColorManagerObsolete.GetThemeColor( themeColor ).Light;
             healMat.name = "healMat";
             HealPlane.GetComponent<Renderer>().material = healMat;
         }
@@ -210,7 +210,7 @@ public class PlayerCommand : MonoBehaviour
             }
             if( themeColor != EThemeColor.White )
             {
-                EnhIcon.GetComponent<SpriteRenderer>().color = ColorManager.GetThemeColor( themeColor ).Bright;
+                EnhIcon.GetComponent<SpriteRenderer>().color = ColorManagerObsolete.GetThemeColor( themeColor ).Bright;
             }
             else
             {
@@ -294,7 +294,7 @@ public class PlayerCommand : MonoBehaviour
 				break;
 			}
 		}
-		maskPlane.GetComponent<Renderer>().material.color = ColorManager.MakeAlpha(Color.black, alpha);
+		maskPlane.GetComponent<Renderer>().material.color = ColorManagerObsolete.MakeAlpha(Color.black, alpha);
 		transform.rotation = Quaternion.identity;
     }
 
