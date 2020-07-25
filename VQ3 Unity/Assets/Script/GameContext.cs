@@ -89,7 +89,11 @@ public class GameContext : MonoBehaviour
 		{
 		case GameState.Battle:
 			LuxSystem.OnBattleStarted(FieldConductor.CurrentEncounter);
-			Music.Play("BattleMusic", "Intro");
+#if UNITY_EDITOR
+			Music.Play("BattleMusic", PlayerConductor.CommandGraph.DebugIntroCommand.GetBlockName());
+#else
+			Music.Play("BattleMusic", PlayerConductor.CommandGraph.IntroCommand.GetBlockName());
+#endif
 			ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
 			ColorManager.SetGlobalState("Base", "Black");
 			FieldConductor.OnEnterBattle();
@@ -113,7 +117,7 @@ public class GameContext : MonoBehaviour
 			ColorManager.SetGlobalState("Base", "Black");
 			FieldConductor.OnEnterSetting();
 			PlayerConductor.OnEnterSetting();
-			ResultConductor.OKButton.SetMode(ButtonMode.Hide, true);
+			//ResultConductor.OKButton.SetMode(ButtonMode.Hide, true);
 			break;
 		case GameState.Title:
 			Music.Play("ambient");

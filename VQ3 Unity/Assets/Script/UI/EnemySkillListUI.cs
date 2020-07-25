@@ -3,40 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class EnemySkillListUI : MonoBehaviour {
-
-	public GameObject SkillCutIn;
-
-	public static readonly Timing ShowSkillCutInTiming = new Timing(0, 3, 0);
-
+	
 	bool isExecuting_;
 
-	GaugeRenderer baseLine_;
+	public GaugeRenderer TimeLine;
 	Dictionary<int, EnemyCommand> commandData_;
-	List<SkillUI> skillData_ = new List<SkillUI>();
+	//List<SkillUI> skillData_ = new List<SkillUI>();
 
 	// Use this for initialization
 	void Awake () {
-		baseLine_ = GetComponentInChildren<GaugeRenderer>();
-		skillData_.AddRange(GetComponentsInChildren<SkillUI>());
-		transform.localScale = Vector3.zero;
+		//skillData_.AddRange(GetComponentsInChildren<SkillUI>());
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if( isExecuting_ )
 		{
-			if( Music.Just < ShowSkillCutInTiming )
-			{
-				transform.localScale = Vector3.zero;
-				return;
-			}
-
-			if( Music.IsJustChangedAt(ShowSkillCutInTiming) )
-			{
-				transform.localScale = Vector3.one;
-				SkillCutIn.GetComponent<Animation>().Play();
-			}
-
 			if( Music.IsJustChangedAt(CommandGraph.AllowInputEnd) )
 			{
 				isExecuting_ = false;
@@ -48,21 +30,12 @@ public class EnemySkillListUI : MonoBehaviour {
 				return;
 			}
 
-			if( Music.IsJustChangedBar() )
+			if( AnimManager.IsAnimating(TimeLine.gameObject) == false )
 			{
-				int bar = Music.Just.Bar;
-				if( skillData_[bar].WillBeExecuted )
-				{
-					skillData_[bar].Execute();
-				}
+				TimeLine.SetRate(1.0f - (float)(Music.MusicalTime / LuxSystem.TurnMusicalBars));
 			}
 
-			if( AnimManager.IsAnimating(baseLine_.gameObject) == false )
-			{
-				float mtRate = (float)(Music.MusicalTime / LuxSystem.TurnMusicalBars);
-				baseLine_.SetRate(1.0f - mtRate);
-			}
-
+			/*
 			int targetIndex = 0;
 			for( int i = 0; i < skillData_.Count; ++i )
 			{
@@ -73,17 +46,20 @@ public class EnemySkillListUI : MonoBehaviour {
 					targetIndex += skillData_[i].length;
 				}
 			}
+			*/
 		}
 	}
 
 	public void Execute()
 	{
 		isExecuting_ = true;
+		transform.localScale = Vector3.one;
 	}
 
 	public void Set(Dictionary<int, EnemyCommand> commandData)
 	{
 		commandData_ = commandData;
+		/*
 		foreach( SkillUI skill in skillData_ )
 		{
 			skill.Reset();
@@ -91,24 +67,25 @@ public class EnemySkillListUI : MonoBehaviour {
 
 		foreach( KeyValuePair<int, EnemyCommand> pair in commandData_ )
 		{
-			skillData_[pair.Key].Set(pair.Value.ShortText, 2/*temp*/, ColorManagerObsolete.Base.Dark, ColorManagerObsolete.Base.Bright, isEnemySkill: true);
+			skillData_[pair.Key].Set(pair.Value.ShortText, 2, ColorManagerObsolete.Base.Dark, ColorManagerObsolete.Base.Bright, isEnemySkill: true);
 		}
 
 		foreach( SkillUI skill in skillData_ )
 		{
 			skill.Show();
 		}
-
-		baseLine_.SetColor(ColorManagerObsolete.Base.Dark);
+		*/
 	}
 
 	public void OnInvert()
 	{
 		transform.localScale = Vector3.zero;
+		/*
 		foreach( SkillUI skill in skillData_ )
 		{
 			skill.Reset();
 		}
+		*/
 	}
 
 	public void OnPlayerWin()

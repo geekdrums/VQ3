@@ -22,7 +22,7 @@ public class EventConductor : MonoBehaviour
 	public MidairPrimitive Cursor;
 	public GaugeRenderer VLine;
 	public GameObject MessageParent;
-	public ButtonUI OKButton;
+	//public ButtonUI OKButton;
 
 	public CommandInfoUI CommandInfo;
 	public GameObject Title;
@@ -44,7 +44,7 @@ public class EventConductor : MonoBehaviour
 
 	void Awake()
 	{
-		OKButton.OnPushed += this.OnPushedOK;
+		//OKButton.OnPushed += this.OnPushedOK;
 	}
 
 	void Update()
@@ -138,7 +138,7 @@ public class EventConductor : MonoBehaviour
 		animation_ = GetComponentInChildren<Animation>();
 		animation_.Play("EventShowAnim");
 		NextMessage();
-		OKButton.SetMode(ButtonMode.Active, true);
+		//OKButton.SetMode(ButtonMode.Active, true);
 		TextWindow.Reset();
 		if( Music.IsPlaying == false || Music.CurrentMusicName != data.MusicName )
 		{

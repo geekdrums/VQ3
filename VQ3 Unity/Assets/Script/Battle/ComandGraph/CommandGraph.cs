@@ -13,7 +13,6 @@ public enum VoxButton
     Count
 }
 
-[ExecuteInEditMode]
 public class CommandGraph : MonoBehaviour
 {
 	public static Timing AllowInputEnd = new Timing(3, 3, 0);
@@ -58,6 +57,7 @@ public class CommandGraph : MonoBehaviour
 	public bool UPDATE_BUTTON;
 
 	public PlayerCommand IntroCommand;
+	public PlayerCommand DebugIntroCommand;
 
 	public PlayerCommand PreviewCurrentCommand;
 
@@ -112,6 +112,9 @@ public class CommandGraph : MonoBehaviour
 		offsetRotation = Quaternion.LookRotation(transform.position - SelectSpot.transform.position);
 		CurrentButton = VoxButton.None;
 		CurrentCommand = IntroCommand;
+#if UNITY_EDITOR
+		CurrentCommand = DebugIntroCommand;
+#endif
 
 		CurrentRect.transform.parent = this.transform;
 		CurrentRect.transform.localPosition = Vector3.zero;
@@ -839,7 +842,11 @@ public class CommandGraph : MonoBehaviour
 		OldCommand = null;
 		NextCommand = null;
 		CommandLoopCount = 0;
+#if UNITY_EDITOR
+		Select(DebugIntroCommand);
+#else
 		Select(IntroCommand);
+#endif
 		OnExecCommand();
 		transform.rotation = Quaternion.Inverse(Quaternion.LookRotation(-IntroCommand.transform.localPosition)) * offsetRotation;
 		CurrentRect.transform.parent = IntroCommand.transform;
@@ -1022,5 +1029,5 @@ public class CommandGraph : MonoBehaviour
 		}
 	}
 
-	#endregion
+#endregion
 }

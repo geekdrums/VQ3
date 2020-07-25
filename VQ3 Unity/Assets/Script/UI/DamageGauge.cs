@@ -19,7 +19,6 @@ public class DamageGauge : MonoBehaviour
 	public CounterSprite VTCount;
 	public GaugeRenderer TextBase;
 	public TextMesh ShieldText;
-	public GaugeRenderer Split;
 
 	public GaugeRenderer HPGauge;
 	public GaugeRenderer RedGauge;
@@ -28,7 +27,6 @@ public class DamageGauge : MonoBehaviour
 	public CounterSprite VTCount2;
 	public GaugeRenderer TextBase2;
 	public TextMesh EnemyText;
-	public GaugeRenderer Split2;
 
 	public Enemy Enemy { get; private set; }
 	public Mode CurrentMode { get; private set; }
@@ -55,7 +53,10 @@ public class DamageGauge : MonoBehaviour
 		{
 		case Mode.Damage:
 			{
-				if( Music.IsJustChanged ) RedGauge.GetComponentInChildren<Renderer>().enabled = Music.JustTotalUnits % 3 <= 1;
+				if( Music.IsJustChanged )
+				{
+					RedGauge.GetComponentInChildren<Renderer>().enabled = Music.JustTotalUnits % 3 <= 1;
+				}
 			}
 			break;
 		case Mode.Break:
@@ -65,19 +66,19 @@ public class DamageGauge : MonoBehaviour
 				TimeGauge.SetRate(Mathf.Clamp01(BreakRate * GameContext.LuxSystem.VTRate));
 				VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
 				VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalBars;
-				BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManagerObsolete.Accent.Time, 0.2f));
-				Color timeColor = GetTimeColor();
-				TimeGauge.SetColor(timeColor);
-				VTCount.CounterColor = timeColor;
+				//BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManagerObsolete.Accent.Time, 0.2f));
+				//Color timeColor = GetTimeColor();
+				//TimeGauge.SetColor(timeColor);
+				//VTCount.CounterColor = timeColor;
 			}
 			break;
 		case Mode.DamageAndTime:
 			{
 				TimeGauge2.SetRate(GameContext.LuxSystem.VTRate);
 				VTCount2.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalBars;
-				Color timeColor = GetTimeColor();
-				TimeGauge2.SetColor(timeColor);
-				VTCount2.CounterColor = timeColor;
+				//Color timeColor = GetTimeColor();
+				//TimeGauge2.SetColor(timeColor);
+				//VTCount2.CounterColor = timeColor;
 
 				if( Music.IsJustChanged ) RedGauge.GetComponentInChildren<Renderer>().enabled = Music.JustTotalUnits % 3 <= 1;
 			}
@@ -124,16 +125,10 @@ public class DamageGauge : MonoBehaviour
 		RedGauge.SetRate((float)(Enemy.HitPoint + damage_) / Enemy.MaxHP);
 		HPGauge.SetRate(RedGauge.Rate);
 		HPGauge.AnimateRate((float)Enemy.HitPoint / Enemy.MaxHP, time: 0.1f);
-
-		Vector3 initialPosition_ = transform.position;
-		transform.position = position;
-
+		
 		float delay = (float)Music.Meter.SecPerUnit * 24;
 		float animTime = 0.2f;
 		float animTime2 = 0.5f;
-		transform.AnimatePosition(initialPosition_, time: animTime, delay: delay);
-		Split2.SetRate(0);
-		Split2.AnimateRate(1.0f, InterpType.BackOut, time: animTime2, delay: delay + animTime);
 
 		TimeGauge2.transform.parent.localScale = Vector3.zero;
 		TimeGauge2.transform.parent.AnimateScale(1.0f, time: 0.0f, delay: delay + animTime);
@@ -145,7 +140,7 @@ public class DamageGauge : MonoBehaviour
 		TextBase2.AnimateRate(1.0f, InterpType.BackOut, time: animTime2, delay: delay + animTime + animTime2);
 	}
 
-	public void InitializeVPVT(Vector3 position)
+	public void InitializeVPVT()
 	{
 		isInitialized_ = true;
 		Enemy = null;
@@ -157,28 +152,10 @@ public class DamageGauge : MonoBehaviour
 		TimeGauge.SetRate(Mathf.Clamp01(BreakRate * GameContext.LuxSystem.VTRate));
 		VPCount.Count = GameContext.LuxSystem.OverflowVP - GameContext.LuxSystem.CurrentVP;
 		VTCount.Count = GameContext.LuxSystem.CurrentTime / LuxSystem.TurnMusicalBars;
-		BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManagerObsolete.Accent.Time, 0.2f));
-		Color timeColor = GetTimeColor();
-		TimeGauge.SetColor(timeColor);
-		VTCount.CounterColor = timeColor;
-
-		Vector3 initialPosition_ = transform.position;
-		transform.position = position;
-
-		float delay = (float)Music.Meter.SecPerUnit * Mathf.Min(48.0f - (float)Music.MusicalTime * 16, 32);
-		float animTime = 0.2f;
-		float animTime2 = 0.5f;
-		transform.AnimatePosition(initialPosition_, time: animTime, delay: delay);
-		Split.SetRate(0);
-		Split.AnimateRate(1.0f, InterpType.BackOut, time: animTime2, delay: delay + animTime);
-
-		Vector3 initialScale = ShieldText.transform.localScale;
-		ShieldText.transform.localScale = Vector3.zero;
-		ShieldText.transform.parent.AnimateScale(1.0f, time: 0.0f, delay: delay + animTime);
-		VPCount.transform.parent.localScale = Vector3.zero;
-		VPCount.transform.parent.AnimateScale(1.0f, time: 0.0f, delay: delay + animTime);
-		TextBase.SetRate(0);
-		TextBase.AnimateRate(1.0f, InterpType.BackOut, time: animTime2, delay: delay + animTime + animTime2);
+		//BreakGauge.SetColor(Color.Lerp(BreakGauge.LineColor, BreakRate > 0.0f ? Color.white : ColorManagerObsolete.Accent.Time, 0.2f));
+		//Color timeColor = GetTimeColor();
+		//TimeGauge.SetColor(timeColor);
+		//VTCount.CounterColor = timeColor;
 	}
 
 	public void OnBattleStarted()
@@ -197,6 +174,8 @@ public class DamageGauge : MonoBehaviour
 
 	private Mode GetDesiredMode()
 	{
+		return Mode.Break;
+		/*
 		if( isInitialized_ == false || GameContext.BattleState == BattleState.Endro )
 		{
 			return Mode.None;
@@ -217,6 +196,7 @@ public class DamageGauge : MonoBehaviour
 		{
 			return Mode.None;
 		}
+		*/
 	}
 
 	private void ModeInit()

@@ -20,6 +20,8 @@ public class EnemyConductor : MonoBehaviour
 	public float EnemyDamageShake = 2.0f;
 	public float EnemyDamageTimeCoeff = 1.0f;
 	public float EnemyDamageTimeMin = 0.15f;
+	public float EnemyDamageTrembleTime = 0.025f;
+
 
 	List<Enemy> Enemies = new List<Enemy>();
 	Encounter CurrentEncounter;
@@ -143,7 +145,7 @@ public class EnemyConductor : MonoBehaviour
 			Vector3 damageTextPos = (skill.damageParent != null ? skill.damageParent.transform.position : skill.GetComponentInChildren<Animation>().transform.position);
 			if( damageGauge.CurrentMode == DamageGauge.Mode.None )
 			{
-				damageGauge.InitializeVPVT(damageTextPos + Vector3.up * 2.0f + Vector3.right);
+				damageGauge.InitializeVPVT();
 			}
 			if( damageGauge.CurrentMode == DamageGauge.Mode.Break )
 			{

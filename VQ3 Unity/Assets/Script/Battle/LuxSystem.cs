@@ -556,7 +556,7 @@ public class LuxSystem : MonoBehaviour
 		//BreakGauge.SetRate(0);
 		DamageGauge.OnBattleStarted();
 
-		MainLight.SetActive(Version >= LuxVersion.Shield);
+		//MainLight.SetActive(Version >= LuxVersion.Shield);
 		foreach( GameObject light in SunLights )
 		{
 			light.SetActive(Version >= LuxVersion.Shield);

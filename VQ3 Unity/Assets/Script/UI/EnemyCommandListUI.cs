@@ -35,11 +35,13 @@ public class EnemyCommandListUI : MonoBehaviour
 			commandIcons_[i].transform.localScale = Vector3.Lerp(commandIcons_[i].transform.localScale, GetTargetScale(i), 0.2f);
 		}
 
+		/*
 		if( Music.IsJustChangedAt(EnemySkillListUI.ShowSkillCutInTiming) && CurrentCommandIcon != null )
 		{
 			CurrentCommandIcon.transform.AnimatePosition(Vector3.down * 2.5f, InterpType.BackOut, time: 0.3f);
 			CurrentCommandIcon.transform.AnimatePosition(Vector3.zero, InterpType.BackOut, time: 0.3f, delay: (float)Music.Meter.SecPerUnit * 8);
 		}
+		*/
 
 		if( AnimManager.IsAnimating(EdgeLine.gameObject) == false && commandIcons_.Count > 0 )
 		{

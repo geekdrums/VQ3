@@ -14,7 +14,7 @@ public enum ResultState
 
 public class ResultConductor : MonoBehaviour {
 
-	public ButtonUI OKButton;
+	//public ButtonUI OKButton;
 	public MemoryResult MemoryResult;
 	public LevelResult LevelResult;
 	public CommandInfoUI CommandInfo;
@@ -29,7 +29,7 @@ public class ResultConductor : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
-		OKButton.OnPushed += this.OnPushedOKButton;
+		//.OnPushed += this.OnPushedOKButton;
 	}
 
 	// Update is called once per frame
@@ -93,8 +93,8 @@ public class ResultConductor : MonoBehaviour {
 			//TextWindow.SetCommand(acquiredCommand);
 			TextWindow.SetMessage(MessageCategory.Result, acquiredCommand.name + "が習得可能になった");
 			CommandInfo.Set(acquiredCommand);
-			OKButton.Primitive.AnimateWidth(0);// AnimType.Linear
-			OKButton.SetText("");
+			//OKButton.Primitive.AnimateWidth(0);// AnimType.Linear
+			//OKButton.SetText("");
 		}
 		else
 		{
@@ -107,7 +107,7 @@ public class ResultConductor : MonoBehaviour {
 	void EndResult()
 	{
 		GameContext.SetState(GameState.Setting);
-		OKButton.Primitive.SetWidth(7.3f);
-		OKButton.SetText("OK");
+		//OKButton.Primitive.SetWidth(7.3f);
+		//OKButton.SetText("OK");
 	}
 }

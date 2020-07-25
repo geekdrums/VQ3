@@ -17,8 +17,6 @@ public enum EnemySpecies
 
 public class Enemy : Character
 {
-	protected static readonly float DamageTrembleTime = 0.025f;
-
 	public string DisplayName;
 	public EnemySpecies Speceis;
 	public string ExplanationText;
@@ -86,11 +84,17 @@ public class Enemy : Character
 	{
 		if( damageTime > 0 )
 		{
+			/*
 			if( (int)(damageTime / DamageTrembleTime) != (int)((damageTime + Time.deltaTime) / DamageTrembleTime) )
 			{
-				transform.localPosition = initialPosition + Random.insideUnitSphere * Mathf.Clamp(damageTime - GameContext.EnemyConductor.EnemyDamageTimeMin, 0.2f, 2.0f) * GameContext.EnemyConductor.EnemyDamageShake;
+				transform.localPosition = initialPosition
+					+ Random.insideUnitSphere
+					* Mathf.Clamp(damageTime - GameContext.EnemyConductor.EnemyDamageTimeMin, 0.2f, 2.0f)
+					* GameContext.EnemyConductor.EnemyDamageShake;
 			}
-			spriteRenderer.color = (damageTime % (DamageTrembleTime * 2) > DamageTrembleTime ? (GameContext.LuxSystem.IsOverFlow ? ColorManagerObsolete.Theme.Bright : Color.clear) : GameContext.EnemyConductor.baseColor);
+			*/
+			float blinkTime = GameContext.EnemyConductor.EnemyDamageTrembleTime;
+			spriteRenderer.color = (damageTime % (blinkTime * 2) > blinkTime ? (GameContext.LuxSystem.IsOverFlow ? ColorManagerObsolete.Theme.Bright : Color.clear) : GameContext.EnemyConductor.baseColor);
 
 			damageTime -= Time.deltaTime;
 			if( damageTime <= 0 )

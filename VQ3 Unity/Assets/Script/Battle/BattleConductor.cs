@@ -21,7 +21,7 @@ public class BattleConductor : MonoBehaviour {
 
     public GameObject SkillParent;
 	public GameObject DamageTextParent;
-	public ButtonUI OKButton;
+	//public ButtonUI OKButton;
 
 
     List<Pair<Timing, Skill>> Skills;
@@ -34,7 +34,7 @@ public class BattleConductor : MonoBehaviour {
 	void Start ()
 	{
         Skills = new List<Pair<Timing, Skill>>();
-		OKButton.OnPushed += this.OnPushedOKButton;
+		//OKButton.OnPushed += this.OnPushedOKButton;
     }
 	
 	// Update is called once per frame
@@ -49,6 +49,8 @@ public class BattleConductor : MonoBehaviour {
 			{
 				if( Music.CurrentBlockName != "Intro" )
 				{
+					GameContext.PlayerConductor.ExecCommand();
+					GameContext.EnemyConductor.CheckCommand();
 					SetState(BattleState.Battle);
 					UpdateBattle();
 				}
@@ -186,7 +188,7 @@ public class BattleConductor : MonoBehaviour {
 		switch( State )
 		{
 		case BattleState.Intro:
-			OKButton.SetMode(ButtonMode.Hide);
+			//OKButton.SetMode(ButtonMode.Hide);
 			break;
 		case BattleState.Battle:
 			break;
