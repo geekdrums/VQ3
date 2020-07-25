@@ -46,13 +46,9 @@ public class DamageText : MonoBehaviour
 		if( isEnd )
 		{
 			isEnd_ = true;
-			if( GameContext.BattleState == BattleState.Win )
-			{
-				Destroy(this.gameObject);
-				return;
-			}
-			transform.AnimatePosition(destination_, time: 0.2f);
-			transform.AnimatePosition(destination_ + (isPlayerDamage_ ? Vector3.down : Vector3.up) * 5, time: 0.2f, delay: 0.3f, endOption: AnimEndOption.Destroy);
+			Destroy(this.gameObject);
+			//transform.AnimatePosition(destination_, time: 0.2f);
+			//transform.AnimatePosition(destination_ + (isPlayerDamage_ ? Vector3.down : Vector3.up) * 5, time: 0.2f, delay: 0.3f, endOption: AnimEndOption.Destroy);
 		}
 	}
 

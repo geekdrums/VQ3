@@ -51,7 +51,7 @@ public class Enemy : Character
 		spriteRenderer = GetComponent<SpriteRenderer>();
 
 		ShadePrimitive shade = GetComponentInChildren<ShadePrimitive>();
-		shade.Light = GameContext.LuxSystem.GetComponent<LightForShadePrimitive>();
+		shade.Light = GameContext.LuxSystem.GetComponentInChildren<LightForShadePrimitive>();
 		shade.Light.AddTarget(shade);
 	}
 
