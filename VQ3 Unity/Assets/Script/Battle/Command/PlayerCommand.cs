@@ -16,7 +16,17 @@ public enum CommandState
 	DontKnow,
 }
 
-[ExecuteInEditMode]
+public enum ResonantRoll
+{
+	None,
+	Attacker,
+	Breaker,
+	Healer,
+	Defender,
+	Enhancer,
+	Unique,
+}
+
 public class PlayerCommand : MonoBehaviour
 {
     #region variables
@@ -51,13 +61,13 @@ public class PlayerCommand : MonoBehaviour
 	public BGAnimBase BGAnim;
 
 	//
-    // graphics editor params
-    //
-    public GameObject plane1;
+	// graphics editor params
+	//
+	public GameObject plane1;
     public GameObject plane2;
     public GameObject centerPlane;
     public GameObject centerIcon;
-    public GameObject maskPlane;
+    public StaticColorSource maskPlane;
 
 
 	//
@@ -102,8 +112,6 @@ public class PlayerCommand : MonoBehaviour
     void Start()
 	{
         ValidatePosition();
-        ValidateIcons();
-		ValidateColor();
     }
     
     //
@@ -111,9 +119,6 @@ public class PlayerCommand : MonoBehaviour
     //
 	public virtual void ValidateState()
 	{
-#if UNITY_EDITOR
-		if( !UnityEditor.EditorApplication.isPlaying ) return;
-#endif
 		state = CommandState.DontKnow;
 		if( acquireLevel <= GameContext.PlayerConductor.Level )
 		{
@@ -140,36 +145,37 @@ public class PlayerCommand : MonoBehaviour
         transform.localPosition = Quaternion.AngleAxis( longitude, Vector3.down ) * Quaternion.AngleAxis( latitude, Vector3.right ) * Vector3.back * GetComponentInParent<CommandGraph>().SphereRadius;
         transform.localScale = commandGraph.MaxScale * (1.0f - (this.transform.position - SelectSpot).magnitude * commandGraph.ScaleCoeff);
         transform.rotation = Quaternion.identity;
-    }
 
-    public virtual void ValidateColor()
+		foreach( CommandEdge line in linkLines )
+		{
+			line.UpdatePosition();
+		}
+	}
+
+	/*
+	public virtual void ValidateColor()
 	{
 		CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
 		if( commandGraph == null ) return;
 		float alpha = (transform.localPosition.z + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff;
-        /*
 		Material maskMat = new Material( Shader.Find( "Transparent/Diffuse" ) );
-        maskMat.hideFlags = HideFlags.DontSave;
-        maskMat.color = ColorManager.MakeAlpha( Color.black, alpha );
-        maskMat.name = "maskMat";
-		if( maskMat != null )
-		{
-			maskPlane.GetComponent<Renderer>().material = maskMat;
-		}
-		*/
-    }
+		maskMat.hideFlags = HideFlags.DontSave;
+		maskMat.color = ColorManager.MakeAlpha( Color.black, alpha );
+		maskMat.name = "maskMat";
+		maskPlane.GetComponent<Renderer>().material = maskMat;
+	}
 
-    public virtual void ValidateIcons()
+	public virtual void ValidateIcons()
     {
 		this.GetComponent<MidairPrimitive>().SetColor(ColorManagerObsolete.GetThemeColor(themeColor).Bright);
 
         if( iconStr.Contains( 'D' ) )
         {
-            DefPlane.SetActive( true );
-            Material defMat = new Material( Shader.Find( "Diffuse" ) );
+			DefPlane.SetActive(true);
+			Material defMat = new Material(Shader.Find("Shader Graphs/SimpleColor"));
             defMat.hideFlags = HideFlags.DontSave;
-            defMat.color = ColorManagerObsolete.GetThemeColor( themeColor ).Shade;
-            defMat.name = "defMat";
+			defMat.SetColor("_Color", ColorManagerObsolete.GetThemeColor(themeColor).Shade);
+			defMat.name = "defMat";
             DefPlane.GetComponent<Renderer>().material = defMat;
         }
         else
@@ -179,10 +185,10 @@ public class PlayerCommand : MonoBehaviour
         if( iconStr.Contains( 'H' ) )
         {
             HealPlane.SetActive( true );
-            Material healMat = new Material( Shader.Find( "Diffuse" ) );
+            Material healMat = new Material(Shader.Find("Shader Graphs/SimpleColor"));
             healMat.hideFlags = HideFlags.DontSave;
-            healMat.color = ColorManagerObsolete.GetThemeColor( themeColor ).Light;
-            healMat.name = "healMat";
+			healMat.SetColor("_Color", ColorManagerObsolete.GetThemeColor(themeColor).Light);
+			healMat.name = "healMat";
             HealPlane.GetComponent<Renderer>().material = healMat;
         }
         else
@@ -222,13 +228,14 @@ public class PlayerCommand : MonoBehaviour
             EnhPlane.SetActive( false );
         }
     }
+	*/
 
-    public void OnValidate()
+	public void OnValidate()
     {
         ValidatePosition();
     }
 
-	public void OnEdgeCreated( CommandEdge edge )
+	public void OnEdgeCreated(CommandEdge edge)
 	{
 		if( linkLines == null ) linkLines = new List<CommandEdge>();
 		linkLines.Add(edge);
@@ -240,16 +247,13 @@ public class PlayerCommand : MonoBehaviour
     //
     void Update()
     {
-#if UNITY_EDITOR
-        if( !UnityEditor.EditorApplication.isPlaying ) return;
-#endif
         UpdateTransform();
-    }
+		UpdateColor();
+	}
 
-    protected virtual void UpdateTransform()
+    public void UpdateTransform()
     {
 		CommandGraph commandGraph = GetComponentInParent<CommandGraph>();
-		float alpha = 0;
 		float distance = (this.transform.position - SelectSpot).magnitude;
 		if( GameContext.State == GameState.Setting || GameContext.State == GameState.Result )
 		{
@@ -260,7 +264,6 @@ public class PlayerCommand : MonoBehaviour
 			else if( state <= CommandState.NotAcquired )
 			{
 				transform.localScale = commandGraph.MaxScale * (1.0f - distance * commandGraph.ScaleCoeff) * 0.8f;
-				alpha = 0.6f;
 			}
 			else//DontKnow
 			{
@@ -280,32 +283,44 @@ public class PlayerCommand : MonoBehaviour
 				break;
 			case CommandState.NotSelected:
 				transform.localScale = scale;
-				alpha = 0.2f;
 				break;
 			case CommandState.Linked:
 				transform.localScale = scale * (this is InvertCommand ? 1.0f : 1.2f);
 				break;
 			case CommandState.Acquired:
 				transform.localScale = scale * 0.8f;
-				alpha = Mathf.Clamp((distance + commandGraph.MaskStartPos) * commandGraph.MaskColorCoeff, 0.6f, 1.0f);
 				break;
 			default://NotAcquired,DontKnow
 				transform.localScale = Vector3.zero;
 				break;
 			}
 		}
-		maskPlane.GetComponent<Renderer>().material.color = ColorManagerObsolete.MakeAlpha(Color.black, alpha);
 		transform.rotation = Quaternion.identity;
     }
 
-    #endregion
+	public void UpdateColor()
+	{
+		float distance = (this.transform.position - SelectSpot).magnitude;
+		maskPlane.SetState("CommandState", state.ToString());
+		maskPlane.SetParameter("CommandDistance", state == CommandState.Acquired ? distance : 0);
 
-    #region battle functions
+#if UNITY_EDITOR
+		if( !UnityEditor.EditorApplication.isPlaying )
+		{
+			maskPlane.RecalculateColor();
+			maskPlane.GetComponent<MidairPrimitive>().UpdateColor();
+		}
+#endif
+	}
 
-    //
-    // battle utilities
-    //
-    public virtual bool IsUsable()
+	#endregion
+
+	#region battle functions
+
+	//
+	// battle utilities
+	//
+	public virtual bool IsUsable()
     {
 		return state <= CommandState.Acquired;
     }
@@ -363,9 +378,9 @@ public class PlayerCommand : MonoBehaviour
 			{
 				foreach( CommandEdge line in linkLines )
 				{
-					if( line.State > EdgeState.PreLinked && line.IsUsable )
+					if( line.State > EdgeState.Prelinked && line.IsUsable )
 					{
-						line.State = EdgeState.PreLinked;
+						line.State = EdgeState.Prelinked;
 					}
 				}
 			}
@@ -412,7 +427,6 @@ public class PlayerCommand : MonoBehaviour
 		state = CommandState.NotAcquired;
 		ValidateState();
 		transform.localScale = Vector3.one * 0.16f;
-		maskPlane.GetComponent<Renderer>().material.color = Color.clear;
 		foreach( CommandEdge line in linkLines )
 		{
 			if( line.GetOtherSide(this).state != CommandState.DontKnow )

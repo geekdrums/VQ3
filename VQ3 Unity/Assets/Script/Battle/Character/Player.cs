@@ -9,7 +9,7 @@ public class Player : Character
 
 	public GameObject UIParent;
 	public CommandGraph commandGraph;
-	public HPPanel HPPanel;
+	public HitPointUI HPUI;
 	public CutInUI CutInUI;
 	public float DangerPercentage;
 	public int DangerHysteresis = 15;
@@ -21,7 +21,6 @@ public class Player : Character
 	{
 		Initialize();
 		initialPosition = UIParent.transform.position;
-		//HPPanel.OnBattleStart();
 	}
 
 	// Update is called once per frame
@@ -67,7 +66,7 @@ public class Player : Character
 		//		break;
 		//	}
 		//}
-		HPPanel.OnTurnStart((command as PlayerCommandData).OwnerCommand);
+		HPUI.OnTurnStart((command as PlayerCommandData).OwnerCommand);
 	}
 	public override void BeAttacked(AttackModule attack, Skill skill)
 	{
@@ -111,7 +110,7 @@ public class Player : Character
 	{
 		base.BeDamaged(damage, skill);
 
-		HPPanel.OnDamage(damage);
+		HPUI.OnDamage(damage);
 		CheckDangerMode();
 
 		if( HitPoint <= 0 )
@@ -125,7 +124,7 @@ public class Player : Character
 		base.Heal(heal);
 		if( HitPoint - oldHitPoint > 0 )
 		{
-			HPPanel.OnHeal(HitPoint - oldHitPoint);
+			HPUI.OnHeal(HitPoint - oldHitPoint);
 			CheckDangerMode();
 			//HPBar.OnHeal( HitPoint - oldHitPoint );
 			SEPlayer.Play(ActionResult.PlayerHeal, this, HitPoint - oldHitPoint);
@@ -169,7 +168,7 @@ public class Player : Character
 	public override void UpdateHealHP()
 	{
 		base.UpdateHealHP();
-		HPPanel.OnUpdateHP();
+		HPUI.OnUpdateHP();
 		CheckDangerMode();
 		if( HitPoint <= 0 )
 		{
@@ -187,6 +186,7 @@ public class Player : Character
 				{
 					IsDangerMode = false;
 					ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
+					ColorManager.SetGlobalState("Base", "Black");
 					Music.SetAisac("Danger", 0);
 				}
 				else
@@ -200,6 +200,7 @@ public class Player : Character
 				{
 					IsDangerMode = true;
 					ColorManagerObsolete.SetBaseColor(EBaseColor.Red);
+					ColorManager.SetGlobalState("Base", "Red");
 					CutInUI.SetDanger();
 					Music.SetAisac("Danger", 1);
 				}
@@ -213,7 +214,7 @@ public class Player : Character
 		DefendPercent = 0;
 		HealPercent = 0;
 		TurnDamage = 0;
-		HPPanel.OnBattleStart();
+		HPUI.OnBattleStart();
 		foreach( EnhanceParameter enhanceParam in ActiveEnhanceParams )
 		{
 			enhanceParam.Init();

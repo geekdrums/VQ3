@@ -5,7 +5,7 @@ using System.Collections;
 public enum EdgeState
 {
 	Linked,
-	PreLinked,
+	Prelinked,
 	Unlinked,
 	Unacquired,
 	DontKnow,
@@ -13,21 +13,14 @@ public enum EdgeState
 }
 
 public class CommandEdge : MonoBehaviour {
-
-	static Color LinkedLineColor = Color.white;
-	static Color UnlinkedLineColor = ColorManagerObsolete.MakeAlpha(Color.white, 0.2f);
-	static Color PrelinkedLineColor = ColorManagerObsolete.MakeAlpha(Color.white, 0.2f);
-	static Color NotSelectedLineColor = ColorManagerObsolete.MakeAlpha(Color.white, 0.9f);
-	static Color InvertLinkedLineColor = Color.black;
-	static Color InvertUnlinkedLineColor = ColorManagerObsolete.MakeAlpha(Color.black, 0.2f);
-	static Color InvertPrelinkedLineColor = ColorManagerObsolete.MakeAlpha(Color.black, 0.2f);
-	static float LinkedLineWidth = 0.3f;
+	static float LinkedLineWidth = 0.2f;
 	static float PrelinkedLineWidth = 0.1f;
-	static float UnlinkedLineWidth = 0.05f;
-	static float NotSelectedLineWidth = 0.15f;
+	static float UnlinkedLineWidth = 0.0f;
+	static float NotSelectedLineWidth = 0.1f;
 
 	LineRenderer line_;
 	EdgeState state_ = EdgeState.None;
+	ColorSourceBase colorSource_;
 	public bool IsInvert { get { return Command1 is InvertCommand || Command2 is InvertCommand; } }
 	public bool IsUsable { get { return Command1.IsUsable() && Command2.IsUsable(); } }
 	public PlayerCommand Command1;
@@ -37,67 +30,22 @@ public class CommandEdge : MonoBehaviour {
 	void Awake()
 	{
 		line_ = GetComponent<LineRenderer>();
+		colorSource_ = GetComponent<ColorSourceBase>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float width = 0;
-		Color color = Color.white;
-		switch( state_ )
+	}
+
+	void OnValidate()
+	{
+		if( Command1 != null && Command2 != null )
 		{
-		case EdgeState.Linked:
-			width = LinkedLineWidth;
-			color = LinkedLineColor;
-			if( IsInvert )
-			{
-				color = InvertLinkedLineColor;
-			}
-			else
-			{
-				if( Command1.state == CommandState.Selected || Command2.state == CommandState.Selected )
-				{
-					width = LinkedLineWidth;
-				}
-				else if( Command1.state == CommandState.NotSelected || Command2.state == CommandState.NotSelected )
-				{
-					color = NotSelectedLineColor;
-					width = NotSelectedLineWidth;
-				}
-			}
-			break;
-		case EdgeState.PreLinked:
-			width = PrelinkedLineWidth;
-			if( IsInvert )
-			{
-				color = InvertPrelinkedLineColor;
-			}
-			else
-			{
-				color = PrelinkedLineColor;
-			}
-			break;
-		case EdgeState.Unlinked:
-			width = UnlinkedLineWidth;
-			if( IsInvert )
-			{
-				color = InvertUnlinkedLineColor;
-			}
-			else
-			{
-				color = UnlinkedLineColor;
-			}
-			break;
-		case EdgeState.Unacquired:
-			width = UnlinkedLineWidth;
-			color = UnlinkedLineColor;
-			break;
-		case EdgeState.DontKnow:
-			break;
+			line_ = GetComponent<LineRenderer>();
+			colorSource_ = GetComponent<ColorSourceBase>();
+			colorSource_.SetState("EdgeState", state_.ToString());
+			UpdatePosition();
 		}
-		line_.SetWidth(width * Command1.transform.localScale.x * 4, width * Command2.transform.localScale.x * 4);
-		line_.SetColors(color, color);
-		line_.SetPosition(0, Command1.transform.localPosition);
-		line_.SetPosition(1, Command2.transform.localPosition);
 	}
 
 	public void SetEnabled( bool enable )
@@ -114,7 +62,51 @@ public class CommandEdge : MonoBehaviour {
 	public EdgeState State
 	{
 		get { return state_; }
-		set { state_ = value; }
+		set
+		{
+			state_ = value;
+			float width = 0;
+			switch( state_ )
+			{
+				case EdgeState.Linked:
+					width = LinkedLineWidth;
+					if( Command1.state == CommandState.Selected || Command2.state == CommandState.Selected )
+					{
+						width = LinkedLineWidth;
+					}
+					else if( Command1.state == CommandState.NotSelected || Command2.state == CommandState.NotSelected )
+					{
+						width = NotSelectedLineWidth;
+					}
+					break;
+				case EdgeState.Prelinked:
+					width = PrelinkedLineWidth;
+					break;
+				case EdgeState.Unlinked:
+					width = UnlinkedLineWidth;
+					break;
+				case EdgeState.Unacquired:
+					width = UnlinkedLineWidth;
+					break;
+				case EdgeState.DontKnow:
+					break;
+			}
+			if( line_ == null )
+			{
+				line_ = GetComponent<LineRenderer>();
+				colorSource_ = GetComponent<ColorSourceBase>();
+			}
+			line_.startWidth = width;
+			line_.endWidth = width;
+			colorSource_.SetState("EdgeState", state_.ToString());
+			UpdatePosition();
+		}
+	}
+
+	public void UpdatePosition()
+	{
+		line_.SetPosition(0, Command1.transform.localPosition);
+		line_.SetPosition(1, Command2.transform.localPosition);
 	}
 
 	public PlayerCommand GetOtherSide( PlayerCommand oneSide )

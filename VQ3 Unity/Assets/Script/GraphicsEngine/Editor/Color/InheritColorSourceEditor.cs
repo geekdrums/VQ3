@@ -6,15 +6,12 @@ using UnityEditor;
 
 
 [CustomEditor(typeof(InheritColorSource))]
-[CanEditMultipleObjects]
 public class InheritColorSourceEditor : ColorSourceBaseEditor
 {
 	SerializedProperty sourceProperty_;
 
-	public override void OnInspectorGUI()
+	public override void DrawSourceInspector()
 	{
-		serializedObject.Update();
-
 		if( sourceProperty_ == null )
 		{
 			sourceProperty_ = serializedObject.FindProperty("Source");
@@ -37,11 +34,5 @@ public class InheritColorSourceEditor : ColorSourceBaseEditor
 			EditorGUI.EndDisabledGroup();
 		}
 		EditorGUILayout.EndHorizontal();
-
-		//EditorGUILayout.LabelField("SourceHSVA", string.Format("H:{0:F3}, S:{1:F3}, V:{2:F3}, A:{3:F3}", sourceColor.H, sourceColor.S, sourceColor.V, sourceColor.A));
-
-		DrawBaseInspector();
-
-		serializedObject.ApplyModifiedProperties();
 	}
 }

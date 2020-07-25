@@ -6,7 +6,6 @@ using UnityEditor;
 
 
 [CustomEditor(typeof(SwitchColorSource))]
-[CanEditMultipleObjects]
 public class SwitchColorSourceEditor : ColorSourceBaseEditor
 {
 	SerializedProperty sourceListProperty_;
@@ -15,10 +14,8 @@ public class SwitchColorSourceEditor : ColorSourceBaseEditor
 
 	bool listFoldOut_ = true;
 
-	public override void OnInspectorGUI()
+	public override void DrawSourceInspector()
 	{
-		serializedObject.Update();
-
 		if( sourceListProperty_ == null )
 		{
 			sourceListProperty_ = serializedObject.FindProperty("SourceList");
@@ -43,16 +40,20 @@ public class SwitchColorSourceEditor : ColorSourceBaseEditor
 
 				if( stateGroup.IsGlobal )
 				{
-					EditorGUI.BeginDisabledGroup(true);
-					int index = Mathf.Max(0, stateGroup.States.IndexOf(stateGroup.GlobalValue));
-					EditorGUILayout.LabelField(stateGroup.States[index], GUILayout.Width(fieldWidth));
-					EditorGUI.EndDisabledGroup();
+					LocalDisableGroup(() =>
+					{
+						int index = Mathf.Max(0, stateGroup.States.IndexOf(stateGroup.GlobalValue));
+						EditorGUILayout.LabelField(stateGroup.States[index], GUILayout.Width(fieldWidth));
+					});
 				}
 				else
 				{
-					int index = Mathf.Max(0, stateGroup.States.IndexOf(stateProperty_.stringValue));
-					index = EditorGUILayout.Popup(index, stateGroup.States.ToArray(), GUILayout.Width(fieldWidth));
-					stateProperty_.stringValue = stateGroup.States[index];
+					LocalEnableGroup(() =>
+					{
+						int index = Mathf.Max(0, stateGroup.States.IndexOf(stateProperty_.stringValue));
+						index = EditorGUILayout.Popup(index, stateGroup.States.ToArray(), GUILayout.Width(fieldWidth));
+						stateProperty_.stringValue = stateGroup.States[index];
+					});
 				}
 			}
 			else
@@ -82,10 +83,12 @@ public class SwitchColorSourceEditor : ColorSourceBaseEditor
 							}
 							if( sourceObjectProp.objectReferenceValue != null )
 							{
-								EditorGUI.BeginDisabledGroup(true);
-								ColorSourceBase sourceColor = (sourceObjectProp.objectReferenceValue as ColorSourceBase);
-								EditorGUILayout.ColorField(sourceColor, GUILayout.Width(80));
-								EditorGUI.EndDisabledGroup();
+								LocalDisableGroup(() =>
+								{
+									ColorSourceBase sourceColor = (sourceObjectProp.objectReferenceValue as ColorSourceBase);
+									EditorGUILayout.ColorField(sourceColor, GUILayout.Width(80));
+								});
+
 							}
 						}
 						EditorGUILayout.EndHorizontal();
@@ -99,10 +102,5 @@ public class SwitchColorSourceEditor : ColorSourceBaseEditor
 			}
 		}
 		EditorGUI.indentLevel--;
-
-
-		DrawBaseInspector();
-
-		serializedObject.ApplyModifiedProperties();
 	}
 }

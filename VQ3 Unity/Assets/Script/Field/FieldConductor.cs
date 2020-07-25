@@ -23,7 +23,6 @@ public class FieldConductor : MonoBehaviour {
 
     void Awake()
     {
-		GameContext.FieldConductor = this;
 		if( RefreshWatchFlags )
 		{
 			foreach( StageData stage in StageData )
@@ -46,10 +45,10 @@ public class FieldConductor : MonoBehaviour {
 	{
 		EncounterIndex = index;
 
-		for( int i=0; i<EncounterIndex; ++i )
-		{
-			GameContext.PlayerConductor.OnGainMemory(StageData[0].Encounters[i].AcquireMemory);
-		}
+		//for( int i=0; i<EncounterIndex; ++i )
+		//{
+		//	GameContext.PlayerConductor.OnGainMemory(StageData[0].Encounters[i].AcquireMemory);
+		//}
 
 		PlayerCommand acquiredCommand = GameContext.PlayerConductor.CheckAcquireCommand();
 		while( acquiredCommand != null )

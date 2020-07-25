@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEditor;
 
 [CustomEditor(typeof(ColorManager))]
-[CanEditMultipleObjects]
 public class ColorManagerEditor : Editor
 {
 	SerializedProperty stateGroupsProperty_;

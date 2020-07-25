@@ -47,4 +47,16 @@ public class InheritColorSource : ColorSourceBase
 			}
 		}
 	}
+
+	public override void ApplySourceInstance()
+	{
+		if( SourceInstance is InheritColorSource == false )
+		{
+			return;
+		}
+
+		base.ApplySourceInstance();
+
+		this.Source = (SourceInstance as InheritColorSource).Source;
+	}
 }

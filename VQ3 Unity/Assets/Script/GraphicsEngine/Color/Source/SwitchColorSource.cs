@@ -165,4 +165,17 @@ public class SwitchColorSource : ColorSourceBase
 	}
 
 	#endregion
+
+	public override void ApplySourceInstance()
+	{
+		if( SourceInstance is SwitchColorSource == false )
+		{
+			return;
+		}
+
+		base.ApplySourceInstance();
+
+		this.SourceList = new List<ColorSourceBase>((SourceInstance as SwitchColorSource).SourceList);
+		this.StateGroupName = (SourceInstance as SwitchColorSource).StateGroupName;
+	}
 }

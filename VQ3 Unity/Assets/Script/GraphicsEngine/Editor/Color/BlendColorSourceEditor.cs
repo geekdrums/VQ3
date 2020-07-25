@@ -6,7 +6,6 @@ using UnityEditor;
 
 
 [CustomEditor(typeof(BlendColorSource))]
-[CanEditMultipleObjects]
 public class BlendColorSourceEditor : ColorSourceBaseEditor
 {
 	SerializedProperty sourceBeginProperty_;
@@ -17,10 +16,8 @@ public class BlendColorSourceEditor : ColorSourceBaseEditor
 
 	bool listFoldOut_ = true;
 
-	public override void OnInspectorGUI()
+	public override void DrawSourceInspector()
 	{
-		serializedObject.Update();
-
 		if( sourceBeginProperty_ == null )
 		{
 			sourceBeginProperty_ = serializedObject.FindProperty("SourceBegin");
@@ -44,13 +41,17 @@ public class BlendColorSourceEditor : ColorSourceBaseEditor
 				ColorGameSyncByParameter parameter = ColorManager.GetParameter(parameterNameProperty_.stringValue);
 				if( parameter.IsGlobal )
 				{
-					EditorGUI.BeginDisabledGroup(true);
-					EditorGUILayout.Slider(parameter.GlobalValue, parameter.MinParam, parameter.MaxParam, GUILayout.Width(fieldWidth));
-					EditorGUI.EndDisabledGroup();
+					LocalDisableGroup(() =>
+					{
+						EditorGUILayout.Slider(parameter.GlobalValue, parameter.MinParam, parameter.MaxParam, GUILayout.Width(fieldWidth));
+					});
 				}
 				else
 				{
-					valueProperty_.floatValue = EditorGUILayout.Slider(valueProperty_.floatValue, parameter.MinParam, parameter.MaxParam, GUILayout.Width(fieldWidth));
+					LocalEnableGroup(() =>
+					{
+						valueProperty_.floatValue = EditorGUILayout.Slider(valueProperty_.floatValue, parameter.MinParam, parameter.MaxParam, GUILayout.Width(fieldWidth));
+					});
 				}
 			}
 			else
@@ -63,10 +64,6 @@ public class BlendColorSourceEditor : ColorSourceBaseEditor
 			DrawSourceProperty("End:", sourceEndProperty_);
 		}
 		EditorGUI.indentLevel--;
-
-		DrawBaseInspector();
-
-		serializedObject.ApplyModifiedProperties();
 	}
 
 	void DrawSourceProperty(string label, SerializedProperty sourceProperty)

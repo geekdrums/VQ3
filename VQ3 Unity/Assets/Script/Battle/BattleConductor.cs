@@ -28,7 +28,6 @@ public class BattleConductor : MonoBehaviour {
 
 	void Awake()
 	{
-		GameContext.BattleConductor = this;
 	}
 
 	// Use this for initialization
@@ -96,6 +95,7 @@ public class BattleConductor : MonoBehaviour {
 				ClearSkills();
 				GameContext.SetState(GameState.Result);
 				ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
+				ColorManager.SetGlobalState("Base", "Black");
 				SetState(BattleState.None);
 			}
 			break;

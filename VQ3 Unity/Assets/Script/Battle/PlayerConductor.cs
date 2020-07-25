@@ -42,7 +42,6 @@ public class PlayerConductor : MonoBehaviour {
 
 	void Awake()
 	{
-		GameContext.PlayerConductor = this;
 	}
 
 	// Use this for initialization
@@ -198,7 +197,7 @@ public class PlayerConductor : MonoBehaviour {
 		{
 			CurrentCommand.SetCurrent();
 			ColorManagerObsolete.SetThemeColor(CurrentCommand.themeColor);
-
+			ColorManager.SetGlobalState("Theme", CurrentCommand.themeColor.ToString());
 			if( CurrentCommand.BGAnim != null && GameContext.LuxSystem.IsOverFlow )
 			{
 				CurrentCommand.BGAnim.Activate();
@@ -297,10 +296,12 @@ public class PlayerConductor : MonoBehaviour {
         WaitCount = 0;
 		ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
 		ColorManagerObsolete.SetThemeColor(EThemeColor.White);
+		ColorManager.SetGlobalState("Base", "Black");
+		ColorManager.SetGlobalState("Theme", "White");
 		//TextWindow.SetCommand(null);
 
 		//VPMeter.SetActive(GameContext.FieldConductor.CurrentEncounter.Version != LuxVersion.None);
-    }
+	}
 
 	public void OnEnterSetting()
 	{
@@ -312,7 +313,7 @@ public class PlayerConductor : MonoBehaviour {
 	public void OnEnterResult()
 	{
 		Player.HitPoint = Player.MaxHP;
-		Player.HPPanel.OnUpdateHP();
+		Player.HPUI.OnUpdateHP();
 		BGAnimBase.DeactivateCurrentAnim();
 	}
 

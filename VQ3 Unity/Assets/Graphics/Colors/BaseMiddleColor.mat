@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: BaseMiddleColor
   m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -54,4 +54,4 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 1}
-    - _Color: {r: 0.20392157, g: 0.20392157, b: 0.20392157, a: 1}
+    - _Color: {r: 0.59607846, g: 0.59607846, b: 0.59607846, a: 1}

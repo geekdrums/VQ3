@@ -36,6 +36,19 @@ public class SerializableDictionary<TKey, TValue, ListType> : IEnumerable<KeyVal
 		set
 		{
 			dictionary[key] = value;
+#if UNITY_EDITOR
+			if( !UnityEditor.EditorApplication.isPlaying )
+			{
+				foreach( SerializableKeyValuePair<TKey, TValue> pair in list )
+				{
+					if( pair.Key.Equals(key) )
+					{
+						pair.Value = value;
+						break;
+					}
+				}
+			}
+#endif
 		}
 	}
 	public bool ContainsKey(TKey key)
@@ -45,6 +58,22 @@ public class SerializableDictionary<TKey, TValue, ListType> : IEnumerable<KeyVal
 	public void Remove(TKey key)
 	{
 		dictionary.Remove(key);
+#if UNITY_EDITOR
+		if( !UnityEditor.EditorApplication.isPlaying )
+		{
+			list.RemoveAt(list.FindIndex((pair) => pair.Key.Equals(key)));
+		}
+#endif
+	}
+	public void Add(ListType pair)
+	{
+		dictionary.Add(pair.Key, pair.Value);
+#if UNITY_EDITOR
+		if( !UnityEditor.EditorApplication.isPlaying )
+		{
+			list.Add(pair);
+		}
+#endif
 	}
 	public TValue At(int index) { return list[index].Value; }
 
@@ -124,6 +153,33 @@ public class SerializableDictionary<TKey, TValue, ListType> : IEnumerable<KeyVal
 		}
 		return dict;
 	}
+
+	public bool KeyEquals(SerializableDictionary<TKey, TValue, ListType> other)
+	{
+		foreach(var key in this.Keys )
+		{
+			if( other.ContainsKey(key) == false )
+			{
+				return false;
+			}
+		}
+		foreach( var key in other.Keys )
+		{
+			if( this.ContainsKey(key) == false )
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void Clone(SerializableDictionary<TKey, TValue, ListType> other)
+	{
+		list.Clear();
+		list.AddRange(other.list);
+		dict_ = ConvertListToDictionary(list);
+	}
+
 }
 	
 [System.Serializable]

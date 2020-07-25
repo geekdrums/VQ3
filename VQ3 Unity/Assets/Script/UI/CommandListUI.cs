@@ -63,8 +63,8 @@ public class CommandListUI : MonoBehaviour
 	{
 		GameObject iconObj = command.InstantiateIconObj(this.gameObject);
 		commandIcons_.Insert(0, iconObj);
-		commandIcons_[0].GetComponent<PlayerCommand>().maskPlane.SetActive(false);
-		commandIcons_[0].GetComponent<PlayerCommand>().enabled = false;
+		//commandIcons_[0].GetComponent<PlayerCommand>().maskPlane.SetActive(false);
+		//commandIcons_[0].GetComponent<PlayerCommand>().enabled = false;
 		while( commandIcons_.Count > MaxCommands )
 		{
 			Destroy(commandIcons_[commandIcons_.Count - 1].gameObject);
@@ -89,8 +89,8 @@ public class CommandListUI : MonoBehaviour
 
 		for( int i = currentIndex_ + 1; i < commandIcons_.Count; ++i )
 		{
-			commandIcons_[i].GetComponent<PlayerCommand>().maskPlane.SetActive(true);
-			commandIcons_[i].GetComponent<PlayerCommand>().maskPlane.GetComponent<Renderer>().material.color = ColorManagerObsolete.MakeAlpha(Color.black, 0.6f);
+			//commandIcons_[i].GetComponent<PlayerCommand>().maskPlane.SetActive(true);
+			//commandIcons_[i].GetComponent<PlayerCommand>().maskPlane.GetComponent<Renderer>().material.color = ColorManagerObsolete.MakeAlpha(Color.black, 0.6f);
 		}
 	}
 }

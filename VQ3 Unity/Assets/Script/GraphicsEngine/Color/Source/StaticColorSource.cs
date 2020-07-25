@@ -45,4 +45,16 @@ public class StaticColorSource : ColorSourceBase
 		ColorPropertyUtil.ToHSVA(Source, out sourceH, out sourceS, out sourceV, out sourceA);
 		GetSourceHSVA(out h_, out s_, out v_, out a_);
 	}
+
+	public override void ApplySourceInstance()
+	{
+		if( SourceInstance is StaticColorSource == false )
+		{
+			return;
+		}
+
+		base.ApplySourceInstance();
+
+		this.Source = (SourceInstance as StaticColorSource).Source;
+	}
 }

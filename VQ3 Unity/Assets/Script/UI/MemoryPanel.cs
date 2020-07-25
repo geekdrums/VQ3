@@ -15,7 +15,7 @@ public class MemoryPanel : MonoBehaviour {
 	public ButtonUI BackButton;
 	public MidairPrimitive BaseFrame;
 
-	public CommandExplanation CommandExp;
+	//public CommandInfoUI CommandInfo;
 
 	Vector3 memoryZeroPosition_;
 	Vector3 memoryMaxPosition_;
@@ -115,7 +115,7 @@ public class MemoryPanel : MonoBehaviour {
 		MemoryGauge.SetColor(ColorManagerObsolete.GetThemeColor(command.themeColor).Bright);
 		MemoryGauge.AnimateRate((playerCommand_.currentLevel > 0 && maxLvMemory > 0 ? (0.9f * (float)playerCommand_.commandData[playerCommand_.currentLevel-1].RequireSP / maxLvMemory + 0.1f) : 0), time: 0.1f);
 
-		CommandExp.Set(command);
+		//CommandInfo.Set(command);
 	}
 
 	public void Reset()
@@ -134,7 +134,7 @@ public class MemoryPanel : MonoBehaviour {
 		{
 			levelInfo.transform.localScale = Vector3.zero;
 		}
-		CommandExp.Hide();
+		//CommandInfo.Hide();
 		TextWindow.SetMessage(MessageCategory.Help, "コマンドにメモリーを分配できます");
 	}
 
@@ -146,7 +146,7 @@ public class MemoryPanel : MonoBehaviour {
 		DownButton.SetMode(ButtonMode.Hide);
 		BackButton.SetMode(ButtonMode.Hide);
 		BaseFrame.AnimateWidth(0);// AnimType.Linear
-		CommandExp.Hide();
+		//CommandInfo.Hide();
 	}
 
 	public void UpdateMemory()

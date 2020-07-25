@@ -1700,7 +1700,6 @@ public class AnimManager : MonoBehaviour
 	{
 		if( Instance.removeAnims_.Contains(anim) == false )
 		{
-			anim.End();
 			Instance.removeAnims_.Add(anim);
 		}
 	}

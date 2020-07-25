@@ -71,8 +71,6 @@ public class SkillCutIn : MonoBehaviour {
 
 		skillList_ = (SkillListUI)Instantiate(skillList, transform);
 		skillList_.transform.position = skillList_.transform.position + Vector3.back * 50;
-		skillList_.Execute(enhIconParent);
-
 
 		float mtu = (float)Music.Meter.SecPerUnit;
 

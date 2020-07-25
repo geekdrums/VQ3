@@ -98,7 +98,6 @@
     <Compile Include="Assets\Script\Field\ResultConductor.cs" />
     <Compile Include="Assets\Script\Field\StageData.cs" />
     <Compile Include="Assets\Script\GameContext.cs" />
-    <Compile Include="Assets\Script\GameContextInitializer.cs" />
     <Compile Include="Assets\Script\GraphicsEngine\Animation\AnimComponent.cs" />
     <Compile Include="Assets\Script\GraphicsEngine\Animation\AnimInfo.cs" />
     <Compile Include="Assets\Script\GraphicsEngine\Animation\AnimManager.cs" />
@@ -139,7 +138,7 @@
     <Compile Include="Assets\Script\MusicEngine\Music.cs" />
     <Compile Include="Assets\Script\MusicEngine\Tiimng.cs" />
     <Compile Include="Assets\Script\UI\ButtonUI.cs" />
-    <Compile Include="Assets\Script\UI\CommandExplanation.cs" />
+    <Compile Include="Assets\Script\UI\CommandInfoUI.cs" />
     <Compile Include="Assets\Script\UI\CommandListUI.cs" />
     <Compile Include="Assets\Script\UI\CutInUI.cs" />
     <Compile Include="Assets\Script\UI\DamageGauge.cs" />
@@ -149,7 +148,7 @@
     <Compile Include="Assets\Script\UI\EnemySkillListUI.cs" />
     <Compile Include="Assets\Script\UI\EnhanceIcons.cs" />
     <Compile Include="Assets\Script\UI\EnhanceUI.cs" />
-    <Compile Include="Assets\Script\UI\HPPanel.cs" />
+    <Compile Include="Assets\Script\UI\HitPointUI.cs" />
     <Compile Include="Assets\Script\UI\LevelResult.cs" />
     <Compile Include="Assets\Script\UI\MemoryPanel.cs" />
     <Compile Include="Assets\Script\UI\MemoryResult.cs" />

@@ -55,6 +55,12 @@ public class ColorSourceBase : MonoBehaviour
 	[SerializeField]
 	protected Component Target;
 
+	/// <summary>
+	/// 指定されれば、Sourceのパラメータを（State,Parameterなどのインタラクティブな要素を除いて）コピーする。
+	/// </summary>
+	[SerializeField]
+	protected ColorSourceBase SourceInstance;
+
 	#endregion
 
 
@@ -491,6 +497,9 @@ public class ColorSourceBase : MonoBehaviour
 		}
 		foreach( ColorSourceBase refColor in beReferencedColors_ )
 		{
+#if UNITY_EDITOR
+			if( refColor == null ) continue;
+#endif
 			refColor.RecalculateColor();
 			refColor.RecalculateReferencedColors();
 		}
@@ -505,10 +514,10 @@ public class ColorSourceBase : MonoBehaviour
 		isDirty_ = true;
 		foreach( ColorSourceBase refColor in beReferencedColors_ )
 		{
-			if( refColor != null )
-			{
-				refColor.SetReferenceColorDirty();
-			}
+#if UNITY_EDITOR
+			if( refColor == null ) continue;
+#endif
+			refColor.SetReferenceColorDirty();
 		}
 	}
 
@@ -633,6 +642,46 @@ public class ColorSourceBase : MonoBehaviour
 		if( Target != null && Target is IColoredObject )
 		{
 			(Target as IColoredObject).SetColor(this);
+		}
+	}
+
+	public virtual void ApplySourceInstance()
+	{
+		this.EditTypeH = SourceInstance.EditTypeH;
+		this.EditTypeS = SourceInstance.EditTypeS;
+		this.EditTypeV = SourceInstance.EditTypeV;
+		this.EditTypeA = SourceInstance.EditTypeA;
+
+		this.EditValueH = SourceInstance.EditValueH;
+		this.EditValueS = SourceInstance.EditValueS;
+		this.EditValueV = SourceInstance.EditValueV;
+		this.EditValueA = SourceInstance.EditValueA;
+		
+		if( StateDict.KeyEquals(SourceInstance.StateDict) == false )
+		{
+			SerializableStringDictionary oldDict = new SerializableStringDictionary();
+			oldDict.Clone(StateDict);
+			StateDict.Clone(SourceInstance.StateDict);
+			foreach( var key in StateDict.Keys )
+			{
+				if( oldDict.ContainsKey(key) )
+				{
+					StateDict[key] = oldDict[key];
+				}
+			}
+		}
+		if( ParameterDict.KeyEquals(SourceInstance.ParameterDict) == false )
+		{
+			SerializableStringToFloatDictionary oldDict = new SerializableStringToFloatDictionary();
+			oldDict.Clone(ParameterDict);
+			ParameterDict.Clone(SourceInstance.ParameterDict);
+			foreach( var key in ParameterDict.Keys )
+			{
+				if( oldDict.ContainsKey(key) )
+				{
+					ParameterDict[key] = oldDict[key];
+				}
+			}
 		}
 	}
 

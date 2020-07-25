@@ -68,6 +68,7 @@ public class LuxSystem : MonoBehaviour
 	public DamageGauge DamageGauge;
 
 	//animation preferences
+	public ColorSourceBase BGColorSource;
 	public Color BGColor;
 	public Vector3 BGOffset;
 	public Vector3 sunsetPosition;
@@ -121,7 +122,6 @@ public class LuxSystem : MonoBehaviour
 
 	void Awake()
 	{
-		GameContext.LuxSystem = this;
 	}
 
 	// Use this for initialization
@@ -129,9 +129,11 @@ public class LuxSystem : MonoBehaviour
 	{
 		State = LuxState.None;
 		ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
+		ColorManager.SetGlobalState("Base", "Black");
+		ColorManager.SetGlobalState("Theme", "White");
 		ColorManagerObsolete.OnBaseColorChanged += this.OnBaseColorChanged;
 
-		BGColor = ColorManagerObsolete.Theme.Light;
+		//BGColor = ColorManagerObsolete.Theme.Light;
 		initialSunPosition = Sun.transform.position;
 		initialMoonPosition = Moon.transform.position;
 		initialMainLightScale = MainLight.transform.localScale.x;
@@ -224,14 +226,14 @@ public class LuxSystem : MonoBehaviour
 			}
 			UpdateLightAngles();
 			UpdateBGOffset();
-			BGColor = Color.Lerp(BGColor, ColorManagerObsolete.Theme.Light, 0.1f);
-			BGMaterial.SetColor("_BaseColor", BGColor);
+			//BGColor = Color.Lerp(BGColor, ColorManagerObsolete.Theme.Light, 0.1f);
+			//BGMaterial.SetColor("_BaseColor", BGColor);
 			break;
 		case LuxState.Overflow:
 			UpdateLightAngles();
 			UpdateBGOffset();
-			BGColor = Color.Lerp(BGColor, ColorManagerObsolete.Theme.Light, 0.1f);
-			BGMaterial.SetColor("_BaseColor", BGColor);
+			//BGColor = Color.Lerp(BGColor, ColorManagerObsolete.Theme.Light, 0.1f);
+			//BGMaterial.SetColor("_BaseColor", BGColor);
 			//BreakAccentGauge.SetColor(Color.Lerp(ColorManagerObsolete.Accent.Break, Color.clear, Music.MusicalCos(8) * 0.3f));
 			break;
 		case LuxState.Overload:
@@ -244,6 +246,8 @@ public class LuxSystem : MonoBehaviour
 			{
 				ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
 				ColorManagerObsolete.SetThemeColor(EThemeColor.White);
+				ColorManager.SetGlobalState("Base", "Black");
+				ColorManager.SetGlobalState("Theme", "White");
 				GameContext.EnemyConductor.OnRevert();
 				GameContext.PlayerConductor.OnRevert();
 				SetState(LuxState.Sun);
@@ -410,7 +414,8 @@ public class LuxSystem : MonoBehaviour
 			Moon.transform.position = Vector3.Lerp(initialMoonPosition, Sun.transform.position + Vector3.back * 75, (-Mathf.Cos(t * Mathf.PI) + 1) / 2);
 			Vector3 distance = Moon.transform.position - Sun.transform.position;
 			distance.z = 0;
-			BGColor = Color.Lerp(BGColor, Color.Lerp(ColorManagerObsolete.Theme.Light, Color.black, 1.0f / (1.0f + distance.magnitude)), 0.3f);
+			BGColorSource.SetParameter("Eclipse", 1.0f / (1.0f + distance.magnitude));
+			//BGColor = Color.Lerp(BGColor, Color.Lerp(ColorManagerObsolete.Theme.Light, Color.black, 1.0f / (1.0f + distance.magnitude)), 0.3f);
 			BGOffset = Vector3.Lerp(Vector3.zero, Vector3.forward * 10, t * t);
 			for( int i = 0; i < lightAngles.Length; i++ )
 			{
@@ -452,11 +457,13 @@ public class LuxSystem : MonoBehaviour
 				{
 					lightAngles[i] = (targetLightAngle + 90) * (1.0f + i * 0.3f) - 90;
 				}
+				BGColorSource.GetComponent<ColorTarget>().ForceSetColor(BGColor);
 			}
 			if( Music.IsJustChangedAt(3) )
 			{
 				Moon.transform.position = Sun.transform.position + Vector3.back * 75.0f;
-				BGColor = ColorManagerObsolete.Base.Back;
+				BGColorSource.SetParameter("Eclipse", 1.0f);
+				//BGColor = ColorManagerObsolete.Base.Back;
 				GetComponent<Animation>()["EclipseAnim"].speed = (float)(Music.CurrentTempo / 60.0);
 				GetComponent<Animation>().Play();
 				GameContext.EnemyConductor.OnInvert();
@@ -469,7 +476,8 @@ public class LuxSystem : MonoBehaviour
 				GetComponent<Animation>().Stop();
 				GameContext.EnemyConductor.baseColor = Color.white;
 				ColorManagerObsolete.SetBaseColor(EBaseColor.White);
-				targetBGColor = ColorManagerObsolete.Base.Front;
+				ColorManager.SetGlobalState("Base", "White");
+				//targetBGColor = ColorManagerObsolete.Base.Front;
 				BGOffset = Vector3.zero;
 				Ring.SetColor(Color.clear);
 				Ring.SetWidth(initialRingWidth);
@@ -489,8 +497,8 @@ public class LuxSystem : MonoBehaviour
 			}
 		}
 
-		BGColor = Color.Lerp(BGColor, targetBGColor, 0.1f);
-		BGMaterial.SetColor("_BaseColor", BGColor);
+		//BGColor = Color.Lerp(BGColor, targetBGColor, 0.1f);
+		//BGMaterial.SetColor("_BaseColor", BGColor);
 	}
 
 	public void UpdateAnimation()
@@ -600,7 +608,7 @@ public class LuxSystem : MonoBehaviour
 				Sun.AnimateColor(Color.white);// AnimType.Linear
 				Moon.transform.position = initialMoonPosition;
 
-				targetBGColor = ColorManagerObsolete.Theme.Light;
+				//targetBGColor = ColorManagerObsolete.Theme.Light;
 				targetSunScale = Vector3.one;
 				targetSunPosition = initialSunPosition;
 				targetMainLightScale = initialMainLightScale;
@@ -613,7 +621,7 @@ public class LuxSystem : MonoBehaviour
 				BGAnimBase.DeactivateCurrentAnim();
 				break;
 			case LuxState.Overload:
-				BGColor = Color.black;
+				//BGColor = Color.black;
 				//BreakAccentGauge.SetColor(Color.clear);
 				break;
 			case LuxState.SunSet:
@@ -622,7 +630,7 @@ public class LuxSystem : MonoBehaviour
 				useTargetLightAngles = true;
 				useTargetLightScales = true;
 				ResetBreak();
-				targetBGColor = Color.black;
+				//targetBGColor = Color.black;
 				targetSunScale = Vector3.zero;
 				targetSunPosition = sunsetPosition;
 				for( int i = 0; i < lightAngles.Length; i++ )

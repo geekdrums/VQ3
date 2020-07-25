@@ -6,15 +6,12 @@ using UnityEditor;
 
 
 [CustomEditor(typeof(StaticColorSource))]
-[CanEditMultipleObjects]
 public class StaticColorSourceEditor : ColorSourceBaseEditor
 {
 	SerializedProperty sourceProperty_;
 
-	public override void OnInspectorGUI()
+	public override void DrawSourceInspector()
 	{
-		serializedObject.Update();
-
 		if( sourceProperty_ == null )
 		{
 			sourceProperty_ = serializedObject.FindProperty("Source");
@@ -29,9 +26,5 @@ public class StaticColorSourceEditor : ColorSourceBaseEditor
 			sourceColor.GetSourceHSVA(out h, out s, out v, out a);
 			//EditorGUILayout.LabelField("SourceHSVA", string.Format("H:{0:F3}, S:{1:F3}, V:{2:F3}, A:{3:F3}", h, s, v, a));
 		}
-
-		DrawBaseInspector();
-
-		serializedObject.ApplyModifiedProperties();
 	}
 }

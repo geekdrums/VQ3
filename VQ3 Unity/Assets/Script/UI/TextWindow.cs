@@ -107,7 +107,7 @@ public class TextWindow : MonoBehaviour
 	float blinkTime_;
 
 	// Use this for initialization
-	void Start()
+	void Awake()
 	{
 		instance_ = this;
 

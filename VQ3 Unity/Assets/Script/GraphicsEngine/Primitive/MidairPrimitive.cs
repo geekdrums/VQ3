@@ -550,7 +550,7 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 		GrowAlphaPropertyID = Shader.PropertyToID("_GrowAlpha");
 	}
 
-	void UpdateColor()
+	public void UpdateColor()
 	{
 		if( material_ == null )
 		{

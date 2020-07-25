@@ -17,13 +17,12 @@ public class ResultConductor : MonoBehaviour {
 	public ButtonUI OKButton;
 	public MemoryResult MemoryResult;
 	public LevelResult LevelResult;
-	public CommandExplanation CommandExp;
+	public CommandInfoUI CommandInfo;
 
     public ResultState State { get; private set; }
 
     void Awake()
     {
-		GameContext.ResultConductor = this;
 	}
 
 
@@ -76,7 +75,6 @@ public class ResultConductor : MonoBehaviour {
 				}
 				break;
 			case ResultState.Command:
-				if( CommandExp.CurrentPhase == CommandExplanation.Phase.Wait )
 				{
 					CheckAcquireCommands();
 				}
@@ -94,13 +92,13 @@ public class ResultConductor : MonoBehaviour {
 			GameContext.PlayerConductor.CommandGraph.ShowAcquireCommand(acquiredCommand);
 			//TextWindow.SetCommand(acquiredCommand);
 			TextWindow.SetMessage(MessageCategory.Result, acquiredCommand.name + "が習得可能になった");
-			CommandExp.Set(acquiredCommand);
+			CommandInfo.Set(acquiredCommand);
 			OKButton.Primitive.AnimateWidth(0);// AnimType.Linear
 			OKButton.SetText("");
 		}
 		else
 		{
-			CommandExp.Hide();
+			CommandInfo.HideCommand();
 			EndResult();
 		}
 	}

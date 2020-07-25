@@ -17,6 +17,9 @@ public class PlayerCommandData : CommandBase
 	public string MusicBlockName;
 	public string DescribeText;
 	public string ExplanationText;
+	public ResonantRoll Roll1;
+	public ResonantRoll Roll2;
+	public string UniqueRollName;
 
 	public float GetAtk()
 	{

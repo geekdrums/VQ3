@@ -172,4 +172,18 @@ public class BlendColorSource : ColorSourceBase
 	}
 
 	#endregion
+
+	public override void ApplySourceInstance()
+	{
+		if( SourceInstance is BlendColorSource == false )
+		{
+			return;
+		}
+
+		base.ApplySourceInstance();
+
+		this.SourceBegin = (SourceInstance as BlendColorSource).SourceBegin;
+		this.SourceEnd = (SourceInstance as BlendColorSource).SourceEnd;
+		this.ParameterName = (SourceInstance as BlendColorSource).ParameterName;
+	}
 }

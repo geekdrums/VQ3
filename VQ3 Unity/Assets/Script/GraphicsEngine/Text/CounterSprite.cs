@@ -17,8 +17,6 @@ public enum CounterVerticalAlign
     Bottom
 }
 
-
-[ExecuteInEditMode]
 public class CounterSprite : MonoBehaviour, IColoredObject {
 
     enum Mark

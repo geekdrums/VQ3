@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HPPanel : MonoBehaviour {
+public class HitPointUI : MonoBehaviour {
     public Player Player;
 
     public GaugeRenderer CurrentBar;
     public GaugeRenderer DamageBar;
     public CounterSprite CurrentHPCount;
-    public CounterSprite MaxHPCount;
 
     int turnStartHP_;
     PlayerCommand currentCommand_;
@@ -18,7 +17,6 @@ public class HPPanel : MonoBehaviour {
     void Start()
     {
         turnStartHP_ = Player.HitPoint;
-        MaxHPCount.Count = Player.MaxHP;
 	}
 	
 	// Update is called once per frame
@@ -31,14 +29,8 @@ public class HPPanel : MonoBehaviour {
 	public void OnBattleStart()
 	{
 		turnStartHP_ = Player.HitPoint;
-		MaxHPCount.Count = Player.MaxHP;
-		CurrentBar.SetColor(ColorManagerObsolete.Base.Front);
-		CurrentBar.SetRate(1);
+		CurrentBar.AnimateRate(1.0f, time: 0.1f, interpType: InterpType.QuadOut).From(0.0f);
 		UpdateHPText();
-
-		CurrentBar.transform.parent.localScale = new Vector3(0, 1, 1);
-		float mtu = (float)Music.Meter.SecPerUnit;
-		CurrentBar.transform.parent.AnimateScaleX(1.0f, time: 0.1f, delay: mtu * 16);// AnimType.Linear
 	}
     public void OnTurnStart( PlayerCommand command )
     {
@@ -47,17 +39,6 @@ public class HPPanel : MonoBehaviour {
         turnStartHP_ = Player.HitPoint;
 		CurrentBar.SetRate(targetRate);
 		DamageBar.SetRate(targetRate);
-		
-		if( currentCommand_.currentData.HealPercent > 0 )
-        {
-            MaxHPCount.CounterColor = ColorManagerObsolete.Theme.Light;
-            CurrentBar.SetColor( ColorManagerObsolete.Theme.Light );
-        }
-        else
-        {
-            MaxHPCount.CounterColor = ColorManagerObsolete.Base.Front;
-            CurrentBar.SetColor( ColorManagerObsolete.Base.Front );
-        }
     }
     public void OnDamage( int damage )
     {

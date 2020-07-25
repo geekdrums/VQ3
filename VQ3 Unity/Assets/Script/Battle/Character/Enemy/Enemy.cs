@@ -51,6 +51,10 @@ public class Enemy : Character
 		targetLocalPosition = initialPosition;
 
 		spriteRenderer = GetComponent<SpriteRenderer>();
+
+		ShadePrimitive shade = GetComponentInChildren<ShadePrimitive>();
+		shade.Light = GameContext.LuxSystem.GetComponent<LightForShadePrimitive>();
+		shade.Light.AddTarget(shade);
 	}
 
 	// Update is called once per frame
@@ -242,7 +246,7 @@ public class Enemy : Character
 
 		float damage = skill.OwnerCharacter.PhysicAttack * ((attack.Power + overFlowPower) / 100.0f) * typeCoeff * shieldCoeff * DefendCoeff;
 		BeDamaged(Mathf.Max(0, (int)damage), skill);
-		Debug.Log(this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint);
+		//Debug.Log(this.ToString() + " was Attacked! " + damage + "Damage! HitPoint is " + HitPoint);
 
 		if( lastDamageResult != ActionResult.NoDamage )
 		{

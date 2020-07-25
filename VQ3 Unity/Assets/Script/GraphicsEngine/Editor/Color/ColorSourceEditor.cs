@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
 
 [CustomEditor(typeof(ColorSourceBase))]
-[CanEditMultipleObjects]
 public class ColorSourceBaseEditor : Editor
 {
+	SerializedProperty sourceInstanceProperty_;
 	SerializedProperty targetProperty_;
 	SerializedProperty editTypeHProperty_;
 	SerializedProperty editTypeSProperty_;
@@ -22,8 +23,45 @@ public class ColorSourceBaseEditor : Editor
 	SerializedProperty stateDictProperty_;
 	SerializedProperty parameterDictProperty_;
 
-	bool staticEditFoldOut_ = true;
-	bool interactiveEditFoldOut_ = true;
+	static bool staticEditFoldOut_ = false;
+	static bool interactiveEditFoldOut_ = false;
+
+	protected bool hasSourceInstance_ = false;
+
+	public override void OnInspectorGUI()
+	{
+		serializedObject.Update();
+
+		if( sourceInstanceProperty_ == null )
+		{
+			sourceInstanceProperty_ = serializedObject.FindProperty("SourceInstance");
+		}
+		EditorGUILayout.PropertyField(sourceInstanceProperty_);
+		hasSourceInstance_ = sourceInstanceProperty_.objectReferenceValue != null;
+
+		ColorSourceBase colorSource = (serializedObject.targetObject as ColorSourceBase);
+		if( hasSourceInstance_ )
+		{
+			// Sourceが指定されたら値をコピーする
+			colorSource.ApplySourceInstance();
+			EditorGUI.BeginDisabledGroup(true);
+		}
+
+		DrawSourceInspector();
+		DrawBaseInspector();
+		
+		if( hasSourceInstance_ )
+		{
+			EditorGUI.EndDisabledGroup();
+		}
+
+		serializedObject.ApplyModifiedProperties();
+	}
+
+	public virtual void DrawSourceInspector()
+	{
+
+	}
 
 	protected void DrawBaseInspector()
 	{
@@ -42,28 +80,22 @@ public class ColorSourceBaseEditor : Editor
 			parameterDictProperty_ = serializedObject.FindProperty("ParameterDict").FindPropertyRelative("list");
 		}
 
-		// Source / Target
-
-		if( serializedObject.isEditingMultipleObjects == false )
+		// Target
+		ColorSourceBase colorSource = (serializedObject.targetObject as ColorSourceBase);
+		Color resultColor = colorSource.ResultColor;
+		EditorGUILayout.BeginHorizontal();
 		{
-			ColorSourceBase colorSource = (serializedObject.targetObject as ColorSourceBase);
-			Color resultColor = colorSource.ResultColor;
-			EditorGUILayout.BeginHorizontal();
+			LocalEnableGroup(() =>
 			{
 				EditorGUILayout.PropertyField(targetProperty_);
-				EditorGUI.BeginDisabledGroup(true);
+			});
+			LocalDisableGroup(() =>
+			{
 				EditorGUILayout.ColorField(colorSource.ResultColor, GUILayout.Width(50));
-				EditorGUI.EndDisabledGroup();
-			}
-			EditorGUILayout.EndHorizontal();
-
-			//EditorGUILayout.LabelField("TargetHSVA", string.Format("H:{0:F3}, S:{1:F3}, V:{2:F3}, A:{3:F3}", colorSource.H, colorSource.S, colorSource.V, colorSource.A));
+			});
 		}
-		else
-		{
-			EditorGUILayout.PropertyField(targetProperty_);
-		}
-
+		EditorGUILayout.EndHorizontal();
+		
 		float defaultLabelWidth = EditorGUIUtility.labelWidth;
 
 		// Static Edit
@@ -83,41 +115,36 @@ public class ColorSourceBaseEditor : Editor
 			EditorGUIUtility.labelWidth = defaultLabelWidth;
 
 			// 設定された色を再現する数値を探索する機能
-			if( serializedObject.isEditingMultipleObjects == false )
+			Color editedColor = colorSource.StaticEditedColor;
+			Color targetEditColor = EditorGUILayout.ColorField("EditedColor", editedColor);
+			if( targetEditColor != editedColor )
 			{
-				ColorSourceBase colorSource = (serializedObject.targetObject as ColorSourceBase);
-				Color editedColor = colorSource.StaticEditedColor;
-				Color targetEditColor = EditorGUILayout.ColorField("EditedColor", editedColor);
-				if( targetEditColor != editedColor )
+				float targetH, targetS, targetV, targetA;
+				ColorPropertyUtil.ToHSVA(targetEditColor, out targetH, out targetS, out targetV, out targetA);
+				float sourceH, sourceS, sourceV, sourceA;
+				colorSource.GetSourceHSVA(out sourceH, out sourceS, out sourceV, out sourceA);
+				float editH, editS, editV, editA;
+				if( ColorPropertyUtil.CalcTargetEditValue(sourceH, targetH,
+					(ColorPropertyEditType)editTypeHProperty_.enumValueIndex, out editH) )
 				{
-					float targetH, targetS, targetV, targetA;
-					ColorPropertyUtil.ToHSVA(targetEditColor, out targetH, out targetS, out targetV, out targetA);
-					float sourceH, sourceS, sourceV, sourceA;
-					colorSource.GetSourceHSVA(out sourceH, out sourceS, out sourceV, out sourceA);
-					float editH, editS, editV, editA;
-					if( ColorPropertyUtil.CalcTargetEditValue(sourceH, targetH,
-						(ColorPropertyEditType)editTypeHProperty_.enumValueIndex, out editH) )
-					{
-						editValueHProperty_.floatValue = editH;
-					}
-					if( ColorPropertyUtil.CalcTargetEditValue(sourceS, targetS,
-						(ColorPropertyEditType)editTypeSProperty_.enumValueIndex, out editS) )
-					{
-						editValueSProperty_.floatValue = editS;
-					}
-					if( ColorPropertyUtil.CalcTargetEditValue(sourceV, targetV,
-						(ColorPropertyEditType)editTypeVProperty_.enumValueIndex, out editV) )
-					{
-						editValueVProperty_.floatValue = editV;
-					}
-					if( ColorPropertyUtil.CalcTargetEditValue(sourceA, targetA,
-						(ColorPropertyEditType)editTypeAProperty_.enumValueIndex, out editA) )
-					{
-						editValueAProperty_.floatValue = editA;
-					}
+					editValueHProperty_.floatValue = editH;
+				}
+				if( ColorPropertyUtil.CalcTargetEditValue(sourceS, targetS,
+					(ColorPropertyEditType)editTypeSProperty_.enumValueIndex, out editS) )
+				{
+					editValueSProperty_.floatValue = editS;
+				}
+				if( ColorPropertyUtil.CalcTargetEditValue(sourceV, targetV,
+					(ColorPropertyEditType)editTypeVProperty_.enumValueIndex, out editV) )
+				{
+					editValueVProperty_.floatValue = editV;
+				}
+				if( ColorPropertyUtil.CalcTargetEditValue(sourceA, targetA,
+					(ColorPropertyEditType)editTypeAProperty_.enumValueIndex, out editA) )
+				{
+					editValueAProperty_.floatValue = editA;
 				}
 			}
-
 		}
 		EditorGUI.indentLevel--;
 
@@ -152,16 +179,20 @@ public class ColorSourceBaseEditor : Editor
 
 					if( stateGroup.IsGlobal )
 					{
-						EditorGUI.BeginDisabledGroup(true);
-						int index = Mathf.Max(0, stateGroup.States.IndexOf(stateGroup.GlobalValue));
-						EditorGUILayout.LabelField(stateGroup.States[index], GUILayout.Width(fieldWidth));
-						EditorGUI.EndDisabledGroup();
+						LocalDisableGroup(() =>
+						{
+							int index = Mathf.Max(0, stateGroup.States.IndexOf(stateGroup.GlobalValue));
+							EditorGUILayout.LabelField(stateGroup.States[index], GUILayout.Width(fieldWidth));
+						});
 					}
 					else
 					{
-						int index = Mathf.Max(0, stateGroup.States.IndexOf(valueProp.stringValue));
-						index = EditorGUILayout.Popup(index, stateGroup.States.ToArray(), GUILayout.Width(fieldWidth));
-						valueProp.stringValue = stateGroup.States[index];
+						LocalEnableGroup(() =>
+						{
+							int index = Mathf.Max(0, stateGroup.States.IndexOf(valueProp.stringValue));
+							index = EditorGUILayout.Popup(index, stateGroup.States.ToArray(), GUILayout.Width(fieldWidth));
+							valueProp.stringValue = stateGroup.States[index];
+						});
 					}
 				}
 				else
@@ -201,13 +232,17 @@ public class ColorSourceBaseEditor : Editor
 					ColorGameSyncByParameter parameter = ColorManager.GetParameter(keyProp.stringValue);
 					if( parameter.IsGlobal )
 					{
-						EditorGUI.BeginDisabledGroup(true);
-						EditorGUILayout.Slider(parameter.GlobalValue, parameter.MinParam, parameter.MaxParam, GUILayout.Width(fieldWidth));
-						EditorGUI.EndDisabledGroup();
+						LocalDisableGroup(() =>
+						{
+							EditorGUILayout.Slider(parameter.GlobalValue, parameter.MinParam, parameter.MaxParam, GUILayout.Width(fieldWidth));
+						});
 					}
 					else
 					{
-						valueProp.floatValue = EditorGUILayout.Slider(valueProp.floatValue, parameter.MinParam, parameter.MaxParam, GUILayout.Width(fieldWidth));
+						LocalEnableGroup(() =>
+						{
+							valueProp.floatValue = EditorGUILayout.Slider(valueProp.floatValue, parameter.MinParam, parameter.MaxParam, GUILayout.Width(fieldWidth));
+						});
 					}
 				}
 				else
@@ -228,9 +263,15 @@ public class ColorSourceBaseEditor : Editor
 		EditorGUI.indentLevel--;
 
 
-		EditorGUI.BeginDisabledGroup(true);
-		EditorGUILayout.PropertyField(serializedObject.FindProperty("beReferencedColors_"), includeChildren: true);
-		EditorGUI.EndDisabledGroup();
+		LocalDisableGroup(() =>
+		{
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("beReferencedColors_"), includeChildren: true);
+		});
+
+		if( hasSourceInstance_ )
+		{
+			EditorGUI.EndDisabledGroup();
+		}
 	}
 
 	void DrawEditProperty(SerializedProperty typeProperty, SerializedProperty valueProperty, string name, float typeWidth, float valueWidth)
@@ -239,10 +280,11 @@ public class ColorSourceBaseEditor : Editor
 		EditorGUILayout.PropertyField(typeProperty, new GUIContent(name), GUILayout.Width(typeWidth));
 		if( typeProperty.enumValueIndex == (int)ColorPropertyEditType.None )
 		{
-			EditorGUI.BeginDisabledGroup(true);
-			valueProperty.floatValue = 0;
-			EditorGUILayout.PropertyField(valueProperty, GUIContent.none, GUILayout.MinWidth(valueWidth));
-			EditorGUI.EndDisabledGroup();
+			LocalDisableGroup(() =>
+			{
+				valueProperty.floatValue = 0;
+				EditorGUILayout.PropertyField(valueProperty, GUIContent.none, GUILayout.MinWidth(valueWidth));
+			});
 		}
 		else
 		{
@@ -251,32 +293,46 @@ public class ColorSourceBaseEditor : Editor
 		EditorGUILayout.EndHorizontal();
 	}
 	
-	protected void ReferenceChanged(Object newObject, Object oldObject)
+	protected void ReferenceChanged(UnityEngine.Object newObject, UnityEngine.Object oldObject)
 	{
-		if( serializedObject.isEditingMultipleObjects )
-		{
-			foreach( Object targetObject in serializedObject.targetObjects )
-			{
-				if( oldObject != null )
-				{
-					(oldObject as ColorSourceBase).NotBeReferencedBy(targetObject as ColorSourceBase);
-				}
-				if( newObject != null )
-				{
-					(newObject as ColorSourceBase).BeReferencedBy(targetObject as ColorSourceBase);
-				}
-			}
-		}
-		else
+		foreach( UnityEngine.Object targetObject in serializedObject.targetObjects )
 		{
 			if( oldObject != null )
 			{
-				(oldObject as ColorSourceBase).NotBeReferencedBy(serializedObject.targetObject as ColorSourceBase);
+				(oldObject as ColorSourceBase).NotBeReferencedBy(targetObject as ColorSourceBase);
 			}
 			if( newObject != null )
 			{
-				(newObject as ColorSourceBase).BeReferencedBy(serializedObject.targetObject as ColorSourceBase);
+				(newObject as ColorSourceBase).BeReferencedBy(targetObject as ColorSourceBase);
 			}
+		}
+	}
+
+	protected void LocalDisableGroup(Action action)
+	{
+		if( hasSourceInstance_ == false )
+		{
+			EditorGUI.BeginDisabledGroup(true);
+			action();
+			EditorGUI.EndDisabledGroup();
+		}
+		else
+		{
+			action();
+		}
+	}
+
+	protected void LocalEnableGroup(Action action)
+	{
+		if( hasSourceInstance_ == false )
+		{
+			action();
+		}
+		else
+		{
+			EditorGUI.EndDisabledGroup();
+			action();
+			EditorGUI.BeginDisabledGroup(true);
 		}
 	}
 }

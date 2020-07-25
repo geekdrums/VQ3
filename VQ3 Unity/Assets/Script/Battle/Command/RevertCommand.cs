@@ -18,19 +18,13 @@ public class RevertCommand : PlayerCommand
 	{
 		ValidateState();
 	}
+
     void Start()
 	{
         ValidatePosition();
-        ValidateIcons();
-        ValidateColor();
 		centerEyePosition = EyeArc.transform.localPosition;
     }
-    public override void ValidateIcons()
-    {
-        ValidatePosition();
 
-        GrowEdge.SetColor( ColorManagerObsolete.GetThemeColor( themeColor ).Bright );
-    }
     void Update()
     {
 #if UNITY_EDITOR

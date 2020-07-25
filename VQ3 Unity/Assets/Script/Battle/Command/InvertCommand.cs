@@ -22,7 +22,6 @@ public class InvertCommand : PlayerCommand
     void Start()
 	{
         ValidatePosition();
-        ValidateColor();
     }
 
 	void Update()

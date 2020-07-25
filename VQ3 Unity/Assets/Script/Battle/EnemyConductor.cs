@@ -46,7 +46,6 @@ public class EnemyConductor : MonoBehaviour
 
 	void Awake()
 	{
-		GameContext.EnemyConductor = this;
 	}
 
 	// Use this for initialization

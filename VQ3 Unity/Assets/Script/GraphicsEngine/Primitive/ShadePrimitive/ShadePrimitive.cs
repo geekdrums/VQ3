@@ -227,6 +227,8 @@ public class ShadePrimitive : MeshComponentBase, IColoredObject
 
 	public void CheckLightPosition()
 	{
+		if( Light == null ) return;
+
 		Vector2 lightPosition = Light.transform.position - transform.position;
 
 		if( Vector2.Distance(lightPosition, lightPositionCache_) > UpdateThreashold )

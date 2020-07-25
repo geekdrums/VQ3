@@ -24,7 +24,7 @@ public class EventConductor : MonoBehaviour
 	public GameObject MessageParent;
 	public ButtonUI OKButton;
 
-	public CommandExplanation CommandExp;
+	public CommandInfoUI CommandInfo;
 	public GameObject Title;
 
 
@@ -44,7 +44,6 @@ public class EventConductor : MonoBehaviour
 
 	void Awake()
 	{
-		GameContext.EventConductor = this;
 		OKButton.OnPushed += this.OnPushedOK;
 	}
 
@@ -238,7 +237,7 @@ public class EventConductor : MonoBehaviour
 
 	IEnumerator Event_ShowCommand()
 	{
-		CommandExp.Set(GameContext.PlayerConductor.CommandGraph.CommandNodes.Find((PlayerCommand command) => command.name == eventArgs_[1]));
+		CommandInfo.Set(GameContext.PlayerConductor.CommandGraph.CommandNodes.Find((PlayerCommand command) => command.name == eventArgs_[1]));
 		OnPushedOK_Coroutine += this.OnPushedOK_Event_ShowCommand;
 		while( true )
 		{
@@ -248,7 +247,7 @@ public class EventConductor : MonoBehaviour
 
 	void OnPushedOK_Event_ShowCommand()
 	{
-		CommandExp.Reset();
+		CommandInfo.HideCommand();
 		EndMacro();
 	}
 

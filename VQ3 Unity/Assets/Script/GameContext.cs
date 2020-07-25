@@ -13,27 +13,65 @@ public enum GameState
     Result
 }
 
-public static class GameContext
+public class GameContext : MonoBehaviour
 {
-	public static GameState State = GameState.Setting;
+	public GameState State_;
+	public BattleConductor BattleConductor_;
+	public EnemyConductor EnemyConductor_;
+	public PlayerConductor PlayerConductor_;
+	public LuxSystem LuxSystem_;
+	public FieldConductor FieldConductor_;
+	public ResultConductor ResultConductor_;
+	public EventConductor EventConductor_;
+	public Camera MainCamera_;
+
+	public int EncounterIndex = 0;
+	public int ScreenWidth = 1366;
+	public int ScreenHeight = 768;
+
+	void Awake()
+	{
+		if( Application.platform == RuntimePlatform.WindowsPlayer ||
+		Application.platform == RuntimePlatform.OSXPlayer ||
+		Application.platform == RuntimePlatform.LinuxPlayer )
+		{
+			Screen.SetResolution(ScreenWidth, ScreenHeight, false);
+			Screen.fullScreen = true;
+		}
+		GameContext.FieldConductor.EncounterIndex = EncounterIndex;
+	}
+
+	void Start()
+	{
+		SetStateInternal(State_);
+	}
+
+	void OnValidate()
+	{
+		Instance_ = this;
+	}
 
 	public static void SetState(GameState nextState)
 	{
-		GameState OldState = State;
-		if( OldState != GameState.Event )
+		Instance.SetStateInternal(nextState);
+	}
+	public void SetStateInternal(GameState nextState)
+	{
+		GameState oldState = State_;
+		if( oldState != GameState.Event )
 		{
-			State = FieldConductor.CheckEvent(nextState);
+			State_ = FieldConductor_.CheckEvent(nextState);
 		}
 		else
 		{
-			State = nextState;
+			State_ = nextState;
 		}
-		OnLeaveState(OldState);
-		OnEnterState(State);
+		OnLeaveState(oldState);
+		OnEnterState(State_);
 
 		//Debug.Log("Enter GameState: " + State.ToString());
 	}
-	static void OnLeaveState(GameState OldState)
+	void OnLeaveState(GameState OldState)
 	{
 		switch( OldState )
 		{
@@ -45,7 +83,7 @@ public static class GameContext
 			break;
 		}
 	}
-	static void OnEnterState(GameState NewState)
+	void OnEnterState(GameState NewState)
 	{
 		switch( NewState )
 		{
@@ -53,6 +91,7 @@ public static class GameContext
 			LuxSystem.OnBattleStarted(FieldConductor.CurrentEncounter);
 			Music.Play("BattleMusic", "Intro");
 			ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
+			ColorManager.SetGlobalState("Base", "Black");
 			FieldConductor.OnEnterBattle();
 			BattleConductor.SetState(BattleState.Intro);
 			LuxSystem.SetState(LuxState.Sun);
@@ -71,6 +110,7 @@ public static class GameContext
 			break;
 		case GameState.Setting:
 			ColorManagerObsolete.SetBaseColor(EBaseColor.Black);
+			ColorManager.SetGlobalState("Base", "Black");
 			FieldConductor.OnEnterSetting();
 			PlayerConductor.OnEnterSetting();
 			ResultConductor.OKButton.SetMode(ButtonMode.Hide, true);
@@ -81,15 +121,29 @@ public static class GameContext
 		}
 	}
 
-	//Conductors
-	public static BattleConductor BattleConductor;
-    public static EnemyConductor EnemyConductor;
-	public static PlayerConductor PlayerConductor;
-	public static LuxSystem LuxSystem;
-	public static FieldConductor FieldConductor;
-	public static ResultConductor ResultConductor;
-	public static EventConductor EventConductor;
-	public static Camera MainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+
+	// accessors
+	public static GameContext Instance_;
+	public static GameContext Instance
+	{
+		get
+		{
+			if( Instance_ == null )
+			{
+				Instance_ = FindObjectOfType<GameContext>();
+			}
+			return Instance_;
+		}
+	}
+	public static GameState State { get { return Instance.State_; } set { Instance.State_ = value; } }
+	public static BattleConductor BattleConductor { get { return Instance.BattleConductor_; } }
+    public static EnemyConductor EnemyConductor { get { return Instance.EnemyConductor_; } }
+	public static PlayerConductor PlayerConductor { get { return Instance.PlayerConductor_; } }
+	public static LuxSystem LuxSystem { get { return Instance.LuxSystem_; } }
+	public static FieldConductor FieldConductor { get { return Instance.FieldConductor_; } }
+	public static ResultConductor ResultConductor { get { return Instance.ResultConductor_; } }
+	public static EventConductor EventConductor { get { return Instance.EventConductor_; } }
+	public static Camera MainCamera { get { return Instance.MainCamera_; } }
 
 	//States
 	public static BattleState BattleState { get { return BattleConductor.State; } }

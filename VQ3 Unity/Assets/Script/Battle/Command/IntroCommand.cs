@@ -15,7 +15,6 @@ public class IntroCommand : PlayerCommand
     void Start()
     {
         ValidatePosition();
-        ValidateColor();
     }
 
     void Update()

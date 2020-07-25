@@ -42,9 +42,10 @@ public class CommandGraph : MonoBehaviour
 	//public TextMesh CurrentCommandName;
 	public GameObject NextRectEffect;
 
-	public CommandExplanation CommandExp;
+	public CommandInfoUI CommandInfo;
+	public CommandInfoUI CurrentCommandInfo;
 	//public CommandListUI CommandList;
-	public SkillCutIn SkillCutIn;
+	//public SkillCutIn SkillCutIn;
 
 	public Vector3 MaxScale = new Vector3(0.24f, 0.24f, 0.24f);
 	public float ScaleCoeff = 0.0f;
@@ -57,6 +58,8 @@ public class CommandGraph : MonoBehaviour
 	public bool UPDATE_BUTTON;
 
 	public PlayerCommand IntroCommand;
+
+	public PlayerCommand PreviewCurrentCommand;
 
 	#endregion
 
@@ -119,6 +122,33 @@ public class CommandGraph : MonoBehaviour
 		ColorManagerObsolete.OnBaseColorChanged += this.OnBaseColorChanged;
 	}
 
+
+	void OnValidate()
+	{
+		if( PreviewCurrentCommand != null )
+		{
+			foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
+			{
+				command.ValidateState();
+				command.SetLink(false);
+			}
+			foreach( CommandEdge edge in EdgeSphere.GetComponentsInChildren<CommandEdge>() )
+			{
+				edge.State = EdgeState.Unlinked;
+			}
+			foreach( PlayerCommand command in PreviewCurrentCommand.LinkedCommands )
+			{
+				command.SetLink(true);
+			}
+			PreviewCurrentCommand.SetCurrent();
+			foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
+			{
+				command.ValidatePosition();
+				command.UpdateTransform();
+				command.UpdateColor();
+			}
+		}
+	}
 
 	#region initialize line & command params
 
@@ -430,7 +460,7 @@ public class CommandGraph : MonoBehaviour
 		NextRect.SetSize(7.0f);
 		NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(7.0f);
 		CurrentRect.SetArc(0);
-		SkillCutIn.Set(NextCommand, CommandExp.SkillListUI, CommandExp.CommandName.gameObject);
+		//SkillCutIn.Set(NextCommand, CommandExp.SkillListUI, CommandExp.CommandName.gameObject);
 	}
 
 
@@ -534,11 +564,11 @@ public class CommandGraph : MonoBehaviour
 				if( command != null )
 				{
 					SEPlayer.Play("tick");
-					CommandExp.Set(PreviewCommand, isPreview: true);
+					CommandInfo.Set(PreviewCommand, isPreview: true);
 				}
 				else
 				{
-					CommandExp.Reset();
+					CommandInfo.HideCommand();
 				}
 			}
 		}
@@ -610,7 +640,8 @@ public class CommandGraph : MonoBehaviour
 			else if( IsInvert && !IsLastInvert )
 			{
 				NextCommand = CurrentCommand;
-				CommandExp.Set(NextCommand);
+				CommandInfo.Set(NextCommand);
+				CurrentCommandInfo.HideCommand();
 			}
 			else
 			{
@@ -743,12 +774,13 @@ public class CommandGraph : MonoBehaviour
 				CurrentRect.transform.localRotation = Quaternion.identity;
 			}
 
-			Color themeColor = ColorManagerObsolete.GetThemeColor(CurrentCommand.themeColor).Bright;
+			//Color themeColor = ColorManagerObsolete.GetThemeColor(CurrentCommand.themeColor).Bright;
 			//CurrentCommandName.text = CurrentCommand.nameText.ToUpper();
 			//CurrentCommandName.color = themeColor;
 			//CurrentCommandName.transform.parent.GetComponent<Animation>().Play("CommandBarAnim");
 			//CommandList.OnExecCommand();
-			CommandExp.Reset();
+			CommandInfo.HideCommand();
+			CurrentCommandInfo.Set(CurrentCommand);
 		}
 		else
 		{
@@ -814,17 +846,6 @@ public class CommandGraph : MonoBehaviour
 		CurrentRect.transform.localPosition = Vector3.forward;
 		CurrentRect.transform.localScale = Vector3.one;
 		CurrentRect.transform.localRotation = Quaternion.identity;
-
-		float delay = 0;
-		foreach( PlayerCommand command in GetComponentsInChildren<PlayerCommand>() )
-		{
-			Vector3 commandPosition = command.transform.localPosition;
-			command.transform.localPosition = Vector3.zero;
-			command.transform.AnimatePosition(commandPosition, InterpType.BackOut, time: 0.5f, delay: delay);
-			delay += 0.07f;
-		}
-
-		CommandExp.OnBattleStart();
 	}
 
 	public void OnShieldBreak()
@@ -918,7 +939,8 @@ public class CommandGraph : MonoBehaviour
 				notSelectedCommand.Deselect();
 		}
 		NextCommand.Select();
-		CommandExp.Set(NextCommand);
+		CommandInfo.Set(NextCommand);
+		CurrentCommandInfo.HideCommand();
 		NextRect.transform.parent = NextCommand.transform;
 		NextRect.transform.localPosition = Vector3.forward;
 		NextRect.transform.localScale = Vector3.one;
@@ -935,6 +957,7 @@ public class CommandGraph : MonoBehaviour
 		}
 		NextRect.SetWidth(3.0f);
 		NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetWidth(3.0f);
+		/*
 		Color themeColor = ColorManagerObsolete.GetThemeColor(NextCommand.themeColor).Bright;
 		GameObject effect = Instantiate(NextRectEffect, NextRect.transform.position, Quaternion.identity) as GameObject;
 		effect.transform.parent = NextRect.transform;
@@ -945,7 +968,7 @@ public class CommandGraph : MonoBehaviour
 		{
 			primitive.SetColor(themeColor);
 		}
-		
+		*/
 		targetRotation = Quaternion.Inverse(Quaternion.LookRotation(-command.transform.localPosition)) * offsetRotation;
 		if( command != IntroCommand ) SEPlayer.Play("select");
 
