@@ -15,9 +15,12 @@ public class AnimComponentEditor : Editor
 	SerializedProperty resetOnEndProperty_;
 	SerializedProperty delayProperty_;
 	SerializedProperty delayTimeUnitProperty_;
+	SerializedProperty speedProperty_;
 
 	System.Action rightClickAction_ = null;
 	AnimInfo copiedAnim_ = null;
+	int selectedIndex_ = -1;
+	bool isMultiSelected_ = false;
 
 	enum FromOrTo
 	{
@@ -32,6 +35,8 @@ public class AnimComponentEditor : Editor
 		MaxDragging,
 	}
 	TimeRangeDragState dragState_;
+
+	static bool childListFoldOut_ = true;
 	
 
 	public override void OnInspectorGUI()
@@ -44,6 +49,7 @@ public class AnimComponentEditor : Editor
 			playOnStartProperty_ = serializedObject.FindProperty("PlayOnStart");
 			resetOnEndProperty_ = serializedObject.FindProperty("ResetOnEnd");
 			delayProperty_ = serializedObject.FindProperty("Delay");
+			speedProperty_ = serializedObject.FindProperty("Speed");
 			delayTimeUnitProperty_ = serializedObject.FindProperty("DelayTimeUnit");
 			childListProperty_ = serializedObject.FindProperty("ChildAnimList");
 		}
@@ -53,6 +59,7 @@ public class AnimComponentEditor : Editor
 		EditorGUILayout.PropertyField(resetOnEndProperty_);
 		EditorGUILayout.PropertyField(delayProperty_);
 		EditorGUILayout.PropertyField(delayTimeUnitProperty_);
+		EditorGUILayout.PropertyField(speedProperty_);
 
 		/*
 		// AnimParamTypeが追加されたときに、ズレてしまうEnumの値を修正する
@@ -86,16 +93,56 @@ public class AnimComponentEditor : Editor
 				rightClickAction_ = null;
 			}
 			bool isRightClick = rightClickAction_ == null && Event.current.type == EventType.MouseDown && Event.current.button == 1;
-			
+			bool isLeftClick = Event.current.type == EventType.MouseDown && Event.current.button == 0;
+
 			float timeRange = (serializedObject.targetObject as AnimComponent).TotalTimeSec;
 			if( dragState_ != TimeRangeDragState.None && Event.current.type == EventType.MouseUp )
 			{
 				dragState_ = TimeRangeDragState.None;
 			}
 
+			int oldSelectedIndex = selectedIndex_;
+			bool isNowSelected = false;
 			for( int i = 0; i < animListProperty_.arraySize; ++i )
 			{
-				DrawAnimInfo(i, timeRange, isRightClick);
+				if( DrawAnimInfo(i, timeRange, isRightClick, isLeftClick) )
+				{
+					selectedIndex_ = i;
+					isNowSelected = true;
+				}
+				GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(2));
+			}
+			GUI.color = Color.white;
+
+			// 選択が変化したら
+			if( isNowSelected )
+			{
+				if( Event.current.modifiers == EventModifiers.None )
+				{
+					// ほかを選択解除
+					for( int i = 0; i < animListProperty_.arraySize; ++i )
+					{
+						if( i == selectedIndex_ ) continue;
+						var selectedProp = animListProperty_.GetArrayElementAtIndex(i).FindPropertyRelative("IsSelected");
+						selectedProp.boolValue = false;
+					}
+					isMultiSelected_ = false;
+				}
+				else if( Event.current.modifiers == EventModifiers.Shift && oldSelectedIndex >= 0 )
+				{
+					// oldからnewまでを選択
+					for( int i = Mathf.Min(oldSelectedIndex, selectedIndex_); i < Mathf.Max(oldSelectedIndex, selectedIndex_); ++i )
+					{
+						if( i == selectedIndex_ ) continue;
+						var selectedProp = animListProperty_.GetArrayElementAtIndex(i).FindPropertyRelative("IsSelected");
+						selectedProp.boolValue = true;
+					}
+					isMultiSelected_ = true;
+				}
+				else if( Event.current.modifiers == EventModifiers.Control )
+				{
+					isMultiSelected_ = true;
+				}
 			}
 
 			GUILayout.BeginHorizontal();
@@ -138,12 +185,34 @@ public class AnimComponentEditor : Editor
 					}
 				}
 				GUILayout.EndHorizontal();
+				if( GUILayout.Button("Save") )
+				{
+					SaveAnimComponentData.DeserializeComponent(target as AnimComponent);
+				}
 			}
 		}
 		EditorGUILayout.Space();
 
-		EditorGUILayout.PropertyField(childListProperty_, includeChildren: true);
-
+		childListFoldOut_ = EditorGUILayout.Foldout(childListFoldOut_, "ChildAnimList");
+		if( childListFoldOut_ )
+		{
+			EditorGUI.indentLevel++;
+			childListProperty_.arraySize = EditorGUILayout.IntField("Size", childListProperty_.arraySize);
+			for( int i = 0; i < childListProperty_.arraySize; ++i )
+			{
+				EditorGUILayout.BeginHorizontal();
+				var childAnimProp = childListProperty_.GetArrayElementAtIndex(i);
+				EditorGUILayout.PropertyField(childAnimProp, new GUIContent(""), GUILayout.Width(EditorGUIUtility.labelWidth));
+				var childAnim = childAnimProp.objectReferenceValue as AnimComponent;
+				if(childAnim != null )
+				{
+					childAnim.Delay = EditorGUILayout.FloatField("", childAnim.Delay);
+				}
+				EditorGUILayout.EndHorizontal();
+			}
+			EditorGUI.indentLevel--;
+		}
+		
 		serializedObject.ApplyModifiedProperties();
 	}
 
@@ -173,11 +242,15 @@ public class AnimComponentEditor : Editor
 		}
 	}
 
-	void DrawAnimInfo(int index, float timeRange, bool isRightClick = false)
+	bool DrawAnimInfo(int index, float timeRange, bool isRightClick = false, bool isLeftClick = false)
 	{
+		bool wasLeftClicked = false;
 		SerializedProperty animStruct = animListProperty_.GetArrayElementAtIndex(index);
 		SerializedProperty objectProp = animStruct.FindPropertyRelative("Object");
 		SerializedProperty paramProp = animStruct.FindPropertyRelative("AnimParam");
+		SerializedProperty selectedProp = animStruct.FindPropertyRelative("IsSelected");
+
+		GUI.color = selectedProp.boolValue ? Color.white : Color.gray;
 
 		AnimParamType paramType = ((AnimParamType)(paramProp.enumValueIndex));
 		UnityEngine.Object refObj = objectProp.objectReferenceValue;
@@ -188,9 +261,17 @@ public class AnimComponentEditor : Editor
 		{
 			// object
 			EditorGUILayout.PropertyField(objectProp, GUIContent.none, GUILayout.MinWidth(100));
-			if( isRightClick && GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) )
+			Rect rect = GUILayoutUtility.GetLastRect();
+			if( isRightClick && rect.Contains(Event.current.mousePosition) )
 			{
 				ListItemRightClickMenu(index);
+			}
+			rect.width = EditorGUIUtility.currentViewWidth;
+			rect.height = EditorGUIUtility.singleLineHeight * 3;
+			if( isLeftClick && rect.Contains(Event.current.mousePosition) )
+			{
+				wasLeftClicked = true;
+				selectedProp.boolValue = true;
 			}
 
 			// param
@@ -207,7 +288,12 @@ public class AnimComponentEditor : Editor
 			if( paramType < AnimParamType.TurnOn && paramType != AnimParamType.Text )
 			{
 				SerializedProperty interpTypeProp = animStruct.FindPropertyRelative("Interp");
-				EditorGUILayout.PropertyField(interpTypeProp, GUIContent.none, GUILayout.Width(100));
+				int oldValue = interpTypeProp.enumValueIndex;
+				interpTypeProp.enumValueIndex = (int)(InterpType)EditorGUILayout.EnumPopup((InterpType)interpTypeProp.enumValueIndex, GUILayout.Width(100));
+				if( interpTypeProp.enumValueIndex != oldValue && isMultiSelected_ )
+				{
+					OnMultiSelectEdit(index, "Interp", (InterpType)interpTypeProp.enumValueIndex, true);
+				}
 			}
 			else
 			{
@@ -307,7 +393,8 @@ public class AnimComponentEditor : Editor
 			/// <img src="D:\UNITY\imagecomments\QS_20200513-040033.png"/>
 			EditorGUILayout.BeginHorizontal();
 			{
-				EditorGUILayout.LabelField("", GUILayout.Width(10));
+				// indent
+				EditorGUILayout.LabelField("", GUILayout.Width(20));
 
 				if( initialProp != null )
 				{
@@ -341,7 +428,8 @@ public class AnimComponentEditor : Editor
 		/// <img src="D:\UNITY\imagecomments\QS_20200513-040129.png"/>
 		EditorGUILayout.BeginHorizontal();
 		{
-			EditorGUILayout.LabelField("", GUILayout.Width(10));
+			// indent
+			EditorGUILayout.LabelField("", GUILayout.Width(20));
 
 			SerializedProperty delayProp = animStruct.FindPropertyRelative("Delay");
 			SerializedProperty timeProp = animStruct.FindPropertyRelative("Time");
@@ -372,11 +460,29 @@ public class AnimComponentEditor : Editor
 			}
 			else if( dragState_ == TimeRangeDragState.MinDragging && lastMinValue != minValue )
 			{
+				if( Event.current.modifiers != EventModifiers.Alt )
+				{
+					minValue = ((int)(minValue * 10)) / 10.0f;
+				}
+				float oldValue = delayProp.floatValue;
 				delayProp.floatValue = TimeUtility.ConvertTime(minValue, TimeUnitType.Sec, timUnit);
+				if( isMultiSelected_ )
+				{
+					OnMultiSelectEdit(index, "Delay", delayProp.floatValue - oldValue, true);
+				}
 			}
 			else if( dragState_ == TimeRangeDragState.MaxDragging && lastMaxValue != maxValue )
 			{
+				if( Event.current.modifiers != EventModifiers.Alt )
+				{
+					maxValue = ((int)(maxValue * 10)) / 10.0f;
+				}
+				float oldValue = timeProp.floatValue;
 				timeProp.floatValue = TimeUtility.ConvertTime(maxValue - minValue, TimeUnitType.Sec, timUnit);
+				if( isMultiSelected_ )
+				{
+					OnMultiSelectEdit(index, "Time", timeProp.floatValue - oldValue, true);
+				}
 			}
 
 			EditorGUILayout.PropertyField(timeProp, GUIContent.none, GUILayout.Width(40));
@@ -384,6 +490,42 @@ public class AnimComponentEditor : Editor
 			EditorGUILayout.PropertyField(endOptionProp, GUIContent.none, GUILayout.Width(60));
 		}
 		EditorGUILayout.EndHorizontal();
+
+		return wasLeftClicked;
+	}
+
+	void OnMultiSelectEdit(int editedIndex, string propName, object propValue, bool valueIsDiff = false)
+	{
+		for( int i = 0; i < animListProperty_.arraySize; ++i )
+		{
+			if( i == editedIndex ) continue;
+			var animProp = animListProperty_.GetArrayElementAtIndex(i);
+			var selectedProp = animProp.FindPropertyRelative("IsSelected");
+			if( selectedProp.boolValue )
+			{
+				var targetProp = animProp.FindPropertyRelative(propName);
+				if( propValue is float )
+				{
+					targetProp.floatValue = (valueIsDiff ? targetProp.floatValue : 0) + (float)propValue;
+				}
+				else if( propValue is int )
+				{
+					targetProp.intValue = (valueIsDiff ? targetProp.intValue : 0) + (int)propValue;
+				}
+				else if( propValue is Vector3 )
+				{
+					targetProp.vector3Value = (valueIsDiff ? targetProp.vector3Value : Vector3.zero) + (Vector3)propValue;
+				}
+				else if( propValue is bool )
+				{
+					targetProp.boolValue = (bool)propValue;
+				}
+				else if( propValue.GetType().IsEnum )
+				{
+					targetProp.enumValueIndex = (int)propValue;
+				}
+			}
+		}
 	}
 
 	void ListItemRightClickMenu(int index)
@@ -472,9 +614,9 @@ public class AnimComponentEditor : Editor
 	void InitializeProperties(SerializedProperty anim)
 	{
 		anim.FindPropertyRelative("Object").objectReferenceValue = (serializedObject.targetObject as AnimComponent).gameObject;
-		anim.FindPropertyRelative("AnimParam").enumValueIndex = (int)AnimParamType.Position;
-		anim.FindPropertyRelative("Interp").enumValueIndex = (int)InterpType.Linear;
-		anim.FindPropertyRelative("Time").floatValue = 1.0f;
+		anim.FindPropertyRelative("AnimParam").enumValueIndex = (int)AnimParamType.PrimitiveRadius;
+		anim.FindPropertyRelative("Interp").enumValueIndex = (int)InterpType.ExpoOut;
+		anim.FindPropertyRelative("Time").floatValue = 0.5f;
 		anim.FindPropertyRelative("Delay").floatValue = 0.0f;
 		anim.FindPropertyRelative("EndOption").enumValueIndex = (int)AnimEndOption.None;
 

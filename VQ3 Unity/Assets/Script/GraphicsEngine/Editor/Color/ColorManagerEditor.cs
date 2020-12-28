@@ -9,6 +9,7 @@ public class ColorManagerEditor : Editor
 {
 	SerializedProperty stateGroupsProperty_;
 	SerializedProperty parametersProperty_;
+	SerializedProperty sourceDictProperty_;
 	ColorGameSyncByState updatedState_ = null;
 	ColorGameSyncByParameter updatedParameter_ = null;
 	bool stateGroupFoldOut_ = true;
@@ -22,6 +23,7 @@ public class ColorManagerEditor : Editor
 		{
 			stateGroupsProperty_ = serializedObject.FindProperty("StateGroups").FindPropertyRelative("list");
 			parametersProperty_ = serializedObject.FindProperty("Parameters").FindPropertyRelative("list");
+			sourceDictProperty_ = serializedObject.FindProperty("ColorSourceDictionary");
 		}
 
 		if( serializedObject.targetObject != ColorManager.Instance )
@@ -30,13 +32,11 @@ public class ColorManagerEditor : Editor
 			return;
 		}
 
-		EditorGUI.indentLevel++;
+		EditorGUILayout.PropertyField(sourceDictProperty_);
+		
 		DrawStateGroups();
-		EditorGUI.indentLevel--;
-
-		EditorGUI.indentLevel++;
+		
 		DrawParameters();
-		EditorGUI.indentLevel--;
 
 		serializedObject.ApplyModifiedProperties();
 

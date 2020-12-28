@@ -38,7 +38,7 @@ public class SaveAnimComponentData
 		};
 	}
 
-	private static void SerializeComponent(AnimComponent component)
+	public static void SerializeComponent(AnimComponent component)
 	{
 		var dic = new Dictionary<string, object>();
 		var type = component.GetType();
@@ -49,7 +49,7 @@ public class SaveAnimComponentData
 		saveObjectDic_.Add(component.GetInstanceID(), dic);
 	}
 
-	private static void DeserializeComponent(AnimComponent component)
+	public static void DeserializeComponent(AnimComponent component)
 	{
 		if( saveObjectDic_.ContainsKey(component.GetInstanceID()) )
 		{

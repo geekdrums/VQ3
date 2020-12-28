@@ -27,6 +27,8 @@ public class AnimInfo
 	public bool HasInitialValue;
 	public string PropertyName;
 
+	public bool IsSelected;
+
 	public object GetTarget()
 	{
 		switch( AnimParam )

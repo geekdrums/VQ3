@@ -10,6 +10,7 @@ public class AnimComponent : MonoBehaviour
 	public bool ResetOnEnd = false;
 	public bool IsAnimListFolded = false;
 	public float Delay;
+	public float Speed = 1.0f;
 	public TimeUnitType DelayTimeUnit;
 
 	public List<AnimInfo> AnimInfoList = new List<AnimInfo>();
@@ -71,7 +72,8 @@ public class AnimComponent : MonoBehaviour
 				continue;
 			}
 
-			AnimationBase animation = AnimManager.CreateAnim(ai.Object, ai.GetTarget(), ai.AnimParam, ai.Interp, ai.TimeUnit, ai.Time, ai.Delay, ai.EndOption);
+			float speedFactor = Speed > 0.0f ? (1.0f / Speed) : 1.0f;
+			AnimationBase animation = AnimManager.CreateAnim(ai.Object, ai.GetTarget(), ai.AnimParam, ai.Interp, ai.TimeUnit, ai.Time * speedFactor, ai.Delay * speedFactor, ai.EndOption);
 
 			animation.SetOnEndEvent(OnEndAnim);
 
@@ -99,35 +101,37 @@ public class AnimComponent : MonoBehaviour
 		State = AnimState.Ready;
 	}
 
-	public void Play(float delay = 0.0f)
+	public void Play(float in_delay = 0.0f, float in_speed = 1.0f)
 	{
-		if( gameObject.activeSelf == false )
-		{
-			gameObject.SetActive(true);
-		}
-
-		if( State == AnimState.Playing || State == AnimState.End )
+		if( State != AnimState.Ready || State == AnimState.End )
 		{
 			ResetAnim();
 		}
-		else if( State == AnimState.Invalid )
-		{
-			Create();
-		}
 
-		float totalDelaySec = delay + TimeUtility.ConvertTime(Delay, DelayTimeUnit);
-
+		float totalDelaySec = in_delay + TimeUtility.ConvertTime(Delay, DelayTimeUnit);
+		
 		foreach( AnimationBase anim in animations_ )
 		{
-			AnimManager.AddAnim(anim).AddDelay(totalDelaySec);
+			AnimManager.AddAnim(anim).AddDelay(totalDelaySec).SetSpeed(in_speed);
 		}
 
 		foreach( AnimComponent child in ChildAnimList )
 		{
-			child.Play(totalDelaySec);
+			child.Play(totalDelaySec, Speed * in_speed);
 		}
 
 		State = AnimState.Playing;
+	}
+
+	/// <summary>
+	/// アニメーションを途中で止める
+	/// </summary>
+	public void Stop()
+	{
+		for( int i = animations_.Count - 1; i >= 0; --i )
+		{
+			animations_[i].Stop();
+		}
 	}
 
 	/// <summary>
@@ -138,18 +142,18 @@ public class AnimComponent : MonoBehaviour
 		if( State == AnimState.Invalid )
 		{
 			Create();
+			return;
 		}
 
 		for( int i = animations_.Count - 1; i >= 0; --i )
 		{
-			if( animations_[i].State == AnimationBase.AnimationState.Ready )
+			if( animations_[i].State < AnimationBase.AnimationState.Playing )
 			{
 				animations_[i].Stop();
 			}
 			else
 			{
 				animations_[i].Reset();
-				animations_[i].ClearInitialValue();
 			}
 		}
 
@@ -187,13 +191,13 @@ public class AnimComponent : MonoBehaviour
 
 	void OnEndAnim(AnimationBase anim)
 	{
-		State = AnimState.End;
-		if( ResetOnEnd )
+		if( animations_.Find((AnimationBase a) => a.State < AnimationBase.AnimationState.End) == null )
 		{
-			if( animations_.Find((AnimationBase a) => a.State < AnimationBase.AnimationState.End) == null )
+			if( ResetOnEnd )
 			{
 				ResetAnim();
 			}
+			State = AnimState.End;
 		}
 	}
 }

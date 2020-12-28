@@ -25,6 +25,8 @@ public class ColorManager : MonoBehaviour
 	SerializableColorStateGroupDictionary StateGroups = new SerializableColorStateGroupDictionary();
 	[SerializeField]
 	SerializableColorParameterDictionary Parameters = new SerializableColorParameterDictionary();
+	[SerializeField]
+	SerializableColorSourceDictionary ColorSourceDictionary = new SerializableColorSourceDictionary();
 
 	// transitions
 	Dictionary<string, ColorStateTransition> stateTransitionDict_ = new Dictionary<string, ColorStateTransition>();
@@ -216,6 +218,21 @@ public class ColorManager : MonoBehaviour
 		return parameterTransitionDict_[name];
 	}
 
+	#endregion
+
+
+	#region utils
+
+	public ColorSourceBase GetColor_(string name)
+	{
+		if( ColorSourceDictionary.ContainsKey(name) )
+		{
+			return ColorSourceDictionary[name];
+		}
+		return null;
+	}
+
+	#endregion
 
 	// static functions
 
@@ -233,7 +250,7 @@ public class ColorManager : MonoBehaviour
 	public static bool IsParameterTransitioning(string name) { return Instance.IsParameterTransitioning_(name); }
 	public static ColorParameterTransition GetParameterTransition(string name) { return Instance.GetParameterTransition_(name); }
 
-	#endregion
+	public static ColorSourceBase GetColor(string name) { return Instance.GetColor_(name); }
 
 }
 
@@ -248,3 +265,9 @@ public class ColorParameterPair : SerializableKeyValuePair<string, ColorGameSync
 
 [System.Serializable]
 public class SerializableColorParameterDictionary : SerializableDictionary<string, ColorGameSyncByParameter, ColorParameterPair> { }
+
+[System.Serializable]
+public class ColorSourcePair : SerializableKeyValuePair<string, ColorSourceBase> { public ColorSourcePair(string key, ColorSourceBase value) : base(key, value) { } }
+
+[System.Serializable]
+public class SerializableColorSourceDictionary : SerializableDictionary<string, ColorSourceBase, ColorSourcePair> { }

@@ -7,10 +7,8 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class MidairPrimitive : MeshComponentBase, IColoredObject
 {
-	public uint Num = 3;
-	[Range(0, 1)]
+	public int Num = 3;
 	public float ArcRate = 1.0f;
-	[Range(0, 1)]
 	public float StartArcRate = 0.0f;
 	public float Width = 1.0f;
 	public float Radius = 1.0f;
@@ -36,16 +34,10 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 	int[] vertexIndices_;
 	Vector2[] vertexUVs_;
 
-	float ArcRateMin { get { return Mathf.Min(ArcRate, StartArcRate); } }
-	float ArcRateMax { get { return Mathf.Max(ArcRate, StartArcRate); } }
-	int ArcEndVertexIndex { get { return Mathf.Min((int)Num, (int)Mathf.Ceil(Num * Mathf.Clamp01(ArcRateMax))); } }
-	int ArcStartVertexIndex { get { return Mathf.Min((int)Num - 1, (int)Mathf.Floor(Num * Mathf.Clamp01(ArcRateMin))); } }
-	int DesiredVertexCount { get { return (int)Num * 2 + 2; } }
-
 	// property cache
-	uint cachedNum_;
-	float cachedArcRateMax_;
-	float cachedArcRateMin_;
+	int cachedNum_;
+	float cachedArcRate_;
+	float cachedStartArcRate_;
 	float cachedWidth_;
 	float cachedRadius_;
 	Color cachedColor_;
@@ -54,8 +46,6 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 	float cachedAngle_;
 
 	// calcurated cache
-	int arcStartIndex_;
-	int arcEndIndex_;
 	float outRadius_;
 	float inRadius_;
 	float growOutRadius_;
@@ -87,8 +77,8 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 	void CheckPropertyCacheUpdate()
 	{
 		bool numChanged			= cachedNum_		!= Num;
-		bool arcRateMaxChanged	= cachedArcRateMax_	!= ArcRateMax;
-		bool arcRateMinChanged	= cachedArcRateMin_	!= ArcRateMin;
+		bool arcEndChanged		= cachedArcRate_	!= ArcRate;
+		bool arcStartChanged	= cachedStartArcRate_	!= StartArcRate;
 		bool widthChanged		= cachedWidth_		!= Width;
 		bool radiusChanged		= cachedRadius_		!= Radius;
 		bool colorChanged		= cachedColor_		!= Color;
@@ -102,11 +92,11 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 			return;
 		}
 
-		if( arcRateMaxChanged )
+		if( arcEndChanged )
 		{
 			RecalculateArcEnd();
 		}
-		if( arcRateMinChanged )
+		if( arcStartChanged )
 		{
 			RecalculateArcStart();
 		}
@@ -167,28 +157,18 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 	public void SetArc(float newArc)
 	{
 		ArcRate = newArc;
-		bool arcRateMaxChanged = cachedArcRateMax_ != ArcRateMax;
-		bool arcRateMinChanged = cachedArcRateMin_ != ArcRateMin;
-		if( arcRateMaxChanged )
+		bool arcEndChanged = cachedArcRate_ != ArcRate;
+		if( arcEndChanged )
 		{
 			RecalculateArcEnd();
-		}
-		if( arcRateMinChanged )
-		{
-			RecalculateArcStart();
 		}
 	}
 
 	public void SetStartArc(float newStartArc)
 	{
 		StartArcRate = newStartArc;
-		bool arcRateMaxChanged = cachedArcRateMax_ != ArcRateMax;
-		bool arcRateMinChanged = cachedArcRateMin_ != ArcRateMin;
-		if( arcRateMaxChanged )
-		{
-			RecalculateArcEnd();
-		}
-		if( arcRateMinChanged )
+		bool arcStartChanged = cachedStartArcRate_ != StartArcRate;
+		if( arcStartChanged )
 		{
 			RecalculateArcStart();
 		}
@@ -219,8 +199,8 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 	void UpdatePropertyCache()
 	{
 		cachedNum_ = Num;
-		cachedArcRateMax_ = ArcRateMax;
-		cachedArcRateMin_ = ArcRateMin;
+		cachedArcRate_ = ArcRate;
+		cachedStartArcRate_ = StartArcRate;
 		cachedWidth_ = Width;
 		cachedRadius_ = Radius;
 		cachedColor_ = Color;
@@ -231,7 +211,7 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 
 	bool CheckVertex()
 	{
-		int vertexCount = DesiredVertexCount;
+		int vertexCount = Num * 2 + 2;
 		bool isNChanged = (vertices_ == null || vertices_.Length != vertexCount);
 		if( isNChanged )
 		{
@@ -243,52 +223,36 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 
 	void UpdateArcStartParams()
 	{
-		arcStartIndex_ = ArcStartVertexIndex;
-		if( ArcRateMin > 0.0f )
+		float startArcRateFrac = Math.Max(0.0f, StartArcRate % 1.0f);
+		if( startArcRateFrac == 0.0f )
 		{
-			if( ArcRateMin >= 1.0f )
-			{
-				arcStartNormal_ = normalizedVertices_[normalizedVertices_.Length - 1];
-			}
-			else
-			{
-				arcStartNormal_ = CalcArcEdgeNormal(ArcRateMin, normalizedVertices_[arcStartIndex_ + 1]);
-			}
+			arcStartNormal_ = normalizedVertices_[0];
 		}
 		else
 		{
-			arcStartNormal_ = normalizedVertices_[0];
+			int nearestEdge = ((int)Mathf.Floor(Num * startArcRateFrac) + 1) % Num;
+			arcStartNormal_ = CalcArcEdgeNormal(startArcRateFrac, nearestEdge);
 		}
 	}
 
 	void UpdateArcEndParams()
 	{
-		arcEndIndex_ = ArcEndVertexIndex;
-		if( ArcRateMax < 1.0f )
+		float arcRateFrac = Math.Max(0.0f, ArcRate % 1.0f);
+		if( arcRateFrac == 0.0f )
 		{
-			if( ArcRate < StartArcRate )
-			{
-				arcEndNormal_ = arcStartNormal_;
-			}
-			else if( ArcRateMax <= 0.0f )
-			{
-				arcEndNormal_ = normalizedVertices_[0];
-			}
-			else
-			{
-				arcEndNormal_ = CalcArcEdgeNormal(ArcRateMax, normalizedVertices_[arcEndIndex_]);
-			}
+			arcEndNormal_ = normalizedVertices_[0];
 		}
 		else
 		{
-			arcEndNormal_ = normalizedVertices_[normalizedVertices_.Length - 1];
+			int nearestEdge = (int)Mathf.Ceil(Num * arcRateFrac) % Num;
+			arcEndNormal_ = CalcArcEdgeNormal(arcRateFrac, nearestEdge);
 		}
 	}
 
-	Vector3 CalcArcEdgeNormal(float arcRate, Vector3 normalVertex)
+	Vector3 CalcArcEdgeNormal(float arcRate, int nearestEdge)
 	{
-		float arcN = arcRate * Num;
-		float angleOffset = (2 * Mathf.PI / Num) * ((Mathf.Ceil(arcN) - arcN) % 1.0f);
+		Vector3 normalVertex = normalizedVertices_[nearestEdge];
+		float angleOffset = (2 * Mathf.PI) * ((float)nearestEdge / Num - arcRate);
 		Matrix4x4 rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(-angleOffset * (180.0f / Mathf.PI), Vector3.forward), Vector3.one);
 		normalVertex = rotateMatrix * normalVertex;
 		float lRatio = Mathf.Cos(Mathf.PI / Num);
@@ -304,32 +268,11 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 		{
 			return;
 		}
-
-		int oldArcEndIndex = arcEndIndex_;
+		
 		UpdateArcEndParams();
-
-		for( int i = Math.Max(arcStartIndex_ + 1, arcEndIndex_); i < normalizedVertices_.Length; ++i )
-		{
-			SetVertex(i, arcEndNormal_);
-		}
-
-		if( oldArcEndIndex < arcEndIndex_ )
-		{
-			for( int i = oldArcEndIndex; i < arcEndIndex_; ++i )
-			{
-				SetVertex(i, normalizedVertices_[i]);
-			}
-		}
-		else if( arcEndIndex_ < oldArcEndIndex )
-		{
-			for( int i = oldArcEndIndex; i > arcEndIndex_; --i )
-			{
-				SetVertex(i, arcEndNormal_);
-			}
-		}
-
-		cachedArcRateMax_ = ArcRate;
+		RecalculateVertices();
 		UpdateVertices();
+		cachedArcRate_ = ArcRate;
 	}
 
 	void RecalculateArcStart()
@@ -338,32 +281,11 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 		{
 			return;
 		}
-
-		int oldArcStartIndex = arcStartIndex_;
+		
 		UpdateArcStartParams();
-
-		for( int i = 0; i <= arcStartIndex_; ++i )
-		{
-			SetVertex(i, arcStartNormal_);
-		}
-
-		if( oldArcStartIndex < arcStartIndex_ )
-		{
-			for( int i = oldArcStartIndex; i < arcStartIndex_; ++i )
-			{
-				SetVertex(i, arcStartNormal_);
-			}
-		}
-		else if( arcStartIndex_ < oldArcStartIndex )
-		{
-			for( int i = oldArcStartIndex; i > arcStartIndex_; --i )
-			{
-				SetVertex(i, normalizedVertices_[i]);
-			}
-		}
-
-		cachedArcRateMin_ = StartArcRate;
+		RecalculateVertices();
 		UpdateVertices();
+		cachedStartArcRate_ = StartArcRate;
 	}
 
 	void RecalculateRadius()
@@ -374,19 +296,8 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 		}
 
 		UpdateCulculateCache();
-
-		for( int i = 0; i <= arcStartIndex_; ++i )
-		{
-			SetVertex(i, arcStartNormal_);
-		}
-		for( int i = arcStartIndex_ + 1; i < arcEndIndex_; ++i )
-		{
-			SetVertex(i, normalizedVertices_[i]);
-		}
-		for( int i = arcEndIndex_; i < normalizedVertices_.Length; ++i )
-		{
-			SetVertex(i, arcEndNormal_);
-		}
+		RecalculateVertices();
+		UpdateVertices();
 
 		cachedWidth_ = Width;
 		cachedRadius_ = Radius;
@@ -395,7 +306,6 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 		{
 			UpdateColor();
 		}
-		UpdateVertices();
 	}
 
 	void RecalculateWidth()
@@ -406,19 +316,7 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 		}
 
 		UpdateCulculateCache();
-
-		for( int i = 0; i <= arcStartIndex_; ++i )
-		{
-			vertices_[2 * i] = arcStartNormal_ * growInRadius_;
-		}
-		for( int i = arcStartIndex_ + 1; i < arcEndIndex_; ++i )
-		{
-			vertices_[2 * i] = normalizedVertices_[i] * growInRadius_;
-		}
-		for( int i = Math.Max(arcStartIndex_ + 1, arcEndIndex_); i < normalizedVertices_.Length; ++i )
-		{
-			vertices_[2 * i] = arcEndNormal_ * growInRadius_;
-		}
+		RecalculateVertices();
 
 		cachedWidth_ = Width;
 		cachedGrowSize_ = GrowSize;
@@ -441,12 +339,12 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 		bool shouldRecreateVertex = (vertices_ == null || cachedNum_ != Num);
 		if( shouldRecreateVertex || forceReflesh )
 		{
-			int vertexCount = DesiredVertexCount;
+			int vertexCount = Num * 2 + 4;
 			vertices_ = new Vector3[vertexCount];
-			normalizedVertices_ = new Vector3[vertexCount / 2];
+			normalizedVertices_ = new Vector3[Num];
 			// indices
-			vertexIndices_ = new int[Num * QuadIndices.Length];
-			for( int i = 0; i < Num; ++i )
+			vertexIndices_ = new int[(Num + 1) * QuadIndices.Length];
+			for( int i = 0; i <= Num; ++i )
 			{
 				for( int j = 0; j < QuadIndices.Length; ++j )
 				{
@@ -465,7 +363,7 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 		//calc normal
 		Vector3 normalVertex = Quaternion.AngleAxis(Angle, Vector3.forward) * Vector3.up;
 		Matrix4x4 rotateMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis((360.0f / Num), Vector3.forward), Vector3.one);
-		for( int i = 0; i < normalizedVertices_.Length; ++i )
+		for( int i = 0; i < Num; ++i )
 		{
 			normalizedVertices_[i] = normalVertex;
 			normalVertex = rotateMatrix * normalVertex;
@@ -474,23 +372,44 @@ public class MidairPrimitive : MeshComponentBase, IColoredObject
 		UpdateCulculateCache();
 		UpdateArcStartParams();
 		UpdateArcEndParams();
-
-		for( int i = 0; i <= arcStartIndex_; ++i )
-		{
-			SetVertex(i, arcStartNormal_);
-		}
-		for( int i = arcStartIndex_ + 1; i < arcEndIndex_; ++i )
-		{
-			SetVertex(i, normalizedVertices_[i]);
-		}
-		for( int i = Math.Max(arcStartIndex_ + 1, arcEndIndex_); i < normalizedVertices_.Length; ++i )
-		{
-			SetVertex(i, arcEndNormal_);
-		}
+		RecalculateVertices();
 
 		UpdateColor();
 		PopulateMesh();
 		UpdatePropertyCache();
+	}
+
+	void RecalculateVertices()
+	{
+		SetVertex(0, arcStartNormal_);
+
+		float arcStart = Num * (StartArcRate % 1.0f);
+		float arcEnd = Num * (ArcRate % 1.0f);
+		if( arcStart == arcEnd && ArcRate != StartArcRate )
+		{
+			// 一周する
+			arcEnd = arcStart + Num;
+		}
+		float prevArc = arcStart;
+		int currentArc = (int)Mathf.Floor(arcStart) + 1;
+		int vertIndex = 1;
+		int vertMax = vertices_.Length / 2;
+		while( (prevArc <= arcEnd && arcEnd <= currentArc) == false && vertIndex < vertMax - 1 )
+		{
+			currentArc %= Num;
+			SetVertex(vertIndex, normalizedVertices_[currentArc]);
+			++currentArc;
+			prevArc = ((int)prevArc + 1) % Num;
+			++vertIndex;
+		}
+
+		SetVertex(vertIndex, arcEndNormal_);
+		++vertIndex;
+
+		for( ; vertIndex < vertMax; ++vertIndex )
+		{
+			SetVertex(vertIndex, arcEndNormal_);
+		}
 	}
 
 	void SetVertex(int index, Vector3 normalVertex)
