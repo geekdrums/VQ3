@@ -120,7 +120,7 @@ public class Enemy : Character
 
 	protected void CreateDamageText(int damage, ActionResult actResult, GameObject parent = null)
 	{
-		if( (GameContext.LuxSystem.Version < LuxVersion.Shield || GameContext.LuxState == LuxState.Overflow) && damage == 0 ) return;
+		if( (GameContext.LuxSystem.Version < LuxVersion.Shield || GameContext.LuxState == LuxState.Break) && damage == 0 ) return;
 
 		if( GameContext.LuxSystem.IsOverFlow )
 		{

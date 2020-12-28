@@ -67,7 +67,7 @@ public class PlayerCommand : MonoBehaviour
     public GameObject plane2;
     public GameObject centerPlane;
     public GameObject centerIcon;
-    public StaticColorSource maskPlane;
+    public ColorSourceBase colorSource;
 
 
 	//
@@ -301,16 +301,8 @@ public class PlayerCommand : MonoBehaviour
 	public void UpdateColor()
 	{
 		float distance = (this.transform.position - SelectSpot).magnitude;
-		maskPlane.SetState("CommandState", state.ToString());
-		maskPlane.SetParameter("CommandDistance", state == CommandState.Acquired ? distance : 0);
-
-#if UNITY_EDITOR
-		if( !UnityEditor.EditorApplication.isPlaying )
-		{
-			maskPlane.RecalculateColor();
-			maskPlane.GetComponent<MidairPrimitive>().UpdateColor();
-		}
-#endif
+		colorSource.SetState("CommandState", state.ToString());
+		colorSource.SetParameter("CommandDistance", state == CommandState.Acquired ? distance : 0);
 	}
 
 	#endregion

@@ -210,7 +210,7 @@ public class EventConductor : MonoBehaviour
 					EndMacro();
 				}
 			}
-			else if( GameContext.LuxState == LuxState.Overflow )
+			else if( GameContext.LuxState == LuxState.Break )
 			{
 				if( OnPushedOK_Coroutine == null )
 				{

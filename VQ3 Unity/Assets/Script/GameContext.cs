@@ -39,6 +39,7 @@ public class GameContext : MonoBehaviour
 			Screen.fullScreen = true;
 		}
 		GameContext.FieldConductor.EncounterIndex = EncounterIndex;
+		Application.targetFrameRate = 60;
 	}
 
 	void Start()
@@ -98,7 +99,7 @@ public class GameContext : MonoBehaviour
 			ColorManager.SetGlobalState("Base", "Black");
 			FieldConductor.OnEnterBattle();
 			BattleConductor.SetState(BattleState.Intro);
-			LuxSystem.SetState(LuxState.Sun);
+			LuxSystem.SetState(LuxState.Shield);
 			EnemyConductor.SetEncounter(FieldConductor.CurrentEncounter);
 			PlayerConductor.OnBattleStarted();
 			break;

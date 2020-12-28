@@ -40,7 +40,7 @@ public class EnemyCommandGraph : MonoBehaviour {
 					CheckState();
 					if( OldState != CurrentState || TurnCount >= CurrentState.Pattern.Length )
 					{
-						CommandListUI.ClearCommands();
+						CommandListUI.ClearFutureCommands();
 					}
 				}
 				else if( Music.IsJustChangedAt(SetNextTiming) )
@@ -123,6 +123,7 @@ public class EnemyCommandGraph : MonoBehaviour {
 		if( CurrentState.Pattern != null && CurrentState.Pattern.Length > 0 )
 		{
 			CurrentCommandSet = CurrentState.Pattern[TurnCount % CurrentState.Pattern.Length];
+			CommandListUI.AddFutureCommand(CurrentState.Pattern[(TurnCount + CommandListUI.MaxFutureCommands) % CurrentState.Pattern.Length]);
 		}
 		else
 		{
@@ -131,15 +132,6 @@ public class EnemyCommandGraph : MonoBehaviour {
 		++TurnCount;
 
 		CommandListUI.OnExecCommand();
-		if( (OldState != CurrentState || TurnCount > CurrentState.Pattern.Length) && CurrentState.Pattern.Length > 0 )
-		{
-			if( CommandListUI.CurrentCommandState != CurrentState )
-			{
-				CommandListUI.Set(CurrentState);
-			}
-			CommandListUI.ShowAnim();
-			TurnCount %= CurrentState.Pattern.Length;
-		}
 
 		return CurrentCommandSet;
 	}
@@ -156,8 +148,12 @@ public class EnemyCommandGraph : MonoBehaviour {
 			}
 			TurnCount = 0;
 
-			CommandListUI.ClearCommands();
-			CommandListUI.Set(CurrentState);
+			CommandListUI.ClearFutureCommands();
+			for( int i = 0; i < CommandListUI.MaxFutureCommands; ++i )
+			{
+				CommandListUI.AddFutureCommand(CurrentState.Pattern[i % CurrentState.Pattern.Length]);
+			}
+			CommandListUI.Show();
 		}
 	}
 
@@ -187,7 +183,7 @@ public class EnemyCommandGraph : MonoBehaviour {
 			invertState.NextState = "";
 		}
 		CurrentState = invertState;
-		CommandListUI.ClearCommands();
+		CommandListUI.ClearFutureCommands();
 		Shade.SetColor(Color.clear);
 	}
 
@@ -203,6 +199,6 @@ public class EnemyCommandGraph : MonoBehaviour {
 
 	public void OnPlayerWin()
 	{
-		CommandListUI.ClearCommands();
+		CommandListUI.ClearFutureCommands();
 	}
 }

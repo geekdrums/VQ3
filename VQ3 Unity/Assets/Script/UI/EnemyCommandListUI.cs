@@ -6,18 +6,16 @@ using UnityEngine;
 
 public class EnemyCommandListUI : MonoBehaviour
 {
-	public float OldIconScale;
-	public float ActiveIconScale;
-	public float FutureIconScale;
-	public float Interval;
 	public float CenterInterval;
-	public GaugeRenderer EdgeLine;
-	public MidairPrimitive CurrentHex;
-
-	public EnemyCommandState CurrentCommandState { get; private set; }
-	List<GameObject> commandIcons_ = new List<GameObject>();
-	int currentIndex_;
-	GameObject CurrentCommandIcon { get { return (commandIcons_.Count > 0 && 0 <= currentIndex_ && currentIndex_ < commandIcons_.Count ? commandIcons_[currentIndex_] : null); } }
+	public float Interval;
+	public float PastIconScale;
+	public float FutureIconScale;
+	public int MaxPastCommands = 2;
+	public int MaxFutureCommands = 2;
+	
+	List<GameObject> futureCommandIcons_ = new List<GameObject>();
+	List<GameObject> pastCommandIcons_ = new List<GameObject>();
+	GameObject currentCommandIcon_;
 
 	void Start()
 	{
@@ -25,171 +23,102 @@ public class EnemyCommandListUI : MonoBehaviour
 
 	void Update()
 	{
-		if( GameContext.BattleState == BattleState.Intro || GameContext.BattleState == BattleState.Wait ) return;
-
-		for( int i = 0; i < commandIcons_.Count; ++i )
-		{
-			if( AnimManager.IsAnimating(commandIcons_[i].gameObject) ) continue;
-
-			commandIcons_[i].transform.localPosition = Vector3.Lerp(commandIcons_[i].transform.localPosition, GetTargetPos(i), 0.2f);
-			commandIcons_[i].transform.localScale = Vector3.Lerp(commandIcons_[i].transform.localScale, GetTargetScale(i), 0.2f);
-		}
-
-		/*
-		if( Music.IsJustChangedAt(EnemySkillListUI.ShowSkillCutInTiming) && CurrentCommandIcon != null )
-		{
-			CurrentCommandIcon.transform.AnimatePosition(Vector3.down * 2.5f, InterpType.BackOut, time: 0.3f);
-			CurrentCommandIcon.transform.AnimatePosition(Vector3.zero, InterpType.BackOut, time: 0.3f, delay: (float)Music.Meter.SecPerUnit * 8);
-		}
-		*/
-
-		if( AnimManager.IsAnimating(EdgeLine.gameObject) == false && commandIcons_.Count > 0 )
-		{
-			EdgeLine.transform.localPosition = new Vector3(commandIcons_[0].transform.localPosition.x, 0, 10);
-			EdgeLine.Length = commandIcons_[commandIcons_.Count - 1].transform.localPosition.x - commandIcons_[0].transform.localPosition.x;
-		}
-
-		if( CurrentCommandIcon != null && GameContext.BattleState != BattleState.Wait )
-		{
-			CurrentHex.transform.localPosition = new Vector3(CurrentCommandIcon.transform.localPosition.x, 0, -1);
-			CurrentHex.SetArc((float)(-Music.MusicalTime / LuxSystem.TurnMusicalBars));
-		}
 	}
 
-	Vector3 GetTargetScale(int index)
+	Vector3 GetTargetPos(bool isFutureCommand, int index)
 	{
-		if( index < currentIndex_ )
-		{
-			return Vector3.one * OldIconScale;
-		}
-		else if( index == currentIndex_ )
-		{
-			return Vector3.one * ActiveIconScale;
-		}
-		else// (i > currentIndex_ )
-		{
-			return Vector3.one * FutureIconScale;
-		}
-	}
-
-	Vector3 GetTargetPos(int index)
-	{
+		List<GameObject> targetList = isFutureCommand ? futureCommandIcons_ : pastCommandIcons_;
+		Vector3 direction = isFutureCommand ? Vector3.right : Vector3.left;
+		float iconScale = isFutureCommand ? FutureIconScale : PastIconScale;
+		
 		Vector3 res = Vector3.zero;
+		res += direction * CenterInterval;
+		for( int i = 0; i < index; ++i )
+		{
+			res += direction * (iconScale * targetList[i].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f * Interval);
+		}
+		float selfLength = targetList[index].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f;
+		res -= direction * selfLength;
 
-		if( currentIndex_ < 0 )
-		{
-			return res;
-		}
-
-		float currentLength = ActiveIconScale * commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f;
-		float selfLength = GetTargetScale(index).x * commandIcons_[index].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f;
-		if( index < currentIndex_ )
-		{
-			// 過去のコマンド
-			res += Vector3.left * CenterInterval;
-			for( int i = currentIndex_ - 1; i >= index; --i )
-			{
-				res += Vector3.left * (OldIconScale * commandIcons_[i].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f * Interval);
-			}
-			res += Vector3.left * (currentLength - selfLength);
-			return res;
-		}
-		else if( index == currentIndex_ )
-		{
-			// 現在のコマンド
-			return Vector3.zero;
-		}
-		else// (index > currentIndex_ )
-		{
-			// 実行予定のコマンド
-			res += Vector3.right * CenterInterval;
-			for( int i = currentIndex_ + 1; i <= index; ++i )
-			{
-				res += Vector3.right * (FutureIconScale * commandIcons_[i].GetComponentInChildren<MidairPrimitive>().Radius / 3.0f * Interval);
-			}
-			res += Vector3.right * (currentLength - selfLength);
-			return res;
-		}
+		return res;
 	}
 
-	public void Set(EnemyCommandState commandState)
-	{
-		CurrentCommandState = commandState;
-		for( int i = 0; i < CurrentCommandState.Pattern.Length; ++i )
-		{
-			AddCommand(CurrentCommandState.Pattern[i]);
-		}
-	}
-
-	public void AddCommand(EnemyCommandSet command)
+	/// <summary>
+	/// 実行予定のリストにコマンドを追加
+	/// </summary>
+	/// <param name="command"></param>
+	public void AddFutureCommand(EnemyCommandSet command)
 	{
 		GameObject iconObj = Instantiate(command.IconPrefab);
-		commandIcons_.Add(iconObj);
+		futureCommandIcons_.Add(iconObj);
 		iconObj.transform.parent = this.transform;
-		iconObj.transform.localPosition = GetTargetPos(commandIcons_.Count - 1) + Vector3.up * 5;
+		iconObj.transform.localPosition = GetTargetPos(isFutureCommand: true, futureCommandIcons_.Count - 1);
+		iconObj.transform.localScale = FutureIconScale * Vector3.one;
 	}
 
-	public void ShowAnim()
+	public void Show()
 	{
-		for( int i = 0; i < commandIcons_.Count; ++i )
+		for( int i = 0; i < futureCommandIcons_.Count; ++i )
 		{
-			Vector3 targetPos = GetTargetPos(i);
-			commandIcons_[i].transform.localPosition = targetPos + Vector3.up * 5;
-			commandIcons_[i].transform.localScale = GetTargetScale(i);
-			commandIcons_[i].transform.AnimatePosition(targetPos, InterpType.BackOut, time: 0.2f, delay: i * (float)Music.Meter.SecPerUnit * 4.0f / commandIcons_.Count);
+			Vector3 targetPos = GetTargetPos(isFutureCommand: true, i);
+			futureCommandIcons_[i].transform.AnimatePosition(
+				targetPos,
+				InterpType.BackOut,
+				time: 0.2f,
+				delay: i * (float)Music.Meter.SecPerUnit * 4.0f / futureCommandIcons_.Count)
+				.From(targetPos + Vector3.up * 5);
 		}
-		if( commandIcons_.Count > 0 )
-		{
-			EdgeLine.transform.localPosition = commandIcons_[0].transform.localPosition;
-			EdgeLine.Length = commandIcons_[commandIcons_.Count - 1].transform.localPosition.x - commandIcons_[0].transform.localPosition.x;
-		}
-		EdgeLine.SetRate(0);
-		EdgeLine.AnimateRate(1.0f, InterpType.BackOut, time: 0.2f, delay: (float)Music.Meter.SecPerUnit * 4);
 	}
 
-	public void ClearCommands()
+	public void ClearFutureCommands()
 	{
-		CurrentCommandState = null;
-		for( int i = 0; i < commandIcons_.Count; ++i )
+		for( int i = 0; i < futureCommandIcons_.Count; ++i )
 		{
-			Vector3 targetPos = GetTargetPos(i) + Vector3.up * 5;
-			commandIcons_[i].transform.AnimatePosition(targetPos, InterpType.BackOut, time: 0.3f, delay: i * (float)Music.Meter.SecPerUnit * 4.0f / commandIcons_.Count, endOption: AnimEndOption.Destroy);
+			Vector3 targetPos = GetTargetPos(isFutureCommand: true, i) + Vector3.up * 5;
+			futureCommandIcons_[i].transform.AnimatePosition(
+				targetPos,
+				InterpType.BackOut,
+				time: 0.3f, 
+				delay: i * (float)Music.Meter.SecPerUnit * 4.0f / futureCommandIcons_.Count,
+				endOption: AnimEndOption.Destroy);
 		}
-		EdgeLine.AnimateRate(0.0f, InterpType.BackOut, time: 0.2f, delay: (float)Music.Meter.SecPerUnit * 4);
-		CurrentHex.SetArc(0);
-		commandIcons_.Clear();
-		currentIndex_ = -1;
+		futureCommandIcons_.Clear();
 	}
 
 	public void OnExecCommand()
 	{
-		++currentIndex_;
+		if( currentCommandIcon_ != null )
+		{
+			currentCommandIcon_.SetActive(true);
+			currentCommandIcon_.transform.localPosition = CenterInterval * Vector3.left;
+			currentCommandIcon_.transform.localScale = PastIconScale * Vector3.one;
+			pastCommandIcons_.Insert(0, currentCommandIcon_);
+			if( pastCommandIcons_.Count > MaxPastCommands )
+			{
+				Destroy(pastCommandIcons_[MaxPastCommands]);
+				pastCommandIcons_.RemoveAt(MaxPastCommands);
+			}
+		}
 
-		if( currentIndex_ >= commandIcons_.Count )
+		if( futureCommandIcons_.Count == 0 )
 		{
-			currentIndex_ = 0;
-			for( int i = 0; i < commandIcons_.Count; ++i )
-			{
-				MidairPrimitive mask = commandIcons_[i].GetComponentsInChildren<MidairPrimitive>().First((MidairPrimitive primitive) => primitive.name == "Mask");
-				if( mask != null )
-				{
-					mask.SetColor(Color.clear);
-				}
-			}
+			return;
 		}
-		else
+
+		currentCommandIcon_ = futureCommandIcons_[0];
+		currentCommandIcon_.SetActive(false);
+		futureCommandIcons_.RemoveAt(0);
+
+		for( int i = 0; i < futureCommandIcons_.Count; ++i )
 		{
-			CurrentHex.SetSize(commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius);
-			CurrentHex.SetWidth(commandIcons_[currentIndex_].GetComponentInChildren<MidairPrimitive>().Radius);
-			CurrentHex.transform.localScale = Vector3.one * ActiveIconScale;
-			for( int i = 0; i < currentIndex_; ++i )
-			{
-				MidairPrimitive mask = commandIcons_[i].GetComponentsInChildren<MidairPrimitive>().First((MidairPrimitive primitive) => primitive.name == "Mask");
-				if( mask != null )
-				{
-					mask.SetColor(ColorManagerObsolete.MakeAlpha(Color.black, 0.3f));
-				}
-			}
+			futureCommandIcons_[i].transform.AnimatePosition(GetTargetPos(isFutureCommand: true, i), InterpType.QuadOut, time: 0.2f);
 		}
+		for( int i = 0; i < pastCommandIcons_.Count; ++i )
+		{
+			pastCommandIcons_[i].transform.AnimatePosition(GetTargetPos(isFutureCommand: false, i), InterpType.QuadOut, time: 0.2f);
+		}
+		//TODO: カラー設定
+		//currentCommandIcon_
+		// todo add future
 	}
 }

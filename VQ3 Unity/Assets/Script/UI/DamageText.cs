@@ -4,8 +4,6 @@ using System.Collections;
 public class DamageText : MonoBehaviour
 {
 	public CounterSprite DamageCount;
-	public CounterSprite VPCount;
-	public CounterSprite VTCount;
 
 	public float MaxCounterScale;
 	public float MidCounterScale;
@@ -14,13 +12,10 @@ public class DamageText : MonoBehaviour
 	float time_ = 0;
 	bool isEnd_ = false;
 	bool isPlayerDamage_ = false;
-	DamageGauge.Mode mode_;
-	Vector3 destination_;
 
 	// Use this for initialization
 	void Start()
 	{
-		destination_ = transform.parent.Find(isPlayerDamage_ ? "PlayerDestination" : "EnemyDestination").transform.localPosition;
 	}
 
 	// Update is called once per frame
@@ -41,14 +36,11 @@ public class DamageText : MonoBehaviour
 		bool isEnd = false;
 		time_ += Time.deltaTime;
 		isEnd |= time_ >= 2.0f;
-		isEnd |= mode_ == DamageGauge.Mode.Break && GameContext.LuxSystem.IsOverFlow;
 		isEnd |= GameContext.LuxSystem.State != LuxState.Overload && Music.IsJustChangedAt(3, 3, 0);
 		if( isEnd )
 		{
 			isEnd_ = true;
 			Destroy(this.gameObject);
-			//transform.AnimatePosition(destination_, time: 0.2f);
-			//transform.AnimatePosition(destination_ + (isPlayerDamage_ ? Vector3.down : Vector3.up) * 5, time: 0.2f, delay: 0.3f, endOption: AnimEndOption.Destroy);
 		}
 	}
 
@@ -59,85 +51,8 @@ public class DamageText : MonoBehaviour
 		DamageCount.Shake(0.3f, 1.0f);
 	}
 
-	public void AddVP(int VP, int Time)
-	{
-		VTCount.Count += Time / LuxSystem.TurnMusicalBars;
-		VTCount.gameObject.SetActive(VTCount.Count > 0);
-		VPCount.Count += VP;
-		time_ = 0;
-		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalBars);
-
-		VPCount.Shake(0.3f, 1.0f);
-		VTCount.Shake(0.3f, 1.0f);
-	}
-
-
-	void ModeInit(DamageGauge.Mode mode)
-	{
-		mode_ = mode;
-		DamageCount.gameObject.SetActive(mode_ == DamageGauge.Mode.Damage || mode_ == DamageGauge.Mode.DamageAndTime);
-		VPCount.gameObject.SetActive(mode_ == DamageGauge.Mode.Break);
-		VTCount.gameObject.SetActive(mode_ == DamageGauge.Mode.Break);
-	}
-
-	public void InitializeVP(int VP, int Time)
-	{
-		ModeInit(DamageGauge.Mode.Break);
-		VTCount.Count = Time / LuxSystem.TurnMusicalBars;
-		VTCount.gameObject.SetActive(VTCount.Count > 0);
-		VPCount.Count = VP;
-
-		VPCount.Shake(0.4f, 1.0f);
-		VTCount.Shake(0.4f, 1.0f);
-
-		UpdateVPColors(VP, Time / LuxSystem.TurnMusicalBars);
-		isPlayerDamage_ = false;
-	}
-
-	void UpdateVPColors(int VP, float Time)
-	{
-		Color vpColor = Color.white;
-		if( VP >= 10 )
-		{
-			vpColor = ColorManagerObsolete.Accent.Break;
-			VPCount.CounterScale = MaxCounterScale;
-		}
-		else if( VP >= 4 )
-		{
-			vpColor = Color.Lerp(ColorManagerObsolete.Accent.Break, ColorManagerObsolete.Base.Bright, 0.3f);
-			VPCount.CounterScale = MidCounterScale;
-		}
-		else
-		{
-			vpColor = ColorManagerObsolete.Base.MiddleBack;
-			VPCount.CounterScale = MinCounterScale;
-		}
-		VPCount.CounterColor = vpColor;
-		VPCount.GetComponentInChildren<TextMesh>().color = vpColor;
-
-		Color timeColor = Color.white;
-		if( Time >= 0.5f )
-		{
-			timeColor = ColorManagerObsolete.Accent.Time;
-			VTCount.CounterScale = MaxCounterScale;
-		}
-		else if( Time >= 0.2f )
-		{
-			timeColor = Color.Lerp(ColorManagerObsolete.Accent.Time, ColorManagerObsolete.Base.Bright, 0.3f);
-			VTCount.CounterScale = MidCounterScale;
-		}
-		else
-		{
-			timeColor = ColorManagerObsolete.Base.MiddleBack;
-			VTCount.CounterScale = MinCounterScale;
-		}
-		VTCount.CounterColor = timeColor;
-		VTCount.GetComponentInChildren<TextMesh>().color = timeColor;
-	}
-
 	public void InitializeDamage(int damage, ActionResult actionResult, bool isPlayerDamage = false)
 	{
-		ModeInit(DamageGauge.Mode.Damage);
 		Color color;
 		DamageCount.Count = Mathf.Abs(damage);
 		DamageCount.Shake(0.4f, 1.0f);
@@ -161,7 +76,7 @@ public class DamageText : MonoBehaviour
 			{
 				transform.localScale = Vector3.one * 1.4f;
 			}
-			else if( GameContext.LuxSystem.State == LuxState.Overflow )
+			else if( GameContext.LuxSystem.State == LuxState.Break )
 			{
 				transform.localScale = Vector3.one * 1.2f;
 			}

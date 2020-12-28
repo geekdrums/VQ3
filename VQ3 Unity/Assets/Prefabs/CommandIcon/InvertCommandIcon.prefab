@@ -57,6 +57,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -106,7 +107,7 @@ MonoBehaviour:
   plane2: {fileID: 0}
   centerPlane: {fileID: 0}
   centerIcon: {fileID: 0}
-  maskPlane: {fileID: 0}
+  colorSource: {fileID: 0}
   themeColor: 0
   linkLines: []
   numSP: 0
@@ -187,6 +188,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

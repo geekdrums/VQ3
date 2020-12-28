@@ -12,7 +12,9 @@ public class EnemyConductor : MonoBehaviour
 	public EnemyCommandGraph commandGraph;
 	public EnemySkillListUI skillList;
 	public GameObject damageTextPrefab;
+	public GameObject vpTextPrefab;
 	public DamageGauge damageGauge;
+	public VPGauge VPGauge;
 	public GameObject commandIconPrefab;
 	public GameObject shortTextWindowPrefab;
 	public EnemyCommand PhysicDefaultCommand;
@@ -29,6 +31,7 @@ public class EnemyConductor : MonoBehaviour
 	public int EnemyCount { get { return Enemies.Count; } }
 	public Enemy targetEnemy { get; private set; }
 	protected DamageText lastDamageText_;
+	protected VPText lastVPText_;
 
 	Color baseColor_;
 	public Color baseColor
@@ -143,25 +146,26 @@ public class EnemyConductor : MonoBehaviour
 			GameContext.LuxSystem.AddVP(vp, vt);
 
 			Vector3 damageTextPos = (skill.damageParent != null ? skill.damageParent.transform.position : skill.GetComponentInChildren<Animation>().transform.position);
-			if( damageGauge.CurrentMode == DamageGauge.Mode.None )
+			if( GameContext.LuxSystem.IsOverFlow )
 			{
-				damageGauge.InitializeVPVT();
 			}
-			if( damageGauge.CurrentMode == DamageGauge.Mode.Break )
+			else
 			{
-				if( lastDamageText_ != null )
+				if( VPGauge.GetIsInitialized() == false )
 				{
-					lastDamageText_.AddVP(vp, vt);
+					VPGauge.InitializeVPVT(damageTextPos);
+				}
+
+				if( lastVPText_ != null )
+				{
+					lastVPText_.AddVP(vp, vt);
 				}
 				else
 				{
-					GameObject damageText = (GameObject)Instantiate(damageTextPrefab, damageTextPos, Quaternion.identity);
-					damageText.transform.parent = GameContext.BattleConductor.DamageTextParent.transform;
-					lastDamageText_ = damageText.GetComponent<DamageText>();
-					lastDamageText_.InitializeVP(vp, vt);
+					lastVPText_ = Instantiate(vpTextPrefab, damageTextPos, Quaternion.identity, GameContext.BattleConductor.DamageTextParent.transform).GetComponent<VPText>();
+					lastVPText_.InitializeVP(vp, vt);
 				}
 			}
-
 			foreach( Enemy e in GetTargetEnemies(attack, skill) )
 			{
 				e.BeAttacked(attack, skill);

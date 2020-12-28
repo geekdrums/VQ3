@@ -200,7 +200,7 @@ public class BattleConductor : MonoBehaviour {
 			TextWindow.SetMessage(MessageCategory.Result, "戦闘不能、緊急離脱。");
 			GameContext.PlayerConductor.OnPlayerLose();
 			GameContext.EnemyConductor.OnPlayerLose();
-			GameContext.LuxSystem.SetState(LuxState.SunSet);
+			GameContext.LuxSystem.SetState(LuxState.End);
 			Music.Play("Continue");
 			ClearSkills();
 			//OKButton.SetText("Continue");
@@ -213,7 +213,7 @@ public class BattleConductor : MonoBehaviour {
 			break;
 		case BattleState.Endro:
 			ClearSkills();
-			GameContext.LuxSystem.SetState(LuxState.SunSet);
+			GameContext.LuxSystem.SetState(LuxState.End);
 			TextWindow.SetMessage(MessageCategory.Result, "敵性反応ゼロ。殲滅を確認。");
 			//OKButton.SetText("OK");
 			//OKButton.SetMode(ButtonMode.Active, true);

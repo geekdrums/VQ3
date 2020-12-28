@@ -429,7 +429,7 @@ public class CommandGraph : MonoBehaviour
 			CurrentRect.SetArc(0);
 			break;
 		case BattleState.Intro:
-			if( Music.IsJustChangedAt(AllowInputEnd) /*|| (NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.MusicalTime % 16 == WaitInputEnd.MusicalTime))*/ )
+			if( Music.IsJustChangedAt(AllowInputEnd) || (NextCommand != null && Music.IsJustChangedWhen((Timing t) => t.GetTotalUnits(Music.Meter) % 16 == WaitInputEnd.GetTotalUnits(Music.Meter))) )
 			{
 				SetNextBlock();
 			}
@@ -454,7 +454,6 @@ public class CommandGraph : MonoBehaviour
 		case BattleState.Endro:
 			break;
 		}
-		CurrentRect.SetColor(ColorManagerObsolete.Base.Front);
 	}
 
 	void OnSkillCutIn()
@@ -554,7 +553,6 @@ public class CommandGraph : MonoBehaviour
 				NextRect.transform.localScale = Vector3.Lerp(NextRect.transform.localScale, Vector3.one * 0.1f, 0.2f);
 			}
 			NextRect.transform.rotation = Quaternion.identity;
-			NextRect.SetColor(ColorManagerObsolete.Base.Front);
 			NextRect.SetSize(1.5f);
 			NextRect.SetWidth(0.2f);
 			NextRect.GetComponentsInChildren<MidairPrimitive>()[1].SetSize(1.5f);

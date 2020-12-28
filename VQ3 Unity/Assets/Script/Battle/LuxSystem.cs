@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public enum LuxState
 {
 	None,
-    Sun,
-    Overflow,
+    Shield,
+    Break,
     Overload,
-    SunSet,
+    End,
 }
 
 public enum LuxVersion
@@ -27,6 +27,7 @@ public class LuxSystem : MonoBehaviour
 	public static readonly int WaveNum = 33;
 	public static readonly float WaveHeight = 2.0f;
 	public static readonly float TurnMusicalBars = 4.0f;
+	public static readonly float TurnMusicalUnits = 4.0f * 16.0f;
 	public int CurrentVP { get; private set; }
 	public int CurrentTime { get; private set; }
 	public int LastMaxTime { get; private set; }
@@ -65,7 +66,7 @@ public class LuxSystem : MonoBehaviour
 	public float LightRemainTime = 1.0f;
 	public Material BGMaterial;
 	public CutInUI CutInUI;
-	public DamageGauge DamageGauge;
+	public VPGauge VPGauge;
 
 	//animation preferences
 	public ColorSourceBase BGColorSource;
@@ -219,7 +220,7 @@ public class LuxSystem : MonoBehaviour
 
 		switch( State )
 		{
-		case LuxState.Sun:
+		case LuxState.Shield:
 			if( lightHoleRemainTime_ > 0 )
 			{
 				lightHoleRemainTime_ -= Time.deltaTime;
@@ -229,7 +230,7 @@ public class LuxSystem : MonoBehaviour
 			//BGColor = Color.Lerp(BGColor, ColorManagerObsolete.Theme.Light, 0.1f);
 			//BGMaterial.SetColor("_BaseColor", BGColor);
 			break;
-		case LuxState.Overflow:
+		case LuxState.Break:
 			UpdateLightAngles();
 			UpdateBGOffset();
 			//BGColor = Color.Lerp(BGColor, ColorManagerObsolete.Theme.Light, 0.1f);
@@ -250,11 +251,11 @@ public class LuxSystem : MonoBehaviour
 				ColorManager.SetGlobalState("Theme", "White");
 				GameContext.EnemyConductor.OnRevert();
 				GameContext.PlayerConductor.OnRevert();
-				SetState(LuxState.Sun);
+				SetState(LuxState.Shield);
 				WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
 			}
 			break;
-		case LuxState.SunSet:
+		case LuxState.End:
 			break;
 		}
 
@@ -268,9 +269,9 @@ public class LuxSystem : MonoBehaviour
 	{
 		if( Music.IsJustChanged && CurrentTime > 0 )
 		{
-			if( (State == LuxState.Sun || State == LuxState.Overflow) && IsInverting == false )
+			if( (State == LuxState.Shield || State == LuxState.Break) && IsInverting == false )
 			{
-				CurrentTime -= (Music.IsJustChanged ? 1 : 0); //Music.DeltaMT;
+				CurrentTime -= 1;
 				//TimeCount.Count = CurrentTime / TurnMusicalBars;
 				if( CurrentTime <= 0 )
 				{
@@ -278,15 +279,15 @@ public class LuxSystem : MonoBehaviour
 					{
 						SEPlayer.Play("vtEmpty");
 						CutInUI.SetShieldRecover();
-						DamageGauge.OnShieldRecover();
 					}
+					VPGauge.OnShieldRecover();
 					CurrentTime = 0;
 					LastMaxTime = 0;
 					CurrentVP = 0;
 					//BreakCount.Count = CurrentVP;
 					Music.SetAisac("TrackVolumeOver", 0);
 					WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
-					SetState(LuxState.Sun);
+					SetState(LuxState.Shield);
 					GameContext.PlayerConductor.CommandGraph.OnShieldRecover();
 				}
 			}
@@ -327,7 +328,7 @@ public class LuxSystem : MonoBehaviour
 		{
 			for( int i = 0; i<WaveNum; ++i )
 			{
-				float offset = (State == LuxState.Overflow ? LightHoleOverflowOffset * (GameContext.BattleState == BattleState.Eclipse ? 1.0f - Music.MusicalTime/3.0f : 1.0f) : LightHoleDefaultOffset);
+				float offset = (State == LuxState.Break ? LightHoleOverflowOffset * (GameContext.BattleState == BattleState.Eclipse ? 1.0f - Music.MusicalTime/3.0f : 1.0f) : LightHoleDefaultOffset);
 				float targetScale = Mathf.Max(0, 1.0f - vtScales_[i] * LightHoleCoeff - offset);
 				lightUpWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightUpWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
 				lightBottomWaves_[i].transform.localScale = new Vector3(1, Mathf.Lerp(lightBottomWaves_[i].transform.localScale.y, targetScale, 0.2f), 1);
@@ -440,7 +441,7 @@ public class LuxSystem : MonoBehaviour
 			if( IsOverFlow )
 			{
 				TextWindow.SetMessage(MessageCategory.Invert, "オーバーロード完了。");
-				BreakTime = Mathf.Clamp((int)(CurrentTime / TurnMusicalBars), 2, MaxInvertTime);
+				BreakTime = Mathf.Clamp((int)(CurrentTime / TurnMusicalUnits), 2, MaxInvertTime);
 				Music.SetAisac("Danger", 0);
 			}
 			else
@@ -554,7 +555,7 @@ public class LuxSystem : MonoBehaviour
 		//TimeGauge.transform.parent.gameObject.SetActive(Version >= LuxVersion.AutoShield);
 		//TimeCount.transform.parent.gameObject.SetActive(Version >= LuxVersion.AutoShield);
 		//BreakGauge.SetRate(0);
-		DamageGauge.OnBattleStarted();
+		VPGauge.OnBattleStarted();
 
 		//MainLight.SetActive(Version >= LuxVersion.Shield);
 		foreach( GameObject light in SunLights )
@@ -588,9 +589,10 @@ public class LuxSystem : MonoBehaviour
 		if( State != newState )
 		{
 			State = newState;
+			ColorManager.SetGlobalState("Break", State.ToString());
 			switch( State )
 			{
-			case LuxState.Sun:
+			case LuxState.Shield:
 				ResetBreak();
 				WaveLineMaterial.color = ColorManagerObsolete.Base.Front;
 
@@ -624,7 +626,7 @@ public class LuxSystem : MonoBehaviour
 				//BGColor = Color.black;
 				//BreakAccentGauge.SetColor(Color.clear);
 				break;
-			case LuxState.SunSet:
+			case LuxState.End:
 				BGOffset = Vector3.zero;
 				UpdateAnimation();
 				useTargetLightAngles = true;
@@ -644,7 +646,7 @@ public class LuxSystem : MonoBehaviour
 				Music.SetAisac("TrackVolumeOver", 0);
 				//BreakAccentGauge.SetColor(Color.clear);
 				break;
-			case LuxState.Overflow:
+			case LuxState.Break:
 				WaveLineMaterial.color = ColorManagerObsolete.Accent.Break;
 				SEPlayer.Play("invert");
 				GameContext.PlayerConductor.OnOverFlowed();
@@ -667,7 +669,7 @@ public class LuxSystem : MonoBehaviour
 				CurrentVP = 0;
 				CurrentTime = 0;
 				LastMaxTime = 0;
-				DamageGauge.OnShieldRecover();
+				VPGauge.OnShieldRecover();
 			}
 		}
 		//BreakCount.Count = 100.0f * ((float)CurrentVP / OverflowVP);
@@ -684,12 +686,12 @@ public class LuxSystem : MonoBehaviour
 
 		if( IsOverFlow && !oldIsOverFlow )
 		{
-			SetState(LuxState.Overflow);
+			SetState(LuxState.Break);
 			GameContext.PlayerConductor.CommandGraph.OnShieldBreak();
 		}
-		else if( oldIsOverFlow && !IsOverFlow && State != LuxState.SunSet )
+		else if( oldIsOverFlow && !IsOverFlow && State != LuxState.End )
 		{
-			SetState(LuxState.Sun);
+			SetState(LuxState.Shield);
 			GameContext.PlayerConductor.CommandGraph.OnShieldRecover();
 		}
 	}
